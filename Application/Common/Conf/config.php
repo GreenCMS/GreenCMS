@@ -38,5 +38,5 @@ return array(
     'DB_SQL_BUILD_CACHE' => true,
 
 
-    'LOAD_EXT_CONFIG' => 'config_router', // 加载扩展配置文件 config_alias,config_db,config_system
+    'LOAD_EXT_CONFIG' => 'config_router,config_log,config_oauth', // 加载扩展配置文件 config_alias,config_db,config_system
 );

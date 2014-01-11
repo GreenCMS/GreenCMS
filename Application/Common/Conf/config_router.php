@@ -5,8 +5,6 @@ if (!defined('THINK_PATH'))
 
 $config_router=array(
 
-
-		
 		//URL模式
 		'URL_MODEL'=>2,
 		
