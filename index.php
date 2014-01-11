@@ -6,7 +6,9 @@ if (version_compare(PHP_VERSION, '5.3.0', '<')) die('require PHP > 5.3.0 !'); //
  * 下面的内容自己决定
  */
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
+//error_reporting(0);
 @set_time_limit(240);
+//@ini_set("memory_limit",'-1');
 
 /**
  * 系统调试设置
