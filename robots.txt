@@ -1,0 +1,10 @@
+#
+# robots.txt for GreenCMS
+# @author ZTS
+#
+
+User-agent: *
+
+Disallow: /Data/
+Disallow: /Public/Ueditor/
+Disallow: /admin.php
