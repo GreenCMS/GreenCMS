@@ -2,6 +2,9 @@
 return array(
     //'配置项'=>'配置值'
     'Maintain' => false,
+
+    'SHOW_PAGE_TRACE' =>true,
+
     'COOKIE_EXPIRE' => 3600, // Coodie有效期
     'COOKIE_DOMAIN' => '', // Cookie有效域名
     'COOKIE_PATH' => '/', // Cookie路径
@@ -18,6 +21,10 @@ return array(
 
     'DATA_CACHE_TYPE' => 'File', // 数据缓存类型,支持:File||Memcache|Xcache
     'DATA_CACHE_SUBDIR' => true, // 使用子目录缓存 (自动根据缓存标识的哈希创建子目录)
+
+    'MODULE_ALLOW_LIST'     =>  array('Home','Admin'), //TP 3.1升级-- 配置你原来的分组列表
+    'DEFAULT_MODULE'        =>  'Home',//TP 3.1升级--默认分组
+   // 'DEFAULT_M_LAYER'       =>  'Logic', // TP 3.1升级--默认的模型层名称
 
 
     'URL_CASE_INSENSITIVE' => true, //URL大小写不敏感
