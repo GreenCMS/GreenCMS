@@ -10,17 +10,18 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 @set_time_limit(240);
 //@ini_set("memory_limit",'-1');
 
+
 /**
  * 系统调试设置
  * 项目正式部署后请设置为false
  */
 define ('APP_DEBUG', true);
-
+define('BUILD_DIR_SECURE', false);
 /**定义网站根目录
  *
  */
 define("WEB_ROOT", dirname(__FILE__) . "/");
-
+require(WEB_ROOT . "db_config.php");
 /**
  * 强制修正URL路径(一般不需要开启)
  * 适用于反代一个二级目录并且不能替换部分文字的情况。(我说的就是捉急的iis~~~~)
