@@ -8,9 +8,9 @@
  */
 
 namespace Home\Controller;
-use Think\Controller;
+use Home\Controller\HomeBaseController;
 
-class MaintainController extends Action
+class MaintainController extends HomeBaseController
 {
 
 }
