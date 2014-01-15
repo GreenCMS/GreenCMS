@@ -18,7 +18,7 @@ class PostsLogic extends RelationModel{
         $info ['post_type'] = $type;
         $info ['post_status'] = $status;
 
-        $post_res = D ( 'Posts' )->where ( $info )->relation ( $relation )->find ();
+        $post_res = $this->where ( $info )->relation ( $relation )->find ();
         return $post_res;
     }
 
@@ -31,7 +31,7 @@ class PostsLogic extends RelationModel{
             $info['post_id']  = array('in',$ids);
           }
 
-        $post_list = D ( 'Posts' )->where ( $info )->order ( ' post_top desc ,' . $order )->limit ( $limit )->relation ( $relation )->select ();
+        $post_list = $this->where ( $info )->order ( ' post_top desc ,' . $order )->limit ( $limit )->relation ( $relation )->select ();
 
         return $post_list;
     }
@@ -40,7 +40,7 @@ class PostsLogic extends RelationModel{
         $info ['post_status'] = $post_status;
         $info ['post_type'] = $type;
 
-        $count = D ( 'Posts' )->where ( $info )->count ();
+        $count = $this->where ( $info )->count ();
 
         return $count;
     }
@@ -49,7 +49,7 @@ class PostsLogic extends RelationModel{
         $info ['post_id'] = $id;
 
         $data= array('post_status'=>'preDel');
-        if (D ( 'Posts' )->where ( $info )->setField($data))
+        if ($this->where ( $info )->setField($data))
             return true;
         else
             return false;
@@ -59,7 +59,7 @@ class PostsLogic extends RelationModel{
     public function del($id) {
         $info ['post_id'] = $id;
 
-        if (D ( 'Posts' )->where ( $info )->relation ( true )->delete ())
+        if ($this->where ( $info )->relation ( true )->delete ())
             return true;
         else
             return false;
@@ -69,7 +69,7 @@ class PostsLogic extends RelationModel{
     public function viewInc($id) {
         $info ['post_id'] = $id;
 
-        if (D ( 'Posts' )->where ( $info )->setInc('post_view_count'))
+        if ($this->where ( $info )->setInc('post_view_count'))
             return true;
         else
             return false;

@@ -13,8 +13,8 @@ use \Think\Model\RelationModel;
 class UserLogic extends RelationModel{
 
     public function detail($uid) {
-        $User= D ( 'User' );
-        $user=$User->where(array('user_id'=>$uid))->find();
+
+        $user=$this->where(array('user_id'=>$uid))->find();
         return $user;
     }
 

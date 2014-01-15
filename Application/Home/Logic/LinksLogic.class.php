@@ -24,7 +24,7 @@ class LinksLogic extends Model {
 
     public function getList($limit=10, $tag=1 ,$order= 'link_sort desc ,link_id asc') {
 
-        $link_list = D( 'Links' )->where($tag)->order ($order )->limit ( $limit )->select ();
+        $link_list = $this->where($tag)->order ($order )->limit ( $limit )->select ();
 
         return $link_list;
     }
@@ -32,7 +32,7 @@ class LinksLogic extends Model {
 
     public function del($id) {
 
-        if (D( 'Links' )->where(array('link_id'=>$id))->delete()) {
+        if ($this->where(array('link_id'=>$id))->delete()) {
             return  true;
         }else {
             return  false;
@@ -42,7 +42,7 @@ class LinksLogic extends Model {
 
     public function detail($id) {
 
-        $link_list = D( 'Links' )->where(array('link_id'=>$id))->find();
+        $link_list = $this->where(array('link_id'=>$id))->find();
 
         return $link_list;
     }

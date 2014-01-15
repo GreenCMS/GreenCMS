@@ -9,7 +9,7 @@
 
 namespace Home\Model;
 use \Think\Model\RelationModel;
-
+use Common\Model;
 class CatsModel extends RelationModel  {
     public $_link = array (
         'Post_cat' => array (
