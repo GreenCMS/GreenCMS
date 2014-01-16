@@ -34,7 +34,7 @@ class ArchiveController  extends HomeBaseController
         //print_array($user->detail(12));
 
         $cats=D("Cats",'Logic');
-        print_array($cats->detail(15));
+        print_array($cats->getFather(19));
 
 
         $this->show(" ");

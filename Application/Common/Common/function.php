@@ -130,3 +130,4 @@ function remove_xss($val)
     return $val;
 }
 
+
