@@ -7,7 +7,7 @@ define("GreenCMS_DB_TYPE", 'mysqli');
 define("GreenCMS_DB_HOST", '127.0.0.1');
 
 //数据库名称
-define("GreenCMS_DB_NAME", 'greenstudio');
+define("GreenCMS_DB_NAME", 'greencms');
 
 //用户名
 define("GreenCMS_DB_USR", 'root');

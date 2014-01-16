@@ -20,7 +20,7 @@ class PostsModel extends RelationModel {
 
             'class_name' => 'Tags',
 
-            'mapping_name' => 'pts',
+            'mapping_name' => 'post_tag',
 
             'foreign_key' => 'post_id',
 
@@ -35,7 +35,7 @@ class PostsModel extends RelationModel {
 
             'class_name' => 'Cats',
 
-            'mapping_name' => 'pcs',
+            'mapping_name' => 'post_cat',
 
             'foreign_key' => 'post_id',
 
