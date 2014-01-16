@@ -18,26 +18,13 @@ class CatsModel extends RelationModel  {
 
             'class_name' => 'Post_cat',
 
-            'mapping_name' => 'in_post',
+            'mapping_name' => 'cat_post',
 
             'foreign_key' => 'cat_id',
             // post_user
             'parent_key' => 'cat_id'
         ),
 
-        'Father' => array (
 
-            'mapping_type' => HAS_ONE,
-
-            'class_name' => 'Cats',
-
-            'mapping_name' => 'father',
-
-            'mapping_key' => 'cat_father',
-
-            'foreign_key' => 'cat_father',
-
-            'parent_key' => 'cat_id'
-        )
     );
 }

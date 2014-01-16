@@ -14,13 +14,13 @@ class UserModel extends RelationModel{
 
     public $_link = array (
 
-        'Role' => array (
+        'Name' => array (
 
             'mapping_type' => MANY_TO_MANY,
 
             'class_name' => 'Role',
 
-            'mapping_name' => 'role',
+            'mapping_name' => 'role_info',
 
             'foreign_key' => 'user_id',
 
@@ -29,13 +29,13 @@ class UserModel extends RelationModel{
             'relation_table' => 'role_users'
         ),
 
-        'Name' => array (
+        'Role' => array (
 
             'mapping_type' => BELONGS_TO,
 
             'class_name' => 'Role_users',
 
-            'mapping_name' => 'name',
+            'mapping_name' => 'user_role',
 
             'mapping_key' => 'user_id',
 

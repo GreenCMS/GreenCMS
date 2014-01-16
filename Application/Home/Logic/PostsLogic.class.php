@@ -13,17 +13,19 @@ use \Think\Model\RelationModel;
 class PostsLogic extends RelationModel{
 
 
+
     public function detail($param, $type = 'single', $status = 'publish', $relation = true) {
         $info ['post_id|post_name'] = urlencode ( urldecode ( $param ) );
         $info ['post_type'] = $type;
         $info ['post_status'] = $status;
 
-        $post_res = $this->where ( $info )->relation ( $relation )->find ();
+           //TODO $relation
+        $post_res = D('Posts')->where ( $info )->relation ( $relation )->find ();
         return $post_res;
     }
 
 
-    public function getList( $type = 'single',$order = 'post_id desc', $limit = 20, $post_status='publish',$relation = true,$ids=array()){
+    public function getList( $type = 'single',$order = 'post_id desc', $limit = 20,$relation = true, $post_status='publish',$ids=array()){
         $info ['post_type'] = $type;
         $info ['post_status'] = $post_status;
 
@@ -31,7 +33,7 @@ class PostsLogic extends RelationModel{
             $info['post_id']  = array('in',$ids);
           }
 
-        $post_list = $this->where ( $info )->order ( ' post_top desc ,' . $order )->limit ( $limit )->relation ( $relation )->select ();
+        $post_list =  D('Posts')->where ( $info )->order ( ' post_top desc ,' . $order )->limit ( $limit )->relation ( $relation )->select ();
 
         return $post_list;
     }

@@ -12,9 +12,9 @@ use \Think\Model\RelationModel;
 
 class UserLogic extends RelationModel{
 
-    public function detail($uid) {
+    public function detail($uid,$relation=true) {
 
-        $user=$this->where(array('user_id'=>$uid))->find();
+        $user=D('User')->where(array('user_id'=>$uid))->relation($relation)->find();
         return $user;
     }
 

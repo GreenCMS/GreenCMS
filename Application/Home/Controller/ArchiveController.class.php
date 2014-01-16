@@ -31,10 +31,10 @@ class ArchiveController  extends HomeBaseController
         //print_array($pc->getPostId(8));
 
         $user=D("User",'Logic');
-        //print_array($user->detail(12));
+        print_array($user->detail(12));
 
         $cats=D("Cats",'Logic');
-        print_array($cats->getFather(19));
+       // print_array($cats->detail(15));
 
 
         $this->show(" ");

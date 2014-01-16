@@ -12,13 +12,11 @@ use \Think\Model\RelationModel;
 
 class CatsLogic extends RelationModel {
 
-
-    public function detail($id, $field = true){
+    public function detail($id, $relation = true){
         /* 获取分类信息 */
         $map = array();
         $map['cat_id'] = $id;
-
-        return $this->field($field)->where($map)->find();
+        return  D('Cats')->where($map)->relation($relation)->find();
     }
 
     public function getFather($id = 0){
@@ -48,14 +46,36 @@ class CatsLogic extends RelationModel {
 
     public function getChild($id = 0 ){
         if($id){
-            $info = $this->where(array("cat_father"=>$id))->select();
+            $info =  D('Cats')->where(array("cat_father"=>$id))->select();
             if($info!=null) return $info;
         }
         return false;
     }
 
+    public function getPosts($cat_id) {
+        $cat = D ( 'Post_cat' )->field ( 'post_id' )->where ( array (
+            'cat_id' => $cat_id
+        ) )->select ();
+        return $cat;
+    }
+
+    public function getPostsByCat($cat_id, $num = 5) {
+        $cat=$this->getPostIdsByCat($cat_id);
+        $posts = D ( 'Posts','Logic' )->getList ( 'single','post_id desc', $num, true,'publish', $cat );
+
+        return $posts;
+    }
 
 
+    public function getPostIdsByCat($cat_id) {
+        $cat=$this->getPosts($cat_id);
+
+        foreach ( $cat as $key => $value ) {
+            $cat [$key] = $cat [$key] ['post_id'];
+        }
+
+        return $cat;
+    }
 
 
 }
