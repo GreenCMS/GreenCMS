@@ -22,7 +22,8 @@ define('BUILD_DIR_SECURE', false);
  */
 define("WEB_ROOT", dirname(__FILE__) . "/");
 require(WEB_ROOT . "db_config.php");
-/**
+
+ /**
  * 强制修正URL路径(一般不需要开启)
  * 适用于反代一个二级目录并且不能替换部分文字的情况。(我说的就是捉急的iis~~~~)
  * /

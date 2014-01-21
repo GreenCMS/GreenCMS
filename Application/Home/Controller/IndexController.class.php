@@ -17,7 +17,6 @@ class IndexController extends HomeBaseController
     public function index()
     {
 
-        print_array($this->get__config());
-        echo "cfhello world";
+        $this->display('index');
     }
 }

@@ -7,6 +7,7 @@
  * Time: 下午11:09
  */
 
+include  APP_PATH.'Common/Common/common_router.php';
 
 /**
  * @param $res
