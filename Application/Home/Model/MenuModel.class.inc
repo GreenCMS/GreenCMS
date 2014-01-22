@@ -11,7 +11,11 @@ namespace Home\Model;
 use \Think\Model;
 
 
-class MenuModel extends Model{
+/**
+ * Class MenuModel
+ * @package Home\Model
+ */
+class MenuModel extends Model {
 
 
 

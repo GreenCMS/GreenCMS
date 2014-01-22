@@ -10,11 +10,18 @@ namespace Home\Model;
 use \Think\Model\RelationModel;
 
 
-class UserModel extends RelationModel{
+/**
+ * Class UserModel
+ * @package Home\Model
+ */
+class UserModel extends RelationModel {
 
-    public $_link = array (
+    /**
+     * @var array
+     */
+    public $_link = array(
 
-        'Name' => array (
+        'Name' => array(
 
             'mapping_type' => MANY_TO_MANY,
 
@@ -29,7 +36,7 @@ class UserModel extends RelationModel{
             'relation_table' => 'role_users'
         ),
 
-        'Role' => array (
+        'Role' => array(
 
             'mapping_type' => BELONGS_TO,
 

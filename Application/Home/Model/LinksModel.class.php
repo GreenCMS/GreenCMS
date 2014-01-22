@@ -10,8 +10,15 @@
 namespace Home\Model;
 use \Think\Model;
 
+/**
+ * Class LinksModel
+ * @package Home\Model
+ */
 class LinksModel extends Model {
 
+    /**
+     * @var bool
+     */
     protected $autoCheckFields=false;
 
 
