@@ -14,7 +14,7 @@ use \Think\Model\RelationModel;
  * Class PostsLogic
  * @package Home\Logic
  */
-class PostsLogic extends RelationModel{
+class PostsLogic extends RelationModel {
 
     /**
      * @param $id 文章id或者其他识别符

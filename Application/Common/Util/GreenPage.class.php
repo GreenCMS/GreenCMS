@@ -42,8 +42,10 @@ class GreenPage{
      * 架构函数
      * @access public
      * @param array $totalRows  总的记录数
-     * @param array $listRows  每页显示记录数
-     * @param array $parameter  分页跳转的参数
+     * @param array|string $listRows 每页显示记录数
+     * @param array|string $parameter 分页跳转的参数
+     * @param string $url
+     * @param string $url
      */
     public function __construct($totalRows,$listRows='',$parameter='',$url='') {
         $this->totalRows    =   $totalRows;

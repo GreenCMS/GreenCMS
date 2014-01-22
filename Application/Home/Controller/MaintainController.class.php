@@ -10,7 +10,10 @@
 namespace Home\Controller;
 use Home\Controller\HomeBaseController;
 
-class MaintainController extends HomeBaseController
-{
+/**
+ * Class MaintainController
+ * @package Home\Controller
+ */
+class MaintainController extends HomeBaseController {
 
 }
