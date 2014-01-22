@@ -1,6 +1,7 @@
 <?php
 return array(
-    'DEFAULT_THEME'    =>    'vena'
+    'DEFAULT_THEME'    =>    'vena',
+    'PAGER' => 1
 
 
 );

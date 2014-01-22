@@ -22,6 +22,18 @@ function print_array(& $res)
 }
 
 /**
+ * @param $i
+ * 判断是否置顶
+ */
+function is_top($i) {
+    if ($i==1) {
+        echo  '【固顶】';
+    }
+}
+
+
+
+/**
  * 数组降维
  */
 function array2str($res)

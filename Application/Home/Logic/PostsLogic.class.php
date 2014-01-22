@@ -42,7 +42,7 @@ class PostsLogic extends RelationModel{
         $info ['post_status'] = $post_status;
         $info ['post_type'] = $type;
 
-        $count = $this->where ( $info )->count ();
+        $count = (int) $this->where ( $info )->count ();
 
         return $count;
     }
