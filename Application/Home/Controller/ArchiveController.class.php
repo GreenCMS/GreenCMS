@@ -24,23 +24,24 @@ class ArchiveController extends HomeBaseController {
 
         $info['post_content|post_title'] =  array('like',"%$keyword%");
 
-
-
         $PostsList = D ( 'Posts','Logic' );
 
-        $count = $PostsList->count(); // 查询满足要求的总记录数
+        $count = $PostsList->countAll('all','publish',$info); // 查询满足要求的总记录数
         ($count==0)?$res404 = 0:$res404 = 1;
 
-        $Page = new GreenPage ( $count, Pager ); // 实例化分页类 传入总记录数
-        $navi = $Page->show ();
+        $Page = new GreenPage ( $count,  C('PAGER')   ); // 实例化分页类 传入总记录数
+        $pager_bar = $Page->show ();
+        $limit=$Page->firstRow.','.$Page->listRows;
 
-        $res = $PostsList->post_list_page($Page, 'all', 'post_id desc','publish', $info);
+       // $res = $PostsList->post_list_page($Page, 'all', 'post_id desc','publish', $info);
+
+        $res = $PostsList->getList('all', 'post_id desc',$limit,true,publish, array(),$info);
 
 
         $this->assign ( 'title', '关于"'.$keyword.'"文章搜索结果' );
         $this->assign ( 'res404', $res404 ); // 赋值数据集
         $this->assign ( 'postslist', $res ); // 赋值数据集
-        $this->assign ( 'page', $navi ); // 赋值分页输出
+        $this->assign ( 'page', $pager_bar ); // 赋值分页输出
 
         $this->display ( 'single-list' );
 
@@ -89,20 +90,20 @@ class ArchiveController extends HomeBaseController {
 
         $PostsList = D ( 'Posts','Logic' );
 
-        $count = $PostsList->count('page'); // 查询满足要求的总记录数
+        $count = $PostsList->countAll(); // 查询满足要求的总记录数
         ($count==0)?$res404 = 0:$res404 = 1;
 
-        $Page = new Page ( $count, Pager ); // 实例化分页类 传入总记录数
-        $navi = $Page->show ();
+        $Page = new GreenPage( $count , C('PAGER')  );
+        $pager_bar = $Page->show();
+        $limit=$Page->firstRow.','.$Page->listRows;
 
-        $res = $PostsList->post_list_page($Page,'page');
+        $res = $PostsList->getList('page', 'post_id desc',$limit,true);
 
         $this->assign ( 'title', '所有页面' );
         $this->assign ( 'res404', $res404 ); // 赋值数据集
         $this->assign ( 'postslist', $res ); // 赋值数据集
-        $this->assign ( 'page', $navi ); // 赋值分页输出
+        $this->assign ( 'page', $pager_bar ); // 赋值分页输出
 
-        //$this->display ( 'page-list' );
         $this->display ( 'single-list' );
     }
 
