@@ -10,11 +10,21 @@
 namespace Home\Logic;
 use \Think\Model\RelationModel;
 
-class UserLogic extends RelationModel{
+/**
+ * Class UserLogic
+ * @package Home\Logic
+ */
+class UserLogic extends RelationModel {
 
-    public function detail($uid,$relation=true) {
+    /**
+     * @param $uid 用户UID
+     * @param bool $relation 是否关联查询
+     * @return mixed 找到返回数组
+     */
+    public function detail( $uid,$relation=true ) {
 
-        $user=D('User')->where(array('user_id'=>$uid))->relation($relation)->find();
+        $user = D( 'User' )->where( array( 'user_id' => $uid ) )->relation( $relation )->find();
+
         return $user;
     }
 

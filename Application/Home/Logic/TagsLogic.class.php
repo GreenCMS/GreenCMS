@@ -10,14 +10,22 @@
 namespace Home\Logic;
 use \Think\Model\RelationModel;
 
-class TagsLogic extends RelationModel{
+/**
+ * Class TagsLogic
+ * @package Home\Logic
+ */
+class TagsLogic extends RelationModel {
 
-    public function getPostId($tag_id) {
+    /**
+     * @param $tag_id 输入tag_id
+     * @return mixed 找到的话返回post_id数组集合
+     */
+    public function getPostId( $tag_id ) {
 
-        $tag=D ( 'Post_tag' )->field('post_id')->where(array('tag_id'=>$tag_id))->select();
+        $tag=D ( 'Post_tag' )->field( 'post_id' )->where( array( 'tag_id' => $tag_id ) )->select();
 
-        foreach ($tag as $key => $value) {
-            $tag[$key]=$tag[$key]['post_id'];
+        foreach ( $tag as $key => $value ) {
+            $tag[$key] = $tag[$key]['post_id'];
         }
 
         return $tag;

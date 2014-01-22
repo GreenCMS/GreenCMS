@@ -10,7 +10,11 @@
 namespace Home\Logic;
 use \Think\Model;
 
-class MenuLogic extends Model{
+/**
+ * Class MenuLogic
+ * @package Home\Logic
+ */
+class MenuLogic extends Model {
 
 
 }
