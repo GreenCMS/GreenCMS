@@ -10,7 +10,15 @@
 namespace Home\Model;
 use \Think\Model\RelationModel;
 
+/**
+ * Class TagsModel
+ * @package Home\Model
+ */
 class TagsModel extends  RelationModel {
+
+    /**
+     * @var array
+     */
     public $_link = array(
         'Post_tags'=> array(
 
@@ -21,7 +29,7 @@ class TagsModel extends  RelationModel {
             'mapping_name'=>'in_post',
 
             'foreign_key'=>'tag_id',
-            //post_user
+
             'parent_key'=>'tag_id'),
 
     );

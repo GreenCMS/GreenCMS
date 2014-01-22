@@ -10,13 +10,20 @@
 namespace Home\Model;
 use Think\Model\RelationModel;
 
+/**
+ * Class PostsModel
+ * @package Home\Model
+ */
 class PostsModel extends RelationModel {
 
-    public $_link = array (
+    /**
+     * @var array
+     */
+    public $_link = array(
 
-        'Tag' => array (
+        'Tag' => array(
 
-            'mapping_type' =>  MANY_TO_MANY,
+            'mapping_type' => MANY_TO_MANY,
 
             'class_name' => 'Tags',
 
@@ -29,7 +36,7 @@ class PostsModel extends RelationModel {
             'relation_table' => 'post_tag'
         ),
 
-        'Cat' => array (
+        'Cat' => array(
 
             'mapping_type' => MANY_TO_MANY,
 
@@ -44,14 +51,14 @@ class PostsModel extends RelationModel {
             'relation_table' => 'post_cat'
         ),
 
-        'User' => array (
+        'User' => array(
 
             'mapping_type' => BELONGS_TO,
 
             'class_name' => 'User',
 
             'foreign_key' => 'user_id',
-            // post_user
+
             'mapping_name' => 'post_user',
 
             'parent_key' => 'user_id'

@@ -10,9 +10,18 @@
 namespace Home\Model;
 use \Think\Model\RelationModel;
 use Common\Model;
+
+/**
+ * Class CatsModel
+ * @package Home\Model
+ */
 class CatsModel extends RelationModel  {
-    public $_link = array (
-        'Post_cat' => array (
+
+    /**
+     * @var array
+     */
+    public $_link = array(
+        'Post_cat' => array(
 
             'mapping_type' => HAS_MANY,
 
@@ -21,7 +30,7 @@ class CatsModel extends RelationModel  {
             'mapping_name' => 'cat_post',
 
             'foreign_key' => 'cat_id',
-            // post_user
+
             'parent_key' => 'cat_id'
         ),
 

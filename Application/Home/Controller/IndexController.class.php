@@ -1,23 +1,33 @@
 <?php
-// 本类由系统自动生成，仅供测试用途
+/**
+ * Created by Green Studio.
+ * File: IndexController.class.php
+ * User: TianShuo
+ * Date: 14-1-11
+ * Time: 下午1:40
+ */
 namespace Home\Controller;
 
 use Home\Controller\HomeBaseController;
 
 
-class IndexController extends HomeBaseController
-{
+/**
+ * Class IndexController
+ * @package Home\Controller
+ */
+class IndexController extends HomeBaseController {
 
-    function __construct()
-    {
+    /**
+     *
+     */
+    function __construct() {
         parent::__construct();
-
     }
 
-    public function index()
-    {
-
-        print_array($this->get__config());
-        echo "cfhello world";
+    /**
+     * 首页
+     */
+    public function index() {
+        $this->display('index');
     }
 }

@@ -10,31 +10,40 @@
 namespace Home\Controller;
 use Common\Controller\BaseController;
 
-class HomeBaseController extends BaseController
-{
-    function __construct()
-    {
+/**
+ * Class HomeBaseController
+ * @package Home\Controller
+ */
+class HomeBaseController extends BaseController {
+
+    /**
+     * 构造
+     */
+    function __construct() {
         parent::__construct();
 
-
-        $this->autload_config();
+        $this->newPosts = D ( 'Posts','Logic' )->getList ( 'single', 'post_date desc', 5, false );
+        $this->friendurl = D ( 'Links','Logic' )->getList ( '5' );
+        $this->custom_config();
     }
 
-    function get__config()
-    {
-        $options = D('Options')->where(array('autoload' => 'yes'))->select();
+    /**
+     * 获取配置
+     * @return mixed
+     */
+    function get__config() {
+        $options = D( 'Options' )->where( array( 'autoload' => 'yes' ) )->select();
         return $options;
     }
 
-    function autload_config()
-    {
-
+    /**
+     * 用户存放在数据库中的配置，覆盖config中的
+     */
+    function custom_config() {
         $options = $this->get__config();
         foreach ($options as $config) {
             C($config['option_name'], $config['option_value']);
         }
-
     }
-
 
 }
