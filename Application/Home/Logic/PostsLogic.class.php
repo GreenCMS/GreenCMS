@@ -18,15 +18,13 @@ class PostsLogic extends RelationModel {
 
     /**
      * @param $id 文章id或者其他识别符
-     * @param string $type 文章类型 (single,page,all)
      * @param bool $relation 是否关联其他信息
      * @param array $info_with 强制传入的判断条件
      * @return mixed 如果找到返回数组
      */
-    public function detail( $id, $type = 'single', $relation = true, $info_with=array() ) {
+    public function detail( $id, $relation = true, $info_with=array() ) {
         $info = $info_with;
         $info['post_id'] = $id ;
-        $info['post_type'] = $type;
         if($info['post_status'] == '' ) $info['post_status'] = 'publish';
 
         $post_res = D( 'Posts' )->where( $info )->relation( $relation )->find();
