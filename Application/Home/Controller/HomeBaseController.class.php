@@ -31,7 +31,7 @@ class HomeBaseController extends BaseController {
      * 获取配置
      * @return mixed
      */
-    function get__config() {
+    function getConfig() {
         $options = D( 'Options' )->where( array( 'autoload' => 'yes' ) )->select();
         return $options;
     }
@@ -39,11 +39,30 @@ class HomeBaseController extends BaseController {
     /**
      * 用户存放在数据库中的配置，覆盖config中的
      */
-    function custom_config() {
-        $options = $this->get__config();
+    function customConfig() {
+        $options = $this->getConfig();
         foreach ($options as $config) {
             C($config['option_name'], $config['option_value']);
         }
     }
+
+    /**
+     * 是否为空
+     * @param $info
+     * @param string $message
+     */
+    public function if404( $info, $message = "" ) {
+        if( empty($info) ) $this->error404( $message );
+    }
+
+    /**
+     * 404 ERROR
+     */
+    public function error404( $message = "" ) {
+        $this->assign( "message", $message );
+        $this->display('Index/404');
+        die();
+    }
+
 
 }

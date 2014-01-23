@@ -11,8 +11,16 @@ namespace Home\Controller;
 use Home\Controller\HomeBaseController;
 
 
+/**
+ * Class PostController
+ * @package Home\Controller
+ */
 class PostController extends HomeBaseController {
 
+    /**
+     * @function 文章单页
+     * @param $info
+     */
     public function single( $info = -1 ) {
         $Posts = D ( 'Posts', 'Logic' );
         $post_res = $Posts->detail( $info );
@@ -25,6 +33,10 @@ class PostController extends HomeBaseController {
 
     }
 
+    /**
+     * @function 页面单页
+     * @param $info
+     */
     public function page( $info = -1 ) {
 
         $Posts = D ( 'Posts', 'Logic' );
@@ -38,6 +50,9 @@ class PostController extends HomeBaseController {
 
     }
 
+    /**
+     * @function 未知类型单页
+     */
     public function _empty() {
         //ACTION_NAME
 
