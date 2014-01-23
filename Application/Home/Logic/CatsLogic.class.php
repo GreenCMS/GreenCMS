@@ -80,11 +80,12 @@ class CatsLogic extends RelationModel {
     }
 
     /**
-     * @param $cat_id 分类id
+     * @param $info 分类info
      * @return mixed 找到的话返回post_id数组集合
      */
-    public function getPostsId( $cat_id ) {
-        $cat = D ( 'Post_cat' )->field( 'post_id' )->where ( array ( 'cat_id' => $cat_id ) )->select();
+    public function getPostsId( $info ) {
+        $cat_info ['tag_id'] = $info;
+        $cat = D ( 'Post_cat' )->field( 'post_id' )->where ( $cat_info )->select();
         foreach ( $cat as $key => $value ) {
             $cat[$key] = $cat[$key]['post_id'];
         }

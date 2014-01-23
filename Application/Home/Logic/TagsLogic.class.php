@@ -28,7 +28,7 @@ class TagsLogic extends RelationModel {
      * @return mixed 找到的话返回post_id数组集合
      */
     public function getPostsId( $info ) {
-        $tag_info ['tag_id|tag_slug'] = $info;
+        $tag_info ['tag_id'] = $info;
         $tag=D ( 'Post_tag' )->field( 'post_id' )->where( $tag_info )->select();
         foreach ( $tag as $key => $value ) {
             $tag[$key] = $tag[$key]['post_id'];

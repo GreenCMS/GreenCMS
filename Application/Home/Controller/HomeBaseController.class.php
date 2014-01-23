@@ -22,8 +22,9 @@ class HomeBaseController extends BaseController {
     function __construct() {
         parent::__construct();
 
-        $this->newPosts = D ( 'Posts','Logic' )->getList ( 'single', 'post_date desc', 5, false );
-        $this->friendurl = D ( 'Links','Logic' )->getList ( '5' );
+        $this->newPosts = D ( 'Posts','Logic' )->getList( 5, 'single', 'post_date desc',  false );
+        $this->friendurl = D ( 'Links','Logic' )->getList( 5 );
+
         $this->customConfig();
     }
 

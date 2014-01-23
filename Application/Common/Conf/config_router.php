@@ -12,15 +12,15 @@ $config_router=array(
 		'URL_ROUTER_ON'=>true,
 		//路由定义
 		'URL_ROUTE_RULES'=> array(
-				'Single/:year/:month/:day/:info'=>'Single/detail', //年月日规则路由
-				'Single/:year/:month/:info'=>'Single/detail', //年月规则路由
-				'Single/:year/:info'=>'Single/detail', //年规则路由
-				'Single/:info'=>'Single/detail', //普通规则路由
+				'Single/:year/:month/:day/:info'=>'Post/single', //年月日规则路由
+				'Single/:year/:month/:info'=>'Post/single', //年月规则路由
+				'Single/:year/:info'=>'Post/single', //年规则路由
+				'Single/:info'=>'Post/single', //普通规则路由
 
-				'Page/:year/:month/:day/:info'=>'Page/detail', //年月日规则路由
-				'Page/:year/:month/:info'=>'Page/detail', //年月规则路由
-				'Page/:year/:info'=>'Page/detail', //年规则路由
-				'Page/:info'=>'Page/detail', //普通规则路由
+				'Page/:year/:month/:day/:info'=>'Post/page', //年月日规则路由
+				'Page/:year/:month/:info'=>'Post/page', //年月规则路由
+				'Page/:year/:info'=>'Post/page', //年规则路由
+				'Page/:info'=>'Post/page', //普通规则路由
 
 				'Tag/:info'=>'Tag/detail', //普通规则路由
 

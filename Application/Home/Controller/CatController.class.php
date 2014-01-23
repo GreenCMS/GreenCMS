@@ -8,6 +8,7 @@
  */
 
 namespace Home\Controller;
+use Common\Util\GreenPage;
 
 
 /**
