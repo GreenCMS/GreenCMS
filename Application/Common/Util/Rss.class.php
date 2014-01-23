@@ -14,7 +14,8 @@ namespace Common\Util;
  * Class Rss
  * @package Common\Util
  */
-class Rss {
+class Rss
+{
 
     /**
      * RSS频道名
@@ -84,7 +85,6 @@ class Rss {
     protected $items = array();
 
 
-
     /**
      * 构造函数
      * @access public
@@ -94,7 +94,8 @@ class Rss {
      * @param string $imgurl  RSS频道图标
      */
 
-    public function __construct( $title, $link, $description, $imgurl = '' ) {
+    public function __construct($title, $link, $description, $imgurl = '')
+    {
 
         $this->channel_title = $title;
 
@@ -111,7 +112,6 @@ class Rss {
     }
 
 
-
     /**
      * 设置私有变量
      * @access public
@@ -119,10 +119,10 @@ class Rss {
      * @param string $value  变量的值
      */
 
-    public function Config($key,$value) {
+    public function Config($key, $value)
+    {
         $this->{$key} = $value;
     }
-
 
 
     /**
@@ -134,7 +134,8 @@ class Rss {
      * @param string $pubDate  日志的发布日期
      */
 
-    function AddItem($title, $link, $description, $pubDate) {
+    function AddItem($title, $link, $description, $pubDate)
+    {
         $this->items[] = array('title' => $title, 'link' => $link, 'description' => $description, 'pubDate' => $pubDate);
     }
 
@@ -144,7 +145,8 @@ class Rss {
      * @return string
      */
 
-    public function Fetch() {
+    public function Fetch()
+    {
 
         $rss = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\r\n";
 
@@ -190,7 +192,6 @@ class Rss {
         }
 
 
-
         for ($i = 0; $i < count($this->items); $i++) {
 
             $rss .= "<item>\r\n";
@@ -208,7 +209,6 @@ class Rss {
         }
 
 
-
         $rss .= "</channel>\r\n</rss>";
 
         return $rss;
@@ -216,13 +216,13 @@ class Rss {
     }
 
 
-
     /**
      * 输出RSS的XML到浏览器
      * @access public
      * @return void
      */
-    public function Display() {
+    public function Display()
+    {
         header("Content-Type: text/xml; charset=utf-8");
         echo $this->Fetch();
         exit;

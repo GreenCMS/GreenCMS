@@ -8,13 +8,14 @@
  */
 
 namespace Home\Logic;
-use \Think\Model;
+use Think\Model;
 
 /**
  * Class MenuLogic
  * @package Home\Logic
  */
-class MenuLogic extends Model {
+class MenuLogic extends Model
+{
 
 
 }

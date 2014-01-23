@@ -14,7 +14,8 @@ namespace Common\Util;
  * Class QRMaker
  * @package Common\Util
  */
-class QRMaker {
+class QRMaker
+{
 
     /**
      * @var string api地址
@@ -48,7 +49,8 @@ class QRMaker {
      * @param $logo logo图片
      * @param string $size
      */
-    public function __construct($data, $logo, $size = '200x200') {
+    public function __construct($data, $logo, $size = '200x200')
+    {
         $this->data = $data;
         $this->logo = $logo;
         $this->size = $size;
@@ -58,14 +60,16 @@ class QRMaker {
      * @function 获得二维码图片
      * @return string
      */
-    protected function getpng() {
+    protected function getpng()
+    {
         return $this->api = $this->api . 'chart?chs=' . $this->size . '&cht=qr&chl=' . urlencode($this->data) . '&chld=L|1&choe=UTF-8';
     }
 
     /**
      * @function 输出二维码图片
      */
-    public function images() {
+    public function images()
+    {
         $this->QR = imagecreatefrompng($this->getpng());
         if ($this->logo !== FALSE) {
             $this->logo = imagecreatefromstring(file_get_contents($this->logo));

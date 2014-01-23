@@ -7,7 +7,7 @@
  * Time: 下午11:09
  */
 
-include  APP_PATH.'Common/Common/common_router.php';
+include APP_PATH . 'Common/Common/common_router.php';
 
 /**
  * @param $res
@@ -25,9 +25,10 @@ function print_array(& $res)
  * @param $i
  * 判断是否置顶
  */
-function is_top($i) {
-    if ($i==1) {
-        echo  '【固顶】';
+function is_top($i)
+{
+    if ($i == 1) {
+        echo '【固顶】';
     }
 }
 
@@ -35,8 +36,9 @@ function is_top($i) {
 /**
  *
  */
-function get_opinion( $key ){
-    return C( $key );
+function get_opinion($key)
+{
+    return C($key);
 }
 
 /**

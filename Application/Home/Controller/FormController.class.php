@@ -10,6 +10,7 @@
 namespace Home\Controller;
 
 
-class FormController {
+class FormController
+{
 
 }

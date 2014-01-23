@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if lt IE 7 ]>
+<html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en"> <!--<![endif]-->
 <head>
 
-	<!-- Basic Page Needs -->
-	<meta charset="utf-8" />
-	<title>{:C('title')}|{$title}</title>
-	<meta name="description" content="Green Studio" />
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8"/>
+    <title>{:C('title')}|{$title}</title>
+    <meta name="description" content="Green Studio"/>
 
 
-{:R('Common/common_import',array(),'Widget')}
+    {:R('Common/common_import',array(),'Widget')}
 
 </head>
 <body>
@@ -23,21 +26,21 @@
 <!-- Title Bar / Srart
 ================================================== -->
 <div class="page-title">
-	<div class="container">
+    <div class="container">
 
-		<div class="twelve columns">
-			<h1>{$title}</h1>
-		</div>
-		
-		<nav class="four columns">
-			<ul class="breadcrumbs">
-				<li><a href="{:U('/')}">Home</a></li>
-				<li><i class="icon-angle-right"></i></li>
-				<li>{$title}</li>
-			</ul>
-		</nav>
-		
-	</div>
+        <div class="twelve columns">
+            <h1>{$title}</h1>
+        </div>
+
+        <nav class="four columns">
+            <ul class="breadcrumbs">
+                <li><a href="{:U('/')}">Home</a></li>
+                <li><i class="icon-angle-right"></i></li>
+                <li>{$title}</li>
+            </ul>
+        </nav>
+
+    </div>
 </div>
 <!-- Title Bar / End
 ================================================== -->
@@ -45,95 +48,99 @@
 <!-- Blog / Srart
 ================================================== -->
 <section class="blog">
-	<div class="container">
-	
-		<div class="three_fourth column">
-		<!-- -->
-		<if condition="$res404 eq 0 ">
+    <div class="container">
 
-				<article class="post">
-					<div class="post-content medium clearfix">
-						没有相关文章
-						<div class="ten columns omega"></div>
-					</div>
-				</article>
+        <div class="three_fourth column">
+            <!-- -->
+            <if condition="$res404 eq 0 ">
+
+                <article class="post">
+                    <div class="post-content medium clearfix">
+                        没有相关文章
+                        <div class="ten columns omega"></div>
+                    </div>
+                </article>
 
 
-				</if>
-		
-		<volist name="postslist" id="post" empty="没有相关文章">
-			<!-- Post Start -->
-			<article class="post">
+            </if>
 
-				<div class="post-content medium clearfix">
+            <volist name="postslist" id="post" empty="没有相关文章">
+                <!-- Post Start -->
+                <article class="post">
 
-					<div class="tweleve columns omega">
-						<!-- Title -->
-						<h2><a href="{$post.post_id|getSingleURLByID=page}">{$post.post_top|is_top}{$post.post_title}</a></h2>
-						
-						<!-- Meta -->
-						<div class="meta clearfix">
-							<span><img src="__PUBLIC__/images/icons/calendar.png" alt="date" />
+                    <div class="post-content medium clearfix">
+
+                        <div class="tweleve columns omega">
+                            <!-- Title -->
+                            <h2><a href="{$post.post_id|getSingleURLByID=page}">{$post.post_top|is_top}{$post.post_title}</a>
+                            </h2>
+
+                            <!-- Meta -->
+                            <div class="meta clearfix">
+							<span><img src="__PUBLIC__/images/icons/calendar.png" alt="date"/>
 							{$post.post_date}</span>
-							<span><img src="__PUBLIC__/images/icons/user.png" alt="author" />
+							<span><img src="__PUBLIC__/images/icons/user.png" alt="author"/>
 							作者 : <a href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a></span>
 							<span><img src="__PUBLIC__/images/icons/ribbon.png" alt="cat"/> 
 							分类 :<volist name="post.pcs" id="cat">
-								<a href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>, 
-							</volist></span>
+                                    <a href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
+                                </volist></span>
 							
-							<span><img src="__PUBLIC__/images/icons/ticket.png"	alt="tags" />
+							<span><img src="__PUBLIC__/images/icons/ticket.png" alt="tags"/>
 							标签 :
 							
 							 <volist name="post.pts" id="tag">
-								<a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>, 
-							</volist>
+                                 <a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
+                             </volist>
 						</span>
 						
-						<span><img src="__PUBLIC__/images/icons/comments.png" alt="comments" />
+						<span><img src="__PUBLIC__/images/icons/comments.png" alt="comments"/>
 							<a href="{$post.post_id|getSingleURLByID=page}#comments">{$post.comment_count}条评论</a></span>
-						</span></div>
-						
-						<!-- Content -->
-						<p>
-						{$post.post_content|strip_tags|mb_substr=0,200}
-						</p>
-						
-						<!-- Read More -->
-						<a href="{$post.post_id|getSingleURLByID=page}" class="btn continue">Read More</a>
-					
-					</div>
-				</div>
-		
-			</article>
-			<!-- Post End -->
-			</volist>
-			<!-- Navigation -->
-			<div class="blog-navi nomargin">
-			
-				<ul>
-				{$page}
-				</ul>
-			</div>
-		
-		</div>
-		<!-- Sidebar Start -->
-			<div class="one_fourth column">
+                                </span></div>
 
-				<div id="sidebar">
+                            <!-- Content -->
+                            <p>
+                                {$post.post_content|strip_tags|mb_substr=0,200}
+                            </p>
 
-				{:R('Home/search',array(),'Widget')}
-			{:R('Home/categories',array(),'Widget')}
-			{:R('Home/tag',array(),'Widget')}
-			{:R('Home/aboutus',array(),'Widget')}
-			
+                            <!-- Read More -->
+                            <a href="{$post.post_id|getSingleURLByID=page}" class="btn continue">Read More</a>
 
-				</div>
-			</div>
-			<!-- Sidebar End -->
-</div></section>
+                        </div>
+                    </div>
+
+                </article>
+                <!-- Post End -->
+            </volist>
+            <!-- Navigation -->
+            <div class="blog-navi nomargin">
+
+                <ul>
+                    {$page}
+                </ul>
+            </div>
+
+        </div>
+        <!-- Sidebar Start -->
+        <div class="one_fourth column">
+
+            <div id="sidebar">
+
+                {:R('Home/search',array(),'Widget')}
+                {:R('Home/categories',array(),'Widget')}
+                {:R('Home/tag',array(),'Widget')}
+                {:R('Home/aboutus',array(),'Widget')}
+
+
+            </div>
+        </div>
+        <!-- Sidebar End -->
+    </div>
+</section>
 <!-- Blog / End
 ================================================== -->
 {:R('Home/home_footer',array(),'Widget')}
 
-{:R('Common/common_theme',array(),'Widget')}</body></html>
+{:R('Common/common_theme',array(),'Widget')}
+</body>
+</html>

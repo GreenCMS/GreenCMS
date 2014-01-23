@@ -8,14 +8,15 @@
  */
 
 namespace Home\Model;
-use \Think\Model\RelationModel;
 use Common\Model;
+use Think\Model\RelationModel;
 
 /**
  * Class CatsModel
  * @package Home\Model
  */
-class CatsModel extends RelationModel  {
+class CatsModel extends RelationModel
+{
 
     /**
      * @var array

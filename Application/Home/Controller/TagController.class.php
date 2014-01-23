@@ -15,52 +15,54 @@ use Common\Util\GreenPage;
  * Class TagController
  * @package Home\Controller
  */
-class TagController extends HomeBaseController {
+class TagController extends HomeBaseController
+{
 
     /**
      *
      */
-    public function index() {
+    public function index()
+    {
 
     }
 
     /**
      * @param $info
      */
-    public function detail( $info ) {
-        $Tag = D( 'Tags', 'Logic' );
-        $Posts = D( 'Posts', 'Logic' );
+    public function detail($info)
+    {
+        $Tag = D('Tags', 'Logic');
+        $Posts = D('Posts', 'Logic');
 
-        $tag = $Tag->detail( $info );
-        if( empty($tag) ){
+        $tag = $Tag->detail($info);
+        if (empty($tag)) {
             //TODO error("没有这个标签");
         }
 
-        $posts_id = $Tag->getPostsId( $tag['tag_id'] );
-        $count = sizeof( $posts_id );
+        $posts_id = $Tag->getPostsId($tag['tag_id']);
+        $count = sizeof($posts_id);
 
-        if( $count == 0 ){
+        if ($count == 0) {
             //TODO 数量为0
         }
 
-        $Page = new GreenPage( $count, get_opinion( 'PAGER' ) );
+        $Page = new GreenPage($count, get_opinion('PAGER'));
         $pager_bar = $Page->show();
-        $limit = $Page->firstRow.','.$Page->listRows;
+        $limit = $Page->firstRow . ',' . $Page->listRows;
 
-        $res = $Posts->getList( $limit, 'single', 'post_id desc', true, array(), $posts_id );
+        $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
 
-        $this->assign ( 'title', $tag['tag_name'] ); // 赋值数据集
+        $this->assign('title', $tag['tag_name']); // 赋值数据集
 
-        $this->assign ( 'postslist', $res ); // 赋值数据集
-        $this->assign ( 'page', $pager_bar ); // 赋值分页输出
+        $this->assign('postslist', $res); // 赋值数据集
+        $this->assign('page', $pager_bar); // 赋值分页输出
 
         //TODO display
         print_array($res);
 
-       // $this->display ( 'Archive/single-list' );
+        // $this->display ( 'Archive/single-list' );
 
     }
-
 
 
 }

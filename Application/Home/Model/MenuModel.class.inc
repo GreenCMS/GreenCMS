@@ -8,15 +8,15 @@
  */
 
 namespace Home\Model;
-use \Think\Model;
+use Think\Model;
 
 
 /**
  * Class MenuModel
  * @package Home\Model
  */
-class MenuModel extends Model {
-
+class MenuModel extends Model
+{
 
 
 }

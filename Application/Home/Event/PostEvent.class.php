@@ -8,8 +8,10 @@
  */
 
 namespace Home\Event;
+
 use Home\Controller\HomeBaseController;
 
-class PostEvent extends HomeBaseController {
+class PostEvent extends HomeBaseController
+{
 
 }

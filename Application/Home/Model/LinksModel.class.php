@@ -8,21 +8,19 @@
  */
 
 namespace Home\Model;
-use \Think\Model;
+use Think\Model;
 
 /**
  * Class LinksModel
  * @package Home\Model
  */
-class LinksModel extends Model {
+class LinksModel extends Model
+{
 
     /**
      * @var bool
      */
-    protected $autoCheckFields=false;
-
-
-
+    protected $autoCheckFields = false;
 
 
 }

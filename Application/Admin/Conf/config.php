@@ -8,9 +8,9 @@
  */
 
 
-$menu_arr = array (
+$menu_arr = array(
 
-    'admin_big_menu' => array (
+    'admin_big_menu' => array(
         'Index' => '首页',
         'Posts' => '文章管理',
         'Sysdata' => '数据管理',
@@ -19,8 +19,8 @@ $menu_arr = array (
         'Filemanage' => '文件管理'
     )
 ,
-    'admin_sub_menu' => array (
-        'Index' => array (
+    'admin_sub_menu' => array(
+        'Index' => array(
             'Index/index' => '仪表盘',
             'Index/myInfo' => '修改密码',
             'Index/cache' => '缓存清理',
@@ -29,7 +29,7 @@ $menu_arr = array (
         )
     ,
 
-        'Posts' => array (
+        'Posts' => array(
             'Posts/index' => '文章列表',
             'Posts/page' => '页面列表',
             'Posts/category' => '分类管理',
@@ -39,20 +39,20 @@ $menu_arr = array (
             'Posts/recycle' => '回收站'
         )
     ,
-        'Sysdata' => array (
+        'Sysdata' => array(
             'Sysdata/index' => '数据库备份',
             'Sysdata/restore' => '数据库导入',
             'Sysdata/zipList' => '数据库压缩包',
             'Sysdata/repair' => '数据库优化修复'
         )
     ,
-        'Filemanage' => array (
+        'Filemanage' => array(
 
             'Filemanage/index' => '文件管理'
         )
     ,
 
-        'Access' => array (
+        'Access' => array(
             'Access/index' => '用户管理',
             'Access/guest' => '游客管理',
             'Access/nodelist' => '节点管理',
@@ -62,7 +62,7 @@ $menu_arr = array (
             'Access/addNode' => '添加节点',
             'Access/addRole' => '添加角色'
         ),
-        'Webinfo' => array (
+        'Webinfo' => array(
             'Webinfo/index' => '站点设置',
             'Webinfo/special' => '附加设置',
             'Webinfo/setEmailConfig' => '邮箱配置',
@@ -74,8 +74,7 @@ $menu_arr = array (
         )
     )
 
-)
-;
+);
 
 $config_rbac = array(
     /*
@@ -101,10 +100,10 @@ $config_rbac = array(
     /*
      * 系统备份数据库时每个sql分卷大小，单位字节
     */
-    'sqlFileSize' => 5242880  ,
+    'sqlFileSize' => 5242880,
     // (测试功能)该值不可太大，否则会导致恢复失败，建议5M一卷
     // 5M=5*1024*1024=5242880
 
 );
 
-return array_merge ( $config_rbac, $menu_arr );
+return array_merge($config_rbac, $menu_arr);

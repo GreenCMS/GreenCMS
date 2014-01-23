@@ -7,14 +7,15 @@
  * Time: 上午12:51
  */
 namespace Home\Model;
-use \Think\Model\RelationModel;
+use Think\Model\RelationModel;
 
 
 /**
  * Class UserModel
  * @package Home\Model
  */
-class UserModel extends RelationModel {
+class UserModel extends RelationModel
+{
 
     /**
      * @var array
@@ -50,8 +51,7 @@ class UserModel extends RelationModel {
 
             'parent_key' => 'user_id',
         )
-    )
-    ;
+    );
 
 
 }

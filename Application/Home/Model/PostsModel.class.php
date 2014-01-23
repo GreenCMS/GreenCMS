@@ -14,7 +14,8 @@ use Think\Model\RelationModel;
  * Class PostsModel
  * @package Home\Model
  */
-class PostsModel extends RelationModel {
+class PostsModel extends RelationModel
+{
 
     /**
      * @var array
@@ -63,11 +64,7 @@ class PostsModel extends RelationModel {
 
             'parent_key' => 'user_id'
         )
-    )
-    ;
-
-
-
+    );
 
 
 }

@@ -12,19 +12,22 @@ namespace Home\Controller;
  * Class IndexController
  * @package Home\Controller
  */
-class IndexController extends HomeBaseController {
+class IndexController extends HomeBaseController
+{
 
     /**
      *
      */
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
     }
 
     /**
      * 首页
      */
-    public function index() {
+    public function index()
+    {
         $this->display('index');
     }
 }

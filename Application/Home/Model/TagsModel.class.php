@@ -8,29 +8,30 @@
  */
 
 namespace Home\Model;
-use \Think\Model\RelationModel;
+use Think\Model\RelationModel;
 
 /**
  * Class TagsModel
  * @package Home\Model
  */
-class TagsModel extends  RelationModel {
+class TagsModel extends RelationModel
+{
 
     /**
      * @var array
      */
     public $_link = array(
-        'Post_tags'=> array(
+        'Post_tags' => array(
 
-            'mapping_type'=>HAS_MANY,
+            'mapping_type' => HAS_MANY,
 
-            'class_name'=>'Post_tag',
+            'class_name' => 'Post_tag',
 
-            'mapping_name'=>'in_post',
+            'mapping_name' => 'in_post',
 
-            'foreign_key'=>'tag_id',
+            'foreign_key' => 'tag_id',
 
-            'parent_key'=>'tag_id'),
+            'parent_key' => 'tag_id'),
 
     );
 

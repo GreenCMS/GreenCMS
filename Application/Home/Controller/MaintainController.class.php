@@ -13,6 +13,7 @@ namespace Home\Controller;
  * Class MaintainController
  * @package Home\Controller
  */
-class MaintainController extends HomeBaseController {
+class MaintainController extends HomeBaseController
+{
 
 }
