@@ -1,0 +1,53 @@
+/* =================================================================== */
+/* Midnight Blue
+====================================================================== */
+.news-item .date .day,
+.toggle a.toggle-trigger:before,
+.toggle a.toggle-trigger,
+article.post .post-content h2 a,
+.blog-navi ul li a,
+ul.share-post li a .badge,
+.widget .search-icon:after,
+#filters li a:hover,
+#filters li.selected a,
+#filters li.selected a:hover,
+.project-details ul li span,
+.accordion li a,
+.dropcap,
+#tabs li a,
+#tabs li.active a {
+	color: #2a375f;
+}
+
+
+.menu, .menu ul li,
+.menu ul ul li,
+.menu ul ul li:hover,
+.hold.medium a.hover-zoom, 
+.hold.medium a.hover-link,
+.plan h3,
+article.post .main-info .date,
+.blog-navi ul li a:hover,
+.blog-navi ul li a.current,
+.widget ul.tags-list li a,
+.hold a.hover-zoom, 
+.hold a.hover-link,
+.projects-navi a,
+.accordion li a.active,
+#tabs li.active a:hover,
+#swipebox-action, #swipebox-caption,
+.swipe-navi .swipe-left,
+.swipe-navi .swipe-right,
+.footer-bar,
+.plan-price{
+	background: #2a375f;
+}
+
+
+.menu ul ul:before {
+	border-color: transparent transparent #2a375f transparent;
+}
+
+.plan-price:after {
+	border-color: #2a375f transparent;
+}

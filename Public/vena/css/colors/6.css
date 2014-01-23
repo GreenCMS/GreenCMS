@@ -1,0 +1,153 @@
+/* =================================================================== */
+/* White
+====================================================================== */
+article.post .main-info .date span.day,
+article.post .main-info .date span.month,
+.footer-logo span,
+.footer-links li a,
+.footer-logo span,
+.news-item .date .day,
+.toggle a.toggle-trigger:before,
+.toggle a.toggle-trigger,
+ul.share-post li a .badge,
+.projects-navi a i,
+#tabs li.active a {
+	color: #fff;
+}
+
+
+.menu, .menu ul li,
+article.post .main-info a.commentsnumber,
+article.post .main-info a.commentsnumber:hover,
+.hold a.hover-zoom, 
+.hold a.hover-link,
+.projects-navi a,
+#swipebox-action, #swipebox-caption,
+.swipe-navi .swipe-left,
+.swipe-navi .swipe-right {
+	background: #fff;
+}
+
+
+.menu ul ul:before {
+	border-color: transparent transparent #353535 transparent;
+}
+
+.projects-navi .disabled,
+.menu ul ul li a,
+.swipe-navi .swipe-left:hover,
+.swipe-navi .swipe-right:hover,
+.menu ul li:hover > a{
+	color: #fff;
+}
+
+
+.footer-bar,
+.menu ul ul li,
+.menu ul ul li:hover {
+	background: #353535;
+}
+
+article.post .main-info a.commentsnumber,
+article.post .main-info a.commentsnumber:hover {
+	text-shadow: none;
+}
+
+/* =================================================================== */
+/* Red
+====================================================================== */
+blockquote {border-left: 3px solid #fa4646;}
+
+#filters li a:hover,
+#filters li.selected a,
+#filters li.selected a:hover,
+a, a:active, a:visited,
+.news-item .description h4 a:hover,
+.error404 p.big,
+article.post .post-content h2 a:hover,
+.footer-links li a:hover,
+.tooltip,
+.footer-recent-news li a:hover { 
+	color: #fa4646; 
+}
+
+.plan h3 { background: #fa4646; }
+
+.widget ul.tags-list li a,
+.blog-navi ul li a.current,
+.toggle a.toggle-trigger:before,
+.hold a.hover-zoom, 
+.hold a.hover-link,
+.swipe-navi .swipe-left:hover,
+.swipe-navi .swipe-right:hover,
+.projects-navi a,
+#tabs li.active a,
+#tabs li.active a:hover,
+.accordion li a.active,
+.plan-price,
+button.btn,
+a.btn,
+article.post .main-info .date,
+.hold a.hover-zoom:hover, 
+.hold a.hover-link:hover,
+.menu ul li:hover,
+.menu ul ul li a:active,
+.menu ul ul li a:hover,
+#jPanelMenu-menu li.current,
+a.go-to-portfolio,
+.hold a.hover-zoom:hover, 
+.hold a.hover-link:hover,
+.news-item .date .month {
+	background: #fa4646; 
+}
+
+.plan-price:after {
+	border-color: #fa4646 transparent;
+}
+
+.widget ul.tags-list li a:hover,
+.blog-navi ul li a:hover,
+button.btn:hover, 
+a.btn:hover,
+.plan h3,
+.projects-navi .disabled,
+.hold a.hover-zoom:hover, 
+.hold a.hover-link:hover,
+.projects-navi a:hover {
+	background: #EC4040;
+}
+
+button.btn, a.btn {
+color: #FFF;
+box-shadow: 0 2px 0 0 #D62626;
+-moz-box-shadow: 0 2px 0 0 #D62626;
+-webkit-box-shadow: 0 2px 0 0 #D62626;
+-o-box-shadow: 0 2px 0 0 #D62626;
+-ms-box-shadow: 0 2px 0 0 #D62626;
+}
+
+
+a:hover,
+article.post .post-content h2 a,
+.blog-navi ul li a,
+.toggle a.toggle-trigger,
+.project-details ul li span,
+.swipe-navi .swipe-left, 
+.swipe-navi .swipe-right,
+#tabs li a,
+.accordion li a,
+.menu ul li a, 
+.menu ul li:hover .menu ul ul li a,
+.menu ul li:hover, 
+.dropcap,
+article.post .main-info a.commentsnumber,
+article.post .main-info a.commentsnumber span,
+.news-item .date .day {
+	color: #1d1d1d;
+}
+
+a.go-to-portfolio i ,
+button.btn,
+a.btn {
+	color: #fff;
+}
