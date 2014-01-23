@@ -8,7 +8,6 @@
  */
 
 namespace Home\Controller;
-use Home\Controller\BaseController;
 use Common\Util\GreenPage;
 
 /**
@@ -77,7 +76,7 @@ class ArchiveController extends HomeBaseController {
 
 
     /**
-     *页面归档
+     * 页面归档
      */
     public function page() {
         //TODO year/month/day  按日月归档

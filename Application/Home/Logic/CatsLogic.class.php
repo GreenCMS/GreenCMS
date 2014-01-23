@@ -23,7 +23,7 @@ class CatsLogic extends RelationModel {
      */
     public function detail( $id, $relation = true ) {
         $map = array();
-        $map['cat_id'] = $id;
+        $map['cat_id|cat_slug'] = $id;
         return  D( 'Cats' )->where( $map )->relation( $relation )->find();
     }
 

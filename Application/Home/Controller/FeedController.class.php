@@ -8,10 +8,17 @@
  */
 
 namespace Home\Controller;
-use Common\Controller\BaseController;
 use Common\Util\Rss;
 
-class FeedController extends BaseController {
+/**
+ * Class FeedController
+ * @package Home\Controller
+ */
+class FeedController extends HomeBaseController {
+
+    /**
+     * 初始化 判断feed功能是否开启
+     */
     function __construct() {
         parent::__construct ();
         if( get_opinion( 'feed_open' ) == 0 ){
@@ -19,10 +26,16 @@ class FeedController extends BaseController {
         }
     }
 
+    /**
+     *
+     */
     public function index() {
         $this->listSingle();
     }
 
+    /**
+     * 文章feed
+     */
     public function listSingle() {
 
         $PostsList = D( 'Posts', 'Logic' );
@@ -42,6 +55,10 @@ class FeedController extends BaseController {
         $RSS->Display ();
 
     }
+
+    /**
+     * 页面feed
+     */
     public function listsPage(){
 
         $PostsList = D( 'Posts', 'Logic' );

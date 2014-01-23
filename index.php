@@ -23,6 +23,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
  * 项目正式部署后请设置为false
  */
 define ('APP_DEBUG', true);
+define ('GreenStudio', true); //绿荫专业
 define('BUILD_DIR_SECURE', false);
 /**定义网站根目录
  *

@@ -8,9 +8,6 @@
  */
 namespace Home\Controller;
 
-use Home\Controller\HomeBaseController;
-
-
 /**
  * Class IndexController
  * @package Home\Controller

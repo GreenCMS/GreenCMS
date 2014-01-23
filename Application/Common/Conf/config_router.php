@@ -22,11 +22,11 @@ $config_router=array(
 				'Page/:year/:info'=>'Page/detail', //年规则路由
 				'Page/:info'=>'Page/detail', //普通规则路由
 
-				'Tag/:info'=>'Tag/index', //普通规则路由
+				'Tag/:info'=>'Tag/detail', //普通规则路由
 
-				'Cat/:father1/:father2/:info'=>'Cat/index', //普通规则路由
-				'Cat/:father/:info'=>'Cat/index', //普通规则路由
-				'Cat/:info'=>'Cat/index', //普通规则路由jius
+				'Cat/:father1/:father2/:info'=>'Cat/detail', //普通规则路由
+				'Cat/:father/:info'=>'Cat/detail', //普通规则路由
+				'Cat/:info'=>'Cat/detail', //普通规则路由jius
 		),
 		/*
 		 * 注意！顺序不能乱 只有不符合第一个条件才回去匹配第二个

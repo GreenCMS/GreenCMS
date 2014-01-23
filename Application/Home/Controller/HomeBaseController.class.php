@@ -24,7 +24,7 @@ class HomeBaseController extends BaseController {
 
         $this->newPosts = D ( 'Posts','Logic' )->getList ( 'single', 'post_date desc', 5, false );
         $this->friendurl = D ( 'Links','Logic' )->getList ( '5' );
-        $this->custom_config();
+        $this->customConfig();
     }
 
     /**
