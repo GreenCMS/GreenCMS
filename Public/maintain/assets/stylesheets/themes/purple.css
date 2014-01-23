@@ -1,0 +1,7 @@
+/* PURPLE SCHEME --------------------------------- */
+
+h2, a, a:visited, a:hover, a:focus, #switch ul li a.current, #contact a:hover  { color: #936dcc; }
+#countdown .two.columns, #twitter { background: #936dcc; }
+.twitter-text, #countdown .two.columns { text-shadow: 0px 1px 0px #674d8d; }
+.twitter-text a:hover { color: #e6d6ff !important; }
+#sigil { background-image: url(../../images/logo/purple.png);}

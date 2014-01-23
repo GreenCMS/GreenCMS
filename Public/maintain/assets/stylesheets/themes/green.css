@@ -1,0 +1,7 @@
+/* GREEN SCHEME --------------------------------- */
+
+h2, a, a:visited, a:hover, a:focus, #switch ul li a.current, #contact a:hover  { color: #104000; }
+#countdown .two.columns, #twitter { background: #104000; }
+.twitter-text, #countdown .two.columns { text-shadow: 0px 1px 0px #104000; }
+.twitter-text a:hover { color: #ffe1e1 !important; }
+#sigil { background-image: url(../../images/logo/green.png);}

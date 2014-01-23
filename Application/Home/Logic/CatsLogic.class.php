@@ -28,6 +28,15 @@ class CatsLogic extends RelationModel {
     }
 
     /**
+     * @param int $limit limit
+     * @param bool $relation 是否关联
+     * @return mixed
+     */
+    public function getList( $limit = 20, $relation = true ){
+        return  D( 'Cats' )->limit( $limit )->relation( $relation )->find();
+    }
+
+    /**
      * @param int $id  分类id
      * @return mixed 找到所有父类
      */
@@ -43,7 +52,7 @@ class CatsLogic extends RelationModel {
      * @param int $id 分类id
      * @return mixed  找到所有子节点
      */
-    public function getChildren( $id = 0 ){
+    public function getChildren( $id = 0 ) {
         if( $id ) {
             $info = $this->getChild( $id );
             if( sizeof( $info ) == 1 ){
@@ -62,7 +71,7 @@ class CatsLogic extends RelationModel {
      * @param int $id 分类id
      * @return mixed 返回子节点
      */
-    public function getChild( $id = 0 ){
+    public function getChild( $id = 0 ) {
         if( $id ) {
             $info = D( 'Cats' )->where( array( "cat_father" => $id ) )->select();
             if( $info != null ) return $info;
@@ -72,12 +81,13 @@ class CatsLogic extends RelationModel {
 
     /**
      * @param $cat_id 分类id
-     * @return mixed 找到所有posts
+     * @return mixed 找到的话返回post_id数组集合
      */
-    public function getPosts( $cat_id ) {
-        $cat = D ( 'Post_cat' )->field( 'post_id' )->where ( array (
-            'cat_id' => $cat_id
-        ) )->select();
+    public function getPostsId( $cat_id ) {
+        $cat = D ( 'Post_cat' )->field( 'post_id' )->where ( array ( 'cat_id' => $cat_id ) )->select();
+        foreach ( $cat as $key => $value ) {
+            $cat[$key] = $cat[$key]['post_id'];
+        }
         return $cat;
     }
 

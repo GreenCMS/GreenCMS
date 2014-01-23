@@ -42,7 +42,7 @@ class PostsLogic extends RelationModel {
      * @param array $info_with 强制传入的判断条件
      * @return mixed 返回文章列表
      */
-    public function getList( $type = 'single', $order = 'post_id desc', $limit = 20, $relation = true, $info_with=array(), $ids=array() ){
+    public function getList( $limit = 20, $type = 'single', $order = 'post_id desc', $relation = true, $info_with=array(), $ids=array() ){
         $info = $info_with;
         if( $type != 'all' ) $info['post_type'] = $type;
         if( $info['post_status'] == '' ) $info['post_status'] = 'publish';

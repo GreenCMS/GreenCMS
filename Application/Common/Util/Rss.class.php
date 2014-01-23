@@ -10,138 +10,75 @@
 namespace Common\Util;
 
 
+/**
+ * Class Rss
+ * @package Common\Util
+ */
 class Rss {
 
     /**
-
-    +----------------------------------------------------------
-
      * RSS频道名
-
-    +----------------------------------------------------------
-
      * @var string
-
      * @access protected
-
-    +----------------------------------------------------------
-
      */
 
     protected $channel_title = '';
 
     /**
-
-    +----------------------------------------------------------
-
      * RSS频道链接
-
-    +----------------------------------------------------------
-
      * @var string
-
      * @access protected
-
-    +----------------------------------------------------------
-
      */
 
     protected $channel_link = '';
 
     /**
-
-    +----------------------------------------------------------
-
      * RSS频道描述
-
-    +----------------------------------------------------------
-
      * @var string
-
      * @access protected
-
-    +----------------------------------------------------------
-
      */
 
     protected $channel_description = '';
 
     /**
-
-    +----------------------------------------------------------
-
      * RSS频道使用的小图标的URL
-
-    +----------------------------------------------------------
-
      * @var string
-
      * @access protected
-
-    +----------------------------------------------------------
-
      */
 
     protected $channel_imgurl = '';
 
     /**
-
-    +----------------------------------------------------------
-
      * RSS频道所使用的语言
-
-    +----------------------------------------------------------
-
      * @var string
-
      * @access protected
-
-    +----------------------------------------------------------
-
      */
 
     protected $language = 'zh_CN';
 
     /**
-
-    +----------------------------------------------------------
-
      * RSS文档创建日期，默认为今天
-
-    +----------------------------------------------------------
-
      * @var string
-
      * @access protected
-
-    +----------------------------------------------------------
-
      */
 
     protected $pubDate = '';
 
+    /**
+     * @var bool|string
+     */
     protected $lastBuildDate = '';
 
-
-
+    /**
+     * @var string
+     */
     protected $generator = 'ZTS RSS Generator';
 
 
-
     /**
-
-    +----------------------------------------------------------
-
      * RSS单条信息的数组
-
-    +----------------------------------------------------------
-
      * @var string
-
      * @access protected
-
-    +----------------------------------------------------------
-
      */
 
     protected $items = array();
@@ -149,32 +86,15 @@ class Rss {
 
 
     /**
-
-    +----------------------------------------------------------
-
      * 构造函数
-
-    +----------------------------------------------------------
-
      * @access public
-
-    +----------------------------------------------------------
-
      * @param string $title  RSS频道名
-
      * @param string $link  RSS频道链接
-
      * @param string $description  RSS频道描述
-
      * @param string $imgurl  RSS频道图标
-
-    +----------------------------------------------------------
-
      */
 
-    public function __construct($title, $link, $description, $imgurl = '')
-
-    {
+    public function __construct( $title, $link, $description, $imgurl = '' ) {
 
         $this->channel_title = $title;
 
@@ -193,90 +113,38 @@ class Rss {
 
 
     /**
-
-    +----------------------------------------------------------
-
      * 设置私有变量
-
-    +----------------------------------------------------------
-
      * @access public
-
-    +----------------------------------------------------------
-
      * @param string $key  变量名
-
      * @param string $value  变量的值
-
-    +----------------------------------------------------------
-
      */
 
-    public function Config($key,$value)
-
-    {
-
+    public function Config($key,$value) {
         $this->{$key} = $value;
-
     }
 
 
 
     /**
-
-    +----------------------------------------------------------
-
      * 添加RSS项
-
-    +----------------------------------------------------------
-
      * @access public
-
-    +----------------------------------------------------------
-
      * @param string $title  日志的标题
-
      * @param string $link  日志的链接
-
      * @param string $description  日志的摘要
-
      * @param string $pubDate  日志的发布日期
-
-    +----------------------------------------------------------
-
      */
 
-    function AddItem($title, $link, $description, $pubDate)
-
-    {
-
+    function AddItem($title, $link, $description, $pubDate) {
         $this->items[] = array('title' => $title, 'link' => $link, 'description' => $description, 'pubDate' => $pubDate);
-
     }
 
-
-
     /**
-
-    +----------------------------------------------------------
-
      * 输出RSS的XML为字符串
-
-    +----------------------------------------------------------
-
      * @access public
-
-    +----------------------------------------------------------
-
      * @return string
-
-    +----------------------------------------------------------
-
      */
 
-    public function Fetch()
-
-    {
+    public function Fetch() {
 
         $rss = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\r\n";
 
@@ -292,8 +160,6 @@ class Rss {
 
         $rss .= "<language>{$this->language}</language>\r\n";
 
-
-
         if (!empty($this->pubDate))
 
             $rss .= "<pubDate>{$this->pubDate}</pubDate>\r\n";
@@ -307,10 +173,7 @@ class Rss {
             $rss .= "<generator>{$this->generator}</generator>\r\n";
 
 
-
         $rss .= "<ttl>5</ttl>\r\n";
-
-
 
         if (!empty($this->channel_imgurl)) {
 
@@ -355,33 +218,14 @@ class Rss {
 
 
     /**
-
-    +----------------------------------------------------------
-
      * 输出RSS的XML到浏览器
-
-    +----------------------------------------------------------
-
      * @access public
-
-    +----------------------------------------------------------
-
      * @return void
-
-    +----------------------------------------------------------
-
      */
-
-    public function Display()
-
-    {
-
+    public function Display() {
         header("Content-Type: text/xml; charset=utf-8");
-
         echo $this->Fetch();
-
         exit;
-
     }
 
 }

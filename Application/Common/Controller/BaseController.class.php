@@ -10,15 +10,19 @@ namespace Common\Controller;
 
 use Think\Controller;
 
-class BaseController extends Controller
-{
+/**
+ * Class BaseController
+ * @package Common\Controller
+ */
+class BaseController extends Controller {
 
-
-    function check_verify()
-    {
-        if (!APP_DEBUG) {
-            if ($_SESSION ['verify'] != md5($_POST ['verify'])) {
-                $this->error('验证码错误！');
+    /**
+     * check_verify
+     */
+    function check_verify() {
+        if ( !APP_DEBUG ) {
+            if ( $_SESSION['verify'] != md5( $_POST ['verify'] ) ) {
+                $this->error( '验证码错误！' );
             }
         }
 

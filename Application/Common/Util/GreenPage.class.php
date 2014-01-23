@@ -10,32 +10,79 @@
 // +----------------------------------------------------------------------
 namespace Common\Util;
 
+/**
+ * Class GreenPage
+ * @package Common\Util
+ */
 class GreenPage{
 
-    // 分页栏每页显示的页数
+    /**
+     * 分页栏每页显示的页数
+     * @var int
+     */
     public $rollPage = 5;
-    // 页数跳转时要带的参数
+
+    /**
+     * 页数跳转时要带的参数
+     * @var array|string
+     */
+
     public $parameter  ;
-    // 分页URL地址
+    /**
+     * 分页URL地址
+     * @var string
+     */
     public $url     =   '';
-    // 默认列表每页显示行数
+
+    /**
+     *  默认列表每页显示行数
+     * @var int
+     */
     public $listRows = 20;
-    // 起始行数
+
+    /**
+     * 起始行数
+     * @var int
+     */
     public $firstRow    ;
-    // 分页总页面数
+
+    /**
+     * 分页总页面数
+     * @var float
+     */
     protected $totalPages  ;
-    // 总行数
+
+    /**
+     * 总行数
+     * @var array
+     */
     protected $totalRows  ;
-    // 当前页数
+
+    /**
+     * 当前页数
+     * @var float
+     */
     protected $nowPage    ;
-    // 分页的栏的总页数
+
+    /**
+     * 分页的栏的总页数
+     * @var float
+     */
     protected $coolPages   ;
-    // 分页显示定制/现在第%nowPage%页
+
+    /**
+     * 分页显示定制/现在第%nowPage%页
+     * @var array
+     */
     protected $config  =
         array('header'=>'条记录','prev'=>'« 上一页','next'=>'下一页 »',
             'first'=>'第一页','last'=>'最后一页',
             'theme'=>' %first%  %prePage%  %upPage% %linkPage% %downPage%   %nextPage% %end%');
-    // 默认分页变量名
+
+    /**
+     *  默认分页变量名
+     * @var mixed|string
+     */
     protected $varPage;
 
     /**
@@ -65,6 +112,10 @@ class GreenPage{
         $this->firstRow     =   $this->listRows*($this->nowPage-1);
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function setConfig($name,$value) {
         if(isset($this->config[$name])) {
             $this->config[$name]    =   $value;

@@ -40,7 +40,7 @@ class ArchiveController extends HomeBaseController {
         $pager_bar = $Page->show();
         $limit=$Page->firstRow.','.$Page->listRows;
 
-        $res = $PostsList->getList('all', 'post_id desc',$limit,true, $info);
+        $res = $PostsList->getList( $limit, 'all', 'post_id desc', true, $info );
 
         $this->assign( 'title', '关于"'.$keyword.'"文章搜索结果' );
         $this->assign( 'res404', $res404 );
@@ -65,7 +65,7 @@ class ArchiveController extends HomeBaseController {
         $pager_bar = $Page->show();
         $limit = $Page->firstRow.','.$Page->listRows;
 
-        $res = $PostsList->getList( 'single', 'post_id desc', $limit, true );
+        $res = $PostsList->getList( $limit, 'single', 'post_id desc', true );
 
         $this->assign( 'title', '所有文章' );
         $this->assign( 'res404', $res404 ); // 赋值数据集
@@ -91,7 +91,7 @@ class ArchiveController extends HomeBaseController {
         $pager_bar = $Page->show();
         $limit = $Page->firstRow.','.$Page->listRows;
 
-        $res = $PostsList->getList( 'page', 'post_id desc', $limit, true );
+        $res = $PostsList->getList( $limit, 'page', 'post_id desc', true );
 
         $this->assign( 'title', '所有页面' );
         $this->assign( 'res404', $res404 ); // 赋值数据集

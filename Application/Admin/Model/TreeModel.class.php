@@ -5,12 +5,13 @@ namespace Common\Model;
  * 生成多层树状下拉选框的工具模型
  */
 class TreeModel {
-	/**
+    /**
      * 把返回的数据集转换成Tree
      * @access public
      * @param array $list 要转换的数据集
+     * @param string $pk
      * @param string $pid parent标记字段
-     * @param string $level level标记字段
+     * @param string $child level标记字段
      * @return array
      */
 	public function toTree($list=null, $pk='id',$pid = 'pid',$child = '_child'){

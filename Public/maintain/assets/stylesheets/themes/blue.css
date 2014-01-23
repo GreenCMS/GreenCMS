@@ -1,0 +1,7 @@
+/* BLUE SCHEME --------------------------------- */
+
+h2, a, a:visited, a:hover, a:focus, #switch ul li a.current, #contact a:hover { color: #6da7cc; }
+#countdown .two.columns, #twitter { background: #6da7cc; }
+.twitter-text, #countdown .two.columns { text-shadow: 0px 1px 0px #5085a5; }
+.twitter-text a:hover { color: #b0e0ff !important; }
+#sigil { background-image: url(../../images/logo/blue.png);}
