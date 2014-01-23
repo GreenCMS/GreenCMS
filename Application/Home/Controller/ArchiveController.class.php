@@ -56,7 +56,7 @@ class ArchiveController extends HomeBaseController {
      */
     public function single() {
         //TODO year/month/day 按日月归档
-        $PostsList = D ( 'Posts','Logic' );
+        $PostsList = D ( 'Posts', 'Logic' );
 
         $count = $PostsList->countAll(); // 查询满足要求的总记录数
         ($count==0)?$res404 = 0:$res404 = 1;
@@ -82,7 +82,7 @@ class ArchiveController extends HomeBaseController {
     public function page() {
         //TODO year/month/day  按日月归档
 
-        $PostsList = D ( 'Posts','Logic' );
+        $PostsList = D ( 'Posts', 'Logic' );
 
         $count = $PostsList->countAll( 'page' ); // 查询满足要求的总记录数
         ($count==0)?$res404 = 0:$res404 = 1;

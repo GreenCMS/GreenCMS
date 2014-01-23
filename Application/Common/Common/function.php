@@ -32,6 +32,12 @@ function is_top($i) {
 }
 
 
+/**
+ *
+ */
+function get_opinion( $key ){
+    return C( $key );
+}
 
 /**
  * 数组降维
@@ -49,7 +55,7 @@ function array2str($res)
 /**
  * 二位数组转化为一维数组
  * @param 二维数组
- * @return 一维数组
+ * @return array 一维数组
  */
 function array_multi2single($array)
 {

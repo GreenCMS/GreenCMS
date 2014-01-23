@@ -47,7 +47,7 @@ class HomeBaseController extends BaseController {
     }
 
     /**
-     * 是否为空
+     * @function 是否为空
      * @param $info
      * @param string $message
      */
@@ -55,12 +55,14 @@ class HomeBaseController extends BaseController {
         if( empty($info) ) $this->error404( $message );
     }
 
+
     /**
-     * 404 ERROR
+     * @function 404 ERROR
+     * @param string $message
      */
     public function error404( $message = "" ) {
         $this->assign( "message", $message );
-        $this->display('Index/404');
+        $this->display('Index/404' );
         die();
     }
 
