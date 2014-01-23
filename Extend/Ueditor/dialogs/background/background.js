@@ -5,22 +5,22 @@ var me = editor,
     bkbodyStyle = "",
     bkcolor = "";
 var popup = new UE.ui.Popup({
-    content:new UE.ui.ColorPicker({
-        noColorText:me.getLang("clearColor"),
-        editor:me,
-        onpickcolor:function (t, color) {
+    content: new UE.ui.ColorPicker({
+        noColorText: me.getLang("clearColor"),
+        editor: me,
+        onpickcolor: function (t, color) {
             domUtils.setStyle(cp, "background-color", color);
             bkcolor = color;
             UE.ui.Popup.postHide();
         },
-        onpicknocolor:function (t, color) {
+        onpicknocolor: function (t, color) {
             domUtils.setStyle(cp, "background-color", "transparent");
             bkcolor = "";
             UE.ui.Popup.postHide();
         }
     }),
-    editor:me,
-    onhide:function () {
+    editor: me,
+    onhide: function () {
         setBody();
     }
 });
@@ -48,9 +48,9 @@ var bindClick = function () {
             toggleBody(bodyid);
             if (bodyid == "imgManager") {
                 ajax.request(editor.options.imageManagerUrl, {
-                    timeout:100000,
-                    action:"get",
-                    onsuccess:function (xhr) {
+                    timeout: 100000,
+                    action: "get",
+                    onsuccess: function (xhr) {
                         var tmp = utils.trim(xhr.responseText),
                             imageUrls = !tmp ? [] : tmp.split("ue_separate_ue"),
                             length = imageUrls.length,
@@ -81,7 +81,7 @@ var bindClick = function () {
 
                         }
                     },
-                    onerror:function () {
+                    onerror: function () {
                         $G("imageList").innerHTML = lang.imageLoadError;
                     }
                 });
@@ -164,7 +164,7 @@ var getCheckedTab = function () {
 var init = function () {
     bindClick();
     var el = getHead()[0],
-            bodyid = el.getAttribute("tabsrc");
+        bodyid = el.getAttribute("tabsrc");
     toggleHead(el);
     toggleBody(bodyid);
     $G("alignment").style.display = "none";
@@ -226,8 +226,7 @@ function initAlign() {
         alignType.value = align;
     }
 }
-    init();
-
+init();
 
 
 //获得选中的类型
@@ -301,8 +300,8 @@ var setBody = function () {
         bgimg = $G("url").value,
         align = $G("repeatType").value,
         alignObj = {
-            "background-repeat":"no-repeat",
-            "background-position":"center center"
+            "background-repeat": "no-repeat",
+            "background-position": "center center"
         },
         outstr = [];
     if (color)
@@ -329,20 +328,19 @@ var setBody = function () {
         }
     }
     if (getCheckIpt() != "none") {
-        utils.cssRule('body','body{' + outstr.join(";") + '}',doc);
+        utils.cssRule('body', 'body{' + outstr.join(";") + '}', doc);
 
     } else {
 
-        utils.cssRule('body','',doc)
+        utils.cssRule('body', '', doc)
     }
 };
-
 
 
 dialog.onok = function () {
     setBody();
 };
 dialog.oncancel = function () {
-    utils.cssRule('body',bkbodyStyle,doc)
+    utils.cssRule('body', bkbodyStyle, doc)
 };
-bkbodyStyle = utils.cssRule('body',undefined,doc);
+bkbodyStyle = utils.cssRule('body', undefined, doc);

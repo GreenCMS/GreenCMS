@@ -31,17 +31,17 @@ define('BUILD_DIR_SECURE', false);
 define("WEB_ROOT", dirname(__FILE__) . "/");
 require(WEB_ROOT . "db_config.php");
 
- /**
-  * 强制修正URL路径(一般不需要开启)
-  * 适用于反代一个二级目录并且不能替换部分文字的情况。(我说的就是捉急的iis~~~~)
-  * /
- //define('__APP__', '');
+/**
+ * 强制修正URL路径(一般不需要开启)
+ * 适用于反代一个二级目录并且不能替换部分文字的情况。(我说的就是捉急的iis~~~~)
+ * /
+//define('__APP__', '');
 
 
- /**
-  * 缓存目录设置
-  * 此目录必须可写，建议移动到非WEB目录
-  */
+/**
+ * 缓存目录设置
+ * 此目录必须可写，建议移动到非WEB目录
+ */
 define ('RUNTIME_PATH', './Data/Temp/');
 
 /** 定义项目日志文件路径

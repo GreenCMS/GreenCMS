@@ -7,12 +7,12 @@
  */
 var imageUploader = {},
     flashObj = null,
-    postConfig=[];
+    postConfig = [];
 (function () {
     var g = $G,
         ajax = parent.baidu.editor.ajax,
         maskIframe = g("maskIframe"); //tab遮罩层,用来解决flash和其他dom元素的z-index层级不一致问题
-       // flashObj;                   //flash上传对象
+    // flashObj;                   //flash上传对象
 
     var flagImg = null, flashContainer;
     imageUploader.init = function (opt, callbacks) {
@@ -39,12 +39,12 @@ var imageUploader = {},
         addSearchListener();
         $focus(g("url"));
     };
-    imageUploader.setPostParams = function(obj,index){
-        if(index===undefined){
-            utils.each(postConfig,function(config){
+    imageUploader.setPostParams = function (obj, index) {
+        if (index === undefined) {
+            utils.each(postConfig, function (config) {
                 config.data = obj;
             })
-        }else{
+        } else {
             postConfig[index].data = obj;
         }
     };
@@ -97,7 +97,7 @@ var imageUploader = {},
             g("searchList").innerHTML = "";
             g("searchList").appendChild(frg);
         };
-        baidu.sio.callByServer(url, reqCallBack, {charset:"GB18030"});
+        baidu.sio.callByServer(url, reqCallBack, {charset: "GB18030"});
     }
 
     function selectTxt(node) {
@@ -376,7 +376,7 @@ var imageUploader = {},
         img.onload = function () {
             flagImg = this;
             showImageInfo(this);
-            showPreviewImage(this,true);
+            showPreviewImage(this, true);
             this.onload = null;
         };
         img.onerror = function () {
@@ -415,9 +415,9 @@ var imageUploader = {},
      */
     function showPreviewImage(img, needClone) {
         var tmpWidth = img.width, tmpHeight = img.height;
-        var maxWidth = 262,maxHeight = 262,
-            target = scaling(tmpWidth,tmpHeight,maxWidth,maxHeight);
-        target.border = img.border||0;
+        var maxWidth = 262, maxHeight = 262,
+            target = scaling(tmpWidth, tmpHeight, maxWidth, maxHeight);
+        target.border = img.border || 0;
         target.src = img.src;
         flagImg = true;
         if ((target.width + 2 * target.border) > maxWidth) {
@@ -454,20 +454,21 @@ var imageUploader = {},
         }
     }
 
-    function scaling(width,height,maxWidth,maxHeight){
-        if(width<maxWidth && height<maxHeight) return {width:width,height:height};
-        var srcRatio = (width/height).toFixed(2),
-            tarRatio = (maxWidth/maxHeight).toFixed(2),
-            w,h;
-        if(srcRatio<tarRatio){
+    function scaling(width, height, maxWidth, maxHeight) {
+        if (width < maxWidth && height < maxHeight) return {width: width, height: height};
+        var srcRatio = (width / height).toFixed(2),
+            tarRatio = (maxWidth / maxHeight).toFixed(2),
+            w, h;
+        if (srcRatio < tarRatio) {
             h = maxHeight;
-            w = h*srcRatio;
-        }else{
+            w = h * srcRatio;
+        } else {
             w = maxWidth;
-            h = w/srcRatio;
+            h = w / srcRatio;
         }
-        return {width:w.toFixed(0),height:h.toFixed(0)}
+        return {width: w.toFixed(0), height: h.toFixed(0)}
     }
+
     /**
      * 创建flash实例
      * @param opt
@@ -477,22 +478,22 @@ var imageUploader = {},
         var i18n = utils.extend({}, lang.flashI18n);
         //处理图片资源地址的编码，补全等问题
         for (var i in i18n) {
-            if (!(i in {"lang":1, "uploadingTF":1, "imageTF":1, "textEncoding":1}) && i18n[i]) {
+            if (!(i in {"lang": 1, "uploadingTF": 1, "imageTF": 1, "textEncoding": 1}) && i18n[i]) {
                 i18n[i] = encodeURIComponent(editor.options.langPath + editor.options.lang + "/images/" + i18n[i]);
             }
         }
         opt = utils.extend(opt, i18n, false);
         var option = {
-            createOptions:{
-                id:'flash',
-                url:opt.flashUrl,
-                width:opt.width,
-                height:opt.height,
-                errorMessage:lang.flashError,
-                wmode:browser.safari ? 'transparent' : 'window',
-                ver:'10.0.0',
-                vars:opt,
-                container:opt.container
+            createOptions: {
+                id: 'flash',
+                url: opt.flashUrl,
+                width: opt.width,
+                height: opt.height,
+                errorMessage: lang.flashError,
+                wmode: browser.safari ? 'transparent' : 'window',
+                ver: '10.0.0',
+                vars: opt,
+                container: opt.container
             }
         };
         flashContainer = $G(opt.container);
@@ -526,7 +527,7 @@ var imageUploader = {},
     function createAlignButton(ids) {
         for (var i = 0, ci; ci = ids[i++];) {
             var floatContainer = g(ci),
-                nameMaps = {"none":lang.floatDefault, "left":lang.floatLeft, "right":lang.floatRight, "center":lang.floatCenter};
+                nameMaps = {"none": lang.floatDefault, "left": lang.floatLeft, "right": lang.floatRight, "center": lang.floatCenter};
             for (var j in nameMaps) {
                 var div = document.createElement("div");
                 div.setAttribute("name", j);
@@ -591,9 +592,9 @@ var imageUploader = {},
                     //已经初始化过时不再重复提交请求
                     if (!list.children.length) {
                         ajax.request(editor.options.imageManagerUrl, {
-                            timeout:100000,
-                            action:"get",
-                            onsuccess:function (xhr) {
+                            timeout: 100000,
+                            action: "get",
+                            onsuccess: function (xhr) {
                                 //去除空格
                                 var tmp = utils.trim(xhr.responseText),
                                     imageUrls = !tmp ? [] : tmp.split("ue_separate_ue"),
@@ -621,7 +622,7 @@ var imageUploader = {},
 
                                 }
                             },
-                            onerror:function () {
+                            onerror: function () {
                                 g("imageList").innerHTML = lang.imageLoadError;
                             }
                         });
