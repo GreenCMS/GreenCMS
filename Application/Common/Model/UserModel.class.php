@@ -6,7 +6,7 @@
  * Date: 14-1-16
  * Time: 上午12:51
  */
-namespace Home\Model;
+namespace Common\Model;
 use Think\Model\RelationModel;
 
 

@@ -7,7 +7,7 @@
  * Time: 下午11:54
  */
 
-namespace Home\Model;
+namespace Common\Model;
 use Think\Model\RelationModel;
 
 /**

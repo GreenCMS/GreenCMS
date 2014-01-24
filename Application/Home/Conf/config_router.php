@@ -1,13 +1,9 @@
 <?php
-
-if (!defined('THINK_PATH'))
-    exit();
-
 $config_router = array(
 
+    'URL_HTML_SUFFIX' => 'html',
     //URL模式
     'URL_MODEL' => 2,
-
     //开启路由!!建议url模型选择2，否则的话建议使用native模式
     'URL_ROUTER_ON' => true,
     //路由定义
@@ -28,12 +24,10 @@ $config_router = array(
         'Cat/:father/:info' => 'Cat/detail', //普通规则路由
         'Cat/:info' => 'Cat/detail', //普通规则路由jius
     ),
-    /*
+
+    /**
      * 注意！顺序不能乱 只有不符合第一个条件才回去匹配第二个
-*/
-
-    'OUR_URL_MODEL' => "native", //Single单页路由模式
-
+     */
     /**
      * @var
      * native,
@@ -46,22 +40,26 @@ $config_router = array(
      * year/post_name,
      * year/post_id,
      * */
+    'OUR_URL_MODEL' => "native", //Single单页路由模式
 
+
+    /**
+     * @var
+     * native
+     * ID
+     * slug
+     */
     'OUR_TAG_MODEL' => "native", //TAG标签路由模式.
-    /**
-     * @var
-     * native
-     * ID
-     * slug
-     */
 
-    'OUR_CAT_MODEL' => "native", //TAG标签路由模式.
+
     /**
      * @var
      * native
      * ID
      * slug
      */
+    'OUR_CAT_MODEL' => "native", //TAG标签路由模式.
+
 
 
 );

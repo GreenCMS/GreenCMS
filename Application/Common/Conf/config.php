@@ -1,7 +1,7 @@
 <?php
 return array(
     //'配置项'=>'配置值'
-    'Maintain' => false,
+
 
     'SHOW_PAGE_TRACE' => true,
 
@@ -22,13 +22,8 @@ return array(
     'DATA_CACHE_TYPE' => 'File', // 数据缓存类型,支持:File||Memcache|Xcache
     'DATA_CACHE_SUBDIR' => true, // 使用子目录缓存 (自动根据缓存标识的哈希创建子目录)
 
-    'MODULE_ALLOW_LIST' => array('Home', 'Admin'), //TP 3.1升级-- 配置你原来的分组列表
-    'DEFAULT_MODULE' => 'Home', //TP 3.1升级--默认分组
-    // 'DEFAULT_M_LAYER'       =>  'Logic', // TP 3.1升级--默认的模型层名称
-
 
     'URL_CASE_INSENSITIVE' => true, //URL大小写不敏感
-    'URL_HTML_SUFFIX' => 'greencms',
 
     //静态缓存
     'HTML_CACHE_ON' => false, //生产环境设置为开启
@@ -44,5 +39,14 @@ return array(
     'DB_SQL_BUILD_CACHE' => true,
 
 
-    'LOAD_EXT_CONFIG' => 'config_db,config_router,config_log,config_oauth', // 加载扩展配置文件 config_alias,config_db,config_system
+    /**
+     * TP 3.1升级
+     */
+    'MODULE_ALLOW_LIST' => array('Home', 'Admin'), //配置你原来的分组列表
+    'DEFAULT_MODULE' => 'Home', //T默认分组
+    // 'DEFAULT_M_LAYER'       =>  'Logic', //默认的模型层名称
+
+
+
+    'LOAD_EXT_CONFIG' => 'config_db,config_log,config_oauth', // 加载扩展配置文件 config_alias,config_db,config_system
 );

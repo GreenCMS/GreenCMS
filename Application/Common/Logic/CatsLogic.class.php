@@ -7,8 +7,9 @@
  * Time: 上午12:34
  */
 
-namespace Home\Logic;
-use \Think\Model\RelationModel;
+namespace Common\Logic;
+use Common\Util\Category;
+use Think\Model\RelationModel;
 
 /**
  * Class CatsLogic
@@ -36,7 +37,7 @@ class CatsLogic extends RelationModel
      */
     public function getList($limit = 20, $relation = true)
     {
-        return D('Cats')->limit($limit)->relation($relation)->find();
+        return D('Cats')->limit($limit)->relation($relation)->select();
     }
 
     /**
@@ -122,5 +123,24 @@ class CatsLogic extends RelationModel
             $cat[$key] = $cat[$key]['post_id'];
         }
         return $cat;
+    }
+
+
+    /**
+     *
+     * @return array
+     */
+    public function category()
+    {
+
+        $Cat = new Category ('Cats', array(
+            'cat_id',
+            'cat_father',
+            'cat_name',
+            'cat_slug'
+        )); // , array('cid', 'pid', 'name', 'fullname')
+
+         return $Cat->getList();
+
     }
 }

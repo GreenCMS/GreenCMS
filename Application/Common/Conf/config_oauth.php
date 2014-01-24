@@ -1,7 +1,5 @@
 <?php
 
-if (!defined('THINK_PATH'))
-    exit();
 // 系统别名定义文件
 return array(
 

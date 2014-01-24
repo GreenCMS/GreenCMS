@@ -7,7 +7,7 @@
  * Time: 下午4:46
  */
 
-namespace Home\Logic;
+namespace Common\Logic;
 use Think\Model;
 
 /**

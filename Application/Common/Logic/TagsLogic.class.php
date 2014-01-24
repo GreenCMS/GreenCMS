@@ -7,7 +7,7 @@
  * Time: 上午12:37
  */
 
-namespace Home\Logic;
+namespace Common\Logic;
 use Think\Model\RelationModel;
 
 /**
@@ -40,6 +40,9 @@ class TagsLogic extends RelationModel
     }
 
 
+
+
+
     /**
      * @param int $limit
      * @param bool $relation
@@ -47,6 +50,6 @@ class TagsLogic extends RelationModel
      */
     public function getList($limit = 20, $relation = true)
     {
-        return D('Tags')->limit($limit)->relation($relation)->find();
+        return D('Tags')->limit($limit)->relation($relation)->select();
     }
 }

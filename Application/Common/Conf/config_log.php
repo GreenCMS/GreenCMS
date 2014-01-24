@@ -1,7 +1,6 @@
 <?php
 
-if (!defined('THINK_PATH'))
-    exit();
+
 $config_log = array(
 
     //日志
