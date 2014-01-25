@@ -55,6 +55,42 @@ function array2str($res)
 
 
 /**
+ * @param $Timestamp
+ * @param string $need
+ * @return mixed
+ */
+function getTimestamp($Timestamp, $need = '$timestamp') {
+    $array = explode ( "-", $Timestamp );
+    $year = $array [0];
+    $month = $array [1];
+
+    $array = explode ( ":", $array [2] );
+    $minute = $array [1];
+    $second = $array [2];
+
+    $array = explode ( " ", $array [0] );
+    $day = $array [0];
+    $hour = $array [1];
+
+    $timestamp = mktime ( $hour, $minute, $second, $month, $day, $year );
+
+    if ($need === 'hour') {
+        return $hour;
+    } else if ($need === 'minute') {
+        return $minute;
+    } else if ($need === 'second') {
+        return $second;
+    } else if ($need === 'month') {
+        return $month;
+    } else if ($need === 'day') {
+        return $day;
+    } else if ($need === 'year') {
+        return $year;
+    }
+
+}
+
+/**
  * 二位数组转化为一维数组
  * @param 二维数组
  * @return array 一维数组

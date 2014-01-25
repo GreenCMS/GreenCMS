@@ -29,8 +29,8 @@ class PostController extends HomeBaseController
         $Posts->viewInc($post_res['post_id']);
 
         $this->assign('post', $post_res); // 赋值数据集
-        print_array($post_res);
-        //$this->display ( 'single' );
+        //print_array($post_res);
+        $this->display ( 'single' );
 
     }
 
@@ -47,8 +47,8 @@ class PostController extends HomeBaseController
         $Posts->viewInc($post_res['post_id']);
 
         $this->assign('post', $post_res); // 赋值数据集
-        print_array($post_res);
-        //$this->display ( 'page' );
+        //print_array($post_res);
+        $this->display ( 'page' );
 
     }
 

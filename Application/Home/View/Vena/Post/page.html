@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+
+<!-- Basic Page Needs -->
+<meta charset="utf-8" />
+<title> {$post.post_title} |{:get_opinion('title')}</title>
+<meta name="description" content="Green Studio" />
+<meta name="author" content="{$post.post_user.user_nicename}" />
+<meta name="keywords"
+	content='<volist name="post.pts" id="tag">{$tag.tag_name}, </volist>' />
+        
+<include file="Public:head"/>
+
+        
+</head>
+<body>
+
+{:W('Common/mainMenu')}
+
+<!-- Title Bar / Srart
+================================================== -->
+<div class="page-title">
+	<div class="container">
+
+		<div class="sixteen columns">
+			<h1>{$post.post_top|is_top}{$post.post_title}</h1>
+		</div>
+		
+	</div>
+</div>
+<!-- Title Bar / End
+================================================== -->
+
+<!-- Elements / Srart
+================================================== -->
+<section class="faq">
+	<div class="container">
+
+		<div class="sixteen columns">
+	
+				<!-- Post Start -->
+				<article class="post">
+
+					<div class="main-info">
+						<!-- Date -->
+						<div class="date">
+							<span class="month">{$post.post_date|getTimeStamp='month'}月</span>
+							<span class="day">{$post.post_date|getTimeStamp='day'}</span>
+						</div>
+
+						<!-- Comments Number -->
+						<a href="#comments" class="commentsnumber">
+							浏览 <span>{$post.post_comment_count}</span>
+
+						</a>
+					</div>
+
+					<div class="post-content">{$post.post_content}</div>
+
+				</article>
+				<!-- Post End -->
+
+				<!-- About Author -->
+				<article class="post-author">
+
+					<div class="author-avatar">
+						<img src="__PUBLIC__/vena/images/avatar.png" alt="" />
+					</div>
+
+					<h4>
+						关于作者<a href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a>
+					</h4>
+					<p>{$post.post_user.user_intro}</p>
+
+				</article>
+		
+			
+			</div>
+			
+		</div>
+	
+	</div>
+</section>
+<!-- Elements / End
+================================================== -->
+<include file="Public:footer"/>
+
+<include file="Public:theme"/>
+</body>
+</html>
