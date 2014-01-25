@@ -18,6 +18,11 @@ class AdminBaseController extends Controller
     {
         parent::__construct();
         $this->_initialize();
+
+        $this->_currentPostion();
+        $this->_currentUser();
+
+
     }
 
     protected function _initialize()
@@ -33,4 +38,49 @@ class AdminBaseController extends Controller
         }
 
     }
+
+    private function _currentPostion()
+    {
+
+      //  echo CONTROLLER_NAME;
+      //  echo ACTION_NAME;
+
+
+        $cache = C('admin_big_menu');
+        foreach ($cache as $big_url => $big_name) {
+            if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
+                $module = $big_name;
+                $module_url = U("$big_url" . '/index');
+            }else{
+             }
+        }
+
+        $cache = C('admin_sub_menu');
+        foreach ($cache as $big_url => $big_name) {
+            if (strtolower($big_url )== strtolower(CONTROLLER_NAME)) {
+                foreach ($big_name as $sub_url => $sub_name) {
+                    $sub_true_url = explode('/', $sub_url);
+                    if (!strcasecmp($sub_true_url [1], strtolower(ACTION_NAME))) {
+                        $action = $sub_name;
+                        $action_url = U("$sub_url");
+                    }
+                }
+            }
+        }
+
+        $this->assign('module', $module);
+        $this->assign('action', $action);
+        $this->assign('module_url', $module_url);
+        $this->assign('action_url', $action_url);
+
+    }
+
+    private function _currentUser()
+    {
+        $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $user = D('User', 'Logic')->detail($user_id);
+        $this->assign('user',$user);
+    }
+
+
 }
