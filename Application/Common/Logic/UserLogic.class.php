@@ -36,8 +36,18 @@ class UserLogic extends RelationModel
     public function getList($limit = true, $relation = true)
     {
         return D('User')->limit($limit)->relation($relation)->select();
-
     }
 
+
+    public function genHash(& $authInfo)
+    {
+        $User = D('User', 'Logic');
+
+        $condition['user_id'] = $authInfo['user_id'];
+        $session_code = encrypt($authInfo['user_id'] . $authInfo['user_pass'] . time());
+        $User->where($condition)->setField('user_session', $session_code);
+
+        return $session_code;
+    }
 
 }

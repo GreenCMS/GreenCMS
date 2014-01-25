@@ -1112,7 +1112,8 @@ function session($name,$value='') {
  * Cookie 设置、获取、删除
  * @param string $name cookie名称
  * @param mixed $value cookie值
- * @param mixed $options cookie参数
+ * @param null $option
+ * @internal param mixed $options cookie参数
  * @return mixed
  */
 function cookie($name, $value='', $option=null) {

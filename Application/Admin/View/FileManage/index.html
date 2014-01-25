@@ -1,0 +1,37 @@
+<head>
+
+<title>==</title>
+
+<!-- jQuery and jQuery UI (REQUIRED) -->
+<link rel="stylesheet" type="text/css" media="screen" href="/green2014/Extend/GreenFinder/css/jquery-ui.css">
+<script type="text/javascript" src="/green2014/Extend/GreenFinder/js/jquery.min.js"></script>
+<script type="text/javascript" src="/green2014/Extend/GreenFinder/js/jquery-ui.min.js"></script>
+
+<!-- elFinder CSS (REQUIRED) -->
+<link rel="stylesheet" type="text/css" media="screen" href="/green2014/Extend/GreenFinder/css/elfinder.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/green2014/Extend/GreenFinder/css/theme.css">
+
+<!-- elFinder JS (REQUIRED) -->
+<script type="text/javascript" src="/green2014/Extend/GreenFinder/js/elfinder.min.js"></script>
+
+<!-- elFinder translation (OPTIONAL) -->
+<script type="text/javascript" src="/green2014/Extend/GreenFinder/js/i18n/elfinder.zh_CN.js"></script>
+
+<!-- elFinder initialization (REQUIRED) -->
+<script type="text/javascript" charset="utf-8">
+    $().ready(function() {
+        var elf = $('#elfinder').elfinder({
+            url : "{:U('Admin/FileManage/indexConnect')}",  // 这里设置为File模块的index方法，用U方法构建
+            lang: 'zh_CN',             // language (OPTIONAL)
+        }).elfinder('instance');
+    });
+</script>
+</head>
+<body class="page-header-fixed">
+
+                <!-- Element where elFinder will be created (REQUIRED) -->
+                <div style=" height: 600px;" id="elfinder"></div>
+
+
+</body>
+</html>
