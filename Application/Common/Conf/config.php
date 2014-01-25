@@ -14,6 +14,10 @@ return array(
     'DEFAULT_TIMEZONE' => 'PRC', // 默认时区
     'DEFAULT_AJAX_RETURN' => 'JSON', // 默认AJAX 数据返回格式,可选JSON XML ...
 
+
+
+
+
     //APP_AUTOLOAD_PATH' =>'@.Common,@.Tool',//自动加载
 
     'TOKEN_ON' => false, //TOKEN_ON

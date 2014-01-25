@@ -1,13 +1,19 @@
 <?php
-// 本类由系统自动生成，仅供测试用途
+/**
+ * Created by Green Studio.
+ * File: IndexController.class.php
+ * User: TianShuo
+ * Date: 14-1-25
+ * Time: 上午10:38
+ */
+
 namespace Admin\Controller;
 
-use Think\Controller;
-
-class IndexController extends Controller
+class IndexController extends AdminBaseController
 {
     public function index()
     {
-        echo "hello ADMIN";
+
     }
+
 }
