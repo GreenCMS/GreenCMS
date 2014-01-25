@@ -1,43 +1,18 @@
 <?php
 /**
  * Created by Green Studio.
- * File: HomeWidget.class.php
+ * File: CommonWidget.class.php
  * User: TianShuo
  * Date: 14-1-24
- * Time: 上午9:50
+ * Time: 下午2:52
  */
 
 namespace Home\Widget;
 
-
 use Home\Controller\HomeBaseController;
 
-class HomeWidget extends HomeBaseController
+class CommonWidget extends HomeBaseController
 {
-
-
-    public function categories()
-    {
-        $CatList = D('Cats', 'Logic');
-
-        $this->assign('list', $CatList->category());
-
-        $this->display('Widget:categories');
-    }
-
-    public function tag()
-    {
-
-        $TagList = D('Tags', 'Logic');
-
-        $tag_res = $TagList->getList(50, false);
-
-        $this->assign('tagClouds', $tag_res);
-
-        $this->display('Widget:tag');
-
-    }
-
     public function mainMenu()
     {
 
@@ -61,5 +36,4 @@ class HomeWidget extends HomeBaseController
         $this->display('Widget:mainMenu');
 
     }
-
 }

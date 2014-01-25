@@ -12,28 +12,22 @@
 
     <!-- Basic Page Needs -->
     <meta charset="utf-8"/>
-    <title>{:C('title')}|{$title}</title>
+    <title>{$title}|{:get_opinion('title')}</title>
     <meta name="description" content="Green Studio"/>
 
 
-    <!-- Mobile Specific Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
 
 
     <include file="Public:head"/>
 
 
-    <!-- Style Files -->
-    <link rel="stylesheet" href="__PUBLIC__/vena/css/style.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="__PUBLIC__/vena/css/colors/1.css" id="color"/>
 
-
-    <script type="text/javascript" src="__PUBLIC__/vena/js/switcher.js"></script>
 
 </head>
 <body>
 
-{:W('Home/mainMenu')}
+{:W('Common/mainMenu')}
 
 <!-- Title Bar / Srart
 ================================================== -->
@@ -134,10 +128,11 @@
 
             <div id="sidebar">
                 <include file="Public:search"/>
-                {:W('Home/categories')}
-                {:W('Home/tag')}
+                {:W('Widget/search')}
+                {:W('Widget/categories')}
+                {:W('Widget/tag')}
+                {:W('Widget/aboutUs')}
 
-                <include file="Public:aboutus"/>
             </div>
         </div>
         <!-- Sidebar End -->
