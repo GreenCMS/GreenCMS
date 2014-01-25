@@ -23,54 +23,17 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
  * 项目正式部署后请设置为false
  */
 define ('APP_DEBUG', true);
-define ('GreenStudio', true); //绿荫专业
+define ('GreenStudio', true); //绿荫专用
 define('BUILD_DIR_SECURE', false);
 /**定义网站根目录
  *
  */
 define("WEB_ROOT", dirname(__FILE__) . "/");
+
+
 require(WEB_ROOT . "db_config.php");
+require(WEB_ROOT . "const_config.php");
 
-/**
- * 强制修正URL路径(一般不需要开启)
- * 适用于反代一个二级目录并且不能替换部分文字的情况。(我说的就是捉急的iis~~~~)
- * /
-//define('__APP__', '');
-
-
-/**
- * 缓存目录设置
- * 此目录必须可写，建议移动到非WEB目录
- */
-define ('RUNTIME_PATH', './Data/Temp/');
-
-/** 定义项目日志文件路径
- *  此目录必须可写，建议移动到非WEB目录
- */
-define('LOG_PATH', WEB_ROOT . "Data/Log/");
-
-/**定义Cache目录
- *  此目录必须可写，建议移动到非WEB目录
- */
-define('WEB_CACHE_PATH', WEB_ROOT . "Data/Cache/");
-
-/**系统备份数据库文件存放目录
- *  此目录必须可写，建议移动到非WEB目录
- */
-define("DB_Backup_PATH", WEB_ROOT . "Data/DBbackup/");
-
-/**
- * 系统备份文件存放目录
- */
-define("System_Backup_PATH", WEB_ROOT . "Data/Backup/");
-
-/**系统升级文件存放目录
- */
-define("Upgrade_PATH", WEB_ROOT . "Data/Upgrade/");
-
-/**上传文件存放目录
- */
-define("UploadDir", "Upload/");
 
 /**
  * 应用目录设置
