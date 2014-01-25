@@ -9,16 +9,20 @@
 
 include APP_PATH . 'Common/Common/common_router.php';
 
+
+function encrypt($data) {
+    return md5($data);
+    //return md5(C("AUTH_CODE") . md5($data));
+}
+
+
 /**
  * @param $res
  * @function        打印数组
  */
 function print_array(& $res)
 {
-    echo '<pre>';
-    print_r($res);
-    echo '</pre>';
-
+    dump($res);
 }
 
 /**
@@ -59,20 +63,21 @@ function array2str($res)
  * @param string $need
  * @return mixed
  */
-function getTimestamp($Timestamp, $need = '$timestamp') {
-    $array = explode ( "-", $Timestamp );
+function getTimestamp($Timestamp, $need = '$timestamp')
+{
+    $array = explode("-", $Timestamp);
     $year = $array [0];
     $month = $array [1];
 
-    $array = explode ( ":", $array [2] );
+    $array = explode(":", $array [2]);
     $minute = $array [1];
     $second = $array [2];
 
-    $array = explode ( " ", $array [0] );
+    $array = explode(" ", $array [0]);
     $day = $array [0];
     $hour = $array [1];
 
-    $timestamp = mktime ( $hour, $minute, $second, $month, $day, $year );
+    $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
 
     if ($need === 'hour') {
         return $hour;

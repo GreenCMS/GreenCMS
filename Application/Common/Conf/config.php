@@ -15,7 +15,7 @@ return array(
     'DEFAULT_AJAX_RETURN' => 'JSON', // 默认AJAX 数据返回格式,可选JSON XML ...
 
 
-
+    'AUTH_CODE' => "ZTS",
 
 
     //APP_AUTOLOAD_PATH' =>'@.Common,@.Tool',//自动加载
@@ -32,12 +32,12 @@ return array(
     //静态缓存
     'HTML_CACHE_ON' => false, //生产环境设置为开启
     'HTML_CACHE_RULES' => array(
-        '*' => array('{$_SERVER.REQUEST_URI}', '36000', ''), //全局静态缓存，第二个参数为时间单位秒
-    ),
+    '*' => array('{$_SERVER.REQUEST_URI}', '36000', ''), //全局静态缓存，第二个参数为时间单位秒
+),
 
     'TMPL_PARSE_STRING' => array( //'__PUBLIC__' => 'PUBLIC', // 强制修正__PUBLIC__
-        //'__ROOT__' => '',// 强制修正__ROOT__
-    ),
+    //'__ROOT__' => '',// 强制修正__ROOT__
+),
 
     'DB_FIELDS_CACHE' => false,
     'DB_SQL_BUILD_CACHE' => true,
