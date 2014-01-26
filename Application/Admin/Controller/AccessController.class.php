@@ -24,7 +24,13 @@ class AccessController extends AdminBaseController
     public function index()
     {
         $this->listname = '管理组用户';
-        $this->list = D('Access','Logic')->adminList();
+
+
+        $list = D('Access','Logic')->adminList();
+
+        $this->assign('list',$list);
+
+        //dump($list);
         $this->display('userlist');
     }
 

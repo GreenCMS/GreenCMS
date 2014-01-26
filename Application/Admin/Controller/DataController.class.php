@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Common\Util\Dir;
 
 class DataController extends AdminBaseController
 {
@@ -265,7 +266,7 @@ class DataController extends AdminBaseController
 
             $files = $sqlFiles;
             foreach ($files as $file) {
-                import('@.ORG.Dir');
+
                 $dir = new Dir();
                 $dir->delDirAndFile(DatabaseBackDir . $file);
             }
@@ -492,7 +493,7 @@ class DataController extends AdminBaseController
             $files = $zipFiles;
             foreach ($files as $file) {
 
-                import('@.ORG.Dir');
+
                 $dir = new Dir();
                 $dir->delDirAndFile(DatabaseBackDir . "Zip/" . $file);
             }
@@ -594,5 +595,69 @@ class DataController extends AdminBaseController
             $this->display();
         }
     }
+
+
+    public function cache()
+    {
+
+    }
+
+    public function clear()
+    {
+        $Dir = new Dir(RUNTIME_PATH);
+
+
+        $caches = array(
+            "HomeCache" => array(
+                "name" => "网站缓存文件",
+                "path" => RUNTIME_PATH . "Cache",
+                "size" => $Dir->size(RUNTIME_PATH . "Cache"),
+
+            ),
+            "HomeData" => array(
+                "name" => "网站数据库字段缓存文件",
+                "path" => RUNTIME_PATH . "Data",
+                "size" => $Dir->size(RUNTIME_PATH . "Data"),
+            ),
+            "AdminLog" => array(
+                "name" => "网站日志缓存文件",
+                "path" => RUNTIME_PATH . "Logs",
+                "size" => $Dir->size(RUNTIME_PATH . "Logs"),
+            ),
+            "AdminTemp" => array(
+                "name" => "网站临时缓存文件",
+                "path" => RUNTIME_PATH . "Temp",
+                "size" => $Dir->size(RUNTIME_PATH . "Temp"),
+
+            ),
+            "Homeruntime" => array(
+                "name" => "网站~runtime.php缓存文件",
+                "path" => RUNTIME_PATH . "~runtime.php",
+                "size" => $Dir->realsize(RUNTIME_PATH . "~runtime.php"),
+            )
+        );
+
+        // p($_POST['cache']);die;
+        if (IS_POST) {
+            foreach ($_POST ['cache'] as $path) {
+                if (isset ($caches [$path]))
+                    $Dir->delDirAndFile($caches [$path] ['path']);
+            }
+
+            /*echo json_encode ( array (
+                    "status" => 1,
+                    "info" => "缓存文件已清除"
+            ) );*/
+            $this->success("清除成功");
+        } else {
+
+
+            //print_array(	 Dir::dirSize(RUNTIME_PATH));
+
+            $this->assign("caches", $caches);
+            $this->display();
+        }
+    }
+
 
 }

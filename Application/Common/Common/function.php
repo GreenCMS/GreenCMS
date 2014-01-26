@@ -36,6 +36,17 @@ function is_top($i)
     }
 }
 
+/**
+ * @param $test判断是否为空
+ */
+function is_empty($test) {
+    if ($test=='') {
+        echo '空' ;
+    }else {
+        echo $test ;
+    }
+}
+
 
 /**
  *

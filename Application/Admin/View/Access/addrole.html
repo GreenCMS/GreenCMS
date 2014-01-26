@@ -3,207 +3,220 @@
 <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]>
 <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!--><html lang="en"> <!--<![endif]-->
-<!-- BEGIN HEAD --><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta name="description" content="GreenCMS"/>
-<meta name="keywords" content="GreenCMS"/>
-<include file="Public:head"/>
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="GreenCMS"/>
+    <meta name="keywords" content="GreenCMS"/>
+    <include file="Public:head"/>
 
-<title>{$action} | {:get_opinion('title')}</title>
+    <title>{$action} | {:get_opinion('title')}</title>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
-    <!-- BEGIN HEADER -->
-    <div class="header navbar navbar-inverse navbar-fixed-top">
-        <!-- BEGIN TOP NAVIGATION BAR -->
-        <div class="navbar-inner">
-            <div class="container-fluid">
-                <!-- BEGIN LOGO -->
-                <a class="brand" href="{:U('Admin/Index/index')}">
-                <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo" />
-                </a>
-                <!-- END LOGO -->
-                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-                <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-                <img src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt="" />
-                </a>          
-                <!-- END RESPONSIVE MENU TOGGLER -->            
-                <!-- BEGIN TOP NAVIGATION MENU -->              
-                <ul class="nav pull-right">
-                    <!-- BEGIN USER LOGIN DROPDOWN -->
-                    <li class="dropdown user">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img alt="" src="__PUBLIC__/admin/assets/img/avatar1_small.jpg" />
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <!-- BEGIN LOGO -->
+            <a class="brand" href="{:U('Admin/Index/index')}">
+                <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
+            </a>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                <img src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <ul class="nav pull-right">
+                <!-- BEGIN USER LOGIN DROPDOWN -->
+                <li class="dropdown user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img alt="" src="__PUBLIC__/admin/assets/img/avatar1_small.jpg"/>
                         <span class="username">{$username}</span>
                         <i class="icon-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{:U('Admin/Index/index')}"><i class="icon-user"></i>个人信息</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{:U('Admin/Login/logout')}"><i class="icon-key"></i>退出</a></li>
-                        </ul>
-                    </li>
-                    <!-- END USER LOGIN DROPDOWN -->
-                </ul>
-                <!-- END TOP NAVIGATION MENU --> 
-            </div>
-        </div>
-        <!-- END TOP NAVIGATION BAR -->
-    </div>
-    <!-- END HEADER -->
-    <!-- BEGIN CONTAINER -->
-    <div class="page-container row-fluid">
-        <!-- BEGIN SIDEBAR -->
-        <div class="page-sidebar nav-collapse collapse">
-            <!-- BEGIN SIDEBAR MENU -->        
-            <ul class="page-sidebar-menu">
-                <li>
-                     
-                    
-                     
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{:U('Admin/Index/index')}"><i class="icon-user"></i>个人信息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{:U('Admin/Login/logout')}"><i class="icon-key"></i>退出</a></li>
+                    </ul>
                 </li>
-                {:W('Common/sideBar')}
+                <!-- END USER LOGIN DROPDOWN -->
             </ul>
-            <!-- END SIDEBAR MENU -->
+            <!-- END TOP NAVIGATION MENU -->
         </div>
-        <!-- END SIDEBAR -->
-        <!-- BEGIN PAGE -->
-        <div class="page-content">
-            <!-- BEGIN PAGE CONTAINER-->        
-            <div class="container-fluid">
-                <!-- BEGIN PAGE HEADER-->
-                <div class="row-fluid">
-                    <div class="span12">  
-                        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-                        <h3 class="page-title">
-                            {$action}<small>&nbsp;&nbsp;{:get_opinion('title')}</small>
-                        </h3>
-                        <ul class="breadcrumb">
-                            <li>
-                                <a href="{$module_url}">{$module}</a>
-                                <i class="icon-angle-right"></i>
-                            </li>
-                            <li><a href="{$action_url}">{$action}</a></li>
-                        </ul>
-                        <!-- END PAGE TITLE & BREADCRUMB-->
-                    </div>
+    </div>
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar nav-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        <ul class="page-sidebar-menu">
+            <li>
+
+
+            </li>
+            {:W('Common/sideBar')}
+        </ul>
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        {$action}
+                        <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{$module_url}">{$module}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li><a href="{$action_url}">{$action}</a></li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
-                <!-- END PAGE HEADER-->
-                <!-- BEGIN PAGE CONTENT-->
-                <div class="row-fluid">
-                    <div class="span12">
-                        <h4>{$action}</h4>
-                        <form class="form-horizontal" id="newrole" method="post">
-                            <div class="control-group">
-                                    <label class="control-label">角色组名称：</label>
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="m-wrap medium" name="name" id="name" value="{$info.name}" />
-                                        <span class="help-inline"></span>
-                                    </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <h4>{$action}</h4>
+
+                    <form class="form-horizontal" id="newrole" method="post">
+                        <div class="control-group">
+                            <label class="control-label">角色组名称：</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap medium" name="name" id="name"
+                                       value="{$info.name}"/>
+                                <span class="help-inline"></span>
                             </div>
-                            <div class="control-group">
-                                <label class="control-label">状态：</label>
-                                <div class="controls">
-                                    <select  name="status" class="medium m-wrap" tabindex="1">
-                                        <if condition="$info.status eq 1">
-                                            <option value="1" selected>启用</option>
-                                            <option value="0">禁用</option>
-                                            <else/>
-                                            <option value="1">启用</option>
-                                            <option value="0" selected>禁用</option>
-                                        </if>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">状态：</label>
+
+                            <div class="controls">
+                                <select name="status" class="medium m-wrap" tabindex="1">
+                                    <if condition="$info.status eq 1">
+                                        <option value="1" selected>启用</option>
+                                        <option value="0">禁用</option>
+                                        <else/>
+                                        <option value="1">启用</option>
+                                        <option value="0" selected>禁用</option>
+                                    </if>
+                                </select>
                             </div>
-                            <div class="control-group">
-                                <label class="control-label">父级组ID：</label>
-                                <div class="controls">
-                                    <select name="pid" class="medium m-wrap" tabindex="1">
-                                    	<option value="-1">无</option>
-                                        {$info.pidOption}
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">父级组ID：</label>
+
+                            <div class="controls">
+                                <select name="pid" class="medium m-wrap" tabindex="1">
+                                    <option value="-1">无</option>
+                                    {$info.pidOption}
+                                </select>
                             </div>
-                           <!-- div class="control-group">
-                                    <label class="control-label">显示排序：</label>
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="m-wrap medium" name="sort" id="sort" value="{$info.sort}" />
-                                        <span class="help-inline"></span>
-                                    </div>
+                        </div>
+                        <!-- div class="control-group">
+                                 <label class="control-label">显示排序：</label>
+                                 <div class="controls">
+                                     <input type="text" placeholder="" class="m-wrap medium" name="sort" id="sort" value="{$info.sort}" />
+                                     <span class="help-inline"></span>
+                                 </div>
+                         </div>
+-->
+                        <div class="control-group">
+                            <label class="control-label">描 述：</label>
+
+                            <div class="controls">
+                                <textarea name="remark" class="medium m-wrap" rows="3">{$info.remark}</textarea>
                             </div>
- -->                            <div class="control-group">
-                                <label class="control-label">描 述：</label>
-                                <div class="controls">
-                                    <textarea name="remark" class="medium m-wrap" rows="3">{$info.remark}</textarea>
-                                </div>
-                            </div>
-                            <input type="hidden" name="id" value="{$info.id}"/>
-                            <div class="control-group success" style="font-size:16px;color: red;text-align: left; display:none;">
-                            </div>
-                            <div class="form-actions">
-                                <button type="button" class="btn blue submit" id="submit"><i class="icon-ok"></i>
+                        </div>
+                        <input type="hidden" name="id" value="{$info.id}"/>
+
+                        <div class="control-group success"
+                             style="font-size:16px;color: red;text-align: left; display:none;">
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn blue submit" id="submit"><i class="icon-ok"></i>
                                 <switch name="action_name">
                                     <case value="editRole">修改</case>
                                     <case value="addRole">添加</case>
-                                    <default />添加
+                                    <default/>
+                                    添加
                                 </switch>
                             </button>
-                            </div>
-                            <switch name="action_name">
-                                <case value="editRole"><span id="action" style="display:none;">editRole</span></case>
-                                <case value="addRole"><span id="action" style="display:none;">addRole</span></case>
-                                <default /><span id="action" style="display:none;">addRole</span>
-                            </switch>
-                        </form>
-                    </div>
+                        </div>
+                        <switch name="action_name">
+                            <case value="editRole"><span id="action" style="display:none;">editRole</span></case>
+                            <case value="addRole"><span id="action" style="display:none;">addRole</span></case>
+                            <default/>
+                            <span id="action" style="display:none;">addRole</span>
+                        </switch>
+                    </form>
                 </div>
-                <!-- END PAGE CONTENT-->
             </div>
-            <!-- END PAGE CONTAINER-->
+            <!-- END PAGE CONTENT-->
         </div>
-        <!-- END PAGE -->
+        <!-- END PAGE CONTAINER-->
     </div>
-    <!-- END CONTAINER -->
-    <!-- BEGIN FOOTER -->
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
 {:W('Common/footer')}
 <!-- END FOOTER -->
-    <include file="Public:foot"/>  
-    <script>
-        jQuery(document).ready(function() {      
-            
-            App.init();
-            TableManaged.init();
+<include file="Public:foot"/>
+<script>
+    jQuery(document).ready(function () {
 
-            var url = '{:U("Admin/Access/$handle")}';
+        App.init();
+        TableManaged.init();
 
-            $(".submit").click(function() {
-                $(".submit").text("添加中，请稍候……");
-                var formObj = $("#newrole");
-                var div = $(".success");
-                formObj.ajaxSubmit({
-                    url:url,
-                    type:"POST",
-                    dataType:"json",
-                    success:function(data) {
-                        if(data.status == 1) {
-                            div.fadeIn().html(data.info);
-                            div.fadeOut(3000); 
-                            $("#submit").text("添加");
-                            location.href = data.url;                           
-                        }
-                        else {
-                            div.fadeIn().html(data.info);
-                            div.fadeOut(3000); 
-                            $("#submit").text("添加");
-                        }
+        var url = '{:U("Admin/Access/$handle")}';
+
+        $(".submit").click(function () {
+            $(".submit").text("添加中，请稍候……");
+            var formObj = $("#newrole");
+            var div = $(".success");
+            formObj.ajaxSubmit({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 1) {
+                        div.fadeIn().html(data.info);
+                        div.fadeOut(3000);
+                        $("#submit").text("添加");
+                        location.href = data.url;
                     }
-                });
+                    else {
+                        div.fadeIn().html(data.info);
+                        div.fadeOut(3000);
+                        $("#submit").text("添加");
+                    }
+                }
             });
         });
-    </script>
+    });
+</script>
 </body>
 <!-- END BODY -->
 </html>

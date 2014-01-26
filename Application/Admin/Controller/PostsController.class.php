@@ -27,8 +27,7 @@ class PostsController extends AdminBaseController
 
         $this->assign('posts', $posts);
 
-        print_array($posts);
-        //$this->display('index');
+        $this->display('index');
     }
 
     public function page()
@@ -43,12 +42,14 @@ class PostsController extends AdminBaseController
         $cats = D('Cats', 'Logic')->category();
         $tags = D('Tags', 'Logic')->select();
 
+        $this->assign("tags", "$tags");
+        $this->assign("cats", "$cats");
+
         $this->assign("handle", "addHandle");
         $this->assign("publish", "发布");
 
-        print_array($cats);
-        print_array($tags);
-        //$this->display();
+
+        $this->display();
     }
 
     public function noVerify()
@@ -142,9 +143,8 @@ class PostsController extends AdminBaseController
 
         $posts = D('Posts', 'Logic')->where($where)->relation(true)->order('post_date desc')->select();
 
-        $this->posts = $posts;
-
-        //$this->display();
+        $this->assign('posts',$posts);
+        $this->display();
     }
 
     public function unverifiedHandle($id, $post_status = 'publish')
@@ -175,9 +175,9 @@ class PostsController extends AdminBaseController
         $where['post_status'] = 'unpublished';
         $posts = D('Posts')->where($where)->relation(true)->order('post_date desc')->select();
 
-        $this->posts = $posts;
+        $this->assign('posts',$posts);
 
-        //$this->display();
+        $this->display();
     }
 
     public function recycleHandle($id = 0)
@@ -242,7 +242,7 @@ class PostsController extends AdminBaseController
             $this->assign("info", $info);
             $this->assign("handle", "posts");
             $this->assign("publish", "更新");
-            //$this->display('add');
+            $this->display('add');
 
         }
 
@@ -253,9 +253,9 @@ class PostsController extends AdminBaseController
 
         $category = D("Cats", "Logic")->relation(true)->category();
 
-        print_array($category);
+        $this->assign('category',$category);
 
-        //$this->display();
+        $this->display();
     }
 
     public function addCategory()
@@ -264,9 +264,8 @@ class PostsController extends AdminBaseController
         $this->assign('action', $action);
         $cats = D('Cats', 'Logic')->category();
 
-        print_array($cats);
-
-        // $this->display();
+        $this->assign('cats',$cats);
+        $this->display();
     }
 
     public function addCategoryHandle()
@@ -296,7 +295,7 @@ class PostsController extends AdminBaseController
         $this->assign('cats', $cats);
 
 
-        //$this->display();
+        $this->display();
     }
 
     public function editCategoryHandle($id)
@@ -346,13 +345,13 @@ class PostsController extends AdminBaseController
         $tags = D('Tags')->select();
         $this->assign('tags', $tags);
 
-        //$this->display();
+        $this->display();
     }
 
     public function addTag()
     {
 
-       // $this->display();
+       $this->display();
     }
 
     public function addTagHandle()
@@ -373,7 +372,7 @@ class PostsController extends AdminBaseController
         $tag = D('Tags')->find($id);
 
         $this->assign('tag', $tag);
-       // $this->display();
+       $this->display();
     }
 
     public function editTagHandle($id)

@@ -8,8 +8,8 @@
  */
 
 namespace Admin\Logic;
-use Common\Util\Category;
 
+use Common\Util\Category;
 use Think\Model\RelationModel;
 
 class AccessLogic extends RelationModel
@@ -22,16 +22,14 @@ class AccessLogic extends RelationModel
      */
     public function adminList()
     {
-        $res = D('User')->where(array(
-            "user_level" => array(
-                'neq',
-                5
-            )
-        ))->field('password', true)->relation('role')->select();
+        $res = D('User')->field('user_pass', true)->where(array("user_level" => array('neq', 5)))
+            ->relation(true)->select();
+
 
         foreach ($res as $k => $v) {
             $res [$k] ['user_status'] = $v ['user_status'] == 1 ? "启用" : "禁用";
         }
+
         return $res;
     }
 
@@ -42,9 +40,9 @@ class AccessLogic extends RelationModel
      */
     public function guestList()
     {
-        $res = D('User')->where(array(
+        $res = D('User')->field('password', true)->where(array(
             "user_level" => '5'
-        ))->field('password', true)->relation('role')->select();
+        ))->relation(true)->select();
 
         foreach ($res as $k => $v) {
             $res [$k] ['user_status'] = $v ['user_status'] == 1 ? "启用" : "禁用";
