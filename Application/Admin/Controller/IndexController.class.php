@@ -13,9 +13,6 @@ class IndexController extends AdminBaseController
 {
     public function index()
     {
-        echo C('title');
-
-        echo get_opinion('title');
         $this->display();
     }
 

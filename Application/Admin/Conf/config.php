@@ -18,8 +18,8 @@ $menu_arr = array(
         'Custom' => '主题插件',
         'Access' => '权限管理',
         'System' => '系统设置',
-    )
-,
+    ),
+
     'admin_sub_menu' => array(
         'Index' => array(
             'Index/index' => '仪表盘',
@@ -112,7 +112,7 @@ $config_rbac = array(
 );
 
 $config_other = array(
-     'title'=>"绿荫工作室2013",
+    'title' => "绿荫工作室2014",
     'URL_MODEL' => 2,
 
 );
