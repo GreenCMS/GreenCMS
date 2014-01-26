@@ -13,11 +13,11 @@ $menu_arr = array(
     'admin_big_menu' => array(
         'Index' => '首页',
         'Posts' => '文章管理',
-        'Sysdata' => '数据缓存',
+        'Data' => '数据缓存',
         'Media' => '文件附件',
         'Custom' => '主题插件',
         'Access' => '权限管理',
-        'Webinfo' => '系统设置',
+        'System' => '系统设置',
     )
 ,
     'admin_sub_menu' => array(
@@ -38,13 +38,13 @@ $menu_arr = array(
             'Posts/recycle' => '回收站'
         ),
 
-        'Sysdata' => array(
-            'Sysdata/index' => '数据库备份',
-            'Sysdata/restore' => '数据库导入',
-            'Sysdata/zipList' => '数据库压缩包',
-            'Sysdata/repair' => '数据库优化修复',
-            'Sysdata/cache' => '缓存设置',
-            'Sysdata/clear' => '缓存清理'
+        'Data' => array(
+            'Data/index' => '数据库备份',
+            'Data/restore' => '数据库导入',
+            'Data/zipList' => '数据库压缩包',
+            'Data/repair' => '数据库优化修复',
+            'Data/cache' => '缓存设置',
+            'Data/clear' => '缓存清理'
 
         ),
 
@@ -68,14 +68,14 @@ $menu_arr = array(
             'Access/addRole' => '添加角色'
         ),
 
-        'Webinfo' => array(
-            'Webinfo/index' => '站点设置',
-            'Webinfo/special' => '附加设置',
-            'Webinfo/setEmailConfig' => '邮箱配置',
-            'Webinfo/setSafeConfig' => '安全选项',
-            'Webinfo/links' => '链接管理',
-            'Webinfo/update' => '系统升级',
-            'Webinfo/info' => '系统信息'
+        'System' => array(
+            'System/index' => '站点设置',
+            'System/special' => '附加设置',
+            'System/setEmailConfig' => '邮箱配置',
+            'System/setSafeConfig' => '安全选项',
+            'System/links' => '链接管理',
+            'System/update' => '系统升级',
+            'System/info' => '系统信息'
         )
     )
 
