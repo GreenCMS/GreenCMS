@@ -8,6 +8,7 @@
  */
 
 namespace Admin\Controller;
+use Common\Util\Category;
 
 
 class AccessController extends AdminBaseController
@@ -23,7 +24,7 @@ class AccessController extends AdminBaseController
     public function index()
     {
         $this->listname = '管理组用户';
-        $this->list = D(Access)->adminList();
+        $this->list = D('Access','Logic')->adminList();
         $this->display('userlist');
     }
 
@@ -31,7 +32,7 @@ class AccessController extends AdminBaseController
     public function guest()
     {
         $this->listname = '游客组用户';
-        $this->list = D(Access)->guestList();
+        $this->list = D('Access','Logic')->guestList();
         $this->display('userlist');
     }
 
@@ -51,9 +52,8 @@ class AccessController extends AdminBaseController
     }
 
     // 用户解锁处理
-    public function indexlock()
+    public function indexlock($id)
     {
-        $id = $_GET ['id'];
         // 解锁用户
         if ($id == 1) { // 判断用户是否为超级管理员，如果是不能做任何操作（我的超级管理员ID为1）
             $this->error('对不起，您不能对此用户做任何操作！');
@@ -69,7 +69,7 @@ class AccessController extends AdminBaseController
     // 角色列表
     public function rolelist()
     {
-        $this->assign('rolelist', D("Access")->roleList());
+        $this->assign('rolelist', D('Access','Logic')->roleList());
         $this->display();
     }
 
@@ -84,7 +84,7 @@ class AccessController extends AdminBaseController
             'pid'
         );
         // $node = M('node')->field($field)->order('sort')->select();
-        $node = D("Access")->nodeList();
+        $node = D('Access','Logic')->nodeList();
         // $node=node_merge($node);
         // print_r($node);die;
         $this->assign('node', $node);
@@ -182,7 +182,7 @@ class AccessController extends AdminBaseController
     {
         if (IS_POST) {
             header('Content-Type:application/json; charset=utf-8');
-            $res = (D("Access")->editAdmin());
+            $res = (D('Access','Logic')->editAdmin());
             if ($res ['status'] == 1) {
                 $this->success($res ['info'], U('Admin/Access/index'));
             } elseif ($res ['status'] == 0) {
@@ -259,7 +259,7 @@ class AccessController extends AdminBaseController
         if (IS_POST) {
 
             header('Content-Type:application/json; charset=utf-8');
-            echo json_encode(D("Access")->addRole());
+            echo json_encode(D('Access','Logic')->addRole());
         } else {
             $this->assign("info", $this->getRole());
             $this->assign("handle", "addRole");
@@ -272,7 +272,7 @@ class AccessController extends AdminBaseController
         if (IS_POST) {
 
             header('Content-Type:application/json; charset=utf-8'); // p($_POST);die;
-            echo json_encode(D("Access")->editRole());
+            echo json_encode(D('Access','Logic')->editRole());
         } else {
             $M = M("Role");
             $info = $M->where("id=" . ( int )$_GET ['id'])->find();
@@ -292,7 +292,7 @@ class AccessController extends AdminBaseController
         header('Content-Type:application/json; charset=utf-8');
         if (IS_POST) {
 
-            echo json_encode(D("Access")->changeRole());
+            echo json_encode(D('Access','Logic')->changeRole());
         } else {
             $M = M("Node");
             $info = M("Role")->where("id=" . ( int )$_GET ['id'])->find();
@@ -322,13 +322,13 @@ class AccessController extends AdminBaseController
     public function opNodeStatus()
     {
         header('Content-Type:application/json; charset=utf-8');
-        echo json_encode(D("Access")->opStatus("Node"));
+        echo json_encode(D('Access','Logic')->opStatus("Node"));
     }
 
     public function opRoleStatus()
     {
         header('Content-Type:application/json; charset=utf-8');
-        echo json_encode(D("Access")->opStatus("Role"));
+        echo json_encode(D('Access','Logic')->opStatus("Role"));
     }
 
     public function opSort()
@@ -369,7 +369,7 @@ class AccessController extends AdminBaseController
         if (IS_POST) {
 
             header('Content-Type:application/json; charset=utf-8');
-            echo json_encode(D("Access")->addNode());
+            echo json_encode(D('Access','Logic')->addNode());
         } else {
             $this->assign("info", $this->getPid(array(
                 'level' => 1
@@ -385,7 +385,7 @@ class AccessController extends AdminBaseController
         if (IS_POST) {
 
             header('Content-Type:application/json; charset=utf-8');
-            echo json_encode(D("Access")->editNode());
+            echo json_encode(D('Access','Logic')->editNode());
         } else {
             $M = M("Node");
             $info = $M->where("id=" . ( int )$_GET ['id'])->find();
@@ -416,7 +416,6 @@ class AccessController extends AdminBaseController
      */
     private function getRole($info = array())
     {
-        // import("Category");
         // $cat = new Category('Role', array('id', 'pid', 'name', 'remark'));
         // $list = $cat->getList(); //获取分类结构
         $Role = M('Role');
@@ -432,7 +431,6 @@ class AccessController extends AdminBaseController
 
     private function getRoleListOption($info = array())
     {
-        // import("Category");
         // $cat = new Category('Role', array('id', 'pid', 'name', 'remark'));
         // $list = $cat->getList(); //获取分类结构
         $Role = M('Role');
@@ -468,7 +466,6 @@ class AccessController extends AdminBaseController
             $info ['levelOption'] .= '<option value="' . $i . '" ' . $selected . '>' . $arr [$i] . '</option>';
         }
         $level = $info ['level'] - 1;
-        import("@.ORG.Category");
         $cat = new Category ('Node', array(
             'id',
             'pid',

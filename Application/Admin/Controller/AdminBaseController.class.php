@@ -40,6 +40,20 @@ class AdminBaseController extends BaseController
 
     }
 
+
+    protected function checkToken() {
+        if (IS_POST) {
+            if (! M( "Admin" )->autoCheckToken ( $_POST )) {
+                die ( json_encode ( array (
+                    'status' => 0,
+                    'info' => '令牌验证失败'
+                ) ) );
+            }
+            unset ( $_POST [C ( "TOKEN_NAME" )] );
+        }
+    }
+
+
     private function _currentPostion()
     {
 

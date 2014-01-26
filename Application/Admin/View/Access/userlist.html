@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--><html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD --><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="GreenCMS"/>
+<meta name="keywords" content="GreenCMS"/>
+<include file="Public:head"/>
+
+<title>{$action} | {:get_opinion('title')}</title>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+    <!-- BEGIN HEADER -->
+    <div class="header navbar navbar-inverse navbar-fixed-top">
+        <!-- BEGIN TOP NAVIGATION BAR -->
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <!-- BEGIN LOGO -->
+                <a class="brand" href="{:U('Admin/Index/index')}">
+                <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo" />
+                </a>
+                <!-- END LOGO -->
+                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                <img src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt="" />
+                </a>          
+                <!-- END RESPONSIVE MENU TOGGLER -->            
+                <!-- BEGIN TOP NAVIGATION MENU -->              
+                <ul class="nav pull-right">
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <li class="dropdown user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img alt="" src="__PUBLIC__/admin/assets/img/avatar1_small.jpg" />
+                        <span class="username">{$username}</span>
+                        <i class="icon-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{:U('Admin/Index/index')}"><i class="icon-user"></i>个人信息</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{:U('Admin/Login/logout')}"><i class="icon-key"></i>退出</a></li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+                <!-- END TOP NAVIGATION MENU --> 
+            </div>
+        </div>
+        <!-- END TOP NAVIGATION BAR -->
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container row-fluid">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar nav-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->        
+            <ul class="page-sidebar-menu">
+                <li>
+                     
+                    
+                     
+                </li>
+                {:W('Common/sideBar')}
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN PAGE -->
+        <div class="page-content">
+            <!-- BEGIN PAGE CONTAINER-->        
+            <div class="container-fluid">
+                <!-- BEGIN PAGE HEADER-->
+                <div class="row-fluid">
+                    <div class="span12">  
+                        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                        <h3 class="page-title">
+                            {$action}<small>&nbsp;&nbsp;{:get_opinion('title')}</small>
+                        </h3>
+                        <ul class="breadcrumb">
+                            <li>
+                                <a href="{$module_url}">{$module}</a>
+                                <i class="icon-angle-right"></i>
+                            </li>
+                            <li><a href="{$action_url}">{$action}</a></li>
+                        </ul>
+                        <!-- END PAGE TITLE & BREADCRUMB-->
+                    </div>
+                </div>
+                <!-- END PAGE HEADER-->
+                <!-- BEGIN PAGE CONTENT-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h4>{$listname}列表</h4>
+                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                   
+                            <table
+                                class="table table-striped table-bordered table-hover">
+                                  <thead>
+                            <tr>
+                                <td>UID</td>
+                                <td>账号</td>
+                                <td>状态</td>
+                                <td>用户角色</td>
+                                <td>用户组</td>
+                             
+                                <td>开通时间</td>
+                                <td width="150">操作</td>
+                            </tr>
+                        </thead>
+                        <volist name="list" id="vo">
+                            <tr align="center" aid="{$vo.user_id}">
+                                <td>{$vo.user_id}</td>
+                                <td>{$vo.user_login}</td>
+                                <td>{$vo.user_status}</td>
+                                <td>{$vo.role.0.name}</td>
+                                <td>{$vo.role.0.remark}</td>
+                                <td>{$vo.user_registered}</td>
+                                <td>[ <a href="__URL__/editUser?aid={$vo.user_id}">编辑</a> ][ <a href="__URL__/delUser?aid={$vo.user_id}">删除</a> ]</td>
+                            </tr>
+                        </volist>
+                            </table>
+                        
+
+
+                        <!-- END EXAMPLE TABLE PORTLET-->
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+            <!-- END PAGE CONTAINER-->
+        </div>
+        <!-- END PAGE -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+{:W('Common/footer')}
+<!-- END FOOTER -->
+    <include file="Public:foot"/>  
+    <script>
+        jQuery(document).ready(function() {      
+            $("#cache_table :checkbox").attr("checked", true);
+             
+            App.init();
+            TableManaged.init();
+
+            $("#checkall").click(function() { //":checked"匹配所有的复选框
+                $("#cache_table :checkbox").attr("checked", true); //"#div1 :checked"之间必须有空格checked是设置选中状态。如果为true则是选中fo否则false为不选中
+                $("span").addClass("checked"); 
+            });
+            $("#check_cancel").click(function() {
+                $("#cache_table :checkbox").attr("checked", false);
+                $("span").removeClass("checked"); 
+            });
+            //理解用迭代原理each（function(){}）
+            $("#check_reverse").click(function() {
+                $("#cache_table :checkbox").each(function() {
+                
+                    $(this).attr("checked", !$(this).attr("checked")); 
+                    $(this).parentsUntil('div').toggleClass("checked");
+                    
+                    
+                    //!$(this).attr("checked")判断复选框的状态：如果选中则取反
+                });
+            });
+        });
+    </script>
+</body>
+<!-- END BODY -->
+</html>
