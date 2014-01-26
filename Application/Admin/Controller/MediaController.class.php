@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by Green Studio.
- * File: FileManageController.class.php
+ * File: MediaController.class.php
  * User: TianShuo
  * Date: 14-1-25
  * Time: 下午7:54
@@ -10,7 +10,7 @@
 namespace Admin\Controller;
 
 
-class FileManageController extends AdminBaseController{
+class MediaController extends AdminBaseController{
 
     public function __construct() {
         parent::__construct();
@@ -20,11 +20,11 @@ class FileManageController extends AdminBaseController{
         }
     }
 
-    public function index(){
+    public function file(){
         $this->display();
     }
 
-    public function indexConnect(){
+    public function fileConnect(){
         define("IN_ADMIN",1);//重要，定义一个常量，在插件的PHP入口文件中验证，防止非法访问。
         include './Extend/GreenFinder/php/connector.php';//包含elfinder自带php接口的入口文件
     }

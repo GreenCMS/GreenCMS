@@ -9,9 +9,9 @@
 
 namespace Home\Widget;
 
-use Home\Controller\HomeBaseController;
+use \Think\Controller;
 
-class WidgetWidget extends HomeBaseController
+class WidgetWidget extends Controller
 {
 
     public function search()

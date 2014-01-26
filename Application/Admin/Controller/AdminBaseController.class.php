@@ -9,10 +9,10 @@
 
 namespace Admin\Controller;
 
+use Common\Controller\BaseController;
 use Org\Util\Rbac;
-use Think\Controller;
 
-class AdminBaseController extends Controller
+class AdminBaseController extends BaseController
 {
     public function __construct()
     {
@@ -22,6 +22,7 @@ class AdminBaseController extends Controller
         $this->_currentPostion();
         $this->_currentUser();
 
+        $this->customConfig();
 
     }
 
@@ -42,8 +43,8 @@ class AdminBaseController extends Controller
     private function _currentPostion()
     {
 
-      //  echo CONTROLLER_NAME;
-      //  echo ACTION_NAME;
+        //  echo CONTROLLER_NAME;
+        //  echo ACTION_NAME;
 
 
         $cache = C('admin_big_menu');
@@ -51,13 +52,13 @@ class AdminBaseController extends Controller
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 $module = $big_name;
                 $module_url = U("$big_url" . '/index');
-            }else{
-             }
+            } else {
+            }
         }
 
         $cache = C('admin_sub_menu');
         foreach ($cache as $big_url => $big_name) {
-            if (strtolower($big_url )== strtolower(CONTROLLER_NAME)) {
+            if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 foreach ($big_name as $sub_url => $sub_name) {
                     $sub_true_url = explode('/', $sub_url);
                     if (!strcasecmp($sub_true_url [1], strtolower(ACTION_NAME))) {
@@ -79,7 +80,7 @@ class AdminBaseController extends Controller
     {
         $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
         $user = D('User', 'Logic')->detail($user_id);
-        $this->assign('user',$user);
+        $this->assign('user', $user);
     }
 
 

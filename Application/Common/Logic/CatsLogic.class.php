@@ -92,7 +92,7 @@ class CatsLogic extends RelationModel
      */
     public function getPostsId($info)
     {
-        $cat_info ['tag_id'] = $info;
+        $cat_info ['cat_id'] = $info;
         $cat = D('Post_cat')->field('post_id')->where($cat_info)->select();
         foreach ($cat as $key => $value) {
             $cat[$key] = $cat[$key]['post_id'];
@@ -108,7 +108,7 @@ class CatsLogic extends RelationModel
     public function getPostsByCat($cat_id, $num = 5)
     {
         $cat = $this->getPostIdsByCat($cat_id);
-        $posts = D('Posts', 'Logic')->getList('single', 'post_id desc', $num, true, 'publish', $cat);
+        $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
         return $posts;
     }
 
@@ -140,7 +140,7 @@ class CatsLogic extends RelationModel
             'cat_slug'
         )); // , array('cid', 'pid', 'name', 'fullname')
 
-         return $Cat->getList();
+        return $Cat->getList();
 
     }
 }

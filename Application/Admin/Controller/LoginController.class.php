@@ -45,15 +45,12 @@ class LoginController extends Controller
         $ipLocation = new IpLocation();
         $ip_info = $ipLocation->getIpInfo();
 
-        print_array($ip_info);
-
         $map = array();
         $map['user_login'] = $_POST['username'];
         $map['user_status'] = array('gt', 0);
 
         $authInfo = RBAC::authenticate($map);
 
-        print_array($authInfo);
         if (false === $authInfo) {
             $this->error('帐号不存在或已禁用！');
         } else {
@@ -77,7 +74,6 @@ class LoginController extends Controller
             // 缓存访问权限
             RBAC::saveAccessList();
 
-            print_array(Rbac::getAccessList($authInfo['user_id']));
             $this->success('登录成功！', U("Admin/Index/index"), false);
         };
 

@@ -18,6 +18,30 @@ class BaseController extends Controller
 {
 
     /**
+     * 获取配置
+     * @return mixed
+     */
+    function getConfig()
+    {
+        $options = D('Options')->where(array('autoload' => 'yes'))->select();
+        return $options;
+    }
+
+    /**
+     * 用户存放在数据库中的配置，覆盖config中的
+     */
+    function customConfig()
+    {
+        $options = $this->getConfig();
+        foreach ($options as $config) {
+            C($config['option_name'], $config['option_value']);
+        }
+    }
+
+
+
+
+    /**
      * check_verify
      */
     function check_verify()

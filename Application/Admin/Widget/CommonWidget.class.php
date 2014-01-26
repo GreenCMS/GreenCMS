@@ -12,8 +12,15 @@ namespace Admin\Widget;
 use Admin\Controller\AdminBaseController;
 use Org\Util\Rbac;
 
+/**
+ * Class CommonWidget
+ * @package Admin\Widget
+ */
 class CommonWidget extends AdminBaseController
 {
+    /**
+     *
+     */
     public function header()
     {
 
@@ -21,6 +28,9 @@ class CommonWidget extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function sideBar()
     {
 
@@ -31,6 +41,10 @@ class CommonWidget extends AdminBaseController
     }
 
 
+    /**
+     * @FBI Warning ！除非你有空闲时间，否则不要没事读这段丧心病狂的代码。。。。
+     * @return string
+     */
     private function show_all_menu()
     {
         C('admin_sub_menu', array_change_key_case(C('admin_sub_menu')));
@@ -143,6 +157,9 @@ class CommonWidget extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function footer()
     {
 

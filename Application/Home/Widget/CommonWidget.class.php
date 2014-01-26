@@ -9,9 +9,9 @@
 
 namespace Home\Widget;
 
-use Home\Controller\HomeBaseController;
+use \Think\Controller;
 
-class CommonWidget extends HomeBaseController
+class CommonWidget extends Controller
 {
     public function mainMenu()
     {

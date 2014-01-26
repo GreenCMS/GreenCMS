@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>仪表盘 | {:get_opinion('title')}</title>
+    <title>修改密码 | {:get_opinion('title')}</title>
     <meta name="description" content="GreenCMS"/>
     <meta name="keywords" content="GreenCMS"/>
     <include file="Public:head"/>
@@ -42,7 +42,7 @@
                 <div class="span12">
                     <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                     <h3 class="page-title">
-                        {$action}
+                        修改密码
                         <small>&nbsp;&nbsp;{$Think.config.title}</small>
                     </h3>
                     <ul class="breadcrumb">
@@ -50,51 +50,40 @@
                             <a href="{$module_url}">{$module}</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li><a href="{$action_url}">{$action}</a></li>
+                        <li><a href="{:U('Admin/Index/myInfo')}">修改密码</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
             </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
-            <div class="row-fluid profile">
+            <div class="row-fluid">
                 <div class="span12">
-                    <!--BEGIN TABS-->
-                    <div class="tabbable tabbable-custom tabbable-full-width">
-                        <div class="tab-content">
-                            <div class="tab-pane row-fluid active" id="tab_1_1">
-                                <ul class="unstyled profile-nav span3">
-                                    <li><img src="__PUBLIC__/baracktocat.jpg" alt=""/></li>
-                                </ul>
-                                <div class="span9">
-                                    <div class="row-fluid">
-                                        <div class="alert alert-success">
-                                            <button class="close" data-dismiss="alert"></button>
-                                            <strong>欢迎回来!</strong>
-                                        </div>
-                                        <div class="span8 profile-info">
-                                            <h1>{$user.user_name}</h1>
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                    <form action="{:U('Admin/Index/changePassHandle')}" class="form-horizontal" method="post" id="newpassword">
+                        <div class="control-group">
+                            <label class="control-label">新密码</label>
 
-                                            <p>{$user.user_intro}</p>
-
-                                            <p><a href="{$user_url}" target="_blank">{$user.user_url}</a></p>
-                                            <ul class="unstyled inline">
-                                                <li><i class="icon-star"></i>{$user.user_nicename}</li>
-                                                <li><i class="icon-heart"></i>{$user.user_email}</li>
-                                                <li><i class="icon-calendar"></i>{$user.user_registered}</li>
-                                            </ul>
-                                        </div>
-                                        <!--end span8-->
-                                    </div>
-                                    <!--end row-fluid-->
-
-                                </div>
-                                <!--end span9-->
+                            <div class="controls">
+                                <input type="password" placeholder="" class="m-wrap medium" name="password"
+                                       id="password"/>
+                                <span class="help-inline"></span>
                             </div>
-                            <!--end tab-pane-->
                         </div>
-                    </div>
-                    <!--END TABS-->
+                        <div class="control-group">
+                            <label class="control-label">确认新密码</label>
+
+                            <div class="controls">
+                                <input type="password" placeholder="" class="m-wrap medium" name="rpassword"
+                                       id="rpassword"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <a href="javascript:;" class="btn blue" id="button"><i class="icon-ok"></i> 修改</a>
+                        </div>
+                    </form>
+                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
             </div>
             <!-- END PAGE CONTENT-->
@@ -109,15 +98,24 @@
 <!-- END FOOTER -->
 
 <include file="Public:foot"/>
-
 <script>
     jQuery(document).ready(function () {
         App.init();
         TableManaged.init();
+
+        $("#button").click(function () {
+            if ($("#password").val() == '') {
+                alert("密码不能为空！");
+            }
+            else if ($("#password").val() != $("#rpassword").val()) {
+                alert("两次输入不一致！");
+            }
+            else {
+                $("#newpassword").submit();
+            }
+        });
     });
 </script>
 </body>
 <!-- END BODY -->
 </html>
-
-
