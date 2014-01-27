@@ -139,19 +139,18 @@ class MySQLLogic extends Model
      */
     public function zip($files, $filename, $outDir = WEB_CACHE_PATH, $path = DB_Backup_PATH)
     {
-        $zip = new ZipArchive;
+        $zip = new \ZipArchive;
 
         $dir = new Dir();
         $dir->makeDir($outDir);
 
 
-        $res = $zip->open($outDir . "\\" . $filename, ZipArchive::CREATE);
+        $res = $zip->open($outDir . "\\" . $filename, \ZipArchive::CREATE);
 
         if ($res == TRUE) {
             foreach ($files as $file) {
                 if ($t = $zip->addFile($path . $file, str_replace('/', '', $file))) {
                     //TODO zip压缩成功
-                    Log::write('zip压缩成功');
                     $t = $zip->addFile($path . $file, str_replace('/', '', $file));
                 }
             }
@@ -174,7 +173,7 @@ class MySQLLogic extends Model
      */
     function unzip($file, $outDir = DB_Backup_PATH)
     {
-        $zip = new ZipArchive();
+        $zip = new \ZipArchive();
         if ($zip->open(DB_Backup_PATH . "Zip/" . $file) !== TRUE)
             return FALSE;
         $zip->extractTo($outDir);

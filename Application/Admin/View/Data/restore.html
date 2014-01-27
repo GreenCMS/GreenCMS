@@ -120,7 +120,7 @@
                                     <td><input pre="{$sql.pre}" type="checkbox" name="sqlFiles" value="{$sql.name}"/>
                                     </td>
                                     <td align="left"><a
-                                            href="{:U('Sysdata/downFile',array('file'=>$sql['name'],'type'=>'sql'))}"
+                                            href="{:U('Data/downFile',array('file'=>$sql['name'],'type'=>'sql'))}"
                                             target="_blank">{$sql.name}</a></td>
                                     <td>{$sql.time}</td>
                                     <td>{$sql.type}</td>
@@ -235,7 +235,7 @@ jQuery(document).ready(function () {
                 }
             }
         }
-        var url = "{:U('Admin/Sysdata/delSqlFiles')}";
+        var url = "{:U('Admin/Data/delSqlFiles')}";
         $.post(url, {sqlFiles: sqlFiles}, function (data) {
 
             //删除成功
@@ -288,7 +288,7 @@ jQuery(document).ready(function () {
                 }
             }
         }
-        var url2 = "{:U('Admin/Sysdata/zipSql')}";
+        var url2 = "{:U('Admin/Data/zipSql')}";
         $.post(url2, {sqlFiles: sqlFiles2}, function (data) {
 
 
@@ -327,7 +327,7 @@ jQuery(document).ready(function () {
         var sqlPre = $(this).attr("sqlPre");
         $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("导入中...");
         $(".btn").attr("disabledSubmit", true);
-        var url_restore = "{:U('Admin/Sysdata/restoreData')}";
+        var url_restore = "{:U('Admin/Data/restoreData')}";
         $.getJSON(url_restore, {sqlPre: sqlPre}, function (json) {
             if (json.status == 1) {
                 if (json.url) {
@@ -372,7 +372,7 @@ jQuery(document).ready(function () {
             $("#to").css("border-color", "red");
             return false;
         }
-        var url3 = "{:U('Admin/Sysdata/sendSql')}";
+        var url3 = "{:U('Admin/Data/sendSql')}";
         var obj3 = document.getElementsByName('sqlFiles');
 
         // var file = [];
