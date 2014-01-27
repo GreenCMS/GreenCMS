@@ -15,24 +15,25 @@
 
     <title>{$action} | {:get_opinion('title')}</title>
     <script type="text/javascript">
-        window.UEDITOR_HOME_URL = "__PUBLIC__/Ueditor/";
+        window.UEDITOR_HOME_URL = "__ROOT__/Extend/Ueditor/";
 
-        var URL_upload = "{:U('Admin/File/imageUp')}";
-        var URL_fileUp = "{:U('Admin/File/fileUp')}";
-        var URL_scrawlUp = "{:U('Admin/File/scrawlUp')}";
-        var URL_getRemoteImage = "{:U('Admin/File/getRemoteImage')}";
-        var URL_imageManager = "{:U('Admin/File/imageManager')}";
+        var URL_upload = "{:U('Admin/Ueditor/imageUp')}";
+        var URL_fileUp = "{:U('Admin/Ueditor/fileUp')}";
+        var URL_scrawlUp = "{:U('Admin/Ueditor/scrawlUp')}";
+        var URL_getRemoteImage = "{:U('Admin/Ueditor/getRemoteImage')}";
+        var URL_imageManager = "{:U('Admin/Ueditor/imageManager')}";
 
-        var URL_imageUp = "{:U('Admin/File/imageUp')}";
+        var URL_imageUp = "{:U('Admin/Ueditor/imageUp')}";
 
-        var URL_getMovie = "{:U('Admin/File/getMovie')}";
+        var URL_getMovie = "{:U('Admin/Ueditor/getMovie')}";
 
 
         var URL_home = "__ROOT__";
 
+
     </script>
-    <load href="__PUBLIC__/Ueditor/ueditor.config.js"/>
-    <load href="__PUBLIC__/Ueditor/ueditor.all.min.js"/>
+    <load href="__ROOT__/Extend/Ueditor/ueditor.config.js"/>
+    <load href="__ROOT__/Extend/Ueditor/ueditor.all.js"/>
 
 </head>
 <!-- END HEAD -->

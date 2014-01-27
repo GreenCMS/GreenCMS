@@ -10,9 +10,9 @@
 namespace Admin\Controller;
 
 
+
 class PostsController extends AdminBaseController
 {
-
     public function index($post_type = 'single', $post_status = 'publish')
     {
         $cat = I('get.cat');
@@ -38,7 +38,6 @@ class PostsController extends AdminBaseController
 
     public function add()
     {
-
         $cats = D('Cats', 'Logic')->category();
         $tags = D('Tags', 'Logic')->select();
 
@@ -143,7 +142,7 @@ class PostsController extends AdminBaseController
 
         $posts = D('Posts', 'Logic')->where($where)->relation(true)->order('post_date desc')->select();
 
-        $this->assign('posts',$posts);
+        $this->assign('posts', $posts);
         $this->display();
     }
 
@@ -175,7 +174,7 @@ class PostsController extends AdminBaseController
         $where['post_status'] = 'unpublished';
         $posts = D('Posts')->where($where)->relation(true)->order('post_date desc')->select();
 
-        $this->assign('posts',$posts);
+        $this->assign('posts', $posts);
 
         $this->display();
     }
@@ -253,7 +252,7 @@ class PostsController extends AdminBaseController
 
         $category = D("Cats", "Logic")->relation(true)->category();
 
-        $this->assign('category',$category);
+        $this->assign('category', $category);
 
         $this->display();
     }
@@ -264,7 +263,7 @@ class PostsController extends AdminBaseController
         $this->assign('action', $action);
         $cats = D('Cats', 'Logic')->category();
 
-        $this->assign('cats',$cats);
+        $this->assign('cats', $cats);
         $this->display();
     }
 
@@ -351,7 +350,7 @@ class PostsController extends AdminBaseController
     public function addTag()
     {
 
-       $this->display();
+        $this->display();
     }
 
     public function addTagHandle()
@@ -372,7 +371,7 @@ class PostsController extends AdminBaseController
         $tag = D('Tags')->find($id);
 
         $this->assign('tag', $tag);
-       $this->display();
+        $this->display();
     }
 
     public function editTagHandle($id)

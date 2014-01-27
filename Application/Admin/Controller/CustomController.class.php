@@ -8,6 +8,7 @@
  */
 
 namespace Admin\Controller;
+
 use Common\Util\GreenPage;
 
 class CustomController extends AdminBaseController

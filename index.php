@@ -42,6 +42,7 @@ require(WEB_ROOT . "const_config.php");
 define ('APP_PATH', './Application/');
 
 
+
 /**
  * 引入核心入口
  * ThinkPHP亦可移动到WEB以外的目录

@@ -45,9 +45,12 @@ define("Upgrade_PATH", WEB_ROOT . "Data/Upgrade/");
 
 /**上传文件存放目录
  */
-define("UploadDir", "Upload/");
+define("UploadDir", "Upload");
 
 
-/**上传文件存放目录
+/**Ip.DATA存放目录
  */
 define("IpData", WEB_ROOT . "Data/Ip/UTFWry.dat");
+
+
+

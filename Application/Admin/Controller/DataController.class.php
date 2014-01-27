@@ -621,8 +621,8 @@ class DataController extends AdminBaseController
             ),
             "AdminLog" => array(
                 "name" => "网站日志缓存文件",
-                "path" => RUNTIME_PATH . "Logs",
-                "size" => $Dir->size(RUNTIME_PATH . "Logs"),
+                "path" => LOG_PATH ,
+                "size" => $Dir->size(LOG_PATH),
             ),
             "AdminTemp" => array(
                 "name" => "网站临时缓存文件",

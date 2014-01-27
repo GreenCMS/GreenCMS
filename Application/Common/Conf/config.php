@@ -31,7 +31,9 @@ return array(
         '*' => array('{$_SERVER.REQUEST_URI}', '36000', ''), //全局静态缓存，第二个参数为时间单位秒
     ),
 
-    'TMPL_PARSE_STRING' => array( //'__PUBLIC__' => 'PUBLIC', // 强制修正__PUBLIC__
+    'TMPL_PARSE_STRING' => array(
+        '__EXTEND__'=>ExtendDir,
+        //'__PUBLIC__' => 'PUBLIC', // 强制修正__PUBLIC__
         //'__ROOT__' => '',// 强制修正__ROOT__
     ),
 

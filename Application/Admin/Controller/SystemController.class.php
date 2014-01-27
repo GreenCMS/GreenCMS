@@ -93,7 +93,7 @@ class SystemController extends AdminBaseController
 
     public function links()
     {
-        $this->linklist = D('Links','Logic')->getList(1000);
+        $this->linklist = D('Links', 'Logic')->getList(1000);
 
         $this->display();
     }
