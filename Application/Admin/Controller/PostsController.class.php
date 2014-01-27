@@ -24,9 +24,9 @@ class PostsController extends AdminBaseController
         if ($tag != '') $post_ids = D('Tags', 'Logic')->getPostsId($tag);
 
 
-        $posts = D('Posts', 'Logic')->getList(1000, $post_type, 'post_id desc', true, $where, $post_ids);
+        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where, $post_ids);
 
-       // dump($posts);
+        // dump($posts);
         $this->assign('posts', $posts);
 
         $this->display('index');
@@ -43,8 +43,8 @@ class PostsController extends AdminBaseController
         $cats = D('Cats', 'Logic')->category();
         $tags = D('Tags', 'Logic')->select();
 
-        $this->assign("tags", "$tags");
-        $this->assign("cats", "$cats");
+        $this->assign("tags", $tags);
+        $this->assign("cats", $cats);
 
         $this->assign("handle", "addHandle");
         $this->assign("publish", "发布");
@@ -137,12 +137,11 @@ class PostsController extends AdminBaseController
     }
 
 
-    public function unverified()
+    public function unverified($post_type = "all")
     {
-
         $where['post_status'] = 'unverified';
 
-        $posts = D('Posts', 'Logic')->where($where)->relation(true)->order('post_date desc')->select();
+        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_date desc', true, $where);
 
         $this->assign('posts', $posts);
         $this->display();
@@ -168,13 +167,11 @@ class PostsController extends AdminBaseController
 
 
     //恢复
-    public function recycle()
+    public function recycle($post_type = "all")
     {
-
-        //$where['post_status'] = array('neq','publish');
-
         $where['post_status'] = 'preDel';
-        $posts = D('Posts')->where($where)->relation(true)->order('post_date desc')->select();
+
+        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where);
 
         $this->assign('posts', $posts);
 
@@ -255,8 +252,8 @@ class PostsController extends AdminBaseController
         $category = D("Cats", "Logic")->relation(true)->category();
 
 
-        foreach ($category as $key => $value){
-            $category[$key]["cat_father"]= D('Cats', 'Logic')->detail($value["cat_father"]);
+        foreach ($category as $key => $value) {
+            $category[$key]["cat_father"] = D('Cats', 'Logic')->detail($value["cat_father"]);
         }
 
 

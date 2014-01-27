@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by Green Studio.
- * File: SysdataController.class.php
+ * File: MySQLController.class.php
  * User: TianShuo
  * Date: 14-1-26
  * Time: 下午5:25
@@ -55,8 +55,8 @@ class DataController extends AdminBaseController
         /**
          * 如果备份文件夹不存在，则自动建立
          */
-        if (!is_dir(DatabaseBackDir)) {
-            mkdir(DatabaseBackDir, 0777);
+        if (!is_dir(DB_Backup_PATH)) {
+            mkdir(DB_Backup_PATH, 0777);
         }
         $time = time();
         if (isset($_POST['systemBackup'])) {
@@ -65,20 +65,20 @@ class DataController extends AdminBaseController
                 die(json_encode(array("status" => 0, "info" => "只有超级管理员账号登录后方可自动备份操作")));
             }
             $type = "系统自动备份";
-            $tables = D("SysData")->getAllTableName();
-            $path = DatabaseBackDir . "/SYSTEM_" . date("Ym");
+            $tables = D("MySQL", "Logic")->getAllTableName();
+            $path = DB_Backup_PATH . "/SYSTEM_" . date("Ym");
             if (file_exists($path . "_1.sql")) {
                 die(json_encode(array("status" => 0, "info" => "本月系统已经进行了自动备份操作")));
             }
         } else {
             $type = "管理员后台手动备份";
-            $path = DatabaseBackDir . "/CUSTOM_" . date("Ymd") . "_" . randCode(5);
+            $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" .md5( rand(0,255).md5(rand(128,200)).rand(100,768));
         }
         $pre = "# -----------------------------------------------------------\n" .
             "# " . C('OUR_NAME') . " database backup files\n" .
             "# URL: " . C('OUR_URL') . "\n" .
             "# Type: {$type}\n";
-        $bdTable = D("SysData")->bakupTable($tables); //取得表结构信息
+        $bdTable = D("MySQL", "Logic")->bakupTable($tables); //取得表结构信息
         $outPut = "";
         $file_n = 1;
         $backedTable = array();
@@ -136,8 +136,8 @@ class DataController extends AdminBaseController
             $file_n++;
         }
         $time = time() - $time;
-        // echo json_encode(array("status" => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) . "个SQL文件。耗时：{$time} 秒", "url" => U('Admin/Sysdata/restore')));
-        $this->success('备份成功', U('Admin/Sysdata/restore'));
+        // echo json_encode(array("status" => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) . "个SQL文件。耗时：{$time} 秒", "url" => U('Admin/MySQL/restore')));
+        $this->success('备份成功', U('Admin/Data/restore'));
     }
 
     /**
@@ -147,7 +147,7 @@ class DataController extends AdminBaseController
      */
     public function restore()
     {
-        $data = D("SysData")->getSqlFilesList();
+        $data = D("MySQL", "Logic")->getSqlFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
@@ -169,7 +169,7 @@ class DataController extends AdminBaseController
         // die(json_encode(array("status" => 0, "info" => "错误的请求")));
 //获取sql文件前缀
         $sqlPre = $_GET['sqlPre'];
-        $handle = opendir(DatabaseBackDir);
+        $handle = opendir(DB_Backup_PATH);
         $sqlFiles = array();
         while ($file = readdir($handle)) {
 //获取以$sqlPre为前缀的所有sql文件
@@ -208,7 +208,7 @@ class DataController extends AdminBaseController
         $M = M('User');
         $execute = 0;
         foreach ($files as $fileKey => $sqlFile) {
-            $file = DatabaseBackDir . $sqlFile;
+            $file = DB_Backup_PATH . $sqlFile;
             if (!file_exists($file))
                 continue;
             $file = fopen($file, "r");
@@ -233,7 +233,7 @@ class DataController extends AdminBaseController
                         $imported = isset($_SESSION['cacheRestore']['imported']) ? $_SESSION['cacheRestore']['imported'] : 0;
                         $imported += $execute;
                         $_SESSION['cacheRestore']['imported'] = $imported;
-                        echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>', "url" => U('Sysdata/restoreData', array(randCode() => randCode()))));
+                        echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>', "url" => U('MySQL/restoreData', array(randCode() => randCode()))));
                         exit;
                     }
                 } else {
@@ -268,7 +268,7 @@ class DataController extends AdminBaseController
             foreach ($files as $file) {
 
                 $dir = new Dir();
-                $dir->delDirAndFile(DatabaseBackDir . $file);
+                $dir->delDirAndFile(DB_Backup_PATH . $file);
             }
             echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__ . "/restore?" . time()));
 
@@ -314,7 +314,7 @@ class DataController extends AdminBaseController
         $n = 1;
 //计算待发送到邮件的附件大小，并分成多个压缩文件组
         foreach (array($sqlFiles) as $flie => $value) {
-            $path = DatabaseBackDir . $flie;
+            $path = DB_Backup_PATH . $flie;
             if (file_exists($path)) {
                 if (filesize($path) > 52428800) { //50*1024*1024=52428800
                     $files[$n][] = $flie;
@@ -364,7 +364,7 @@ class DataController extends AdminBaseController
             // $filesready = explode(',', $files);
 
             $zipOut = "sqlBackup.zip";
-            if (D("SysData")->zip($sqlFiles, $zipOut)) {
+            if (D("MySQL", "Logic")->zip($sqlFiles, $zipOut)) {
                 send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
 
             }
@@ -380,25 +380,25 @@ class DataController extends AdminBaseController
             //	Log::write('$zipFiles:'.$zipFiles);
 
 
-            //   if (D("SysData")->zip($zipFiles, $zipOut)) {
+            //   if (D("MySQL","Logic")->zip($zipFiles, $zipOut)) {
             //  	Log::write('$zipFiles:'.$zipFiles.'//$zipOut:'.$zipOut);
 
             //TODO is_ok
-            // send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", DatabaseBackDir .'CUSTOM_20131016_o2Jke_1.sql');//
+            // send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", DB_Backup_PATH .'CUSTOM_20131016_o2Jke_1.sql');//
             //        send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut);//
 
 
             delDirAndFile(WEB_CACHE_PATH . $zipOut); //删除已发送附件
 
 
-            // echo json_encode(array("status" => 1, "info" => "如果要发送SQL文件卷较大(多)发送时间可能需要几分钟甚至更久，请耐心等待，发送期间请勿刷新本页。SQL打包成{$sum}个zip包，分{$sum}封邮件发出，<font color=\"red\">当前已经发送完第{$k}封邮件</font>", "url" => U('Sysdata/sendSql', array(randCode() => randCode()))));
+            // echo json_encode(array("status" => 1, "info" => "如果要发送SQL文件卷较大(多)发送时间可能需要几分钟甚至更久，请耐心等待，发送期间请勿刷新本页。SQL打包成{$sum}个zip包，分{$sum}封邮件发出，<font color=\"red\">当前已经发送完第{$k}封邮件</font>", "url" => U('MySQL/sendSql', array(randCode() => randCode()))));
             // unset($_SESSION['cacheSendSql']['files'][$k]);
             // exit;
             //    }
             // }
             $time = time() - $_SESSION['cacheSendSql']['time'];
             unset($_SESSION['cacheSendSql']);
-            die(json_encode(array("status" => 1, "info" => "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒"))); //, "url" => U('Admin/sysdata/restore',true,false,true)
+            die(json_encode(array("status" => 1, "info" => "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒"))); //, "url" => U('Admin/MySQL/restore',true,false,true)
         }
         $this->display();
     }
@@ -423,15 +423,15 @@ class DataController extends AdminBaseController
                 $toZip[implode("_", $tem)][] = $file;
             }
             foreach ($toZip as $zipOut => $files) {
-                if (D("SysData")->zip($files, $zipOut . ".zip", DatabaseBackDir . "Zip/")) {
+                if (D("MySQL", "Logic")->zip($files, $zipOut . ".zip", DB_Backup_PATH . "Zip/")) {
                     /*foreach ($files as $file) {
-                        delDirAndFile(DatabaseBackDir . $file);
+                        delDirAndFile(DB_Backup_PATH . $file);
                     }*/
                 } else {
                     die(json_encode(array("status" => 2, "info" => "打包过程出现错误")));
                 }
             }
-            die(json_encode(array("status" => 1, "info" => "打包的sql文件成功，本次打包" . count($toZip) . "个zip文件", "url" => U('Sysdata/zipList'))));
+            die(json_encode(array("status" => 1, "info" => "打包的sql文件成功，本次打包" . count($toZip) . "个zip文件", "url" => U('MySQL/zipList'))));
         }
     }
 
@@ -442,7 +442,7 @@ class DataController extends AdminBaseController
      */
     public function zipList()
     {
-        $data = D("SysData")->getZipFilesList();
+        $data = D("MySQL", "Logic")->getZipFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
@@ -465,9 +465,9 @@ class DataController extends AdminBaseController
 //      $_SESSION['unzip']['count'] = count($files);
 
         foreach ($files as $k => $file) {
-            D("SysData")->unzip($file);
+            D("MySQL", "Logic")->unzip($file);
             /* if (count($files) > 1) {
-                echo json_encode(array("status" => 1, "info" => "正在解压缩，请勿刷新本页<br />当前已经解压完{$file}", "url" => U('Sysdata/unzipSqlfile', array(randCode() => randCode()))));
+                echo json_encode(array("status" => 1, "info" => "正在解压缩，请勿刷新本页<br />当前已经解压完{$file}", "url" => U('MySQL/unzipSqlfile', array(randCode() => randCode()))));
                 unset($_SESSION['unzip']['files'][$k]);
                 exit;
             } */
@@ -475,7 +475,7 @@ class DataController extends AdminBaseController
 
         $time = time() - $_SESSION['unzip']['time'];
         unset($_SESSION['unzip']);
-        die(json_encode(array("status" => 1, "info" => "已解压完成&nbsp;&nbsp;耗时：$time 秒", "url" => U('Sysdata/restore')))); //, "url" => U('SysData/restore')
+        die(json_encode(array("status" => 1, "info" => "已解压完成&nbsp;&nbsp;耗时：$time 秒", "url" => U('MySQL/restore')))); //, "url" => U('MySQL/restore')
     }
 
     /**
@@ -495,7 +495,7 @@ class DataController extends AdminBaseController
 
 
                 $dir = new Dir();
-                $dir->delDirAndFile(DatabaseBackDir . "Zip/" . $file);
+                $dir->delDirAndFile(DB_Backup_PATH . "Zip/" . $file);
             }
             echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__ . "/zipList?" . time()));
         }
@@ -506,7 +506,7 @@ class DataController extends AdminBaseController
         if (empty($_GET['file']) || empty($_GET['type']) || !in_array($_GET['type'], array("zip", "sql"))) {
             $this->error("下载地址不存在");
         }
-        $path = array("zip" => DatabaseBackDir . "Zip/", "sql" => DatabaseBackDir);
+        $path = array("zip" => DB_Backup_PATH . "Zip/", "sql" => DB_Backup_PATH);
         $filePath = $path[$_GET['type']] . $_GET['file'];
         if (!file_exists($filePath)) {
             $this->error("该文件不存在，可能是被删除");
@@ -569,10 +569,10 @@ class DataController extends AdminBaseController
             $table = implode(',', $_POST['table']);
             if ($_POST['act'] == 'repair') {
                 if ($M->query("REPAIR TABLE {$table} "))
-                    die(json_encode(array("status" => 1, "info" => "修复表成功", 'url' => U('Sysdata/repair'))));
+                    die(json_encode(array("status" => 1, "info" => "修复表成功", 'url' => U('MySQL/repair'))));
             } elseif ($_POST['act'] == 'optimize') {
                 if ($M->query("OPTIMIZE TABLE $table"))
-                    die(json_encode(array("status" => 1, "info" => "优化表成功", 'url' => U('Sysdata/repair'))));
+                    die(json_encode(array("status" => 1, "info" => "优化表成功", 'url' => U('MySQL/repair'))));
             }
             die(json_encode(array("status" => 0, "info" => "请选择操作")));
         } else {

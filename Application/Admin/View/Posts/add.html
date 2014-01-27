@@ -84,10 +84,7 @@
 <!-- BEGIN SIDEBAR -->
 <div class="page-sidebar nav-collapse collapse">
     <!-- BEGIN SIDEBAR MENU -->
-
-
-    </li> {:W('Common/sideBar')}
-    </ul>
+    {:W('Common/sideBar')}
     <!-- END SIDEBAR MENU -->
 </div>
 <!-- END SIDEBAR -->
@@ -143,7 +140,7 @@
                         <div class="controls">
                             <foreach name="cats" item="vCats"><input
                                     type="checkbox" value="{$vCats.cat_id}" name="cats[]"
-                                <foreach name="info['pcs']" item="pcs">
+                                <foreach name="info['post_cat']" item="pcs">
                                     <if
                                             condition="$vCats['cat_id'] eq $pcs['cat_id']">
                                         checked="checked"
@@ -157,12 +154,12 @@
                     <div class="control-group">
                         <label class="control-label">标签</label>
 
+
                         <div class="controls">
                             <foreach name="tags" item="vTags"><input
                                     type="checkbox" value="{$vTags.tag_id}" name="tags[]"
-                                <foreach name="info['pts']" item="pts">
-                                    <if
-                                            condition="$vTags['tag_id'] eq $pts['tag_id']">
+                                <foreach name="info['post_tag']" item="pts">
+                                    <if condition="$vTags['tag_id'] eq $pts['tag_id']">
                                         checked="checked"
                                         <else/>
                                     </if>
@@ -300,7 +297,7 @@
 <script>
     jQuery(document).ready(function () {
         App.init();
-        TableManaged.init();
+       // TableManaged.init();
     });
 </script>
 <script type="text/javascript">

@@ -116,7 +116,7 @@
                             </thead>
                             <tbody id="cache_table">
                             <volist name="list" id="sql">
-                                <tr id="{$sql.name|del_sql=###}" align="center">
+                                <tr id="{$sql.name}" align="center"><!--|del_sql=###-->
                                     <td><input pre="{$sql.pre}" type="checkbox" name="sqlFiles" value="{$sql.name}"/>
                                     </td>
                                     <td align="left"><a
