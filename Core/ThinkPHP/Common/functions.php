@@ -786,6 +786,7 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             $url   .=   '&'.$vars;
         }
     }else{ // PATHINFO模式或者兼容URL模式
+        //TODO Undefined variable: module \Core\ThinkPHP\Common\functions.php 第 789 行.
         $module =   defined('BIND_MODULE') ? '' : $module;
         if(isset($route)) {
             $url    =   __APP__.'/'.($module?$module.MODULE_PATHINFO_DEPR:'').rtrim($url,$depr);
@@ -1112,7 +1113,8 @@ function session($name,$value='') {
  * Cookie 设置、获取、删除
  * @param string $name cookie名称
  * @param mixed $value cookie值
- * @param mixed $options cookie参数
+ * @param null $option
+ * @internal param mixed $options cookie参数
  * @return mixed
  */
 function cookie($name, $value='', $option=null) {

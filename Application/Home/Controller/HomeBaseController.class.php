@@ -14,36 +14,44 @@ use Common\Controller\BaseController;
  * Class HomeBaseController
  * @package Home\Controller
  */
-class HomeBaseController extends BaseController {
+class HomeBaseController extends BaseController
+{
 
     /**
      * 构造
      */
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
 
-        $this->newPosts = D ( 'Posts','Logic' )->getList ( 'single', 'post_date desc', 5, false );
-        $this->friendurl = D ( 'Links','Logic' )->getList ( '5' );
-        $this->custom_config();
+        $this->newPosts = D('Posts', 'Logic')->getList(5, 'single', 'post_date desc', false);
+        $this->friendurl = D('Links', 'Logic')->getList(5);
+
+        $this->customConfig();
     }
 
-    /**
-     * 获取配置
-     * @return mixed
-     */
-    function get__config() {
-        $options = D( 'Options' )->where( array( 'autoload' => 'yes' ) )->select();
-        return $options;
-    }
 
     /**
-     * 用户存放在数据库中的配置，覆盖config中的
+     * @function 是否为空
+     * @param $info
+     * @param string $message
      */
-    function custom_config() {
-        $options = $this->get__config();
-        foreach ($options as $config) {
-            C($config['option_name'], $config['option_value']);
-        }
+    public function if404($info, $message = "")
+    {
+        if (empty($info)) $this->error404($message);
     }
+
+
+    /**
+     * @function 404 ERROR
+     * @param string $message
+     */
+    public function error404($message = "")
+    {
+        $this->assign("message", $message);
+        $this->display('Index/404');
+        die();
+    }
+
 
 }

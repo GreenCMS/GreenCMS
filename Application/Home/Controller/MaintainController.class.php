@@ -8,12 +8,17 @@
  */
 
 namespace Home\Controller;
-use Home\Controller\HomeBaseController;
 
 /**
  * Class MaintainController
  * @package Home\Controller
  */
-class MaintainController extends HomeBaseController {
+class MaintainController extends HomeBaseController
+{
 
+    public function index(){
+
+
+        $this->display();
+    }
 }

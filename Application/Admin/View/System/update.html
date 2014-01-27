@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="GreenCMS"/>
+    <meta name="keywords" content="GreenCMS"/>
+    <include file="Public:head"/>
+
+    <title>{$action} | {:get_opinion('title')}</title>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <!-- BEGIN LOGO -->
+            <a class="brand" href="{:U('Admin/Index/index')}">
+                <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
+            </a>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                <img src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <ul class="nav pull-right">
+                <!-- BEGIN USER LOGIN DROPDOWN -->
+                <li class="dropdown user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img alt="" src="__PUBLIC__/admin/assets/img/avatar1_small.jpg"/>
+                        <span class="username">{$username}</span>
+                        <i class="icon-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{:U('Admin/Index/index')}"><i class="icon-user"></i>个人信息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{:U('Admin/Login/logout')}"><i class="icon-key"></i>退出</a></li>
+                    </ul>
+                </li>
+                <!-- END USER LOGIN DROPDOWN -->
+            </ul>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+    </div>
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar nav-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+
+
+        {:W('Common/sideBar')}
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        {$action}
+                        <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{$module_url}">{$module}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li><a href="{$action_url}">{$action}</a></li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table table-bordered table-hover" class="tab">
+                        <tr>
+                            <th class="hidden-480">系统名称</th>
+                            <th class="hidden-480">系统版本</th>
+                            <th class="hidden-480">官方网址</th>
+                            <th class="hidden-480">开发团队</th>
+                        </tr>
+                        <tr>
+                            <td class="hidden-480">{:get_opinion('software_name')}</td>
+                            <td class="hidden-480">{:get_opinion('software_version')}</td>
+                            <td class="hidden-480">{:get_opinion('software_homepage')}</td>
+                            <td class="hidden-480">{:get_opinion('software_author')}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-actions" style="text-align: center">
+                <div class="span4">
+                    <button type="button" class="btn green check_update">
+                        <i class="m-icon-swapright m-icon-white"></i>检测更新
+                    </button>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+{:W('Common/footer')}
+<!-- END FOOTER -->
+<include file="Public:foot"/>
+<script>
+
+    $(function ($) {
+        var notice = '{:cookie("updatenotice")}';
+        $.post("{:U('System/update')}", { version: "{:substr(C('SOFT_VERSION'),-8)}"},
+                function (data) {
+                    if (data.msg == 1 && notice != 1) {
+                        jconfirm('系统检测到有新版本!是否更新?<br/>当前版本:{:C('
+                        SOFT_VERSION
+                        ')}&nbsp;&nbsp;最新版本:' + data.version, '{:U('
+                        System / updateHandle
+                        ', '
+                        ', '
+                        ')}'
+                    )
+                        ;
+                    }
+                });
+    });
+
+    $(".check_update").click(function () {
+        art.dialog.tips('正在检测新版本...', 60);
+        $.post("{:U('System/update')}", { version: "{:substr(C('SOFT_VERSION'),-8)}"},
+                function (data) {
+                    if (data.msg == 0) {
+                        art.dialog.tips('已经是最新版本!');
+                    }
+                    if (data.msg == 1) {
+                        jconfirm('系统检测到有新版本!是否更新?<br/>当前版本:{:C('
+                        SOFT_VERSION
+                        ')}&nbsp;&nbsp;最新版本:' + data.version, '{:U('
+                        System / updateHandle
+                        ', '
+                        ', '
+                        ')}'
+                    )
+                        ;
+                    }
+                    if (data.msg == 2) {
+                        art.dialog.tips('检测更新失败!');
+                    }
+                });
+    });
+
+    artDialog.updatesystem = function (str, url) {
+
+        return artDialog({
+            title: 'GreenCMS系统在线更新',
+            id: 'updatesystem',
+            icon: 'face-smile',
+            fixed: true,
+            lock: true,
+            opacity: .1,
+            content: [
+                '<div style="margin-bottom:10px;font-size:12px" id="art_content">',
+                str,
+                '</div>',
+                '<div>',
+                '备份整站: <input type="checkbox"  name="art_backupall" id="art_backupall"/>&nbsp;&nbsp;备份数据库: <input type="checkbox"  name="art_backupsql" id="art_backupsql"/><br/>',
+                '<div style="margin-bottom:5px;margin-top:5px;font-size:12px">系统更新可能有意外情况,推荐备份数据!整站备份不包括Public目录,Public目录请自行备份!</div>',
+                '</div>',
+            ].join(''),
+            init: function () {
+                $.post("{:U('System/applycookie')}");
+            },
+            ok: function (here) {
+                if ($('#art_backupall').attr('checked') == 'checked') url = url + '/backupall/1';
+                if ($('#art_backupsql').attr('checked') == 'checked') url = url + '/backupsql/1';
+                if ($('#art_backupall').attr('checked') != 'checked' && $('#art_backupsql').attr('checked') != 'checked') {
+                    var dialog = art.dialog({
+                        title: '警告',
+                        content: '未选择任何备份目标',
+                        cancelVal: '确定',
+                        cancel: true,
+                        time: 2
+                    });
+                    return false;
+                }
+                window.location.href = url;
+                art.dialog.tips('请勿关闭浏览器,系统正在更新中...', 60);
+            },
+            cancel: function (here) {
+                var list = art.dialog.list;
+                for (var i in list) {
+                    list[i].close();
+                }
+                ;
+                return true;
+            }
+        });
+    };
+
+    function jconfirm(str, url) {
+        artDialog.updatesystem(str, url);
+    }
+
+    jQuery(document).ready(function () {
+        App.init();
+
+
+    });
+</script>
+</body>
+<!-- END BODY -->
+</html>

@@ -1,0 +1,35 @@
+/* =================================================================== */
+/* Pink
+====================================================================== */
+blockquote {border-left: 3px solid #ff0060;}
+
+a, a:active, a:visited,
+.news-item .description h4 a:hover,
+.error404 p.big,
+article.post .post-content h2 a:hover,
+.footer-links li a:hover,
+.tooltip,
+.footer-recent-news li a:hover { 
+	color: #ff0060; 
+}
+
+button.btn,
+a.btn,
+article.post .main-info a.commentsnumber,
+.widget ul.tags-list li a:hover,
+.hold a.hover-zoom:hover, 
+.hold a.hover-link:hover,
+.projects-navi a:hover,
+.swipe-navi .swipe-left:hover, 
+.swipe-navi .swipe-right:hover,
+.menu ul li:hover,
+.menu ul ul li a:active,
+.menu ul ul li a:hover,
+#jPanelMenu-menu li.current,
+a.go-to-portfolio,
+.hold.medium a.hover-zoom:hover, 
+.hold.medium a.hover-link:hover,
+.news-item .date .month {
+	background: #ff0060; 
+}
+

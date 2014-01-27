@@ -5,6 +5,8 @@
 
 User-agent: *
 
+Disallow: /Extend/
 Disallow: /Data/
-Disallow: /Public/Ueditor/
+Disallow: /Dev/
+Disallow: /Core/
 Disallow: /admin.php

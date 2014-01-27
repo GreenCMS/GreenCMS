@@ -1,7 +1,5 @@
 <?php
 
-if (!defined('THINK_PATH'))
-    exit();
 /* */
 $config_db = array(
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="GreenCMS"/>
+    <meta name="keywords" content="GreenCMS"/>
+    <include file="Public:head"/>
+
+    <title>{$action} | {:get_opinion('title')}</title>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <!-- BEGIN LOGO -->
+            <a class="brand" href="{:U('Admin/Index/index')}">
+                <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
+            </a>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                <img src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <ul class="nav pull-right">
+                <!-- BEGIN USER LOGIN DROPDOWN -->
+                <li class="dropdown user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img alt="" src="__PUBLIC__/admin/assets/img/avatar1_small.jpg"/>
+                        <span class="username">{$username}</span>
+                        <i class="icon-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{:U('Admin/Index/index')}"><i class="icon-user"></i>个人信息</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{:U('Admin/Login/logout')}"><i class="icon-key"></i>退出</a></li>
+                    </ul>
+                </li>
+                <!-- END USER LOGIN DROPDOWN -->
+            </ul>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+    </div>
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar nav-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        {:W('Common/sideBar')}
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        {$action}
+                        <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{$module_url}">{$module}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li><a href="{$action_url}">{$action}</a></li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+                <div class="span12">
+
+
+                    <table class="table table-bordered table-hover" class="tab">
+
+                        <thead>
+                        <tr>
+
+                            <th class="hidden-480">名称</th>
+                            <th class="hidden-480">值</th>
+                            <th class="hidden-480">名称</th>
+                            <th class="hidden-480">值</th>
+                        </tr>
+                        </thead>
+
+                        <volist name="server_info" id="vo" key="k">
+                            <php> if($k%2==1) echo "
+                                <tr>";
+                            </php>
+                            <td width="120" align="right">{$key}：</td>
+                            <td>{$vo}</td>
+                            <php> if($k%2==0) echo "</tr>";</php>
+                        </volist>
+                        <php>if(count($caches)%2==1) echo '
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            </tr>';
+                        </php>
+                    </table>
+
+
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+{:W('Common/footer')}
+<!-- END FOOTER -->
+<include file="Public:foot"/>
+<script>
+    jQuery(document).ready(function () {
+        App.init();
+    });
+</script>
+</body>
+<!-- END BODY -->
+</html>

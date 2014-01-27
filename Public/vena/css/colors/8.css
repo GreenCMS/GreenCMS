@@ -1,0 +1,115 @@
+/* =================================================================== */
+/* Accent
+====================================================================== */
+blockquote {border-left: 3px solid #FC7373;}
+
+a, a:active, a:visited,
+.news-item .description h4 a:hover,
+.error404 p.big,
+article.post .post-content h2 a:hover,
+.footer-links li a:hover,
+.tooltip,
+.footer-recent-news li a:hover { 
+	color: #FC7373; 
+}
+
+button.btn,
+a.btn,
+article.post .main-info a.commentsnumber,
+.widget ul.tags-list li a:hover,
+.hold a.hover-zoom:hover, 
+.hold a.hover-link:hover,
+.swipe-navi .swipe-left:hover, 
+.swipe-navi .swipe-right:hover,
+.menu ul li:hover,
+.menu ul ul li a:active,
+.menu ul ul li a:hover,
+#jPanelMenu-menu li.current,
+a.go-to-portfolio,
+.hold.medium a.hover-zoom:hover, 
+.hold.medium a.hover-link:hover,
+.news-item .date .month {
+	background: #FC7373; 
+}
+
+button.btn, a.btn {
+	box-shadow: 0 2px 0 0 #E45454;
+	-moz-box-shadow: 0 2px 0 0 #E45454;
+	-webkit-box-shadow: 0 2px 0 0 #E45454;
+	-o-box-shadow: 0 2px 0 0 #E45454;
+	-ms-box-shadow: 0 2px 0 0 #E45454;
+}
+
+article.post .main-info a.commentsnumber:hover,
+a.go-to-portfolio:hover,
+button.btn:hover, 
+a.btn:hover {
+	background: #FC5151;
+}
+
+.projects-navi a,
+a.go-to-portfolio i ,
+button.btn,
+a.btn {
+	color: #fff;
+}
+
+/* =================================================================== */
+/* Main
+====================================================================== */
+a:hover,
+.news-item .date .day,
+.toggle a.toggle-trigger:before,
+.toggle a.toggle-trigger,
+article.post .post-content h2 a,
+.blog-navi ul li a,
+ul.share-post li a .badge,
+.widget .search-icon:after,
+#filters li a:hover,
+#filters li.selected a,
+#filters li.selected a:hover,
+.project-details ul li span,
+.accordion li a,
+#tabs li a,
+.dropcap {
+	color: #4e4e4e;
+}
+
+.plan h3,
+.projects-navi a:hover { 
+	background: #464646; 
+}
+
+.plan-price,
+.menu, .menu ul li,
+.menu ul ul li,
+.menu ul ul li:hover,
+.hold.medium a.hover-zoom, 
+.hold.medium a.hover-link,
+article.post .main-info .date,
+.blog-navi ul li a:hover,
+.blog-navi ul li a.current,
+.widget ul.tags-list li a,
+.hold a.hover-zoom, 
+.hold a.hover-link,
+.projects-navi a,
+.accordion li a.active,
+#tabs li.active a,
+#swipebox-action, #swipebox-caption,
+.swipe-navi .swipe-left,
+.swipe-navi .swipe-right,
+.footer-bar{
+	background: #4e4e4e;
+}
+
+.plan-price:after {
+	border-color: #fc6264 transparent;
+}
+
+.menu ul ul:before {
+	border-color: transparent transparent #4e4e4e transparent;
+}
+
+.plan-price:after {
+	border-color: #4e4e4e transparent;
+}

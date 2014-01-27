@@ -7,7 +7,14 @@
  * Time: 下午11:09
  */
 
-include  APP_PATH.'Common/Common/common_router.php';
+include APP_PATH . 'Common/Common/common_router.php';
+
+
+function encrypt($data) {
+    return md5($data);
+    //return md5(C("AUTH_CODE") . md5($data));
+}
+
 
 /**
  * @param $res
@@ -15,23 +22,39 @@ include  APP_PATH.'Common/Common/common_router.php';
  */
 function print_array(& $res)
 {
-    echo '<pre>';
-    print_r($res);
-    echo '</pre>';
-
+    dump($res);
 }
 
 /**
  * @param $i
  * 判断是否置顶
  */
-function is_top($i) {
-    if ($i==1) {
-        echo  '【固顶】';
+function is_top($i)
+{
+    if ($i == 1) {
+        echo '【固顶】';
+    }
+}
+
+/**
+ * @param $test判断是否为空
+ */
+function is_empty($test) {
+    if ($test=='') {
+        echo '空' ;
+    }else {
+        echo $test ;
     }
 }
 
 
+/**
+ *
+ */
+function get_opinion($key)
+{
+    return C($key);
+}
 
 /**
  * 数组降维
@@ -47,9 +70,46 @@ function array2str($res)
 
 
 /**
+ * @param $Timestamp
+ * @param string $need
+ * @return mixed
+ */
+function getTimestamp($Timestamp, $need = '$timestamp')
+{
+    $array = explode("-", $Timestamp);
+    $year = $array [0];
+    $month = $array [1];
+
+    $array = explode(":", $array [2]);
+    $minute = $array [1];
+    $second = $array [2];
+
+    $array = explode(" ", $array [0]);
+    $day = $array [0];
+    $hour = $array [1];
+
+    $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
+
+    if ($need === 'hour') {
+        return $hour;
+    } else if ($need === 'minute') {
+        return $minute;
+    } else if ($need === 'second') {
+        return $second;
+    } else if ($need === 'month') {
+        return $month;
+    } else if ($need === 'day') {
+        return $day;
+    } else if ($need === 'year') {
+        return $year;
+    }
+
+}
+
+/**
  * 二位数组转化为一维数组
  * @param 二维数组
- * @return 一维数组
+ * @return array 一维数组
  */
 function array_multi2single($array)
 {
