@@ -43,12 +43,13 @@ class TagController extends HomeBaseController
         $count = sizeof($posts_id);
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
+        if (!empty($posts_id)) {
+            $Page = new GreenPage($count, get_opinion('PAGER'));
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
 
-        $Page = new GreenPage($count, get_opinion('PAGER'));
-        $pager_bar = $Page->show();
-        $limit = $Page->firstRow . ',' . $Page->listRows;
-
-        $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+        }
 
         $this->assign('title', $tag['tag_name']); // 赋值数据集
         $this->assign('res404', $res404);
@@ -58,7 +59,7 @@ class TagController extends HomeBaseController
         //TODO display
         // print_array($res);
 
-        $this->display ( 'Archive/single-list' );
+        $this->display('Archive/single-list');
 
     }
 

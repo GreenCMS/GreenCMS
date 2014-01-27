@@ -41,15 +41,16 @@ class CatController extends HomeBaseController
 
         $posts_id = $Cat->getPostsId($cat['cat_id']);
         $count = sizeof($posts_id);
-
         ($count == 0) ? $res404 = 0 : $res404 = 1;
 
-        $Page = new GreenPage($count, get_opinion('PAGER'));
-        $pager_bar = $Page->show();
-        $limit = $Page->firstRow . ',' . $Page->listRows;
+        if (!empty($posts_id)) {
 
-        $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $Page = new GreenPage($count, get_opinion('PAGER'));
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
 
+            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+        }
         $this->assign('title', $cat['cat_name']); // 赋值数据集
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集
@@ -58,7 +59,7 @@ class CatController extends HomeBaseController
         //TODO display
         //print_array($res);
 
-        $this->display ( 'Archive/single-list' );
+        $this->display('Archive/single-list');
 
     }
 }
