@@ -39,8 +39,6 @@ class BaseController extends Controller
     }
 
 
-
-
     /**
      * check_verify
      */

@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if lt IE 7 ]>
+<html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
 <!--<![endif]-->
 <head>
 
-<!-- Basic Page Needs -->
-<meta charset="utf-8" />
-<title>  {$post.post_title}|{:get_opinion('title')} </title>
-<meta name="description" content="Green Studio" />
-<meta name="author" content="{$post.post_user.user_nicename}" />
-<meta name="keywords"
-	content='{$post.post_title},<volist name="post.pts" id="tag">{$tag.tag_name}, </volist>' />
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8"/>
+    <title> {$post.post_title}|{:get_opinion('title')} </title>
+    <meta name="description" content="Green Studio"/>
+    <meta name="author" content="{$post.post_user.user_nicename}"/>
+    <meta name="keywords"
+          content='{$post.post_title},<volist name="post.pts" id="tag">{$tag.tag_name}, </volist>'/>
 
-<include file="Public:head"/>
+    <include file="Public:head"/>
 
 </head>
 
@@ -23,133 +26,139 @@
 
 {:W('Common/mainMenu')}
 
-	<!-- Title Bar / Srart
+<!-- Title Bar / Srart
 ================================================== -->
-	<div class="page-title">
-		<div class="container">
+<div class="page-title">
+    <div class="container">
 
-			<div class="twelve columns">
-				<h1>{$post.post_top|is_top}{$post.post_title}</h1>
-				<div class="meta clearfix">
+        <div class="twelve columns">
+            <h1>{$post.post_top|is_top}{$post.post_title}</h1>
+
+            <div class="meta clearfix">
 					<span><img src="__PUBLIC__/vena/images/icons/user.png"
-						alt="author" />作者 : <a href="{$post.post_user.user_url}">{$post.post_user.user_nicename},</a>
+                               alt="author"/>作者 : <a
+                            href="{$post.post_user.user_url}">{$post.post_user.user_nicename},</a>
 					</span> <span><img src="__PUBLIC__/vena/images/icons/ribbon.png"
-						alt="categories" /> <span>分类 : <volist name="post.post_cat"
-								id="cat"> <a href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
-							</volist>
+                                       alt="categories"/> <span>分类 : <volist name="post.post_cat"
+                                                                             id="cat"><a
+                    href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
+            </volist>
 					</span> <span><img src="__PUBLIC__/vena/images/icons/ticket.png"
-							alt="tags" /> <span>标签 : <volist name="post.post_tag" id="tag">
-								<a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>, </volist>
+                                       alt="tags"/> <span>标签 : <volist name="post.post_tag" id="tag">
+                <a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
+            </volist>
 
 
 
 						</span> </span>
-				</div>
-			</div>
+            </div>
+        </div>
 
-			<div class="four columns">
-				<ul class="share-post">
-					<li><a href="#" class="gplus">
-							<div class="badge">
-								<i class="icon-google-plus"></i>
-							</div>
-							<div class="shares">15</div>
-					</a></li>
-					<li><a href="#" class="pinterest">
-							<div class="badge">
-								<i class="icon-pinterest"></i>
-							</div>
-							<div class="shares">24</div>
-					</a></li>
-					<li><a href="#" class="facebook">
-							<div class="badge">
-								<i class="icon-facebook"></i>
-							</div>
-							<div class="shares">182</div>
-					</a></li>
-					<li><a href="#" class="twitter">
-							<div class="badge">
-								<i class="icon-twitter"></i>
-							</div>
-							<div class="shares"><span class="ds-thread-count" data-thread-key="{$post.post_od|md5}"  data-count-type="weibo_reposts"></span>
+        <div class="four columns">
+            <ul class="share-post">
+                <li><a href="#" class="gplus">
+                    <div class="badge">
+                        <i class="icon-google-plus"></i>
+                    </div>
+                    <div class="shares">15</div>
+                </a></li>
+                <li><a href="#" class="pinterest">
+                    <div class="badge">
+                        <i class="icon-pinterest"></i>
+                    </div>
+                    <div class="shares">24</div>
+                </a></li>
+                <li><a href="#" class="facebook">
+                    <div class="badge">
+                        <i class="icon-facebook"></i>
+                    </div>
+                    <div class="shares">182</div>
+                </a></li>
+                <li><a href="#" class="twitter">
+                    <div class="badge">
+                        <i class="icon-twitter"></i>
+                    </div>
+                    <div class="shares"><span class="ds-thread-count" data-thread-key="{$post.post_od|md5}"
+                                              data-count-type="weibo_reposts"></span>
+                    </div>
+                </a></li>
+                <li><a class="btn orange" style="padding: 0;" href="{:U('/Feed')}">
+                    <div class="badge" style="background: none;">
+                        <i class="icon-rss"></i>
+                    </div>
+                    <div class="shares"></div>
+
+                </a></li>
+
+            </ul>
+        </div>
+    </div>
 </div>
-					</a></li>
-					<li><a class="btn orange"  style="padding: 0;" href="{:U('/Feed')}">
-							<div class="badge" style="background: none;">
-								<i class="icon-rss"></i>
-							</div>
-							<div class="shares"></div>
-
-					</a></li>
-
-				</ul>
-			</div>
-		</div>
-	</div>
-	<!-- Title Bar / End
+<!-- Title Bar / End
 ================================================== -->
 
-	<!-- Blog / Srart
+<!-- Blog / Srart
 ================================================== -->
-	<section class="blog">
-		<div class="container">
+<section class="blog">
+    <div class="container">
 
-			<div class="three_fourth column">
+        <div class="three_fourth column">
 
-				<!-- Post Start -->
-				<article class="post">
+            <!-- Post Start -->
+            <article class="post">
 
-					<div class="main-info">
-						<!-- Date -->
-						<div class="date">
-							<span class="month">{$post.post_date|getTimeStamp='month'}月</span>
-							<span class="day">{$post.post_date|getTimeStamp='day'}</span>
-						</div>
+                <div class="main-info">
+                    <!-- Date -->
+                    <div class="date">
+                        <span class="month">{$post.post_date|getTimeStamp='month'}月</span>
+                        <span class="day">{$post.post_date|getTimeStamp='day'}</span>
+                    </div>
 
-						<!-- Comments Number -->
-						<a href="#comments" class="commentsnumber">
-							浏览 <span>{$post.post_comment_count}</span>
+                    <!-- Comments Number -->
+                    <a href="#comments" class="commentsnumber">
+                        浏览 <span>{$post.post_comment_count}</span>
 
-						</a>
-					</div>
+                    </a>
+                </div>
 
-					<div class="post-content">{$post.post_content}</div>
+                <div class="post-content">{$post.post_content}</div>
 
-				</article>
-				<!-- Post End -->
+            </article>
+            <!-- Post End -->
 
-				<!-- About Author -->
-				<article class="post-author">
+            <!-- About Author -->
+            <article class="post-author">
 
-					<div class="author-avatar">
-						<img src="__PUBLIC__/vena/images/avatar.png" alt="" />
-					</div>
+                <div class="author-avatar">
+                    <img src="__PUBLIC__/vena/images/avatar.png" alt=""/>
+                </div>
 
-					<h4>
-						关于作者<a href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a>
-					</h4>
-					<p>{$post.post_user.user_intro}</p>
+                <h4>
+                    关于作者<a href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a>
+                </h4>
 
-				</article>
-				
+                <p>{$post.post_user.user_intro}</p>
 
-			</div>
+            </article>
 
-			<!-- Sidebar Start -->
-			<div class="one_fourth column">
-			  <include file="Public:search"/>
-                {:W('Widget/search')}
-                {:W('Widget/categories')}
-                {:W('Widget/tag')}
-                {:W('Widget/aboutUs')}
 
-			</div>
-		</div>
-		<!-- Sidebar End -->
+        </div>
 
-		</div>
-	</section>
-	<!-- Blog / End
+        <!-- Sidebar Start -->
+        <div class="one_fourth column">
+            <include file="Public:search"/>
+            {:W('Widget/search')}
+            {:W('Widget/categories')}
+            {:W('Widget/tag')}
+            {:W('Widget/aboutUs')}
+
+        </div>
+    </div>
+    <!-- Sidebar End -->
+
+    </div>
+</section>
+<!-- Blog / End
 ================================================== -->
 
 <include file="Public:footer"/>

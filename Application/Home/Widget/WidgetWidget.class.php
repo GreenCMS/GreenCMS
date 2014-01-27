@@ -9,7 +9,7 @@
 
 namespace Home\Widget;
 
-use \Think\Controller;
+use Think\Controller;
 
 class WidgetWidget extends Controller
 {

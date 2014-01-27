@@ -61,7 +61,6 @@ $config_router = array(
     'OUR_CAT_MODEL' => "native", //TAG标签路由模式.
 
 
-
 );
 
 return $config_router;

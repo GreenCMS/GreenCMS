@@ -10,7 +10,6 @@
 namespace Admin\Controller;
 
 
-
 class PostsController extends AdminBaseController
 {
     public function index($post_type = 'single', $post_status = 'publish')

@@ -40,9 +40,6 @@ class TagsLogic extends RelationModel
     }
 
 
-
-
-
     /**
      * @param int $limit
      * @param bool $relation

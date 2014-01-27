@@ -32,7 +32,7 @@ return array(
     ),
 
     'TMPL_PARSE_STRING' => array(
-        '__EXTEND__'=>ExtendDir,
+        '__EXTEND__' => ExtendDir,
         //'__PUBLIC__' => 'PUBLIC', // 强制修正__PUBLIC__
         //'__ROOT__' => '',// 强制修正__ROOT__
     ),
