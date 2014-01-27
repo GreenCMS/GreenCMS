@@ -26,6 +26,7 @@ class PostsController extends AdminBaseController
 
         $posts = D('Posts', 'Logic')->getList(1000, $post_type, 'post_id desc', true, $where, $post_ids);
 
+       // dump($posts);
         $this->assign('posts', $posts);
 
         $this->display('index');
@@ -253,6 +254,12 @@ class PostsController extends AdminBaseController
 
         $category = D("Cats", "Logic")->relation(true)->category();
 
+
+        foreach ($category as $key => $value){
+            $category[$key]["cat_father"]= D('Cats', 'Logic')->detail($value["cat_father"]);
+        }
+
+
         $this->assign('category', $category);
 
         $this->display();
@@ -263,6 +270,7 @@ class PostsController extends AdminBaseController
         $action = '添加';
         $this->assign('action', $action);
         $cats = D('Cats', 'Logic')->category();
+
 
         $this->assign('cats', $cats);
         $this->display();

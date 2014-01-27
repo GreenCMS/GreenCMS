@@ -140,13 +140,13 @@
 
 
                                             分类:
-                                            <volist name="v['pcs']" id="v_pcs" empty="无分类">
+                                            <volist name="v['post_cat']" id="v_pcs" empty="无分类">
                                                 <a
                                                         href="{:U('Posts/category', array('id' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
                                             </volist>
 
                                             标签:
-                                            <volist name="v['pts']" id="v_pts" empty="无标签">
+                                            <volist name="v['post_tag']" id="v_pts" empty="无标签">
                                                 <a href="{:U('Posts/tag', array('id' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
 
                                             </volist>
@@ -161,7 +161,7 @@
                                             &nbsp;&nbsp;&nbsp;
 
                                             <a
-                                                    href="{:U('App/'.$v[post_type].'/detail', array('info' => $v[post_id]))}"
+                                                    href="{:U('Home/'.$v[post_type].'/detail', array('info' => $v[post_id]))}"
                                                     target="_blank">查看</a>
 
                                             &nbsp;&nbsp;&nbsp;
