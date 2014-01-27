@@ -57,7 +57,9 @@ a.btn {
 /* =================================================================== */
 /* Main
 ====================================================================== */
-a:hover,
+a:hover{
+    color: #212020;
+}
 .news-item .date .day,
 .toggle a.toggle-trigger:before,
 .toggle a.toggle-trigger,
