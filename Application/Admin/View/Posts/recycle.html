@@ -21,40 +21,7 @@
 <!-- BEGIN HEADER -->
 <div class="header navbar navbar-inverse navbar-fixed-top">
     <!-- BEGIN TOP NAVIGATION BAR -->
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <!-- BEGIN LOGO -->
-            <a class="brand" href="{:U('Admin/Index/index')}"> <img
-                    src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
-            </a>
-            <!-- END LOGO -->
-            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-            <a href="javascript:;" class="btn-navbar collapsed"
-               data-toggle="collapse" data-target=".nav-collapse"> <img
-                    src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
-            </a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
-            <ul class="nav pull-right">
-                <!-- BEGIN USER LOGIN DROPDOWN -->
-                <li class="dropdown user"><a href="#" class="dropdown-toggle"
-                                             data-toggle="dropdown"> <img alt=""
-                                                                          src="__PUBLIC__/admin/assets/img/avatar1_small.jpg"/> <span
-                        class="username">{$username}</span> <i class="icon-angle-down"></i>
-                </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{:U('Admin/Index/index')}"><i
-                                class="icon-user"></i>个人信息</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{:U('Admin/Login/logout')}"><i
-                                class="icon-key"></i>退出</a></li>
-                    </ul>
-                </li>
-                <!-- END USER LOGIN DROPDOWN -->
-            </ul>
-            <!-- END TOP NAVIGATION MENU -->
-        </div>
-    </div>
+      {:W('Common/header')}
     <!-- END TOP NAVIGATION BAR -->
 </div>
 <!-- END HEADER -->
@@ -63,10 +30,8 @@
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
         <!-- BEGIN SIDEBAR MENU -->
-
-
-        </li> {:W('Common/sideBar')}
-        </ul>
+        {:W('Common/sideBar')}
+        
         <!-- END SIDEBAR MENU -->
     </div>
     <!-- END SIDEBAR -->
