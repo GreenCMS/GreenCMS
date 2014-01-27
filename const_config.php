@@ -45,7 +45,7 @@ define("Upgrade_PATH", WEB_ROOT . "Data/Upgrade/");
 
 /**上传文件存放目录
  */
-define("UploadDir", "Upload");
+define("UploadDir", "Upload/");
 
 
 /**Ip.DATA存放目录

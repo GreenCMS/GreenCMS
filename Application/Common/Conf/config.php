@@ -2,7 +2,7 @@
 return array(
     //'配置项'=>'配置值'
 
-    'SHOW_PAGE_TRACE' => true,
+    'SHOW_PAGE_TRACE' => APP_DEBUG,
 
     'COOKIE_PREFIX' => 'greencms_', // cookie 名称前缀
     'COOKIE_EXPIRE' => 3600, // Coodie有效期

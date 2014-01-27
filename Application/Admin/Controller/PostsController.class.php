@@ -8,7 +8,7 @@
  */
 
 namespace Admin\Controller;
-
+use Org\Util\Rbac;
 
 class PostsController extends AdminBaseController
 {
