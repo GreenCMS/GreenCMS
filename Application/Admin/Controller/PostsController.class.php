@@ -18,11 +18,11 @@ class PostsController extends AdminBaseController
     {
         $cat = I('get.cat');
         $tag = I('get.tag');
-
         $where = array('post_status' => $post_status);
 
-        if ($cat == '') $post_ids = D('Cats', 'Logic')->getPostsId($cat);
-        if ($tag == '') $post_ids = D('Tags', 'Logic')->getPostsId($tag);
+        if ($cat != '') $post_ids = D('Cats', 'Logic')->getPostsId($cat);
+        if ($tag != '') $post_ids = D('Tags', 'Logic')->getPostsId($tag);
+
 
         $posts = D('Posts', 'Logic')->getList(1000, $post_type, 'post_id desc', true, $where, $post_ids);
 
