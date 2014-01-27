@@ -12,6 +12,8 @@ namespace Admin\Controller;
 
 class PostsController extends AdminBaseController
 {
+    //TODO 文章发布修改问题。。
+    //TODO 部分信息显示错误
     public function index($post_type = 'single', $post_status = 'publish')
     {
         $cat = I('get.cat');
@@ -170,7 +172,7 @@ class PostsController extends AdminBaseController
 
         //$where['post_status'] = array('neq','publish');
 
-        $where['post_status'] = 'unpublished';
+        $where['post_status'] = 'preDel';
         $posts = D('Posts')->where($where)->relation(true)->order('post_date desc')->select();
 
         $this->assign('posts', $posts);
