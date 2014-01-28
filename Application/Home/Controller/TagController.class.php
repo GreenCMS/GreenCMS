@@ -36,7 +36,7 @@ class TagController extends HomeBaseController
 
         $tag = $Tag->detail($info);
         if (empty($tag)) {
-            //TODO error("没有这个标签");
+            $this->error("没有这个标签");
         }
 
         $posts_id = $Tag->getPostsId($tag['tag_id']);
@@ -55,9 +55,6 @@ class TagController extends HomeBaseController
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('page', $pager_bar); // 赋值分页输出
-
-        //TODO display
-        // print_array($res);
 
         $this->display('Archive/single-list');
 

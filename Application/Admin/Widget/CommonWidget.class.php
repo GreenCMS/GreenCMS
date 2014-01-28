@@ -9,8 +9,8 @@
 
 namespace Admin\Widget;
 
-use \Think\Controller;
 use Org\Util\Rbac;
+use Think\Controller;
 
 /**
  * Class CommonWidget
@@ -23,7 +23,6 @@ class CommonWidget extends Controller
      */
     public function header()
     {
-
 
 
         $this->display('Widget:header');

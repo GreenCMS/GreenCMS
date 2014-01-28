@@ -8,12 +8,11 @@
  */
 
 namespace Admin\Controller;
+
 use Org\Util\Rbac;
 
 class PostsController extends AdminBaseController
 {
-    //TODO 文章发布修改问题。。
-    //TODO 部分信息显示错误
     public function index($post_type = 'single', $post_status = 'publish')
     {
         $cat = I('get.cat');

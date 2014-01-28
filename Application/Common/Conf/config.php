@@ -37,9 +37,6 @@ return array(
         //'__ROOT__' => '',// 强制修正__ROOT__
     ),
 
-    'DB_FIELDS_CACHE' => false,
-    'DB_SQL_BUILD_CACHE' => true,
-
 
     /**
      * TP 3.1升级

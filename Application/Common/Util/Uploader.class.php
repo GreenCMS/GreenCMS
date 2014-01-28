@@ -214,7 +214,6 @@ class Uploader
             if (!file_exists($pathStr)) {
                 if (!mkdir($pathStr, 0777, true)) {
                     //return false;
-                    //@TODO just try mkdir for two times to prvent mkdir failed on Windows for first time
 
                     if (!file_exists($pathStr)) {
                         if (!mkdir($pathStr, 0777, true)) {

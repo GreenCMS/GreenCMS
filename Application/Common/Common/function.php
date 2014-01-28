@@ -13,7 +13,7 @@ include APP_PATH . 'Common/Common/common_router.php';
 function encrypt($data)
 {
     //return md5($data);
-   return md5(C("AUTH_CODE") . md5($data));
+    return md5(C("AUTH_CODE") . md5($data));
 }
 
 

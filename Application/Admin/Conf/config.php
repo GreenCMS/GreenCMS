@@ -115,7 +115,6 @@ $config_other = array(
     'URL_MODEL' => 2,
     'SHOW_PAGE_TRACE' => false,
 
-
 );
 $config = array_merge($config_rbac, $menu_arr);
 return array_merge($config, $config_other);

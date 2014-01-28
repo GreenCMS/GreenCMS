@@ -75,7 +75,7 @@ class DataController extends AdminBaseController
             }
         } else {
             $type = "管理员后台手动备份";
-            $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" .md5( rand(0,255).md5(rand(128,200)).rand(100,768));
+            $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
         }
         $pre = "# -----------------------------------------------------------\n" .
             "# " . C('OUR_NAME') . " database backup files\n" .
@@ -368,6 +368,7 @@ class DataController extends AdminBaseController
 
             $zipOut = "sqlBackup.zip";
             if (D("MySQL", "Logic")->zip($sqlFiles, $zipOut)) {
+                //TODO send_mail
                 send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
 
             }

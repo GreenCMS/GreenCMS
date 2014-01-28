@@ -14,6 +14,11 @@ use Common\Util\GreenPage;
 class CustomController extends AdminBaseController
 {
 
+    public function theme()
+    {
+
+    }
+
     public function plugin()
     {
 
@@ -28,8 +33,8 @@ class CustomController extends AdminBaseController
             0
         );
 
-        //TODO _get
         //$install = $this->_get('install', false);
+        $install = I('get.install');
         if ($install != 1) {
             $model = M('plugin');
             $count = $model->where($map)->count();

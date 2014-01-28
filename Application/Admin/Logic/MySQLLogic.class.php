@@ -9,8 +9,8 @@
 
 namespace Admin\Logic;
 
-use Think\Model;
 use Common\Util\Dir;
+use Think\Model;
 
 class MySQLLogic extends Model
 {

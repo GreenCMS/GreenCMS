@@ -36,7 +36,7 @@ class CatController extends HomeBaseController
 
         $cat = $Cat->detail($info);
         if (empty($tag)) {
-            //TODO error("没有这个标签");
+            $this->error("没有这个标签");
         }
 
         $posts_id = $Cat->getPostsId($cat['cat_id']);
@@ -56,8 +56,6 @@ class CatController extends HomeBaseController
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('page', $pager_bar); // 赋值分页输出
 
-        //TODO display
-        //print_array($res);
 
         $this->display('Archive/single-list');
 
