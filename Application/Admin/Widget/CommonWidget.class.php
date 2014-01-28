@@ -9,20 +9,22 @@
 
 namespace Admin\Widget;
 
-use Admin\Controller\AdminBaseController;
+use \Think\Controller;
 use Org\Util\Rbac;
 
 /**
  * Class CommonWidget
  * @package Admin\Widget
  */
-class CommonWidget extends AdminBaseController
+class CommonWidget extends Controller
 {
     /**
      *
      */
     public function header()
     {
+
+
 
         $this->display('Widget:header');
 
