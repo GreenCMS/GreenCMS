@@ -102,13 +102,13 @@ class SystemController extends AdminBaseController
     {
         if (IS_POST) {
 
-            if (D('Links')->add_link($_POST)) {
-                $this->success('链接添加成功', U('Admin/Webinfo/links'));
+            if (D('Links', 'Logic')->addLink($_POST)) {
+                $this->success('链接添加成功', U('Admin/System/links'));
             } else {
-                $this->error('链接添加失败', U('Admin/Webinfo/links'));
+                $this->error('链接添加失败', U('Admin/System/links'));
             }
         } else {
-            $this->form_url = U('Admin/Webinfo/addlink');
+            $this->form_url = U('Admin/System/addlink');
             $this->action = '添加链接';
             $this->buttom = '添加';
             $this->display('addlink');
@@ -123,13 +123,13 @@ class SystemController extends AdminBaseController
                 'link_id' => $id
             ))->save($_POST)
             ) {
-                $this->success('链接编辑成功', U('Admin/Webinfo/links'));
+                $this->success('链接编辑成功', U('Admin/System/links'));
             } else {
-                $this->error('链接编辑失败', U('Admin/Webinfo/links'));
+                $this->error('链接编辑失败', U('Admin/System/links'));
             }
         } else {
 
-            $this->form_url = U('Admin/Webinfo/editlink', array(
+            $this->form_url = U('Admin/System/editlink', array(
                 'id' => $id
             ));
             $this->link = D('Links')->detail($id);
@@ -274,7 +274,7 @@ class SystemController extends AdminBaseController
         File::write_file(LOG_PATH . $date . '/log.txt', $logcontent);
 
         // 跳转到更新展示页面
-        $this->success('更新完毕!', U('Webinfo/over', array(
+        $this->success('更新完毕!', U('System/over', array(
             "date" => $date
         )));
     }
