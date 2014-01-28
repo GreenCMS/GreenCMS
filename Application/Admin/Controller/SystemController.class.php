@@ -35,7 +35,6 @@ class SystemController extends AdminBaseController
     }
 
 
-
     public function setEmailConfig()
     {
         $this->assign('send_mail', C('send_mail'));

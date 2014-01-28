@@ -91,11 +91,11 @@ class ArchiveController extends HomeBaseController
         $count = $PostsList->countAll('page'); // 查询满足要求的总记录数
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
-        $Page = new GreenPage($count, C('PAGER'));
-        $pager_bar = $Page->show();
-        $limit = $Page->firstRow . ',' . $Page->listRows;
+            $Page = new GreenPage($count, C('PAGER'));
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
 
-        $res = $PostsList->getList($limit, 'page', 'post_id desc', true);
+            $res = $PostsList->getList($limit, 'page', 'post_id desc', true);
         }
         $this->assign('title', '所有页面');
         $this->assign('res404', $res404); // 赋值数据集

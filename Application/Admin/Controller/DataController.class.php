@@ -603,7 +603,7 @@ class DataController extends AdminBaseController
 
     public function cache()
     {
-        $this->assign('HTML_CACHE_ON',(int)get_opinion('HTML_CACHE_ON'));
+        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON'));
         $this->display();
     }
 
@@ -613,7 +613,6 @@ class DataController extends AdminBaseController
         $this->success('配置成功');
 
     }
-
 
 
     public function clear()
