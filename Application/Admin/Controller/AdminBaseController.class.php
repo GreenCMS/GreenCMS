@@ -99,4 +99,25 @@ class AdminBaseController extends BaseController
     }
 
 
+    public function saveConfig()
+    {
+        $options = D('Options');
+        $data=array();
+        foreach ($_POST as $name => $value) {
+            unset ($data ['option_id']); // 删除上次保存配置时产生的option_id，否则无法插入下一条数据
+            $data ['option_name'] = $name;
+            $data ['option_value'] = $value;
+
+            $find = $options->where(array(
+                'option_name' => $name
+            ))->select();
+            if (!$find) {
+                $options->data($data)->add();
+            } else {
+                $data ['option_id'] = $find [0] ['option_id'];
+                $options->save($data);
+            }
+        }
+    }
+
 }

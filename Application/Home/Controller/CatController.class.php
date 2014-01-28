@@ -33,9 +33,9 @@ class CatController extends HomeBaseController
     {
         $Cat = D('Cats', 'Logic');
         $Posts = D('Posts', 'Logic');
-
         $cat = $Cat->detail($info);
-        if (empty($tag)) {
+
+        if (empty($cat)) {
             $this->error("没有这个标签");
         }
 

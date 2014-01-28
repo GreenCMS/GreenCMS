@@ -68,7 +68,7 @@
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="site_url"
-                                       value="{:C('site_url')}"/>
+                                       value="{:get_opinion('site_url')}"/>
                                 <span class="help-inline"></span>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="title"
-                                       value="{:C('title')}"/>
+                                       value="{:get_opinion('title')}"/>
                                 <span class="help-inline"></span>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="keywords"
-                                       value="{:C('keywords')}"/>
+                                       value="{:get_opinion('keywords')}"/>
                                 <span class="help-inline">多个关键词用英文逗号,分隔</span>
                             </div>
                         </div>
@@ -95,16 +95,17 @@
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="description"
-                                       value="{:C('description')}"/>
-                                <span class="help-inline">多个描述用英文逗号,分隔</span>
+                                       value="{:get_opinion('description')}"/>
+                                <span class="help-inline">一般是一句话描述你的网站</span>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">网站底部信息</label>
                             <textarea class="" id="post_content" name="foot" style="margin-left:18px; width:23em;"
-                                      rows="6">{:C('foot')}</textarea>
+                                      rows="6">{:get_opinion('foot')}</textarea>
                             <span class="help-inline">版权信息、统计代码</span>
                         </div>
+
                         <div class="control-group">
                             <label class="control-label">是否开启注册</label>
 
@@ -113,10 +114,13 @@
                                 <label class="radio">
 
                                     <switch name="users_can_register">
-                                        <case value="1"><input type="radio" name="users_can_register" checked="checked"
-                                                               value="1"/></case>
+                                        <case value="1"><input type="radio" name="users_can_register"
+                                                               checked="checked" value="1"/></case>
                                         <case value="0"><input type="radio" name="users_can_register" value="1"/></case>
+
                                         <default/>
+                                        <input type="radio" name="users_can_register"
+                                               checked="checked" value="1"/>
                                     </switch>
                                     是
 
@@ -125,12 +129,14 @@
 
 
                                 <label class="radio">
-
                                     <switch name="users_can_register">
                                         <case value="1"><input type="radio" name="users_can_register" value="0"/></case>
                                         <case value="0"><input type="radio" name="users_can_register" checked="checked"
                                                                value="0"/></case>
+
                                         <default/>
+                                        <input type="radio" name="users_can_register" checked=
+                                                value="0"/>
                                     </switch>
                                     否
                                 </label>

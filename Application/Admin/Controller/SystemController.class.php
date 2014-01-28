@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Common\Util\Dir;
 
 class SystemController extends AdminBaseController
 {
@@ -21,10 +22,7 @@ class SystemController extends AdminBaseController
 
     public function index()
     {
-
-        // $configs=$this->get__config();
-        $this->assign('users_can_register', C('users_can_register'));
-
+        $this->assign('users_can_register', get_opinion('users_can_register'));
         $this->display();
     }
 
@@ -36,26 +34,7 @@ class SystemController extends AdminBaseController
         $this->success('配置成功', 'index');
     }
 
-    public function saveConfig()
-    {
-        $options = D('Options');
 
-        foreach ($_POST as $name => $value) {
-            unset ($data ['option_id']); // 删除上次保存配置时产生的option_id，否则无法插入下一条数据
-            $data ['option_name'] = $name;
-            $data ['option_value'] = $value;
-
-            $find = $options->where(array(
-                'option_name' => $name
-            ))->select();
-            if (!$find) {
-                $options->data($data)->add();
-            } else {
-                $data ['option_id'] = $find [0] ['option_id'];
-                $options->save($data);
-            }
-        }
-    }
 
     public function setEmailConfig()
     {
@@ -119,7 +98,7 @@ class SystemController extends AdminBaseController
     {
         if (IS_POST) {
 
-            if (D('Links')->where(array(
+            if (D('Links', 'Logic')->where(array(
                 'link_id' => $id
             ))->save($_POST)
             ) {
@@ -132,7 +111,7 @@ class SystemController extends AdminBaseController
             $this->form_url = U('Admin/System/editlink', array(
                 'id' => $id
             ));
-            $this->link = D('Links')->detail($id);
+            $this->link = D('Links', 'Logic')->detail($id);
             // print_array($this->link);
             $this->action = '编辑链接';
             $this->buttom = '编辑';
@@ -296,7 +275,6 @@ class SystemController extends AdminBaseController
 
     public function clear()
     {
-        import("@.ORG.Dir");
         $Dir = new Dir (RUNTIME_PATH);
 
         $caches = array(
@@ -429,5 +407,14 @@ class SystemController extends AdminBaseController
         $this->assign('server_info', $info);
 
         $this->display('info');
+    }
+
+
+    public function special()
+    {
+
+        $this->display();
+
+
     }
 }

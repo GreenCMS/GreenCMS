@@ -62,12 +62,12 @@ class ArchiveController extends HomeBaseController
         $PostsList = D('Posts', 'Logic');
 
         $count = $PostsList->countAll(); // 查询满足要求的总记录数
+
         ($count == 0) ? $res404 = 0 : $res404 = 1;
-        if (!empty($posts_id)) {
+        if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER'));
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-
             $res = $PostsList->getList($limit, 'single', 'post_id desc', true);
         }
         $this->assign('title', '所有文章');
@@ -90,13 +90,13 @@ class ArchiveController extends HomeBaseController
 
         $count = $PostsList->countAll('page'); // 查询满足要求的总记录数
         ($count == 0) ? $res404 = 0 : $res404 = 1;
-
+        if ($count != 0) {
         $Page = new GreenPage($count, C('PAGER'));
         $pager_bar = $Page->show();
         $limit = $Page->firstRow . ',' . $Page->listRows;
 
         $res = $PostsList->getList($limit, 'page', 'post_id desc', true);
-
+        }
         $this->assign('title', '所有页面');
         $this->assign('res404', $res404); // 赋值数据集
         $this->assign('postslist', $res); // 赋值数据集

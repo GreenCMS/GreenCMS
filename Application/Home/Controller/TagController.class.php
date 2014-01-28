@@ -35,6 +35,7 @@ class TagController extends HomeBaseController
         $Posts = D('Posts', 'Logic');
 
         $tag = $Tag->detail($info);
+
         if (empty($tag)) {
             $this->error("没有这个标签");
         }

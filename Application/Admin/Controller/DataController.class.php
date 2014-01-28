@@ -603,8 +603,18 @@ class DataController extends AdminBaseController
 
     public function cache()
     {
+        $this->assign('HTML_CACHE_ON',(int)get_opinion('HTML_CACHE_ON'));
+        $this->display();
+    }
+
+    public function cacheHandle()
+    {
+        $this->saveConfig();
+        $this->success('配置成功');
 
     }
+
+
 
     public function clear()
     {
