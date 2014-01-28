@@ -30,7 +30,7 @@ class PostController extends HomeBaseController
 
         $this->assign('post', $post_res); // 赋值数据集
         //print_array($post_res);
-        $this->display ( 'single' );
+        $this->display('single');
 
     }
 
@@ -48,7 +48,7 @@ class PostController extends HomeBaseController
 
         $this->assign('post', $post_res); // 赋值数据集
         //print_array($post_res);
-        $this->display ( 'page' );
+        $this->display('page');
 
     }
 

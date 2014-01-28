@@ -8,7 +8,7 @@
  */
 
 namespace Common\Logic;
-use \Think\Model\RelationModel;
+use Think\Model\RelationModel;
 
 /**
  * Class PostsLogic

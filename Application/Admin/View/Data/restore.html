@@ -21,38 +21,7 @@
 <!-- BEGIN HEADER -->
 <div class="header navbar navbar-inverse navbar-fixed-top">
     <!-- BEGIN TOP NAVIGATION BAR -->
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <!-- BEGIN LOGO -->
-            <a class="brand" href="{:U('Admin/Index/index')}">
-                <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
-            </a>
-            <!-- END LOGO -->
-            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-            <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-                <img src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
-            </a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
-            <ul class="nav pull-right">
-                <!-- BEGIN USER LOGIN DROPDOWN -->
-                <li class="dropdown user">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img alt="" src="__PUBLIC__/admin/assets/img/avatar1_small.jpg"/>
-                        <span class="username">{$username}</span>
-                        <i class="icon-angle-down"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{:U('Admin/Index/index')}"><i class="icon-user"></i>个人信息</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{:U('Admin/Login/logout')}"><i class="icon-key"></i>退出</a></li>
-                    </ul>
-                </li>
-                <!-- END USER LOGIN DROPDOWN -->
-            </ul>
-            <!-- END TOP NAVIGATION MENU -->
-        </div>
-    </div>
+    {:W('Common/header')}
     <!-- END TOP NAVIGATION BAR -->
 </div>
 <!-- END HEADER -->
@@ -62,10 +31,7 @@
     <div class="page-sidebar nav-collapse collapse">
         <!-- BEGIN SIDEBAR MENU -->
         <ul class="page-sidebar-menu">
-            <li>
 
-
-            </li>
             {:W('Common/sideBar')}
         </ul>
         <!-- END SIDEBAR MENU -->
@@ -116,11 +82,11 @@
                             </thead>
                             <tbody id="cache_table">
                             <volist name="list" id="sql">
-                                <tr id="{$sql.name|del_sql=###}" align="center">
+                                <tr id="{$sql.name}" align="center"><!--|del_sql=###-->
                                     <td><input pre="{$sql.pre}" type="checkbox" name="sqlFiles" value="{$sql.name}"/>
                                     </td>
                                     <td align="left"><a
-                                            href="{:U('Sysdata/downFile',array('file'=>$sql['name'],'type'=>'sql'))}"
+                                            href="{:U('Data/downFile',array('file'=>$sql['name'],'type'=>'sql'))}"
                                             target="_blank">{$sql.name}</a></td>
                                     <td>{$sql.time}</td>
                                     <td>{$sql.type}</td>
@@ -235,7 +201,7 @@ jQuery(document).ready(function () {
                 }
             }
         }
-        var url = "{:U('Admin/Sysdata/delSqlFiles')}";
+        var url = "{:U('Admin/Data/delSqlFiles')}";
         $.post(url, {sqlFiles: sqlFiles}, function (data) {
 
             //删除成功
@@ -288,7 +254,7 @@ jQuery(document).ready(function () {
                 }
             }
         }
-        var url2 = "{:U('Admin/Sysdata/zipSql')}";
+        var url2 = "{:U('Admin/Data/zipSql')}";
         $.post(url2, {sqlFiles: sqlFiles2}, function (data) {
 
 
@@ -327,7 +293,7 @@ jQuery(document).ready(function () {
         var sqlPre = $(this).attr("sqlPre");
         $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("导入中...");
         $(".btn").attr("disabledSubmit", true);
-        var url_restore = "{:U('Admin/Sysdata/restoreData')}";
+        var url_restore = "{:U('Admin/Data/restoreData')}";
         $.getJSON(url_restore, {sqlPre: sqlPre}, function (json) {
             if (json.status == 1) {
                 if (json.url) {
@@ -372,7 +338,7 @@ jQuery(document).ready(function () {
             $("#to").css("border-color", "red");
             return false;
         }
-        var url3 = "{:U('Admin/Sysdata/sendSql')}";
+        var url3 = "{:U('Admin/Data/sendSql')}";
         var obj3 = document.getElementsByName('sqlFiles');
 
         // var file = [];

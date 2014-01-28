@@ -94,6 +94,7 @@ class CatsLogic extends RelationModel
     {
         $cat_info ['cat_id'] = $info;
         $cat = D('Post_cat')->field('post_id')->where($cat_info)->select();
+
         foreach ($cat as $key => $value) {
             $cat[$key] = $cat[$key]['post_id'];
         }

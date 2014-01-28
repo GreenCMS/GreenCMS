@@ -112,8 +112,8 @@ $config_rbac = array(
 );
 
 $config_other = array(
-    'title' => "绿荫工作室2014",
     'URL_MODEL' => 2,
+    'SHOW_PAGE_TRACE' => false,
 
 );
 $config = array_merge($config_rbac, $menu_arr);

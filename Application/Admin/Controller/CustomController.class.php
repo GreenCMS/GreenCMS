@@ -14,6 +14,11 @@ use Common\Util\GreenPage;
 class CustomController extends AdminBaseController
 {
 
+    public function theme()
+    {
+        $this->display();
+    }
+
     public function plugin()
     {
 
@@ -28,8 +33,8 @@ class CustomController extends AdminBaseController
             0
         );
 
-        //TODO _get
         //$install = $this->_get('install', false);
+        $install = I('get.install');
         if ($install != 1) {
             $model = M('plugin');
             $count = $model->where($map)->count();
@@ -77,10 +82,10 @@ class CustomController extends AdminBaseController
     {
         // 为方便调试, 插件功能模块编译不缓存
         C('TMPL_CACHE_ON', false);
-        $name = $this->_get('name', false);
+        $name = I('get.name');
         if (empty ($name))
             $this->die('参数错误!');
-        $method = $this->_get('method', false);
+        $method = I('get.method');
         $method = empty ($method) ? 'index' : $method;
         $path = './Public/Plugin/' . $name . '/admin.php';
         if (file_exists($path)) {
@@ -110,8 +115,8 @@ class CustomController extends AdminBaseController
     // 执行插件导入
     public function pluginDoimport()
     {
-        $filename = $this->_post('filename', false);
-        $checkdir = $this->_post('checkdir', false);
+        $filename = I('post.filename');
+        $checkdir = I('post.checkdir');
         if (strtolower(substr($filename, -4)) != '.zip')
             $this->error('仅支持后缀为zip的压缩包');
         $path = ltrim($filename, __ROOT__ . '/');

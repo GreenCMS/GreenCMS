@@ -21,40 +21,7 @@
 <!-- BEGIN HEADER -->
 <div class="header navbar navbar-inverse navbar-fixed-top">
     <!-- BEGIN TOP NAVIGATION BAR -->
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <!-- BEGIN LOGO -->
-            <a class="brand" href="{:U('Admin/Index/index')}"> <img
-                    src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
-            </a>
-            <!-- END LOGO -->
-            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-            <a href="javascript:;" class="btn-navbar collapsed"
-               data-toggle="collapse" data-target=".nav-collapse"> <img
-                    src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
-            </a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
-            <ul class="nav pull-right">
-                <!-- BEGIN USER LOGIN DROPDOWN -->
-                <li class="dropdown user"><a href="#" class="dropdown-toggle"
-                                             data-toggle="dropdown"> <img alt=""
-                                                                          src="__PUBLIC__/admin/assets/img/avatar1_small.jpg"/> <span
-                        class="username">{$username}</span> <i class="icon-angle-down"></i>
-                </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{:U('Admin/Index/index')}"><i
-                                class="icon-user"></i>个人信息</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{:U('Admin/Login/logout')}"><i
-                                class="icon-key"></i>退出</a></li>
-                    </ul>
-                </li>
-                <!-- END USER LOGIN DROPDOWN -->
-            </ul>
-            <!-- END TOP NAVIGATION MENU -->
-        </div>
-    </div>
+    {:W('Common/header')}
     <!-- END TOP NAVIGATION BAR -->
 </div>
 <!-- END HEADER -->
@@ -63,9 +30,7 @@
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
         <!-- BEGIN SIDEBAR MENU -->
-
-
-        </li> {:W('Common/sideBar')}
+        {:W('Common/sideBar')}
         <!-- END SIDEBAR MENU -->
     </div>
     <!-- END SIDEBAR -->
@@ -140,13 +105,13 @@
 
 
                                             分类:
-                                            <volist name="v['pcs']" id="v_pcs" empty="无分类">
+                                            <volist name="v['post_cat']" id="v_pcs" empty="无分类">
                                                 <a
                                                         href="{:U('Posts/category', array('id' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
                                             </volist>
 
                                             标签:
-                                            <volist name="v['pts']" id="v_pts" empty="无标签">
+                                            <volist name="v['post_tag']" id="v_pts" empty="无标签">
                                                 <a href="{:U('Posts/tag', array('id' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
 
                                             </volist>
@@ -161,7 +126,7 @@
                                             &nbsp;&nbsp;&nbsp;
 
                                             <a
-                                                    href="{:U('App/'.$v[post_type].'/detail', array('info' => $v[post_id]))}"
+                                                    href="{:U('Home/'.$v[post_type].'/detail', array('info' => $v[post_id]))}"
                                                     target="_blank">查看</a>
 
                                             &nbsp;&nbsp;&nbsp;
@@ -173,7 +138,7 @@
 
 
                                             <a
-                                                    href="{:U('Admin/Posts/del', array('id' => $v[post_id]))}">删除</a>
+                                                    href="{:U('Admin/Posts/preDel', array('id' => $v[post_id]))}">删除</a>
                                         </td>
 
 

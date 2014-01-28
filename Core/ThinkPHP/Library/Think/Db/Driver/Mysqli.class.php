@@ -31,6 +31,7 @@ class Mysqli extends Db{
                 $this->config['params'] =   '';
             }
         }
+
     }
 
     /**
@@ -64,7 +65,8 @@ class Mysqli extends Db{
      * @access public
      */
     public function free() {
-        $this->queryID->free_result();
+        //TODO 这里是不是BUG        $this->queryID->free_result();
+        $this->free_result();
         $this->queryID = null;
     }
 

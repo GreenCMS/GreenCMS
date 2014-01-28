@@ -39,18 +39,22 @@ class BaseController extends Controller
     }
 
 
-
-
     /**
      * check_verify
      */
     function check_verify()
     {
         if (!APP_DEBUG) {
-            if ($_SESSION['verify'] != md5($_POST ['verify'])) {
+            if ($_SESSION['verify'] != md5(I('post.verify')))
                 $this->error('验证码错误！');
-            }
         }
+    }
 
+
+    function is_sae()
+    {
+        if (defined('SAE_TMP_PATH')) {
+            $this->error("当前功能不支持SAE下使用");
+        }
     }
 }

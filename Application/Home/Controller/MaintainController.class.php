@@ -16,7 +16,8 @@ namespace Home\Controller;
 class MaintainController extends HomeBaseController
 {
 
-    public function index(){
+    public function index()
+    {
 
 
         $this->display();

@@ -1,5 +1,7 @@
 <?php
 
+defined('THINK_PATH') or exit();
+if(GREEN_CMS!=1)exit();
 error_reporting(0); // Set E_ALL for debuging
 
 include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'elFinderConnector.class.php';
@@ -28,22 +30,6 @@ function access($attr, $path, $data, $volume) {
 		:  null;                                    // else elFinder decide it itself
 }
 
-$opts = array(
-	// 'debug' => true,
-	'roots' => array(
-		array(
-			'driver'        => 'LocalFileSystem',   // driver for accessing file system (REQUIRED)
-		//	'path'          => '/Public',         // path to files (REQUIRED)
-		//	'URL'           => dirname($_SERVER['PHP_SELF']) . '/Public', // URL to files (REQUIRED)
-
-            'path'          => './Extend/',         // path to files (REQUIRED)
-            'URL'           => __ROOT__.'/Extend/', // 上传文件目录的URL
-
-
-			'accessControl' => 'access'             // disable and hide dot starting files (OPTIONAL)
-		)
-	)
-);
 
 // run elFinder
 $connector = new elFinderConnector(new elFinder($opts));

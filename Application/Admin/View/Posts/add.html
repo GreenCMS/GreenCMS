@@ -42,255 +42,219 @@
 <!-- BEGIN HEADER -->
 <div class="header navbar navbar-inverse navbar-static-top">
     <!-- BEGIN TOP NAVIGATION BAR -->
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <!-- BEGIN LOGO -->
-            <a class="brand" href="{:U('Admin/Index/index')}"> <img
-                    src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
-            </a>
-            <!-- END LOGO -->
-            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-            <a href="javascript:;" class="btn-navbar collapsed"
-               data-toggle="collapse" data-target=".nav-collapse"> <img
-                    src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
-            </a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
-            <ul class="nav pull-right">
-                <!-- BEGIN USER LOGIN DROPDOWN -->
-                <li class="dropdown user"><a href="#" class="dropdown-toggle"
-                                             data-toggle="dropdown"> <img alt=""
-                                                                          src="__PUBLIC__/admin/assets/img/avatar1_small.jpg"/> <span
-                        class="username">{$username}</span> <i class="icon-angle-down"></i>
-                </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{:U('Admin/Index/index')}"><i
-                                class="icon-user"></i>个人信息</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{:U('Admin/Login/logout')}"><i
-                                class="icon-key"></i>退出</a></li>
-                    </ul>
-                </li>
-                <!-- END USER LOGIN DROPDOWN -->
-            </ul>
-            <!-- END TOP NAVIGATION MENU -->
-        </div>
-    </div>
+    {:W('Common/header')}
     <!-- END TOP NAVIGATION BAR -->
 </div>
 <!-- END HEADER -->
 <!-- BEGIN CONTAINER -->
 <div class="page-container row-fluid">
-    <!-- BEGIN SIDEBAR -->
-    <div class="page-sidebar nav-collapse collapse">
-        <!-- BEGIN SIDEBAR MENU -->
-
-
-        </li> {:W('Common/sideBar')}
-        </ul>
-        <!-- END SIDEBAR MENU -->
-    </div>
-    <!-- END SIDEBAR -->
-    <!-- BEGIN PAGE -->
-    <div class="page-content">
-        <!-- BEGIN PAGE CONTAINER-->
-        <div class="container-fluid">
-            <!-- BEGIN PAGE HEADER-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-                    <h3 class="page-title">
-                        {$action}
-                        <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
-                    </h3>
-                    <ul class="breadcrumb">
-                        <li><a href="{$module_url}">{$module}</a> <i
-                                class="icon-angle-right"></i></li>
-                        <li><a href="{$action_url}">{$action}</a></li>
-                    </ul>
-                    <!-- END PAGE TITLE & BREADCRUMB-->
-                </div>
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar nav-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->
+    {:W('Common/sideBar')}
+    <!-- END SIDEBAR MENU -->
+</div>
+<!-- END SIDEBAR -->
+<!-- BEGIN PAGE -->
+<div class="page-content">
+    <!-- BEGIN PAGE CONTAINER-->
+    <div class="container-fluid">
+        <!-- BEGIN PAGE HEADER-->
+        <div class="row-fluid">
+            <div class="span12">
+                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                <h3 class="page-title">
+                    {$action}
+                    <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
+                </h3>
+                <ul class="breadcrumb">
+                    <li><a href="{$module_url}">{$module}</a> <i
+                            class="icon-angle-right"></i></li>
+                    <li><a href="{$action_url}">{$action}</a></li>
+                </ul>
+                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
-            <!-- END PAGE HEADER-->
-            <!-- BEGIN PAGE CONTENT-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        </div>
+        <!-- END PAGE HEADER-->
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row-fluid">
+            <div class="span12">
+                <!-- BEGIN EXAMPLE TABLE PORTLET-->
 
 
-                    <form action="{:U('Posts/addHandle')}" id="add_post"
-                          name="add_post" class="form-horizontal">
+                <form action="{:U('Posts/addHandle')}" id="add_post"
+                      name="add_post" class="form-horizontal">
 
 
-                        <div class="control-group">
-                            <label class="control-label">标题</label>
+                    <div class="control-group">
+                        <label class="control-label">标题</label>
 
-                            <div class="controls">
-                                <input type="text" id="post_title" placeholder=""
-                                       class="m-wrap medium" name="post_title"
-                                       value="{$info.post_title}"/> <span class="help-inline"></span>
-                            </div>
+                        <div class="controls">
+                            <input type="text" id="post_title" placeholder=""
+                                   class="m-wrap large" name="post_title"
+                                   value="{$info.post_title}"/> <span class="help-inline"></span>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label">内容</label>
-                            <textarea class="span12 ckeditor m-wrap" id="post_content"
-                                      name="post_content"
-                                      style="width: 60%; margin-left: 20px;">{$info.post_content}</textarea>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">分类</label>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">内容</label>
+                        <textarea class="span12 ckeditor m-wrap" id="post_content"
+                                  name="post_content"
+                                  style="width: 60%; margin-left: 20px;">{$info.post_content}</textarea>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">分类</label>
 
-                            <div class="controls">
-                                <foreach name="cats" item="vCats"><input
-                                        type="checkbox" value="{$vCats.cat_id}" name="cats[]"
-                                    <foreach name="info['pcs']" item="pcs">
-                                        <if
-                                                condition="$vCats['cat_id'] eq $pcs['cat_id']">
-                                            checked="checked"
-                                            <else/>
-                                        </if>
-                                    </foreach>
-                                    /> {$vCats.cat_name}&nbsp;&nbsp;
+                        <div class="controls">
+                            <foreach name="cats" item="vCats"><input
+                                    type="checkbox" value="{$vCats.cat_id}" name="cats[]"
+                                <foreach name="info['post_cat']" item="pcs">
+                                    <if
+                                            condition="$vCats['cat_id'] eq $pcs['cat_id']">
+                                        checked="checked"
+                                        <else/>
+                                    </if>
                                 </foreach>
-                            </div>
+                                /> {$vCats.cat_name}&nbsp;&nbsp;
+                            </foreach>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label">标签</label>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">标签</label>
 
-                            <div class="controls">
-                                <foreach name="tags" item="vTags"><input
-                                        type="checkbox" value="{$vTags.tag_id}" name="tags[]"
-                                    <foreach name="info['pts']" item="pts">
-                                        <if
-                                                condition="$vTags['tag_id'] eq $pts['tag_id']">
-                                            checked="checked"
-                                            <else/>
-                                        </if>
-                                    </foreach>
-                                    /> {$vTags.tag_name}&nbsp;&nbsp;
+
+                        <div class="controls">
+                            <foreach name="tags" item="vTags"><input
+                                    type="checkbox" value="{$vTags.tag_id}" name="tags[]"
+                                <foreach name="info['post_tag']" item="pts">
+                                    <if condition="$vTags['tag_id'] eq $pts['tag_id']">
+                                        checked="checked"
+                                        <else/>
+                                    </if>
                                 </foreach>
-                            </div>
+                                /> {$vTags.tag_name}&nbsp;&nbsp;
+                            </foreach>
                         </div>
+                    </div>
 
 
-                        <div class="control-group">
-                            <label class="control-label">分类</label>
+                    <div class="control-group">
+                        <label class="control-label">分类</label>
 
-                            <div class="controls">
+                        <div class="controls">
 
-                                <label class="radio">
-                                    <div class="radio">
+                            <label class="radio">
+                                <div class="radio">
 
 
-                                        <if condition="$info.post_type eq single ">
+                                    <if condition="$info.post_type eq single ">
 									<span class="checked"><input type="radio"
                                                                  name="post_type" value="single" checked=""></span>
-                                            <elseif condition="$info.post_type eq page "/>
+                                        <elseif condition="$info.post_type eq page "/>
 									<span class=""><input type="radio"
                                                           name="post_type" value="single"></span>
-                                            <else/>
+                                        <else/>
 									<span class="checked"><input type="radio"
                                                                  name="post_type" value="single" checked=""></span>
 
-                                        </if>
+                                    </if>
 
-                                    </div>
-                                    文章
-                                </label>
+                                </div>
+                                文章
+                            </label>
 
-                                <label class="radio">
-                                    <div class="radio">
+                            <label class="radio">
+                                <div class="radio">
 
 
-                                        <if condition="$info.post_type eq page ">
+                                    <if condition="$info.post_type eq page ">
 										<span class="checked"><input type="radio"
                                                                      name="post_type" value="page" checked=""></span>
-                                            <else/>
+                                        <else/>
 										<span class=""><input type="radio"
                                                               name="post_type" value="page"></span>
-                                        </if>
+                                    </if>
 
 
-                                    </div>
-                                    页面
-                                </label>
+                                </div>
+                                页面
+                            </label>
 
 
-                            </div>
                         </div>
+                    </div>
 
 
-                        <div class="control-group">
-                            <label class="control-label">置顶</label>
+                    <div class="control-group">
+                        <label class="control-label">置顶</label>
 
-                            <div class="controls">
+                        <div class="controls">
 
-                                <label class="radio">
-                                    <div class="radio">
+                            <label class="radio">
+                                <div class="radio">
 
 
-                                        <if condition="$info.post_top eq 1 ">
+                                    <if condition="$info.post_top eq 1 ">
 									<span class="checked"><input type="radio"
                                                                  name="post_top" value="1" checked=""></span>
-                                            <else/>
+                                        <else/>
 									<span class=""><input type="radio"
                                                           name="post_top" value="1"></span>
 
-                                        </if>
+                                    </if>
 
-                                    </div>
-                                    是
-                                </label>
+                                </div>
+                                是
+                            </label>
 
-                                <label class="radio">
-                                    <div class="radio">
+                            <label class="radio">
+                                <div class="radio">
 
 
-                                        <if condition="$info.post_top eq 0 ">
+                                    <if condition="$info.post_top eq 0 ">
 										<span class="checked"><input type="radio"
                                                                      name="post_top" value="0" checked=""></span>
-                                            <else/>
+                                        <else/>
 										<span class=""><input type="radio"
                                                               name="post_top" value="0"></span>
-                                        </if>
+                                    </if>
 
 
-                                    </div>
-                                    否
-                                </label>
+                                </div>
+                                否
+                            </label>
 
 
-                            </div>
                         </div>
+                    </div>
 
 
-                        <input type="hidden" name="post_id" value="{$post_id}"/>
+                    <input type="hidden" name="post_id" value="{$post_id}"/>
 
-                        <div class="form-actions">
+                    <div class="form-actions">
 							<span style="font-size: 18px; color: red; font-weight: bold;"
                                   id="success"></span>
-                            <button type="button" class="btn blue submit">
-                                <i class="icon-ok"></i> 发布
-                            </button>
-                        </div>
+                        <button type="button" class="btn blue submit">
+                            <i class="icon-ok"></i> 发布
+                        </button>
+                    </div>
 
-                        <switch name="action_name">
-                            <case value="posts">
-                                <span id="action" style="display: none;">posts</span></case>
-                            <case
-                                    value="add">
-                                <span id="action" style="display: none;">addHandle</span></case>
-                            <default/>
-                            <span id="action" style="display: none;">addHandle</span></switch>
-                    </form>
-                    <!-- END EXAMPLE TABLE PORTLET-->
-                </div>
+                    <switch name="action_name">
+                        <case value="posts">
+                            <span id="action" style="display: none;">posts</span></case>
+                        <case
+                                value="add">
+                            <span id="action" style="display: none;">addHandle</span></case>
+                        <default/>
+                        <span id="action" style="display: none;">addHandle</span></switch>
+                </form>
+                <!-- END EXAMPLE TABLE PORTLET-->
             </div>
-            <!-- END PAGE CONTENT-->
         </div>
-        <!-- END PAGE CONTAINER-->
+        <!-- END PAGE CONTENT-->
     </div>
-    <!-- END PAGE -->
+    <!-- END PAGE CONTAINER-->
+</div>
+<!-- END PAGE -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
@@ -300,7 +264,7 @@
 <script>
     jQuery(document).ready(function () {
         App.init();
-        TableManaged.init();
+        // TableManaged.init();
     });
 </script>
 <script type="text/javascript">

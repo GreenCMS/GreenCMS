@@ -10,9 +10,10 @@
 include APP_PATH . 'Common/Common/common_router.php';
 
 
-function encrypt($data) {
-    return md5($data);
-    //return md5(C("AUTH_CODE") . md5($data));
+function encrypt($data)
+{
+    //return md5($data);
+    return md5(C("AUTH_CODE") . md5($data));
 }
 
 
@@ -39,11 +40,12 @@ function is_top($i)
 /**
  * @param $test判断是否为空
  */
-function is_empty($test) {
-    if ($test=='') {
-        echo '空' ;
-    }else {
-        echo $test ;
+function is_empty($test)
+{
+    if ($test == '') {
+        echo '空';
+    } else {
+        echo $test;
     }
 }
 

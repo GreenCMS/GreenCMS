@@ -157,8 +157,7 @@ class AccessLogic extends RelationModel
             );
         }
 
-        // @Todo 我把这个改成md5了，因为其他地方好像都是md5。。。。。
-        $datas ['user_pass'] = md5(trim($_POST ['password']));
+        $datas ['user_pass'] = encrypt(trim($_POST ['password']));
         $datas ['user_registered'] = date("Y-m-d H:m:s");
         $datas ['user_intro'] = trim($_POST ['user_intro']);
         $datas ['user_status'] = ( int )($_POST ['user_status']);
@@ -200,7 +199,7 @@ class AccessLogic extends RelationModel
 
         $User = D("User");
         if (!empty ($_POST ['password'])) {
-            $data ['user_pass'] = md5(trim($_POST ['password']));
+            $data ['user_pass'] = encrypt($_POST ['password']);
         } else {
             unset ($_POST ['password']);
         }
@@ -222,15 +221,11 @@ class AccessLogic extends RelationModel
         $roleStatus = M("Role_users")->where("`user_id`=" . $user_id)->save(array(
             'role_id' => $role_id
         ));
-        $data ['userlevel'] = $role_id;
+        $data ['user_level'] = $role_id;
 
         // print_array($data);
-        // echo M("Role_users")->getLastSql();
 
-        if ($User->where(array(
-            'user_id' => $user_id
-        ))->save($data)
-        ) {
+        if ($User->where(array('user_id' => $user_id))->save($data)) {
 
             return $roleStatus == TRUE ? array(
                 'status' => 1,

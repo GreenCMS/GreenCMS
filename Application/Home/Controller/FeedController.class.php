@@ -24,7 +24,7 @@ class FeedController extends HomeBaseController
     {
         parent::__construct();
         if (get_opinion('feed_open') == 0) {
-            //TODO FEED功能关闭
+            $this->error("没FEED功能关闭");
         }
     }
 

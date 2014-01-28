@@ -9,9 +9,13 @@
 
 namespace Admin\Controller;
 
+use Common\Util\Dir;
 
 class SystemController extends AdminBaseController
 {
+    //TODO Upgrade
+    //TODO Email Setting
+
     public function add()
     {
         $data ['option_name'] = 'smtp_user';
@@ -21,10 +25,7 @@ class SystemController extends AdminBaseController
 
     public function index()
     {
-
-        // $configs=$this->get__config();
-        $this->assign('users_can_register', C('users_can_register'));
-
+        $this->assign('users_can_register', get_opinion('users_can_register'));
         $this->display();
     }
 
@@ -36,26 +37,6 @@ class SystemController extends AdminBaseController
         $this->success('配置成功', 'index');
     }
 
-    public function saveConfig()
-    {
-        $options = D('Options');
-
-        foreach ($_POST as $name => $value) {
-            unset ($data ['option_id']); // 删除上次保存配置时产生的option_id，否则无法插入下一条数据
-            $data ['option_name'] = $name;
-            $data ['option_value'] = $value;
-
-            $find = $options->where(array(
-                'option_name' => $name
-            ))->select();
-            if (!$find) {
-                $options->data($data)->add();
-            } else {
-                $data ['option_id'] = $find [0] ['option_id'];
-                $options->save($data);
-            }
-        }
-    }
 
     public function setEmailConfig()
     {
@@ -102,13 +83,13 @@ class SystemController extends AdminBaseController
     {
         if (IS_POST) {
 
-            if (D('Links')->add_link($_POST)) {
-                $this->success('链接添加成功', U('Admin/Webinfo/links'));
+            if (D('Links', 'Logic')->addLink($_POST)) {
+                $this->success('链接添加成功', U('Admin/System/links'));
             } else {
-                $this->error('链接添加失败', U('Admin/Webinfo/links'));
+                $this->error('链接添加失败', U('Admin/System/links'));
             }
         } else {
-            $this->form_url = U('Admin/Webinfo/addlink');
+            $this->form_url = U('Admin/System/addlink');
             $this->action = '添加链接';
             $this->buttom = '添加';
             $this->display('addlink');
@@ -119,20 +100,20 @@ class SystemController extends AdminBaseController
     {
         if (IS_POST) {
 
-            if (D('Links')->where(array(
+            if (D('Links', 'Logic')->where(array(
                 'link_id' => $id
             ))->save($_POST)
             ) {
-                $this->success('链接编辑成功', U('Admin/Webinfo/links'));
+                $this->success('链接编辑成功', U('Admin/System/links'));
             } else {
-                $this->error('链接编辑失败', U('Admin/Webinfo/links'));
+                $this->error('链接编辑失败', U('Admin/System/links'));
             }
         } else {
 
-            $this->form_url = U('Admin/Webinfo/editlink', array(
+            $this->form_url = U('Admin/System/editlink', array(
                 'id' => $id
             ));
-            $this->link = D('Links')->detail($id);
+            $this->link = D('Links', 'Logic')->detail($id);
             // print_array($this->link);
             $this->action = '编辑链接';
             $this->buttom = '编辑';
@@ -274,7 +255,7 @@ class SystemController extends AdminBaseController
         File::write_file(LOG_PATH . $date . '/log.txt', $logcontent);
 
         // 跳转到更新展示页面
-        $this->success('更新完毕!', U('Webinfo/over', array(
+        $this->success('更新完毕!', U('System/over', array(
             "date" => $date
         )));
     }
@@ -296,7 +277,6 @@ class SystemController extends AdminBaseController
 
     public function clear()
     {
-        import("@.ORG.Dir");
         $Dir = new Dir (RUNTIME_PATH);
 
         $caches = array(
@@ -429,5 +409,14 @@ class SystemController extends AdminBaseController
         $this->assign('server_info', $info);
 
         $this->display('info');
+    }
+
+
+    public function special()
+    {
+
+        $this->display();
+
+
     }
 }

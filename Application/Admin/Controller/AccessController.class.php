@@ -146,7 +146,7 @@ class AccessController extends AdminBaseController
                 'user_login' => htmlspecialchars(trim($_POST ['user_login'])),
                 'user_nicename' => htmlspecialchars(trim($_POST ['user_nicename'])),
                 'display_name' => htmlspecialchars(trim($_POST ['display_name'])),
-                'user_pass' => md5($_POST ['password']),
+                'user_pass' => encrypt($_POST ['password']),
                 'user_email' => htmlspecialchars($_POST ['user_email']),
                 'user_url' => htmlspecialchars($_POST ['user_url']),
                 'user_intro' => htmlspecialchars($_POST ['user_intro'])
