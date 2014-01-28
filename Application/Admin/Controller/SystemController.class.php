@@ -13,6 +13,9 @@ use Common\Util\Dir;
 
 class SystemController extends AdminBaseController
 {
+    //TODO Upgrade
+    //TODO Email Setting
+
     public function add()
     {
         $data ['option_name'] = 'smtp_user';

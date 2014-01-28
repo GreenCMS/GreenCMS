@@ -30,21 +30,6 @@ function access($attr, $path, $data, $volume) {
 		:  null;                                    // else elFinder decide it itself
 }
 
-$opts = array(
-	// 'debug' => true,
-	'roots' => array(
-		array(
-			'driver'        => 'LocalFileSystem',   // driver for accessing file system (REQUIRED)
-		//	'path'          => '/Public',         // path to files (REQUIRED)
-		//	'URL'           => dirname($_SERVER['PHP_SELF']) . '/Public', // URL to files (REQUIRED)
-
-            'path'          => './Upload/',         // path to files (REQUIRED)
-            'URL'           => __ROOT__.'/Upload/', // 上传文件目录的URL
-
-			'accessControl' => 'access'             // disable and hide dot starting files (OPTIONAL)
-		)
-	)
-);
 
 // run elFinder
 $connector = new elFinderConnector(new elFinder($opts));

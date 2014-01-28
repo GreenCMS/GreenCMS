@@ -16,7 +16,7 @@ class CustomController extends AdminBaseController
 
     public function theme()
     {
-
+        $this->display();
     }
 
     public function plugin()
