@@ -14,6 +14,14 @@ use Common\Util\Uploader;
 
 class UeditorController extends AdminBaseController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+        error_reporting(E_ERROR | E_WARNING);
+    }
+
+
     public function index()
     {
         $this->display();
@@ -24,14 +32,13 @@ class UeditorController extends AdminBaseController
 
 
         echo '<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<script src="' . __ROOT__ . '/Extend/Ueditor/ueditor.parse.js" type="text/javascript"></script>
-<script>' . " uParse('.content',{
-      'highlightJsUrl':'" . __ROOT__ . "/Extend/Ueditor/third-party/SyntaxHighlighter/shCore.js',
-      'highlightCssUrl':" . __ROOT__ . "/Extend/Ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
-  })
-</script>";
+            <script src="' . __ROOT__ . '/Extend/Ueditor/ueditor.parse.js" type="text/javascript"></script>
+            <script>' . " uParse('.content',{
+                  'highlightJsUrl':'" . __ROOT__ . "/Extend/Ueditor/third-party/SyntaxHighlighter/shCore.js',
+                  'highlightCssUrl':" . __ROOT__ . "/Extend/Ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
+              })</script>";
 
-        error_reporting(E_ERROR | E_WARNING);
+
         $content = htmlspecialchars(stripslashes($_REQUEST ['myEditor']));
 
         // 存入数据库或者其他操作
@@ -44,15 +51,12 @@ class UeditorController extends AdminBaseController
 
     public function fileUp()
     {
-
-
         header("Content-Type: text/html; charset=utf-8");
-        error_reporting(E_ERROR | E_WARNING);
 
         //上传配置
         $config = array(
-            "savePath" => UploadDir . 'file/' . date('Y') . '/', //保存路径
-            "allowFiles" => array(".rar", ".doc", ".docx", ".zip", ".pdf", ".txt", ".swf", ".wmv"), //文件允许格式
+            "savePath" => UploadDir . 'file/' . date('Y').'/'. date('m') . '/', //TODO 保存路径
+            "allowFiles" => array(".rar", ".doc", ".docx", ".zip", ".pdf", ".txt", ".ppt", ".pptx",".xls","xlsx"), //文件允许格式
             "maxSize" => 100000 //文件大小限制，单位KB
         );
 
@@ -86,19 +90,16 @@ class UeditorController extends AdminBaseController
 
     public function scrawlUp()
     {
-
-
         header("Content-Type:text/html;charset=utf-8");
-        error_reporting(E_ERROR | E_WARNING);
 
         //上传配置
         $config = array(
-            "savePath" => UploadDir, //存储文件夹
-            "maxSize" => 1000, //允许的文件最大尺寸，单位KB
+            "savePath" => UploadDir. 'scraw/' . date('Y').'/'. date('m') . '/', //存储文件夹
+            "maxSize" => 10000, //允许的文件最大尺寸，单位KB
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp") //允许的文件格式
         );
         //临时文件目录
-        $tmpPath = "tmp/";
+        $tmpPath = UploadDir."tmp/";
 
         //获取当前上传的类型
         $action = htmlspecialchars($_GET["action"]);
@@ -149,10 +150,10 @@ class UeditorController extends AdminBaseController
     public function getRemoteImage()
     {
         header("Content-Type: text/html; charset=utf-8");
-        error_reporting(E_ERROR | E_WARNING);
+
         //远程抓取图片配置
         $config = array(
-            "savePath" => UploadDir . 'remote/' . date('Y') . '/', //保存路径
+            "savePath" => UploadDir . 'remote/' . date('Y').'/'. date('m').'/'. '/', //保存路径
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp"), //文件允许格式
             "maxSize" => 30000 //文件大小限制，单位KB
         );
@@ -245,7 +246,7 @@ class UeditorController extends AdminBaseController
 
     public function getMovie()
     {
-        error_reporting(E_ERROR | E_WARNING);
+
         $key = htmlspecialchars($_POST["searchKey"]);
         $type = htmlspecialchars($_POST["videoType"]);
         $html = file_get_contents('http://api.tudou.com/v3/gw?method=item.search&appKey=myKey&format=json&kw=' . $key . '&pageNo=1&pageSize=20&channelId=' . $type . '&inDays=7&media=v&sort=s');
@@ -257,7 +258,7 @@ class UeditorController extends AdminBaseController
     {
 
         header("Content-Type: text/html; charset=utf-8");
-        error_reporting(E_ERROR | E_WARNING);
+
 
         //需要遍历的目录列表，最好使用缩略图地址，否则当网速慢时可能会造成严重的延时
         $paths = array(UploadDir, 'upload1/');
@@ -312,7 +313,7 @@ class UeditorController extends AdminBaseController
     public function imageUp()
     {
         header("Content-Type: text/html; charset=utf-8");
-        error_reporting(E_ERROR | E_WARNING);
+
         date_default_timezone_set("Asia/chongqing");
         // 上传图片框中的描述表单名称，
         $title = htmlspecialchars($_POST ['pictitle'], ENT_QUOTES);
@@ -320,7 +321,7 @@ class UeditorController extends AdminBaseController
 
         // 上传配置
         $config = array(
-            "savePath" => ($path == "1" ? UploadDir : "upload1/"),
+            "savePath" => ($path == "1" ? UploadDir.'img/'.date('Y').'/'. date('m') . '/' : "upload1/"),
             "maxSize" => 3000, // 单位KB
             "allowFiles" => array(
                 ".gif",

@@ -209,7 +209,7 @@ class Uploader
         if (strrchr($pathStr, "/") != "/") {
             $pathStr .= "/";
         }
-        $pathStr .= date("Ymd");
+        $pathStr .= date("d");
         if (!defined('SAE_TMP_PATH')) {
             if (!file_exists($pathStr)) {
                 if (!mkdir($pathStr, 0777, true)) {
