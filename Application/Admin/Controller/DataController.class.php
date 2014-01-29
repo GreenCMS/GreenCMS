@@ -78,8 +78,8 @@ class DataController extends AdminBaseController
             $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
         }
         $pre = "# -----------------------------------------------------------\n" .
-            "# " . C('OUR_NAME') . " database backup files\n" .
-            "# URL: " . C('OUR_URL') . "\n" .
+            "# " . get_opinion('title') . " database backup files\n" .
+            "# URL: " . get_opinion('site_url') . "\n" .
             "# Type: {$type}\n";
         $bdTable = D("MySQL", "Logic")->bakupTable($tables); //取得表结构信息
         $outPut = "";

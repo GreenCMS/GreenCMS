@@ -14,6 +14,7 @@ use Common\Util\GreenPage;
 class CustomController extends AdminBaseController
 {
 
+    //TODO plugin
     public function theme()
     {
         $this->display();
