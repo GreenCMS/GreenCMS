@@ -4,7 +4,7 @@ return array(
 
     'SHOW_PAGE_TRACE' => true,
 
-    'URL_MODEL' => 0,
+    'URL_MODEL' => 2,
 
     'COOKIE_PREFIX' => 'greencms_', // cookie 名称前缀
     'COOKIE_EXPIRE' => 3600, // Coodie有效期
@@ -34,7 +34,7 @@ return array(
     ),
 
     'TMPL_PARSE_STRING' => array(
-        '__EXTEND__' => ExtendDir,
+        '__EXTEND__' => Extend_PATH,
         //'__PUBLIC__' => 'PUBLIC', // 强制修正__PUBLIC__
         //'__ROOT__' => '',// 强制修正__ROOT__
     ),

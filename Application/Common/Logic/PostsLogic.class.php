@@ -26,7 +26,7 @@ class PostsLogic extends RelationModel
     public function detail($id, $relation = true, $info_with = array())
     {
         $info = $info_with;
-        $info['post_id'] = $id;
+        $info['post_id|post_name'] = $id;
         if ($info['post_status'] == '') $info['post_status'] = 'publish';
 
         $post_res = D('Posts')->where($info)->relation($relation)->find();
