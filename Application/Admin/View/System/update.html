@@ -101,7 +101,7 @@
 
     $(function ($) {
         var notice = '{:cookie("updatenotice")}';
-        $.post("{:U('System/update')}", { version: "{:substr(C('SOFT_VERSION'),-8)}"},
+        $.post("{:U('Admin/System/update')}", { version: "{:substr(C('SOFT_VERSION'),-8)}"},
                 function (data) {
                     if (data.msg == 1 && notice != 1) {
                         jconfirm('系统检测到有新版本!是否更新?<br/>当前版本:{:C('
@@ -128,7 +128,7 @@
                         jconfirm('系统检测到有新版本!是否更新?<br/>当前版本:{:C('
                         SOFT_VERSION
                         ')}&nbsp;&nbsp;最新版本:' + data.version, '{:U('
-                        System / updateHandle
+                        Admin / System / updateHandle
                         ', '
                         ', '
                         ')}'
@@ -160,7 +160,7 @@
                 '</div>',
             ].join(''),
             init: function () {
-                $.post("{:U('System/applycookie')}");
+                $.post("{:U('Admin/System/applycookie')}");
             },
             ok: function (here) {
                 if ($('#art_backupall').attr('checked') == 'checked') url = url + '/backupall/1';

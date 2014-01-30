@@ -55,8 +55,8 @@ class UeditorController extends AdminBaseController
 
         //上传配置
         $config = array(
-            "savePath" => UploadDir . 'file/' . date('Y').'/'. date('m') . '/', //TODO 保存路径
-            "allowFiles" => array(".rar", ".doc", ".docx", ".zip", ".pdf", ".txt", ".ppt", ".pptx",".xls","xlsx"), //文件允许格式
+            "savePath" => UploadDir . 'file/' . date('Y') . '/' . date('m') . '/', //TODO 保存路径
+            "allowFiles" => array(".rar", ".doc", ".docx", ".zip", ".pdf", ".txt", ".ppt", ".pptx", ".xls", "xlsx"), //文件允许格式
             "maxSize" => 100000 //文件大小限制，单位KB
         );
 
@@ -94,12 +94,12 @@ class UeditorController extends AdminBaseController
 
         //上传配置
         $config = array(
-            "savePath" => UploadDir. 'scraw/' . date('Y').'/'. date('m') . '/', //存储文件夹
+            "savePath" => UploadDir . 'scraw/' . date('Y') . '/' . date('m') . '/', //存储文件夹
             "maxSize" => 10000, //允许的文件最大尺寸，单位KB
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp") //允许的文件格式
         );
         //临时文件目录
-        $tmpPath = UploadDir."tmp/";
+        $tmpPath = UploadDir . "tmp/";
 
         //获取当前上传的类型
         $action = htmlspecialchars($_GET["action"]);
@@ -153,7 +153,7 @@ class UeditorController extends AdminBaseController
 
         //远程抓取图片配置
         $config = array(
-            "savePath" => UploadDir . 'remote/' . date('Y').'/'. date('m').'/'. '/', //保存路径
+            "savePath" => UploadDir . 'remote/' . date('Y') . '/' . date('m') . '/' . '/', //保存路径
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp"), //文件允许格式
             "maxSize" => 30000 //文件大小限制，单位KB
         );
@@ -321,7 +321,7 @@ class UeditorController extends AdminBaseController
 
         // 上传配置
         $config = array(
-            "savePath" => ($path == "1" ? UploadDir.'img/'.date('Y').'/'. date('m') . '/' : "upload1/"),
+            "savePath" => ($path == "1" ? UploadDir . 'img/' . date('Y') . '/' . date('m') . '/' : "upload1/"),
             "maxSize" => 3000, // 单位KB
             "allowFiles" => array(
                 ".gif",

@@ -1,6 +1,7 @@
 <?php
 return array(
 
+
     'MAINTAIN' => false,
 
     'DEFAULT_THEME' => 'vena',

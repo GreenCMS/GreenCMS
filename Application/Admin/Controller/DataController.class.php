@@ -236,7 +236,7 @@ class DataController extends AdminBaseController
                         $imported = isset($_SESSION['cacheRestore']['imported']) ? $_SESSION['cacheRestore']['imported'] : 0;
                         $imported += $execute;
                         $_SESSION['cacheRestore']['imported'] = $imported;
-                        echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>', "url" => U('Data/restoreData', array(randCode() => randCode()))));
+                        echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>', "url" => U('Admin/Data/restoreData', array(randCode() => randCode()))));
                         exit;
                     }
                 } else {
@@ -395,7 +395,7 @@ class DataController extends AdminBaseController
             delDirAndFile(WEB_CACHE_PATH . $zipOut); //删除已发送附件
 
 
-            // echo json_encode(array("status" => 1, "info" => "如果要发送SQL文件卷较大(多)发送时间可能需要几分钟甚至更久，请耐心等待，发送期间请勿刷新本页。SQL打包成{$sum}个zip包，分{$sum}封邮件发出，<font color=\"red\">当前已经发送完第{$k}封邮件</font>", "url" => U('Data/sendSql', array(randCode() => randCode()))));
+            // echo json_encode(array("status" => 1, "info" => "如果要发送SQL文件卷较大(多)发送时间可能需要几分钟甚至更久，请耐心等待，发送期间请勿刷新本页。SQL打包成{$sum}个zip包，分{$sum}封邮件发出，<font color=\"red\">当前已经发送完第{$k}封邮件</font>", "url" => U('Admin/Data/sendSql', array(randCode() => randCode()))));
             // unset($_SESSION['cacheSendSql']['files'][$k]);
             // exit;
             //    }
@@ -435,7 +435,7 @@ class DataController extends AdminBaseController
                     die(json_encode(array("status" => 2, "info" => "打包过程出现错误")));
                 }
             }
-            die(json_encode(array("status" => 1, "info" => "打包的sql文件成功，本次打包" . count($toZip) . "个zip文件", "url" => U('Data/zipList'))));
+            die(json_encode(array("status" => 1, "info" => "打包的sql文件成功，本次打包" . count($toZip) . "个zip文件", "url" => U('Admin/Data/zipList'))));
         }
     }
 
@@ -479,7 +479,7 @@ class DataController extends AdminBaseController
 
         $time = time() - $_SESSION['unzip']['time'];
         unset($_SESSION['unzip']);
-        die(json_encode(array("status" => 1, "info" => "已解压完成&nbsp;&nbsp;耗时：$time 秒", "url" => U('Data/restore')))); //, "url" => U('Data/restore')
+        die(json_encode(array("status" => 1, "info" => "已解压完成&nbsp;&nbsp;耗时：$time 秒", "url" => U('Admin/Data/restore')))); //, "url" => U('Data/restore')
     }
 
     /**
@@ -498,7 +498,7 @@ class DataController extends AdminBaseController
             foreach ($files as $file) {
 
 
-                $dir = new Dir();
+                $dir = new Dir(DB_Backup_PATH . "Zip/");
                 $dir->delDirAndFile(DB_Backup_PATH . "Zip/" . $file);
             }
             echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__ . "/zipList?" . time()));
@@ -573,10 +573,10 @@ class DataController extends AdminBaseController
             $table = implode(',', $_POST['table']);
             if ($_POST['act'] == 'repair') {
                 if ($M->query("REPAIR TABLE {$table} "))
-                    die(json_encode(array("status" => 1, "info" => "修复表成功", 'url' => U('Data/repair'))));
+                    die(json_encode(array("status" => 1, "info" => "修复表成功", 'url' => U('Admin/Data/repair'))));
             } elseif ($_POST['act'] == 'optimize') {
                 if ($M->query("OPTIMIZE TABLE $table"))
-                    die(json_encode(array("status" => 1, "info" => "优化表成功", 'url' => U('Data/repair'))));
+                    die(json_encode(array("status" => 1, "info" => "优化表成功", 'url' => U('Admin/Data/repair'))));
             }
             die(json_encode(array("status" => 0, "info" => "请选择操作")));
         } else {

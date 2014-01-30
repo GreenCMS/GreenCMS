@@ -4,6 +4,8 @@ return array(
 
     'SHOW_PAGE_TRACE' => true,
 
+    'URL_MODEL' => 0,
+
     'COOKIE_PREFIX' => 'greencms_', // cookie 名称前缀
     'COOKIE_EXPIRE' => 3600, // Coodie有效期
     'COOKIE_DOMAIN' => '', // Cookie有效域名

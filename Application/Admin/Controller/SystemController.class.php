@@ -255,7 +255,7 @@ class SystemController extends AdminBaseController
         File::write_file(LOG_PATH . $date . '/log.txt', $logcontent);
 
         // 跳转到更新展示页面
-        $this->success('更新完毕!', U('System/over', array(
+        $this->success('更新完毕!', U('Admin/System/over', array(
             "date" => $date
         )));
     }

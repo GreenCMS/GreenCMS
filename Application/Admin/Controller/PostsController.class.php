@@ -217,9 +217,12 @@ class PostsController extends AdminBaseController
             }
 
             if ($data['post_type'] == 'single') {
-                $url = U('Posts/index');
+                $url = U('Admin/Posts/index');
+            } elseif ($data['post_type'] == 'page') {
+                $url = U('Admin/Posts/page');
             } else {
-                $url = U('Posts/page');
+                $url = U('Admin/Posts/index');
+
             }
 
 

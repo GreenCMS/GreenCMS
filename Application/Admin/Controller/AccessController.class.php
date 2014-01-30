@@ -284,7 +284,7 @@ class AccessController extends AdminBaseController
             $M = M("Role");
             $info = $M->where("id=" . ( int )$_GET ['id'])->find();
             if (empty ($info ['id'])) {
-                $this->error("不存在该角色", U('Access/roleList'));
+                $this->error("不存在该角色", U('Admin/Access/roleList'));
             }
             $this->assign("info", $this->getRole($info));
             $this->action = '编辑角色';
@@ -304,7 +304,7 @@ class AccessController extends AdminBaseController
             $M = M("Node");
             $info = M("Role")->where("id=" . ( int )$_GET ['id'])->find();
             if (empty ($info ['id'])) {
-                $this->error("不存在该用户组", U('Access/roleList'));
+                $this->error("不存在该用户组", U('Admin/Access/roleList'));
             }
             $access = M("Access")->field("CONCAT(`node_id`,':',`level`,':',`pid`) as val")->where("`role_id`=" . $info ['id'])->select();
             $info ['access'] = count($access) > 0 ? json_encode($access) : json_encode(array());
@@ -397,7 +397,7 @@ class AccessController extends AdminBaseController
             $M = M("Node");
             $info = $M->where("id=" . ( int )$_GET ['id'])->find();
             if (empty ($info ['id'])) {
-                $this->error("不存在该节点", U('Access/nodeList'));
+                $this->error("不存在该节点", U('Admin/Access/nodeList'));
             }
             $this->assign("info", $this->getPid($info));
             $this->action = '编辑节点';

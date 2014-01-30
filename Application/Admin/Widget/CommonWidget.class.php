@@ -109,7 +109,7 @@ class CommonWidget extends Controller
                         foreach ($big_name as $sub_url => $sub_name) {
                             $sub_true_url = explode('/', $sub_url);
                             $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
-                            $menu .= '<li class="' . $css . '"><a href="' . U("$sub_url") . '">' . $sub_name . '</a></li>';
+                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '">' . $sub_name . '</a></li>';
                         }
                 }
                 $menu .= '</ul></li>';
@@ -129,7 +129,7 @@ class CommonWidget extends Controller
                         foreach ($big_name as $sub_url => $sub_name) {
                             $sub_true_url = explode('/', $sub_url);
                             $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
-                            $menu .= '<li class="' . $css . '"><a href="' . U("$sub_url") . '">' . $sub_name . '</a></li>';
+                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '">' . $sub_name . '</a></li>';
                         }
                 }
                 $menu .= '</ul></li>';
@@ -147,7 +147,7 @@ class CommonWidget extends Controller
                         foreach ($big_name as $sub_url => $sub_name) {
                             $sub_true_url = explode('/', $sub_url);
                             $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
-                            $menu .= '<li class="' . $css . '"><a href="' . U("$sub_url") . '">' . $sub_name . '</a></li>';
+                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '">' . $sub_name . '</a></li>';
                         }
                 }
                 $menu .= '</ul></li>';

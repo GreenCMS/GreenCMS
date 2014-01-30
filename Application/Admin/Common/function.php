@@ -30,6 +30,7 @@ function byteFormat($bytes)
  * @param string $body    邮件内容
  * @param string $attachment 附件列表
 +----------------------------------------------------------
+ * @param string $config
  * @return boolean
 +----------------------------------------------------------
  */

@@ -66,7 +66,7 @@ class AdminBaseController extends BaseController
         foreach ($cache as $big_url => $big_name) {
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 $module = $big_name;
-                $module_url = U("$big_url" . '/index');
+                $module_url = U("Admin/" . "$big_url" . '/index');
             } else {
             }
         }
@@ -78,7 +78,7 @@ class AdminBaseController extends BaseController
                     $sub_true_url = explode('/', $sub_url);
                     if (!strcasecmp($sub_true_url [1], strtolower(ACTION_NAME))) {
                         $action = $sub_name;
-                        $action_url = U("$sub_url");
+                        $action_url = U("Admin/" . "$sub_url");
                     }
                 }
             }

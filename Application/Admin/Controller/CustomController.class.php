@@ -130,7 +130,7 @@ class CustomController extends AdminBaseController
         import('ORG.PclZip');
         $zip = new PclZip ($path);
         $zip->extract(PCLZIP_OPT_PATH, $tplpath);
-        $this->success('操作成功!', U('Webinfo/plugin?install=1'));
+        $this->success('操作成功!', U('Admin/Custom/plugin?install=1'));
     }
 
     // 插件安装
@@ -163,7 +163,7 @@ class CustomController extends AdminBaseController
                 '__install'
             ));
         }
-        $this->success('操作成功!', U('Webinfo/plugin?status=0'));
+        $this->success('操作成功!', U('Admin/Custom/plugin?status=0'));
     }
 
     // 卸载插件
@@ -186,7 +186,7 @@ class CustomController extends AdminBaseController
                 '__uninstall'
             ));
         }
-        $this->success('操作成功!', U('Webinfo/plugin'));
+        $this->success('操作成功!', U('Admin/Custom/plugin'));
     }
 
     public function pluginDel()
@@ -199,7 +199,7 @@ class CustomController extends AdminBaseController
             $this->error('请先卸载当前插件!');
         $path = './Public/Plugin/' . $map ['title'];
         File::del_dir($path);
-        $this->success('操作成功!', U('Webinfo/plugin'));
+        $this->success('操作成功!', U('Admin/Custom/plugin'));
     }
 
     // 插件开启和关闭(ajax处理)
@@ -324,7 +324,7 @@ class CustomController extends AdminBaseController
             }
         }
         F('plugin', $_POST, $tplpath);
-        $this->success('操作成功!', U('Webinfo/plugin'));
+        $this->success('操作成功!', U('Admin/Custom/plugin'));
     }
 
     public function pluginDownload()
@@ -389,7 +389,7 @@ class CustomController extends AdminBaseController
         $zip = new PclZip ($filepath);
         $zip->extract(PCLZIP_OPT_PATH, $tplpath);
         @unlink($filepath); // 删除安装文件
-        $this->success('操作成功!', U('Webinfo/plugin?install=1'));
+        $this->success('操作成功!', U('Admin/Custom/plugin?install=1'));
     }
 
 

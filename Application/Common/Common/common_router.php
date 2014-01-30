@@ -5,43 +5,41 @@ function getSingleURLByID($ID, $type = 'single')
 {
     $Posts = D('Posts');
 
-    if ($type == 'single')
-        $urlbase = U('/single');
-    elseif ($type == 'page')
-        $urlbase = U('/page'); else
-        $urlbase = U('/single');
+
+    $url_base = U("Home/Post/" . $type);
+
 
     if (C('OUR_URL_MODEL') === 'native') {
-        $URL = U($type . '/detail', array(
+        $URL = U("Home/Post/" . $type, array(
             'info' => $ID
         ));
 
         return $URL;
     } elseif (C('OUR_URL_MODEL') === 'post_id') {
-        $URL = $urlbase . '/' . $ID;
+        $URL = $url_base . '/' . $ID;
     } else if (C('OUR_URL_MODEL') === 'post_name') {
         $posts = $Posts->find($ID);
-        $URL = $urlbase . '/' . $posts ['post_name'];
+        $URL = $url_base . '/' . $posts ['post_name'];
     } else if (C('OUR_URL_MODEL') === 'year/month/post_name') {
         $posts = $Posts->find($ID);
-        $URL = $urlbase . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . $posts ['post_name'];
+        $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . $posts ['post_name'];
     } else if (C('OUR_URL_MODEL') === 'year/month/post_id') {
         $posts = $Posts->find($ID);
-        $URL = $urlbase . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . $ID;
+        $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . $ID;
     } else if (C('OUR_URL_MODEL') === 'year/post_id') {
         $posts = $Posts->find($ID);
-        $URL = $urlbase . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . $ID;
+        $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . $ID;
     } else if (C('OUR_URL_MODEL') === 'year/post_name') {
         $posts = $Posts->find($ID);
-        $URL = $urlbase . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . $posts ['post_name'];
+        $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . $posts ['post_name'];
     } else if (C('OUR_URL_MODEL') === 'year/month/day/post_id') {
         $posts = $Posts->find($ID);
-        $URL = $urlbase . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . getTimestamp($posts ['post_date'], 'day') . '/' . $ID;
+        $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . getTimestamp($posts ['post_date'], 'day') . '/' . $ID;
     } else if (C('OUR_URL_MODEL') === 'year/month/day/post_name') {
         $posts = $Posts->find($ID);
-        $URL = $urlbase . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . getTimestamp($posts ['post_date'], 'day') . '/' . $posts ['post_name'];
+        $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . getTimestamp($posts ['post_date'], 'day') . '/' . $posts ['post_name'];
     } else {
-        $URL = $urlbase . '/' . $ID;
+        $URL = $url_base . '/' . $ID;
     }
 
     return $URL;
@@ -52,7 +50,7 @@ function getTagURLByID($ID)
 {
     $Tags = D('native');
     if (C('OUR_TAG_MODEL') === 'native') {
-        $URL = U('Tag/index', array("info" => $ID));
+        $URL = U('Home/Tag/detail', array("info" => $ID));
     } elseif (C('OUR_TAG_MODEL') === 'ID') {
         $URL = U('/tag') . '/' . $ID;
     } else if (C('OUR_TAG_MODEL') === 'slug') {
@@ -69,7 +67,7 @@ function getCatURLByID($ID)
 {
     $Tags = D('Tags');
     if (C('OUR_CAT_MODEL') === 'native') {
-        $URL = U('Cat/index', array("info" => $ID));
+        $URL = U('Home/Cat/detail', array("info" => $ID));
     } elseif (C('OUR_TAG_MODEL') === 'ID') {
         $URL = U('/cat') . '/' . $ID;
     } else if (C('OUR_TAG_MODEL') === 'slug') {
