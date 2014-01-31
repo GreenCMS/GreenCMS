@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Common\Util\File;
 use Common\Util\GreenPage;
 
 class CustomController extends AdminBaseController
@@ -26,41 +27,40 @@ class CustomController extends AdminBaseController
         // 安全验证
         // $this->checksafeauth();
         if (isset ($_GET ['title']))
-            $this->assign("title", $_GET ['title']);
+            $this->assign("title", I('get.title'));
         if (!empty ($_GET ['status']))
-            $map ['status'] = $_GET ['status'];
-        $map ['id'] = array(
-            'gt',
-            0
-        );
+            $map ['status'] = I('get.status');
+        $map ['id'] = array('gt', 0);
 
         //$install = $this->_get('install', false);
         $install = I('get.install');
         if ($install != 1) {
-            $model = M('plugin');
-            $count = $model->where($map)->count();
+            $Plugin = M('plugin');
+            $count = $Plugin->where($map)->count();
             $fenye = 20;
-            $p = new GreenPage ($count, $fenye);
-            $list = $model->where($map)->order('pubdate desc')->limit($p->firstRow . ',' . $p->listRows)->select();
+            $p = new GreenPage ($count, get_opinion('pager'));
+            $list = $Plugin->where($map)->order('pubdate desc')->limit($p->firstRow . ',' . $p->listRows)->select();
             // echo $model->getLastSql();exit;
-            $p->setConfig('prev', '上一页');
-            $p->setConfig('header', '条记录');
-            $p->setConfig('first', '首 页');
-            $p->setConfig('last', '末 页');
-            $p->setConfig('next', '下一页');
-            $p->setConfig('theme', "%first%%upPage%%linkPage%%downPage%%end%<li><span>共<font color='#009900'><b>%totalRow%</b></font>条记录 " . $fenye . "条/每页</span></li>");
+            /* $p->setConfig('prev', '上一页');
+             $p->setConfig('header', '条记录');
+             $p->setConfig('first', '首 页');
+             $p->setConfig('last', '末 页');
+             $p->setConfig('next', '下一页');
+             $p->setConfig('theme', "%first%%upPage%%linkPage%%downPage%%end%<li><span>共<font color='#009900'><b>%totalRow%</b></font>条记录 " . $fenye . "条/每页</span></li>");
+             */
             $this->assign('page', $p->show());
             $this->assign("list", $list);
+
             $this->display();
         } else {
-            $model = M('plugin');
-            $pluginlist = $model->field('title')->select();
+            $Plugin = M('plugin');
+            $pluginlist = $Plugin->field('title')->select();
             $plist = array();
             foreach ($pluginlist as $v) {
                 $plist [] = $v ['title'];
             }
             // 未安装插件
-            $path = './Public/Plugin';
+            $path = Plugin_PATH;
             $dir = File::get_dirs($path);
             foreach ($dir ['dir'] as $k => $v) {
                 if (!in_array($v, $plist) && $v != '.' && $v != '..') {
@@ -88,7 +88,7 @@ class CustomController extends AdminBaseController
             $this->die('参数错误!');
         $method = I('get.method');
         $method = empty ($method) ? 'index' : $method;
-        $path = './Public/Plugin/' . $name . '/admin.php';
+        $path = Plugin_PATH . $name . '/admin.php';
         if (file_exists($path)) {
             $model = M('plugin');
             $map ['title'] = $name;
@@ -109,7 +109,7 @@ class CustomController extends AdminBaseController
     public function pluginImport()
     {
         // 安全验证
-        $this->checksafeauth();
+        //$this->checksafeauth();
         $this->display();
     }
 
@@ -122,7 +122,7 @@ class CustomController extends AdminBaseController
             $this->error('仅支持后缀为zip的压缩包');
         $path = ltrim($filename, __ROOT__ . '/');
         $filename = substr(ltrim(strrchr($path, '/'), '/'), 0, -4);
-        $tplpath = './Public/Plugin/' . $filename;
+        $tplpath = Plugin_PATH . $filename;
         if (is_dir($tplpath) && $checkdir != 1)
             $this->error('插件目录已存在!');
         if (!is_file($path))
@@ -136,13 +136,13 @@ class CustomController extends AdminBaseController
     // 插件安装
     public function pluginInstall()
     {
-        $title = $this->_get('title', false);
+        $title = I('get.title');
         if (empty ($title))
             $this->error('插件名不存在!');
         $data ['description'] = '';
         $data ['author'] = '';
         $data ['copyright'] = '';
-        $xmlpath = './Public/Plugin/' . $title . '/plugin.xml';
+        $xmlpath = Plugin_PATH . $title . '/plugin.xml';
         if (file_exists($xmlpath)) {
             $tag = simplexml_load_file($xmlpath);
             $data ['author'] = ( string )$tag->author;
@@ -154,7 +154,7 @@ class CustomController extends AdminBaseController
         $data ['pubdate'] = time();
         $model = M('plugin');
         $model->add($data);
-        $path = './Public/Plugin/' . $title . '/admin.php';
+        $path = Plugin_PATH . $title . '/admin.php';
         if (file_exists($path)) {
             set_include_path(__ROOT__);
             include($path);
@@ -169,7 +169,7 @@ class CustomController extends AdminBaseController
     // 卸载插件
     public function pluginUninstall()
     {
-        $map ['id'] = $this->_get('id', false);
+        $map ['id'] = I('get.id');
         $model = M('plugin');
         $list = $model->field('title,status')->where($map)->find();
         if (!$list)
@@ -177,12 +177,12 @@ class CustomController extends AdminBaseController
         if ($list ['status'] == 0)
             $this->error('请先禁用当前插件!');
         $model->where($map)->delete();
-        $path = './Public/Plugin/' . $title . '/admin.php';
+        $path = Plugin_PATH . $list['title'] . '/admin.php';
         if (file_exists($path)) {
             set_include_path(__ROOT__);
             include($path);
             call_user_func(array(
-                $title . 'Plugin',
+                $list['title'] . 'Plugin',
                 '__uninstall'
             ));
         }
@@ -192,12 +192,12 @@ class CustomController extends AdminBaseController
     public function pluginDel()
     {
         // 安全验证
-        $this->checksafeauth();
-        $map ['title'] = $this->_get('title', false);
+        // $this->checksafeauth();
+        $map ['title'] = I('get.title');
         $model = M('plugin');
         if ($model->where($map)->find())
             $this->error('请先卸载当前插件!');
-        $path = './Public/Plugin/' . $map ['title'];
+        $path = Plugin_PATH . $map ['title'];
         File::del_dir($path);
         $this->success('操作成功!', U('Admin/Custom/plugin'));
     }
@@ -205,7 +205,7 @@ class CustomController extends AdminBaseController
     // 插件开启和关闭(ajax处理)
     public function pluginStatus()
     {
-        $map ['id'] = $this->_post('id', false);
+        $map ['id'] = I('id');
         $model = M('plugin');
         $list = $model->where($map)->find();
         if (!$list)
@@ -217,8 +217,8 @@ class CustomController extends AdminBaseController
 
     public function pluginEdit()
     {
-        $name = $this->_get('name');
-        $path = './Public/Plugin' . '/' . $name;
+        $name = I('get.name');
+        $path = Plugin_PATH . '/' . $name;
         if (empty ($name) or strpos($name, '/'))
             $this->error('参数不正确!');
         if (!is_dir($path))
@@ -311,10 +311,10 @@ class CustomController extends AdminBaseController
 
     public function pluginDoedit()
     {
-        $name = $this->_get('name');
+        $name = I('get.name');
         if (empty ($name))
             $this->error('参数不正确!');
-        $tplpath = './Public/Plugin/' . $name . '/';
+        $tplpath = Plugin_PATH . $name . '/';
         if (!is_dir($tplpath))
             $this->error('插件目录不存在!');
         // 防止服务器反转义
@@ -329,10 +329,10 @@ class CustomController extends AdminBaseController
 
     public function pluginDownload()
     {
-        $dir = $this->_get('name');
+        $dir = I('get.name');
         if (strpos($dir, '/') or empty ($dir))
             $this->error('参数不正确!');
-        $path = './Public/Plugin/' . $dir;
+        $path = Plugin_PATH . $dir;
         if (!is_dir($path))
             $this->error('目录不存在!');
         import('@.ORG.PclZip');
@@ -364,7 +364,7 @@ class CustomController extends AdminBaseController
     public function pluginRemoteinstall()
     {
         // 安全验证 $this->checksafeauth();
-        $url = $this->_get('url');
+        $url = I('get.url');
         $ext = strtolower(strrchr($url, '.'));
         $filepath = ltrim(strrchr($url, '/'), '/');
         if ($ext != '.zip') {
@@ -381,7 +381,7 @@ class CustomController extends AdminBaseController
             $this->error('远程获取文件失败!,<a href="' . $url . '" target="_blank">本地下载安装</a>');
         }
         $filename = substr($filepath, 0, -4);
-        $tplpath = './Public/Plugin/' . $filename;
+        $tplpath = Plugin_PATH . $filename;
         if (is_dir($tplpath))
             $this->error('插件目录已存在!');
         File::write_file($filepath, $content);

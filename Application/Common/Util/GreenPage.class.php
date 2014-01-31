@@ -198,13 +198,13 @@ class GreenPage
             $page = ($nowCoolPage - 1) * $this->rollPage + $i;
             if ($page != $this->nowPage) {
                 if ($page <= $this->totalPages) {
-                    $linkPage .= "&nbsp;<li><a  class='number'  href='" . str_replace('__PAGE__', $page, $url) . "'>&nbsp;" . $page . "&nbsp;</a></li>";
+                    $linkPage .= "<li><a  class='number'  href='" . str_replace('__PAGE__', $page, $url) . "'>" . $page . "</a></li>";
                 } else {
                     break;
                 }
             } else {
                 if ($this->totalPages != 1) {
-                    $linkPage .= "&nbsp;<li><a class='number current'>" . $page . "</a></li>";
+                    $linkPage .= "<li><a class='number current'>" . $page . "</a></li>";
                 }
             }
         }

@@ -44,9 +44,14 @@ define("System_Backup_PATH", WEB_ROOT . "Data/Backup/");
 define("Upgrade_PATH", WEB_ROOT . "Data/Upgrade/");
 
 
-/**系统升级文件存放目录
+/**
  */
 define("Extend_PATH", WEB_ROOT . "Extend/");
+
+
+/**
+ */
+define("Plugin_PATH", WEB_ROOT . "Extend/Plugin/");
 
 /**上传文件存放目录
  */
