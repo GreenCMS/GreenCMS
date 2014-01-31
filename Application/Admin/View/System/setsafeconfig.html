@@ -63,6 +63,8 @@
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <form action="{:U('Admin/System/SetSafeConfigHandle')}" name="change_System"
                           class="form-horizontal" method="post">
+
+
                         <div class="control-group">
                             <label class="control-label">THinkphp表单令牌验证</label>
 
@@ -147,6 +149,16 @@
                                     </switch>
                                     关
                                 </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">DEFAULT_FILTER</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="DEFAULT_FILTER"
+                                       value="{:C('DEFAULT_FILTER')}"/>
+                                <span class="help-inline">默认htmlspecialchars</span>
                             </div>
                         </div>
 

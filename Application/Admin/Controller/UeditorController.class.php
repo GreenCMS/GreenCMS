@@ -9,7 +9,8 @@
 
 namespace Admin\Controller;
 
-use Common\Util\Dir;
+//use Common\Util\Dir;
+use Common\Util\File;
 use Common\Util\Uploader;
 
 class UeditorController extends AdminBaseController
@@ -272,9 +273,10 @@ class UeditorController extends AdminBaseController
                 $files = array();
                 foreach ($paths as $path) {
 
-                    $dir = new Dir();
-                    $tmp = $dir->getfiles($path);
+                    //$dir = new Dir();
+                    //$tmp = $dir->getfiles($path);
 
+                    $tmp = File::getFiles($path);
                     if ($tmp) {
                         $files = array_merge($files, $tmp);
                     }

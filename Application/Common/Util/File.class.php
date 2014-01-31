@@ -141,8 +141,34 @@ class File
         return true;
     }
 
+    /**
+     * 遍历获取目录下的指定类型的文件
+     * @param $path 路径
+     * @param array $files
+     *  文件类型数组
+     * @return array 所有文件路径
+     */
+    public static function getFiles($path, &$files = array())
+    {
+        if (!is_dir($path))
+            return null;
+        $handle = opendir($path);
+        while (false !== ($file = readdir($handle))) {
+            if ($file != '.' && $file != '..') {
+                $path2 = $path . '/' . $file;
+                if (is_dir($path2)) {
+                    self::getFiles($path2, $files);
+                } else {
+                    if (preg_match("/\.(gif|jpeg|jpg|png|bmp)$/i", $file)) {
+                        $files [] = $path2;
+                    }
+                }
+            }
+        }
+        return $files;
+    }
 
-    static function getDirs($dir)
+    public static function getDirs($dir)
     {
         $dir = rtrim($dir, '/') . '/';
         $dirArray [][] = NULL;

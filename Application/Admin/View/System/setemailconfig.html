@@ -86,7 +86,7 @@
                                                                value="0"/></case>
                                         <default/>
                                     </switch>
-                                    mail模块发送
+                                    mail模块发送(尚不支持)
                                 </label>
                             </div>
                         </div>
@@ -131,11 +131,11 @@
 
                             <div class="controls">
                                 <input type="password" placeholder="" class="m-wrap large" name="smtp_pass"
-                                       value="{$smtp_pass}"/>
+                                       value="{:C('smtp_pass')}"/>
                                 <span class="help-inline">你的邮箱密码</span>
                             </div>
                         </div>
-                        <div class="control-group">
+                       <!-- <div class="control-group">
                             <label class="control-label">测试邮件</label>
 
                             <div class="controls">
@@ -144,7 +144,7 @@
                                 <span class="help-inline">test@163.com</span>&nbsp;&nbsp;
                                 <a href="#" class="btn red"><i class="icon-ok"></i> 测试</a>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-actions">
                             <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
                         </div>
