@@ -36,7 +36,7 @@ class File
     }
 
 
-    static function writeFile($filename, $writetext, $openmod = 'w')
+    public static function writeFile($filename, $writetext, $openmod = 'w')
     {
         if (@$fp = fopen($filename, $openmod)) {
             flock($fp, 2);
@@ -239,10 +239,57 @@ class File
 
     }
 
-    public static function makeDir($path)
+    public static function makeDir($path,$property=0777 )
     {
-        return is_dir($path) or (self::makeDir(dirname($path)) and @mkdir($path, 0777));
+        return is_dir($path) or (self::makeDir(dirname($path),$property) and @mkdir($path, $property));
     }
+
+
+    /**
+     * 功能：生成zip压缩文件，存放都 WEB_CACHE_PATH 中
+     * @param $files        array   需要压缩的文件
+     * @param $filename     string  压缩后的zip文件名  包括zip后缀
+     * @param $path         string  文件所在目录
+     * @param $outDir       string  输出目录
+     * @return array
+     */
+    public function zip($files, $filename, $outDir = WEB_CACHE_PATH, $path = DB_Backup_PATH)
+    {
+        $zip = new \ZipArchive;
+
+        File::makeDir($outDir);
+
+        $res = $zip->open($outDir . "\\" . $filename, \ZipArchive::CREATE);
+
+        if ($res == TRUE) {
+            foreach ($files as $file) {
+                if ($t = $zip->addFile($path . $file, str_replace('/', '', $file))) {
+                    $t = $zip->addFile($path . $file, str_replace('/', '', $file));
+                }
+            }
+            $zip->close();
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * 功能：解压缩zip文件，存放都 DB_Backup_PATH 中
+     * @param $file         string   需要压缩的文件
+     * @param $outDir       string   解压文件存放目录
+     * @return array
+     */
+    function unzip($file, $outDir = DB_Backup_PATH)
+    {
+        $zip = new \ZipArchive();
+        if ($zip->open(DB_Backup_PATH . "Zip/" . $file) !== TRUE)
+            return FALSE;
+        $zip->extractTo($outDir);
+        $zip->close();
+        return TRUE;
+    }
+
 
 
 }

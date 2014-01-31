@@ -209,26 +209,10 @@ jQuery(document).ready(function () {
                 $("#success").fadeIn().html(data.info);
                 $("#success").fadeOut(3000);
 
-                var to_deleted_obj = document.getElementsByName('sqlFiles');
-                var to_deleted_sqlFiles = '';
-                for (var i = 0; i < to_deleted_obj.length; i++) {
-                    if (to_deleted_obj[i].checked) {
-                        // file.push({sqlFiles:obj[i].value});
-                        if (i != to_deleted_obj.length - 1) {
-                            to_deleted_sqlFiles = to_deleted_sqlFiles + (to_deleted_obj[i].value) + ',';
-                        }
-                        else {
-                            to_deleted_sqlFiles += to_deleted_obj[i].value;
-                        }
-                    }
-                }
-                var deleted = to_deleted_sqlFiles.split(',');
+                setTimeout(function () {
+                    top.window.location.reload();
+                }, 1000);
 
-                $.each(deleted, function (n, value) {
-                    var name = value.replace(".sql", "");
-                    var to_deleted = $('#' + name);
-                    to_deleted.fadeOut();
-                });
             }
             else {
                 $("#success").fadeIn().html(data.info);

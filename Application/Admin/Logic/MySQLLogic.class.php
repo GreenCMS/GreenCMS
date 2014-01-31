@@ -42,7 +42,7 @@ class MySQLLogic extends Model
      * @return string
     +----------------------------------------------------------
      */
-    public function bakupTable($table_list)
+    public function backupTable($table_list)
     {
         //M()->query("SET OPTION SQL_QUOTE_SHOW_CREATE = 1"); //1，表示表名和字段名会用``包着的,0 则不用``
         $outPut = '';
@@ -59,11 +59,8 @@ class MySQLLogic extends Model
     }
 
     /**
-    +----------------------------------------------------------
      * 功能：读取已经备份SQL文件列表，并按备份时间倒序，名称升序排列
-    +----------------------------------------------------------
      * @return array
-    +----------------------------------------------------------
      */
     public function getSqlFilesList()
     {
@@ -84,7 +81,7 @@ class MySQLLogic extends Model
                 $bk['description'] = substr($detail[4], 14);
                 $bk['time'] = substr($detail[5], 8);
                 $_size = filesize(DB_Backup_PATH . "/$file");
-                $bk['size'] = byteFormat($_size);
+                $bk['size'] = File::byteFormat($_size);
                 $size += $_size;
                 $bk['pre'] = substr($file, 0, strrpos($file, '_'));
                 $bk['num'] = substr($file, strrpos($file, '_') + 1, strrpos($file, '.') - 1 - strrpos($file, '_'));
@@ -102,7 +99,7 @@ class MySQLLogic extends Model
             }
         }
         unset($list);
-        return array("list" => $newArr, "size" => byteFormat($size));
+        return array("list" => $newArr, "size" => File::byteFormat($size));
     }
 
     public function getZipFilesList()
@@ -116,69 +113,13 @@ class MySQLLogic extends Model
                 $tem = array();
                 $tem['file'] = $file; //  checkCharset($file);
                 $_size = filesize(DB_Backup_PATH . "Zip/$file");
-                $tem['size'] = byteFormat($_size);
+                $tem['size'] = File::byteFormat($_size);
                 $tem['time'] = date("Y-m-d H:i:s", filectime(DB_Backup_PATH . "Zip/$file"));
                 $size += $_size;
                 $list[] = $tem;
             }
         }
-        return array("list" => $list, "size" => byteFormat($size));
-    }
-
-    /**
-    +----------------------------------------------------------
-     * 功能：生成zip压缩文件，存放都 WEB_CACHE_PATH 中
-    +----------------------------------------------------------
-     * @param $files        array   需要压缩的文件
-     * @param $filename     string  压缩后的zip文件名  包括zip后缀
-     * @param $path         string  文件所在目录
-     * @param $outDir       string  输出目录
-    +----------------------------------------------------------
-     * @return array
-    +----------------------------------------------------------
-     */
-    public function zip($files, $filename, $outDir = WEB_CACHE_PATH, $path = DB_Backup_PATH)
-    {
-        $zip = new \ZipArchive;
-
-
-        File::makeDir($outDir);
-
-
-        $res = $zip->open($outDir . "\\" . $filename, \ZipArchive::CREATE);
-
-        if ($res == TRUE) {
-            foreach ($files as $file) {
-                if ($t = $zip->addFile($path . $file, str_replace('/', '', $file))) {
-                    //TODO zip压缩成功
-                    $t = $zip->addFile($path . $file, str_replace('/', '', $file));
-                }
-            }
-            $zip->close();
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
-
-    /**
-    +----------------------------------------------------------
-     * 功能：解压缩zip文件，存放都 DB_Backup_PATH 中
-    +----------------------------------------------------------
-     * @param $file         string   需要压缩的文件
-     * @param $outDir       string   解压文件存放目录
-    +----------------------------------------------------------
-     * @return array
-    +----------------------------------------------------------
-     */
-    function unzip($file, $outDir = DB_Backup_PATH)
-    {
-        $zip = new \ZipArchive();
-        if ($zip->open(DB_Backup_PATH . "Zip/" . $file) !== TRUE)
-            return FALSE;
-        $zip->extractTo($outDir);
-        $zip->close();
-        return TRUE;
+        return array("list" => $list, "size" => File::byteFormat($size));
     }
 
 

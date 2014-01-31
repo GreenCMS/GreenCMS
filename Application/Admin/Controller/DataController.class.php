@@ -11,42 +11,40 @@ namespace Admin\Controller;
 
 use Common\Util\File;
 
+/**
+ * Class DataController
+ * @package Admin\Controller
+ */
 class DataController extends AdminBaseController
 {
-
-    //TODO 邮件发送
-
-
     /**
-    +----------------------------------------------------------
      * 列出系统中所有数据库表信息
-    +----------------------------------------------------------
+     * For MySQL
      */
     public function index()
     {
-        $M = M();
-        $tabs = $M->query('SHOW TABLE STATUS');
-        $total = 0;
-        foreach ($tabs as $k => $v) {
-            $tabs[$k]['size'] = byteFormat($v['Data_length'] + $v['Index_length']);
-            $total += $v['Data_length'] + $v['Index_length'];
+        $tabs = M()->query('SHOW TABLE STATUS');
+        $total_length = 0;
+        foreach ($tabs as $key => $value) {
+            $tabs[$key]['size'] = File::byteFormat($value['Data_length'] + $value['Index_length']);
+            $total_length += $value['Data_length'] + $value['Index_length'];
         }
+
+        $this->assign("formUrl", U('Admin/Data/backupHandle'));
         $this->assign("list", $tabs);
-        $this->assign("total", byteFormat($total));
+        $this->assign("total", File::byteFormat($total_length));
         $this->assign("tables", count($tabs));
         $this->display();
     }
 
     /**
-    +----------------------------------------------------------
      * 备份数据库
-    +----------------------------------------------------------
+     * For MySQL
      */
-    public function backup()
+    public function backupHandle()
     {
-        if (!IS_POST)
-            $this->error("访问出错啦");
-        header('Content-Type:application/json; charset=utf-8');
+        if (!IS_POST) $this->error("访问出错啦");
+//        header('Content-Type:application/json; charset=utf-8');
 //        $this->checkToken();
         $M = M();
         function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
@@ -59,29 +57,29 @@ class DataController extends AdminBaseController
          * 如果备份文件夹不存在，则自动建立
          */
         if (!is_dir(DB_Backup_PATH)) {
-            mkdir(DB_Backup_PATH, 0777);
+            File::makeDir(DB_Backup_PATH, 0777);
         }
-        $time = time();
-        if (isset($_POST['systemBackup'])) {
 
-            if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
-                die(json_encode(array("status" => 0, "info" => "只有超级管理员账号登录后方可自动备份操作")));
-            }
+        G('Backup_start');
+        if (isset($_POST['systemBackup'])) {
+            //TODO 系统自动备份
             $type = "系统自动备份";
             $tables = D("MySQL", "Logic")->getAllTableName();
-            $path = DB_Backup_PATH . "/SYSTEM_" . date("Ym");
+            $path = DB_Backup_PATH . "/SYSTEM_" . date("Ymd");
             if (file_exists($path . "_1.sql")) {
-                die(json_encode(array("status" => 0, "info" => "本月系统已经进行了自动备份操作")));
+                die(json_encode(array("status" => 0, "info" => "今天系统已经进行了自动备份操作")));
             }
         } else {
             $type = "管理员后台手动备份";
             $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
         }
-        $pre = "# -----------------------------------------------------------\n" .
+
+        $pre =
+            "# -----------------------------------------------------------\n" .
             "# " . get_opinion('title') . " database backup files\n" .
             "# URL: " . get_opinion('site_url') . "\n" .
             "# Type: {$type}\n";
-        $bdTable = D("MySQL", "Logic")->bakupTable($tables); //取得表结构信息
+        $bdTable = D("MySQL", "Logic")->backupTable($tables); //取得表结构信息
         $outPut = "";
         $file_n = 1;
         $backedTable = array();
@@ -112,9 +110,11 @@ class DataController extends AdminBaseController
                         $sqlNo = "# Description:当前SQL文件包含了表：" . implode("、", $backedTable) . "的数据" . $sqlNo;
                     }
                     if (strlen($pre) + strlen($sqlNo) + strlen($bdTable) + strlen($outPut) + strlen($temSql) > C("sqlFileSize")) {
-                        $file = $path . "_" . $file_n . ".sql";
+                        $file_name = $path . "_" . $file_n . ".sql";
                         $outPut = $file_n == 1 ? $pre . $sqlNo . $bdTable . $outPut : $pre . $sqlNo . $outPut;
-                        file_put_contents($file, $outPut, FILE_APPEND);
+                        //file_put_contents($file, $outPut, FILE_APPEND);
+                        //TODO file_put_contents-->> File::writeFile需要测试
+                        File::writeFile($file_name, $outPut);
                         $bdTable = $outPut = "";
                         $backedTable = array();
                         $backedTable[] = $table;
@@ -133,20 +133,22 @@ class DataController extends AdminBaseController
             } else {
                 $sqlNo = "# Description:当前SQL文件包含了表：" . implode("、", $backedTable) . "的数据" . $sqlNo;
             }
-            $file = $path . "_" . $file_n . ".sql";
+            $file_name = $path . "_" . $file_n . ".sql";
             $outPut = $file_n == 1 ? $pre . $sqlNo . $bdTable . $outPut : $pre . $sqlNo . $outPut;
-            file_put_contents($file, $outPut, FILE_APPEND);
+            // file_put_contents($file_name, $outPut, FILE_APPEND);
+            File::writeFile($file_name, $outPut);
             $file_n++;
         }
-        $time = time() - $time;
+
+        G('Backup_end');
+
         // echo json_encode(array("status" => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) . "个SQL文件。耗时：{$time} 秒", "url" => U('Admin/Data/restore')));
-        $this->success('备份成功', U('Admin/Data/restore'));
+        $this->success('备份成功耗时:' . G('Backup_start', 'Backup_end') . 's', U('Admin/Data/restore'));
     }
 
     /**
-    +----------------------------------------------------------
      * 还原数据库内容
-    +----------------------------------------------------------
+     * For MySQL
      */
     public function restore()
     {
@@ -158,11 +160,12 @@ class DataController extends AdminBaseController
     }
 
     /**
-    +----------------------------------------------------------
      * 读取要导入的sql文件列表并排序后插入SESSION中
-    +----------------------------------------------------------
      */
     /*static*/
+    /**
+     * @return array
+     */
     private function getRestoreFiles()
     {
         $_SESSION['cacheRestore']['time'] = time();
@@ -196,12 +199,11 @@ class DataController extends AdminBaseController
     }
 
     /**
-    +----------------------------------------------------------
      * 执行还原数据库操作
-    +----------------------------------------------------------
      */
     public function restoreData()
     {
+        //TODO 需要测试
 //        ini_set("memory_limit", "256M");
         function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
 //取得需要导入的sql文件
@@ -254,44 +256,35 @@ class DataController extends AdminBaseController
     }
 
     /**
-    +----------------------------------------------------------
      * 删除已备份数据库文件
-    +----------------------------------------------------------
      */
     public function delSqlFiles()
     {
         if (IS_POST) {
-            $this->checkToken();
-            $sqlFiles = explode(',', $_POST['sqlFiles']);
-            if (empty($sqlFiles) || count($sqlFiles) == 0 || $_POST['sqlFiles'] == "") {
+            //  $this->checkToken();
+            $sql_files = explode(',', $_POST['sqlFiles']);
+            if (empty($sql_files) || count($sql_files) == 0 || $_POST['sqlFiles'] == "") {
                 die(json_encode(array("status" => 0, "info" => "请先选择要删除的sql文件")));
             }
 
-            $files = $sqlFiles;
+            $files = $sql_files;
             foreach ($files as $file) {
                 File::delFile(DB_Backup_PATH . $file);
-                //TODO File与Dir 类的统一
-                //$dir = new File();
-                //$dir->delDirAndFile(DB_Backup_PATH . $file);
             }
-            echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__ . "/restore?" . time()));
+            echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__));
 
         }
     }
 
     /**
-    +----------------------------------------------------------
-     * 功能：将待通过邮件发送的sql文件按卷标升序排序并按sql文件大小分组为多个待压缩组
-    +----------------------------------------------------------
+     * 将待通过邮件发送的sql文件按卷标升序排序并按sql文件大小分组为多个待压缩组
      * @return array
-    +----------------------------------------------------------
      */
     static private function getSqlFilesGroups()
     {
         $_SESSION['cacheSendSql']['time'] = time();
-        //
-        $sql = explode(',', $_POST['sqlFiles']);
 
+        $sql = explode(',', $_POST['sqlFiles']);
 
         if (empty($sql) || count($sql) == 0 || $_POST['sqlFiles'] == "") {
             die(json_encode(array("status" => 0, "info" => "请选择要发送到邮件的sql文件")));
@@ -304,6 +297,7 @@ class DataController extends AdminBaseController
         } else {
             die(json_encode(array("status" => 0, "info" => "接受SQL文件的邮件地址格式错误")));
         }
+
         $sqlFiles = array();
         foreach ($files as $sqlFile) {
             $k = explode("_", $sqlFile);
@@ -316,22 +310,22 @@ class DataController extends AdminBaseController
 
         $temSize = 0;
         $n = 1;
-//计算待发送到邮件的附件大小，并分成多个压缩文件组
-        foreach (array($sqlFiles) as $flie => $value) {
-            $path = DB_Backup_PATH . $flie;
+        //计算待发送到邮件的附件大小，并分成多个压缩文件组
+        foreach (array($sqlFiles) as $key => $value) {
+            $path = DB_Backup_PATH . $key;
             if (file_exists($path)) {
                 if (filesize($path) > 52428800) { //50*1024*1024=52428800
-                    $files[$n][] = $flie;
+                    $files[$n][] = $key;
                     $temSize = 0;
                     $n++;
                 } else {
                     $temSize += filesize($path);
                     if ($temSize < 52428800) {
-                        $files[$n][] = $flie;
+                        $files[$n][] = $key;
                     } else {
                         $temSize = 0;
                         $temSize += filesize($path);
-                        $files[$n][] = $flie;
+                        $files[$n][] = $key;
                         $n++;
                     }
                 }
@@ -340,19 +334,15 @@ class DataController extends AdminBaseController
         unset($_POST, $sqlFiles, $temSize);
         $_SESSION['cacheSendSql']['count'] = count($files);
 
-
+        //TODO 测试分卷发送
         return $_SESSION['cacheSendSql']['files'] = $files;
     }
 
     /**
-    +----------------------------------------------------------
      * 将已备份数据库文件通过系统邮箱发送到指定邮箱中
-    +----------------------------------------------------------
      */
     public function sendSql()
     {
-
-
         set_time_limit(0);
         if (IS_POST) {
             header('Content-Type:application/json; charset=utf-8');
@@ -368,7 +358,7 @@ class DataController extends AdminBaseController
             // $filesready = explode(',', $files);
 
             $zipOut = "sqlBackup.zip";
-            if (D("MySQL", "Logic")->zip($sqlFiles, $zipOut)) {
+            if (File::zip($sqlFiles, $zipOut)) {
                 //TODO send_mail
                 send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
 
@@ -409,9 +399,7 @@ class DataController extends AdminBaseController
     }
 
     /**
-    +----------------------------------------------------------
      * 打包sql文件
-    +----------------------------------------------------------
      */
     public function zipSql()
     {
@@ -428,7 +416,7 @@ class DataController extends AdminBaseController
                 $toZip[implode("_", $tem)][] = $file;
             }
             foreach ($toZip as $zipOut => $files) {
-                if (D("MySQL", "Logic")->zip($files, $zipOut . ".zip", DB_Backup_PATH . "Zip/")) {
+                if (File::zip($files, $zipOut . ".zip", DB_Backup_PATH . "Zip/")) {
                     /*foreach ($files as $file) {
                         delDirAndFile(DB_Backup_PATH . $file);
                     }*/
@@ -441,9 +429,7 @@ class DataController extends AdminBaseController
     }
 
     /**
-    +----------------------------------------------------------
      * 列出以打包sql文件
-    +----------------------------------------------------------
      */
     public function zipList()
     {
@@ -454,6 +440,9 @@ class DataController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     * @return bool
+     */
     function unzipSqlfile()
     {
         if (!IS_POST)
@@ -470,7 +459,7 @@ class DataController extends AdminBaseController
 //      $_SESSION['unzip']['count'] = count($files);
 
         foreach ($files as $k => $file) {
-            D("MySQL", "Logic")->unzip($file);
+            File::unzip($file);
             /* if (count($files) > 1) {
                 echo json_encode(array("status" => 1, "info" => "正在解压缩，请勿刷新本页<br />当前已经解压完{$file}", "url" => U('Data/unzipSqlfile', array(randCode() => randCode()))));
                 unset($_SESSION['unzip']['files'][$k]);
@@ -484,9 +473,7 @@ class DataController extends AdminBaseController
     }
 
     /**
-    +----------------------------------------------------------
      * 删除已备份数据库文件
-    +----------------------------------------------------------
      */
     public function delZipFiles()
     {
@@ -506,6 +493,9 @@ class DataController extends AdminBaseController
         }
     }
 
+    /**
+     *
+     */
     public function downFile()
     {
         if (empty($_GET['file']) || empty($_GET['type']) || !in_array($_GET['type'], array("zip", "sql"))) {
@@ -523,8 +513,12 @@ class DataController extends AdminBaseController
         readfile($filePath);
     }
 
+    /**
+     * 完整性测试，有待检验
+     */
     private function integrity_testing()
     {
+
 
         $post_ids = D('Posts')->field('post_id')->select();
         foreach ($post_ids as $key => $value) {
@@ -561,6 +555,9 @@ class DataController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function repair()
     {
         $M = M();
@@ -582,32 +579,48 @@ class DataController extends AdminBaseController
             die(json_encode(array("status" => 0, "info" => "请选择操作")));
         } else {
             $tabs = $M->query('SHOW TABLE STATUS');
-            $totalsize = array('table' => 0, 'index' => 0, 'data' => 0, 'free' => 0);
+            $total_size = array('table' => 0, 'index' => 0, 'data' => 0, 'free' => 0);
             $tables = array();
             foreach ($tabs as $k => $table) {
-                $table['size'] = byteFormat($table['Data_length'] + $table['Index_length']);
-                $totalsize['table'] += $table['Data_length'] + $table['Index_length'];
-                $totalsize['data'] += $table['Data_length'];
-                $table['Data_length'] = byteFormat($table['Data_length']);
-                $totalsize['index'] += $table['Index_length'];
-                $table['Index_length'] = byteFormat($table['Index_length']);
-                $totalsize['free'] += $table['Data_free'];
-                $table['Data_free'] = byteFormat($table['Data_free']);
+                $table['size'] = File::byteFormat($table['Data_length'] + $table['Index_length']);
+                $total_size['table'] += $table['Data_length'] + $table['Index_length'];
+                $total_size['data'] += $table['Data_length'];
+                $table['Data_length'] = File::byteFormat($table['Data_length']);
+                $total_size['index'] += $table['Index_length'];
+                $table['Index_length'] =File:: byteFormat($table['Index_length']);
+                $total_size['free'] += $table['Data_free'];
+                $table['Data_free'] = File::byteFormat($table['Data_free']);
                 $tables[] = $table;
             }
+
+            $total_size['table'] = File::byteFormat($total_size['table']);
+
+
+            $total_size['free'] = File::byteFormat($total_size['free']);
+            $total_size['table'] = File::byteFormat($total_size['table']);
+            $total_size['data'] = File::byteFormat($total_size['data']);
+            $total_size['index'] = File::byteFormat($total_size['index']);
+
+
             $this->assign("list", $tables);
-            $this->assign("totalsize", $totalsize);
+            $this->assign("totalsize", $total_size);
             $this->display();
         }
     }
 
 
+    /**
+     *
+     */
     public function cache()
     {
         $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON'));
         $this->display();
     }
 
+    /**
+     *
+     */
     public function cacheHandle()
     {
         $this->saveConfig();
@@ -616,6 +629,9 @@ class DataController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function clear()
     {
         $caches = array(
