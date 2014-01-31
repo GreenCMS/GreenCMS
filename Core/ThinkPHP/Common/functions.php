@@ -787,7 +787,10 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         }
     }else{ // PATHINFO模式或者兼容URL模式
         //TODO Undefined variable: module \Core\ThinkPHP\Common\functions.php 第 789 行.
+        //TODO ThinkPHP 3.2 Patch By ZTS
+        $module =   '';
         $module =   defined('BIND_MODULE') ? '' : $module;
+
         if(isset($route)) {
             $url    =   __APP__.'/'.($module?$module.MODULE_PATHINFO_DEPR:'').rtrim($url,$depr);
         }else{

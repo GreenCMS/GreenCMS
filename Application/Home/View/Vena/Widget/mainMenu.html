@@ -39,7 +39,7 @@
                             <ul>
 
                                 <volist name="posts" id="vo">
-                                    <li><a href="{$vo.post_id|getSingleURLByID=single}">
+                                    <li><a href="{$vo.post_id|getSingleURLByID='single'}">
                                         {$vo.post_title} </a></li>
                                 </volist>
 
@@ -50,7 +50,7 @@
                             <ul>
 
                                 <volist name="pages" id="vo">
-                                    <li><a href="{$vo.post_id|getSingleURLByID=page}">
+                                    <li><a href="{$vo.post_id|getSingleURLByID='page'}">
                                         {$vo.post_title} </a></li>
                                 </volist>
 

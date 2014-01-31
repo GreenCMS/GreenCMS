@@ -16,7 +16,7 @@
     <meta name="description" content="Green Studio"/>
     <meta name="author" content="{$post.post_user.user_nicename}"/>
     <meta name="keywords"
-          content='{$post.post_title},<volist name="post.pts" id="tag">{$tag.tag_name}, </volist>'/>
+          content='{$post.post_title},<volist name="post.post_tag" id="tag">{$tag.tag_name}, </volist>'/>
 
     <include file="Public:head"/>
 
@@ -78,7 +78,7 @@
                     <div class="badge">
                         <i class="icon-twitter"></i>
                     </div>
-                    <div class="shares"><span class="ds-thread-count" data-thread-key="{$post.post_od|md5}"
+                    <div class="shares"><span class="ds-thread-count" data-thread-key="{$post.post_id|md5}"
                                               data-count-type="weibo_reposts"></span>
                     </div>
                 </a></li>
@@ -146,7 +146,6 @@
 
         <!-- Sidebar Start -->
         <div class="one_fourth column">
-            <include file="Public:search"/>
             {:W('Widget/search')}
             {:W('Widget/categories')}
             {:W('Widget/tag')}

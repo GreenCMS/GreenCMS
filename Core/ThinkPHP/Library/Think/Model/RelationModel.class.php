@@ -186,8 +186,9 @@ class RelationModel extends Model {
                             case MANY_TO_MANY:
                                 $pk   =  $result[$mappingKey];
                                 $mappingCondition = " {$mappingFk}='{$pk}'";
-                                $mappingOrder =  $val['mapping_order'];
-                                $mappingLimit =  $val['mapping_limit'];
+                                //TODO ThinkPHP3.2 Patch By ZTS
+                                if (array_key_exists('mapping_order', $val))  $mappingOrder =  $val['mapping_order'];
+                                if (array_key_exists('mapping_limit', $val))  $mappingLimit =  $val['mapping_limit'];
                                 $mappingRelationFk = $val['relation_foreign_key']?$val['relation_foreign_key']:$model->getModelName().'_id';
                                 $mappingRelationTable  =  $val['relation_table']?$val['relation_table']:$this->getRelationTableName($model);
                                 $sql = "SELECT b.{$mappingFields} FROM {$mappingRelationTable} AS a, ".$model->getTableName()." AS b WHERE a.{$mappingRelationFk} = b.{$model->getPk()} AND a.{$mappingCondition}";
