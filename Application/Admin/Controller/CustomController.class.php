@@ -206,12 +206,12 @@ class CustomController extends AdminBaseController
     public function pluginStatus()
     {
         $map ['id'] = I('id');
-        $model = M('plugin');
-        $list = $model->where($map)->find();
+        $Plugin = M('Plugin');
+        $list = $Plugin->where($map)->find();
         if (!$list)
             die ('插件信息不存在!');
         $map ['status'] = $list ['status'] == 1 ? 0 : 1;
-        $model->save($map);
+        $Plugin->save($map);
         die ('1');
     }
 

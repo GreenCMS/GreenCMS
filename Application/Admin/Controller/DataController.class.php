@@ -9,7 +9,7 @@
 
 namespace Admin\Controller;
 
-use Common\Util\Dir;
+use Common\Util\File;
 
 class DataController extends AdminBaseController
 {
@@ -264,14 +264,15 @@ class DataController extends AdminBaseController
             $this->checkToken();
             $sqlFiles = explode(',', $_POST['sqlFiles']);
             if (empty($sqlFiles) || count($sqlFiles) == 0 || $_POST['sqlFiles'] == "") {
-                die(json_encode(array("status" => 0, "info" => "请先选择要删除的文件")));
+                die(json_encode(array("status" => 0, "info" => "请先选择要删除的sql文件")));
             }
 
             $files = $sqlFiles;
             foreach ($files as $file) {
-
-                $dir = new Dir();
-                $dir->delDirAndFile(DB_Backup_PATH . $file);
+                File::delFile(DB_Backup_PATH . $file);
+                //TODO File与Dir 类的统一
+                //$dir = new File();
+                //$dir->delDirAndFile(DB_Backup_PATH . $file);
             }
             echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__ . "/restore?" . time()));
 
@@ -392,7 +393,7 @@ class DataController extends AdminBaseController
             //        send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut);//
 
 
-            delDirAndFile(WEB_CACHE_PATH . $zipOut); //删除已发送附件
+            File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
 
 
             // echo json_encode(array("status" => 1, "info" => "如果要发送SQL文件卷较大(多)发送时间可能需要几分钟甚至更久，请耐心等待，发送期间请勿刷新本页。SQL打包成{$sum}个zip包，分{$sum}封邮件发出，<font color=\"red\">当前已经发送完第{$k}封邮件</font>", "url" => U('Admin/Data/sendSql', array(randCode() => randCode()))));
@@ -497,9 +498,9 @@ class DataController extends AdminBaseController
             $files = $zipFiles;
             foreach ($files as $file) {
 
-
-                $dir = new Dir(DB_Backup_PATH . "Zip/");
-                $dir->delDirAndFile(DB_Backup_PATH . "Zip/" . $file);
+                File::delFile(DB_Backup_PATH . "Zip/" . $file);
+                //$dir = new Dir(DB_Backup_PATH . "Zip/");
+                //$dir->delDirAndFile(DB_Backup_PATH . "Zip/" . $file);
             }
             echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__ . "/zipList?" . time()));
         }
@@ -617,36 +618,35 @@ class DataController extends AdminBaseController
 
     public function clear()
     {
-        $Dir = new Dir(RUNTIME_PATH);
-
-
         $caches = array(
             "HomeCache" => array(
                 "name" => "网站缓存文件",
                 "path" => RUNTIME_PATH . "Cache",
-                "size" => $Dir->size(RUNTIME_PATH . "Cache"),
+                //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
+                "size" => File::realSize(RUNTIME_PATH . "Cache"),
 
             ),
             "HomeData" => array(
                 "name" => "网站数据库字段缓存文件",
                 "path" => RUNTIME_PATH . "Data",
-                "size" => $Dir->size(RUNTIME_PATH . "Data"),
+                "size" => File::realSize(RUNTIME_PATH . "Data"),
             ),
             "AdminLog" => array(
                 "name" => "网站日志缓存文件",
                 "path" => LOG_PATH,
-                "size" => $Dir->size(LOG_PATH),
+                "size" => File::realSize(LOG_PATH),
             ),
             "AdminTemp" => array(
                 "name" => "网站临时缓存文件",
                 "path" => RUNTIME_PATH . "Temp",
-                "size" => $Dir->size(RUNTIME_PATH . "Temp"),
+                "size" => File::realSize(RUNTIME_PATH . "Temp"),
 
             ),
             "Homeruntime" => array(
                 "name" => "网站~runtime.php缓存文件",
                 "path" => RUNTIME_PATH . "~runtime.php",
-                "size" => $Dir->realsize(RUNTIME_PATH . "~runtime.php"),
+                //  "size" => $Dir->realsize(RUNTIME_PATH . "~runtime.php"),
+                "size" => File::realSize(RUNTIME_PATH . "~runtime.php"),
             )
         );
 
@@ -654,7 +654,8 @@ class DataController extends AdminBaseController
         if (IS_POST) {
             foreach ($_POST ['cache'] as $path) {
                 if (isset ($caches [$path]))
-                    $Dir->delDirAndFile($caches [$path] ['path']);
+                    //$Dir->delDirAndFile($caches [$path] ['path']);
+                File::delAll($caches [$path] ['path'], true);
             }
 
             /*echo json_encode ( array (
@@ -663,9 +664,6 @@ class DataController extends AdminBaseController
             ) );*/
             $this->success("清除成功");
         } else {
-
-
-            //print_array(	 Dir::dirSize(RUNTIME_PATH));
 
             $this->assign("caches", $caches);
             $this->display();

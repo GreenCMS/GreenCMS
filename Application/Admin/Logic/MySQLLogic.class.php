@@ -9,7 +9,7 @@
 
 namespace Admin\Logic;
 
-use Common\Util\Dir;
+use Common\Util\File;
 use Think\Model;
 
 class MySQLLogic extends Model
@@ -141,8 +141,8 @@ class MySQLLogic extends Model
     {
         $zip = new \ZipArchive;
 
-        $dir = new Dir();
-        $dir->makeDir($outDir);
+
+        File::makeDir($outDir);
 
 
         $res = $zip->open($outDir . "\\" . $filename, \ZipArchive::CREATE);

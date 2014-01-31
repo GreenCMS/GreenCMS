@@ -22,7 +22,7 @@ define ('RUNTIME_PATH', './Data/Temp/');
 /** 定义项目日志文件路径
  *  此目录必须可写，建议移动到非WEB目录
  */
-define('LOG_PATH', WEB_ROOT . "Data/Log/");
+define('LOG_PATH', "./Data/Log/");
 
 /**定义Cache目录
  *  此目录必须可写，建议移动到非WEB目录
