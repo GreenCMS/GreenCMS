@@ -9,8 +9,6 @@
 
 namespace Admin\Controller;
 
-
-use Common\Util\Dir;
 use Common\Util\File;
 
 class SystemController extends AdminBaseController
@@ -55,7 +53,6 @@ class SystemController extends AdminBaseController
 
     public function setSafeConfig()
     {
-        $this->assign('think_token', C('think_token'));
 
         $this->assign('db_fieldtype_check', C('db_fieldtype_check'));
 
@@ -71,7 +68,7 @@ class SystemController extends AdminBaseController
          * if ($_POST ['think_token']) { C ( 'TOKEN_ON', true ); } else { C ( 'TOKEN_ON', false ); } if ($_POST ['DB_FIELDTYPE_CHECK']) { C ( 'DB_FIELDTYPE_CHECK', true ); } else { C ( 'DB_FIELDTYPE_CHECK', false ); }
          */
 
-        $this->success('配置成功', 'setSafeConfig');
+        $this->success('配置成功');
     }
 
     public function links()
@@ -283,52 +280,6 @@ class SystemController extends AdminBaseController
         $this->action = '更新结果';
         $this->clear();
         $this->display();
-    }
-
-    public function clear()
-    {
-        $Dir = new Dir (RUNTIME_PATH);
-
-        $caches = array(
-            "HomeCache" => array(
-                "name" => "网站缓存文件",
-                "path" => RUNTIME_PATH . "Cache",
-                "size" => $Dir->size(RUNTIME_PATH . "Cache")
-            ),
-            "HomeData" => array(
-                "name" => "网站数据库字段缓存文件",
-                "path" => RUNTIME_PATH . "Data",
-                "size" => $Dir->size(RUNTIME_PATH . "Data")
-            ),
-            "AdminLog" => array(
-                "name" => "网站日志缓存文件",
-                "path" => RUNTIME_PATH . "Logs",
-                "size" => $Dir->size(RUNTIME_PATH . "Logs")
-            ),
-            "AdminTemp" => array(
-                "name" => "网站临时缓存文件",
-                "path" => RUNTIME_PATH . "Temp",
-                "size" => $Dir->size(RUNTIME_PATH . "Temp")
-            ),
-            "Homeruntime" => array(
-                "name" => "网站~runtime.php缓存文件",
-                "path" => RUNTIME_PATH . "~runtime.php",
-                "size" => $Dir->realsize(RUNTIME_PATH . "~runtime.php")
-            )
-        );
-
-        $cache = array(
-            "HomeCache",
-            "HomeData",
-            "AdminLog",
-            "AdminTemp",
-            "Homeruntime"
-        );
-
-        foreach ($cache as $path) {
-            if (isset ($caches [$path]))
-                $Dir->delDirAndFile($caches [$path] ['path']);
-        }
     }
 
     public function backupsql($date)

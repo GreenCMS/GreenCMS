@@ -9,7 +9,6 @@
 
 namespace Admin\Controller;
 
-//use Common\Util\Dir;
 use Common\Util\File;
 use Common\Util\Uploader;
 

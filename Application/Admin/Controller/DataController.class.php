@@ -587,7 +587,7 @@ class DataController extends AdminBaseController
                 $total_size['data'] += $table['Data_length'];
                 $table['Data_length'] = File::byteFormat($table['Data_length']);
                 $total_size['index'] += $table['Index_length'];
-                $table['Index_length'] =File:: byteFormat($table['Index_length']);
+                $table['Index_length'] = File:: byteFormat($table['Index_length']);
                 $total_size['free'] += $table['Data_free'];
                 $table['Data_free'] = File::byteFormat($table['Data_free']);
                 $tables[] = $table;
@@ -615,6 +615,9 @@ class DataController extends AdminBaseController
     public function cache()
     {
         $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON'));
+        $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
+        $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
+
         $this->display();
     }
 

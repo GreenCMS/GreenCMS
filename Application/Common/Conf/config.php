@@ -6,10 +6,13 @@ return array(
 
     'URL_MODEL' => 2,
 
+    /**
     'COOKIE_PREFIX' => 'greencms_', // cookie 名称前缀
     'COOKIE_EXPIRE' => 3600, // Coodie有效期
     'COOKIE_DOMAIN' => '', // Cookie有效域名
     'COOKIE_PATH' => '/', // Cookie路径
+     */
+
     'SESSION_AUTO_START' => true, // 是否自动开启Session
     'SESSION_OPTIONS' => array(), // session 配置数组 支持type name id path expire domain 等参数
     'SESSION_PREFIX' => '', // session 前缀
@@ -17,10 +20,10 @@ return array(
     'DEFAULT_AJAX_RETURN' => 'JSON', // 默认AJAX 数据返回格式,可选JSON XML ...
 
 
-    'AUTH_CODE' => "ZTS",
+    'AUTH_CODE' => "ZTS", //安装完毕之后不要改变，否则所有密码都会出错
     'ADMIN' => 'admin',
     'TOKEN_ON' => false, //TOKEN_ON
-    'DEFAULT_FILTER' => 'htmlspecialchars', //过滤方法
+
 
     'DATA_CACHE_TYPE' => 'File', // 数据缓存类型,支持:File||Memcache|Xcache
     'DATA_CACHE_SUBDIR' => true, // 使用子目录缓存 (自动根据缓存标识的哈希创建子目录)

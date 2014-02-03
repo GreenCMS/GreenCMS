@@ -102,17 +102,21 @@ $config_rbac = array(
     'RBAC_USER_TABLE' => GreenCMS_DB_PREFIX . 'role_users',
     'RBAC_ACCESS_TABLE' => GreenCMS_DB_PREFIX . 'access',
     'RBAC_NODE_TABLE' => GreenCMS_DB_PREFIX . 'node',
-    /*
-     * 系统备份数据库时每个sql分卷大小，单位字节
-    */
-    'sqlFileSize' => 5242880,
-    // (测试功能)该值不可太大，否则会导致恢复失败，建议5M一卷
-    // 5M=5*1024*1024=5242880
+
 
 );
 
 $config_other = array(
+    'URL_MODEL' => 0,
+
     'SHOW_PAGE_TRACE' => false,
+
+    /*
+    * 系统备份数据库时每个sql分卷大小，单位字节
+   */
+    'sqlFileSize' => 5242880,
+    // (测试功能)该值不可太大，否则会导致恢复失败，建议5M一卷
+    // 5M=5*1024*1024=5242880
 
 );
 $config = array_merge($config_rbac, $menu_arr);
