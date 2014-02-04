@@ -48,7 +48,6 @@ class PostsController extends AdminBaseController
         $this->assign("handle", "addHandle");
         $this->assign("publish", "发布");
 
-
         $this->display();
     }
 
@@ -95,12 +94,12 @@ class PostsController extends AdminBaseController
                 $this->error('修改失败');
             }
         } else {
-            if ($post_id = D('Posts', 'Logic')->relation(true)->add($data)) {
+            if ($post_id = D('Posts')->relation(true)->add($data)) { //, 'Logic'
                 foreach ($_POST['cats'] as $cat_id) {
-                    M("Post_cat", 'Logic')->add(array("cat_id" => $cat_id, "post_id" => $post_id));
+                    D("Post_cat", 'Logic')->add(array("cat_id" => $cat_id, "post_id" => $post_id));
                 }
                 foreach ($_POST['tags'] as $tag_id) {
-                    M("Post_tag", 'Logic')->add(array("tag_id" => $tag_id, "post_id" => $post_id));
+                    D("Post_tag", 'Logic')->add(array("tag_id" => $tag_id, "post_id" => $post_id));
                 }
                 // $this->success('发布成功', U('Admin/Posts/index'));
 
