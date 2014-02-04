@@ -265,9 +265,9 @@ class File
 
     }
 
-    public static function makeDir($path,$property=0777 )
+    public static function makeDir($path, $property = 0777)
     {
-        return is_dir($path) or (self::makeDir(dirname($path),$property) and @mkdir($path, $property));
+        return is_dir($path) or (self::makeDir(dirname($path), $property) and @mkdir($path, $property));
     }
 
 
@@ -315,7 +315,6 @@ class File
         $zip->close();
         return TRUE;
     }
-
 
 
 }

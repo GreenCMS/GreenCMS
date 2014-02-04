@@ -7,7 +7,7 @@ $config_db = array(
 
     'DB_FIELDS_CACHE' => true,
     'DB_SQL_BUILD_CACHE' => true,
-    */
+     */
 
     // 数据库配置
     'DB_TYPE' => GreenCMS_DB_TYPE,
