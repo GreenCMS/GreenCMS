@@ -299,14 +299,15 @@ class AccessLogic extends RelationModel
 
     public function changeRole()
     {
-        $M = M("Access");
-        $role_id = ( int )$_POST ['id'];
-        $M->where("role_id=" . $role_id)->delete();
-        $data = $_POST ['data'];
-        if (count($data) == 0) {
+        $Access = D("Access");
+        $role_id = (int) I('get.id');
+         $Access->where("role_id=" . $role_id)->delete();
+         $data = $_POST ['data'];
+
+         if (count($data) == 0) {
             return array(
                 'status' => 1,
-                'info' => "清除所有权限成功",
+                'info' => "清除所有权限成功".array2str($data),
                 'url' => U("Admin/Access/roleList")
             );
         }
@@ -318,7 +319,7 @@ class AccessLogic extends RelationModel
             $datas [$k] ['level'] = $tem [1];
             $datas [$k] ['pid'] = $tem [2];
         }
-        if ($M->addAll($datas)) {
+        if ($Access->addAll($datas)) {
             return array(
                 'status' => 1,
                 'info' => "设置成功",

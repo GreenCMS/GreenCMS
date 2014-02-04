@@ -296,12 +296,11 @@ class AccessController extends AdminBaseController
 
     public function changeRole()
     {
-        header('Content-Type:application/json; charset=utf-8');
         if (IS_POST) {
-
+            header('Content-Type:application/json; charset=utf-8');
             echo json_encode(D('Access', 'Logic')->changeRole());
         } else {
-            $M = M("Node");
+            $Node = D("Node");
             $info = M("Role")->where("id=" . ( int )$_GET ['id'])->find();
             if (empty ($info ['id'])) {
                 $this->error("不存在该用户组", U('Admin/Access/roleList'));
@@ -309,15 +308,15 @@ class AccessController extends AdminBaseController
             $access = M("Access")->field("CONCAT(`node_id`,':',`level`,':',`pid`) as val")->where("`role_id`=" . $info ['id'])->select();
             $info ['access'] = count($access) > 0 ? json_encode($access) : json_encode(array());
             $this->assign("info", $info);
-            $datas = $M->where("level=1")->select();
+            $datas = $Node->where("level=1")->select();
             foreach ($datas as $k => $v) {
                 $map ['level'] = 2;
                 $map ['pid'] = $v ['id'];
-                $datas [$k] ['data'] = $M->where($map)->select();
+                $datas [$k] ['data'] = $Node->where($map)->select();
                 foreach ($datas [$k] ['data'] as $k1 => $v1) {
                     $map ['level'] = 3;
                     $map ['pid'] = $v1 ['id'];
-                    $datas [$k] ['data'] [$k1] ['data'] = $M->where($map)->select();
+                    $datas [$k] ['data'] [$k1] ['data'] = $Node->where($map)->select();
                 }
             }
             $this->assign("nodeList", $datas);
