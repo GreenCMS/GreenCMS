@@ -17,6 +17,24 @@ use Common\Util\File;
  */
 class DataController extends AdminBaseController
 {
+
+
+    public function db()
+    {
+
+        $this->assign('db_path', DB_Backup_PATH);
+        $this->display();
+
+
+    }
+
+    public function dbHandle()
+    {
+        $this->saveConfig();
+        $this->success('配置成功');
+
+    }
+
     /**
      * 列出系统中所有数据库表信息
      * For MySQL

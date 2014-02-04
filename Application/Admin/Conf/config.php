@@ -39,10 +39,11 @@ $menu_arr = array(
         ),
 
         'Data' => array(
+            'Data/db' => '数据库设置',
             'Data/index' => '数据库备份',
             'Data/restore' => '数据库导入',
-            'Data/zipList' => '数据库压缩包',
-            'Data/repair' => '数据库优化修复',
+            'Data/zipList' => '数据库压缩',
+            'Data/repair' => '数据库优化',
             'Data/cache' => '缓存设置',
             'Data/clear' => '缓存清理'
 

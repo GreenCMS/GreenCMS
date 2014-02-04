@@ -48,7 +48,7 @@ class SystemController extends AdminBaseController
     {
         $this->saveConfig();
 
-        $this->success('配置成功', 'setEmailConfig');
+        $this->success('配置成功');
     }
 
     public function setSafeConfig()
@@ -64,9 +64,6 @@ class SystemController extends AdminBaseController
     public function setSafeConfigHandle()
     {
         $this->saveConfig();
-        /*
-         * if ($_POST ['think_token']) { C ( 'TOKEN_ON', true ); } else { C ( 'TOKEN_ON', false ); } if ($_POST ['DB_FIELDTYPE_CHECK']) { C ( 'DB_FIELDTYPE_CHECK', true ); } else { C ( 'DB_FIELDTYPE_CHECK', false ); }
-         */
 
         $this->success('配置成功');
     }
