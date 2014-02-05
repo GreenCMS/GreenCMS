@@ -71,18 +71,3 @@ function send_mail($to, $name, $subject = '', $body = '', $attachment = null, $c
     return $mail->Send() ? true : $mail->ErrorInfo;
 }
 
-
-function get_class_all_methods($class){
-    $r = new ReflectionClass($class);
-    foreach($r->getMethods() as $key=>$methodObj){
-        if($methodObj->isPrivate())
-            $methods[$key]['type'] = 'private';
-        elseif($methodObj->isProtected())
-            $methods[$key]['type'] = 'protected';
-        else
-            $methods[$key]['type'] = 'public';
-        $methods[$key]['name'] = $methodObj->name;
-        $methods[$key]['class'] = $methodObj->class;
-    }
-    return $methods;
-}
