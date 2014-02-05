@@ -30,7 +30,7 @@ function commonAjaxSubmit(url,formObj,div){
         url:url,
         type:"POST",
         success:function(data, st) {
-            //                var data = eval("(" + data + ")");
+                var data = eval("(" + data + ")");
             if(data.status==1){
             	div.fadeIn().html(data.info);
             	div.fadeOut(3000);

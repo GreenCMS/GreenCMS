@@ -297,6 +297,12 @@ class AccessController extends AdminBaseController
     public function changeRole()
     {
         if (IS_POST) {
+            //TODO BUG HERE
+
+            $res = D('Access', 'Logic')->changeRole();
+            if ($res['status'] == 1) $this->success("设置成功", U("Admin/Access/roleList"));
+            else $this->error("设置失败，请重试");
+            die();
             header('Content-Type:application/json; charset=utf-8');
             echo json_encode(D('Access', 'Logic')->changeRole());
         } else {

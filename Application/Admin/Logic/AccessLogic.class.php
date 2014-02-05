@@ -300,7 +300,7 @@ class AccessLogic extends RelationModel
     public function changeRole()
     {
         $Access = D("Access");
-        $role_id = (int) I('get.id');
+        $role_id = (int) I('post.id');
          $Access->where("role_id=" . $role_id)->delete();
          $data = $_POST ['data'];
 
