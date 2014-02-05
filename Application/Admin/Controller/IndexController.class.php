@@ -13,6 +13,8 @@ class IndexController extends AdminBaseController
 {
     public function index()
     {
+
+
         $this->display();
     }
 
@@ -42,6 +44,7 @@ class IndexController extends AdminBaseController
 
         }
     }
+
 
 
 }
