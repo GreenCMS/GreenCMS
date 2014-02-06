@@ -7,7 +7,7 @@
  * Time: 上午11:56
  */
 
-namespace Admin\Controller;
+namespace Install\Controller;
 
 use Think\Controller;
 

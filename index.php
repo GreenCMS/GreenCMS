@@ -31,7 +31,7 @@ define('BUILD_DIR_SECURE', false);
 define("WEB_ROOT", dirname(__FILE__) . "/");
 
 
-require(WEB_ROOT . "db_config.php");
+if (file_exists(WEB_ROOT . "db_config.php")) require(WEB_ROOT . "db_config.php");
 require(WEB_ROOT . "const_config.php");
 
 
@@ -40,7 +40,6 @@ require(WEB_ROOT . "const_config.php");
  * 安全期间，建议安装调试完成后移动到非WEB目录
  */
 define ('APP_PATH', './Application/');
-
 
 
 /**
