@@ -1,7 +1,0 @@
-/* RED SCHEME --------------------------------- */
-
-h2, a, a:visited, a:hover, a:focus, #switch ul li a.current, #contact a:hover  { color: #941616; }
-#countdown .two.columns, #twitter { background: #941616; }
-.twitter-text, #countdown .two.columns { text-shadow: 0px 1px 0px #5f1313; }
-.twitter-text a:hover { color: #ffe1e1 !important; }
-#sigil { background-image: url(../../images/logo/red.png);}
