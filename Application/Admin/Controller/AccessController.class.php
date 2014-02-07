@@ -145,8 +145,7 @@ class AccessController extends AdminBaseController
             $user = array(
                 'user_login' => htmlspecialchars(trim($_POST ['user_login'])),
                 'user_nicename' => htmlspecialchars(trim($_POST ['user_nicename'])),
-                'display_name' => htmlspecialchars(trim($_POST ['display_name'])),
-                'user_pass' => encrypt($_POST ['password']),
+                 'user_pass' => encrypt($_POST ['password']),
                 'user_email' => htmlspecialchars($_POST ['user_email']),
                 'user_url' => htmlspecialchars($_POST ['user_url']),
                 'user_intro' => htmlspecialchars($_POST ['user_intro'])
@@ -161,8 +160,8 @@ class AccessController extends AdminBaseController
                 $user ['user_level'] = $_POST ['role_id'];
             }
 
-            $User = D('user');
-            $User_users = D('role_users');
+            $User = D('User');
+            $User_users = D('Role_users');
             if ($new_id = $User->add($user)) {
 
                 $role = array(
@@ -175,6 +174,7 @@ class AccessController extends AdminBaseController
                     $this->error('添加用户权限失败！', U('Admin/Access/index'));
                 }
             } else {
+            //    die(D('User')->getlastsql());
                 $this->error('添加用户失败！', U('Admin/Access/index'));
             }
         }

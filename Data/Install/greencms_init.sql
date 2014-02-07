@@ -2,7 +2,7 @@
 -- Records of options
 -- ----------------------------
 INSERT INTO `{$db_prefix}options` VALUES (null, 'site_url', 'http://green.njut.asia', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES (null, 'title', 'GreenCMS2014  Powered By �������� ', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES (null, 'title', 'GreenCMS2014  Powered By 绿荫工作室 ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES (null, 'keywords', 'GreenCMS v2', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES (null, 'description', 'GreenCMS 2014', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES (null, 'foot', 'By GreenStudio', 'yes');
@@ -38,11 +38,11 @@ INSERT INTO `{$db_prefix}options` VALUES (null, 'DB_SQL_BUILD_CACHE', '1', 'yes'
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `{$db_prefix}role` VALUES ('1', '��������Ա', '1', '1', 'ϵͳ���ó�������Ա��');
-INSERT INTO `{$db_prefix}role` VALUES ('2', '��վ����Ա', '2', '1', 'ӵ��ϵͳ�����ڳ�������Ա��Ȩ��');
-INSERT INTO `{$db_prefix}role` VALUES ('3', '���ݹ���Ա', '3', '1', 'ӵ�з�������Ȩ��');
-INSERT INTO `{$db_prefix}role` VALUES ('4', 'Ͷ��Ա', '4', '1', 'ֻ��Ͷ��Ĭ��Ϊδ���');
-INSERT INTO `{$db_prefix}role` VALUES ('5', '�ο�', '5', '1', '������Ϣ�޸�');
+INSERT INTO `{$db_prefix}role` VALUES ('1', '超级管理员', '1', '1', '系统内置超级管理员组');
+INSERT INTO `{$db_prefix}role` VALUES ('2', '网站管理员', '2', '1', '拥有系统仅此于超级管理员的权限');
+INSERT INTO `{$db_prefix}role` VALUES ('3', '内容管理员', '3', '1', '拥有发布文章权利');
+INSERT INTO `{$db_prefix}role` VALUES ('4', '投稿员', '4', '1', '只能投稿默认为未审核');
+INSERT INTO `{$db_prefix}role` VALUES ('5', '游客', '5', '1', '基本信息修改');
 
 
 

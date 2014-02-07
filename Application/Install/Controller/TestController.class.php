@@ -82,15 +82,15 @@ class TestController extends Controller
         $UeditorController = array_diff(get_class_methods(new \Admin\Controller\UeditorController()), $AdminBaseController);
 
 
-        dump($AdminBaseController);
-        dump($IndexController);
-        dump($AccessController);
-        dump($CustomController);
-        dump($DataController);
-        dump($SystemController);
-        dump($PostsController);
-        dump($MediaController);
-        dump($UeditorController);
+//        dump($AdminBaseController);
+//        dump($IndexController);
+//        dump($AccessController);
+//        dump($CustomController);
+//        dump($DataController);
+//        dump($SystemController);
+//        dump($PostsController);
+//        dump($MediaController);
+//        dump($UeditorController);
 
 
         $Controllers = array('IndexController', 'AccessController', 'CustomController', 'DataController'
@@ -98,10 +98,10 @@ class TestController extends Controller
 
         foreach ($Controllers as $value) {
             $data = array();
-            $data['name'] = $value;
-            $data['title'] = $data['name'];
+            $data['name'] = substr($value,0,-10);
+            $data['title'] = $value;
             $data['status'] = 1;
-            $data['remark'] = $data['name'];
+            $data['remark'] = $value;
             $data['sort'] = 0;
             $data['pid'] = (int)$level1_temp['id'];
             $data['level'] = 2;
@@ -111,11 +111,13 @@ class TestController extends Controller
         $map['id'] = array('neq', 1);
         $Nodes = D('Node')->field('name')->where($map)->select();
         dump($Nodes);
-        foreach ($Nodes as $key => $value) {
 
+
+        foreach ($Nodes as $key => $value) {
+            $value['name']=$value['name'].'Controller';
             $temp = $$value['name'];
 
-            $map2['name'] = $value['name'];
+            $map2['name'] = substr($value['name'],0,-10);
             $map2['level'] = 2;
 
             $temp2 = D($NODE)->field('id')->where($map2)->find();
