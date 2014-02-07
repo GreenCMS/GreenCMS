@@ -19,14 +19,18 @@ class PostsController extends AdminBaseController
         $tag = I('get.tag');
         $where = array('post_status' => $post_status);
 
-        if ($cat != '') $post_ids = D('Cats', 'Logic')->getPostsId($cat);
-        if ($tag != '') $post_ids = D('Tags', 'Logic')->getPostsId($tag);
+        if ($cat != '') {
+            $post_ids = D('Cats', 'Logic')->getPostsId($cat);
+            $post_ids = null ? array('post_id' => 0) : $post_ids;
+        } else if ($tag != '') {
+            $post_ids = D('Tags', 'Logic')->getPostsId($tag);
+            $post_ids = null? array('post_id' => 0) : $post_ids;
+        }
 
 
         $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where, $post_ids);
 
-        // dump($posts);
-        $this->assign('posts', $posts);
+         $this->assign('posts', $posts);
 
         $this->display('index');
     }
@@ -45,7 +49,7 @@ class PostsController extends AdminBaseController
         $this->assign("tags", $tags);
         $this->assign("cats", $cats);
 
-        $this->assign("handle", "addHandle");
+        $this->assign("handle", U('Admin/Posts/addHandle'));
         $this->assign("publish", "发布");
 
         $this->display();
@@ -239,7 +243,8 @@ class PostsController extends AdminBaseController
             $this->cats = M('cats')->select();
             $this->tags = M('tags')->select();
             $this->assign("info", $info);
-            $this->assign("handle", "posts");
+             $this->assign("handle", U('Admin/Posts/posts'));
+
             $this->assign("publish", "更新");
             $this->display('add');
 
