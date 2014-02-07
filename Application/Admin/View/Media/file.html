@@ -16,32 +16,6 @@
     <title>{$action} | {:get_opinion('title')}</title>
 
 
-    <!-- jQuery and jQuery UI (REQUIRED) -->
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-
-    <!-- elFinder CSS (REQUIRED) -->
-    <link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/GreenFinder/css/elfinder.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/GreenFinder/css/theme.css">
-
-    <!-- elFinder JS (REQUIRED) -->
-    <script type="text/javascript" src="__ROOT__/Extend/GreenFinder/js/elfinder.min.js"></script>
-
-    <!-- elFinder translation (OPTIONAL) -->
-    <script type="text/javascript" src="__ROOT__/Extend/GreenFinder/js/i18n/elfinder.ru.js"></script>
-
-
-    <!-- elFinder initialization (REQUIRED) -->
-    <script type="text/javascript" charset="utf-8">
-        $().ready(function () {
-            var elf = $('#elfinder').elfinder({
-                url: "{:U('Admin/Media/fileConnect')}",  // 这里设置为File模块的index方法，用U方法构建
-                lang: 'zh_CN'            // language (OPTIONAL)
-            }).elfinder('instance');
-        });
-    </script>
 </head>
 <body class="page-header-fixed">
 <!-- BEGIN HEADER -->
@@ -139,6 +113,33 @@
     });
 </script>
 
+
+<!-- jQuery and jQuery UI (REQUIRED) -->
+<link rel="stylesheet" type="text/css" media="screen"
+      href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
+<!-- elFinder CSS (REQUIRED) -->
+<link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/GreenFinder/css/elfinder.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/GreenFinder/css/theme.css">
+
+<!-- elFinder JS (REQUIRED) -->
+<script type="text/javascript" src="__ROOT__/Extend/GreenFinder/js/elfinder.min.js"></script>
+
+<!-- elFinder translation (OPTIONAL) -->
+<script type="text/javascript" src="__ROOT__/Extend/GreenFinder/js/i18n/elfinder.zh_CN.js"></script>
+
+
+<!-- elFinder initialization (REQUIRED) -->
+<script type="text/javascript" charset="utf-8">
+    $().ready(function () {
+        var elf = $('#elfinder').elfinder({
+            url: "{:U('Admin/Media/fileConnect')}",  // 这里设置为File模块的index方法，用U方法构建
+            lang: 'zh_CN'            // language (OPTIONAL)
+        }).elfinder('instance');
+    });
+</script>
 
 </body>
 </html>
