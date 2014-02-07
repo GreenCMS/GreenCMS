@@ -23,6 +23,21 @@ class TestController extends Controller
 
     }
 
+
+    /**
+     * test only 生产模式需要删除这个代码
+     */
+    public function uninstall()
+    {
+
+
+        $file2 = WEB_ROOT . 'Data/Install/install.lock';
+        unlink($file2);
+        $this->redirect('Install/Index/index');
+
+    }
+
+
     public function index()
     {
 

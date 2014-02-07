@@ -25,6 +25,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 define ('APP_DEBUG', true);
 define ('GreenStudio', true); //绿荫专用
 define('BUILD_DIR_SECURE', false);
+
 /**定义网站根目录
  *
  */
@@ -37,7 +38,6 @@ require(WEB_ROOT . "const_config.php");
 
 /**
  * 应用目录设置
- * 安全期间，建议安装调试完成后移动到非WEB目录
  */
 define ('APP_PATH', './Application/');
 

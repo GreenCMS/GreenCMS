@@ -104,26 +104,35 @@ class IndexController extends Controller
     {
         $time = date("Y-m-d H:m:s");
 
-        $db_host = $_POST["dbhost"];
-        $db_port = $_POST["dbport"];
+        $db_host = $_POST["db_host"];
+        $db_port = $_POST["db_port"];
 
-        $db_user = $_POST ["dbuser"];
-        $db_password = $_POST["dbpwd"];
+        $db_user = $_POST ["db_user"];
+        $db_password = $_POST["db_password"];
 
-        $db_name = $_POST["dbname"];
-        $db_prefix = $_POST["dbprefix"];
-
-        $admin_user=$_POST['adminuser'];
-        $admin_password= encrypt($_POST['adminpwd']);
-
-        $title=$_POST['cfg_webname'];
-        $site_url=$_POST['cfg_basehost'].$_POST['cfg_cmspath'];
+        $db_name = $_POST["db_name"];
+        $db_prefix = $_POST["db_prefix"];
 
 
-        if (!testDB($db_host, $db_user, $db_password))
+        if ($_POST['admin_password'] != $_POST['admin_password2'] || trim($_POST['admin_password']) == '' || trim($_POST['admin_password2']) == '')
+            $this->error("两次输入的密码不一致，请重新设定！，或者密码为空");
+        else {
+            $admin_user = $_POST['admin_user'];
+            $admin_password = encrypt($_POST['admin_password']);
+            $admin_email = $_POST['admin_email'];
+            $user_session= encrypt($admin_user .$admin_password . time());
+
+
+        }
+
+        $title = $_POST['cfg_title'];
+        $site_url = $_POST['cfg_basehost'] . $_POST['cfg_cmspath'];
+
+
+        if (!testDB($db_host . ":" . $db_port, $db_user, $db_password))
             $this->error("数据库服务器或登录密码无效，\n\n无法连接数据库，请重新设定！");
 
-        $conn = mysql_connect($db_host, $db_user, $db_password);
+        $conn = mysql_connect($db_host . ":" . $db_port, $db_user, $db_password);
 
 
         mysql_query("CREATE DATABASE IF NOT EXISTS `" . $db_name . "`;", $conn);
@@ -134,42 +143,11 @@ class IndexController extends Controller
         mysql_query("set names 'utf8'");
 
 
-        $sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_empty.sql');
-        $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
-        File::writeFile(WEB_ROOT . 'Data/Install/greencms_sample.sql', $sql_query, 'w+');
+        $file = WEB_ROOT . 'Data/Install/db_config_sample.php';
 
-
-        $file = WEB_ROOT . 'Data/Install/greencms_sample.sql';
-        insertDB($file,$conn);
-
-        $sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_init.sql');
-        $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
-        File::writeFile(WEB_ROOT . 'Data/Install/greencms_init_sample.sql', $sql_query, 'w+');
-
-        $file2 = WEB_ROOT . 'Data/Install/greencms_init_sample.sql';
-        insertDB($file2,$conn);
-
-        /**
-         * 插入管理员数据
-         */
-        $admin_query = "INSERT INTO `{$db_prefix}user` (`user_id`, `user_login`, `user_pass`, `user_nicename`, `user_email`,
-        `user_url`, `user_registered`, `user_activation_key`, `user_status`,  `user_intro`,
-        `user_level`, `user_session`) VALUES(1, '{$admin_user}', '" . $admin_password . "', '管理员', 'admin@admin.com',
-         '', '{$time}', '', 1, '我是admin，欢迎使用', 2, '');";
-        mysql_query($admin_query, $conn);
-        //更新配置
-
-
-        $cquery = "Update `{$db_prefix}options` set option_value='{$title}' where option_name='title';";
-        mysql_query($cquery, $conn);
-        $cquery = "Update `{$db_prefix}options` set option_value='{$site_url}' where option_name='site_url';";
-        mysql_query($cquery, $conn);
-
-
-        dump($cquery);
-
-        $content = File::readFile(WEB_ROOT . 'Data/Install/db_config_sample.php');
-
+        if (!file_exists($file))
+            $this->error('Data/Install/db_config_sample.php文件不存在,请检查');
+        $content = File::readFile($file);
         $content = str_replace("~dbhost~", $db_host, $content);
         $content = str_replace("~dbname~", $db_name, $content);
         $content = str_replace("~dbuser~", $db_user, $content);
@@ -179,6 +157,36 @@ class IndexController extends Controller
         if (!File::writeFile(WEB_ROOT . 'db_config.php', $content, 'w+')) {
             $this->error("数据库配置文件写入失败，请您手动根据Data/Install/db_config_sample.php文件在根目录创建文件");
         }
+
+
+        $sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_empty.sql');
+        $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
+        $file = WEB_ROOT . 'Data/Install/greencms_sample.sql';
+        File::writeFile($file, $sql_query, 'w+');
+        insertDB($file, $conn);
+        unlink($file);
+
+        $sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_init.sql');
+        $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
+        $file2 = WEB_ROOT . 'Data/Install/greencms_init_sample.sql';
+        File::writeFile($file2, $sql_query, 'w+');
+        insertDB($file2, $conn);
+        unlink($file2);
+
+         /**
+         * 插入管理员数据&更新配置
+         */
+        $admin_query = "INSERT INTO `{$db_prefix}user` (`user_id`, `user_login`, `user_pass`, `user_nicename`, `user_email`,
+        `user_url`, `user_registered`, `user_activation_key`, `user_status`,  `user_intro`,
+        `user_level`, `user_session`) VALUES(1, '{$admin_user}', '" . $admin_password . "', '管理员', '{$admin_email}',
+         '', '{$time}', '', 1, '我是admin，欢迎使用', 2, '{$user_session}');";
+        if(!mysql_query($admin_query, $conn)) $this->error(' 插入管理员数据出错');
+        $cquery = "Update `{$db_prefix}options` set option_value='{$title}' where option_name='title';";
+        if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
+        $cquery = "Update `{$db_prefix}options` set option_value='{$site_url}' where option_name='site_url';";
+        if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
+
+
 
 
         //TODO       今天就写到这里
@@ -195,18 +203,18 @@ class IndexController extends Controller
         File::delAll(LOG_PATH);
         File::delAll(WEB_CACHE_PATH);
         if (File::writeFile(WEB_ROOT . 'Data/install/install.lock', 'installed', 'w+'))
-            $this->show('安装成功');
-
-        $this->redirect('Home/Index/index',array(),10,'安装成功,立即返回首页');
+            $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
 
 
     }
 
-    public function dbTest($dbhost, $dbuser, $dbpwd)
+    public function dbTest($db_host, $db_port, $db_user, $db_password)
     {
-        if (testDB($dbhost, $dbuser, $dbpwd))
+        if (testDB($db_host . ":" . $db_port, $db_user, $db_password))
             return 'ok';
         else
             return "数据库服务器或登录密码无效，\n\n无法连接数据库，请重新设定！";
     }
+
+
 }

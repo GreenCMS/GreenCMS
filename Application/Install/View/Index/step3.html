@@ -132,28 +132,28 @@
                                             <td><strong>数据库主机：</strong></td>
                                             <td>
                                                 <input type="text" id="dbhost" placeholder="" class="m-wrap medium"
-                                                       name="dbhost" value="localhost">
+                                                       name="db_host" value="localhost">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>数据库端口：</strong></td>
                                             <td>
                                                 <input type="text"   placeholder="" class="m-wrap medium"
-                                                       name="dbport" value="3306">
+                                                       name="db_port" value="3306">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>数据库用户：</strong></td>
                                             <td>
                                                 <input type="text" id="dbuser" placeholder="" class="m-wrap medium"
-                                                       name="dbuser" value="root">
+                                                       name="db_user" value="root">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>数据库密码：</strong></td>
                                             <td>
                                                 <input type="password" id="dbpwd" placeholder="" class="m-wrap medium"
-                                                       name="dbpwd" value="" onChange="TestDb();">
+                                                       name="db_password" value="" onChange="TestDb();">
 
                                                 <div style='float:right' id='dbpwdsta'></div>
                                             </td>
@@ -162,7 +162,7 @@
                                             <td><strong>数据库名称：</strong></td>
                                             <td>
                                                 <input type="text" id="dbname" placeholder="" class="m-wrap medium"
-                                                       name="dbname" value="green"
+                                                       name="db_name" value="green"
                                                        onChange="HaveDB();">
 
                                                 <div style='float:right' id='havedbsta'></div>
@@ -172,7 +172,7 @@
                                             <td><strong>数据表前缀：</strong></td>
                                             <td>
                                                 <input type="text" id="dbprefix" placeholder="" class="m-wrap medium"
-                                                       name="dbprefix" value="green_">
+                                                       name="db_prefix" value="green_">
                                             </td>
                                         </tr>
                                         <tr>
@@ -204,26 +204,33 @@
                                             <tr>
                                                 <td><strong>用户名：</strong></td>
                                                 <td>
-                                                    <input type="text" id="adminuser" placeholder=""
+                                                    <input type="text" id="admin_user" placeholder=""
                                                            class="m-wrap medium"
-                                                           name="adminuser" value="admin">
+                                                           name="admin_user" value="admin">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td><strong>密　码：</strong></td>
                                                 <td>
-                                                    <input type="password" id="adminpwd" placeholder=""
-                                                           class="m-wrap medium" name="adminpwd" value="">
+                                                    <input type="password" id="admin_password" placeholder=""
+                                                           class="m-wrap medium" name="admin_password" value="">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td><strong>重复密码：</strong></td>
                                                 <td>
-                                                    <input type="password" id="adminpwd2" placeholder=""
-                                                           class="m-wrap medium" name="adminpwd2" value="">
+                                                    <input type="password" id="admin_password2" placeholder=""
+                                                           class="m-wrap medium" name="admin_password2" value="">
                                                 </td>
                                             </tr>
-
+                                            <tr>
+                                                <td><strong>管理员邮箱：</strong></td>
+                                                <td>
+                                                    <input type="text" id="admin_email" placeholder=""
+                                                           class="m-wrap medium"
+                                                           name="admin_email" value="admin@njut.asia">
+                                                </td>
+                                            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -245,8 +252,8 @@
                                                 <tr>
                                                     <td><strong>网站名称：</strong></td>
                                                     <td>
-                                                        <input type="text" id="cfg_webname" placeholder=""
-                                                               class="m-wrap medium" name="cfg_webname"
+                                                        <input type="text" id="cfg_title" placeholder=""
+                                                               class="m-wrap medium" name="cfg_title"
                                                                value="GreenCMS v2">
                                                     </td>
                                                 </tr>
