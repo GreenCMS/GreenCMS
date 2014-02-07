@@ -187,6 +187,7 @@ class IndexController extends Controller
         if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
 
+        A('Install/Test')->init($key='zts');
 
 
         //TODO       今天就写到这里

@@ -18,8 +18,7 @@ class TestController extends Controller
     {
         parent::__construct();
 
-        $key=I('get.key');
-        if($key!='zts')die("No access");
+
 
     }
 
@@ -27,8 +26,9 @@ class TestController extends Controller
     /**
      * test only 生产模式需要删除这个代码
      */
-    public function uninstall()
+    public function uninstall($key)
     {
+        if($key!='zts')die("No access");
 
 
         $file2 = WEB_ROOT . 'Data/Install/install.lock';
@@ -38,10 +38,13 @@ class TestController extends Controller
     }
 
 
-    public function index()
+    public function init($key)
     {
 
-        $test = false;
+         if($key!='zts')die("No access");
+
+
+        $test = true;
 
         $NODE = 'Node';
         $data = array();
@@ -53,6 +56,10 @@ class TestController extends Controller
         $data['pid'] = 0;
         $data['level'] = 1;
         dump($data);
+
+        if ($test) D($NODE)->where('1')->delete();
+
+
         if ($test) D($NODE)->data($data)->add();
 
 
@@ -63,27 +70,27 @@ class TestController extends Controller
         dump((int)$level1_temp['id']);
 
 
-        $AdminBaseController = get_class_methods(new AdminBaseController());
+        $AdminBaseController = get_class_methods(new \Admin\Controller\AdminBaseController());
         //消除继承得到的方法
-        $AccessController = array_diff(get_class_methods(new AccessController()), $AdminBaseController);
-        $CustomController = array_diff(get_class_methods(new CustomController()), $AdminBaseController);
-        $IndexController = array_diff(get_class_methods(new IndexController()), $AdminBaseController);
-        $DataController = array_diff(get_class_methods(new  DataController()), $AdminBaseController);
-        $SystemController = array_diff(get_class_methods(new SystemController()), $AdminBaseController);
-        $PostsController = array_diff(get_class_methods(new PostsController()), $AdminBaseController);
-        $MediaController = array_diff(get_class_methods(new MediaController()), $AdminBaseController);
-        $UeditorController = array_diff(get_class_methods(new UeditorController()), $AdminBaseController);
+        $AccessController = array_diff(get_class_methods(new \Admin\Controller\AccessController()), $AdminBaseController);
+        $CustomController = array_diff(get_class_methods(new \Admin\Controller\CustomController()), $AdminBaseController);
+        $IndexController = array_diff(get_class_methods(new \Admin\Controller\IndexController()), $AdminBaseController);
+        $DataController = array_diff(get_class_methods(new \Admin\Controller\ DataController()), $AdminBaseController);
+        $SystemController = array_diff(get_class_methods(new \Admin\Controller\SystemController()), $AdminBaseController);
+        $PostsController = array_diff(get_class_methods(new \Admin\Controller\PostsController()), $AdminBaseController);
+        $MediaController = array_diff(get_class_methods(new \Admin\Controller\MediaController()), $AdminBaseController);
+        $UeditorController = array_diff(get_class_methods(new \Admin\Controller\UeditorController()), $AdminBaseController);
 
 
-//        dump($AdminBaseController);
-//        dump($IndexController);
-//        dump($AccessController);
-//        dump($CustomController);
-//        dump($DataController);
-//        dump($SystemController);
-//        dump($PostsController);
-//        dump($MediaController);
-//        dump($UeditorController);
+        dump($AdminBaseController);
+        dump($IndexController);
+        dump($AccessController);
+        dump($CustomController);
+        dump($DataController);
+        dump($SystemController);
+        dump($PostsController);
+        dump($MediaController);
+        dump($UeditorController);
 
 
         $Controllers = array('IndexController', 'AccessController', 'CustomController', 'DataController'
@@ -98,7 +105,7 @@ class TestController extends Controller
             $data['sort'] = 0;
             $data['pid'] = (int)$level1_temp['id'];
             $data['level'] = 2;
-            dump($data);
+            echo 'Controller:'.$value;dump($data);
             if ($test) D($NODE)->data($data)->add();
         }
         $map['id'] = array('neq', 1);
