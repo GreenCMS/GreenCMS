@@ -33,7 +33,7 @@ class AdminBaseController extends BaseController
             // 登录检查
             RBAC::checkLogin();
              // 提示错误信息 无权限
-            //$this->error(L('_VALID_ACCESS_'));
+            $this->error(L('_VALID_ACCESS_'));
 
             // TODO 如何防止循环无权限
         }
