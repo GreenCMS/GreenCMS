@@ -8,8 +8,8 @@
  */
 
 namespace Admin\Controller;
-
 use Common\Util\File;
+
 
 /**
  * Class DataController
@@ -82,7 +82,8 @@ class DataController extends AdminBaseController
         if (isset($_POST['systemBackup'])) {
             //TODO 系统自动备份
             $type = "系统自动备份";
-            $tables = D("MySQL", "Logic")->getAllTableName();
+            $MySQLLogic = new \Admin\Logic\MySQLLogic();
+            $tables = $MySQLLogic->getAllTableName();
             $path = DB_Backup_PATH . "/SYSTEM_" . date("Ymd");
             if (file_exists($path . "_1.sql")) {
                 die(json_encode(array("status" => 0, "info" => "今天系统已经进行了自动备份操作")));
@@ -97,7 +98,8 @@ class DataController extends AdminBaseController
             "# " . get_opinion('title') . " database backup files\n" .
             "# URL: " . get_opinion('site_url') . "\n" .
             "# Type: {$type}\n";
-        $bdTable = D("MySQL", "Logic")->backupTable($tables); //取得表结构信息
+        $MySQLLogic = new \Admin\Logic\MySQLLogic();
+        $bdTable = $MySQLLogic->backupTable($tables); //取得表结构信息
         $outPut = "";
         $file_n = 1;
         $backedTable = array();
@@ -170,7 +172,9 @@ class DataController extends AdminBaseController
      */
     public function restore()
     {
-        $data = D("MySQL", "Logic")->getSqlFilesList();
+        $MySQLLogic = new \Admin\Logic\MySQLLogic();
+
+        $data = $MySQLLogic->getSqlFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
@@ -392,8 +396,9 @@ class DataController extends AdminBaseController
 
             //	Log::write('$zipFiles:'.$zipFiles);
 
+            // $MySQLLogic= new \Admin\Logic\MySQLLogic();
 
-            //   if (D("MySQL","Logic")->zip($zipFiles, $zipOut)) {
+            //   if ( $MySQLLogic->zip($zipFiles, $zipOut)) {
             //  	Log::write('$zipFiles:'.$zipFiles.'//$zipOut:'.$zipOut);
 
             //TODO is_ok
@@ -451,7 +456,9 @@ class DataController extends AdminBaseController
      */
     public function zipList()
     {
-        $data = D("MySQL", "Logic")->getZipFilesList();
+        $MySQLLogic = new \Admin\Logic\MySQLLogic();
+
+        $data = $MySQLLogic->getZipFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
@@ -533,6 +540,10 @@ class DataController extends AdminBaseController
 
     /**
      * 完整性测试，有待检验
+     */
+    //TODO bug
+    /**
+     * cat tag被删除之后完整性不能保证
      */
     private function integrity_testing()
     {
@@ -681,7 +692,7 @@ class DataController extends AdminBaseController
             ),
             "Homeruntime" => array(
                 "name" => "网站~runtime.php缓存文件",
-                "path" => RUNTIME_PATH . "common~runtime.php",
+                "path" => RUNTIME_PATH . "~runtime.php",
                 //  "size" => $Dir->realsize(RUNTIME_PATH . "~runtime.php"),
                 "size" => File::realSize(RUNTIME_PATH . "common~runtime.php"),
             )

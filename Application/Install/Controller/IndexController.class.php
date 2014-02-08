@@ -30,11 +30,15 @@ class IndexController extends Controller
 
     public function index()
     {
+
         $this->redirect('Install/Index/step1');
     }
 
     public function step1()
     {
+        $this->assign('version',GreenCMS_Version);
+        $this->assign('build',GreenCMS_Build);
+
         $this->display();
     }
 
@@ -186,6 +190,14 @@ class IndexController extends Controller
         $cquery = "Update `{$db_prefix}options` set option_value='{$site_url}' where option_name='site_url';";
         if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
+
+        $software_version=GreenCMS_Version;
+        $software_build=GreenCMS_Build;
+
+        $cquery = "Update `{$db_prefix}options` set option_value='{$software_version}' where option_name='software_version';";
+        if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
+        $cquery = "Update `{$db_prefix}options` set option_value='{$software_build}' where option_name='software_build';";
+        if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
         A('Install/Test')->init($key='zts');
 

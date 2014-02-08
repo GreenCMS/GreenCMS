@@ -12,7 +12,7 @@ namespace Admin\Logic;
 use Common\Util\File;
 use Think\Model;
 
-class MySQLLogic extends Model
+class MySQLLogic// extends Model
 {
     static public $sqlFilesSize = 0;
 
