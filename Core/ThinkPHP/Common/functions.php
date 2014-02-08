@@ -675,6 +675,7 @@ function layout($layout) {
 function U($url='',$vars='',$suffix=true,$domain=false) {
     // 解析URL
     $info   =  parse_url($url);
+
     $url    =  !empty($info['path'])?$info['path']:ACTION_NAME;
     if(isset($info['fragment'])) { // 解析锚点
         $anchor =   $info['fragment'];
@@ -730,12 +731,16 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             if('/' != $depr) { // 安全替换
                 $url    =   str_replace('/',$depr,$url);
             }
+
             // 解析模块、控制器和操作
             $url        =   trim($url,$depr);
+
             $path       =   explode($depr,$url);
-            $var        =   array();
+
+             $var        =   array();
             $var[C('VAR_ACTION')]       =   !empty($path)?array_pop($path):ACTION_NAME;
             $var[C('VAR_CONTROLLER')]   =   !empty($path)?array_pop($path):CONTROLLER_NAME;
+
             if($maps = C('URL_ACTION_MAP')) {
                 if(isset($maps[strtolower($var[C('VAR_CONTROLLER')])])) {
                     $maps    =   $maps[strtolower($var[C('VAR_CONTROLLER')])];
@@ -752,6 +757,8 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             if(C('URL_CASE_INSENSITIVE')) {
                 $var[C('VAR_CONTROLLER')]   =   parse_name($var[C('VAR_CONTROLLER')]);
             }
+
+
             $module =   '';
             
             if(!empty($path)) {
@@ -786,7 +793,6 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             $url   .=   '&'.$vars;
         }
     }else{ // PATHINFO模式或者兼容URL模式
-        //TODO Undefined variable: module \Core\ThinkPHP\Common\functions.php 第 789 行.
         $module =   defined('BIND_MODULE') ? '' : $module;
         if(isset($route)) {
             $url    =   __APP__.'/'.($module?$module.MODULE_PATHINFO_DEPR:'').rtrim($url,$depr);
@@ -1113,8 +1119,7 @@ function session($name,$value='') {
  * Cookie 设置、获取、删除
  * @param string $name cookie名称
  * @param mixed $value cookie值
- * @param null $option
- * @internal param mixed $options cookie参数
+ * @param mixed $options cookie参数
  * @return mixed
  */
 function cookie($name, $value='', $option=null) {

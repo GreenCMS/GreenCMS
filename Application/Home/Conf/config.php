@@ -1,11 +1,10 @@
 <?php
 return array(
 
+
     'MAINTAIN' => false,
 
-    'DEFAULT_THEME' => 'vena',
-
-    'PAGER' => 5,
+    'DEFAULT_THEME' => 'Vena',
 
     'LOAD_EXT_CONFIG' => 'config_router', // 加载扩展配置文件
 

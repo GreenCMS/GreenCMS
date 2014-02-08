@@ -22,26 +22,27 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
  * 系统调试设置
  * 项目正式部署后请设置为false
  */
-define ('APP_DEBUG', true);
+define ('APP_DEBUG', false);
 define ('GreenStudio', true); //绿荫专用
 define('BUILD_DIR_SECURE', false);
+
 /**定义网站根目录
  *
  */
 define("WEB_ROOT", dirname(__FILE__) . "/");
 
 
-require(WEB_ROOT . "db_config.php");
+if (file_exists(WEB_ROOT . "db_config.php")) require(WEB_ROOT . "db_config.php");
 require(WEB_ROOT . "const_config.php");
 
 
 /**
  * 应用目录设置
- * 安全期间，建议安装调试完成后移动到非WEB目录
  */
 define ('APP_PATH', './Application/');
 
-
+define ('GreenCMS_Version', 'v2.1.0208');
+define ('GreenCMS_Build', '20140208');
 
 /**
  * 引入核心入口

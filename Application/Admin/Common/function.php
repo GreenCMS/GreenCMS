@@ -9,18 +9,6 @@
 
 
 /**
- * 功能：计算文件大小
- * @param $bytes
- * @return string 转换后的字符串
- */
-function byteFormat($bytes)
-{
-    $sizetext = array(" B", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB");
-    return round($bytes / pow(1024, ($i = floor(log($bytes, 1024)))), 2) . $sizetext[$i];
-}
-
-
-/**
 +----------------------------------------------------------
  * 功能：系统邮件发送函数
 +----------------------------------------------------------
@@ -30,6 +18,7 @@ function byteFormat($bytes)
  * @param string $body    邮件内容
  * @param string $attachment 附件列表
 +----------------------------------------------------------
+ * @param string $config
  * @return boolean
 +----------------------------------------------------------
  */
@@ -82,25 +71,3 @@ function send_mail($to, $name, $subject = '', $body = '', $attachment = null, $c
     return $mail->Send() ? true : $mail->ErrorInfo;
 }
 
-
-//TODO 已经移到Dir.class中了 即将删除
-
-function delDirAndFile($path, $delDir = FALSE)
-{
-    $handle = opendir($path);
-    if ($handle) {
-        while (false !== ($item = readdir($handle))) {
-            if ($item != "." && $item != "..")
-                is_dir("$path/$item") ? delDirAndFile("$path/$item", $delDir) : unlink("$path/$item");
-        }
-        closedir($handle);
-        if ($delDir)
-            return rmdir($path);
-    } else {
-        if (file_exists($path)) {
-            return unlink($path);
-        } else {
-            return FALSE;
-        }
-    }
-}

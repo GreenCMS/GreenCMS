@@ -61,7 +61,7 @@
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
                 <div class="span12">
-                    <h4>数据库中共有{$list|count}张表，共计{$totalsize.table|byteFormat}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <h4>数据库中共有{$list|count}张表，共计{$totalsize.table}&nbsp;&nbsp;&nbsp;&nbsp;
                     </h4>
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <form id="form">
@@ -106,10 +106,10 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><b>{$totalsize.free|byteFormat}</b></td>
-                                <td><b>{$totalsize.table|byteFormat}</b></td>
-                                <td><b>{$totalsize.data|byteFormat}</b></td>
-                                <td><b>{$totalsize.index|byteFormat}</b></td>
+                                <td><b>{$totalsize.free}</b></td>
+                                <td><b>{$totalsize.table}</b></td>
+                                <td><b>{$totalsize.data}</b></td>
+                                <td><b>{$totalsize.index}</b></td>
                             </tr>
                             </tfoot>
                         </table>

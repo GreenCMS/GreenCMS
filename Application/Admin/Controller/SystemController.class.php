@@ -9,7 +9,7 @@
 
 namespace Admin\Controller;
 
-use Common\Util\Dir;
+use Common\Util\File;
 
 class SystemController extends AdminBaseController
 {
@@ -48,12 +48,11 @@ class SystemController extends AdminBaseController
     {
         $this->saveConfig();
 
-        $this->success('配置成功', 'setEmailConfig');
+        $this->success('配置成功');
     }
 
     public function setSafeConfig()
     {
-        $this->assign('think_token', C('think_token'));
 
         $this->assign('db_fieldtype_check', C('db_fieldtype_check'));
 
@@ -65,11 +64,8 @@ class SystemController extends AdminBaseController
     public function setSafeConfigHandle()
     {
         $this->saveConfig();
-        /*
-         * if ($_POST ['think_token']) { C ( 'TOKEN_ON', true ); } else { C ( 'TOKEN_ON', false ); } if ($_POST ['DB_FIELDTYPE_CHECK']) { C ( 'DB_FIELDTYPE_CHECK', true ); } else { C ( 'DB_FIELDTYPE_CHECK', false ); }
-         */
 
-        $this->success('配置成功', 'setSafeConfig');
+        $this->success('配置成功');
     }
 
     public function links()
@@ -150,6 +146,7 @@ class SystemController extends AdminBaseController
     {
         header("ContentType:text/html;charset:utf8");
 
+
         if (!$_GET ['backupall'] && !$_GET ['backupall']) {
             $this->error('未选择任何备份目标');
         }
@@ -159,24 +156,24 @@ class SystemController extends AdminBaseController
         $logcontent .= '更新时间:' . date('Y-m-d H:i:s') . '###';
         $logcontent .= '系统原始版本:' . C('SOFT_VERSION') . '###';
 
-        $backupall = isset ($_GET ['backupall']) ? $_GET ['backupall'] : 0;
+        $backup_file = isset ($_GET ['backupall']) ? $_GET ['backupall'] : 0;
         $backupsql = isset ($_GET ['backupsql']) ? $_GET ['backupsql'] : 0;
         $logcontent .= '正在执行系统版本检测...###';
         G('run1');
 
-        $msg = fopen_url('http://greencms.xjh1994.com/update.php?version=' . substr(C('SOFT_VERSION'), -8));
+        $msg = File::readFile('http://greencms.xjh1994.com/update.php?version=' . substr(C('SOFT_VERSION'), -8));
         // $msg = 1;
         $msg = $msg != 0 && $msg != 1 ? 2 : $msg;
         if ($msg == 0)
-            $this->error('当前系统已经是最新版!');
+            //  $this->error('当前系统已经是最新版!');
 
-        $nowversion = fopen_url('http://greencms.xjh1994.com/update.php?fullversion=1');
+        $nowversion = File::readFile('http://greencms.xjh1994.com/update.php?fullversion=1');
         // $nowversion = '2.0 Alpha build 20131122';
 
         if ($msg == 2)
-            $this->error('更新检测失败!');
+            //  $this->error('更新检测失败!');
 
-        $updateurl = fopen_url('http://greencms.xjh1994.com/update.php?updateurl=1');
+        $updateurl = File::readFile('http://greencms.xjh1994.com/update.php?updateurl=1');
 
         $logcontent .= '系统更新版本:' . $nowversion . '###';
         $logcontent .= '系统版本检测完毕,区间耗时:' . G('run1', 'end1') . 's' . '###';
@@ -188,17 +185,24 @@ class SystemController extends AdminBaseController
         $logcontent .= '清理系统缓存完毕!,区间耗时:' . G('run2', 'end2') . 's' . ' ###';
 
         import('@.ORG.PclZip');
-        import('@.ORG.File');
-        File::mk_dir(SystemBackDir);
-        File::mk_dir(SystemBackDir . $date);
-        if ($backupall == 1) {
+
+        File::makeDir(System_Backup_PATH);
+        File::makeDir(System_Backup_PATH . $date);
+        if ($backup_file == 1) {
             // 备份整站
             $logcontent .= '开始备份整站内容...###';
             G('run3');
-            $backupallurl = SystemBackDir . $date . '/backupall.zip';
+            $backup_all_file = System_Backup_PATH . $date . '/backupall.zip';
+            /*
             $zip = new PclZip ($backupallurl);
             $zip->create('App,Data/Backup,Data/DBbackup,Data/Log,install,index.php,admin.php');
-            $logcontent .= '成功完成整站数据备份,备份文件路径:<a href=\'' . __ROOT__ . '/Data/Backup/' . $date . '/backupall.zip' . '\'>' . $backupallurl . '</a>, 区间耗时:' . G('run3', 'end3') . 's' . ' ###';
+            */
+            $zip = new \ZipArchive;
+            $res = $zip->open($backup_all_file, \ZipArchive::CREATE);
+            $zip->addFile(__ROOT__ . 'index.php');
+            $zip->close();
+
+            $logcontent .= '成功完成整站数据备份,备份文件路径:<a href=\'' . $backup_all_file . '\'>' . $backup_all_file . '</a>, 区间耗时:' . G('run3', 'end3') . 's' . ' ###';
         }
 
         if ($backupsql == 1) {
@@ -214,7 +218,7 @@ class SystemController extends AdminBaseController
         G('run5');
         $path = './Data/Backup/' . $date;
         $updatedzipurl = $path . '/update.zip';
-        File::write_file($updatedzipurl, fopen_url($updateurl));
+        //File::write_file($updatedzipurl, fopen_url($updateurl));
         $logcontent .= '获取远程更新包成功,更新包路径:<a href=\'' . __ROOT__ . ltrim($updatedzipurl, '.') . '\'>' . $updatedzipurl . '</a>' . '区间耗时:' . G('run5', 'end5') . 's' . '###';
 
         // 解压缩更新包
@@ -255,7 +259,7 @@ class SystemController extends AdminBaseController
         File::write_file(LOG_PATH . $date . '/log.txt', $logcontent);
 
         // 跳转到更新展示页面
-        $this->success('更新完毕!', U('System/over', array(
+        $this->success('更新完毕!', U('Admin/System/over', array(
             "date" => $date
         )));
     }
@@ -273,52 +277,6 @@ class SystemController extends AdminBaseController
         $this->action = '更新结果';
         $this->clear();
         $this->display();
-    }
-
-    public function clear()
-    {
-        $Dir = new Dir (RUNTIME_PATH);
-
-        $caches = array(
-            "HomeCache" => array(
-                "name" => "网站缓存文件",
-                "path" => RUNTIME_PATH . "Cache",
-                "size" => $Dir->size(RUNTIME_PATH . "Cache")
-            ),
-            "HomeData" => array(
-                "name" => "网站数据库字段缓存文件",
-                "path" => RUNTIME_PATH . "Data",
-                "size" => $Dir->size(RUNTIME_PATH . "Data")
-            ),
-            "AdminLog" => array(
-                "name" => "网站日志缓存文件",
-                "path" => RUNTIME_PATH . "Logs",
-                "size" => $Dir->size(RUNTIME_PATH . "Logs")
-            ),
-            "AdminTemp" => array(
-                "name" => "网站临时缓存文件",
-                "path" => RUNTIME_PATH . "Temp",
-                "size" => $Dir->size(RUNTIME_PATH . "Temp")
-            ),
-            "Homeruntime" => array(
-                "name" => "网站~runtime.php缓存文件",
-                "path" => RUNTIME_PATH . "~runtime.php",
-                "size" => $Dir->realsize(RUNTIME_PATH . "~runtime.php")
-            )
-        );
-
-        $cache = array(
-            "HomeCache",
-            "HomeData",
-            "AdminLog",
-            "AdminTemp",
-            "Homeruntime"
-        );
-
-        foreach ($cache as $path) {
-            if (isset ($caches [$path]))
-                $Dir->delDirAndFile($caches [$path] ['path']);
-        }
     }
 
     public function backupsql($date)

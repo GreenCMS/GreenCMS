@@ -121,6 +121,7 @@ class AccessController extends AdminBaseController
 
 
     // 添加用户
+
     public function addUser()
     {
         $this->action_name = 'addUser';
@@ -145,24 +146,22 @@ class AccessController extends AdminBaseController
             $user = array(
                 'user_login' => htmlspecialchars(trim($_POST ['user_login'])),
                 'user_nicename' => htmlspecialchars(trim($_POST ['user_nicename'])),
-                'display_name' => htmlspecialchars(trim($_POST ['display_name'])),
-                'user_pass' => encrypt($_POST ['password']),
+                 'user_pass' => encrypt($_POST ['password']),
                 'user_email' => htmlspecialchars($_POST ['user_email']),
                 'user_url' => htmlspecialchars($_POST ['user_url']),
-                'user_intro' => htmlspecialchars($_POST ['user_intro'])
-                // 'logintime'=>time(),
+                'user_intro' => htmlspecialchars($_POST ['user_intro']),
+                'user_status' => htmlspecialchars($_POST ['user_status']),
+
+            // 'logintime'=>time(),
                 // 'loginip'=>get_client_ip(),
                 // 'lock'=>$_POST['lock']
             );
             // 添加用户与角色关系
-            if ($_POST ['role_id'] == 5) {
-                $user ['user_level'] = 0;
-            } else {
-                $user ['user_level'] = $_POST ['role_id'];
-            }
 
-            $User = D('user');
-            $User_users = D('role_users');
+                $user ['user_level'] = $_POST ['role_id'];
+
+            $User = D('User');
+            $User_users = D('Role_users');
             if ($new_id = $User->add($user)) {
 
                 $role = array(
@@ -175,6 +174,7 @@ class AccessController extends AdminBaseController
                     $this->error('添加用户权限失败！', U('Admin/Access/index'));
                 }
             } else {
+            //    die(D('User')->getlastsql());
                 $this->error('添加用户失败！', U('Admin/Access/index'));
             }
         }
@@ -284,7 +284,7 @@ class AccessController extends AdminBaseController
             $M = M("Role");
             $info = $M->where("id=" . ( int )$_GET ['id'])->find();
             if (empty ($info ['id'])) {
-                $this->error("不存在该角色", U('Access/roleList'));
+                $this->error("不存在该角色", U('Admin/Access/roleList'));
             }
             $this->assign("info", $this->getRole($info));
             $this->action = '编辑角色';
@@ -296,28 +296,33 @@ class AccessController extends AdminBaseController
 
     public function changeRole()
     {
-        header('Content-Type:application/json; charset=utf-8');
         if (IS_POST) {
+            //TODO BUG HERE
 
+            $res = D('Access', 'Logic')->changeRole();
+            if ($res['status'] == 1) $this->success("设置成功", U("Admin/Access/roleList"));
+            else $this->error("设置失败，请重试");
+            die();
+            header('Content-Type:application/json; charset=utf-8');
             echo json_encode(D('Access', 'Logic')->changeRole());
         } else {
-            $M = M("Node");
+            $Node = D("Node");
             $info = M("Role")->where("id=" . ( int )$_GET ['id'])->find();
             if (empty ($info ['id'])) {
-                $this->error("不存在该用户组", U('Access/roleList'));
+                $this->error("不存在该用户组", U('Admin/Access/roleList'));
             }
             $access = M("Access")->field("CONCAT(`node_id`,':',`level`,':',`pid`) as val")->where("`role_id`=" . $info ['id'])->select();
             $info ['access'] = count($access) > 0 ? json_encode($access) : json_encode(array());
             $this->assign("info", $info);
-            $datas = $M->where("level=1")->select();
+            $datas = $Node->where("level=1")->select();
             foreach ($datas as $k => $v) {
                 $map ['level'] = 2;
                 $map ['pid'] = $v ['id'];
-                $datas [$k] ['data'] = $M->where($map)->select();
+                $datas [$k] ['data'] = $Node->where($map)->select();
                 foreach ($datas [$k] ['data'] as $k1 => $v1) {
                     $map ['level'] = 3;
                     $map ['pid'] = $v1 ['id'];
-                    $datas [$k] ['data'] [$k1] ['data'] = $M->where($map)->select();
+                    $datas [$k] ['data'] [$k1] ['data'] = $Node->where($map)->select();
                 }
             }
             $this->assign("nodeList", $datas);
@@ -397,7 +402,7 @@ class AccessController extends AdminBaseController
             $M = M("Node");
             $info = $M->where("id=" . ( int )$_GET ['id'])->find();
             if (empty ($info ['id'])) {
-                $this->error("不存在该节点", U('Access/nodeList'));
+                $this->error("不存在该节点", U('Admin/Access/nodeList'));
             }
             $this->assign("info", $this->getPid($info));
             $this->action = '编辑节点';

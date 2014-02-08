@@ -22,7 +22,7 @@ class AccessLogic extends RelationModel
      */
     public function adminList()
     {
-        $res = D('User')->field('user_pass', true)->where(array("user_level" => array('neq', 5)))
+        $res = D('User')->field('user_pass', true)->where(array("user_level" => array('neq',5)))
             ->relation(true)->select();
 
 
@@ -114,7 +114,7 @@ class AccessLogic extends RelationModel
         return $M->save($_POST) ? array(
             'status' => 1,
             info => '更新节点信息成功',
-            'url' => U('Access/nodeList')
+            'url' => U('Admin/Access/nodeList')
         ) : array(
             'status' => 0,
             info => '更新节点信息失败'
@@ -127,7 +127,7 @@ class AccessLogic extends RelationModel
         return $M->add($_POST) ? array(
             'status' => 1,
             info => $_POST ['id'] . '添加节点信息成功',
-            'url' => U('Access/nodeList')
+            'url' => U('Admin/Access/nodeList')
         ) : array(
             'status' => 0,
             info => '添加节点信息失败'
@@ -171,7 +171,7 @@ class AccessLogic extends RelationModel
                 'role_id' => ( int )$_POST ['role_id']
             ));
             if (C("SYSTEM_EMAIL")) {
-                $body = "你的账号已开通，登录地址：" . C('WEB_ROOT') . U("Public/index") . "<br/>登录账号是：" . $datas ["user_email"] . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录密码是：" . $_POST ['password'];
+                $body = "你的账号已开通，登录地址：" . C('WEB_ROOT') . U("Admin/Login/index") . "<br/>登录账号是：" . $datas ["user_email"] . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录密码是：" . $_POST ['password'];
                 $info = send_mail($datas ["user_email"], "", "开通账号", $body) ? "添加新账号成功并已发送账号开通通知邮件" : "添加新账号成功但发送账号开通通知邮件失败";
             } else {
                 $info = "账号已开通，请通知相关人员";
@@ -179,7 +179,7 @@ class AccessLogic extends RelationModel
             return array(
                 'status' => 1,
                 'info' => $info,
-                'url' => U("Access/index")
+                'url' => U("Admin/Access/index")
             );
         } else {
             return array(
@@ -221,27 +221,28 @@ class AccessLogic extends RelationModel
         $roleStatus = M("Role_users")->where("`user_id`=" . $user_id)->save(array(
             'role_id' => $role_id
         ));
-        $data ['user_level'] = $role_id;
 
-        // print_array($data);
+
+        $data ['user_level'] = $_POST ['role_id'];
+
 
         if ($User->where(array('user_id' => $user_id))->save($data)) {
 
             return $roleStatus == TRUE ? array(
                 'status' => 1,
                 'info' => "成功更新",
-                'url' => U("Access/index")
+                'url' => U("Admin/Access/index")
             ) : array(
                 'status' => 1,
                 'info' => "成功更新，但更改用户所属组未更新",
-                'url' => U("Access/index")
+                'url' => U("Admin/Access/index")
             );
         } else {
 
             return $roleStatus == TRUE ? array(
                 'status' => 1,
                 'info' => "用户未更新，但更改用户所属组更新成功",
-                'url' => U("Access/index")
+                'url' => U("Admin/Access/index")
             ) : array(
                 'status' => 0,
                 'info' => "所属用户组未更新，请重试"
@@ -265,7 +266,7 @@ class AccessLogic extends RelationModel
             return array(
                 'status' => 1,
                 'info' => "成功更新",
-                'url' => U("Access/roleList")
+                'url' => U("Admin/Access/roleList")
             );
         } else {
             return array(
@@ -287,7 +288,7 @@ class AccessLogic extends RelationModel
             return array(
                 'status' => 1,
                 'info' => "成功添加",
-                'url' => U("Access/roleList")
+                'url' => U("Admin/Access/roleList")
             );
         } else {
             return array(
@@ -299,15 +300,16 @@ class AccessLogic extends RelationModel
 
     public function changeRole()
     {
-        $M = M("Access");
-        $role_id = ( int )$_POST ['id'];
-        $M->where("role_id=" . $role_id)->delete();
-        $data = $_POST ['data'];
-        if (count($data) == 0) {
+        $Access = D("Access");
+        $role_id = (int) I('post.id');
+         $Access->where("role_id=" . $role_id)->delete();
+         $data = $_POST ['data'];
+
+         if (count($data) == 0) {
             return array(
                 'status' => 1,
-                'info' => "清除所有权限成功",
-                'url' => U("Access/roleList")
+                'info' => "清除所有权限成功".array2str($data),
+                'url' => U("Admin/Access/roleList")
             );
         }
         $datas = array();
@@ -318,11 +320,11 @@ class AccessLogic extends RelationModel
             $datas [$k] ['level'] = $tem [1];
             $datas [$k] ['pid'] = $tem [2];
         }
-        if ($M->addAll($datas)) {
+        if ($Access->addAll($datas)) {
             return array(
                 'status' => 1,
                 'info' => "设置成功",
-                'url' => U("Access/roleList")
+                'url' => U("Admin/Access/roleList")
             );
         } else {
             return array(

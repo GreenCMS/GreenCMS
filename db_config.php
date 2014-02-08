@@ -4,10 +4,10 @@
 define("GreenCMS_DB_TYPE", 'mysql');
 
 //数据库地址
-define("GreenCMS_DB_HOST", '127.0.0.1');
+define("GreenCMS_DB_HOST", 'localhost');
 
 //数据库名称
-define("GreenCMS_DB_NAME", 'greencms');
+define("GreenCMS_DB_NAME", 'green');
 
 //用户名
 define("GreenCMS_DB_USR", 'root');
@@ -19,6 +19,6 @@ define("GreenCMS_DB_PWD", '');
 define("GreenCMS_DB_PORT", '3306');
 
 //前缀,生产环境需要自形添加 如 green_
-define("GreenCMS_DB_PREFIX", '');
+define("GreenCMS_DB_PREFIX", 'green_');
 
 

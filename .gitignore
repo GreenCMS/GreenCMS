@@ -1,0 +1,16 @@
+Upload/**
+Data/DBbackup/*.sql
+Data/DBbackup/**/*.zip
+Data/Cache/*
+Data/Log/*
+Data/Temp/**
+Data/Temp/Cache/**/**/*.php
+Data/Temp/Data/**/**
+Data/Temp/Temp/**/**
+
+*.tmp
+*.bak
+*.log
+.idea/
+
+ 

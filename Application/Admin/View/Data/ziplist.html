@@ -83,7 +83,7 @@
                                 <tr id="{$zip.file}" align="center">
                                     <td><input type="checkbox" name="zipFiles" value="{$zip.file}"/></td>
                                     <td align="left"><a
-                                            href="{:U('Data/downFile',array('file'=>$zip['file'],'type'=>'zip'))}"
+                                            href="{:U('Admin/Data/downFile',array('file'=>$zip['file'],'type'=>'zip'))}"
                                             target="_blank">{$zip.file}</a></td>
                                     <td>{$zip.time}</td>
                                     <td>{$zip.size}</td>
@@ -191,26 +191,9 @@
                     $("#success").fadeIn().html(data.info);
                     $("#success").fadeOut(3000);
 
-                    var to_deleted_obj = document.getElementsByName('zipFiles');
-                    var to_deleted_zipFiles = '';
-                    for (var i = 0; i < to_deleted_obj.length; i++) {
-                        if (to_deleted_obj[i].checked) {
-                            // file.push({zipFiles:obj[i].value});
-                            if (i != to_deleted_obj.length - 1) {
-                                to_deleted_zipFiles = to_deleted_zipFiles + (to_deleted_obj[i].value) + ',';
-                            }
-                            else {
-                                to_deleted_zipFiles += to_deleted_obj[i].value;
-                            }
-                        }
-                    }
-                    var deleted = to_deleted_zipFiles.split(',');
-
-                    $.each(deleted, function (n, value) {
-                        var name = value.replace(".zip", "");
-                        var to_deleted = $('#' + name);
-                        to_deleted.fadeOut();
-                    });
+                    setTimeout(function () {
+                        top.window.location.reload();
+                    }, 1000);
                 }
                 else {
                     $("#success").fadeIn().html(data.info);

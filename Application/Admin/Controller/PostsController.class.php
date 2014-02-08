@@ -19,14 +19,18 @@ class PostsController extends AdminBaseController
         $tag = I('get.tag');
         $where = array('post_status' => $post_status);
 
-        if ($cat != '') $post_ids = D('Cats', 'Logic')->getPostsId($cat);
-        if ($tag != '') $post_ids = D('Tags', 'Logic')->getPostsId($tag);
+        if ($cat != '') {
+            $post_ids = D('Cats', 'Logic')->getPostsId($cat);
+            $post_ids = null ? array('post_id' => 0) : $post_ids;
+        } else if ($tag != '') {
+            $post_ids = D('Tags', 'Logic')->getPostsId($tag);
+            $post_ids = null? array('post_id' => 0) : $post_ids;
+        }
 
 
         $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where, $post_ids);
 
-        // dump($posts);
-        $this->assign('posts', $posts);
+         $this->assign('posts', $posts);
 
         $this->display('index');
     }
@@ -45,9 +49,8 @@ class PostsController extends AdminBaseController
         $this->assign("tags", $tags);
         $this->assign("cats", $cats);
 
-        $this->assign("handle", "addHandle");
+        $this->assign("handle", U('Admin/Posts/addHandle'));
         $this->assign("publish", "发布");
-
 
         $this->display();
     }
@@ -55,10 +58,10 @@ class PostsController extends AdminBaseController
     public function noVerify()
     {
         $accessList = RBAC::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
-        if ($accessList['POSTS']['noVerify'] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
-            return true;
+         if ($accessList['ADMIN']['POSTS']['NOVERIFY'] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+             return true;
         } else {
-            return false;
+             return false;
         }
 
     }
@@ -95,12 +98,12 @@ class PostsController extends AdminBaseController
                 $this->error('修改失败');
             }
         } else {
-            if ($post_id = D('Posts', 'Logic')->relation(true)->add($data)) {
+            if ($post_id = D('Posts')->relation(true)->add($data)) { //, 'Logic'
                 foreach ($_POST['cats'] as $cat_id) {
-                    M("Post_cat", 'Logic')->add(array("cat_id" => $cat_id, "post_id" => $post_id));
+                    D("Post_cat", 'Logic')->add(array("cat_id" => $cat_id, "post_id" => $post_id));
                 }
                 foreach ($_POST['tags'] as $tag_id) {
-                    M("Post_tag", 'Logic')->add(array("tag_id" => $tag_id, "post_id" => $post_id));
+                    D("Post_tag", 'Logic')->add(array("tag_id" => $tag_id, "post_id" => $post_id));
                 }
                 // $this->success('发布成功', U('Admin/Posts/index'));
 
@@ -217,9 +220,12 @@ class PostsController extends AdminBaseController
             }
 
             if ($data['post_type'] == 'single') {
-                $url = U('Posts/index');
+                $url = U('Admin/Posts/index');
+            } elseif ($data['post_type'] == 'page') {
+                $url = U('Admin/Posts/page');
             } else {
-                $url = U('Posts/page');
+                $url = U('Admin/Posts/index');
+
             }
 
 
@@ -237,7 +243,8 @@ class PostsController extends AdminBaseController
             $this->cats = M('cats')->select();
             $this->tags = M('tags')->select();
             $this->assign("info", $info);
-            $this->assign("handle", "posts");
+             $this->assign("handle", U('Admin/Posts/posts'));
+
             $this->assign("publish", "更新");
             $this->display('add');
 

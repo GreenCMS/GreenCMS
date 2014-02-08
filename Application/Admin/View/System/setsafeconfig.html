@@ -63,66 +63,56 @@
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <form action="{:U('Admin/System/SetSafeConfigHandle')}" name="change_System"
                           class="form-horizontal" method="post">
+
+                        <h3 class="form-section">Cookie设置</h3>
+
+
                         <div class="control-group">
-                            <label class="control-label">THinkphp表单令牌验证</label>
+                            <label class="control-label">Cookie前缀</label>
 
                             <div class="controls">
-                                <label class="radio">
-
-                                    <switch name="think_token">
-                                        <case value="1"><input type="radio" name="think_token" checked="checked"
-                                                               value="1"/></case>
-                                        <case value="0"><input type="radio" name="think_token" value="1"/></case>
-                                        <default/>
-                                        <input type="radio" name="think_token" checked="checked" value="1"/>
-                                    </switch>
-                                    开
-                                </label>
-                                <label class="radio">
-
-                                    <switch name="think_token">
-                                        <case value="1"><input type="radio" name="think_token" value="0"/></case>
-                                        <case value="0"><input type="radio" name="think_token" checked="checked"
-                                                               value="0"/></case>
-                                        <default/>
-                                        <input type="radio" name="think_token" value="0"/>
-                                    </switch>
-                                    关
-                                </label>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">ThinkPHP字段类型验证</label>
-
-                            <div class="controls">
-                                <label class="radio">
-
-                                    <switch name="db_fieldtype_check">
-                                        <case value="1"><input type="radio" name="db_fieldtype_check" checked="checked"
-                                                               value="1"/></case>
-                                        <case value="0"><input type="radio" name="db_fieldtype_check" value="1"/></case>
-                                        <default/>
-                                        <input type="radio" name="db_fieldtype_check" checked="checked" value="1"/>
-                                    </switch>
-                                    开
-                                </label>
-                                <label class="radio">
-
-                                    <switch name="db_fieldtype_check">
-                                        <case value="1"><input type="radio" name="db_fieldtype_check" value="0"/></case>
-                                        <case value="0"><input type="radio" name="db_fieldtype_check" checked="checked"
-                                                               value="0"/></case>
-                                        <default/>
-                                        <input type="radio" name="db_fieldtype_check" value="0"/>
-                                    </switch>
-                                    关
-                                </label>
+                                <input type="text" placeholder="" class="m-wrap large" name="COOKIE_PREFIX"
+                                       value="{:C('COOKIE_PREFIX')}"/>
+                                <span class="help-inline">默认greencms_</span>
                             </div>
                         </div>
 
 
                         <div class="control-group">
-                            <label class="control-label">开启调试记录记录</label>
+                            <label class="control-label">Cookie到期时间</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="COOKIE_EXPIRE"
+                                       value="{:C('COOKIE_EXPIRE')}"/>
+                                <span class="help-inline">默认3600 (单位-秒)</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">Cookie域名</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="COOKIE_DOMAIN"
+                                       value="{:C('COOKIE_DOMAIN')}"/>
+                                <span class="help-inline">默认为空</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">Cookie路径</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="COOKIE_PATH"
+                                       value="{:C('COOKIE_PATH')}"/>
+                                <span class="help-inline">默认为 / </span>
+                            </div>
+                        </div>
+
+
+                        <h3 class="form-section">调试记录设置</h3>
+
+                        <div class="control-group">
+                            <label class="control-label">开启调试记录</label>
 
                             <div class="controls">
                                 <label class="radio">
@@ -147,6 +137,29 @@
                                     </switch>
                                     关
                                 </label>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">日志记录等级</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="DEFAULT_FILTER"
+                                       value="{:C('LOG_LEVEL')}" style="width: 500px !important;
+"/>
+                                <span class="help-inline">可选SQL,DEBUG,EMERG,ALERT,CRIT,ERR,WARN,INFO</span>
+                            </div>
+                        </div>
+
+                        <h3 class="form-section">安全过滤设置</h3>
+
+                        <div class="control-group">
+                            <label class="control-label">默认安全过滤</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="DEFAULT_FILTER"
+                                       value="{:C('DEFAULT_FILTER')}"/>
+                                <span class="help-inline">默认htmlspecialchars</span>
                             </div>
                         </div>
 
