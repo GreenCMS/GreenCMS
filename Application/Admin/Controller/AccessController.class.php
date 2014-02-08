@@ -121,7 +121,7 @@ class AccessController extends AdminBaseController
 
 
     // 添加用户
-        //TODO 默认不能禁用用户
+
     public function addUser()
     {
         $this->action_name = 'addUser';
@@ -149,8 +149,10 @@ class AccessController extends AdminBaseController
                  'user_pass' => encrypt($_POST ['password']),
                 'user_email' => htmlspecialchars($_POST ['user_email']),
                 'user_url' => htmlspecialchars($_POST ['user_url']),
-                'user_intro' => htmlspecialchars($_POST ['user_intro'])
-                // 'logintime'=>time(),
+                'user_intro' => htmlspecialchars($_POST ['user_intro']),
+                'user_status' => htmlspecialchars($_POST ['user_status']),
+
+            // 'logintime'=>time(),
                 // 'loginip'=>get_client_ip(),
                 // 'lock'=>$_POST['lock']
             );
