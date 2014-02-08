@@ -153,7 +153,7 @@ class UeditorController extends AdminBaseController
 
         //远程抓取图片配置
         $config = array(
-            "savePath" => UploadDir . 'remote/' . date('Y') . '/' . date('m') . '/' . '/', //保存路径
+            "savePath" => UploadDir . 'remote/' . date('Y') . '/' . date('m') . '/' , //保存路径
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp"), //文件允许格式
             "maxSize" => 30000 //文件大小限制，单位KB
         );
@@ -220,7 +220,7 @@ class UeditorController extends AdminBaseController
             //创建保存位置
             $savePath = $config['savePath'];
             if (!file_exists($savePath)) {
-                mkdir("$savePath", 0777);
+                mkdir("$savePath", 0777,true);
             }
             //写入文件
             $tmpName = $savePath . rand(1, 10000) . time() . strrchr($imgUrl, '.');
