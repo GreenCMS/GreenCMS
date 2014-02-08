@@ -157,11 +157,8 @@ class AccessController extends AdminBaseController
                 // 'lock'=>$_POST['lock']
             );
             // 添加用户与角色关系
-            if ($_POST ['role_id'] == 5) {
-                $user ['user_level'] = 0;
-            } else {
+
                 $user ['user_level'] = $_POST ['role_id'];
-            }
 
             $User = D('User');
             $User_users = D('Role_users');

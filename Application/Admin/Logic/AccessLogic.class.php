@@ -22,7 +22,7 @@ class AccessLogic extends RelationModel
      */
     public function adminList()
     {
-        $res = D('User')->field('user_pass', true)->where(array("user_level" => array('neq', 5)))
+        $res = D('User')->field('user_pass', true)->where(array("user_level" => array('neq',5)))
             ->relation(true)->select();
 
 
@@ -221,9 +221,10 @@ class AccessLogic extends RelationModel
         $roleStatus = M("Role_users")->where("`user_id`=" . $user_id)->save(array(
             'role_id' => $role_id
         ));
-        $data ['user_level'] = $role_id;
 
-        // print_array($data);
+
+        $data ['user_level'] = $_POST ['role_id'];
+
 
         if ($User->where(array('user_id' => $user_id))->save($data)) {
 
