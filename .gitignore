@@ -1,0 +1,12 @@
+Upload/**/*
+Data/DBbackup/*
+Data/DBbackup/**/*
+Data/Cache/*
+Data/Log/*
+Data/Temp/*
+*.tmp
+*.bak
+*.log
+.idea/
+
+ 

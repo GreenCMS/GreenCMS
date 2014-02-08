@@ -681,9 +681,9 @@ class DataController extends AdminBaseController
             ),
             "Homeruntime" => array(
                 "name" => "网站~runtime.php缓存文件",
-                "path" => RUNTIME_PATH . "~runtime.php",
+                "path" => RUNTIME_PATH . "common~runtime.php",
                 //  "size" => $Dir->realsize(RUNTIME_PATH . "~runtime.php"),
-                "size" => File::realSize(RUNTIME_PATH . "~runtime.php"),
+                "size" => File::realSize(RUNTIME_PATH . "common~runtime.php"),
             )
         );
 
