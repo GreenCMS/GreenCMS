@@ -216,9 +216,9 @@ class IndexController extends Controller
         File::delAll(RUNTIME_PATH);
         File::delAll(LOG_PATH);
         File::delAll(WEB_CACHE_PATH);
-        if (File::writeFile(WEB_ROOT . 'Data/install/install.lock', 'installed', 'w+'))
-            $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
+        if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+'))
 
+            $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
 
     }
 

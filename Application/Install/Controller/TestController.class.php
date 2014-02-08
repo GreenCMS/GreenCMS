@@ -105,7 +105,7 @@ class TestController extends Controller
             $data['sort'] = 0;
             $data['pid'] = (int)$level1_temp['id'];
             $data['level'] = 2;
-            echo 'Controller:'.$value;dump($data);
+            if (!$test)  echo 'Controller:'.$value; if (!$test) dump($data);
             if ($test) D($NODE)->data($data)->add();
         }
         $map['id'] = array('neq', 1);
@@ -133,7 +133,7 @@ class TestController extends Controller
                 $data['sort'] = 0;
                 $data['pid'] = (int)$temp2['id'];
                 $data['level'] = 3;
-                if (!$test)   dump($data);
+                if (!$test)  dump($data);
 
                 if ($test) D($NODE)->data($data)->add();
 
