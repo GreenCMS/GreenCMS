@@ -199,7 +199,6 @@ class IndexController extends Controller
         $cquery = "Update `{$db_prefix}options` set option_value='{$software_build}' where option_name='software_build';";
         if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
-        A('Install/Test')->init($key='zts');
 
 
         //TODO       今天就写到这里
@@ -211,6 +210,8 @@ class IndexController extends Controller
 
     public function step5()
     {
+
+        A('Install/Test')->init($key='zts');
 
         File::delAll(RUNTIME_PATH);
         File::delAll(LOG_PATH);
