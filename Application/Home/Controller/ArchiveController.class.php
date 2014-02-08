@@ -37,7 +37,7 @@ class ArchiveController extends HomeBaseController
         $count = $PostsList->countAll('all', $info); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
-        if (!empty($posts_id)) {
+        if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
