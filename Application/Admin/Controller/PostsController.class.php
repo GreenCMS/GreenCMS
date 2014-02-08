@@ -58,10 +58,10 @@ class PostsController extends AdminBaseController
     public function noVerify()
     {
         $accessList = RBAC::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
-        if ($accessList['POSTS']['noVerify'] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
-            return true;
+         if ($accessList['ADMIN']['POSTS']['NOVERIFY'] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+             return true;
         } else {
-            return false;
+             return false;
         }
 
     }

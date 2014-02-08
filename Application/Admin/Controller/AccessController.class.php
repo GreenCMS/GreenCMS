@@ -121,6 +121,7 @@ class AccessController extends AdminBaseController
 
 
     // 添加用户
+        //TODO 默认不能禁用用户
     public function addUser()
     {
         $this->action_name = 'addUser';
