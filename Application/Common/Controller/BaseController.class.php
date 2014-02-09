@@ -57,4 +57,9 @@ class BaseController extends Controller
             $this->error("当前功能不支持SAE下使用");
         }
     }
+
+    function json_return($status=1,$info='',$url='')
+    {
+        die(json_encode(array("status" => $status, "info" =>$info,"url" =>$url)));
+    }
 }
