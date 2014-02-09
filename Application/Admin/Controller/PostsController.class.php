@@ -24,16 +24,41 @@ class PostsController extends AdminBaseController
             $post_ids = null ? array('post_id' => 0) : $post_ids;
         } else if ($tag != '') {
             $post_ids = D('Tags', 'Logic')->getPostsId($tag);
-            $post_ids = null? array('post_id' => 0) : $post_ids;
+            $post_ids = null ? array('post_id' => 0) : $post_ids;
         }
 
 
         $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where, $post_ids);
 
-         $this->assign('posts', $posts);
+        $this->assign('posts', $posts);
 
         $this->display('index');
     }
+
+    public function indexHandle()
+    {
+        if (I('post.delAll') == 1) {
+            $post_ids = I('post.posts');
+            foreach ($post_ids as $post_id) {
+                $res = D('Posts', 'Logic')->preDel($post_id);
+                if ($res == false) $this->success('文章ID：' . $post_id . '删除到回收站失败');
+            }
+            $this->success('批量删除到回收站成功');
+        }
+        if (I('post.verifyAll') == 1) {
+            $post_ids = I('post.posts');
+            foreach ($post_ids as $post_id) {
+                $res = D('Posts', 'Logic')->verify($post_id);
+                if ($res == false) $this->success('文章ID：' . $post_id . '移至待审核列表失败');
+            }
+            $this->success('批量移至待审核列表');
+        }
+        if (I('post.postAdd') == 1) {
+             $this->redirect('Admin/Posts/add');
+        }
+
+    }
+
 
     public function page()
     {
@@ -58,10 +83,10 @@ class PostsController extends AdminBaseController
     public function noVerify()
     {
         $accessList = RBAC::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
-         if ($accessList['ADMIN']['POSTS']['NOVERIFY'] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
-             return true;
+        if ($accessList['ADMIN']['POSTS']['NOVERIFY'] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+            return true;
         } else {
-             return false;
+            return false;
         }
 
     }
@@ -243,7 +268,7 @@ class PostsController extends AdminBaseController
             $this->cats = M('cats')->select();
             $this->tags = M('tags')->select();
             $this->assign("info", $info);
-             $this->assign("handle", U('Admin/Posts/posts'));
+            $this->assign("handle", U('Admin/Posts/posts'));
 
             $this->assign("publish", "更新");
             $this->display('add');
