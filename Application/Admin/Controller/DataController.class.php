@@ -35,6 +35,59 @@ class DataController extends AdminBaseController
 
     }
 
+
+    public function backupall()
+    {
+
+        @set_time_limit(1024);
+
+        $root_path = WEB_ROOT;
+
+
+
+        $Zip = new \ZipArchive();
+        $PHPZip = new \Common\Util\PHPZip();
+//        foreach ($path['file'] as $value) {
+//            $Zip->addFile($root_path.$value);
+//        }
+//        foreach ($path['dir'] as $value) {
+//            $Zip->addEmptyDir($root_path.$value);
+//        }
+
+        $backup_path=System_Backup_PATH;
+        mkdir($backup_path,0777,true);
+        $Zip->open($backup_path.date(Ymd)."_system_backup.zip", \ZIPARCHIVE::CREATE);
+
+        $dir = scandir(WEB_ROOT);
+        dump($dir);
+        //die();
+
+        foreach($dir as $value){
+            if($value[0]!='.'&&$value!='Data'){
+                $PHPZip::folderToZip($value, $Zip);
+            }
+        }
+//        $PHPZip::folderToZip('Application', $Zip);
+//        $PHPZip::folderToZip('Core', $Zip);
+//        $PHPZip::folderToZip('Data', $Zip);
+//        $PHPZip::folderToZip('Extend', $Zip);
+//        $PHPZip::folderToZip('Public', $Zip);
+//        $PHPZip::folderToZip('Upload', $Zip);
+//        $PHPZip::folderToZip('.htaccess', $Zip);
+//        $PHPZip::folderToZip('admin.php', $Zip);
+//        $PHPZip::folderToZip('const_config.php', $Zip);
+//        $PHPZip::folderToZip('db_config.php', $Zip);
+//        $PHPZip::folderToZip('index.php', $Zip);
+//        $PHPZip::folderToZip('robots.txt', $Zip);
+        //      $PHPZip::folderToZip('', $Zip);
+
+        $Zip->close();
+
+        $Zip->close();
+
+    }
+
+
     /**
      * 列出系统中所有数据库表信息
      * For MySQL

@@ -34,7 +34,7 @@ class SystemController extends AdminBaseController
 
         $this->saveConfig();
 
-        $this->success('配置成功', 'index');
+        $this->success('配置成功');
     }
 
 

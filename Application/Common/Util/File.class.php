@@ -168,7 +168,7 @@ class File
         return $files;
     }
 
-    public static function getDirs($dir)
+    public static function getDirs($dir, $doc = false)
     {
         $dir = rtrim($dir, '/') . '/';
         $dirArray [][] = NULL;
@@ -177,11 +177,17 @@ class File
             $j = 0;
             while (false !== ($file = readdir($handle))) {
                 if (is_dir($dir . $file)) { //判断是否文件夹
-                    $dirArray ['dir'] [$i] = $file;
-                    $i++;
+                    if ($file[0]!='.') {
+                        $dirArray ['dir'] [$i] = $file;
+                        $i++;
+                    }
+
                 } else {
-                    $dirArray ['file'] [$j] = $file;
-                    $j++;
+                    if ($file[0]!='.') {
+                        $dirArray ['file'] [$j] = $file;
+                        $j++;
+                    }
+
                 }
             }
             closedir($handle);
@@ -270,6 +276,20 @@ class File
         return is_dir($path) or (self::makeDir(dirname($path), $property) and @mkdir($path, $property));
     }
 
+    public static function scanDir($dir)
+    {
+
+        $path = self::getDirs(WEB_ROOT);
+        $dir = $path['dir'];
+        foreach ($dir as $key => $value) {
+            if (($dir[$key][0]) == '.') {
+                unset($dir[$key]);
+            }
+        }
+
+        return $dir;
+
+    }
 
     /**
      * 功能：生成zip压缩文件，存放都 WEB_CACHE_PATH 中
@@ -279,7 +299,7 @@ class File
      * @param $outDir       string  输出目录
      * @return array
      */
-    public function zip($files, $filename, $outDir = WEB_CACHE_PATH, $path = DB_Backup_PATH)
+    public static function zip($files, $filename, $outDir = WEB_CACHE_PATH, $path = DB_Backup_PATH)
     {
         $zip = new \ZipArchive;
 
@@ -306,7 +326,7 @@ class File
      * @param $outDir       string   解压文件存放目录
      * @return array
      */
-    function unzip($file, $outDir = DB_Backup_PATH)
+    public static function unzip($file, $outDir = DB_Backup_PATH)
     {
         $zip = new \ZipArchive();
         if ($zip->open(DB_Backup_PATH . "Zip/" . $file) !== TRUE)
