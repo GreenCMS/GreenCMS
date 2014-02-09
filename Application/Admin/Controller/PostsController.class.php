@@ -39,35 +39,37 @@ class PostsController extends AdminBaseController
     {
         if (I('post.delAll') == 1) {
             $post_ids = I('post.posts');
+            is_string($post_ids) == true ? $num = 0 : $num = count($post_ids);
+
             foreach ($post_ids as $post_id) {
                 $res = D('Posts', 'Logic')->preDel($post_id);
                 if ($res == false) $this->success('文章ID：' . $post_id . '删除到回收站失败');
             }
-            $this->success('批量删除到回收站成功');
+            $this->success($num . '篇文章批量删除到回收站成功');
         }
         if (I('post.verifyAll') == 1) {
             $post_ids = I('post.posts');
+            is_string($post_ids) == true ? $num = 0 : $num = count($post_ids);
             foreach ($post_ids as $post_id) {
                 $res = D('Posts', 'Logic')->verify($post_id);
                 if ($res == false) $this->success('文章ID：' . $post_id . '移至待审核列表失败');
             }
-            $this->success('批量移至待审核列表');
+            $this->success($num . '篇文章批量移至待审核列表');
         }
         if (I('post.postAdd') == 1) {
-             $this->redirect('Admin/Posts/add');
+            $this->redirect('Admin/Posts/add');
         }
 
     }
-
 
     public function page()
     {
         $this->index(page);
     }
 
-
     public function add()
     {
+
         $cats = D('Cats', 'Logic')->category();
         $tags = D('Tags', 'Logic')->select();
 
@@ -90,7 +92,6 @@ class PostsController extends AdminBaseController
         }
 
     }
-
 
     public function addHandle()
     {
@@ -142,7 +143,6 @@ class PostsController extends AdminBaseController
         }
     }
 
-    //删除到回收站
     public function preDel($id = 0)
     {
         if (D('Posts', 'Logic')->preDel($id)) {
@@ -152,7 +152,6 @@ class PostsController extends AdminBaseController
         }
     }
 
-    //永久删除
     public function del($id = 0)
     {
 
@@ -162,7 +161,6 @@ class PostsController extends AdminBaseController
             $this->error('永久删除失败');
         }
     }
-
 
     public function unverified($post_type = "all")
     {
@@ -192,8 +190,6 @@ class PostsController extends AdminBaseController
 
     }
 
-
-    //恢复
     public function recycle($post_type = "all")
     {
         $where['post_status'] = 'preDel';
@@ -215,7 +211,6 @@ class PostsController extends AdminBaseController
             $this->error('恢复失败');
         }
     }
-
 
     public function posts($id = -1)
     {
@@ -265,8 +260,8 @@ class PostsController extends AdminBaseController
             if (empty($info)) {
                 $this->error("不存在该记录");
             }
-            $this->cats = M('cats')->select();
-            $this->tags = M('tags')->select();
+            $this->cats = D('Cats', 'Logic')->category();;
+            $this->tags = M('Tags')->select();
             $this->assign("info", $info);
             $this->assign("handle", U('Admin/Posts/posts'));
 
@@ -351,7 +346,6 @@ class PostsController extends AdminBaseController
         }
     }
 
-
     public function delCategory($id = -1)
     {
 
@@ -425,7 +419,6 @@ class PostsController extends AdminBaseController
             $this->error('分类编辑失败~~可能没有更新', U('Admin/Posts/tag'));
         }
     }
-
 
     public function delTag($id = -1)
     {

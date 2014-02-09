@@ -44,7 +44,6 @@ class DataController extends AdminBaseController
         $root_path = WEB_ROOT;
 
 
-
         $Zip = new \ZipArchive();
         $PHPZip = new \Common\Util\PHPZip();
 //        foreach ($path['file'] as $value) {
@@ -54,16 +53,16 @@ class DataController extends AdminBaseController
 //            $Zip->addEmptyDir($root_path.$value);
 //        }
 
-        $backup_path=System_Backup_PATH;
-        mkdir($backup_path,0777,true);
-        $Zip->open($backup_path.date(Ymd)."_system_backup.zip", \ZIPARCHIVE::CREATE);
+        $backup_path = System_Backup_PATH;
+        mkdir($backup_path, 0777, true);
+        $Zip->open($backup_path . date(Ymd) . "_system_backup.zip", \ZIPARCHIVE::CREATE);
 
         $dir = scandir(WEB_ROOT);
         dump($dir);
         //die();
 
-        foreach($dir as $value){
-            if($value[0]!='.'&&$value!='Data'){
+        foreach ($dir as $value) {
+            if ($value[0] != '.' && $value != 'Data') {
                 $PHPZip::folderToZip($value, $Zip);
             }
         }
@@ -435,7 +434,7 @@ class DataController extends AdminBaseController
             $zipOut = "sqlBackup.zip";
             if (File::zip($sqlFiles, $zipOut)) {
                 //TODO send_mail
-                send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
+                $res = send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
 
             }
 
@@ -469,7 +468,13 @@ class DataController extends AdminBaseController
             // }
             $time = time() - $_SESSION['cacheSendSql']['time'];
             unset($_SESSION['cacheSendSql']);
-            die(json_encode(array("status" => 1, "info" => "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒"))); //, "url" => U('Admin/Data/restore',true,false,true)
+
+            if (is_bool($res) && $res == true) {
+                die(json_encode(array("status" => 1, "info" => "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒"))); //, "url" => U('Admin/Data/restore',true,false,true)
+            }else{
+                die(json_encode(array("status" => 1, "info" => "$res"))); //, "url" => U('Admin/Data/restore',true,false,true)
+
+            }
         }
         $this->display();
     }

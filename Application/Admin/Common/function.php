@@ -42,7 +42,7 @@ function send_mail($to, $name, $subject = '', $body = '', $attachment = null, $c
     $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
     $mail->IsSMTP(); // 设定使用SMTP服务
 //    $mail->IsHTML(true);
-    $mail->SMTPDebug = 1; // 关闭SMTP调试功能 1 = errors and messages2 = messages only
+    $mail->SMTPDebug = 0; // 关闭SMTP调试功能 1 = errors and messages2 = messages only
     $mail->SMTPAuth = true; // 启用 SMTP 验证功能
     if ($config['smtp_port'] == 465)
         $mail->SMTPSecure = 'ssl'; // 使用安全协议

@@ -110,6 +110,16 @@ class PostsLogic extends RelationModel
             return false;
 
     }
+
+    public function unverify($id){
+        $info['post_id'] = $id;
+        $data = array('post_status' => 'publish');
+        if ($this->where($info)->setField($data))
+            return true;
+        else
+            return false;
+
+    }
     /**
      * @param $id 需要计数的id
      * @return bool 返回是否成功
