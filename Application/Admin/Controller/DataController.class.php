@@ -18,6 +18,13 @@ use Common\Util\File;
 class DataController extends AdminBaseController
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->is_sae();
+
+    }
+
 
     public function db()
     {

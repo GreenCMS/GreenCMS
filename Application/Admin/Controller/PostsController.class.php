@@ -134,9 +134,9 @@ class PostsController extends AdminBaseController
                 // $this->success('发布成功', U('Admin/Posts/index'));
 
                 if ($data['post_type'] == 'single') {
-                    die(json_encode(array("status" => 1, "info" => "发布成功", "url" => U('Admin/Posts/index'))));
+                    $this->json_return(1,"发布成功",U('Admin/Posts/index'));
                 } else {
-                    die(json_encode(array("status" => 1, "info" => "发布成功", "url" => U('Admin/Posts/page'))));
+                    $this->json_return(1,"发布成功",U('Admin/Posts/page'));
                 }
 
             }
@@ -250,9 +250,9 @@ class PostsController extends AdminBaseController
 
 
             if ($M->save($data)) {
-                die(json_encode(array("status" => 1, "info" => "已经更新", "url" => $url)));
+                $this->json_return(1,"已经更新",$url);
             } else {
-                die(json_encode(array("status" => 0, "info" => "更新失败", "url" => $url)));
+                $this->json_return(0,"更新失败",$url);
             }
         } else {
 
