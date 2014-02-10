@@ -22,7 +22,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
  * 系统调试设置
  * 项目正式部署后请设置为false
  */
-define ('APP_DEBUG', false);
+define ('APP_DEBUG', true);
 define ('GreenStudio', true); //绿荫专用
 define('BUILD_DIR_SECURE', false);
 

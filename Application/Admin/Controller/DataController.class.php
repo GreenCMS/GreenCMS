@@ -735,12 +735,17 @@ class DataController extends AdminBaseController
     public function clear()
     {
         $caches = array(
+            "HTMLCache"   => array(
+                "name" => "网站HTML缓存文件",
+                "path" => RUNTIME_PATH . "HTML",
+                //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
+                "size" => File::realSize(RUNTIME_PATH . "HTML"),
+            ),
             "HomeCache"   => array(
                 "name" => "网站缓存文件",
                 "path" => RUNTIME_PATH . "Cache",
                 //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
                 "size" => File::realSize(RUNTIME_PATH . "Cache"),
-
             ),
             "HomeData"    => array(
                 "name" => "网站数据库字段缓存文件",
@@ -756,7 +761,6 @@ class DataController extends AdminBaseController
                 "name" => "网站临时缓存文件",
                 "path" => RUNTIME_PATH . "Temp",
                 "size" => File::realSize(RUNTIME_PATH . "Temp"),
-
             ),
             "Homeruntime" => array(
                 "name" => "网站~runtime.php缓存文件",

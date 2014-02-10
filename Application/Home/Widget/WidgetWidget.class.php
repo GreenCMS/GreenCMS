@@ -27,7 +27,7 @@ class WidgetWidget extends Controller
         $about_us = get_opinion('widget_about_us');
 
         $this->assign('widget_about_us', $about_us);
-        $this->display('Widget:aboutUs');
+        $this->display('Widget:aboutus');
     }
 
     public function categories()
