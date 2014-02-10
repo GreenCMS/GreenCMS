@@ -27,7 +27,7 @@ class MediaController extends AdminBaseController
 
     public function fileConnect()
     {
-        $roots = array('/Upload/', '/Public/');
+        $roots = array('/Upload/', '/Public/', '/Application/');
         $opts = $this->__array($roots);
 
         include WEB_ROOT . 'Extend/GreenFinder/php/connector.php'; //包含elfinder自带php接口的入口文件
