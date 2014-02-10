@@ -772,10 +772,12 @@ class DataController extends AdminBaseController
 
         // p($_POST['cache']);die;
         if (IS_POST) {
+
             foreach ($_POST ['cache'] as $path) {
-                if (isset ($caches [$path]))
-                    //$Dir->delDirAndFile($caches [$path] ['path']);
-                File::delAll($caches [$path] ['path'], true);
+                if (isset ($caches [$path])) {
+                    $res=File::delAll($caches [$path] ['path'], true);
+                }
+                //$Dir->delDirAndFile($caches [$path] ['path']);
             }
 
             /*echo json_encode ( array (
