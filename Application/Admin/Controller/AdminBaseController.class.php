@@ -61,7 +61,6 @@ class AdminBaseController extends BaseController
         //  echo CONTROLLER_NAME;
         //  echo ACTION_NAME;
 
-
         $cache = C('admin_big_menu');
         foreach ($cache as $big_url => $big_name) {
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {

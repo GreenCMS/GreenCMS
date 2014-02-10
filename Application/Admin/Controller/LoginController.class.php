@@ -9,11 +9,22 @@
 
 namespace Admin\Controller;
 
+use Common\Controller\BaseController;
 use Org\Util\Rbac;
 use Think\Controller;
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->customConfig();
+
+    }
+
+
     public function _before_index()
     {
         $user_session = cookie('user_session');
