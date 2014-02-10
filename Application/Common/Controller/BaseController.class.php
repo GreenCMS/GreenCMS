@@ -58,8 +58,8 @@ class BaseController extends Controller
         }
     }
 
-    function json_return($status=1,$info='',$url='')
+    function json_return($status = 1, $info = '', $url = '')
     {
-        die(json_encode(array("status" => $status, "info" =>$info,"url" =>$url)));
+        die(json_encode(array("status" => $status, "info" => $info, "url" => $url)));
     }
 }

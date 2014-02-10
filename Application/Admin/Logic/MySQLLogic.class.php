@@ -12,7 +12,7 @@ namespace Admin\Logic;
 use Common\Util\File;
 use Think\Model;
 
-class MySQLLogic// extends Model
+class MySQLLogic // extends Model
 {
     static public $sqlFilesSize = 0;
 
@@ -39,6 +39,7 @@ class MySQLLogic// extends Model
      * 功能：读取数据库表结构信息
     +----------------------------------------------------------
      * @param $table_list
+     *
      * @return string
     +----------------------------------------------------------
      */

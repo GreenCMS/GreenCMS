@@ -17,7 +17,7 @@ class PHPZip
             // no resource given, exit
             return false;
         }
-        if(is_file($folder)){
+        if (is_file($folder)) {
             $zipFile->addFile($folder);
         }
         // we check if $folder has a slash at its end, if not, we append one
@@ -43,7 +43,7 @@ class PHPZip
                     if ($subfolder != null) {
                         $zipFile->addEmptyDir($folder . $f);
                     } else {
-                        $zipFile->addEmptyDir($folder. $f);
+                        $zipFile->addEmptyDir($folder . $f);
                     }
                     self::folderToZip($folder . $f, $zipFile, $folder);
 

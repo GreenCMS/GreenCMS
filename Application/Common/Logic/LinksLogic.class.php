@@ -19,6 +19,7 @@ class LinksLogic extends Model
 
     /**
      * @param $data 数据
+     *
      * @return bool 是否添加成功
      */
     public function addLink($data)
@@ -36,6 +37,7 @@ class LinksLogic extends Model
      * @param int $limit 限制
      * @param int $tag 标签
      * @param string $order 顺序
+     *
      * @return mixed 如果找到返回数组
      */
     public function getList($limit = 10, $tag = 1, $order = 'link_sort desc ,link_id asc')
@@ -47,6 +49,7 @@ class LinksLogic extends Model
 
     /**
      * @param $id 需要删除的id
+     *
      * @return bool 是否删除成功
      */
     public function del($id)
@@ -60,6 +63,7 @@ class LinksLogic extends Model
 
     /**
      * @param $id 需要查询id
+     *
      * @return mixed 详细信息
      */
     public function detail($id)

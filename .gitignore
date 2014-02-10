@@ -13,5 +13,6 @@ Data/Temp/Temp/**/**
 *.bak
 *.log
 .idea/
+.idea/*
 
  

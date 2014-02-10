@@ -88,6 +88,7 @@ class Rss
     /**
      * 构造函数
      * @access public
+     *
      * @param string $title  RSS频道名
      * @param string $link  RSS频道链接
      * @param string $description  RSS频道描述
@@ -115,6 +116,7 @@ class Rss
     /**
      * 设置私有变量
      * @access public
+     *
      * @param string $key  变量名
      * @param string $value  变量的值
      */
@@ -128,6 +130,7 @@ class Rss
     /**
      * 添加RSS项
      * @access public
+     *
      * @param string $title  日志的标题
      * @param string $link  日志的链接
      * @param string $description  日志的摘要

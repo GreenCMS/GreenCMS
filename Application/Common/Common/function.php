@@ -19,6 +19,7 @@ function encrypt($data)
 
 /**
  * @param $res
+ *
  * @function        打印数组
  */
 function print_array(& $res)
@@ -74,6 +75,7 @@ function array2str($res)
 /**
  * @param $Timestamp
  * @param string $need
+ *
  * @return mixed
  */
 function getTimestamp($Timestamp, $need = '$timestamp')
@@ -111,6 +113,7 @@ function getTimestamp($Timestamp, $need = '$timestamp')
 /**
  * 二位数组转化为一维数组
  * @param 二维数组
+ *
  * @return array 一维数组
  */
 function array_multi2single($array)
@@ -133,6 +136,7 @@ function array_multi2single($array)
 +----------------------------------------------------------
  * @param string $value    待检测字符串
 +----------------------------------------------------------
+ *
  * @return boolean
 +----------------------------------------------------------
  */
@@ -148,6 +152,7 @@ function is_email($value)
 +----------------------------------------------------------
  * @param string $val
 +----------------------------------------------------------
+ *
  * @return string 返回处理后的字符串
 +----------------------------------------------------------
  */

@@ -20,6 +20,7 @@ class UserLogic extends RelationModel
     /**
      * @param $uid 用户UID
      * @param bool $relation 是否关联查询
+     *
      * @return mixed 找到返回数组
      */
     public function detail($uid, $relation = true)
@@ -31,6 +32,7 @@ class UserLogic extends RelationModel
     /**
      * @param bool $limit limit
      * @param bool $relation 是否关联
+     *
      * @return mixed 找到返回数组
      */
     public function getList($limit = true, $relation = true)

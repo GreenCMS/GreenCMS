@@ -21,6 +21,7 @@ class PostsLogic extends RelationModel
      * @param $id 文章id或者其他识别符
      * @param bool $relation 是否关联其他信息
      * @param array $info_with 强制传入的判断条件
+     *
      * @return mixed 如果找到返回数组
      */
     public function detail($id, $relation = true, $info_with = array())
@@ -40,6 +41,7 @@ class PostsLogic extends RelationModel
      * @param bool $relation 是否关联其他信息
      * @param array $ids 需要限制的id
      * @param array $info_with 强制传入的判断条件
+     *
      * @return mixed 返回文章列表
      */
     public function getList($limit = 20, $type = 'single', $order = 'post_id desc', $relation = true, $info_with = array(),
@@ -58,6 +60,7 @@ class PostsLogic extends RelationModel
      * @param string $type
      * @param array $info_with
      * @param array $ids 需要限制的id
+     *
      * @return int
      */
     public function countAll($type = 'single', $info_with = array(), $ids = array())
@@ -73,6 +76,7 @@ class PostsLogic extends RelationModel
 
     /**
      * @param $id 需要预删除的id
+     *
      * @return bool 是否删除成功
      */
     public function preDel($id)
@@ -89,6 +93,7 @@ class PostsLogic extends RelationModel
     /**
      * @param $id 需要预删除的id
      * @param string $relation 是否删除关联(脑残才不删除关联呢。。。。)
+     *
      * @return bool 是否删除成功
      */
     public function del($id, $relation = 'true')
@@ -101,7 +106,8 @@ class PostsLogic extends RelationModel
             return false;
     }
 
-    public function verify($id){
+    public function verify($id)
+    {
         $info['post_id'] = $id;
         $data = array('post_status' => 'unverified');
         if ($this->where($info)->setField($data))
@@ -111,7 +117,8 @@ class PostsLogic extends RelationModel
 
     }
 
-    public function unverify($id){
+    public function unverify($id)
+    {
         $info['post_id'] = $id;
         $data = array('post_status' => 'publish');
         if ($this->where($info)->setField($data))
@@ -120,8 +127,10 @@ class PostsLogic extends RelationModel
             return false;
 
     }
+
     /**
      * @param $id 需要计数的id
+     *
      * @return bool 返回是否成功
      */
     public function viewInc($id)

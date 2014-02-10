@@ -2,9 +2,9 @@
 return array(
 
 
-    'MAINTAIN' => false,
+    'MAINTAIN'        => false,
 
-    'DEFAULT_THEME' => 'Vena',
+    'DEFAULT_THEME'   => 'Vena',
 
     'LOAD_EXT_CONFIG' => 'config_router', // 加载扩展配置文件
 

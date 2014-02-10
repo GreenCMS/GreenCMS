@@ -19,6 +19,7 @@ class PostController extends HomeBaseController
 
     /**
      * @function 文章单页
+     *
      * @param $info
      */
     public function single($info = -1)
@@ -36,6 +37,7 @@ class PostController extends HomeBaseController
 
     /**
      * @function 页面单页
+     *
      * @param $info
      */
     public function page($info = -1)

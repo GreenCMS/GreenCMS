@@ -128,7 +128,7 @@ class DataController extends AdminBaseController
         $tables = empty($_POST['table']) ? array() : $_POST['table'];
         if (count($tables) == 0 && !isset($_POST['systemBackup'])) {
             $this->error('请先选择要备份的表');
-         }
+        }
         /**
          * 如果备份文件夹不存在，则自动建立
          */
@@ -537,7 +537,7 @@ class DataController extends AdminBaseController
     function unzipSqlfile()
     {
         if (!IS_POST)
-            return FALSE;
+            return false;
 
 
         $zipFiles = explode(',', $_POST['zipFiles']);
@@ -735,24 +735,24 @@ class DataController extends AdminBaseController
     public function clear()
     {
         $caches = array(
-            "HomeCache" => array(
+            "HomeCache"   => array(
                 "name" => "网站缓存文件",
                 "path" => RUNTIME_PATH . "Cache",
                 //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
                 "size" => File::realSize(RUNTIME_PATH . "Cache"),
 
             ),
-            "HomeData" => array(
+            "HomeData"    => array(
                 "name" => "网站数据库字段缓存文件",
                 "path" => RUNTIME_PATH . "Data",
                 "size" => File::realSize(RUNTIME_PATH . "Data"),
             ),
-            "AdminLog" => array(
+            "AdminLog"    => array(
                 "name" => "网站日志缓存文件",
                 "path" => LOG_PATH,
                 "size" => File::realSize(LOG_PATH),
             ),
-            "AdminTemp" => array(
+            "AdminTemp"   => array(
                 "name" => "网站临时缓存文件",
                 "path" => RUNTIME_PATH . "Temp",
                 "size" => File::realSize(RUNTIME_PATH . "Temp"),

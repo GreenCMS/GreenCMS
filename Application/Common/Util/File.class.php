@@ -54,12 +54,12 @@ class File
         if (file_exists($file)) {
             return unlink($file);
         } else {
-            return FALSE;
+            return false;
         }
     }
 
 
-    public static function delAll($path, $delDir = FALSE)
+    public static function delAll($path, $delDir = false)
     {
         $handle = opendir($path);
         if ($handle) {
@@ -74,7 +74,7 @@ class File
             if (file_exists($path)) {
                 return unlink($path);
             } else {
-                return FALSE;
+                return false;
             }
         }
     }
@@ -146,6 +146,7 @@ class File
      * @param $path 路径
      * @param array $files
      *  文件类型数组
+     *
      * @return array 所有文件路径
      */
     public static function getFiles($path, &$files = array())
@@ -171,19 +172,19 @@ class File
     public static function getDirs($dir, $doc = false)
     {
         $dir = rtrim($dir, '/') . '/';
-        $dirArray [][] = NULL;
+        $dirArray [][] = null;
         if (false != ($handle = opendir($dir))) {
             $i = 0;
             $j = 0;
             while (false !== ($file = readdir($handle))) {
                 if (is_dir($dir . $file)) { //判断是否文件夹
-                    if ($file[0]!='.') {
+                    if ($file[0] != '.') {
                         $dirArray ['dir'] [$i] = $file;
                         $i++;
                     }
 
                 } else {
-                    if ($file[0]!='.') {
+                    if ($file[0] != '.') {
                         $dirArray ['file'] [$j] = $file;
                         $j++;
                     }
@@ -293,10 +294,12 @@ class File
 
     /**
      * 功能：生成zip压缩文件，存放都 WEB_CACHE_PATH 中
+     *
      * @param $files        array   需要压缩的文件
      * @param $filename     string  压缩后的zip文件名  包括zip后缀
      * @param $path         string  文件所在目录
      * @param $outDir       string  输出目录
+     *
      * @return array
      */
     public static function zip($files, $filename, $outDir = WEB_CACHE_PATH, $path = DB_Backup_PATH)
@@ -307,33 +310,35 @@ class File
 
         $res = $zip->open($outDir . "\\" . $filename, \ZipArchive::CREATE);
 
-        if ($res == TRUE) {
+        if ($res == true) {
             foreach ($files as $file) {
                 if ($t = $zip->addFile($path . $file, str_replace('/', '', $file))) {
                     $t = $zip->addFile($path . $file, str_replace('/', '', $file));
                 }
             }
             $zip->close();
-            return TRUE;
+            return true;
         } else {
-            return FALSE;
+            return false;
         }
     }
 
     /**
      * 功能：解压缩zip文件，存放都 DB_Backup_PATH 中
+     *
      * @param $file         string   需要压缩的文件
      * @param $outDir       string   解压文件存放目录
+     *
      * @return array
      */
     public static function unzip($file, $outDir = DB_Backup_PATH)
     {
         $zip = new \ZipArchive();
-        if ($zip->open(DB_Backup_PATH . "Zip/" . $file) !== TRUE)
-            return FALSE;
+        if ($zip->open(DB_Backup_PATH . "Zip/" . $file) !== true)
+            return false;
         $zip->extractTo($outDir);
         $zip->close();
-        return TRUE;
+        return true;
     }
 
 

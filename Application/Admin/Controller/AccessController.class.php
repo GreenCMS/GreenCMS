@@ -144,21 +144,21 @@ class AccessController extends AdminBaseController
             // 组合用户信息并添加
 
             $user = array(
-                'user_login' => htmlspecialchars(trim($_POST ['user_login'])),
+                'user_login'    => htmlspecialchars(trim($_POST ['user_login'])),
                 'user_nicename' => htmlspecialchars(trim($_POST ['user_nicename'])),
-                 'user_pass' => encrypt($_POST ['password']),
-                'user_email' => htmlspecialchars($_POST ['user_email']),
-                'user_url' => htmlspecialchars($_POST ['user_url']),
-                'user_intro' => htmlspecialchars($_POST ['user_intro']),
-                'user_status' => htmlspecialchars($_POST ['user_status']),
+                'user_pass'     => encrypt($_POST ['password']),
+                'user_email'    => htmlspecialchars($_POST ['user_email']),
+                'user_url'      => htmlspecialchars($_POST ['user_url']),
+                'user_intro'    => htmlspecialchars($_POST ['user_intro']),
+                'user_status'   => htmlspecialchars($_POST ['user_status']),
 
-            // 'logintime'=>time(),
+                // 'logintime'=>time(),
                 // 'loginip'=>get_client_ip(),
                 // 'lock'=>$_POST['lock']
             );
             // 添加用户与角色关系
 
-                $user ['user_level'] = $_POST ['role_id'];
+            $user ['user_level'] = $_POST ['role_id'];
 
             $User = D('User');
             $User_users = D('Role_users');
@@ -174,7 +174,7 @@ class AccessController extends AdminBaseController
                     $this->error('添加用户权限失败！', U('Admin/Access/index'));
                 }
             } else {
-            //    die(D('User')->getlastsql());
+                //    die(D('User')->getlastsql());
                 $this->error('添加用户失败！', U('Admin/Access/index'));
             }
         }
@@ -352,12 +352,12 @@ class AccessController extends AdminBaseController
         if ($M->save($datas)) {
             echo json_encode(array(
                 'status' => 1,
-                'info' => "处理成功"
+                'info'   => "处理成功"
             ));
         } else {
             echo json_encode(array(
                 'status' => 0,
-                'info' => "处理失败"
+                'info'   => "处理失败"
             ));
         }
     }

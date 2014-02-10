@@ -33,6 +33,7 @@ class HomeBaseController extends BaseController
 
     /**
      * @function 是否为空
+     *
      * @param $info
      * @param string $message
      */
@@ -44,6 +45,7 @@ class HomeBaseController extends BaseController
 
     /**
      * @function 404 ERROR
+     *
      * @param string $message
      */
     public function error404($message = "")

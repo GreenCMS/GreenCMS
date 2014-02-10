@@ -45,6 +45,7 @@ class QRMaker
 
     /**
      * @function 构造函数
+     *
      * @param $data
      * @param $logo logo图片
      * @param string $size
@@ -71,7 +72,7 @@ class QRMaker
     public function images()
     {
         $this->QR = imagecreatefrompng($this->getpng());
-        if ($this->logo !== FALSE) {
+        if ($this->logo !== false) {
             $this->logo = imagecreatefromstring(file_get_contents($this->logo));
 
             $QR_width = imagesx($this->QR);

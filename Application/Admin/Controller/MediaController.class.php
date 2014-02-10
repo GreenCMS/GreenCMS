@@ -42,9 +42,9 @@ class MediaController extends AdminBaseController
 
         foreach ($paths as $path) {
             $single_root = array(
-                'driver' => 'LocalFileSystem', // driver for accessing file system (REQUIRED)
-                'path' => '.' . $path, // path to files (REQUIRED)
-                'URL' => __ROOT__ . $path, // 上传文件目录的URL
+                'driver'        => 'LocalFileSystem', // driver for accessing file system (REQUIRED)
+                'path'          => '.' . $path, // path to files (REQUIRED)
+                'URL'           => __ROOT__ . $path, // 上传文件目录的URL
                 'accessControl' => 'access' // disable and hide dot starting files (OPTIONAL)
             );
 

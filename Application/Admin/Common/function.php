@@ -19,6 +19,7 @@
  * @param string $attachment 附件列表
 +----------------------------------------------------------
  * @param string $config
+ *
  * @return boolean
 +----------------------------------------------------------
  */
@@ -27,16 +28,16 @@ function send_mail($to, $name, $subject = '', $body = '', $attachment = null, $c
     // $config = is_array($config) ? $config : C('SYSTEM_EMAIL');
     //从数据库读取smtp配置
     $config = array(
-        'smtp_host' => C('smtp_host'),
-        'smtp_port' => C('smtp_port'),
-        'smtp_user' => C('smtp_user'),
-        'smtp_pass' => C('smtp_pass'),
+        'smtp_host'  => C('smtp_host'),
+        'smtp_port'  => C('smtp_port'),
+        'smtp_user'  => C('smtp_user'),
+        'smtp_pass'  => C('smtp_pass'),
         'from_email' => C('from_email'),
-        'from_name' => C('title')
+        'from_name'  => C('title')
     );
 
     // Log::write(array_to_str($config));
-    //TODO 这里类的引用方式不够THINKPHP :)
+
     include Extend_PATH . 'PHPMailer/phpmailer.class.php'; //从PHPMailer目录导phpmailer.class.php类文件
     $mail = new PHPMailer(); //PHPMailer对象
     $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码

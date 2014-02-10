@@ -28,13 +28,13 @@ class Uploader
         "文件未被完整上传",
         "没有文件被上传",
         "上传文件为空",
-        "POST" => "文件大小超出 post_max_size 限制",
-        "SIZE" => "文件大小超出网站限制",
-        "TYPE" => "不允许的文件类型",
-        "DIR" => "目录创建失败",
-        "IO" => "输入输出错误",
+        "POST"    => "文件大小超出 post_max_size 限制",
+        "SIZE"    => "文件大小超出网站限制",
+        "TYPE"    => "不允许的文件类型",
+        "DIR"     => "目录创建失败",
+        "IO"      => "输入输出错误",
         "UNKNOWN" => "未知错误",
-        "MOVE" => "文件保存时出错"
+        "MOVE"    => "文件保存时出错"
     );
 
     /**
@@ -54,6 +54,7 @@ class Uploader
     /**
      * 上传文件的主处理方法
      * @param $base64
+     *
      * @return mixed
      */
     private function upFile($base64)
@@ -120,7 +121,9 @@ class Uploader
 
     /**
      * 处理base64编码的图片上传
+     *
      * @param $base64Data
+     *
      * @return mixed
      */
     private function base64ToImage($base64Data)
@@ -145,17 +148,18 @@ class Uploader
     {
         return array(
             "originalName" => $this->oriName,
-            "name" => $this->fileName,
-            "url" => $this->fullName,
-            "size" => $this->fileSize,
-            "type" => $this->fileType,
-            "state" => $this->stateInfo
+            "name"         => $this->fileName,
+            "url"          => $this->fullName,
+            "size"         => $this->fileSize,
+            "type"         => $this->fileType,
+            "state"        => $this->stateInfo
         );
     }
 
     /**
      * 上传错误检查
      * @param $errCode
+     *
      * @return string
      */
     private function getStateInfo($errCode)
