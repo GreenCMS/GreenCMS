@@ -14,7 +14,7 @@ use Think\Controller;
 use Think\Hook;
 use Think\Think;
 
-class IndexController extends Controller
+class IndexController extends InstallBaseController
 {
     public function __construct()
     {
@@ -210,14 +210,15 @@ class IndexController extends Controller
     public function step5()
     {
 
-        A('Install/Test')->init($key = 'zts');
+        //A('Install/Test')->init($key = 'zts');
 
+        $this->init();
         File::delAll(RUNTIME_PATH);
         File::delAll(LOG_PATH);
         File::delAll(WEB_CACHE_PATH);
-        if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+'))
-
+        if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {
             $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
+        }
 
     }
 

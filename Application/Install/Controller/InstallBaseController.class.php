@@ -11,37 +11,12 @@ namespace Install\Controller;
 
 use Think\Controller;
 
-class TestController extends Controller
+class InstallBaseController extends Controller
 {
 
-    public function __construct()
+
+    private function init()
     {
-        parent::__construct();
-
-
-    }
-
-
-    /**
-     * test only 生产模式需要删除这个代码
-     */
-    public function uninstall($key)
-    {
-        if ($key != 'zts') die("No access");
-
-
-        $file2 = WEB_ROOT . 'Data/Install/install.lock';
-        unlink($file2);
-        $this->redirect('Install/Index/index');
-
-    }
-
-
-    public function init($key)
-    {
-
-        if ($key != 'zts') die("No access");
-
 
         $test = true;
 
