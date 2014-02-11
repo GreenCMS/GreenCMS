@@ -26,6 +26,11 @@ class HomeBaseController extends BaseController
     {
         parent::__construct();
 
+        $lockFile = WEB_ROOT . 'Data/Install/install.lock';
+        if (!file_exists($lockFile)) {
+            $this->redirect('Install/Index/index');
+        }
+
         $Posts=new PostsLogic();
         $Links=new LinksLogic();
 

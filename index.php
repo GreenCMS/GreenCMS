@@ -9,6 +9,7 @@
 
 if (version_compare(PHP_VERSION, '5.3.0', '<')) die('require PHP > 5.3.0 !'); //这个是TP3.2的需求,需要namespace
 
+
 /**
  * 下面的内容自己决定
  */
