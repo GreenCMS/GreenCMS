@@ -78,7 +78,7 @@ function array2str($res)
  *
  * @return mixed
  */
-function getTimestamp($Timestamp, $need = '$timestamp')
+function getTimestamp($Timestamp, $need = 'timestamp')
 {
     $array = explode("-", $Timestamp);
     $year = $array [0];
@@ -106,6 +106,8 @@ function getTimestamp($Timestamp, $need = '$timestamp')
         return $day;
     } else if ($need === 'year') {
         return $year;
+    }else {
+        return date($need,$timestamp);
     }
 
 }

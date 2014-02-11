@@ -70,7 +70,7 @@
                                 <div class="btn-group">
                                     <a href="{:U('Admin/Posts/addCategory')}">
                                         <button id="sample_editable_1_new" class="btn green">
-                                            添加新分类<i class="icon-plus"></i>
+                                            <i class="icon-plus"></i>添加新分类
                                         </button>
                                     </a>
                                 </div>
@@ -95,8 +95,7 @@
                                     <tr class="odd gradeX">
                                         <td style="width:8px;"><input type="checkbox" class="checkboxes" value="1"/>
                                         </td>
-                                        <td><a
-                                                href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}"
+                                        <td><a href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}"
                                                 title="{$v.cat_name}">{$v.cat_name}</a></td>
                                         <td class="hidden-480"><a
                                                 href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">{$v.cat_slug}</a>

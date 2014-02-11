@@ -98,11 +98,11 @@
                                     <tr>
                                         <th style="width: 8px;"><input type="checkbox" class="group-checkable"
                                                                        data-set="#sample_1 .checkboxes"/></th>
-                                        <th>标题</th>
-                                        <th>作者</th>
-                                        <th>分类&&标签</th>
-                                        <th>发布日期</th>
-                                        <th>操作</th>
+                                        <th style="width:100px;">标题</th>
+                                        <th style="width:100px;">作者</th>
+                                        <th>分类 与 标签</th>
+                                        <th style="width:130px;">发布日期</th>
+                                        <th style="width:250px;">操作</th>
 
                                     </tr>
                                     </thead>
@@ -120,14 +120,14 @@
                                             <td>
                                                 分类:
                                                 <volist name="v['post_cat']" id="v_pcs" empty="无分类">
-                                                    <a href="{:U('Admin/Posts/category', array('id' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
+                                                    <a class="btn mini grey" href="{:U('Admin/Posts/category', array('id' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
                                                 </volist>
                                                 标签:
                                                 <volist name="v['post_tag']" id="v_pts" empty="无标签">
-                                                    <a href="{:U('Admin/Posts/tag', array('id' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
+                                                    <a class="btn mini grey" href="{:U('Admin/Posts/tag', array('id' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
                                                 </volist>
                                             </td>
-                                            <td>{$v.post_date}</td>
+                                            <td>{:getTimestamp($v['post_date'],'Y-m-d H:i') } </td>
                                             <td>
                                                 <a class="btn mini" href="{:U('Admin/Posts/posts', array('id' => $v[post_id]))}">编辑</a>
                                                 &nbsp;&nbsp;&nbsp;
