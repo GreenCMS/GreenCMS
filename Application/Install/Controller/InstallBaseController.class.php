@@ -15,7 +15,7 @@ class InstallBaseController extends Controller
 {
 
 
-    private function init()
+    protected function init()
     {
 
         $test = true;
