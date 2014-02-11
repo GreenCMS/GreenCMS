@@ -9,6 +9,7 @@
 
 namespace Home\Controller;
 use Common\Util\Rss;
+use Common\Logic\PostsLogic;
 
 /**
  * Class FeedController
@@ -42,7 +43,7 @@ class FeedController extends HomeBaseController
     public function listSingle()
     {
 
-        $PostsList = D('Posts', 'Logic');
+        $PostsList =new PostsLogic();
         $post_list = $PostsList->getList(get_opinion('feed_num'), 'single', 'post_id desc', true);
         $RSS = new RSS (get_opinion('all_title'), '', get_opinion('all_title'), ''); // 站点标题的链接
         foreach ($post_list as $list) {
@@ -66,7 +67,7 @@ class FeedController extends HomeBaseController
     public function listsPage()
     {
 
-        $PostsList = D('Posts', 'Logic');
+        $PostsList = new PostsLogic();
         $post_list = $PostsList->getList(get_opinion('feed_num'), 'page', 'post_id desc', true);
         $RSS = new RSS (get_opinion('ALL_TITLE'), '', get_opinion('ALL_TITLE'), ''); // 站点标题的链接
         foreach ($post_list as $list) {

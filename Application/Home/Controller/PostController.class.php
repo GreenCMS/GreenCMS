@@ -8,6 +8,7 @@
  */
 
 namespace Home\Controller;
+use Common\Logic\PostsLogic;
 
 
 /**
@@ -24,13 +25,13 @@ class PostController extends HomeBaseController
      */
     public function single($info = -1)
     {
-        $Posts = D('Posts', 'Logic');
+        $Posts = new PostsLogic();
         $post_res = $Posts->detail($info);
 
+        if(empty($post_res))$this->error404("非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
         $Posts->viewInc($post_res['post_id']);
 
         $this->assign('post', $post_res); // 赋值数据集
-        //print_array($post_res);
         $this->display('single');
 
     }
@@ -43,13 +44,13 @@ class PostController extends HomeBaseController
     public function page($info = -1)
     {
 
-        $Posts = D('Posts', 'Logic');
+        $Posts = new PostsLogic();
         $post_res = $Posts->detail($info);
+        if(empty($post_res))$this->error404("非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.");
 
         $Posts->viewInc($post_res['post_id']);
 
         $this->assign('post', $post_res); // 赋值数据集
-        //print_array($post_res);
         $this->display('page');
 
     }

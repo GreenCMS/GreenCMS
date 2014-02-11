@@ -10,6 +10,9 @@
 namespace Home\Controller;
 use Common\Util\GreenPage;
 
+use Common\Logic\PostsLogic;
+use Common\Logic\TagsLogic;
+
 
 /**
  * Class TagController
@@ -31,13 +34,13 @@ class TagController extends HomeBaseController
      */
     public function detail($info)
     {
-        $Tag = D('Tags', 'Logic');
-        $Posts = D('Posts', 'Logic');
+        $Tag = new TagsLogic();
+        $Posts = new PostsLogic();
 
         $tag = $Tag->detail($info);
 
         if (empty($tag)) {
-            $this->error("没有这个标签");
+            $this->error404("非常抱歉，没有这个标签，可能它已经躲起来了");
         }
 
         $posts_id = $Tag->getPostsId($tag['tag_id']);

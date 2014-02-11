@@ -9,6 +9,8 @@
 
 namespace Home\Controller;
 use Common\Controller\BaseController;
+use Common\Logic\PostsLogic;
+use Common\Logic\LinksLogic;
 
 /**
  * Class HomeBaseController
@@ -24,8 +26,14 @@ class HomeBaseController extends BaseController
     {
         parent::__construct();
 
-        $this->newPosts = D('Posts', 'Logic')->getList(5, 'single', 'post_date desc', false);
-        $this->friendurl = D('Links', 'Logic')->getList(5);
+        $Posts=new PostsLogic();
+        $Links=new LinksLogic();
+
+        $newPosts = $Posts->getList(5, 'single', 'post_date desc', false);
+        $friendUrl = $Links->getList(5);
+
+        $this->assign('newPosts',$newPosts);
+        $this->assign('friendurl',$friendUrl);
 
         $this->customConfig();
     }
@@ -48,7 +56,7 @@ class HomeBaseController extends BaseController
      *
      * @param string $message
      */
-    public function error404($message = "")
+    public function error404($message = "非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.")
     {
         $this->assign("message", $message);
         $this->display('Index/404');

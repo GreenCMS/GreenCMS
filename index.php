@@ -22,7 +22,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
  * 系统调试设置
  * 项目正式部署后请设置为false
  */
-define ('APP_DEBUG', false);
+define ('APP_DEBUG', true);
 define ('GreenStudio', true); //绿荫专用
 define('BUILD_DIR_SECURE', false);
 
@@ -41,8 +41,8 @@ require(WEB_ROOT . "const_config.php");
  */
 define ('APP_PATH', './Application/');
 
-define ('GreenCMS_Version', 'v2.1.0210');
-define ('GreenCMS_Build', '20140210');
+define ('GreenCMS_Version', 'v2.1.0211');
+define ('GreenCMS_Build', '20140211');
 
 /**
  * 引入核心入口

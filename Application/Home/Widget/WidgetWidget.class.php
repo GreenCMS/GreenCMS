@@ -10,6 +10,8 @@
 namespace Home\Widget;
 
 use Think\Controller;
+use Common\Logic\CatsLogic;
+use Common\Logic\TagsLogic;
 
 class WidgetWidget extends Controller
 {
@@ -32,7 +34,7 @@ class WidgetWidget extends Controller
 
     public function categories()
     {
-        $CatList = D('Cats', 'Logic');
+        $CatList =  new CatsLogic();
 
         $this->assign('list', $CatList->category());
 
@@ -42,7 +44,7 @@ class WidgetWidget extends Controller
     public function tag()
     {
 
-        $TagList = D('Tags', 'Logic');
+        $TagList = new TagsLogic();
 
         $tag_res = $TagList->getList(50, false);
 

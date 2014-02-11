@@ -9,6 +9,7 @@
 
 namespace Home\Controller;
 use Common\Util\GreenPage;
+use Common\Logic\PostsLogic;
 
 /**
  * Class ArchiveController
@@ -33,7 +34,7 @@ class ArchiveController extends HomeBaseController
     {
         $info['post_content|post_title'] = array('like', "%$keyword%");
 
-        $PostsList = D('Posts', 'Logic');
+        $PostsList = new PostsLogic();
         $count = $PostsList->countAll('all', $info); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
@@ -59,7 +60,7 @@ class ArchiveController extends HomeBaseController
     public function single()
     {
         //TODO year/month/day 按日月归档
-        $PostsList = D('Posts', 'Logic');
+        $PostsList = new PostsLogic();
 
         $count = $PostsList->countAll(); // 查询满足要求的总记录数
 
@@ -86,7 +87,7 @@ class ArchiveController extends HomeBaseController
     {
         //TODO year/month/day  按日月归档
 
-        $PostsList = D('Posts', 'Logic');
+        $PostsList = new PostsLogic();
 
         $count = $PostsList->countAll('page'); // 查询满足要求的总记录数
         ($count == 0) ? $res404 = 0 : $res404 = 1;
