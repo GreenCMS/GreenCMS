@@ -346,8 +346,8 @@ class AccessController extends AdminBaseController
     public function opSort()
     {
         $M = M("Node");
-        $datas ['id'] = ( int )$this->_post("id");
-        $datas ['sort'] = ( int )$this->_post("sort");
+        $datas ['id'] = ( int )I("post.id");
+        $datas ['sort'] = ( int )I("post.sort");
         header('Content-Type:application/json; charset=utf-8');
         if ($M->save($datas)) {
             echo json_encode(array(

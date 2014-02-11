@@ -82,11 +82,11 @@
                                     <th style="width:8px;"><input type="checkbox"
                                                                   class="group-checkable"
                                                                   data-set="#sample_1 .checkboxes"/></th>
-                                    <th>名称</th>
-                                    <th class="hidden-480">结构</th>
+                                    <th >名称</th>
+                                    <th align="left" class="tree">结构</th>
                                     <th>父类</th>
-                                    <th>操作</th>
                                     <th>查看</th>
+                                    <th>操作</th>
 
                                 </tr>
                                 </thead>
@@ -104,18 +104,11 @@
                                         <td>{$v['cat_father']['cat_name']|is_empty} &nbsp;</td>
 
                                         <td>
-
-
-                                            <a
-                                                    href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">编辑</a>
-
-                                            <a
-                                                    href="{:U('Admin/Posts/delCategory', array('id' => $v['cat_id']))}">删除</a>
+                                            <a class="btn mini green" href="{:U('Admin/Posts/index', array('cat' => $v['cat_id']))}">查看分类文章</a>
                                         </td>
                                         <td>
-
-                                            <a
-                                                    href="{:U('Admin/Posts/index', array('cat' => $v['cat_id']))}">查看所有文章</a>
+                                            <a class="btn mini" href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">编辑</a>
+                                            <a class="btn mini red" href="{:U('Admin/Posts/delCategory', array('id' => $v['cat_id']))}">删除</a>
 
                                         </td>
 

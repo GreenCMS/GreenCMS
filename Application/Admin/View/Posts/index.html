@@ -129,15 +129,14 @@
                                             </td>
                                             <td>{$v.post_date}</td>
                                             <td>
-                                                <a href="{:U('Admin/Posts/posts', array('id' => $v[post_id]))}">编辑</a>
+                                                <a class="btn mini" href="{:U('Admin/Posts/posts', array('id' => $v[post_id]))}">编辑</a>
                                                 &nbsp;&nbsp;&nbsp;
 
-                                                <a href="{:U('Home/Post/'.$v['post_type'], array('info' => $v[post_id]))}"
-                                                   target="_blank">查看</a>
+                                                <a class="btn mini blue" href="{:U('Home/Post/'.$v['post_type'], array('info' => $v[post_id]))}" target="_blank">查看</a>
                                                 &nbsp;&nbsp;&nbsp;
-                                                <a href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v[post_id],'post_status' => 'unverified'))}">审核</a>
+                                                <a class="btn mini purple" href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v[post_id],'post_status' => 'unverified'))}">审核</a>
                                                 &nbsp;&nbsp;&nbsp;
-                                                <a href="{:U('Admin/Posts/preDel', array('id' => $v[post_id]))}">删除</a>
+                                                <a class="btn mini red" href="{:U('Admin/Posts/preDel', array('id' => $v[post_id]))}">删除</a>
                                             </td>
 
 
