@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
 
@@ -18,18 +19,37 @@ class CustomController extends AdminBaseController
     //TODO menu
     public function menu()
     {
+        $cat = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
+
+        $menu = $cat->getList(); // 获取分类结构
+       // dump($menu);
+
+        $this->assign('menu',$menu);
+
         $this->display();
     }
 
+    public function menuDel($id)
+    {
+
+
+
+    }
+
+    public function menuEdit($id)
+    {
+
+
+
+    }
     //TODO plugin
     public function theme()
     {
-        $tpl = File::scanDir(WEB_ROOT . 'Application/Home/View');
+        $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
         $tpl_static = File::scanDir(WEB_ROOT . 'Public');
-        dump($tpl_static);        dump($tpl);
 
-        $tpl2=array_intersect($tpl,$tpl_static);
-        dump($tpl2);
+        $tpl = array_intersect($tpl_view, $tpl_static);
+        //dump($tpl);
         $this->display();
     }
 
