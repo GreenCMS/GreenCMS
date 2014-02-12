@@ -42,8 +42,8 @@ require(WEB_ROOT . "const_config.php");
  */
 define ('APP_PATH', './Application/');
 
-define ('GreenCMS_Version', 'v2.1.0211');
-define ('GreenCMS_Build', '20140211');
+define ('GreenCMS_Version', 'v2.1.0212');
+define ('GreenCMS_Build', '20140212');
 
 /**
  * 引入核心入口
