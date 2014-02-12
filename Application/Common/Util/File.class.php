@@ -280,7 +280,7 @@ class File
     public static function scanDir($dir)
     {
 
-        $path = self::getDirs(WEB_ROOT);
+        $path = self::getDirs($dir);
         $dir = $path['dir'];
         foreach ($dir as $key => $value) {
             if (($dir[$key][0]) == '.') {

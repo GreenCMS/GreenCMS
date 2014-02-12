@@ -24,6 +24,12 @@ class CustomController extends AdminBaseController
     //TODO plugin
     public function theme()
     {
+        $tpl = File::scanDir(WEB_ROOT . 'Application/Home/View');
+        $tpl_static = File::scanDir(WEB_ROOT . 'Public');
+        dump($tpl_static);        dump($tpl);
+
+        $tpl2=array_intersect($tpl,$tpl_static);
+        dump($tpl2);
         $this->display();
     }
 
@@ -165,9 +171,9 @@ class CustomController extends AdminBaseController
             set_include_path(__ROOT__);
             include($path);
             call_user_func(array(
-                $title . 'Plugin',
-                '__install'
-            ));
+                                $title . 'Plugin',
+                                '__install'
+                           ));
         }
         $this->success('操作成功!', U('Admin/Custom/plugin?status=0'));
     }
@@ -188,9 +194,9 @@ class CustomController extends AdminBaseController
             set_include_path(__ROOT__);
             include($path);
             call_user_func(array(
-                $list['title'] . 'Plugin',
-                '__uninstall'
-            ));
+                                $list['title'] . 'Plugin',
+                                '__uninstall'
+                           ));
         }
         $this->success('操作成功!', U('Admin/Custom/plugin'));
     }
