@@ -24,7 +24,12 @@ function encrypt($data)
  */
 function print_array(& $res)
 {
-    dump($res);
+    //dump($res);
+    echo '<pre>';
+    print_r($res);
+    echo '</pre>';
+
+
 }
 
 /**
@@ -75,6 +80,24 @@ function array2str($res)
         $str .= $each . ',';
     }
     return $str;
+}
+
+
+function array_sort($arr,$keys,$type='desc'){
+    $key_value = $new_array = array();
+    foreach ($arr as $k=>$v){
+        $key_value[$k] = $v[$keys];
+    }
+    if($type == 'asc'){
+        asort($key_value);
+    }else{
+        arsort($key_value);
+    }
+    reset($key_value);
+    foreach ($key_value as $k=>$v){
+        $new_array[$k] = $arr[$k];
+    }
+    return $new_array;
 }
 
 

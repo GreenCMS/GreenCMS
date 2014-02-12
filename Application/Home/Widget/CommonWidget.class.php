@@ -9,10 +9,11 @@
 
 namespace Home\Widget;
 
-use Think\Controller;
+use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
-use Common\Logic\CatsLogic;
+use Home\Logic\MenuLogic;
+use Think\Controller;
 
 class CommonWidget extends Controller
 {
@@ -31,6 +32,12 @@ class CommonWidget extends Controller
         $this->assign('cats', $cat_res);
         $this->assign('pages', $page_res);
         $this->assign('posts', $post_res);
+
+
+        $Menu = new MenuLogic();
+        $home_menu = $Menu->genMenu('head');
+
+        $this->assign('home_menu',$home_menu);
 
         $this->display('Widget:mainMenu');
 
