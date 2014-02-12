@@ -1,7 +1,7 @@
 <?php
 
 
-$config_log = array(//日志
+$config_log = array( //日志
     //'LOG_RECORD' => true, // 开启日志记录
     // 'LOG_LEVEL' => 'SQL,DEBUG,EMERG,ALERT,CRIT,ERR,WARN,INFO',
 

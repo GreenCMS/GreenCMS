@@ -55,9 +55,9 @@ class UeditorController extends AdminBaseController
 
         //上传配置
         $config = array(
-            "savePath" => UploadDir . 'file/' . date('Y') . '/' . date('m') . '/', //TODO 保存路径
+            "savePath"   => UploadDir . 'file/' . date('Y') . '/' . date('m') . '/', //TODO 保存路径
             "allowFiles" => array(".rar", ".doc", ".docx", ".zip", ".pdf", ".txt", ".ppt", ".pptx", ".xls", "xlsx"), //文件允许格式
-            "maxSize" => 100000 //文件大小限制，单位KB
+            "maxSize"    => 100000 //文件大小限制，单位KB
         );
 
         //生成上传实例对象并完成上传
@@ -94,8 +94,8 @@ class UeditorController extends AdminBaseController
 
         //上传配置
         $config = array(
-            "savePath" => UploadDir . 'scraw/' . date('Y') . '/' . date('m') . '/', //存储文件夹
-            "maxSize" => 10000, //允许的文件最大尺寸，单位KB
+            "savePath"   => UploadDir . 'scraw/' . date('Y') . '/' . date('m') . '/', //存储文件夹
+            "maxSize"    => 10000, //允许的文件最大尺寸，单位KB
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp") //允许的文件格式
         );
         //临时文件目录
@@ -125,6 +125,7 @@ class UeditorController extends AdminBaseController
         /**
          * 删除整个目录
          * @param $dir
+         *
          * @return bool
          */
         function delDir($dir)
@@ -153,9 +154,9 @@ class UeditorController extends AdminBaseController
 
         //远程抓取图片配置
         $config = array(
-            "savePath" => UploadDir . 'remote/' . date('Y') . '/' . date('m') . '/' , //保存路径
+            "savePath"   => UploadDir . 'remote/' . date('Y') . '/' . date('m') . '/', //保存路径
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp"), //文件允许格式
-            "maxSize" => 30000 //文件大小限制，单位KB
+            "maxSize"    => 30000 //文件大小限制，单位KB
         );
         $uri = htmlspecialchars($_POST['upfile']);
         $uri = str_replace("&amp;", "&", $uri);
@@ -220,7 +221,7 @@ class UeditorController extends AdminBaseController
             //创建保存位置
             $savePath = $config['savePath'];
             if (!file_exists($savePath)) {
-                mkdir("$savePath", 0777,true);
+                mkdir("$savePath", 0777, true);
             }
             //写入文件
             $tmpName = $savePath . rand(1, 10000) . time() . strrchr($imgUrl, '.');
@@ -296,7 +297,7 @@ class UeditorController extends AdminBaseController
                 *  参数：存储域，路径前缀，返回条数，起始条数
                 */
                 $num = 0;
-                while ($ret = $st->getList("upload", NULL, 100, $num)) {
+                while ($ret = $st->getList("upload", null, 100, $num)) {
                     foreach ($ret as $file) {
                         if (preg_match("/\.(gif|jpeg|jpg|png|bmp)$/i", $file))
                             echo $st->getUrl('upload', $file) . "ue_separate_ue";
@@ -322,8 +323,8 @@ class UeditorController extends AdminBaseController
 
         // 上传配置
         $config = array(
-            "savePath" => ($path == "1" ? UploadDir . 'img/' . date('Y') . '/' . date('m') . '/' : "upload1/"),
-            "maxSize" => 3000, // 单位KB
+            "savePath"   => ($path == "1" ? UploadDir . 'img/' . date('Y') . '/' . date('m') . '/' : "upload1/"),
+            "maxSize"    => 3000, // 单位KB
             "allowFiles" => array(
                 ".gif",
                 ".png",

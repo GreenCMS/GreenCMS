@@ -62,18 +62,18 @@
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
                 <div class="span12">
-                    <table class="table table-bordered table-hover" class="tab">
+                    <table class="table table-bordered table-hover">
                         <tr>
                             <th class="hidden-480">系统名称</th>
                             <th class="hidden-480">系统版本</th>
+                            <th class="hidden-480">发布时间</th>
                             <th class="hidden-480">官方网址</th>
-                            <th class="hidden-480">开发团队</th>
                         </tr>
                         <tr>
                             <td class="hidden-480">{:get_opinion('software_name')}</td>
                             <td class="hidden-480">{:get_opinion('software_version')}</td>
-                            <td class="hidden-480">{:get_opinion('software_homepage')}</td>
-                            <td class="hidden-480">{:get_opinion('software_author')}</td>
+                            <td class="hidden-480">{:get_opinion('software_build')}</td>
+                            <td class="hidden-480"><a href="{:get_opinion('software_homepage')}">GreenCMS.net</a></td>
                         </tr>
                     </table>
                 </div>

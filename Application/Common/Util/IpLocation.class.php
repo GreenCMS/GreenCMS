@@ -50,6 +50,7 @@ class IpLocation
      * 构造函数，打开 QQWry.Dat 文件并初始化类中的信息
      *
      * @param string $filename
+     *
      * @return IpLocation
      */
     public function __construct($filename = "UTFWry.dat")
@@ -93,7 +94,9 @@ class IpLocation
      * 返回压缩后可进行比较的IP地址
      *
      * @access private
+     *
      * @param string $ip
+     *
      * @return string
      */
     private function packip($ip)
@@ -107,7 +110,9 @@ class IpLocation
      * 返回读取的字符串
      *
      * @access private
+     *
      * @param string $data
+     *
      * @return string
      */
     private function getstring($data = "")
@@ -163,7 +168,9 @@ class IpLocation
      * 根据所给 IP 地址或域名返回所在地区信息
      *
      * @access public
+     *
      * @param string $ip
+     *
      * @return array
      */
     public function getlocation($ip = '')

@@ -46,5 +46,4 @@ class IndexController extends AdminBaseController
     }
 
 
-
 }

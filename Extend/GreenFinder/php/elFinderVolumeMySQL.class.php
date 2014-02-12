@@ -51,23 +51,23 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
 	 * @var string
 	 **/
 	protected $dbError = '';
-	
-	/**
-	 * Constructor
-	 * Extend options with required fields
-	 *
-	 * @return void
-	 * @author Dmitry (dio) Levashov
-	 **/
+
+    /**
+     * Constructor
+     * Extend options with required fields
+     *
+     * @return \elFinderVolumeMySQL
+    @author Dmitry (dio) Levashov
+     */
 	public function __construct() {
 		$opts = array(
-			'host'          => 'localhost',
-			'user'          => '',
-			'pass'          => '',
-			'db'            => '',
-			'port'          => null,
+			'host'          => GreenCMS_DB_HOST,
+			'user'          => GreenCMS_DB_USR,
+			'pass'          => GreenCMS_DB_PWD,
+			'db'            => GreenCMS_DB_NAME,
+			'port'          => GreenCMS_DB_PORT,
 			'socket'        => null,
-			'files_table'   => 'elfinder_file',
+			'files_table'   => GreenCMS_DB_PREFIX.'file',
 			'tmbPath'       => '',
 			'tmpPath'       => ''
 		);
@@ -120,7 +120,7 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
 
 		$this->updateCache($this->options['path'], $this->_stat($this->options['path']));
 
-		return true;
+ 		return true;
 	}
 
 

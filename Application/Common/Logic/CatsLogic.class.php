@@ -21,6 +21,7 @@ class CatsLogic extends RelationModel
     /**
      * @param $id 分类id
      * @param bool $relation 是否关联
+     *
      * @return mixed 找到之后返回数组
      */
     public function detail($id, $relation = true)
@@ -33,6 +34,7 @@ class CatsLogic extends RelationModel
     /**
      * @param int $limit limit
      * @param bool $relation 是否关联
+     *
      * @return mixed
      */
     public function getList($limit = 20, $relation = true)
@@ -42,6 +44,7 @@ class CatsLogic extends RelationModel
 
     /**
      * @param int $id  分类id
+     *
      * @return mixed 找到所有父类
      */
     public function getFather($id = 0)
@@ -55,6 +58,7 @@ class CatsLogic extends RelationModel
 
     /**
      * @param int $id 分类id
+     *
      * @return mixed  找到所有子节点
      */
     public function getChildren($id = 0)
@@ -75,6 +79,7 @@ class CatsLogic extends RelationModel
 
     /**
      * @param int $id 分类id
+     *
      * @return mixed 返回子节点
      */
     public function getChild($id = 0)
@@ -88,6 +93,7 @@ class CatsLogic extends RelationModel
 
     /**
      * @param $info 分类info
+     *
      * @return mixed 找到的话返回post_id数组集合
      */
     public function getPostsId($info)
@@ -104,6 +110,7 @@ class CatsLogic extends RelationModel
     /**
      * @param $cat_id 分类id
      * @param int $num 数量
+     *
      * @return mixed
      */
     public function getPostsByCat($cat_id, $num = 5)
@@ -115,6 +122,7 @@ class CatsLogic extends RelationModel
 
     /**
      * @param $cat_id 分类id
+     *
      * @return mixed
      */
     public function getPostIdsByCat($cat_id)

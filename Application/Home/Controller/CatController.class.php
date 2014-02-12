@@ -8,8 +8,9 @@
  */
 
 namespace Home\Controller;
+use Common\Logic\CatsLogic;
+use Common\Logic\PostsLogic;
 use Common\Util\GreenPage;
-
 
 /**
  * Class CatController
@@ -31,12 +32,12 @@ class CatController extends HomeBaseController
      */
     public function detail($info)
     {
-        $Cat = D('Cats', 'Logic');
-        $Posts = D('Posts', 'Logic');
+        $Cat = new CatsLogic();
+        $Posts = new PostsLogic();
         $cat = $Cat->detail($info);
 
         if (empty($cat)) {
-            $this->error("没有这个标签");
+            $this->error404("非常抱歉，没有这个分类，可能它已经躲起来了");
         }
 
         $posts_id = $Cat->getPostsId($cat['cat_id']);

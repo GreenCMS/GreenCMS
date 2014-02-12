@@ -27,6 +27,7 @@ class TagsLogic extends RelationModel
 
     /**
      * @param $info 输入tag_id|tag_slug
+     *
      * @return mixed 找到的话返回post_id数组集合
      */
     public function getPostsId($info)
@@ -43,6 +44,7 @@ class TagsLogic extends RelationModel
     /**
      * @param int $limit
      * @param bool $relation
+     *
      * @return mixed
      */
     public function getList($limit = 20, $relation = true)

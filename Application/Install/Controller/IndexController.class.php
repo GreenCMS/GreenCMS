@@ -14,7 +14,7 @@ use Think\Controller;
 use Think\Hook;
 use Think\Think;
 
-class IndexController extends Controller
+class IndexController extends InstallBaseController
 {
     public function __construct()
     {
@@ -36,8 +36,8 @@ class IndexController extends Controller
 
     public function step1()
     {
-        $this->assign('version',GreenCMS_Version);
-        $this->assign('build',GreenCMS_Build);
+        $this->assign('version', GreenCMS_Version);
+        $this->assign('build', GreenCMS_Build);
 
         $this->display();
     }
@@ -124,7 +124,7 @@ class IndexController extends Controller
             $admin_user = $_POST['admin_user'];
             $admin_password = encrypt($_POST['admin_password']);
             $admin_email = $_POST['admin_email'];
-            $user_session= encrypt($admin_user .$admin_password . time());
+            $user_session = encrypt($admin_user . $admin_password . time());
 
 
         }
@@ -177,28 +177,27 @@ class IndexController extends Controller
         insertDB($file2, $conn);
         unlink($file2);
 
-         /**
+        /**
          * 插入管理员数据&更新配置
          */
         $admin_query = "INSERT INTO `{$db_prefix}user` (`user_id`, `user_login`, `user_pass`, `user_nicename`, `user_email`,
         `user_url`, `user_registered`, `user_activation_key`, `user_status`,  `user_intro`,
         `user_level`, `user_session`) VALUES(1, '{$admin_user}', '" . $admin_password . "', '管理员', '{$admin_email}',
          '', '{$time}', '', 1, '我是admin，欢迎使用', 2, '{$user_session}');";
-        if(!mysql_query($admin_query, $conn)) $this->error(' 插入管理员数据出错');
+        if (!mysql_query($admin_query, $conn)) $this->error(' 插入管理员数据出错');
         $cquery = "Update `{$db_prefix}options` set option_value='{$title}' where option_name='title';";
-        if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
+        if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
         $cquery = "Update `{$db_prefix}options` set option_value='{$site_url}' where option_name='site_url';";
-        if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
+        if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
 
-        $software_version=GreenCMS_Version;
-        $software_build=GreenCMS_Build;
+        $software_version = GreenCMS_Version;
+        $software_build = GreenCMS_Build;
 
         $cquery = "Update `{$db_prefix}options` set option_value='{$software_version}' where option_name='software_version';";
-        if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
+        if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
         $cquery = "Update `{$db_prefix}options` set option_value='{$software_build}' where option_name='software_build';";
-        if(!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
-
+        if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
 
         //TODO       今天就写到这里
@@ -211,14 +210,15 @@ class IndexController extends Controller
     public function step5()
     {
 
-        A('Install/Test')->init($key='zts');
+        //A('Install/Test')->init($key = 'zts');
 
+        $this->init();
         File::delAll(RUNTIME_PATH);
         File::delAll(LOG_PATH);
         File::delAll(WEB_CACHE_PATH);
-        if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+'))
-
+        if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {
             $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
+        }
 
     }
 

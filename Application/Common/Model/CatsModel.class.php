@@ -26,13 +26,13 @@ class CatsModel extends RelationModel
 
             'mapping_type' => HAS_MANY,
 
-            'class_name' => 'Post_cat',
+            'class_name'   => 'Post_cat',
 
             'mapping_name' => 'cat_post',
 
-            'foreign_key' => 'cat_id',
+            'foreign_key'  => 'cat_id',
 
-            'parent_key' => 'cat_id'
+            'parent_key'   => 'cat_id'
         ),
 
 

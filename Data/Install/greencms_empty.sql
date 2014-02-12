@@ -190,7 +190,7 @@ CREATE TABLE `{$db_prefix}menu` (
   `menu_sort` bigint(20) NOT NULL DEFAULT '99',
   `menu_name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `menu_action` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `menu_fuction` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `menu_function` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `menu_position` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `menu_url` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`menu_id`)

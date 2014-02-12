@@ -19,11 +19,17 @@ function encrypt($data)
 
 /**
  * @param $res
+ *
  * @function        打印数组
  */
 function print_array(& $res)
 {
-    dump($res);
+    //dump($res);
+    echo '<pre>';
+    print_r($res);
+    echo '</pre>';
+
+
 }
 
 /**
@@ -58,6 +64,12 @@ function get_opinion($key)
     return C($key);
 }
 
+function get_kv($key)
+{
+    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
+    return $options['kv_value'];
+}
+
 /**
  * 数组降维
  */
@@ -71,12 +83,31 @@ function array2str($res)
 }
 
 
+function array_sort($arr,$keys,$type='desc'){
+    $key_value = $new_array = array();
+    foreach ($arr as $k=>$v){
+        $key_value[$k] = $v[$keys];
+    }
+    if($type == 'asc'){
+        asort($key_value);
+    }else{
+        arsort($key_value);
+    }
+    reset($key_value);
+    foreach ($key_value as $k=>$v){
+        $new_array[$k] = $arr[$k];
+    }
+    return $new_array;
+}
+
+
 /**
  * @param $Timestamp
  * @param string $need
+ *
  * @return mixed
  */
-function getTimestamp($Timestamp, $need = '$timestamp')
+function getTimestamp($Timestamp, $need = 'timestamp')
 {
     $array = explode("-", $Timestamp);
     $year = $array [0];
@@ -104,6 +135,8 @@ function getTimestamp($Timestamp, $need = '$timestamp')
         return $day;
     } else if ($need === 'year') {
         return $year;
+    }else {
+        return date($need,$timestamp);
     }
 
 }
@@ -111,6 +144,7 @@ function getTimestamp($Timestamp, $need = '$timestamp')
 /**
  * 二位数组转化为一维数组
  * @param 二维数组
+ *
  * @return array 一维数组
  */
 function array_multi2single($array)
@@ -133,6 +167,7 @@ function array_multi2single($array)
 +----------------------------------------------------------
  * @param string $value    待检测字符串
 +----------------------------------------------------------
+ *
  * @return boolean
 +----------------------------------------------------------
  */
@@ -148,6 +183,7 @@ function is_email($value)
 +----------------------------------------------------------
  * @param string $val
 +----------------------------------------------------------
+ *
  * @return string 返回处理后的字符串
 +----------------------------------------------------------
  */

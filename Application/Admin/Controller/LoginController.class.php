@@ -9,12 +9,22 @@
 
 namespace Admin\Controller;
 
-use Common\Util\IpLocation;
+use Common\Controller\BaseController;
 use Org\Util\Rbac;
 use Think\Controller;
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->customConfig();
+
+    }
+
+
     public function _before_index()
     {
         $user_session = cookie('user_session');
@@ -42,8 +52,8 @@ class LoginController extends Controller
 
     public function login()
     {
-       // $ipLocation = new IpLocation();
-       // $ip_info = $ipLocation->getIpInfo();
+        // $ipLocation = new IpLocation();
+        // $ip_info = $ipLocation->getIpInfo();
 
         $map = array();
         $map['user_login'] = $_POST['username'];
@@ -73,7 +83,6 @@ class LoginController extends Controller
             }
             // 缓存访问权限
             RBAC::saveAccessList();
-
 
 
             $this->success('登录成功！', U("Admin/Index/index"), false);

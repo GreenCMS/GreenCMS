@@ -58,6 +58,7 @@ class Category
      * 构造函数，对象初始化
      * @param string $model
      * @param array $fields ,object  $model 数组或对象，基于TP3.2的数据表模型名称
+     *
      * @internal param array $field 字段映射，分类cat_id，上级分类cat_father,分类名称,格式化后分类名称cat_name* 字段映射，分类cat_id，上级分类cat_father,分类名称,格式化后分类名称cat_name
      */
     public function __construct($model = '', $fields = array())
@@ -80,7 +81,7 @@ class Category
      * @param array,string  $condition  查询条件
      * @param string $orderby    排序
      */
-    private function _findAllCat($condition, $orderby = NULL)
+    private function _findAllCat($condition, $orderby = null)
     {
         $this->rawList = empty($orderby) ? $this->model->where($condition)->select() : $this->model->where($condition)->order($orderby)->select();
     }
@@ -88,6 +89,7 @@ class Category
     /**
      * 返回给定上级分类$cat_father的所有同一级子分类
      * @param   int $cat_father    传入要查询的cat_father
+     *
      * @return  array           返回结构信息
      */
     public function getChild($cat_father)
@@ -135,9 +137,10 @@ class Category
      * @param   array,string     $condition    条件
      * @param   int $cat_id          起始分类
      * @param   string $orderby      排序
+     *
      * @return  array           返回结构信息
      */
-    public function getList($condition = NULL, $cat_id = 0, $orderby = NULL)
+    public function getList($condition = null, $cat_id = 0, $orderby = null)
     {
         unset($this->rawList, $this->formatList);
         $this->_findAllCat($condition, $orderby, $orderby);
@@ -149,6 +152,7 @@ class Category
      * 获取结构
      * @param   array $data         二维数组数据
      * @param   int $cat_id          起始分类
+     *
      * @return  array           递归格式化分类数组
      */
     public function getTree($data, $cat_id = 0)
@@ -171,6 +175,7 @@ class Category
     /**
      * 检查分类参数$cat_id,是否为空
      * @param   int $cat_id          起始分类
+     *
      * @return  boolean           递归格式化分类数组
      */
     private function _checkCatID($cat_id)
@@ -199,7 +204,9 @@ class Category
 
     /**
      * 查询给定分类cat_id的路径
+     *
      * @param   int $cat_id        分类cat_id
+     *
      * @return  array                   数组
      */
     public function getPath($cat_id)
@@ -212,6 +219,7 @@ class Category
     /**
      * 添加分类
      * @param   array $data        一维数组，要添加的数据，$data需要包含上级分类ID。
+     *
      * @return  boolean                    添加成功，返回相应的分类ID,添加失败，返回FALSE；
      */
     public function add($data)
@@ -224,6 +232,7 @@ class Category
     /**
      * 修改分类
      * @param   array $data     一维数组，$data需要包含要修改的分类cat_id。
+     *
      * @return  boolean                 组修改成功，返回相应的分类ID,修改失败，返回FALSE；
      */
     public function edit($data)
@@ -236,6 +245,7 @@ class Category
     /**
      * 删除分类
      * @param   int $cat_id        分类cat_id
+     *
      * @return  boolean                 删除成功，返回相应的分类ID,删除失败，返回FALSE
      */
     public function del($cat_id)

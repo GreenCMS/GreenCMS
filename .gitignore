@@ -5,6 +5,7 @@ Data/Cache/*
 Data/Log/*
 Data/Temp/**
 Data/Temp/Cache/**/**/*.php
+Data/Temp/Cache/**/*.php
 Data/Temp/Data/**/**
 Data/Temp/Temp/**/**
 
@@ -12,5 +13,6 @@ Data/Temp/Temp/**/**
 *.bak
 *.log
 .idea/
+.idea/*
 
  

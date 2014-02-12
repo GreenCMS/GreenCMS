@@ -88,7 +88,8 @@ function GetIP()
 }
 
 
-function insertDB($file,$conn){
+function insertDB($file, $conn)
+{
     if (!file_exists($file))
         die('文件不存在');
     $file = fopen($file, "r");

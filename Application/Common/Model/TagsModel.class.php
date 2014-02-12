@@ -25,13 +25,13 @@ class TagsModel extends RelationModel
 
             'mapping_type' => HAS_MANY,
 
-            'class_name' => 'Post_tag',
+            'class_name'   => 'Post_tag',
 
             'mapping_name' => 'in_post',
 
-            'foreign_key' => 'tag_id',
+            'foreign_key'  => 'tag_id',
 
-            'parent_key' => 'tag_id'),
+            'parent_key'   => 'tag_id'),
 
     );
 

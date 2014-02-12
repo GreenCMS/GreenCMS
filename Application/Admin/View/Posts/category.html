@@ -70,7 +70,7 @@
                                 <div class="btn-group">
                                     <a href="{:U('Admin/Posts/addCategory')}">
                                         <button id="sample_editable_1_new" class="btn green">
-                                            添加新分类<i class="icon-plus"></i>
+                                            <i class="icon-plus"></i>添加新分类
                                         </button>
                                     </a>
                                 </div>
@@ -82,11 +82,11 @@
                                     <th style="width:8px;"><input type="checkbox"
                                                                   class="group-checkable"
                                                                   data-set="#sample_1 .checkboxes"/></th>
-                                    <th>名称</th>
-                                    <th class="hidden-480">结构</th>
+                                    <th >名称</th>
+                                    <th align="left" class="tree">结构</th>
                                     <th>父类</th>
-                                    <th>操作</th>
                                     <th>查看</th>
+                                    <th>操作</th>
 
                                 </tr>
                                 </thead>
@@ -95,8 +95,7 @@
                                     <tr class="odd gradeX">
                                         <td style="width:8px;"><input type="checkbox" class="checkboxes" value="1"/>
                                         </td>
-                                        <td><a
-                                                href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}"
+                                        <td><a href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}"
                                                 title="{$v.cat_name}">{$v.cat_name}</a></td>
                                         <td class="hidden-480"><a
                                                 href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">{$v.cat_slug}</a>
@@ -104,18 +103,11 @@
                                         <td>{$v['cat_father']['cat_name']|is_empty} &nbsp;</td>
 
                                         <td>
-
-
-                                            <a
-                                                    href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">编辑</a>
-
-                                            <a
-                                                    href="{:U('Admin/Posts/delCategory', array('id' => $v['cat_id']))}">删除</a>
+                                            <a class="btn mini green" href="{:U('Admin/Posts/index', array('cat' => $v['cat_id']))}">查看分类文章</a>
                                         </td>
                                         <td>
-
-                                            <a
-                                                    href="{:U('Admin/Posts/index', array('cat' => $v['cat_id']))}">查看所有文章</a>
+                                            <a class="btn mini" href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">编辑</a>
+                                            <a class="btn mini red" href="{:U('Admin/Posts/delCategory', array('id' => $v['cat_id']))}">删除</a>
 
                                         </td>
 

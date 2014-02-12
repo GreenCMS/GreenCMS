@@ -6,24 +6,24 @@ $config_router = array(
     //   'URL_MODEL' => 0,
     //开启路由!!建议url模型选择2，否则的话建议使用native模式
 
-    'URL_ROUTER_ON' => true,
+    'URL_ROUTER_ON'   => true,
     //路由定义
     'URL_ROUTE_RULES' => array(
         'Post/single/:year/:month/:day/:info' => 'Post/single', //年月日规则路由
-        'Post/single/:year/:month/:info' => 'Post/single', //年月规则路由
-        'Post/single/:year/:info' => 'Post/single', //年规则路由
-        'Post/single/:info' => 'Post/single', //普通规则路由
+        'Post/single/:year/:month/:info'      => 'Post/single', //年月规则路由
+        'Post/single/:year/:info'             => 'Post/single', //年规则路由
+        'Post/single/:info'                   => 'Post/single', //普通规则路由
 
-        'Post/Page/:year/:month/:day/:info' => 'Post/page', //年月日规则路由
-        'Post/Page/:year/:month/:info' => 'Post/page', //年月规则路由
-        'Post/Page/:year/:info' => 'Post/page', //年规则路由
-        'Post/Page/:info' => 'Post/page', //普通规则路由
+        'Post/Page/:year/:month/:day/:info'   => 'Post/page', //年月日规则路由
+        'Post/Page/:year/:month/:info'        => 'Post/page', //年月规则路由
+        'Post/Page/:year/:info'               => 'Post/page', //年规则路由
+        'Post/Page/:info'                     => 'Post/page', //普通规则路由
 
-        'Tag/:info' => 'Tag/detail', //普通规则路由
+        'Tag/:info'                           => 'Tag/detail', //普通规则路由
 
-        'Cat/:father1/:father2/:info' => 'Cat/detail', //普通规则路由
-        'Cat/:father/:info' => 'Cat/detail', //普通规则路由
-        'Cat/:info' => 'Cat/detail', //普通规则路由jius
+        'Cat/:father1/:father2/:info'         => 'Cat/detail', //普通规则路由
+        'Cat/:father/:info'                   => 'Cat/detail', //普通规则路由
+        'Cat/:info'                           => 'Cat/detail', //普通规则路由jius
     ),
 
     /**
@@ -41,7 +41,7 @@ $config_router = array(
      * year/post_name,
      * year/post_id,
      * */
-    'OUR_URL_MODEL' => "native", //Single单页路由模式
+    'OUR_URL_MODEL'   => "native", //Single单页路由模式
 
 
     /**
@@ -51,7 +51,7 @@ $config_router = array(
      * slug
      */
     //TODO 当前只有native模式可以使用
-    'OUR_TAG_MODEL' => "native", //TAG标签路由模式.
+    'OUR_TAG_MODEL'   => "native", //TAG标签路由模式.
 
 
     /**
@@ -61,7 +61,7 @@ $config_router = array(
      * slug
      */
     //TODO 当前只有native模式可以使用
-    'OUR_CAT_MODEL' => "native", //TAG标签路由模式.
+    'OUR_CAT_MODEL'   => "native", //TAG标签路由模式.
 
 
 );

@@ -43,6 +43,9 @@ define("System_Backup_PATH", WEB_ROOT . "Data/Backup/");
  */
 define("Upgrade_PATH", WEB_ROOT . "Data/Upgrade/");
 
+/**系统升级文件存放目录
+ */
+define("HTML_PATH", WEB_ROOT . "Data/Temp/HTML/");
 
 /**
  */

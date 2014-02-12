@@ -22,47 +22,47 @@ class PostsModel extends RelationModel
      */
     public $_link = array(
 
-        'Tag' => array(
+        'Tag'  => array(
 
-            'mapping_type' => MANY_TO_MANY,
+            'mapping_type'         => MANY_TO_MANY,
 
-            'class_name' => 'Tags',
+            'class_name'           => 'Tags',
 
-            'mapping_name' => 'post_tag',
+            'mapping_name'         => 'post_tag',
 
-            'foreign_key' => 'post_id',
+            'foreign_key'          => 'post_id',
 
             'relation_foreign_key' => 'tag_id',
 
-            'relation_table' => 'post_tag'
+            'relation_table'       => 'post_tag'
         ),
 
-        'Cat' => array(
+        'Cat'  => array(
 
-            'mapping_type' => MANY_TO_MANY,
+            'mapping_type'         => MANY_TO_MANY,
 
-            'class_name' => 'Cats',
+            'class_name'           => 'Cats',
 
-            'mapping_name' => 'post_cat',
+            'mapping_name'         => 'post_cat',
 
-            'foreign_key' => 'post_id',
+            'foreign_key'          => 'post_id',
 
             'relation_foreign_key' => 'cat_id',
 
-            'relation_table' => 'post_cat'
+            'relation_table'       => 'post_cat'
         ),
 
         'User' => array(
 
             'mapping_type' => BELONGS_TO,
 
-            'class_name' => 'User',
+            'class_name'   => 'User',
 
-            'foreign_key' => 'user_id',
+            'foreign_key'  => 'user_id',
 
             'mapping_name' => 'post_user',
 
-            'parent_key' => 'user_id'
+            'parent_key'   => 'user_id'
         )
     );
 

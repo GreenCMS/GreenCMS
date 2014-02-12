@@ -84,9 +84,10 @@
                                                                    data-set="#sample_1 .checkboxes"/></th>
                                     <th>名称</th>
                                     <th class="hidden-480">别名</th>
-                                    <th>操作</th>
-                                    <th>查看</th>
                                     <th></th>
+                                    <th>查看</th>
+                                    <th>操作</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -99,20 +100,16 @@
                                         <td class="hidden-480"><a
                                                 href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}">{$v.tag_slug}</a>
                                         </td>
-                                        <td>
-
-
-                                            <a
-                                                    href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}">编辑</a>
-
-                                            <a
-                                                    href="{:U('Admin/Posts/delTag', array('id' => $v['tag_id']))}">删除</a>
-                                        </td>
-                                        <td>
-                                            <a
-                                                    href="{:U('Admin/Posts/index', array('tag' => $v['tag_id']))}">查看所有文章</a>
-                                        </td>
                                         <td></td>
+                                        <td>
+                                            <a class="btn mini green"  href="{:U('Admin/Posts/index', array('tag' => $v['tag_id']))}">查看所有文章</a>
+                                        </td>
+                                        <td>
+                                            <a class="btn mini" href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}">编辑</a>
+                                            <a  class="btn mini red" href="{:U('Admin/Posts/delTag', array('id' => $v['tag_id']))}">删除</a>
+                                        </td>
+
+
                                     </tr>
                                 </foreach>
                                 </tbody>

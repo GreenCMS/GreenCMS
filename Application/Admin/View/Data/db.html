@@ -69,7 +69,7 @@
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large"
-                                       value="{$db_path}" disabled />
+                                       value="{$db_path}" disabled/>
                              </div>
                         </div>
 
@@ -81,6 +81,17 @@
                                 <input type="text" placeholder="" class="m-wrap large" name="sqlFileSize"
                                        value="{:C('sqlFileSize')}"/>
                                 <span class="help-inline">单位byte</span>
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label">SQL文件发送邮箱</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="sql_mail"
+                                       value="{:C('sql_mail')}"/>
+                                <span class="help-inline">默认邮箱</span>
                             </div>
                         </div>
 

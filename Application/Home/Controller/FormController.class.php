@@ -8,6 +8,7 @@
  */
 
 namespace Home\Controller;
+use Home\Model\FormModel;
 
 
 class FormController extends HomeBaseController
@@ -17,7 +18,7 @@ class FormController extends HomeBaseController
     {
         if (IS_POST) {
 
-            $Form_apply = D('Form');
+            $Form_apply = new FormModel();
             $Form_apply->create();
 
             if (!$Form_apply->create()) {

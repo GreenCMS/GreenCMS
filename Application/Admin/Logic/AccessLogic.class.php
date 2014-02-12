@@ -22,7 +22,7 @@ class AccessLogic extends RelationModel
      */
     public function adminList()
     {
-        $res = D('User')->field('user_pass', true)->where(array("user_level" => array('neq',5)))
+        $res = D('User')->field('user_pass', true)->where(array("user_level" => array('neq', 5)))
             ->relation(true)->select();
 
 
@@ -94,16 +94,16 @@ class AccessLogic extends RelationModel
         if ($M->save($datas)) {
             return array(
                 'status' => 1,
-                'info' => "处理成功",
-                'data' => array(
+                'info'   => "处理成功",
+                'data'   => array(
                     "status" => $datas ['status'],
-                    "txt" => $datas ['status'] == 1 ? "禁用" : "启动"
+                    "txt"    => $datas ['status'] == 1 ? "禁用" : "启动"
                 )
             );
         } else {
             return array(
                 'status' => 0,
-                'info' => "处理失败"
+                'info'   => "处理失败"
             );
         }
     }
@@ -113,11 +113,11 @@ class AccessLogic extends RelationModel
         $M = M("Node");
         return $M->save($_POST) ? array(
             'status' => 1,
-            info => '更新节点信息成功',
-            'url' => U('Admin/Access/nodeList')
+            info     => '更新节点信息成功',
+            'url'    => U('Admin/Access/nodeList')
         ) : array(
             'status' => 0,
-            info => '更新节点信息失败'
+            info     => '更新节点信息失败'
         );
     }
 
@@ -126,11 +126,11 @@ class AccessLogic extends RelationModel
         $M = M("Node");
         return $M->add($_POST) ? array(
             'status' => 1,
-            info => $_POST ['id'] . '添加节点信息成功',
-            'url' => U('Admin/Access/nodeList')
+            info     => $_POST ['id'] . '添加节点信息成功',
+            'url'    => U('Admin/Access/nodeList')
         ) : array(
             'status' => 0,
-            info => '添加节点信息失败'
+            info     => '添加节点信息失败'
         );
     }
 
@@ -144,7 +144,7 @@ class AccessLogic extends RelationModel
         if (!is_email($_POST ['email'])) {
             return array(
                 'status' => 0,
-                'info' => "邮件地址错误"
+                'info'   => "邮件地址错误"
             );
         }
         $datas = array();
@@ -153,7 +153,7 @@ class AccessLogic extends RelationModel
         if ($M->where("`user_email`='" . $datas ['user_email'] . "'")->count() > 0) {
             return array(
                 'status' => 0,
-                'info' => "已经存在该账号"
+                'info'   => "已经存在该账号"
             );
         }
 
@@ -178,13 +178,13 @@ class AccessLogic extends RelationModel
             }
             return array(
                 'status' => 1,
-                'info' => $info,
-                'url' => U("Admin/Access/index")
+                'info'   => $info,
+                'url'    => U("Admin/Access/index")
             );
         } else {
             return array(
                 'status' => 0,
-                'info' => "添加新账号失败，请重试"
+                'info'   => "添加新账号失败，请重试"
             );
         }
     }
@@ -228,24 +228,24 @@ class AccessLogic extends RelationModel
 
         if ($User->where(array('user_id' => $user_id))->save($data)) {
 
-            return $roleStatus == TRUE ? array(
+            return $roleStatus == true ? array(
                 'status' => 1,
-                'info' => "成功更新",
-                'url' => U("Admin/Access/index")
+                'info'   => "成功更新",
+                'url'    => U("Admin/Access/index")
             ) : array(
                 'status' => 1,
-                'info' => "成功更新，但更改用户所属组未更新",
-                'url' => U("Admin/Access/index")
+                'info'   => "成功更新，但更改用户所属组未更新",
+                'url'    => U("Admin/Access/index")
             );
         } else {
 
-            return $roleStatus == TRUE ? array(
+            return $roleStatus == true ? array(
                 'status' => 1,
-                'info' => "用户未更新，但更改用户所属组更新成功",
-                'url' => U("Admin/Access/index")
+                'info'   => "用户未更新，但更改用户所属组更新成功",
+                'url'    => U("Admin/Access/index")
             ) : array(
                 'status' => 0,
-                'info' => "所属用户组未更新，请重试"
+                'info'   => "所属用户组未更新，请重试"
             );
         }
     }
@@ -265,13 +265,13 @@ class AccessLogic extends RelationModel
         if ($M->save($_POST)) {
             return array(
                 'status' => 1,
-                'info' => "成功更新",
-                'url' => U("Admin/Access/roleList")
+                'info'   => "成功更新",
+                'url'    => U("Admin/Access/roleList")
             );
         } else {
             return array(
                 'status' => 0,
-                'info' => "更新失败，请重试"
+                'info'   => "更新失败，请重试"
             );
         }
     }
@@ -287,13 +287,13 @@ class AccessLogic extends RelationModel
         if ($M->add($_POST)) {
             return array(
                 'status' => 1,
-                'info' => "成功添加",
-                'url' => U("Admin/Access/roleList")
+                'info'   => "成功添加",
+                'url'    => U("Admin/Access/roleList")
             );
         } else {
             return array(
                 'status' => 0,
-                'info' => "添加失败，请重试"
+                'info'   => "添加失败，请重试"
             );
         }
     }
@@ -301,15 +301,15 @@ class AccessLogic extends RelationModel
     public function changeRole()
     {
         $Access = D("Access");
-        $role_id = (int) I('post.id');
-         $Access->where("role_id=" . $role_id)->delete();
-         $data = $_POST ['data'];
+        $role_id = (int)I('post.id');
+        $Access->where("role_id=" . $role_id)->delete();
+        $data = $_POST ['data'];
 
-         if (count($data) == 0) {
+        if (count($data) == 0) {
             return array(
                 'status' => 1,
-                'info' => "清除所有权限成功".array2str($data),
-                'url' => U("Admin/Access/roleList")
+                'info'   => "清除所有权限成功" . array2str($data),
+                'url'    => U("Admin/Access/roleList")
             );
         }
         $datas = array();
@@ -323,13 +323,13 @@ class AccessLogic extends RelationModel
         if ($Access->addAll($datas)) {
             return array(
                 'status' => 1,
-                'info' => "设置成功",
-                'url' => U("Admin/Access/roleList")
+                'info'   => "设置成功",
+                'url'    => U("Admin/Access/roleList")
             );
         } else {
             return array(
                 'status' => 0,
-                'info' => "设置失败，请重试"
+                'info'   => "设置失败，请重试"
             );
         }
     }

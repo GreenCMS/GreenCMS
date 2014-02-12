@@ -12,7 +12,7 @@ namespace Admin\Model;
 
 use Think\Model;
 
-class MySQLModel// extends Model
+class MySQLModel // extends Model
 {
 
- }
+}

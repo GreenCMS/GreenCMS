@@ -32,7 +32,7 @@ class AdminBaseController extends BaseController
         {
             // 登录检查
             RBAC::checkLogin();
-             // 提示错误信息 无权限
+            // 提示错误信息 无权限
             $this->error(L('_VALID_ACCESS_'));
 
             // TODO 如何防止循环无权限
@@ -47,7 +47,7 @@ class AdminBaseController extends BaseController
             if (!M("Admin")->autoCheckToken($_POST)) {
                 die (json_encode(array(
                     'status' => 0,
-                    'info' => '令牌验证失败'
+                    'info'   => '令牌验证失败'
                 )));
             }
             unset ($_POST [C("TOKEN_NAME")]);
@@ -60,7 +60,6 @@ class AdminBaseController extends BaseController
 
         //  echo CONTROLLER_NAME;
         //  echo ACTION_NAME;
-
 
         $cache = C('admin_big_menu');
         foreach ($cache as $big_url => $big_name) {

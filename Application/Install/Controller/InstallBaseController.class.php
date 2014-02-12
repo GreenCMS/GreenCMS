@@ -11,38 +11,12 @@ namespace Install\Controller;
 
 use Think\Controller;
 
-class TestController extends Controller
+class InstallBaseController extends Controller
 {
 
-    public function __construct()
+
+    protected function init()
     {
-        parent::__construct();
-
-
-
-    }
-
-
-    /**
-     * test only 生产模式需要删除这个代码
-     */
-    public function uninstall($key)
-    {
-        if($key!='zts')die("No access");
-
-
-        $file2 = WEB_ROOT . 'Data/Install/install.lock';
-        unlink($file2);
-        $this->redirect('Install/Index/index');
-
-    }
-
-
-    public function init($key)
-    {
-
-         if($key!='zts')die("No access");
-
 
         $test = true;
 
@@ -55,7 +29,7 @@ class TestController extends Controller
         $data['sort'] = 0;
         $data['pid'] = 0;
         $data['level'] = 1;
-        if (!$test)  dump($data);
+        if (!$test) dump($data);
 
         if ($test) D($NODE)->where('1')->delete();
 
@@ -67,7 +41,7 @@ class TestController extends Controller
         $level1_map['level'] = 1;
 
         $level1_temp = D($NODE)->field('id')->where($level1_map)->find();
-        if (!$test)  dump((int)$level1_temp['id']);
+        if (!$test) dump((int)$level1_temp['id']);
 
 
         $AdminBaseController = get_class_methods(new \Admin\Controller\AdminBaseController());
@@ -98,31 +72,32 @@ class TestController extends Controller
 
         foreach ($Controllers as $value) {
             $data = array();
-            $data['name'] = substr($value,0,-10);
+            $data['name'] = substr($value, 0, -10);
             $data['title'] = $value;
             $data['status'] = 1;
             $data['remark'] = $value;
             $data['sort'] = 0;
             $data['pid'] = (int)$level1_temp['id'];
             $data['level'] = 2;
-            if (!$test)  echo 'Controller:'.$value; if (!$test) dump($data);
+            if (!$test) echo 'Controller:' . $value;
+            if (!$test) dump($data);
             if ($test) D($NODE)->data($data)->add();
         }
         $map['id'] = array('neq', 1);
         $Nodes = D('Node')->field('name')->where($map)->select();
-        if (!$test)   dump($Nodes);
+        if (!$test) dump($Nodes);
 
 
         foreach ($Nodes as $key => $value) {
-            $value['name']=$value['name'].'Controller';
+            $value['name'] = $value['name'] . 'Controller';
             $temp = $$value['name'];
 
-            $map2['name'] = substr($value['name'],0,-10);
+            $map2['name'] = substr($value['name'], 0, -10);
             $map2['level'] = 2;
 
             $temp2 = D($NODE)->field('id')->where($map2)->find();
-            if (!$test)   dump((int)$temp2['id']);
-            if (!$test)  dump($temp);
+            if (!$test) dump((int)$temp2['id']);
+            if (!$test) dump($temp);
 
             foreach ($temp as $key => $value) {
                 $data = array();
@@ -133,7 +108,7 @@ class TestController extends Controller
                 $data['sort'] = 0;
                 $data['pid'] = (int)$temp2['id'];
                 $data['level'] = 3;
-                if (!$test)  dump($data);
+                if (!$test) dump($data);
 
                 if ($test) D($NODE)->data($data)->add();
 
