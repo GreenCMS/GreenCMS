@@ -59,6 +59,12 @@ function get_opinion($key)
     return C($key);
 }
 
+function get_kv($key)
+{
+    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
+    return $options['kv_value'];
+}
+
 /**
  * 数组降维
  */

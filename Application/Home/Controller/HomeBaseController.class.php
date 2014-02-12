@@ -9,8 +9,8 @@
 
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Common\Logic\PostsLogic;
 use Common\Logic\LinksLogic;
+use Common\Logic\PostsLogic;
 
 /**
  * Class HomeBaseController
@@ -31,18 +31,27 @@ class HomeBaseController extends BaseController
             $this->redirect('Install/Index/index');
         }
 
-        $Posts=new PostsLogic();
-        $Links=new LinksLogic();
+        $Posts = new PostsLogic();
+        $Links = new LinksLogic();
 
         $newPosts = $Posts->getList(5, 'single', 'post_date desc', false);
         $friendUrl = $Links->getList(5);
 
-        $this->assign('newPosts',$newPosts);
-        $this->assign('friendurl',$friendUrl);
+        $this->assign('newPosts', $newPosts);
+        $this->assign('friendurl', $friendUrl);
 
         $this->customConfig();
+        $this->loadTheme();
+
     }
 
+
+    public function loadTheme()
+    {
+        $theme_name = get_kv(home_theme);
+         if ($theme_name != '')
+            $this->theme($theme_name);
+    }
 
     /**
      * @function 是否为空
