@@ -1,0 +1,94 @@
+/* =================================================================== */
+/* Styles Switcher
+====================================================================== */
+
+	#style-switcher h3 {
+		color: #1d1d1d;
+		font-size: 14px;
+		margin: 8px 3px 5px;
+	}
+	
+	#style-switcher {
+		background: #FFF;
+		width: 195px;
+		position: fixed;
+		top: 45%;
+		z-index: 9999;
+		left: -189px;
+		box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+		-moz-box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+		-webkit-box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+	}
+	
+	#style-switcher div {
+		padding: 5px 10px;
+	}
+	
+	#style-switcher .bottom {
+		color: #252525;
+		padding: 0;
+		background: #fff;
+	}
+	
+	#style-switcher .bottom a.settings {
+		display: block;
+		height: 41px;
+		position: absolute;
+		right: -40px;
+		text-indent: -9999px;
+		top: 0;
+		width: 40px;
+		background: #FFF;
+		box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+		-moz-box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+		-webkit-box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+	}
+	
+	#style-switcher .bottom a.settings img{
+		margin-top: 3px;
+		margin-left: 1px;
+	}
+	
+
+	ul.colors { list-style:none; margin: 0px 0px 10px 0px; overflow: hidden}
+	ul.colors li { float:left; margin:2px; }
+	ul.colors li a { display: block; width:30px; height:30px; cursor: pointer;} 
+	ul.colors li a:hover { opacity: 0.8 }
+	
+	
+	ul.colors .color1 { background: #1d1d1d; }
+	ul.colors .color2 { background: #34495E; }
+	ul.colors .color3 { background: #39132a; }
+	ul.colors .color4 { background: #433a4f; }
+	ul.colors .color5 { background: #2a375f; }
+	ul.colors .color6 { background: #255253; }
+	ul.colors .color7 { background: #6f412f; }
+	ul.colors .color8 { background: #5bc566; }
+	ul.colors .color9 { background: #f65252; }
+	ul.colors .color10 { 
+		background: #fff;
+		box-shadow:0 0 0 2px #e1e1e1 inset; 
+		-moz-box-shadow:0 0 0 2px #e1e1e1 inset; 
+		-webkit-box-shadow:0 0 0 2px #e1e1e1 inset;  
+	}
+	
+
+	ul.colors li a.active { 
+		box-shadow:0 0 0 2px #1d1d1d inset; 
+		-moz-box-shadow:0 0 0 2px #1d1d1d inset; 
+		-webkit-box-shadow:0 0 0 2px #1d1d1d inset; 
+		position: relative;
+	}
+	
+	ul.colors li a.active:after { 
+		content: "\f00c";
+		font-family: "FontAwesome";
+		color: #FFF;
+		position: absolute;
+		bottom: 4px;
+		right: 5px;
+		font-size: 10px;
+	}
+	
+	@media only screen and (max-width: 1029px) { #style-switcher { display: none; } }
+	   
