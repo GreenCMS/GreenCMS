@@ -46,7 +46,7 @@ class CustomController extends AdminBaseController
             $res = $Menu->where(array('menu_pid' => $id))->setField($data);
         }
         //TODO 判断
-        $this->success('删除成功');
+        $this->success('删除成功','Admin/Custom/menu');
 
     }
 
@@ -75,13 +75,13 @@ class CustomController extends AdminBaseController
         $data = $_POST;
         $Menu = D('Menu');
         $result = $Menu->data($data)->add();
-        if ($result) $this->success('添加成功');
+        if ($result) $this->success('添加成功','Admin/Custom/menu');
     }
 
     public function menuEdit($id)
     {
         $action = '编辑菜单';
-        $action_url = U('Admin/Custom/menuEdit');
+        $action_url = U('Admin/Custom/menuEdit', array('id' => $id));
         $form_url = U('Admin/Custom/menuEditHandle', array('id' => $id));
 
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
@@ -105,7 +105,7 @@ class CustomController extends AdminBaseController
         $data = $_POST;
         $Menu = D('Menu');
         $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
-        if ($result) $this->success('添加成功');
+        if ($result) $this->success('编辑成功','Admin/Custom/menu');
 
     }
 
