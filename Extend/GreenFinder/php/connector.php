@@ -1,6 +1,6 @@
 <?php
 
-defined('THINK_PATH') or exit();
+defined('GreenCMS') or exit();
 
 error_reporting(0); // Set E_ALL for debuging
 
