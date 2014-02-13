@@ -16,6 +16,11 @@ use Common\Util\GreenPage;
 class CustomController extends AdminBaseController
 {
 
+    public function index()
+    {
+        $this->display();
+    }
+
     //TODO menu
     public function menu()
     {
@@ -77,12 +82,12 @@ class CustomController extends AdminBaseController
     {
         $action = '编辑菜单';
         $action_url = U('Admin/Custom/menuEdit');
-        $form_url = U('Admin/Custom/menuEditHandle',array('id' => $id));
+        $form_url = U('Admin/Custom/menuEditHandle', array('id' => $id));
 
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
         $menu_list = $Menu->getList(); // 获取分类结构
 
-        $m=D('Menu')->where(array('menu_id' => $id))->find();
+        $m = D('Menu')->where(array('menu_id' => $id))->find();
         $this->assign('info', $m);
 
 
