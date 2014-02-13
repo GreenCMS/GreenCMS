@@ -19,30 +19,91 @@ class CustomController extends AdminBaseController
     //TODO menu
     public function menu()
     {
-        $cat = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
+        $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
 
-        $menu = $cat->getList(); // 获取分类结构
-       // dump($menu);
+        $menu_list = $Menu->getList(); // 获取分类结构
+        // dump($menu);
 
-        $this->assign('menu',$menu);
+        $this->assign('menu', $menu_list);
 
         $this->display();
     }
 
-    public function menuDel($id)
+    public function menuDel($id, $child = false)
+    {
+        $Menu = D('Menu');
+
+        $Menu->where(array('menu_id' => $id))->delete();
+        if ($child) {
+            $res = $Menu->where(array('menu_pid' => $id))->delete();
+        } else {
+            $data = array('menu_pid' => 0);
+            $res = $Menu->where(array('menu_pid' => $id))->setField($data);
+        }
+        //TODO 判断
+        $this->success('删除成功');
+
+    }
+
+    public function menuAdd()
     {
 
+        $action = '添加菜单';
+        $action_url = U('Admin/Custom/menuAdd');
+        $form_url = U('Admin/Custom/menuAddHandle');
+
+        $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
+        $menu_list = $Menu->getList(); // 获取分类结构
 
 
+        $this->assign('menu', $menu_list);
+        $this->assign('action', $action);
+        $this->assign('action_url', $action_url);
+        $this->assign('form_url', $form_url);
+
+        $this->display();
+
+    }
+
+    public function menuAddHandle()
+    {
+        $data = $_POST;
+        $Menu = D('Menu');
+        $result = $Menu->data($data)->add();
+        if ($result) $this->success('添加成功');
     }
 
     public function menuEdit($id)
     {
+        $action = '编辑菜单';
+        $action_url = U('Admin/Custom/menuEdit');
+        $form_url = U('Admin/Custom/menuEditHandle',array('id' => $id));
+
+        $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
+        $menu_list = $Menu->getList(); // 获取分类结构
+
+        $m=D('Menu')->where(array('menu_id' => $id))->find();
+        $this->assign('info', $m);
 
 
+        $this->assign('menu', $menu_list);
+        $this->assign('action', $action);
+        $this->assign('action_url', $action_url);
+        $this->assign('form_url', $form_url);
+
+        $this->display();
 
     }
-    //TODO plugin
+
+    public function menuEditHandle($id)
+    {
+        $data = $_POST;
+        $Menu = D('Menu');
+        $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
+        if ($result) $this->success('添加成功');
+
+    }
+
     public function theme()
     {
         $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
@@ -53,6 +114,7 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
+    //TODO plugin
     public function plugin()
     {
 
