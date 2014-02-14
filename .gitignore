@@ -9,6 +9,7 @@ Data/Temp/Cache/**/*.php
 Data/Temp/Data/**/**
 Data/Temp/Temp/**/**
 
+*.lock
 *.tmp
 *.bak
 *.log
