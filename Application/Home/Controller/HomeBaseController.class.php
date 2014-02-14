@@ -48,7 +48,7 @@ class HomeBaseController extends BaseController
 
     public function loadTheme()
     {
-        $theme_name = get_kv(home_theme);
+        $theme_name = get_kv('home_theme');
          if ($theme_name != '')
             $this->theme($theme_name);
     }
