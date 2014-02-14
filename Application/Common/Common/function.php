@@ -10,6 +10,11 @@
 include APP_PATH . 'Common/Common/common_router.php';
 
 
+function get_menu_url()
+{
+
+}
+
 function encrypt($data)
 {
     //return md5($data);
@@ -83,18 +88,19 @@ function array2str($res)
 }
 
 
-function array_sort($arr,$keys,$type='desc'){
+function array_sort($arr, $keys, $type = 'desc')
+{
     $key_value = $new_array = array();
-    foreach ($arr as $k=>$v){
+    foreach ($arr as $k => $v) {
         $key_value[$k] = $v[$keys];
     }
-    if($type == 'asc'){
+    if ($type == 'asc') {
         asort($key_value);
-    }else{
+    } else {
         arsort($key_value);
     }
     reset($key_value);
-    foreach ($key_value as $k=>$v){
+    foreach ($key_value as $k => $v) {
         $new_array[$k] = $arr[$k];
     }
     return $new_array;
@@ -135,8 +141,8 @@ function getTimestamp($Timestamp, $need = 'timestamp')
         return $day;
     } else if ($need === 'year') {
         return $year;
-    }else {
-        return date($need,$timestamp);
+    } else {
+        return date($need, $timestamp);
     }
 
 }
