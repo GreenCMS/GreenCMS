@@ -70,23 +70,23 @@
                         </tr>
                         <volist name="list" id="vo">
                             <tr>
-                                <td class="hidden-480">{$vo.id}</td>
-                                <td class="hidden-480">{$vo.title}</td>
-                                <td class="hidden-480">作者:{$vo.author}&nbsp;&nbsp;&nbsp;版权:{$vo.copyright}&nbsp;&nbsp;&nbsp;描述信息:{$vo.description}</td>
+                                <td class="hidden-480">{$vo.plugin_id}</td>
+                                <td class="hidden-480">{$vo.plugin_title}</td>
+                                <td class="hidden-480">作者:{$vo.plugin_author}&nbsp;&nbsp;&nbsp;版权:{$vo.plugin_copyright}&nbsp;&nbsp;&nbsp;描述信息:{$vo.plugin_description}</td>
                                 <td class="hidden-480">
                                     <eq name="vo.status" value="0">
-                                        <font color="green">启用</font>-><a href='javascript:;' onclick="ajax({$vo.id})">禁用
+                                        <font color="green">启用</font>-><a href='javascript:;' onclick="ajax({$vo.plugin_id})">禁用
                                         <else/>
                                         <font color="red">禁用</font>-><a href='javascript:;' onclick="ajax({$vo.id})">启用
                                     </eq>
                                     </a>
                                 </td>
                                 <td class="hidden-480">
-                                    <a href="{:U('Admin/Custom/pluginManage')}?name={$vo.title}">管理</a>|
-                                    <a href="{:U('Admin/Custom/pluginEdit')}?name={$vo.title}">配置</a>|
+                                    <a href="{:U('Admin/Custom/pluginManage')}?name={$vo.plugin_title}">管理</a>|
+                                    <a href="{:U('Admin/Custom/pluginEdit')}?name={$vo.plugin_title}">配置</a>|
                                     <a href="javascript:;"
-                                       onClick="JavaScript:return jconfirm('确认卸载吗?','{:U('Admin/Custom/pluginUninstall')}?id={$vo.id}')">卸载</a>|
-                                    <a href="{:U('Admin/Custom/pluginDownload')}?name={$vo.title}">导出</a>
+                                       onClick="JavaScript:return jconfirm('确认卸载吗?','{:U('Admin/Custom/pluginUninstall')}?id={$vo.plugin_id}')">卸载</a>|
+                                    <a href="{:U('Admin/Custom/pluginDownload')}?name={$vo.plugin_title}">导出</a>
                                 </td>
                             </tr>
                         </volist>

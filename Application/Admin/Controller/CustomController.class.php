@@ -27,7 +27,6 @@ class CustomController extends AdminBaseController
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
 
         $menu_list = $Menu->getList(); // 获取分类结构
-        // dump($menu);
 
         $this->assign('menu', $menu_list);
 
@@ -46,7 +45,7 @@ class CustomController extends AdminBaseController
             $res = $Menu->where(array('menu_pid' => $id))->setField($data);
         }
         //TODO 判断
-        $this->success('删除成功','Admin/Custom/menu');
+        $this->success('删除成功', 'Admin/Custom/menu');
 
     }
 
@@ -75,7 +74,7 @@ class CustomController extends AdminBaseController
         $data = $_POST;
         $Menu = D('Menu');
         $result = $Menu->data($data)->add();
-        if ($result) $this->success('添加成功','Admin/Custom/menu');
+        if ($result) $this->success('添加成功', 'Admin/Custom/menu');
     }
 
     public function menuEdit($id)
@@ -105,7 +104,7 @@ class CustomController extends AdminBaseController
         $data = $_POST;
         $Menu = D('Menu');
         $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
-        if ($result) $this->success('编辑成功','Admin/Custom/menu');
+        if ($result) $this->success('编辑成功', 'Admin/Custom/menu');
 
     }
 
@@ -119,64 +118,72 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
-    //TODO plugin
     public function plugin()
     {
+        $map ['plugin_id'] = array('gt', 0);
+        $Plugin = D('plugin');
+        $count = $Plugin->where($map)->count();
+        $p = new GreenPage ($count, get_opinion('pager'));
+        $list = $Plugin->where($map)->limit($p->firstRow . ',' . $p->listRows)->select();
 
-        // 安全验证
-        // $this->checksafeauth();
-        if (isset ($_GET ['title']))
-            $this->assign("title", I('get.title'));
-        if (!empty ($_GET ['status']))
-            $map ['status'] = I('get.status');
-        $map ['id'] = array('gt', 0);
+        $this->assign('page', $p->show());
+        $this->assign("list", $list);
 
-        //$install = $this->_get('install', false);
-        $install = I('get.install');
-        if ($install != 1) {
-            $Plugin = M('plugin');
-            $count = $Plugin->where($map)->count();
-            $fenye = 20;
-            $p = new GreenPage ($count, get_opinion('pager'));
-            $list = $Plugin->where($map)->order('pubdate desc')->limit($p->firstRow . ',' . $p->listRows)->select();
-            // echo $model->getLastSql();exit;
-            /* $p->setConfig('prev', '上一页');
-             $p->setConfig('header', '条记录');
-             $p->setConfig('first', '首 页');
-             $p->setConfig('last', '末 页');
-             $p->setConfig('next', '下一页');
-             $p->setConfig('theme', "%first%%upPage%%linkPage%%downPage%%end%<li><span>共<font color='#009900'><b>%totalRow%</b></font>条记录 " . $fenye . "条/每页</span></li>");
-             */
-            $this->assign('page', $p->show());
-            $this->assign("list", $list);
-
-            $this->display();
-        } else {
-            $Plugin = M('plugin');
-            $pluginlist = $Plugin->field('title')->select();
-            $plist = array();
-            foreach ($pluginlist as $v) {
-                $plist [] = $v ['title'];
-            }
-            // 未安装插件
-            $path = Plugin_PATH;
-            $dir = File::get_dirs($path);
-            foreach ($dir ['dir'] as $k => $v) {
-                if (!in_array($v, $plist) && $v != '.' && $v != '..') {
-                    $list ['title'] = $v;
-                    if (file_exists($path . '/' . $v . '/plugin.xml')) {
-                        $tag = simplexml_load_file($path . '/' . $v . '/plugin.xml');
-                        $list ['author'] = ( string )$tag->author;
-                        $list ['description'] = ( string )$tag->description;
-                        $list ['copyright'] = ( string )$tag->copyright;
-                    }
-                    $list2 [] = $list;
-                }
-            }
-            $this->assign("list", $list2);
-            $this->display('plugin2');
-        }
+        $this->display();
     }
+
+    //TODO plugin
+//    public function plugin()
+//    {
+//
+//        // 安全验证
+//        // $this->checksafeauth();
+//        if (isset ($_GET ['plugin_title']))
+//            $this->assign("title", I('get.title'));
+//        if (!empty ($_GET ['plugin_status']))
+//            $map ['plugin_status'] = I('get.status');
+//        $map ['plugin_id'] = array('gt', 0);
+//
+//        //$install = $this->_get('install', false);
+//        $install = I('get.install');
+//        if ($install != 1) {
+//            $Plugin = D('plugin');
+//            $count = $Plugin->where($map)->count();
+//            $fenye = 20;
+//            $p = new GreenPage ($count, get_opinion('pager'));
+//            $list = $Plugin->where($map)->order('plugin_pubdate desc')->limit($p->firstRow . ',' . $p->listRows)->select();
+//
+//            $this->assign('page', $p->show());
+//            $this->assign("list", $list);
+//
+//            $this->display();
+//        } else {
+//            $Plugin = D('Plugin');
+//            $pluginlist = $Plugin->field('plugin_title')->select();
+//            dump($pluginlist);
+//            $plist = array();
+//            foreach ($pluginlist as $v) {
+//                $plist [] = $v ['plugin_title'];
+//            }
+//            // 未安装插件
+//            $path = Plugin_PATH;
+//            $dir = File::get_dirs($path);
+//            foreach ($dir ['dir'] as $k => $v) {
+//                if (!in_array($v, $plist) && $v != '.' && $v != '..') {
+//                    $list ['plugin_title'] = $v;
+//                    if (file_exists($path . '/' . $v . '/plugin.xml')) {
+//                        $tag = simplexml_load_file($path . '/' . $v . '/plugin.xml');
+//                        $list ['plugin_author'] = ( string )$tag->author;
+//                        $list ['plugin_description'] = ( string )$tag->description;
+//                        $list ['plugin_copyright'] = ( string )$tag->copyright;
+//                    }
+//                    $list2 [] = $list;
+//                }
+//            }
+//            $this->assign("list", $list2);
+//            $this->display('plugin2');
+//        }
+//    }
 
     public function pluginManage()
     {
@@ -190,11 +197,11 @@ class CustomController extends AdminBaseController
         $path = Plugin_PATH . $name . '/admin.php';
         if (file_exists($path)) {
             $model = M('plugin');
-            $map ['title'] = $name;
+            $map ['plugin_title'] = $name;
             $list = $model->where($map)->find();
             if (!$list)
                 $this->error('当前插件没有注册!');
-            if ($list ['status'] == 1)
+            if ($list ['plugin_status'] == 1)
                 $this->error('当前插件没有启用!');
         } else {
             $this->error('当前插件无管理功能!');
@@ -238,18 +245,18 @@ class CustomController extends AdminBaseController
         $title = I('get.title');
         if (empty ($title))
             $this->error('插件名不存在!');
-        $data ['description'] = '';
-        $data ['author'] = '';
-        $data ['copyright'] = '';
+        $data ['plugin_description'] = '';
+        $data ['plugin_author'] = '';
+        $data ['plugin_copyright'] = '';
         $xmlpath = Plugin_PATH . $title . '/plugin.xml';
         if (file_exists($xmlpath)) {
             $tag = simplexml_load_file($xmlpath);
-            $data ['author'] = ( string )$tag->author;
-            $data ['copyright'] = ( string )$tag->copyright;
-            $data ['description'] = ( string )$tag->description;
+            $data ['plugin_author'] = ( string )$tag->author;
+            $data ['plugin_copyright'] = ( string )$tag->copyright;
+            $data ['plugin_description'] = ( string )$tag->description;
         }
-        $data ['status'] = 1;
-        $data ['title'] = $title;
+        $data ['plugin_status'] = 1;
+        $data ['plugin_title'] = $title;
         $data ['pubdate'] = time();
         $model = M('plugin');
         $model->add($data);
@@ -270,18 +277,18 @@ class CustomController extends AdminBaseController
     {
         $map ['id'] = I('get.id');
         $model = M('plugin');
-        $list = $model->field('title,status')->where($map)->find();
+        $list = $model->field('plugin_title,plugin_status')->where($map)->find();
         if (!$list)
             $this->error('插件信息不存在!');
-        if ($list ['status'] == 0)
+        if ($list ['plugin_status'] == 0)
             $this->error('请先禁用当前插件!');
         $model->where($map)->delete();
-        $path = Plugin_PATH . $list['title'] . '/admin.php';
+        $path = Plugin_PATH . $list['plugin_title'] . '/admin.php';
         if (file_exists($path)) {
             set_include_path(__ROOT__);
             include($path);
             call_user_func(array(
-                                $list['title'] . 'Plugin',
+                                $list['plugin_title'] . 'Plugin',
                                 '__uninstall'
                            ));
         }
@@ -292,11 +299,11 @@ class CustomController extends AdminBaseController
     {
         // 安全验证
         // $this->checksafeauth();
-        $map ['title'] = I('get.title');
+        $map ['plugin_title'] = I('get.title');
         $model = M('plugin');
         if ($model->where($map)->find())
             $this->error('请先卸载当前插件!');
-        $path = Plugin_PATH . $map ['title'];
+        $path = Plugin_PATH . $map ['plugin_title'];
         File::del_dir($path);
         $this->success('操作成功!', U('Admin/Custom/plugin'));
     }
@@ -309,7 +316,7 @@ class CustomController extends AdminBaseController
         $list = $Plugin->where($map)->find();
         if (!$list)
             die ('插件信息不存在!');
-        $map ['status'] = $list ['status'] == 1 ? 0 : 1;
+        $map ['plugin_status'] = $list ['plugin_status'] == 1 ? 0 : 1;
         $Plugin->save($map);
         die ('1');
     }
