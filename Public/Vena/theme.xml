@@ -1,10 +1,11 @@
 <theme>
     <name>Vena</name>
+    <version>2</version>
+    <build>20140216</build>
     <description>GreenCMS默认Vena主题</description>
     <author>ZTS</author>
     <copyright>GreenStudio 2011</copyright>
     <tpl_view>Apllication/Home/Vena</tpl_view>
     <tpl_static>Public/Vena</tpl_static>
-
-
+    <introduction>Silence is golden</introduction>
 </theme>

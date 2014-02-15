@@ -8,7 +8,7 @@ Data/Temp/Cache/**/**/*.php
 Data/Temp/Cache/**/*.php
 Data/Temp/Data/**/**
 Data/Temp/Temp/**/**
-
+Data/Install/install.lock
 *.lock
 *.tmp
 *.bak
