@@ -137,9 +137,30 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
+
     public function themeAdd()
     {
         $this->display();
+    }
+
+    //todo 需要检查是否真的成功
+    public function themeDisableHandle($theme_name = 'Vena')
+    {
+        set_kv('theme_' . $theme_name, 'disabled');
+        $this->success('禁用成功', 'Admin/Custom/theme');
+    }
+
+    public function themeEnableHandle($theme_name = 'Vena')
+    {
+
+        set_kv('theme_' . $theme_name, 'enabled');
+        $this->success('启用成功', 'Admin/Custom/theme');
+    }
+
+    private function themeStatus($theme_name = 'Vena')
+    {
+        $res = get_kv('theme_' . $theme_name);
+        return $res;
     }
 
     public function themeChangeHandle($theme_name = 'Vena')
@@ -154,12 +175,15 @@ class CustomController extends AdminBaseController
 
     public function themeDelHandle($theme_name = '')
     {
+        if ($this->themeStatus($theme_name) == 'enabled'){
+            $this->error('请先禁用主题');
+        }
+
         $tpl_view_path = WEB_ROOT . 'Application/Home/View/' . $theme_name . '/';
         $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
-
         File::delAll($tpl_view_path, true);
         File::delAll($tpl_static_path, true);
-
+        $this->success('删除成功');
     }
 
     public function plugin()
