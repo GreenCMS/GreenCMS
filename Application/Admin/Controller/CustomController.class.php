@@ -125,11 +125,11 @@ class CustomController extends AdminBaseController
 
         // 安全验证
         // $this->checksafeauth();
-        if (isset ($_GET ['title']))
-            $this->assign("title", I('get.title'));
-        if (!empty ($_GET ['status']))
-            $map ['status'] = I('get.status');
-        $map ['id'] = array('gt', 0);
+        if (isset ($_GET ['plugin_title']))
+            $this->assign("title", I('get.plugin_title'));
+        if (!empty ($_GET ['plugin_status']))
+            $map ['status'] = I('get.plugin_status');
+        $map ['plugin_id'] = array('gt', 0);
 
         //$install = $this->_get('install', false);
         $install = I('get.install');
@@ -138,7 +138,9 @@ class CustomController extends AdminBaseController
             $count = $Plugin->where($map)->count();
             $fenye = 20;
             $p = new GreenPage ($count, get_opinion('pager'));
-            $list = $Plugin->where($map)->order('pubdate desc')->limit($p->firstRow . ',' . $p->listRows)->select();
+            $list = $Plugin->where($map)->order('plugin_pubdate desc')->limit($p->firstRow . ',' . $p->listRows)->select();
+            // dump($list = $Plugin->where($map)->select());die;
+            // $list = $Plugin->where($map)->select();
             // echo $model->getLastSql();exit;
             /* $p->setConfig('prev', '上一页');
              $p->setConfig('header', '条记录');
@@ -304,12 +306,12 @@ class CustomController extends AdminBaseController
     // 插件开启和关闭(ajax处理)
     public function pluginStatus()
     {
-        $map ['id'] = I('id');
+        $map ['plugin_id'] = I('id');
         $Plugin = M('Plugin');
         $list = $Plugin->where($map)->find();
         if (!$list)
             die ('插件信息不存在!');
-        $map ['status'] = $list ['status'] == 1 ? 0 : 1;
+        $map ['plugin_status'] = $list ['plugin_status'] == 1 ? 0 : 1;
         $Plugin->save($map);
         die ('1');
     }
