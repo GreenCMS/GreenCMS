@@ -112,10 +112,48 @@ class CustomController extends AdminBaseController
     {
         $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
         $tpl_static = File::scanDir(WEB_ROOT . 'Public');
-
         $tpl = array_intersect($tpl_view, $tpl_static);
-        //dump($tpl);
+
+        $theme_list = array();
+        foreach ($tpl as $value) {
+            $tpl_static_path = WEB_ROOT . 'Public/' . $value . '/';
+            $theme_temp = array();
+            if (file_exists($tpl_static_path . 'theme.xml')) {
+                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
+                $theme_temp['name'] = (String)$theme->name;
+                $theme_temp['description'] = $theme->description;
+                $theme_temp['author'] = $theme->author;
+                $theme_temp['copyright'] = $theme->copyright;
+                $theme_temp['tpl_view'] = $theme->tpl_view;
+                $theme_temp['tpl_static'] = $theme->tpl_static;
+
+                array_push($theme_list, $theme_temp);
+            }
+
+        }
+        $this->assign('theme_list', $theme_list);
+
         $this->display();
+    }
+
+    public function themeChangeHandle($theme_name = 'Vena')
+    {
+        $res = set_kv('home_theme', $theme_name);
+        if ($res) {
+            $this->success('切换成功');
+        } else {
+            $this->error('切换失败或者没有切换');
+        }
+    }
+
+    public function themeDelHandle($theme_name = '')
+    {
+        $tpl_view_path =  WEB_ROOT . 'Application/Home/View/'.$theme_name.'/';
+        $tpl_static_path =  WEB_ROOT . 'Public/'.$theme_name.'/';
+
+        File::delAll($tpl_view_path,true);
+        File::delAll($tpl_static_path,true);
+
     }
 
     public function plugin()
@@ -125,6 +163,8 @@ class CustomController extends AdminBaseController
         $count = $Plugin->where($map)->count();
         $p = new GreenPage ($count, get_opinion('pager'));
         $list = $Plugin->where($map)->limit($p->firstRow . ',' . $p->listRows)->select();
+
+        $Plugin_all = File::scanDir(Plugin_PATH);
 
         $this->assign('page', $p->show());
         $this->assign("list", $list);
@@ -136,8 +176,6 @@ class CustomController extends AdminBaseController
 //    public function plugin()
 //    {
 //
-//        // 安全验证
-//        // $this->checksafeauth();
 //        if (isset ($_GET ['plugin_title']))
 //            $this->assign("title", I('get.title'));
 //        if (!empty ($_GET ['plugin_status']))

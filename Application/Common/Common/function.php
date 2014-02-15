@@ -75,6 +75,14 @@ function get_kv($key)
     return $options['kv_value'];
 }
 
+function set_kv($key,$value)
+{
+    $data['kv_value']=$value;
+    $res = D('Kv')->where(array('kv_key' => $key))->data($data)->save();
+    return $res;
+}
+
+
 /**
  * 数组降维
  */
