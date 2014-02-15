@@ -123,7 +123,19 @@ class CustomController extends AdminBaseController
     public function plugin()
     {
 
-        // 安全验证
+        $Addons = M('Addons');
+
+        $list = D('Addons')->getList();
+        $count = count($list);
+        $fenye = 20;
+        $p = new GreenPage ($count, get_opinion('pager'));
+        $list = $Addons->where($where)->order('create_time')->limit($p->firstRow . ',' . $p->listRows)->select();
+
+        $this->assign('page', $p->show());
+        $this->assign('list', $list);
+        $this->display();
+
+        /*// 安全验证
         // $this->checksafeauth();
         if (isset ($_GET ['plugin_title']))
             $this->assign("title", I('get.plugin_title'));
@@ -138,17 +150,17 @@ class CustomController extends AdminBaseController
             $count = $Plugin->where($map)->count();
             $fenye = 20;
             $p = new GreenPage ($count, get_opinion('pager'));
-            $list = $Plugin->where($map)->order('plugin_pubdate desc')->limit($p->firstRow . ',' . $p->listRows)->select();
+            $list = $Plugin->where($map)->order('plugin_pubdate')->limit($p->firstRow . ',' . $p->listRows)->select();
             // dump($list = $Plugin->where($map)->select());die;
             // $list = $Plugin->where($map)->select();
             // echo $model->getLastSql();exit;
-            /* $p->setConfig('prev', '上一页');
+             $p->setConfig('prev', '上一页');
              $p->setConfig('header', '条记录');
              $p->setConfig('first', '首 页');
              $p->setConfig('last', '末 页');
              $p->setConfig('next', '下一页');
              $p->setConfig('theme', "%first%%upPage%%linkPage%%downPage%%end%<li><span>共<font color='#009900'><b>%totalRow%</b></font>条记录 " . $fenye . "条/每页</span></li>");
-             */
+             
             $this->assign('page', $p->show());
             $this->assign("list", $list);
 
@@ -177,7 +189,7 @@ class CustomController extends AdminBaseController
             }
             $this->assign("list", $list2);
             $this->display('plugin2');
-        }
+        }*/
     }
 
     public function pluginManage()

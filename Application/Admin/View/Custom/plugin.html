@@ -62,31 +62,38 @@
                 <div class="span12">
                     <table class="table table-bordered table-hover" class="tab">
                         <tr>
-                            <th class="hidden-480">插件ID</th>
-                            <th class="hidden-480">插件名称</th>
-                            <th class="hidden-480">插件信息</th>
-                            <th class="hidden-480">插件状态</th>
+                            <th class="hidden-480">名称</th>
+                            <th class="hidden-480">标识</th>
+                            <th class="hidden-480">描述</th>
+                            <th class="hidden-480">状态</th>
+                            <th class="hidden-480">作者</th>
+                            <th class="hidden-480">版本</th>
                             <th class="hidden-480">操作</th>
                         </tr>
                         <volist name="list" id="vo">
                             <tr>
-                                <td class="hidden-480">{$vo.plugin_id}</td>
-                                <td class="hidden-480">{$vo.plugin_title}</td>
-                                <td class="hidden-480">作者:{$vo.plugin_author}&nbsp;&nbsp;&nbsp;版权:{$vo.plugin_copyright}&nbsp;&nbsp;&nbsp;描述信息:{$vo.plugin_description}</td>
+                                <td class="hidden-480">{$vo.title}</td>
+                                <td class="hidden-480">{$vo.name}</td>
+                                <td class="hidden-480">{$vo.description}</td>
                                 <td class="hidden-480">
-                                    <eq name="vo.plugin_status" value="0">
-                                        <font color="green">启用</font>-><a href='javascript:;' onclick="ajax({$vo.plugin_id})">禁用
-                                        <else/>
-                                        <font color="red">禁用</font>-><a href='javascript:;' onclick="ajax({$vo.plugin_id})">启用
+                                    <eq name="vo.status" value="1">
+                                        启用
+                                    <else/>
+                                        禁用
                                     </eq>
-                                    </a>
                                 </td>
+                                <td class="hidden-480">{$vo.author}</td>
+                                <td class="hidden-480">{$vo.version}</td>
                                 <td class="hidden-480">
-                                    <a href="{:U('Admin/Custom/pluginManage')}?name={$vo.plugin_title}">管理</a>|
                                     <a href="{:U('Admin/Custom/pluginEdit')}?name={$vo.plugin_title}">配置</a>|
+                                    <eq name="vo.status" value="1">
+                                        <a href='javascript:;' onclick="ajax({$vo.plugin_id})">禁用
+                                        <else/>
+                                        <a href='javascript:;' onclick="ajax({$vo.plugin_id})">启用
+                                    </eq>
+                                    </a>|
                                     <a href="javascript:;"
-                                       onClick="JavaScript:return jconfirm('确认卸载吗?','{:U('Admin/Custom/pluginUninstall')}?id={$vo.plugin_id}')">卸载</a>|
-                                    <a href="{:U('Admin/Custom/pluginDownload')}?name={$vo.plugin_title}">导出</a>
+                                       onClick="JavaScript:return jconfirm('确认卸载吗?','{:U('Admin/Custom/pluginUninstall')}?id={$vo.plugin_id}')">卸载</a>
                                 </td>
                             </tr>
                         </volist>
