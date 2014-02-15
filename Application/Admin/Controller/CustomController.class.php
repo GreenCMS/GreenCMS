@@ -111,7 +111,7 @@ class CustomController extends AdminBaseController
 
     public function theme()
     {
-         $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
+        $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
         $tpl_static = File::scanDir(WEB_ROOT . 'Public');
         $tpl = array_intersect($tpl_view, $tpl_static);
 
@@ -137,6 +137,11 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
+    public function themeAdd()
+    {
+        $this->display();
+    }
+
     public function themeChangeHandle($theme_name = 'Vena')
     {
         $res = set_kv('home_theme', $theme_name);
@@ -149,11 +154,11 @@ class CustomController extends AdminBaseController
 
     public function themeDelHandle($theme_name = '')
     {
-        $tpl_view_path =  WEB_ROOT . 'Application/Home/View/'.$theme_name.'/';
-        $tpl_static_path =  WEB_ROOT . 'Public/'.$theme_name.'/';
+        $tpl_view_path = WEB_ROOT . 'Application/Home/View/' . $theme_name . '/';
+        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
 
-        File::delAll($tpl_view_path,true);
-        File::delAll($tpl_static_path,true);
+        File::delAll($tpl_view_path, true);
+        File::delAll($tpl_static_path, true);
 
     }
 
