@@ -10,8 +10,26 @@
 include APP_PATH . 'Common/Common/common_router.php';
 
 
-function get_menu_url()
+function get_url($url = '', $vars = '')
 {
+    $url_arr = preg_split('/\//', $url);
+
+    if (sizeof($url_arr) == 2) {
+        $url = 'Home/' . $url;
+
+        $URL_MODEL_TEMP = C('URL_MODEL');
+        C('URL_MODEL', (int)get_kv('home_url_model'));
+        $url_return = U($url, $vars, $suffix = true, $domain = false);
+        C('URL_MODEL', $URL_MODEL_TEMP);
+
+        if ($URL_MODEL_TEMP == 2) $url_return = str_replace('/home', '', $url_return);
+        if ($URL_MODEL_TEMP == 0) $url_return = str_replace('?m=home&', '/index.php?', $url_return);
+        $url_return = str_replace('index.php/index.php', 'index.php', $url_return);
+
+    } else {
+        $url_return = U($url, $vars, $suffix = true, $domain = false);
+    }
+    return $url_return;
 
 }
 
@@ -71,13 +89,16 @@ function get_opinion($key)
 
 function get_kv($key)
 {
-    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
+     $kv_array = C('kv');
+    if ($kv_array['$key'] !='') return $kv_array['$key'];
+
+    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->cache(true, 10)->find();
     return $options['kv_value'];
 }
 
-function set_kv($key,$value)
+function set_kv($key, $value)
 {
-    $data['kv_value']=$value;
+    $data['kv_value'] = $value;
     $res = D('Kv')->where(array('kv_key' => $key))->data($data)->save();
     return $res;
 }

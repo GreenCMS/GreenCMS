@@ -3,27 +3,31 @@
 
 
 
-function getRealURL($menu_item = array(),$is_home=false)
+function getRealURL($menu_item = array(), $is_home = false)
 {
-      if ($menu_item['menu_function'] == 'direct') {
+
+     if ($menu_item['menu_function'] == 'direct') {
         $real_url = $menu_item['menu_url'];
     } elseif ($menu_item['menu_function'] == 'none') {
         $real_url = '#';
     } else {
+
         if (json_decode($menu_item['menu_url']) != null) {
             $url = json_decode($menu_item['menu_url']);
         } else {
             $url = $menu_item['menu_url'];
         }
+
         if (is_array($url)) {
             $real_url = call_user_func_array($menu_item['menu_function'], $url);
         } else {
+
             $real_url = call_user_func($menu_item['menu_function'], $url);
         }
     }
 
-   //if($is_home)
-   // $real_url=str_replace('m=admin','m=home',$real_url);
+    //if($is_home)
+    // $real_url=str_replace('m=admin','m=home',$real_url);
     return $real_url;
 }
 
@@ -32,35 +36,37 @@ function getSingleURLByID($ID, $type = 'single')
 {
     $Posts = D('Posts');
 
-    $url_base = U("Post/" . $type);
+    $url_base = get_url("Post/" . $type);
 
-    if (C('OUR_URL_MODEL') === 'native') {
-        $URL = U("Post/" . $type, array('info' => $ID));
+    $home_post_model = get_kv('home_post_model');
+
+    if ($home_post_model === 'native') {
+        $URL = get_url("Post/" . $type, array('info' => $ID));
 
     } else {
 
         C('URL_HTML_SUFFIX', '');
-        if (C('OUR_URL_MODEL') === 'post_id') {
+        if ($home_post_model === 'post_id') {
             $URL = $url_base . '/' . $ID;
-        } else if (C('OUR_URL_MODEL') === 'post_name') {
+        } else if ($home_post_model === 'post_name') {
             $posts = $Posts->detail($ID);
             $URL = $url_base . '/' . $posts ['post_name'];
-        } else if (C('OUR_URL_MODEL') === 'year/month/post_name') {
+        } else if ($home_post_model === 'year/month/post_name') {
             $posts = $Posts->detail($ID);
             $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . $posts ['post_name'];
-        } else if (C('OUR_URL_MODEL') === 'year/month/post_id') {
+        } else if ($home_post_model === 'year/month/post_id') {
             $posts = $Posts->detail($ID);
             $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . $ID;
-        } else if (C('OUR_URL_MODEL') === 'year/post_id') {
+        } else if ($home_post_model === 'year/post_id') {
             $posts = $Posts->detail($ID);
             $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . $ID;
-        } else if (C('OUR_URL_MODEL') === 'year/post_name') {
+        } else if ($home_post_model === 'year/post_name') {
             $posts = $Posts->detail($ID);
             $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . $posts ['post_name'];
-        } else if (C('OUR_URL_MODEL') === 'year/month/day/post_id') {
+        } else if ($home_post_model === 'year/month/day/post_id') {
             $posts = $Posts->detail($ID);
             $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . getTimestamp($posts ['post_date'], 'day') . '/' . $ID;
-        } else if (C('OUR_URL_MODEL') === 'year/month/day/post_name') {
+        } else if ($home_post_model === 'year/month/day/post_name') {
             $posts = $Posts->detail($ID);
             $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . getTimestamp($posts ['post_date'], 'day') . '/' . $posts ['post_name'];
         } else {
@@ -73,16 +79,18 @@ function getSingleURLByID($ID, $type = 'single')
 // 路由动态获取url
 function getTagURLByID($ID)
 {
+    $home_tag_model = get_kv('home_tag_model');
+
     $Tags = D('Tags', 'Logic');
-    if (C('OUR_TAG_MODEL') === 'native') {
-        $URL = U('=Tag/detail', array("info" => $ID));
-    } elseif (C('OUR_TAG_MODEL') === 'ID') {
-        $URL = U('Tag') . '/' . $ID;
-    } else if (C('OUR_TAG_MODEL') === 'slug') {
+    if ($home_tag_model === 'native') {
+        $URL = get_url('Tag/detail', array("info" => $ID));
+    } elseif ($home_tag_model === 'ID') {
+        $URL = get_url('Tag') . '/' . $ID;
+    } else if ($home_tag_model === 'slug') {
         $tag = $Tags->detail($ID);
-        $URL = U('Tag') . '/' . $tag ['tag_slug'];
+        $URL = get_url('Tag') . '/' . $tag ['tag_slug'];
     } else {
-        $URL = U('Tag') . '/' . $ID;
+        $URL = get_url('Tag') . '/' . $ID;
     }
 
     return $URL;
@@ -90,17 +98,21 @@ function getTagURLByID($ID)
 
 function getCatURLByID($ID)
 {
+    $home_cat_model = get_kv('home_cat_model');
+
+
     $Tags = D('Cats', 'Logic');
-    if (C('OUR_CAT_MODEL') === 'native') {
-        $URL = U('Cat/detail', array("info" => $ID));
-    } elseif (C('OUR_TAG_MODEL') === 'ID') {
-        $URL = U('Cat') . '/' . $ID;
-    } else if (C('OUR_TAG_MODEL') === 'slug') {
+    if ($home_cat_model == 'native') {
+        $URL = get_url('Cat/detail', array("info" => $ID));
+    } elseif ($home_cat_model == 'ID') {
+        $URL = get_url('Cat') . '/' . $ID;
+    } else if ($home_cat_model == 'slug') {
         $cat = $Tags->detail($ID);
-        $URL = U('Cat') . '/' . $cat ['cat_slug'];
+        $URL = get_url('Cat') . '/' . $cat ['cat_slug'];
     } else {
-        $URL = U('Cat') . '/' . $ID;
+        $URL = get_url('Cat') . '/' . $ID;
     }
+
 
     return $URL;
 }

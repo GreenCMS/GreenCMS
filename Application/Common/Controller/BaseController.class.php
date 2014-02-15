@@ -16,6 +16,26 @@ use Think\Controller;
  */
 class BaseController extends Controller
 {
+    function __construct()
+    {
+        parent::__construct();
+
+        $this->getKv();
+
+    }
+
+    function getKv()
+    {
+        $Kvs = D('Kv')->where(1)->cache(true, 60)->select();
+        $res_array = array();
+        foreach ($Kvs as $kv) {
+            $res_array[$kv['kv_key']] = $kv['kv_value'];
+        }
+
+        C('kv', $res_array);
+        return $res_array;
+    }
+
 
     /**
      * 获取配置

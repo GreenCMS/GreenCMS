@@ -18,7 +18,8 @@ class CustomController extends AdminBaseController
 
     public function index()
     {
-        $this->display();
+
+
     }
 
     //TODO menu
@@ -110,7 +111,7 @@ class CustomController extends AdminBaseController
 
     public function theme()
     {
-        $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
+         $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
         $tpl_static = File::scanDir(WEB_ROOT . 'Public');
         $tpl = array_intersect($tpl_view, $tpl_static);
 

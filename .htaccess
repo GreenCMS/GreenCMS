@@ -1,6 +1,3 @@
-# RewriteEngine 模式
-RewriteEngine On
-
 # ThinkPHP Rewrite规则
 <IfModule mod_rewrite.c>
    RewriteEngine on

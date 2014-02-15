@@ -16,6 +16,7 @@ class MenuLogic extends Model
 {
 
 
+
     public function getMenu($menu_position = 'head')
     {
         $home_menu = D('Menu')->where(array('menu_position' => $menu_position))->select();
