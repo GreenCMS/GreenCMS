@@ -1,9 +1,11 @@
 <?php
 
-function getRealURL($menu_item = array())
+
+
+
+function getRealURL($menu_item = array(),$is_home=false)
 {
-    define('MODULE_NAME','Home');
-     if ($menu_item['menu_function'] == 'direct') {
+      if ($menu_item['menu_function'] == 'direct') {
         $real_url = $menu_item['menu_url'];
     } elseif ($menu_item['menu_function'] == 'none') {
         $real_url = '#';
@@ -20,6 +22,8 @@ function getRealURL($menu_item = array())
         }
     }
 
+   //if($is_home)
+   // $real_url=str_replace('m=admin','m=home',$real_url);
     return $real_url;
 }
 
