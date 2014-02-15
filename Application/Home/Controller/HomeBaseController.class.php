@@ -16,7 +16,7 @@ use Common\Logic\PostsLogic;
  * Class HomeBaseController
  * @package Home\Controller
  */
-class HomeBaseController extends BaseController
+abstract class HomeBaseController extends BaseController
 {
 
     /**
@@ -48,7 +48,7 @@ class HomeBaseController extends BaseController
 
     public function loadTheme()
     {
-        $theme_name = get_kv(home_theme);
+        $theme_name = get_kv('home_theme');
          if ($theme_name != '')
             $this->theme($theme_name);
     }

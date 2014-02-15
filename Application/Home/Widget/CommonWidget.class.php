@@ -19,19 +19,19 @@ class CommonWidget extends Controller
 {
     public function mainMenu()
     {
-        $TagList = new TagsLogic();
-        $CatList = new CatsLogic();
-        $PageList = new PostsLogic();
-
-        $cat_res = $CatList->category();
-        $tag_res = $TagList->getList(15, false);
-        $page_res = $PageList->getList(20, 'page', 'post_id desc', false);
-        $post_res = $PageList->getList(20, 'single', 'post_id desc', false);
-
-        $this->assign('tags', $tag_res);
-        $this->assign('cats', $cat_res);
-        $this->assign('pages', $page_res);
-        $this->assign('posts', $post_res);
+//        $TagList = new TagsLogic();
+//        $CatList = new CatsLogic();
+//        $PageList = new PostsLogic();
+//
+//        $cat_res = $CatList->category();
+//        $tag_res = $TagList->getList(15, false);
+//        $page_res = $PageList->getList(20, 'page', 'post_id desc', false);
+//        $post_res = $PageList->getList(20, 'single', 'post_id desc', false);
+//
+//        $this->assign('tags', $tag_res);
+//        $this->assign('cats', $cat_res);
+//        $this->assign('pages', $page_res);
+//        $this->assign('posts', $post_res);
 
 
         $Menu = new MenuLogic();

@@ -16,38 +16,29 @@ class MenuLogic extends Model
 {
 
 
+
     public function getMenu($menu_position = 'head')
     {
         $home_menu = D('Menu')->where(array('menu_position' => $menu_position))->select();
         $home_menu_res = array();
         foreach ($home_menu as $key => $value) {
-            if ($value['menu_function'] == 'direct') {
-                $home_menu[$key]['menu_abs_url'] = $home_menu[$key]['menu_url'];
-            } elseif ($value['menu_function'] == 'none') {
-                $home_menu[$key]['menu_abs_url'] = '#';
-            } else {
-                if (json_decode($value['menu_url']) != null) {
-                    $url = json_decode($value['menu_url']);
-                } else {
-                    $url = $value['menu_url'];
-                }
-                if (is_array($url)) {
-                    $home_menu[$key]['menu_abs_url'] = call_user_func_array($value['menu_function'], $url);
-                } else {
-                    $home_menu[$key]['menu_abs_url'] = call_user_func($value['menu_function'], $url);
-                }
-            }
+
+            $home_menu[$key]['menu_abs_url'] = getRealURL($value);
 
             if ($home_menu[$key]['menu_pid'] == 0) {
                 $home_menu_res[$home_menu[$key]['menu_id']] = $home_menu[$key];
-            } else {
-                if (empty($home_menu_res[$home_menu[$key]['menu_pid']]['menu_children'])) {
-                    $home_menu_res[$home_menu[$key]['menu_pid']]['menu_children'] = array();
-                }
+            }
+        }
+
+        foreach ($home_menu as $key => $value) {
+            if (empty($home_menu_res[$home_menu[$key]['menu_pid']]['menu_children'])) {
+                $home_menu_res[$home_menu[$key]['menu_pid']]['menu_children'] = array();
+            }
+            if ($home_menu[$key]['menu_pid'] != 0) {
                 array_push($home_menu_res[$home_menu[$key]['menu_pid']]['menu_children'], $home_menu[$key]);
             }
         }
-       // dump(array_sort($home_menu_res, 'menu_sort'));
+
 
         return array_sort($home_menu_res, 'menu_sort');
     }

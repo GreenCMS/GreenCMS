@@ -307,6 +307,10 @@ class PostsController extends AdminBaseController
         $data['cat_slug'] = I('post.cat_slug');
         $data['cat_father'] = I('post.cat_father');
 
+        if ($data['cat_slug'] == '') {
+            $data['cat_slug'] = $data['cat_name'];
+        }
+
         if (D('Cats')->data($data)->add()) {
             $this->success('分类添加成功', U('Admin/Posts/category'));
         } else {
@@ -388,6 +392,10 @@ class PostsController extends AdminBaseController
     {
         $data['tag_name'] = I('post.tag_name');
         $data['tag_slug'] = I('post.tag_slug');
+
+        if ($data['tag_slug'] == '') {
+            $data['tag_slug'] = $data['tag_name'];
+        }
 
         if (D('Tags')->data($data)->add()) {
             $this->success('标签添加成功', U('Admin/Posts/tag'));

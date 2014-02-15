@@ -13,10 +13,10 @@
     <!-- Basic Page Needs -->
     <meta charset="utf-8"/>
     <title> {$post.post_title} |{:get_opinion('title')}</title>
-    <meta name="description" content="Green Studio"/>
-    <meta name="author" content="{$post.post_user.user_nicename}"/>
+    <meta name="description" content="{:get_opinion('description')}"/>
+     <meta name="author" content="{$post.post_user.user_nicename}"/>
     <meta name="keywords"
-          content='<volist name="post.post_tag" id="tag">{$tag.tag_name}, </volist>'/>
+          content='{:get_opinion("keywords")},<volist name="post.post_tag" id="tag">{$tag.tag_name}, </volist>'/>
 
     <include file="Public:head"/>
 

@@ -3,7 +3,7 @@ $config_router = array(
 
     'URL_HTML_SUFFIX' => 'html',
     //URL模式
-    //   'URL_MODEL' => 0,
+      'URL_MODEL' => 2,
     //开启路由!!建议url模型选择2，否则的话建议使用native模式
 
     'URL_ROUTER_ON'   => true,
