@@ -15,6 +15,7 @@ abstract class InstallBaseController extends Controller
 {
 
 
+    //测试型节点批量添加
     protected function init()
     {
 
