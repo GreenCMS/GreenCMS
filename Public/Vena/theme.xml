@@ -4,6 +4,7 @@
     <build>20140216</build>
     <description>GreenCMS默认Vena主题</description>
     <author>ZTS</author>
+    <preview></preview>
     <copyright>GreenStudio 2011</copyright>
     <tpl_view>Apllication/Home/Vena</tpl_view>
     <tpl_static>Public/Vena</tpl_static>

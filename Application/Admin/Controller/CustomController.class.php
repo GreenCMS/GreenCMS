@@ -165,17 +165,19 @@ class CustomController extends AdminBaseController
 
     public function themeChangeHandle($theme_name = 'Vena')
     {
+        if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
+
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
             $this->success('切换成功');
         } else {
-            $this->error('切换失败或者没有切换');
+            $this->error('切换失败');
         }
     }
 
     public function themeDelHandle($theme_name = '')
     {
-        if ($this->themeStatus($theme_name) == 'enabled'){
+        if ($this->themeStatus($theme_name) == 'enabled') {
             $this->error('请先禁用主题');
         }
 
