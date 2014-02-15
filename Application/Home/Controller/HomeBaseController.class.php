@@ -16,7 +16,7 @@ use Common\Logic\PostsLogic;
  * Class HomeBaseController
  * @package Home\Controller
  */
-class HomeBaseController extends BaseController
+abstract class HomeBaseController extends BaseController
 {
 
     /**

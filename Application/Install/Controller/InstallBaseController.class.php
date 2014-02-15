@@ -11,7 +11,7 @@ namespace Install\Controller;
 
 use Think\Controller;
 
-class InstallBaseController extends Controller
+abstract class InstallBaseController extends Controller
 {
 
 
