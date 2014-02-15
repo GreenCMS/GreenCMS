@@ -110,7 +110,12 @@
                                     <a class="btn mini red" href="{:U('Admin/Custom/menuDel',array('id'=>$vo['menu_id']))}">删除</a>
 
                                 </td>
-                                <td></td>
+                                <td>
+                                    {$vo|getRealURL}
+                                    <a href="{$vo|getRealURL}">实际地址</a>
+
+
+                                </td>
                             </tr>
                         </volist>
                         </tbody>

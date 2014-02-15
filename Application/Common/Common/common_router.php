@@ -1,5 +1,28 @@
 <?php
 
+function getRealURL($menu_item = array())
+{
+    define('MODULE_NAME','Home');
+     if ($menu_item['menu_function'] == 'direct') {
+        $real_url = $menu_item['menu_url'];
+    } elseif ($menu_item['menu_function'] == 'none') {
+        $real_url = '#';
+    } else {
+        if (json_decode($menu_item['menu_url']) != null) {
+            $url = json_decode($menu_item['menu_url']);
+        } else {
+            $url = $menu_item['menu_url'];
+        }
+        if (is_array($url)) {
+            $real_url = call_user_func_array($menu_item['menu_function'], $url);
+        } else {
+            $real_url = call_user_func($menu_item['menu_function'], $url);
+        }
+    }
+
+    return $real_url;
+}
+
 // 路由动态获取url
 function getSingleURLByID($ID, $type = 'single')
 {
@@ -48,14 +71,14 @@ function getTagURLByID($ID)
 {
     $Tags = D('Tags', 'Logic');
     if (C('OUR_TAG_MODEL') === 'native') {
-        $URL = U('Tag/detail', array("info" => $ID));
+        $URL = U('=Tag/detail', array("info" => $ID));
     } elseif (C('OUR_TAG_MODEL') === 'ID') {
-        $URL = U('/tag') . '/' . $ID;
+        $URL = U('Tag') . '/' . $ID;
     } else if (C('OUR_TAG_MODEL') === 'slug') {
         $tag = $Tags->detail($ID);
-        $URL = U('/tag') . '/' . $tag ['tag_slug'];
+        $URL = U('Tag') . '/' . $tag ['tag_slug'];
     } else {
-        $URL = U('/tag') . '/' . $ID;
+        $URL = U('Tag') . '/' . $ID;
     }
 
     return $URL;
@@ -67,12 +90,12 @@ function getCatURLByID($ID)
     if (C('OUR_CAT_MODEL') === 'native') {
         $URL = U('Cat/detail', array("info" => $ID));
     } elseif (C('OUR_TAG_MODEL') === 'ID') {
-        $URL = U('/cat') . '/' . $ID;
+        $URL = U('Cat') . '/' . $ID;
     } else if (C('OUR_TAG_MODEL') === 'slug') {
         $cat = $Tags->detail($ID);
-        $URL = U('/cat') . '/' . $cat ['cat_slug'];
+        $URL = U('Cat') . '/' . $cat ['cat_slug'];
     } else {
-        $URL = U('/cat') . '/' . $ID;
+        $URL = U('Cat') . '/' . $ID;
     }
 
     return $URL;
