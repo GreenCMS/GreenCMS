@@ -115,7 +115,7 @@ class CatsLogic extends RelationModel
      */
     public function getPostsByCat($cat_id, $num = 5)
     {
-        $cat = $this->getPostIdsByCat($cat_id);
+        $cat = $this->getPostsId($cat_id);
         $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
         return $posts;
     }

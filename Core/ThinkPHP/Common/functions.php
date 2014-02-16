@@ -675,9 +675,7 @@ function layout($layout) {
 function U($url='',$vars='',$suffix=true,$domain=false) {
     // 解析URL
     $info   =  parse_url($url);
-
     $url    =  !empty($info['path'])?$info['path']:ACTION_NAME;
-
     if(isset($info['fragment'])) { // 解析锚点
         $anchor =   $info['fragment'];
         if(false !== strpos($anchor,'?')) { // 解析参数
@@ -708,15 +706,12 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
         }
     }
 
-
     // 解析参数
     if(is_string($vars)) { // aaa=1&bbb=2 转换成数组
         parse_str($vars,$vars);
     }elseif(!is_array($vars)){
         $vars = array();
     }
-
-
     if(isset($info['query'])) { // 解析地址里面参数 合并到vars
         parse_str($info['query'],$params);
         $vars = array_merge($params,$vars);
@@ -735,16 +730,12 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             if('/' != $depr) { // 安全替换
                 $url    =   str_replace('/',$depr,$url);
             }
-
             // 解析模块、控制器和操作
             $url        =   trim($url,$depr);
-
             $path       =   explode($depr,$url);
-
-             $var        =   array();
+            $var        =   array();
             $var[C('VAR_ACTION')]       =   !empty($path)?array_pop($path):ACTION_NAME;
             $var[C('VAR_CONTROLLER')]   =   !empty($path)?array_pop($path):CONTROLLER_NAME;
-
             if($maps = C('URL_ACTION_MAP')) {
                 if(isset($maps[strtolower($var[C('VAR_CONTROLLER')])])) {
                     $maps    =   $maps[strtolower($var[C('VAR_CONTROLLER')])];
@@ -761,8 +752,6 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
             if(C('URL_CASE_INSENSITIVE')) {
                 $var[C('VAR_CONTROLLER')]   =   parse_name($var[C('VAR_CONTROLLER')]);
             }
-
-
             $module =   '';
             
             if(!empty($path)) {
@@ -788,7 +777,6 @@ function U($url='',$vars='',$suffix=true,$domain=false) {
     }
 
     if(C('URL_MODEL') == 0) { // 普通模式URL转换
-
         $url        =   __APP__.'?'.C('VAR_MODULE')."={$module}&".http_build_query(array_reverse($var));
         if(C('URL_CASE_INSENSITIVE')){
             $url    =   strtolower($url);
