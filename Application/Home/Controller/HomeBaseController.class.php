@@ -9,8 +9,6 @@
 
 namespace Home\Controller;
 use Common\Controller\BaseController;
-use Common\Logic\LinksLogic;
-use Common\Logic\PostsLogic;
 
 /**
  * Class HomeBaseController
@@ -41,7 +39,7 @@ abstract class HomeBaseController extends BaseController
     public function loadTheme()
     {
         $theme_name = get_kv('home_theme');
-         if ($theme_name != '')
+        if ($theme_name != '')
             $this->theme($theme_name);
     }
 
@@ -66,6 +64,7 @@ abstract class HomeBaseController extends BaseController
     {
         $this->assign("message", $message);
         $this->display('Index/404');
+        \Think\Hook::listen('app_end');
         die();
     }
 
