@@ -90,7 +90,7 @@ function get_opinion($key)
 function get_kv($key)
 {
     $kv_array = C('kv');
-    if ($kv_array['$key'] != '') return $kv_array['$key'];
+    if ($kv_array[$key] != '') return $kv_array[$key];
 
     $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->cache(true, 2)->find();
     return $options['kv_value'];

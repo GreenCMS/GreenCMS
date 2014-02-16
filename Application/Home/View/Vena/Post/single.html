@@ -35,15 +35,15 @@
             <h1>{$post.post_top|is_top}{$post.post_title}</h1>
 
             <div class="meta clearfix">
-					<span><img src="__PUBLIC__/vena/images/icons/user.png"
+					<span><img src="__PUBLIC__/Vena/images/icons/user.png"
                                alt="author"/>作者 : <a
                             href="{$post.post_user.user_url}">{$post.post_user.user_nicename},</a>
-					</span> <span><img src="__PUBLIC__/vena/images/icons/ribbon.png"
+					</span> <span><img src="__PUBLIC__/Vena/images/icons/ribbon.png"
                                        alt="categories"/> <span>分类 : <volist name="post.post_cat"
                                                                              id="cat"><a
                     href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
             </volist>
-					</span> <span><img src="__PUBLIC__/vena/images/icons/ticket.png"
+					</span> <span><img src="__PUBLIC__/Vena/images/icons/ticket.png"
                                        alt="tags"/> <span>标签 : <volist name="post.post_tag" id="tag">
                 <a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
             </volist>
@@ -130,7 +130,7 @@
             <article class="post-author">
 
                 <div class="author-avatar">
-                    <img src="__PUBLIC__/vena/images/avatar.png" alt=""/>
+                    <img src="__PUBLIC__/Vena/images/avatar.png" alt=""/>
                 </div>
 
                 <h4>
