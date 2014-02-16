@@ -177,6 +177,11 @@ class CustomController extends AdminBaseController
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
 
+        if ($this->themeStatus($theme_name) == 'disabled') {
+            $this->error('请先启用主题');
+        }
+
+
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
             $this->success('切换成功');
