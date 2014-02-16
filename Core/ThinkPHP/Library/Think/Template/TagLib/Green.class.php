@@ -18,8 +18,12 @@ class Green extends TagLib
             'attr'  => 'tag_id,num,start,length,li_attr,ul_attr',
             'alias' => 'tli'
         ),
+        'recentlist' => array(
+            'attr'  => 'num,type,order,relation,li_attr,ul_attr',
+            'alias' => 'rli'
+        ),
         'friendlist' => array(
-            'attr'  => 'order,num,link_tag,li_attr,ul_attr',
+            'attr'  => 'length,order,num,link_tag,li_attr,ul_attr',
             'alias' => 'fli'
         ),
         'green'      => array()
@@ -99,12 +103,7 @@ class Green extends TagLib
 
     public function _friendlist($tag, $content)
     {
-        /**
-         *   'friendlist' => array(
-        'attr'  => 'num,link_tag,li_attr,ul_attr',
-        'alias' => 'fli'
-        ),
-         */
+
         $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 5;
         $link_tag = isset ($tag ['link_tag']) ? $tag ['link_tag'] : 'Home';
         $order = isset ($tag ['order']) ? $tag ['order'] : 'link_sort desc ,link_id asc';
@@ -126,6 +125,44 @@ class Green extends TagLib
 
     }
 
+
+    public function _recentlist($tag, $content)
+    {
+        /**
+         * 'recentlist' => array(
+        'attr'  => 'num,type,order,relation,li_attr,ul_attr',
+        'alias' => 'rli'
+        ),
+         */
+        $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 5;
+        $post_type = isset ($tag ['type']) ? $tag ['type'] : 'single';
+        $order = isset ($tag ['order']) ? $tag ['order'] : 'post_date desc';
+        $relation = isset ($tag ['relation']) ? $tag ['relation'] : false;
+        $li_attr = isset ($tag ['li_attr']) ? $tag ['li_attr'] : '';
+        $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
+        $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
+
+        $post_list = D('Posts', 'Logic')->getList($num, $post_type, $order, $relation);
+        /**
+         * <a href="{$vo.post_id|getSingleURLByID}"
+        title=" {$vo.post_title}"><i class="icon-circle-arrow-right"></i>
+        {$vo.post_title|mb_substr=0,20,"UTF-8"}</a>
+         */
+        $parseStr = '<ul ' . $ul_attr . '>';
+        foreach ($post_list as $value) {
+            $parseStr .= '<li ' . $li_attr . '>
+            <a href="' . getSingleURLByID($value['post_id']) . '" title="' .
+                $value['post_title'] . '"> <i class="icon-circle-arrow-right"></i>
+                ' . mb_substr($value['post_title'], 0, $length, "UTF-8") . ' </a></li>';
+        }
+        $parseStr .= '</ul>';
+
+        if (!empty ($parseStr)) {
+            return $parseStr;
+        }
+
+
+    }
 }
 	
 	

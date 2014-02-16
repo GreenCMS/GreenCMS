@@ -18,14 +18,8 @@
             <div class="one-fourth column">
                 <h4>最新消息</h4>
                 <hr class="smalline"/>
-                <ul class="footer-recent-news">
-                    <volist name="newPosts" id="vo">
-                        <li><a href="{$vo.post_id|getSingleURLByID}"
-                               title=" {$vo.post_title}"><i class="icon-circle-arrow-right"></i>
-                            {$vo.post_title|mb_substr=0,20,"UTF-8"}</a></li>
+                <recentlist num='5' ul_attr='class="footer-recent-news"'></recentlist>
 
-                    </volist>
-                </ul>
             </div>
 
             <div class="one-fourth column">

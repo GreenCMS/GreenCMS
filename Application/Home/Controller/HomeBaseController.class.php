@@ -31,11 +31,6 @@ abstract class HomeBaseController extends BaseController
             $this->redirect('Install/Index/index');
         }
 
-        $Posts = new PostsLogic();
-
-        $newPosts = $Posts->getList(5, 'single', 'post_date desc', false);
-
-        $this->assign('newPosts', $newPosts);
 
         $this->customConfig();
         $this->loadTheme();
