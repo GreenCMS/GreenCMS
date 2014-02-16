@@ -59,7 +59,7 @@ class Green extends TagLib
         $li_attr = isset ($tag ['li_attr']) ? $tag ['li_attr'] : '';
         $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
 
-        $post_list = D('Tags', 'Logic')->getPostsByTag($tag_id, $num);
+        $post_list = D('Tags', 'Logic')->getPostsByTag($tag_id, $num,$start);
 
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($post_list as $value) {

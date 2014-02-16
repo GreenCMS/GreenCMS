@@ -113,9 +113,14 @@ class CatsLogic extends RelationModel
      *
      * @return mixed
      */
-    public function getPostsByCat($cat_id, $num = 5)
+    public function getPostsByCat($cat_id, $num = 5, $start = -1)
     {
         $cat = $this->getPostsId($cat_id);
+        if ($start != -1) {
+            for ($i = 0; $i < $start; $i++) {
+                unset($cat[sizeof($cat) - 1]);
+            }
+        }
         $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
         return $posts;
     }
@@ -143,11 +148,11 @@ class CatsLogic extends RelationModel
     {
 
         $Cat = new Category ('Cats', array(
-            'cat_id',
-            'cat_father',
-            'cat_name',
-            'cat_slug'
-        )); // , array('cid', 'pid', 'name', 'fullname')
+                                          'cat_id',
+                                          'cat_father',
+                                          'cat_name',
+                                          'cat_slug'
+                                     )); // , array('cid', 'pid', 'name', 'fullname')
 
         return $Cat->getList();
 

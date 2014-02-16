@@ -46,9 +46,14 @@ class TagsLogic extends RelationModel
      *
      * @return mixed
      */
-    public function getPostsByTag($tag_id, $num = 5)
+    public function getPostsByTag($tag_id, $num = 5, $start = -1)
     {
         $tag = $this->getPostsId($tag_id);
+        if ($start != -1) {
+            for ($i = 0; $i < $start; $i++) {
+                unset($tag[sizeof($tag) - 1]);
+            }
+        }
         $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $tag);
         return $posts;
     }
