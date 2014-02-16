@@ -32,13 +32,10 @@ abstract class HomeBaseController extends BaseController
         }
 
         $Posts = new PostsLogic();
-        $Links = new LinksLogic();
 
         $newPosts = $Posts->getList(5, 'single', 'post_date desc', false);
-        $friendUrl = $Links->getList(5);
 
         $this->assign('newPosts', $newPosts);
-        $this->assign('friendurl', $friendUrl);
 
         $this->customConfig();
         $this->loadTheme();

@@ -41,9 +41,11 @@ class TagsLogic extends RelationModel
     }
 
     /**
-     * @param $cat_id 分类id
+     * @param $tag_id
      * @param int $num 数量
      *
+     * @param $start
+     * @internal param $cat_id 分类id
      * @return mixed
      */
     public function getPostsByTag($tag_id, $num = 5, $start = -1)

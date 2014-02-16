@@ -20,11 +20,11 @@ abstract class BaseController extends Controller
     {
         parent::__construct();
 
-        $this->getKv();
+        $this->getKvs();
 
     }
 
-    function getKv()
+    function getKvs()
     {
         $Kvs = D('Kv')->where(1)->cache(true, 60)->select();
         $res_array = array();

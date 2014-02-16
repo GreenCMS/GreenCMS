@@ -111,6 +111,7 @@ class CatsLogic extends RelationModel
      * @param $cat_id 分类id
      * @param int $num 数量
      *
+     * @param $start
      * @return mixed
      */
     public function getPostsByCat($cat_id, $num = 5, $start = -1)

@@ -31,14 +31,8 @@
             <div class="one-fourth column">
                 <h4>友情链接</h4>
                 <hr class="smalline"/>
-                <ul id="footer-recent-news">
-                    <volist name="friendurl" id="vo">
-                        <li><a href="{$vo.link_url}" title=" {$vo.link_name}">
-                            {$vo.link_name}</a></li>
 
-                    </volist>
-
-                </ul>
+                <friendlist num='10' tag="Home" ul_attr='id="footer-recent-news"' ></friendlist>
 
             </div>
 

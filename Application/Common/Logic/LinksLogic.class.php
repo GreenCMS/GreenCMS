@@ -42,6 +42,9 @@ class LinksLogic extends Model
      */
     public function getList($limit = 10, $tag = 1, $order = 'link_sort desc ,link_id asc')
     {
+        if($tag!=1){
+            $tag=array('link_tag'=>$tag);
+        }
         $link_list = $this->where($tag)->order($order)->limit($limit)->select();
         return $link_list;
     }
