@@ -13,4 +13,6 @@ return array(
 
     'LOAD_EXT_CONFIG' => 'config_router', // 加载扩展配置文件
 
+    'TAGLIB_PRE_LOAD' => 'GreenCMS'
+
 );

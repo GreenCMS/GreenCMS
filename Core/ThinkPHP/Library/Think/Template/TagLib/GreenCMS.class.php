@@ -3,7 +3,7 @@ namespace Think\Template\TagLib;
 use Think\Template\TagLib;
 
 defined('THINK_PATH') or exit();
-class TagLibGreen extends TagLib
+class GreenCMS extends TagLib
 {
 
     // 标签定义
