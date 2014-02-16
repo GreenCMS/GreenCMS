@@ -9,7 +9,7 @@
 
 include APP_PATH . 'Common/Common/common_router.php';
 
-const GreenCMS_ADDON_PATH = './Addons/';
+const GREENCMS_ADDON_PATH = './Addons/';
 
 function get_menu_url()
 {
@@ -285,7 +285,6 @@ function get_addon_config($name){
  * 插件显示内容里生成访问插件的url
  * @param string $url url
  * @param array $param 参数
- * @author 麦当苗儿 <zuojiazi@vip.qq.com>
  */
 function addons_url($url, $param = array()){
     $url        = parse_url($url);
@@ -341,4 +340,24 @@ function list_sort_by($list,$field, $sortby='asc') {
        return $resultSet;
    }
    return false;
+}
+
+/**
+ * 字符串转换为数组，主要用于把分隔符调整到第二个参数
+ * @param  string $str  要分割的字符串
+ * @param  string $glue 分割符
+ * @return array
+ */
+function str2arr($str, $glue = ','){
+    return explode($glue, $str);
+}
+
+/**
+ * 数组转换为字符串，主要用于把分隔符调整到第二个参数
+ * @param  array  $arr  要连接的数组
+ * @param  string $glue 分割符
+ * @return string
+ */
+function arr2str($arr, $glue = ','){
+    return implode($glue, $arr);
 }

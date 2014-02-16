@@ -19,7 +19,7 @@ abstract class Addon{
      *  'title'=>'编辑器',
      *  'description'=>'用于增强整站长文本的输入和显示',
      *  'status'=>1,
-     *  'author'=>'thinkphp',
+     *  'author'=>'xjh1994',
      *  'version'=>'0.1'
      *  )
      */
@@ -33,7 +33,7 @@ abstract class Addon{
 
     public function __construct(){
         $this->view         =   \Think\Think::instance('Think\View');
-        $this->addon_path   =   GreenCMS_ADDON_PATH.$this->getName().'/';
+        $this->addon_path   =   GREENCMS_ADDON_PATH.$this->getName().'/';
         $TMPL_PARSE_STRING = C('TMPL_PARSE_STRING');
         $TMPL_PARSE_STRING['__ADDONROOT__'] = __ROOT__ . '/Addons/'.$this->getName();
         C('TMPL_PARSE_STRING', $TMPL_PARSE_STRING);

@@ -85,15 +85,14 @@
                                 <td class="hidden-480">{$vo.author}</td>
                                 <td class="hidden-480">{$vo.version}</td>
                                 <td class="hidden-480">
-                                    <a href="{:U('Admin/Custom/pluginEdit')}?name={$vo.plugin_title}">配置</a>|
+                                    <a href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>|
                                     <eq name="vo.status" value="1">
-                                        <a href='javascript:;' onclick="ajax({$vo.plugin_id})">禁用
+                                        <a href='javascript:;' onclick="off({$vo.id})">禁用
                                         <else/>
-                                        <a href='javascript:;' onclick="ajax({$vo.plugin_id})">启用
+                                        <a href='javascript:;' onclick="on({$vo.id})">启用
                                     </eq>
                                     </a>|
-                                    <a href="javascript:;"
-                                       onClick="JavaScript:return jconfirm('确认卸载吗?','{:U('Admin/Custom/pluginUninstall')}?id={$vo.plugin_id}')">卸载</a>
+                                    <a href="{:U('Admin/Custom/uninstall')}&id={$vo.id}">卸载</a>
                                 </td>
                             </tr>
                         </volist>
@@ -122,15 +121,31 @@
     });
 </script>
 <script>
-    function ajax(id) {
-        $.post("{:U('Admin/Custom/pluginStatus')}", {id: id},
+    function on(id) {
+        $.post("{:U('Admin/Custom/enable')}", {id: id},
                 function (data) {
-                    if (data == '1') {
+                    /*if (data.status == 1) {
                         window.location.reload(true);
                     }
                     else {
-                        $.dialog.alert(data);
+                        //$.dialog.alert(data);
+                        alert(data);
+                    }*/
+                    window.location.reload(true);
+                });
+    }
+
+    function off(id) {
+        $.post("{:U('Admin/Custom/disable')}", {id: id},
+                function (data) {
+                    /*if (data.status == 1) {
+                        window.location.reload(true);
                     }
+                    else {
+                        //$.dialog.alert(data);
+                        alert(data);
+                    }*/
+                    window.location.reload(true);
                 });
     }
 

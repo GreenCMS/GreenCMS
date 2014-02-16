@@ -59,9 +59,7 @@
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
-                <div class="span12">
-                    {$plugin}
-                </div>
+                
             </div>
             <!-- END PAGE CONTENT-->
         </div>
@@ -79,6 +77,26 @@
     jQuery(document).ready(function () {
         App.init();
     });
+
+</script>
+<script>
+    function ajax(id) {
+        $.post("{:U('Admin/Custom/pluginStatus')}", {id: id},
+                function (data) {
+                    if (data == '1') {
+                        window.location.reload(true);
+                    }
+                    else {
+                        $.dialog.alert(data);
+                    }
+                });
+    }
+
+    function jconfirm(str, url) {
+        $.dialog.confirm(str, function () {
+            window.location.href = url;
+        });
+    }
 </script>
 </body>
 <!-- END BODY -->
