@@ -121,12 +121,17 @@ class CustomController extends AdminBaseController
             $theme_temp = array();
             if (file_exists($tpl_static_path . 'theme.xml')) {
                 $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
-                $theme_temp['name'] = (String)$theme->name;
-                $theme_temp['description'] = $theme->description;
-                $theme_temp['author'] = $theme->author;
-                $theme_temp['copyright'] = $theme->copyright;
-                $theme_temp['tpl_view'] = $theme->tpl_view;
-                $theme_temp['tpl_static'] = $theme->tpl_static;
+
+                $theme_temp = (array)$theme;
+                if ($this->themeStatus($theme_temp['name']) == 'enabled') {
+                    $theme_temp['action_name'] = '禁用';
+                    $theme_temp['action_url'] = U('Admin/Custom/themeDisableHandle', array('theme_name' => $theme_temp['name']));
+
+                } else {
+                    $theme_temp['action_name'] = '启用';
+                    $theme_temp['action_url'] = U('Admin/Custom/themeEnableHandle', array('theme_name' => $theme_temp['name']));
+
+                }
 
                 array_push($theme_list, $theme_temp);
             }
@@ -160,6 +165,11 @@ class CustomController extends AdminBaseController
     private function themeStatus($theme_name = 'Vena')
     {
         $res = get_kv('theme_' . $theme_name);
+        if ($res == null) {
+            set_kv('theme_' . $theme_name, 'disabled');
+            return 'disabled';
+        }
+
         return $res;
     }
 

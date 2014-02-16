@@ -92,17 +92,35 @@ function get_kv($key)
     $kv_array = C('kv');
     if ($kv_array['$key'] != '') return $kv_array['$key'];
 
-    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->cache(true, 10)->find();
+    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->cache(true, 2)->find();
     return $options['kv_value'];
 }
 
 function set_kv($key, $value)
 {
     $data['kv_value'] = $value;
-    $res = D('Kv')->where(array('kv_key' => $key))->data($data)->save();
+    if (exist_kv($key)) {
+        $res = D('Kv')->where(array('kv_key' => $key))->data($data)->save();
+    } else {
+        $data['kv_key'] = $key;
+        $res = D('Kv')->data($data)->add();
+     }
     return $res;
 }
 
+
+
+function exist_kv($key)
+{
+
+    $options = D('Kv')->where(array('kv_key' => $key))->cache(true, 2)->find();
+
+    if ($options == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 /**
  * 数组降维

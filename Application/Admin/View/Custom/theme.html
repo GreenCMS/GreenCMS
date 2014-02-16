@@ -83,36 +83,35 @@
                             <th style="width: 8px;"><input type="checkbox"
                                                            class="group-checkable"
                                                            data-set="#sample_1 .checkboxes"/></th>
-                            <td>序号</td>
+
                             <td>名称</td>
                             <td>描述</td>
+                            <td>介绍</td>
+
                             <td>操作</td>
-                            <td></td>
+                            <td>预览</td>
                         </tr>
                         </thead>
                         <tbody>
                         <volist name="theme_list" id="vo" key="k">
                             <tr align="center" id="{$k}">
-                                <td><input type="checkbox" class="checkboxes" value="{$vo.name}"
+                                <td><input type="checkbox" class="checkboxes" value="{$k}"
                                            name="menus[]"/></td>
 
-                                <td>{$k}</td>
                                 <!--<td>{$vo.menu_id}</td>-->
                                 <td>{$vo.name}</td>
                                 <td align="left">{$vo.description}</td>
+                                <td>{$vo.introduction}</td>
                                 <td>
                                     <a class="btn mini purple" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>
                                     <a class="btn mini red" href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
-
-
+                                    <a class="btn mini red" href="{$vo.action_url}">{$vo.action_name}</a>
                                 </td>
-
                                 <td>
-                                    <a class="btn mini red" href="{:U('Admin/Custom/themeDisableHandle',array('theme_name'=>$vo['name']))}">禁用</a>
-                                    <a class="btn mini red" href="{:U('Admin/Custom/themeEnableHandle',array('theme_name'=>$vo['name']))}">启用</a>
-
-
+                                    <img src="__PUBLIC__{$vo.preview}"/>
                                 </td>
+
+
                             </tr>
                         </volist>
                         </tbody>
