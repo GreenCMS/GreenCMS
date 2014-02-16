@@ -7,8 +7,6 @@ return array(
         '*' => array('{$_SERVER.REQUEST_URI|md5}', '36000', ''), //全局静态缓存，第二个参数为时间单位秒
     ),
 
-    'SHOW_PAGE_TRACE'  => APP_DEBUG,
-
     'DEFAULT_THEME'    => 'Vena',
 
     'LOAD_EXT_CONFIG'  => 'config_router', // 加载扩展配置文件

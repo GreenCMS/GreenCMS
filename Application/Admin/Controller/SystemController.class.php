@@ -55,8 +55,8 @@ class SystemController extends AdminBaseController
     {
 
         $this->assign('db_fieldtype_check', C('db_fieldtype_check'));
-
         $this->assign('LOG_RECORD', C('LOG_RECORD'));
+        $this->assign('SHOW_CHROME_TRACE', C('SHOW_CHROME_TRACE'));
 
         $this->display();
     }

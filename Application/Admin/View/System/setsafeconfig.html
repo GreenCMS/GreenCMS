@@ -111,6 +111,37 @@
 
                         <h3 class="form-section">调试记录设置</h3>
 
+
+                        <div class="control-group">
+                            <label class="control-label">开启Chrome Console<br/>调试记录</label>
+
+                            <div class="controls">
+                                <label class="radio">
+
+                                    <switch name="SHOW_CHROME_TRACE">
+                                        <case value="1"><input type="radio" name="SHOW_CHROME_TRACE" checked="checked"
+                                                               value="1"/></case>
+                                        <case value="0"><input type="radio" name=SHOW_CHROME_TRACE value="1"/></case>
+                                        <default/>
+                                        <input type="radio" name="SHOW_CHROME_TRACE" checked="checked" value="1"/>
+                                    </switch>
+                                    开
+                                </label>
+                                <label class="radio">
+
+                                    <switch name="SHOW_CHROME_TRACE">
+                                        <case value="1"><input type="radio" name="SHOW_CHROME_TRACE" value="0"/></case>
+                                        <case value="0"><input type="radio" name="SHOW_CHROME_TRACE" checked="checked"
+                                                               value="0"/></case>
+                                        <default/>
+                                        <input type="radio" name="SHOW_CHROME_TRACE" value="0"/>
+                                    </switch>
+                                    关
+                                </label>
+                            </div>
+                        </div>
+
+
                         <div class="control-group">
                             <label class="control-label">开启调试记录</label>
 

@@ -49,5 +49,5 @@ return array(
 
    'TAGLIB_BUILD_IN'  => 'Green,Cx',
 
-    'LOAD_EXT_CONFIG'      => 'config_db,config_log,config_oauth', // 加载扩展配置文件 config_alias,config_db,config_system
+    'LOAD_EXT_CONFIG'      => 'config_db,config_log,config_oauth,tags', // 加载扩展配置文件 config_alias,config_db,config_system
 );

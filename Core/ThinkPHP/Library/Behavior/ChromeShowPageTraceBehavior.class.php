@@ -35,6 +35,7 @@ defined('THINK_PATH') or exit();
  * 系统行为扩展 页面Trace显示输出
  */
 class ChromeShowPageTraceBehavior extends Behavior {
+
     // 行为参数定义
     protected $options   =  array(
         'SHOW_PAGE_TRACE'=> false,   // 显示页面Trace信息
@@ -42,9 +43,10 @@ class ChromeShowPageTraceBehavior extends Behavior {
         'PAGE_TRACE_SAVE'   => false,
     );
 
+
     // 行为扩展的执行入口必须是run
     public function run(&$params){
-            if(C('SHOW_PAGE_TRACE')) $this->showTrace();
+            if(C('SHOW_CHROME_TRACE')) $this->showTrace();
     }
 
    

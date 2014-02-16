@@ -34,7 +34,7 @@ class IndexController extends HomeBaseController
     public function test()
     {
 
-        $this->display();
+         $this->display();
     }
 
 }
