@@ -123,12 +123,17 @@ class CustomController extends AdminBaseController
                 $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
 
                 $theme_temp = (array)$theme;
-                if ($this->themeStatus($theme_temp['name']) == 'enabled') {
-                    $theme_temp['action_name'] = '禁用';
+                if ($theme_temp['name']==get_kv('home_theme')) {
+                    $theme_temp['action_name'] = '正在使用';
+                    $theme_temp['action_url'] = '#';
+                    $theme_temp['using_color'] = 'green';
+                 } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
+
+                    $theme_temp['action_name'] = '可以使用';
                     $theme_temp['action_url'] = U('Admin/Custom/themeDisableHandle', array('theme_name' => $theme_temp['name']));
 
                 } else {
-                    $theme_temp['action_name'] = '启用';
+                    $theme_temp['action_name'] = '不可以使用';
                     $theme_temp['action_url'] = U('Admin/Custom/themeEnableHandle', array('theme_name' => $theme_temp['name']));
 
                 }
@@ -151,6 +156,7 @@ class CustomController extends AdminBaseController
     //todo 需要检查是否真的成功
     public function themeDisableHandle($theme_name = 'Vena')
     {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
         set_kv('theme_' . $theme_name, 'disabled');
         $this->success('禁用成功', 'Admin/Custom/theme');
     }
@@ -164,7 +170,7 @@ class CustomController extends AdminBaseController
 
     private function themeStatus($theme_name = 'Vena')
     {
-        $res = get_kv('theme_' . $theme_name);
+        $res = get_kv('theme_' . $theme_name, false);
         if ($res == null) {
             set_kv('theme_' . $theme_name, 'disabled');
             return 'disabled';

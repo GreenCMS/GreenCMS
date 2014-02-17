@@ -87,12 +87,15 @@ function get_opinion($key)
     return C($key);
 }
 
-function get_kv($key)
+function get_kv($key ,$cache=true)
 {
-    $kv_array = C('kv');
-    if ($kv_array[$key] != '') return $kv_array[$key];
+    if($cache){
+        $kv_array = C('kv');
+        if ($kv_array[$key] != '') return $kv_array[$key];
+    }
 
-    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->cache(true, 2)->find();
+
+    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
     return $options['kv_value'];
 }
 
@@ -113,7 +116,7 @@ function set_kv($key, $value)
 function exist_kv($key)
 {
 
-    $options = D('Kv')->where(array('kv_key' => $key))->cache(true, 2)->find();
+    $options = D('Kv')->where(array('kv_key' => $key))->find();
 
     if ($options == null) {
         return false;

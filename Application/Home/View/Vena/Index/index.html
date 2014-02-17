@@ -15,16 +15,35 @@
     <meta name="author" content="Green Studio  2013"/>
 
     <include file="Public:head"/>
+    <script src="__PUBLIC__/Vena/js/switcher.js" type="text/javascript"></script>
 
 </head>
 
 <body>
 {:W('Common/mainMenu')}
-<div style="margin-left: 2px;
-margin-right: 2px;">
 
-    <img style="width: 100%;" src="__PUBLIC__/Vena/images/index/Refresh_Banner.png">
 
+<!--<div class="fullwidthbanner-container">-->
+<!--<img style="width: 100%;" src="__PUBLIC__/Vena/images/index/Refresh_Banner.png">-->
+<!--</div>-->
+
+
+<div id="slider" class="swipe fullwidthbanner-container" style="visibility: visible;">
+    <ul class="swipe-wrap" style="width: 5440px;">
+         <li data-index="0" style="width: 1360px; left: 0px; transition: 400ms; -webkit-transition: 400ms; -webkit-transform: translate(-580px, 0px) translateZ(0px);">
+            <img src="__PUBLIC__/Vena/images/index/Banner1.jpg" alt=""></li>
+        <li data-index="1" style="width: 1360px; left: -1360px; transition: 400ms; -webkit-transition: 400ms; -webkit-transform: translate(0px, 0px) translateZ(0px);">
+            <img src="__PUBLIC__/Vena/images/index/Banner1.jpg" alt=""></li>
+        <li data-index="2" style="width: 1360px; left: -2720px; transition: 0ms; -webkit-transition: 0ms; -webkit-transform: translate(580px, 0px) translateZ(0px);">
+            <img src="__PUBLIC__/Vena/images/index/Banner1.jpg" alt=""></li>
+        <li data-index="3" style="width: 1360px; left: -4080px; transition: 400ms; -webkit-transition: 400ms; -webkit-transform: translate(-580px, 0px) translateZ(0px);">
+            <img src="__PUBLIC__/Vena/images/index/Banner1.jpg" alt=""></li>
+
+    </ul>
+    <div class="swipe-navi">
+        <div class="swipe-left" onclick="mySwipe.prev()"><i class="icon-chevron-left"></i></div>
+        <div class="swipe-right" onclick="mySwipe.next()"><i class="icon-chevron-right"></i></div>
+    </div>
 </div>
 
 <br/>
@@ -221,7 +240,18 @@ margin-right: 2px;">
 
 <include file="Public:theme"/>
 
+
+<script>
+    $(document).ready(function () {
+
+        setInterval("mySwipe.next()",2000);
+//setInterval这个函数会根据后面定义的1000既每隔1秒执行一次前面那个函数
+//如果你用局部刷新，要用AJAX技术
+    });
+
+
+</script>
+
+
 </body>
-
-
 </html>

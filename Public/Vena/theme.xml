@@ -7,7 +7,7 @@
     <preview>/Vena/preview.jpg</preview>
     <preview_big>/Vena/preview_big.jpg</preview_big>
     <copyright>GreenStudio 2011</copyright>
-    <tpl_view>Apllication/Home/Vena</tpl_view>
+    <tpl_view>Apllication/Home/View/Vena</tpl_view>
     <tpl_static>Public/Vena</tpl_static>
     <introduction>GreenStudio 2014主题</introduction>
 </theme>
