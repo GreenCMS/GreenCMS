@@ -124,22 +124,22 @@ class CustomController extends AdminBaseController
 
                 $theme_temp = (array)$theme;
                 if ($theme_temp['name']==get_kv('home_theme')) {
-                    $theme_temp['action_name'] = '正在使用';
-                    $theme_temp['action_url'] = '#';
+                    $theme_temp['status_name'] = '正在使用';
+                    $theme_temp['status_url'] = '#';
                     $theme_temp['using_color'] = 'green';
                     $theme_temp['action_name2'] = '使用中';
                     $theme_temp['action_url2'] = '#';
                  } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
 
-                    $theme_temp['action_name'] = '立即使用';
-                    $theme_temp['action_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));
+                    $theme_temp['status_name'] = '立即使用';
+                    $theme_temp['status_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));
 
                     $theme_temp['action_name2'] = '禁用';
                     $theme_temp['action_url2'] = U('Admin/Custom/themeDisableHandle', array('theme_name' => $theme_temp['name']));
 
                 } else {
-                    $theme_temp['action_name'] = '禁用中';
-                    $theme_temp['action_url'] = '#';
+                    $theme_temp['status_name'] = '禁用中';
+                    $theme_temp['status_url'] = '#';
 
                     $theme_temp['action_name2'] = '启用';
                     $theme_temp['action_url2'] = U('Admin/Custom/themeEnableHandle', array('theme_name' => $theme_temp['name']));

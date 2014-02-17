@@ -28,8 +28,7 @@ class PHPZip
         $handle = opendir($folder);
         while ($f = readdir($handle)) {
             if ($f[0] != ".") {
-                //   dump($folder . $f);
-                if (is_file($folder . $f)) {
+                 if (is_file($folder . $f)) {
                     // if we find a file, store it
                     // if we have a subfolder, store it there
                     if ($subfolder != null) {

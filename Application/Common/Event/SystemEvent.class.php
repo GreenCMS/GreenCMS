@@ -27,18 +27,18 @@ class SystemEvent
         $Zip = new \ZipArchive();
         $PHPZip = new \Common\Util\PHPZip();
 
-        $Zip->open($backup_path . date(Ymd) . "_system_backup.zip", \ZIPARCHIVE::CREATE);;
+        $file_name=$backup_path . date(Ymd) . "_system_backup.zip";
+        $Zip->open($file_name, \ZIPARCHIVE::CREATE);;
 
         foreach ($dir as $value) {
             if ($value[0] != '.' && $value != 'Data') {
-                echo $value . '<br />';
-                $PHPZip::folderToZip($value, $Zip);
+                 $PHPZip::folderToZip($value, $Zip);
             }
         }
 
         $Zip->close();
 
-        return array("status" => 1, "info" => "OK");
+        return array("status" => 1, "info" => $file_name );
     }
 
     public function clearCacheAll()

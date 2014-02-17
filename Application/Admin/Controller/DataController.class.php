@@ -210,7 +210,8 @@ class DataController extends AdminBaseController
             foreach ($files as $file) {
                 File::delFile(DB_Backup_PATH . $file);
             }
-            echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__));
+           // echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__));
+            $this->json_return( 1,  "已删除：" . implode("、", $files),__URL__);
 
         }
     }
@@ -649,6 +650,8 @@ class DataController extends AdminBaseController
             $this->display();
         }
     }
+
+
 
 
 }
