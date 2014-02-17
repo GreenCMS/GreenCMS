@@ -31,7 +31,7 @@ class SystemEvent
 
         foreach ($dir as $value) {
             if ($value[0] != '.' && $value != 'Data') {
-                echo $value.'<br />';
+                echo $value . '<br />';
                 $PHPZip::folderToZip($value, $Zip);
             }
         }
@@ -43,10 +43,28 @@ class SystemEvent
 
     public function clearCacheAll()
     {
+        $caches = array(
+            RUNTIME_PATH . "HTML",
+            RUNTIME_PATH . "Cache",
+            RUNTIME_PATH . "Data",
+            RUNTIME_PATH . "Temp",
+            RUNTIME_PATH . "~runtime.php",
+        );
+        foreach ($caches as $value) {
+            $this->clearCache($value);
+        }
+
+        return true;
     }
 
-    public function clearCache()
+    public function clearLog()
     {
+        return File::delAll(LOG_PATH, true);
+    }
+
+    public function clearCache($cache_path)
+    {
+        return File::delAll($cache_path, true);
     }
 
     public function backupDB($type = "系统自动备份", $tables = array(), $path = DB_Backup_PATH)
@@ -133,8 +151,9 @@ class SystemEvent
 
         G('Backup_end');
 
-        return array("status"                                       => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) .
+        $res = array("status"                                       => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) .
         "个SQL文件。耗时：" . G('Backup_start', 'Backup_end') . "秒", "url" => U('Admin/Data/restore'));
+        return $res;
     }
 
     public function backupDBAll()

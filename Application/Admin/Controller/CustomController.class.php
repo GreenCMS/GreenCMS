@@ -127,17 +127,30 @@ class CustomController extends AdminBaseController
                     $theme_temp['action_name'] = '正在使用';
                     $theme_temp['action_url'] = '#';
                     $theme_temp['using_color'] = 'green';
+                    $theme_temp['action_name2'] = '使用中';
+                    $theme_temp['action_url2'] = '#';
                  } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
 
-                    $theme_temp['action_name'] = '可以使用';
-                    $theme_temp['action_url'] = U('Admin/Custom/themeDisableHandle', array('theme_name' => $theme_temp['name']));
+                    $theme_temp['action_name'] = '立即使用';
+                    $theme_temp['action_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));
+
+                    $theme_temp['action_name2'] = '禁用';
+                    $theme_temp['action_url2'] = U('Admin/Custom/themeDisableHandle', array('theme_name' => $theme_temp['name']));
 
                 } else {
-                    $theme_temp['action_name'] = '不可以使用';
-                    $theme_temp['action_url'] = U('Admin/Custom/themeEnableHandle', array('theme_name' => $theme_temp['name']));
+                    $theme_temp['action_name'] = '禁用中';
+                    $theme_temp['action_url'] = '#';
+
+                    $theme_temp['action_name2'] = '启用';
+                    $theme_temp['action_url2'] = U('Admin/Custom/themeEnableHandle', array('theme_name' => $theme_temp['name']));
 
                 }
 
+                /**
+                 *     <a class="btn " href="{:U('Admin/Custom/themeEnableHandle',array('theme_name'=>$vo['name']))}">启用</a>
+                <a class="btn purple" href="{:U('Admin/Custom/themeDisableHandle',array('theme_name'=>$vo['name']))}">禁用</a>
+
+                 */
                 array_push($theme_list, $theme_temp);
             }
 
@@ -190,6 +203,8 @@ class CustomController extends AdminBaseController
 
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
+            $cache_control=new \Common\Event\SystemEvent();
+            $cache_control->clearCacheAll();
             $this->success('切换成功');
         } else {
             $this->error('切换失败');

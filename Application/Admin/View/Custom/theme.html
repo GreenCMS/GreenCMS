@@ -105,7 +105,9 @@
 
                                 <td>
 
-                                    <a class="btn purple" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>
+                                    <a class="btn purple" href="{$vo.action_url2}">{$vo.action_name2}</a>
+
+                                    <!--<a class="btn blue" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
                                     <a class="btn red" href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
                                 </td>
 

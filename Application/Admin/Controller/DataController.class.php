@@ -630,8 +630,8 @@ class DataController extends AdminBaseController
 
         // p($_POST['cache']);die;
         if (IS_POST) {
-
-            foreach ($_POST ['cache'] as $path) {
+            $paths=$_POST ['cache'];
+            foreach ($paths as $path) {
                 if (isset ($caches [$path])) {
                     $res = File::delAll($caches [$path] ['path'], true);
                 }

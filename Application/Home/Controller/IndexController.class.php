@@ -36,7 +36,7 @@ class IndexController extends HomeBaseController
 
         $System=new \Common\Event\SystemEvent();
         //$System->backupFile(); //test ok~
-       dump($System->backupFile('')) ;
+       dump($System->clearCacheAll()) ;
 
 
          $this->display();
