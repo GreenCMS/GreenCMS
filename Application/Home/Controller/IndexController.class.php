@@ -34,6 +34,11 @@ class IndexController extends HomeBaseController
     public function test()
     {
 
+        $System=new \Common\Event\SystemEvent();
+        //$System->backupFile(); //test ok~
+       dump($System->backupFile('')) ;
+
+
          $this->display();
     }
 

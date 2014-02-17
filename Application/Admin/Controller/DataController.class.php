@@ -43,57 +43,6 @@ class DataController extends AdminBaseController
     }
 
 
-    public function backupall()
-    {
-
-        @set_time_limit(1024);
-
-        $root_path = WEB_ROOT;
-
-
-        $Zip = new \ZipArchive();
-        $PHPZip = new \Common\Util\PHPZip();
-//        foreach ($path['file'] as $value) {
-//            $Zip->addFile($root_path.$value);
-//        }
-//        foreach ($path['dir'] as $value) {
-//            $Zip->addEmptyDir($root_path.$value);
-//        }
-
-        $backup_path = System_Backup_PATH;
-        mkdir($backup_path, 0777, true);
-        $Zip->open($backup_path . date(Ymd) . "_system_backup.zip", \ZIPARCHIVE::CREATE);
-
-        $dir = scandir(WEB_ROOT);
-        dump($dir);
-        //die();
-
-        foreach ($dir as $value) {
-            if ($value[0] != '.' && $value != 'Data') {
-                $PHPZip::folderToZip($value, $Zip);
-            }
-        }
-//        $PHPZip::folderToZip('Application', $Zip);
-//        $PHPZip::folderToZip('Core', $Zip);
-//        $PHPZip::folderToZip('Data', $Zip);
-//        $PHPZip::folderToZip('Extend', $Zip);
-//        $PHPZip::folderToZip('Public', $Zip);
-//        $PHPZip::folderToZip('Upload', $Zip);
-//        $PHPZip::folderToZip('.htaccess', $Zip);
-//        $PHPZip::folderToZip('admin.php', $Zip);
-//        $PHPZip::folderToZip('const_config.php', $Zip);
-//        $PHPZip::folderToZip('db_config.php', $Zip);
-//        $PHPZip::folderToZip('index.php', $Zip);
-//        $PHPZip::folderToZip('robots.txt', $Zip);
-        //      $PHPZip::folderToZip('', $Zip);
-
-        $Zip->close();
-
-        $Zip->close();
-
-    }
-
-
     /**
      * 列出系统中所有数据库表信息
      * For MySQL
@@ -121,107 +70,16 @@ class DataController extends AdminBaseController
     public function backupHandle()
     {
         if (!IS_POST) $this->error("访问出错啦");
-//        header('Content-Type:application/json; charset=utf-8');
-//        $this->checkToken();
-        $M = M();
-        function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
+        $type = "手动自动备份";
+        $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
         $tables = empty($_POST['table']) ? array() : $_POST['table'];
-        if (count($tables) == 0 && !isset($_POST['systemBackup'])) {
-            $this->error('请先选择要备份的表');
-        }
-        /**
-         * 如果备份文件夹不存在，则自动建立
-         */
-        if (!is_dir(DB_Backup_PATH)) {
-            File::makeDir(DB_Backup_PATH, 0777);
-        }
+        $System = new \Common\Event\SystemEvent();
+        //$System->backupFile(); //test ok~
+        $res = $System->backupDB($type, $tables, $path);
 
-        G('Backup_start');
-        if (isset($_POST['systemBackup'])) {
-            //TODO 系统自动备份
-            $type = "系统自动备份";
-            $MySQLLogic = new \Admin\Logic\MySQLLogic();
-            $tables = $MySQLLogic->getAllTableName();
-            $path = DB_Backup_PATH . "/SYSTEM_" . date("Ymd");
-            if (file_exists($path . "_1.sql")) {
-                $this->json_return(0, "今天系统已经进行了自动备份操作");
-            }
-        } else {
-            $type = "管理员后台手动备份";
-            $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
-        }
+        if ($res['status'] == 1)
+            $this->success($res['info'], $res['url']);
 
-        $pre =
-            "# -----------------------------------------------------------\n" .
-            "# " . get_opinion('title') . " database backup files\n" .
-            "# URL: " . get_opinion('site_url') . "\n" .
-            "# Type: {$type}\n";
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
-        $bdTable = $MySQLLogic->backupTable($tables); //取得表结构信息
-        $outPut = "";
-        $file_n = 1;
-        $backedTable = array();
-        foreach ($tables as $table) {
-            $backedTable[] = $table;
-            $outPut .= "\n\n# 数据库表：{$table} 数据信息\n";
-            $tableInfo = $M->query("SHOW TABLE STATUS LIKE '{$table}'");
-            $page = ceil($tableInfo[0]['Rows'] / 10000) - 1;
-            for ($i = 0; $i <= $page; $i++) {
-                $query = $M->query("SELECT * FROM {$table} LIMIT " . ($i * 10000) . ", 10000");
-                foreach ($query as $val) {
-                    $temSql = "";
-                    $tn = 0;
-                    $temSql = '';
-                    foreach ($val as $v) {
-                        $temSql .= $tn == 0 ? "" : ",";
-                        $temSql .= $v == '' ? "''" : "'{$v}'";
-                        $tn++;
-                    }
-                    $temSql = "INSERT INTO `{$table}` VALUES ({$temSql});\n";
-
-                    $sqlNo = "\n# Time: " . date("Y-m-d H:i:s") . "\n" .
-                        "# -----------------------------------------------------------\n" .
-                        "# 当前SQL卷标：#{$file_n}\n# -----------------------------------------------------------\n\n\n";
-                    if ($file_n == 1) {
-                        $sqlNo = "# Description:当前SQL文件包含了表：" . implode("、", $tables) . "的结构信息，表：" . implode("、", $backedTable) . "的数据" . $sqlNo;
-                    } else {
-                        $sqlNo = "# Description:当前SQL文件包含了表：" . implode("、", $backedTable) . "的数据" . $sqlNo;
-                    }
-                    if (strlen($pre) + strlen($sqlNo) + strlen($bdTable) + strlen($outPut) + strlen($temSql) > C("sqlFileSize")) {
-                        $file_name = $path . "_" . $file_n . ".sql";
-                        $outPut = $file_n == 1 ? $pre . $sqlNo . $bdTable . $outPut : $pre . $sqlNo . $outPut;
-                        //file_put_contents($file, $outPut, FILE_APPEND);
-                        //TODO file_put_contents-->> File::writeFile需要测试
-                        File::writeFile($file_name, $outPut);
-                        $bdTable = $outPut = "";
-                        $backedTable = array();
-                        $backedTable[] = $table;
-                        $file_n++;
-                    }
-                    $outPut .= $temSql;
-                }
-            }
-        }
-        if (strlen($bdTable . $outPut) > 0) {
-            $sqlNo = "\n# Time: " . date("Y-m-d H:i:s") . "\n" .
-                "# -----------------------------------------------------------\n" .
-                "# 当前SQL卷标：#{$file_n}\n# -----------------------------------------------------------\n\n\n";
-            if ($file_n == 1) {
-                $sqlNo = "# Description:当前SQL文件包含了表：" . implode("、", $tables) . "的结构信息，表：" . implode("、", $backedTable) . "的数据" . $sqlNo;
-            } else {
-                $sqlNo = "# Description:当前SQL文件包含了表：" . implode("、", $backedTable) . "的数据" . $sqlNo;
-            }
-            $file_name = $path . "_" . $file_n . ".sql";
-            $outPut = $file_n == 1 ? $pre . $sqlNo . $bdTable . $outPut : $pre . $sqlNo . $outPut;
-            // file_put_contents($file_name, $outPut, FILE_APPEND);
-            File::writeFile($file_name, $outPut);
-            $file_n++;
-        }
-
-        G('Backup_end');
-
-        // echo json_encode(array("status" => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) . "个SQL文件。耗时：{$time} 秒", "url" => U('Admin/Data/restore')));
-        $this->success('备份成功耗时:' . G('Backup_start', 'Backup_end') . 's', U('Admin/Data/restore'));
     }
 
     /**
@@ -775,7 +633,7 @@ class DataController extends AdminBaseController
 
             foreach ($_POST ['cache'] as $path) {
                 if (isset ($caches [$path])) {
-                    $res=File::delAll($caches [$path] ['path'], true);
+                    $res = File::delAll($caches [$path] ['path'], true);
                 }
                 //$Dir->delDirAndFile($caches [$path] ['path']);
             }

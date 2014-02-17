@@ -17,3 +17,7 @@ Data/Install/install.lock
 .idea/*
 
  
+/Data/Install/install.lock
+
+Log
+/Data/Temp
