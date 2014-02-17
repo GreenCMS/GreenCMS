@@ -1,14 +1,14 @@
-Upload/**
-Data/DBbackup/*.sql
-Data/DBbackup/**/*.zip
-Data/Cache/*
-Data/Log/*
-Data/Temp/**
-Data/Temp/Cache/**/**/*.php
-Data/Temp/Cache/**/*.php
-Data/Temp/Data/**/**
-Data/Temp/Temp/**/**
-Data/Install/install.lock
+/Upload/**
+/Data/DBbackup/*.sql
+/Data/DBbackup/**/*.zip
+/Data/Cache/*
+/Data/Log/*
+/Data/Temp/**
+/Data/Temp/Cache/**/**/*.php
+/Data/Temp/Cache/**/*.php
+/Data/Temp/Data/**/**
+/Data/Temp/Temp/**/**
+/Data/Install/install.lock
 *.lock
 *.tmp
 *.bak
@@ -18,6 +18,4 @@ Data/Install/install.lock
 
  
 /Data/Install/install.lock
-
-Log
 /Data/Temp
