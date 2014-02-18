@@ -1,9 +1,286 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
-    <title></title>
+
+    <title>{$post['post_title']} -- {:C('title')}</title>
+
+    <meta charset="utf-8"/>
+
+    <link href="__PUBLIC__/2011college/css/base.css" rel="stylesheet"/>
+
+    <style>
+
+        body {
+            background: #EDEDED;
+        }
+
+        .header {
+            background: url(__PUBLIC__/2011college/images/1.png) 0 30px repeat-x;
+            height: 198px;
+        }
+
+        .topbar {
+            background: #000000;
+            height: 30px;
+            width: 100%
+        }
+
+        .topbar ul {
+            width: 1100px;
+            margin: 0 auto;
+            line-height: 30px;
+        }
+
+        .topbar ul li {
+            display: inline;
+        }
+
+        .topbar ul li.line {
+            margin: 0 5px;
+        }
+
+        .topbar ul a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .banner {
+            width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            height: 168px;
+        }
+
+        .logo {
+            background: url(__PUBLIC__/2011college/images/2.png);
+            height: 98px;
+            width: 253px;
+            position: absolute;
+            left: 0;
+            top: 14px;
+        }
+
+        .logo2011 {
+            position: relative;
+            top: 14px;
+            width: 252px;
+            height: 97px;
+            margin: 0 auto;
+        }
+
+        .nav {
+            clear: both;
+            text-align: center;
+            position: relative;
+            top: 36px;
+        }
+
+        .nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 35px;
+        }
+
+        .slide {
+            width: 100%;
+            height: 400px;
+            background: url(__PUBLIC__/2011college/images/slide.png) center -220px no-repeat;
+        }
+
+        .slide-ct {
+            width: 1100px;
+            margin: 0 auto;
+            padding-top: 170px;
+        }
+
+        .apply {
+            width: 558px;
+            height: 100px;
+            position: relative;
+        }
+
+        .apply-bg {
+            width: 558px;
+            height: 100px;
+            background: #B22D00;
+            opacity: 0.7;
+            position: absolute;
+            z-index: 99
+        }
+
+        .apply-txt {
+            position: absolute;
+            z-index: 999;
+            text-indent: 30px;
+        }
+
+        .apply-txt a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 40px;
+            font-family: "微软雅黑";
+            line-height: 100px;
+        }
+
+        .apply-info {
+            width: 360px;
+            height: 52px;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .apply-info-bg {
+            width: 360px;
+            height: 52px;
+            position: absolute;
+            z-index: 99;
+            background: #ffffff;
+            opacity: 0.6;
+        }
+
+        .apply-info-txt {
+            position: absolute;
+            z-index: 999;
+            line-height: 52px;
+            font-size: 20px;
+            font-family: "微软雅黑";
+            text-indent: 30px;
+        }
+
+        .content {
+            width: 960px;
+            margin: 0 auto;
+        }
+
+        .news {
+        }
+
+        .news-hd {
+            border-bottom: 2px solid #0AA5E4;
+            font-size: 30px;
+            padding-bottom: 4px;
+            color: #4D4D4D;
+        }
+
+        .news-hd .more {
+            float: right;
+            color: #A2A2A2;
+            text-decoration: none;
+            font-size: 20px;
+            margin-top: 13px;
+        }
+
+        .news-ct {
+            margin-top: 5px;
+        }
+
+        .news-ct a {
+            color: #4D4D4D;
+            text-decoration: none;
+            font-size: 14px;
+            line-height: 30px;
+        }
+
+        .news-ct a span {
+            float: right;
+        }
+
+        .article {
+            color: #4D4D4D;
+        }
+
+    </style>
+
 </head>
+
 <body>
 
+<div class="header">
+
+    <div class="topbar">
+
+        <ul>
+
+            <li><a href="">学生</a></li>
+
+            <li class="line"></li>
+
+            <li><a href="">教师</a></li>
+
+            <li class="line"></li>
+
+            <li><a href="">访客</a></li>
+
+        </ul>
+
+    </div>
+
+    <div class="banner">
+
+        <div class="logo2011">
+            <img src="__PUBLIC__/2011college/images/2011_logo.png" />
+        </div>
+        <!--<div class="logo"></div>-->
+
+        <div class="nav">
+            <ul>
+                <li style="display:Inline;color:#ffffff">
+                    <a href=" /index/index.green" target="_blank">学院首页</a>
+                </li>
+                <li style="display:Inline;color:#ffffff">
+                    <a href="/single/detail/id/101.green" target="_blank">学院简介</a>
+                </li>
+                <li style="display:Inline;color:#ffffff">
+                    <a href="#" target="_blank">招生就业</a>
+                </li>
+                <li style="display:Inline;color:#ffffff">
+                    <a href="#" target="_blank">专业课程</a>
+                </li>
+                <li style="display:Inline;color:#ffffff">
+                    <a href="#" target="_blank">师资力量</a>
+                </li>
+                <!--<li style="display:Inline;color:#ffffff"><a href="#" target="_blank">奖学金</a></li>-->
+                <li style="display:Inline;color:#ffffff">
+                    <a href="#" target="_blank">教学科研成果</a>
+                </li>
+                <li style="display:Inline;color:#ffffff">
+                    <a href="#" target="_blank">交流项目</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="content">
+
+    <div class="title" style="text-align:center;margin-top:20px;font-size:30px">
+        {$post['post_title']}
+    </div>
+
+    <br/>
+
+    <br/>
+
+    <div class="article">
+        {$post['post_content']}
+    </div>
+
+</div>
+<div class="footer" style="background-color:#2c2c2c;height:40px;width:100%;clear:both;">
+
+    <p style="color:#ffffff; font-size:14px; text-align:center; position:relative; top:10px;">
+
+        Copyright 2013 南京工业大学2011学院 All Rights Reserved
+
+    </p>
+
+</div>
+
 </body>
+
 </html>
