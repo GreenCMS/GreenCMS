@@ -10,6 +10,17 @@
 include APP_PATH . 'Common/Common/common_router.php';
 
 
+function object_to_array($obj)
+{
+    $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
+    foreach ($_arr as $key => $val) {
+
+        $val = (is_array($val) || is_object($val)) ? object_to_array($val) : $val;
+        $arr[$key] = $val;
+    }
+    return $arr;
+}
+
 function get_url($url = '', $vars = '')
 {
     $url_arr = preg_split('/\//', $url);
@@ -87,9 +98,9 @@ function get_opinion($key)
     return C($key);
 }
 
-function get_kv($key ,$cache=true)
+function get_kv($key, $cache = true)
 {
-    if($cache){
+    if ($cache) {
         $kv_array = C('kv');
         if ($kv_array[$key] != '') return $kv_array[$key];
     }
@@ -107,10 +118,9 @@ function set_kv($key, $value)
     } else {
         $data['kv_key'] = $key;
         $res = D('Kv')->data($data)->add();
-     }
+    }
     return $res;
 }
-
 
 
 function exist_kv($key)

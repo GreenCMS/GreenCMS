@@ -122,8 +122,13 @@ class CatsLogic extends RelationModel
                 unset($cat[sizeof($cat) - 1]);
             }
         }
-        $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
-        return $posts;
+         if ($cat != null) {
+            $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
+            return $posts;
+        }else {
+            return false;
+        }
+
     }
 
     /**
