@@ -65,6 +65,7 @@
                                 <i class="icon-globe"></i>{$action}
                             </div>
                         </div>
+
                         <form method="POST" action="{:U('Admin/Posts/indexHandle')}" id="posts">
                             <div class="portlet-body">
                                 <div class="clearfix">
@@ -162,12 +163,16 @@
 {:W('Common/footer')}
 <!-- END FOOTER -->
 <include file="Public:foot"/>
+
 <script>
     jQuery(document).ready(function () {
         App.init();
         TableManaged.init();
+
     });
 </script>
+
+
 </body>
 <!-- END BODY -->
 </html>

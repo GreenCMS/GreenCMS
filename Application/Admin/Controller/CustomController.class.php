@@ -121,13 +121,36 @@ class CustomController extends AdminBaseController
             $theme_temp = array();
             if (file_exists($tpl_static_path . 'theme.xml')) {
                 $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
-                $theme_temp['name'] = (String)$theme->name;
-                $theme_temp['description'] = $theme->description;
-                $theme_temp['author'] = $theme->author;
-                $theme_temp['copyright'] = $theme->copyright;
-                $theme_temp['tpl_view'] = $theme->tpl_view;
-                $theme_temp['tpl_static'] = $theme->tpl_static;
 
+                $theme_temp = (array)$theme;
+                if ($theme_temp['name']==get_kv('home_theme')) {
+                    $theme_temp['status_name'] = '正在使用';
+                    $theme_temp['status_url'] = '#';
+                    $theme_temp['using_color'] = 'green';
+                    $theme_temp['action_name2'] = '使用中';
+                    $theme_temp['action_url2'] = '#';
+                 } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
+
+                    $theme_temp['status_name'] = '立即使用';
+                    $theme_temp['status_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));
+
+                    $theme_temp['action_name2'] = '禁用';
+                    $theme_temp['action_url2'] = U('Admin/Custom/themeDisableHandle', array('theme_name' => $theme_temp['name']));
+
+                } else {
+                    $theme_temp['status_name'] = '禁用中';
+                    $theme_temp['status_url'] = '#';
+
+                    $theme_temp['action_name2'] = '启用';
+                    $theme_temp['action_url2'] = U('Admin/Custom/themeEnableHandle', array('theme_name' => $theme_temp['name']));
+
+                }
+
+                /**
+                 *     <a class="btn " href="{:U('Admin/Custom/themeEnableHandle',array('theme_name'=>$vo['name']))}">启用</a>
+                <a class="btn purple" href="{:U('Admin/Custom/themeDisableHandle',array('theme_name'=>$vo['name']))}">禁用</a>
+
+                 */
                 array_push($theme_list, $theme_temp);
             }
 
@@ -146,6 +169,7 @@ class CustomController extends AdminBaseController
     //todo 需要检查是否真的成功
     public function themeDisableHandle($theme_name = 'Vena')
     {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
         set_kv('theme_' . $theme_name, 'disabled');
         $this->success('禁用成功', 'Admin/Custom/theme');
     }
@@ -159,7 +183,12 @@ class CustomController extends AdminBaseController
 
     private function themeStatus($theme_name = 'Vena')
     {
-        $res = get_kv('theme_' . $theme_name);
+        $res = get_kv('theme_' . $theme_name, false);
+        if ($res == null) {
+            set_kv('theme_' . $theme_name, 'disabled');
+            return 'disabled';
+        }
+
         return $res;
     }
 
@@ -167,8 +196,15 @@ class CustomController extends AdminBaseController
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
 
+        if ($this->themeStatus($theme_name) == 'disabled') {
+            $this->error('请先启用主题');
+        }
+
+
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
+            $cache_control=new \Common\Event\SystemEvent();
+            $cache_control->clearCacheAll();
             $this->success('切换成功');
         } else {
             $this->error('切换失败');

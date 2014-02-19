@@ -70,6 +70,7 @@
                                 </button>
                             </a>
                         </div>
+
                     </div>
 
                     <br/>
@@ -80,39 +81,37 @@
                         <thead>
 
                         <tr>
-                            <th style="width: 8px;"><input type="checkbox"
-                                                           class="group-checkable"
-                                                           data-set="#sample_1 .checkboxes"/></th>
-                            <td>序号</td>
-                            <td>名称</td>
-                            <td>描述</td>
-                            <td>操作</td>
-                            <td></td>
+                            <th style="width: 150px;">预览</th>
+
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>介绍</th>
+                            <th>状态</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <volist name="theme_list" id="vo" key="k">
                             <tr align="center" id="{$k}">
-                                <td><input type="checkbox" class="checkboxes" value="{$vo.name}"
-                                           name="menus[]"/></td>
+                                <td><img src="__PUBLIC__{$vo.preview}"/></td>
 
-                                <td>{$k}</td>
                                 <!--<td>{$vo.menu_id}</td>-->
                                 <td>{$vo.name}</td>
                                 <td align="left">{$vo.description}</td>
+                                <td>{$vo.introduction}</td>
                                 <td>
-                                    <a class="btn mini purple" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>
-                                    <a class="btn mini red" href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
-
-
+                                    <a class="btn {$vo.using_color}" href="{$vo.status_url}">{$vo.status_name}</a>
                                 </td>
 
                                 <td>
-                                    <a class="btn mini red" href="{:U('Admin/Custom/themeDisableHandle',array('theme_name'=>$vo['name']))}">禁用</a>
-                                    <a class="btn mini red" href="{:U('Admin/Custom/themeEnableHandle',array('theme_name'=>$vo['name']))}">启用</a>
 
+                                    <a class="btn purple" href="{$vo.action_url2}">{$vo.action_name2}</a>
 
+                                    <!--<a class="btn blue" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
+                                    <a class="btn red" href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
                                 </td>
+
+
                             </tr>
                         </volist>
                         </tbody>

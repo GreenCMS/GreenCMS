@@ -345,10 +345,9 @@ class RelationModel extends Model
                                 break;
                             case MANY_TO_MANY:
                                 $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id'; // 关联
-                                /**
-                                 *  $mappingRelationTable  =  $val['relation_table']?$val['relation_table']:$this->getRelationTableName($model);
-                                 *  $mappingRelationTable  =  $val['relation_table']?C('DB_PREFIX').$val['relation_table']:$this->getRelationTableName($model);
-                                 */
+
+                                //TODO
+
                                 $mappingRelationTable = $val['relation_table'] ? C('DB_PREFIX') . $val['relation_table'] : $this->getRelationTableName($model);
                                 if (is_array($mappingData)) {
                                     $ids = array();

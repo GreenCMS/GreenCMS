@@ -51,6 +51,7 @@ class CatController extends HomeBaseController
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
             $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+
         }
         $this->assign('title', $cat['cat_name']); // 赋值数据集
         $this->assign('res404', $res404);

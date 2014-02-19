@@ -45,18 +45,21 @@ $menu_arr = array(
             'Data/zipList' => '数据库压缩',
             'Data/repair'  => '数据库优化',
             'Data/cache'   => '缓存设置',
-            'Data/clear'   => '缓存清理'
+            'Data/clear'   => '缓存清理',
+
 
         ),
 
         'Custom' => array(
             'Custom/plugin' => '插件管理',
             'Custom/theme'  => '主题管理',
-            'Custom/menu'  => '菜单管理'
+            'Custom/menu'   => '菜单管理'
         ),
 
         'Media'  => array(
-            'Media/file' => '文件管理'
+            'Media/file'       => '文件管理',
+            'Media/backupFile' => '文件备份',
+            'Media/restoreFile' => '文件恢复',
         ),
 
         'Access' => array(

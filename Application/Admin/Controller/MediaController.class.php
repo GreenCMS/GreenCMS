@@ -9,6 +9,8 @@
 
 namespace Admin\Controller;
 
+use Common\Util\File;
+use Think\Think;
 
 class MediaController extends AdminBaseController
 {
@@ -30,7 +32,7 @@ class MediaController extends AdminBaseController
         $roots = array('Upload/', 'Public/', 'Application/');
         $opts = $this->__array($roots);
 
-        define('GreenCMS','GreenCMS');
+        define('GreenCMS', 'GreenCMS');
         //echo WEB_ROOT . 'Extend/GreenFinder/php/connector.php';
         include WEB_ROOT . 'Extend/GreenFinder/php/connector.php'; //包含elfinder自带php接口的入口文件
     }
@@ -45,8 +47,8 @@ class MediaController extends AdminBaseController
         foreach ($paths as $path) {
             $single_root = array(
                 'driver'        => 'LocalFileSystem', // driver for accessing file system (REQUIRED)
-                'path'          =>  WEB_ROOT. $path, // path to files (REQUIRED)//'./'
-                'URL'           => __ROOT__ .'/'. $path, // 上传文件目录的URL
+                'path'          => WEB_ROOT . $path, // path to files (REQUIRED)//'./'
+                'URL'           => __ROOT__ . '/' . $path, // 上传文件目录的URL
                 'accessControl' => 'access' // disable and hide dot starting files (OPTIONAL)
             );
 
@@ -55,6 +57,41 @@ class MediaController extends AdminBaseController
         }
 
         return $opts;
+    }
+
+
+    public function backupFile()
+    {
+        $root = File::scanDir(WEB_ROOT,true);
+        $root_info = array();
+
+        foreach ($root as $value) {
+            $root_info_temp = array();
+            $root_info_temp['name'] = $value;
+            $root_info_temp['path'] =  WEB_ROOT . $value;
+            $root_info_temp['size'] = File::realSize(WEB_ROOT . $value);
+
+            array_push($root_info,$root_info_temp);
+        }
+      // dump($root_info);
+        $this->assign('root_info', $root_info);
+        $this->display();
+    }
+
+    public function backupFileHandle()
+    {
+
+         $System = new \Common\Event\SystemEvent();
+        $res = $System->backupFile(I('post.file'));
+
+        if($res['status']==1)
+            $this->success('成功备份到文件'.$res['info']);
+    }
+
+    public function restoreFile()
+    {
+
+        $this->display();
     }
 
 

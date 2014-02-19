@@ -6,7 +6,7 @@
  * Date: 14-1-23
  * Time: 上午11:57
  */
-
+//ob_start();
 if (version_compare(PHP_VERSION, '5.3.0', '<')) die('require PHP > 5.3.0 !'); //这个是TP3.2的需求,需要namespace
 
 
@@ -42,8 +42,8 @@ require(WEB_ROOT . "const_config.php");
  */
 define ('APP_PATH', './Application/');
 
-define ('GreenCMS_Version', 'v2.1.0215');
-define ('GreenCMS_Build', '20140215');
+define ('GreenCMS_Version', 'v2.1.0217');
+define ('GreenCMS_Build', '20140217');
 
 /**
  * 引入核心入口

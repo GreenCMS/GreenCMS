@@ -10,6 +10,17 @@
 include APP_PATH . 'Common/Common/common_router.php';
 
 
+function object_to_array($obj)
+{
+    $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
+    foreach ($_arr as $key => $val) {
+
+        $val = (is_array($val) || is_object($val)) ? object_to_array($val) : $val;
+        $arr[$key] = $val;
+    }
+    return $arr;
+}
+
 function get_url($url = '', $vars = '')
 {
     $url_arr = preg_split('/\//', $url);
@@ -87,22 +98,42 @@ function get_opinion($key)
     return C($key);
 }
 
-function get_kv($key)
+function get_kv($key, $cache = true)
 {
-    $kv_array = C('kv');
-    if ($kv_array['$key'] != '') return $kv_array['$key'];
+    if ($cache) {
+        $kv_array = C('kv');
+        if ($kv_array[$key] != '') return $kv_array[$key];
+    }
 
-    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->cache(true, 10)->find();
+
+    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
     return $options['kv_value'];
 }
 
 function set_kv($key, $value)
 {
     $data['kv_value'] = $value;
-    $res = D('Kv')->where(array('kv_key' => $key))->data($data)->save();
+    if (exist_kv($key)) {
+        $res = D('Kv')->where(array('kv_key' => $key))->data($data)->save();
+    } else {
+        $data['kv_key'] = $key;
+        $res = D('Kv')->data($data)->add();
+    }
     return $res;
 }
 
+
+function exist_kv($key)
+{
+
+    $options = D('Kv')->where(array('kv_key' => $key))->find();
+
+    if ($options == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 /**
  * 数组降维

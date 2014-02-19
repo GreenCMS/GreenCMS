@@ -277,18 +277,31 @@ class File
         return is_dir($path) or (self::makeDir(dirname($path), $property) and @mkdir($path, $property));
     }
 
-    public static function scanDir($dir)
+    public static function scanDir($dir, $file = false)
     {
-
-        $path = self::getDirs($dir);
-        $dir = $path['dir'];
-        foreach ($dir as $key => $value) {
-            if (($dir[$key][0]) == '.') {
-                unset($dir[$key]);
+        if ($file == true) {
+            $res = scandir($dir);
+            foreach ($res as $key => $value) {
+                if (($res[$key][0]) == '.') {
+                    unset($res[$key]);
+                }
             }
+
+
+            return $res;
+
+        } else {
+            $path = self::getDirs($dir);
+            $dir = $path['dir'];
+            foreach ($dir as $key => $value) {
+                if (($dir[$key][0]) == '.') {
+                    unset($dir[$key]);
+                }
+            }
+
+            return $dir;
         }
 
-        return $dir;
 
     }
 

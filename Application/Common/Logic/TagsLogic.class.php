@@ -40,6 +40,25 @@ class TagsLogic extends RelationModel
         return $tag;
     }
 
+    /**
+     * @param $tag_id
+     * @param int $num 数量
+     *
+     * @param $start
+     * @internal param $cat_id 分类id
+     * @return mixed
+     */
+    public function getPostsByTag($tag_id, $num = 5, $start = -1)
+    {
+        $tag = $this->getPostsId($tag_id);
+        if ($start != -1) {
+            for ($i = 0; $i < $start; $i++) {
+                unset($tag[sizeof($tag) - 1]);
+            }
+        }
+        $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $tag);
+        return $posts;
+    }
 
     /**
      * @param int $limit
@@ -51,4 +70,10 @@ class TagsLogic extends RelationModel
     {
         return D('Tags')->limit($limit)->relation($relation)->select();
     }
+
+
+
+
+
+
 }

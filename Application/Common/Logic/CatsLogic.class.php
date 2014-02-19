@@ -111,13 +111,24 @@ class CatsLogic extends RelationModel
      * @param $cat_id 分类id
      * @param int $num 数量
      *
+     * @param $start
      * @return mixed
      */
-    public function getPostsByCat($cat_id, $num = 5)
+    public function getPostsByCat($cat_id, $num = 5, $start = -1)
     {
-        $cat = $this->getPostIdsByCat($cat_id);
-        $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
-        return $posts;
+        $cat = $this->getPostsId($cat_id);
+        if ($start != -1) {
+            for ($i = 0; $i < $start; $i++) {
+                unset($cat[sizeof($cat) - 1]);
+            }
+        }
+         if ($cat != null) {
+            $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
+            return $posts;
+        }else {
+            return false;
+        }
+
     }
 
     /**
@@ -143,11 +154,11 @@ class CatsLogic extends RelationModel
     {
 
         $Cat = new Category ('Cats', array(
-            'cat_id',
-            'cat_father',
-            'cat_name',
-            'cat_slug'
-        )); // , array('cid', 'pid', 'name', 'fullname')
+                                          'cat_id',
+                                          'cat_father',
+                                          'cat_name',
+                                          'cat_slug'
+                                     )); // , array('cid', 'pid', 'name', 'fullname')
 
         return $Cat->getList();
 

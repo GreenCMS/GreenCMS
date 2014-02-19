@@ -18,27 +18,15 @@
             <div class="one-fourth column">
                 <h4>最新消息</h4>
                 <hr class="smalline"/>
-                <ul class="footer-recent-news">
-                    <volist name="newPosts" id="vo">
-                        <li><a href="{$vo.post_id|getSingleURLByID}"
-                               title=" {$vo.post_title}"><i class="icon-circle-arrow-right"></i>
-                            {$vo.post_title|mb_substr=0,20,"UTF-8"}</a></li>
+                <recentlist num='5' ul_attr='class="footer-recent-news"'></recentlist>
 
-                    </volist>
-                </ul>
             </div>
 
             <div class="one-fourth column">
                 <h4>友情链接</h4>
                 <hr class="smalline"/>
-                <ul id="footer-recent-news">
-                    <volist name="friendurl" id="vo">
-                        <li><a href="{$vo.link_url}" title=" {$vo.link_name}">
-                            {$vo.link_name}</a></li>
 
-                    </volist>
-
-                </ul>
+                <friendlist num='10' tag="Home" ul_attr='id="footer-recent-news"' ></friendlist>
 
             </div>
 
@@ -91,21 +79,4 @@
 </footer>
 <!-- ==================================================
 Footer / End -->
-
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-48035895-1', 'greencms.net');
-    ga('send', 'pageview');
-
-</script>
+{:get_opinion('foot')}

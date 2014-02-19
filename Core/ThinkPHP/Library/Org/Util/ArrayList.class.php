@@ -28,7 +28,7 @@ class ArrayList implements IteratorAggregate {
     /**
      * 架构函数
      * @access public
-     * @param array|string $elements 初始化数组元素
+     * @param string $elements  初始化数组元素
      */
     public function __construct($elements = array()) {
         if (!empty($elements)) {
