@@ -48,10 +48,15 @@ class IndexController extends HomeBaseController
         $this->display();
     }
 
-
     public function test()
     {
 
+
+    }
+
+    public function tagImport()
+    {
+        if(!file_exists(WEB_CACHE_PATH . '/wordpress.xml'))exit();
 
 
         $wordpress = simplexml_load_file(WEB_CACHE_PATH . '/wordpress.xml');
@@ -61,33 +66,28 @@ class IndexController extends HomeBaseController
             $wordpress_channel->registerXPathNamespace($key, $value);
         }
 
-        $category = $wordpress_channel->xpath('wp:category');
+        $category = $wordpress_channel->xpath('wp:tag');
         foreach ($category as $key => $value) {
             $row = (simplexml_load_string($value->asXML()));
-            $row->cat_name = (simplexml_load_string($row->cat_name->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
+            $row->tag_name = (simplexml_load_string($row->tag_name->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
             $item = object_to_array($row);
-            $cat_temp = array();
-            $cat_temp['cat_id'] = $item['term_id'];
-            $cat_temp['cat_slug'] = $item['category_nicename'];
-            $cat_temp['cat_name'] = $item['cat_name'];
-            $cat_temp['cat_father'] = (int)D('Cats', 'Logic')->detail($item['category_parent']) ['cat_id'];
-            D('Cats', 'Logic')->data($cat_temp)->add();
+            $tag_temp = array();
+            $tag_temp['tag_id'] = $item['term_id'];
+            $tag_temp['tag_slug'] = $item['tag_slug'];
+            $tag_temp['tag_name'] = $item['tag_name'];
+            // $cat_temp['cat_father'] = (int)D('Cats', 'Logic')->detail($item['category_parent']) ['cat_id'];
+            D('Tags', 'Logic')->data($tag_temp)->add();
+
+            dump($tag_temp);
         }
 
 
-        foreach ($wordpress_channel->children() as $child) {
-            //      dump($child);
-            // echo $child->getName() . "\n";
-        }
-
-
-        //  print_array(object_to_array($wordpress_channel));
-        // $this->display();
     }
 
 
     public function catImport()
     {
+        if(!file_exists(WEB_CACHE_PATH . '/wordpress.xml'))exit();
 
         $wordpress = simplexml_load_file(WEB_CACHE_PATH . '/wordpress.xml');
         $namespaces = $wordpress->getNamespaces(true);

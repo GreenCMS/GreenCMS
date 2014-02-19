@@ -42,8 +42,8 @@ return array(
     /**
      * TP 3.1升级
      */
-    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Install'), //配置你原来的分组列表
-    'DEFAULT_MODULE'       => 'Home', //T默认分组
+    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Install','Weixin'), //配置你原来的分组列表
+    'DEFAULT_MODULE'       => 'Home', //T默认分组，
     // 'DEFAULT_M_LAYER'       =>  'Logic', //默认的模型层名称
 
 
