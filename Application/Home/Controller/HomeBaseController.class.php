@@ -31,7 +31,7 @@ abstract class HomeBaseController extends BaseController
 
 
         $this->customConfig();
-        $this->loadTheme();
+       // $this->loadTheme();
 
     }
 
