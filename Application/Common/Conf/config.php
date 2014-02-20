@@ -2,6 +2,9 @@
 return array(
     //'配置项'=>'配置值'
 
+
+    'AUTOLOAD_NAMESPACE' => array('Addons' => './Addons/'), //扩展模块列表    
+
     'SHOW_PAGE_TRACE'      => false,
 
     'URL_MODEL'            => 2,
@@ -42,12 +45,12 @@ return array(
     /**
      * TP 3.1升级
      */
+
     'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Install','Weixin'), //配置你原来的分组列表
     'DEFAULT_MODULE'       => 'Home', //T默认分组，
     // 'DEFAULT_M_LAYER'       =>  'Logic', //默认的模型层名称
 
 
-   'TAGLIB_BUILD_IN'  => 'Green,Cx',
-
     'LOAD_EXT_CONFIG'      => 'config_db,config_log,config_oauth,tags', // 加载扩展配置文件 config_alias,config_db,config_system
+   'TAGLIB_BUILD_IN'  => 'Green,Cx',
 );
