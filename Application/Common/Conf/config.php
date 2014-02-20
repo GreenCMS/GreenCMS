@@ -2,6 +2,14 @@
 return array(
     //'配置项'=>'配置值'
 
+// 数据库配置
+    'DB_TYPE'   => GreenCMS_DB_TYPE,
+    'DB_HOST'   => GreenCMS_DB_HOST,
+    'DB_NAME'   => GreenCMS_DB_NAME,
+    'DB_USER'   => GreenCMS_DB_USR,
+    'DB_PWD'    => GreenCMS_DB_PWD,
+    'DB_PORT'   => GreenCMS_DB_PORT,
+    'DB_PREFIX' => GreenCMS_DB_PREFIX, //测试是为空，生产环境需要自形添加 如 green_
 
     'AUTOLOAD_NAMESPACE' => array('Addons' => './Addons/'), //扩展模块列表    
 
@@ -50,7 +58,7 @@ return array(
     'DEFAULT_MODULE'       => 'Home', //T默认分组，
     // 'DEFAULT_M_LAYER'       =>  'Logic', //默认的模型层名称
 
-
     'LOAD_EXT_CONFIG'      => 'config_db,config_log,config_oauth,tags', // 加载扩展配置文件 config_alias,config_db,config_system
+
    'TAGLIB_BUILD_IN'  => 'Green,Cx',
 );
