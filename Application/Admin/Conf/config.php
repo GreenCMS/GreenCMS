@@ -56,6 +56,8 @@ $menu_arr = array(
             'Custom/menu'   => '菜单管理'
         ),
 
+
+
         'Media'  => array(
             'Media/file'       => '文件管理',
             'Media/backupFile' => '文件备份',
@@ -67,7 +69,6 @@ $menu_arr = array(
             'Access/guest'    => '游客管理',
             'Access/nodelist' => '节点管理',
             'Access/rolelist' => '角色管理',
-            // 'Access/addAdmin' => '添加管理员',
             'Access/addUser'  => '添加用户',
             'Access/addNode'  => '添加节点',
             'Access/addRole'  => '添加角色'
@@ -79,7 +80,7 @@ $menu_arr = array(
             'System/setEmailConfig' => '邮箱配置',
             'System/setSafeConfig'  => '安全选项',
             'System/links'          => '链接管理',
-            'System/update'         => '系统升级',
+//            'System/update'         => '系统升级',
             'System/info'           => '系统信息'
         )
     )

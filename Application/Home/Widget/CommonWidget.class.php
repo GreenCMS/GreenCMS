@@ -17,7 +17,7 @@ use Think\Controller;
 
 class CommonWidget extends Controller
 {
-    public function mainMenu()
+    public function mainMenu($ul_attr='class="navigation"',$li_attr='')
     {
 //        $TagList = new TagsLogic();
 //        $CatList = new CatsLogic();
@@ -35,7 +35,7 @@ class CommonWidget extends Controller
 
 
         $Menu = new MenuLogic();
-        $home_menu = $Menu->genMenu('head');
+        $home_menu = $Menu->genMenu('head',$ul_attr,$li_attr);
 
         $this->assign('home_menu',$home_menu);
 

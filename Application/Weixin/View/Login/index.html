@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <title>Weixin Admin Dashboard </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link href="__PUBLIC__/admin/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/admin/assets/css/metro.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/admin/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/admin/assets/css/login/style.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/admin/assets/css/login/style_responsive.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/admin/assets/css/login/style_default.css" rel="stylesheet" id="style_color"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/assets/uniform/css/uniform.default.css"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="login">
+<!-- BEGIN LOGO -->
+<div class="logo">
+    <img src="__PUBLIC__/admin/assets/img/logo.png" alt=""/>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+    <!-- BEGIN LOGIN FORM -->
+    <form class="form-vertical login-form" action="{:U('Weixin/Login/login')}" method="POST"/>
+    <h3 class="form-title">后台登陆</h3>
+
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-icon left">
+                <i class="icon-user"></i>
+                <input class="m-wrap" name="username" type="text" placeholder="用户名"/>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-icon left">
+                <i class="icon-lock"></i>
+                <input class="m-wrap" name="password" type="password" style="" placeholder="密码"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <label class="checkbox">
+            <input type="checkbox" name="remember" value="1"/> 记住我
+        </label>
+        <button id="login-btn" class="btn green pull-right">
+            登陆 <i class="m-icon-swapright m-icon-white"></i>
+        </button>
+    </div>
+    <div class="forget-password">
+        <h4>忘记密码?</h4>
+
+        <p>
+            点击 <a href="javascript:;" class="" id="forget-password">这里</a>
+            找回密码.
+        </p>
+    </div>
+    </form>
+    <!-- END LOGIN FORM -->
+    <!-- BEGIN FORGOT PASSWORD FORM -->
+    <form class="form-vertical forget-form" action="{:U('/Admin/Login/forgetpass')}"/>
+    <h3 class="">忘记密码 ?</h3>
+
+    <p>输入你注册时候的邮箱.</p>
+
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-icon left">
+                <i class="icon-envelope"></i>
+                <input class="m-wrap" type="text" placeholder="Email"/>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <a href="javascript:;" id="back-btn" class="btn">
+            <i class="m-icon-swapleft"></i> 返回
+        </a>
+        <button id="forget-btn" class="btn green pull-right">
+            提交 <i class="m-icon-swapright m-icon-white"></i>
+        </button>
+    </div>
+    </form>
+    <!-- END FORGOT PASSWORD FORM -->
+</div>
+<!-- END LOGIN -->
+<!-- BEGIN COPYRIGHT -->
+<div class="copyright">
+    2003-{:date('Y')} &copy; <a href="http://www.greencms.net">GreenCMS {:C('software_version')}</a>
+    <br/>Weixin Admin Dashboard.
+    <br/>绿荫工作室 出品
+</div>
+<!-- END COPYRIGHT -->
+<!-- BEGIN JAVASCRIPTS -->
+<script src="__PUBLIC__/admin/assets/js/jquery-1.8.3.min.js"></script>
+<script src="__PUBLIC__/admin/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="__PUBLIC__/admin/assets/uniform/jquery.uniform.min.js"></script>
+<script src="__PUBLIC__/admin/assets/js/jquery.blockui.js"></script>
+<script src="__PUBLIC__/admin/assets/js/app.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        App.initLogin();
+    });
+</script>
+
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

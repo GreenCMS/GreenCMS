@@ -98,15 +98,16 @@ function get_opinion($key)
     return C($key);
 }
 
-function get_kv($key, $cache = true)
+function get_kv($key, $cache = true,$default='')
 {
     if ($cache) {
         $kv_array = C('kv');
         if ($kv_array[$key] != '') return $kv_array[$key];
     }
 
-
     $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
+    if($options['kv_value']=='')
+        return $default;
     return $options['kv_value'];
 }
 

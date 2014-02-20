@@ -83,7 +83,7 @@ function resize() {
 					if(document.documentElement.clientWidth>=1200&&document.documentElement.clientWidth<=1440)
 	{
 		$("#mainWindow img").css("margin-left",moreWidth);
-		$(".containerIndex").css("width","1200px");
+		$(".containerIndex").css("width","90%");
 		$("#globalproductList h1").css("left","565px");
 	}
 	else if(document.documentElement.clientWidth>=900&&document.documentElement.clientWidth<1200)
@@ -104,7 +104,7 @@ function resize() {
 				if(document.documentElement.clientWidth>=1200&&document.documentElement.clientWidth<=1440)
 	{
 		$("#mainWindow img").css("margin-left",moreWidth);
-		$(".containerIndex").css("width","1200px");
+		$(".containerIndex").css("width","90%");
 	}
 	else if(document.documentElement.clientWidth>=900&&document.documentElement.clientWidth<1200)
 	{
