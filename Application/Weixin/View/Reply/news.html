@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="GreenCMS"/>
+    <meta name="keywords" content="GreenCMS"/>
+    <include file="Public:head"/>
+
+    <title>{$action} | {:get_opinion('title')}</title>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    {:W('Common/header')}
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar nav-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        {:W('Common/sideBar')}
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        {$action}
+                        <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{$module_url}">{$module}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li><a href="{$action_url}">{$action}</a></li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                    <form action="{$form_action}" name="change_System" class="form-horizontal"
+                          method="post">
+
+                        <div class="control-group">
+                            <label class="control-label">标题</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="图文消息标题" class="m-wrap large" name="title" value="{$item.title}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">图片链接</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="图片链接，支持JPG、PNG格式，较好的效果为大图360*200，小图200*200"
+                                       class="m-wrap large" name="picurl" value="{$item.picurl}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">网页链接</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="点击图文消息跳转链接" class="m-wrap large"  name="url" value="{$item.url}">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">图文消息描述</label>
+
+                            <div class="controls">
+                                <textarea style="height: 200px;" class="large m-wrap" rows="3" name="description">{$item.description}</textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue"><i class="icon-ok"></i>{$action_name}</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+{:W('Common/footer')}
+<!-- END FOOTER -->
+<include file="Public:foot"/>
+<script>
+    jQuery(document).ready(function () {
+        App.init();
+    });
+</script>
+</body>
+<!-- END BODY -->
+</html>
