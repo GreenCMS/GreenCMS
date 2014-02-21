@@ -25,15 +25,15 @@ class SystemController extends AdminBaseController
 
     public function index()
     {
+
+        $this->assign('feed_open', get_opinion('feed_open'));
         $this->assign('users_can_register', get_opinion('users_can_register'));
         $this->display();
     }
 
     public function indexHandle()
     {
-
         $this->saveConfig();
-
         $this->success('配置成功');
     }
 
@@ -97,8 +97,8 @@ class SystemController extends AdminBaseController
         if (IS_POST) {
 
             if (D('Links', 'Logic')->where(array(
-                'link_id' => $id
-            ))->save($_POST)
+                                                'link_id' => $id
+                                           ))->save($_POST)
             ) {
                 $this->success('链接编辑成功', U('Admin/System/links'));
             } else {
@@ -107,8 +107,8 @@ class SystemController extends AdminBaseController
         } else {
 
             $this->form_url = U('Admin/System/editlink', array(
-                'id' => $id
-            ));
+                                                              'id' => $id
+                                                         ));
             $this->link = D('Links', 'Logic')->detail($id);
             // print_array($this->link);
             $this->action = '编辑链接';
@@ -260,8 +260,8 @@ class SystemController extends AdminBaseController
 
         // 跳转到更新展示页面
         $this->success('更新完毕!', U('Admin/System/over', array(
-            "date" => $date
-        )));
+                                                            "date" => $date
+                                                       )));
     }
 
     public function over()
