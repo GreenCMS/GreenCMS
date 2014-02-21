@@ -28,7 +28,7 @@ class PostController extends HomeBaseController
         $Posts = new PostsLogic();
         $post_res = $Posts->detail($info);
 
-        if(empty($post_res))$this->error404("非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
+        if (empty($post_res)) $this->error404("非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
         $Posts->viewInc($post_res['post_id']);
 
         $this->assign('post', $post_res); // 赋值数据集
@@ -46,7 +46,7 @@ class PostController extends HomeBaseController
 
         $Posts = new PostsLogic();
         $post_res = $Posts->detail($info);
-        if(empty($post_res))$this->error404("非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.");
+        if (empty($post_res)) $this->error404("非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.");
 
         $Posts->viewInc($post_res['post_id']);
 
@@ -58,12 +58,14 @@ class PostController extends HomeBaseController
     /**
      * @function 未知类型单页
      */
-    public function _empty()
+    public function _empty($method, $args)
     {
         //ACTION_NAME
-
+//        dump($method);
+//        dump(I('get.'));
+        $info = I('get.info');
         //TODO 通用模板机制
-        // $this->page( $_GET['info'] );
+        $this->single($info);
 
 
     }
