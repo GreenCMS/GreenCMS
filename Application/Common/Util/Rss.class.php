@@ -73,7 +73,7 @@ class Rss
     /**
      * @var string
      */
-    protected $generator = 'ZTS RSS Generator';
+    protected $generator = 'GreenCMS RSS Generator';
 
 
     /**

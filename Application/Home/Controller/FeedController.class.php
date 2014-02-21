@@ -27,6 +27,7 @@ class FeedController extends HomeBaseController
         if (get_opinion('feed_open') == 0) {
             $this->error404("Feed功能关闭");
         }
+        C('SHOW_CHROME_TRACE')==0;//防止sql输出过多导致header过大
     }
 
     /**
@@ -49,13 +50,13 @@ class FeedController extends HomeBaseController
         foreach ($post_list as $list) {
             $RSS->AddItem(
                 $list ['post_title'],
+                //               $list ['post_id'],
                 'http://'.$_SERVER["SERVER_NAME"].getSingleURLByID($list ['post_id']) ,
                 $list ['post_content'],
                 $list ['post_date']);
         }
 
         $RSS->Display();
-
     }
 
     /**
@@ -70,7 +71,7 @@ class FeedController extends HomeBaseController
         foreach ($post_list as $list) {
             $RSS->AddItem(
                 $list ['post_title'],
-                'http://'.$_SERVER["SERVER_NAME"].getPageURLByID($list ['post_id']) ,
+                'http://' . $_SERVER["SERVER_NAME"] . getPageURLByID($list ['post_id']),
                 $list ['post_content'],
                 $list ['post_date']);
         }
