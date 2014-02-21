@@ -36,9 +36,7 @@ class CatController extends HomeBaseController
         $Posts = new PostsLogic();
         $cat = $Cat->detail($info);
 
-        if (empty($cat)) {
-            $this->error404("非常抱歉，没有这个分类，可能它已经躲起来了");
-        }
+        $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了");
 
         $posts_id = $Cat->getPostsId($cat['cat_id']);
         $count = sizeof($posts_id);

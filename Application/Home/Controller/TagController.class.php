@@ -38,7 +38,7 @@ class TagController extends HomeBaseController
 
         $tag = $Tag->detail($info);
 
-        if (empty($tag)) $this->error404("非常抱歉，没有这个标签，可能它已经躲起来了");
+        $this->if404($tag, "非常抱歉，没有这个标签，可能它已经躲起来了");
 
         $posts_id = $Tag->getPostsId($tag['tag_id']);
         $count = sizeof($posts_id);

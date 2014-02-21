@@ -100,7 +100,6 @@ function getCatURLByID($ID)
 {
     $home_cat_model = get_kv('home_cat_model');
 
-
     $Tags = D('Cats', 'Logic');
     if ($home_cat_model == 'native') {
         $URL = get_url('Cat/detail', array("info" => $ID));

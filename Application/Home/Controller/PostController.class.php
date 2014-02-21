@@ -26,10 +26,12 @@ class PostController extends HomeBaseController
     public function single($info = -1)
     {
         $Posts = new PostsLogic();
-        $post_res = $Posts->detail($info);
 
-        if (empty($post_res)) $this->error404("非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
+        $post_res = $Posts->detail($info);
         $Posts->viewInc($post_res['post_id']);
+
+        $this->if404($post_res, "非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
+//        if (empty($post_res)) $this->error404("非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
 
         $this->assign('post', $post_res); // 赋值数据集
         $this->display('single');
@@ -46,7 +48,7 @@ class PostController extends HomeBaseController
 
         $Posts = new PostsLogic();
         $post_res = $Posts->detail($info);
-        if (empty($post_res)) $this->error404("非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.");
+        $this->if404($post_res, "非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.");
 
         $Posts->viewInc($post_res['post_id']);
 
