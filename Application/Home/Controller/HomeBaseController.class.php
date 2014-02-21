@@ -29,19 +29,11 @@ abstract class HomeBaseController extends BaseController
             $this->redirect('Install/Index/index');
         }
 
-
         $this->customConfig();
-       // $this->loadTheme();
 
     }
 
 
-    public function loadTheme()
-    {
-        $theme_name = get_kv('home_theme');
-        if ($theme_name != '')
-            $this->theme($theme_name);
-    }
 
     /**
      * @function 是否为空
