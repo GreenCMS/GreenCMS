@@ -15,7 +15,7 @@ $menu_arr = array(
         'Posts'  => '文章管理',
         'Data'   => '数据缓存',
         'Media'  => '文件附件',
-        'Custom' => '主题插件',
+        'Custom' => '个性设置',
         'Access' => '权限管理',
         'System' => '系统设置',
     ),
