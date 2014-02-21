@@ -7,7 +7,6 @@
  * Time: 上午11:57
  */
 //ob_start();
-if (version_compare(PHP_VERSION, '5.3.0', '<')) die('require PHP > 5.3.0 !'); //这个是TP3.2的需求,需要namespace
 
 
 /**
@@ -23,8 +22,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
  * 系统调试设置
  * 项目正式部署后请设置为false
  */
-define ('APP_DEBUG', true);
-define ('GreenStudio', true); //绿荫专用
+define('APP_DEBUG', true);
 define('BUILD_DIR_SECURE', false);
 
 /**定义网站根目录
@@ -34,16 +32,15 @@ define("WEB_ROOT", dirname(__FILE__) . '/');
 
 
 if (file_exists(WEB_ROOT . "db_config.php")) require(WEB_ROOT . "db_config.php");
-require(WEB_ROOT . "const_config.php");
-
+if (file_exists(WEB_ROOT . "const_config.php")) require(WEB_ROOT . "const_config.php");
 
 /**
  * 应用目录设置
  */
 define ('APP_PATH', './Application/');
 
-define ('GreenCMS_Version', 'v2.1.0217');
-define ('GreenCMS_Build', '20140217');
+define ('GreenCMS_Version', 'v2.1.0221');
+define ('GreenCMS_Build', '20140221');
 
 /**
  * 引入核心入口
