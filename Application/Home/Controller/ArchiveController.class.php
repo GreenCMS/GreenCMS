@@ -48,7 +48,7 @@ class ArchiveController extends HomeBaseController
         $this->assign('title', '关于"' . $keyword . '"文章搜索结果');
         $this->assign('res404', $res404);
         $this->assign('postslist', $res);
-        $this->assign('page', $pager_bar);
+        $this->assign('pager', $pager_bar);
 
         $this->display('single-list');
 
@@ -62,7 +62,7 @@ class ArchiveController extends HomeBaseController
         //TODO year/month/day 按日月归档
         $PostsList = new PostsLogic();
 
-        $count = $PostsList->countAll(); // 查询满足要求的总记录数
+        $count = $PostsList->countAll('single'); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
@@ -74,7 +74,7 @@ class ArchiveController extends HomeBaseController
         $this->assign('title', '所有文章');
         $this->assign('res404', $res404); // 赋值数据集
         $this->assign('postslist', $res); // 赋值数据集
-        $this->assign('page', $pager_bar); // 赋值分页输出
+        $this->assign('pager', $pager_bar); // 赋值分页输出
 
         $this->display('single-list');
     }
@@ -101,9 +101,26 @@ class ArchiveController extends HomeBaseController
         $this->assign('title', '所有页面');
         $this->assign('res404', $res404); // 赋值数据集
         $this->assign('postslist', $res); // 赋值数据集
-        $this->assign('page', $pager_bar); // 赋值分页输出
+        $this->assign('pager', $pager_bar); // 赋值分页输出
 
         $this->display('single-list');
     }
+
+
+    /**
+     * @function 未知类型
+     */
+    public function _empty($method, $args)
+    {
+        //ACTION_NAME
+//        dump($method);
+//        dump(I('get.'));
+        $info = I('get.info');
+        //TODO 通用类型
+        $this->single($info);
+
+    }
+
+
 
 }
