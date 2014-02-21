@@ -43,7 +43,7 @@ define("System_Backup_PATH", WEB_ROOT . "Data/Backup/");
  */
 define("Upgrade_PATH", WEB_ROOT . "Data/Upgrade/");
 
-/**系统升级文件存放目录
+/**HTML静态缓存存放目录
  */
 define("HTML_PATH", WEB_ROOT . "Data/Temp/HTML/");
 
@@ -51,19 +51,10 @@ define("HTML_PATH", WEB_ROOT . "Data/Temp/HTML/");
  */
 define("Extend_PATH", WEB_ROOT . "Extend/");
 
-
 /**
  */
 define("Plugin_PATH", WEB_ROOT . "Extend/Plugin/");
 
 /**上传文件存放目录
  */
-define("UploadDir", "Upload/");
-
-
-/**Ip.DATA存放目录
- */
-define("IpData", WEB_ROOT . "Data/Ip/UTFWry.dat");
-
-
-
+define("Upload_PATH", "Upload/");

@@ -95,7 +95,7 @@ class PostsController extends AdminBaseController
 
     public function addHandle()
     {
-        $post_id = $_POST['post_id'] ? (int)$_POST['post_id'] : false;
+         $post_id = $_POST['post_id'] ? (int)$_POST['post_id'] : false;
         $data['post_type'] = $_POST['post_type'] ? $_POST['post_type'] : 'single';
         $data['post_title'] = $_POST['post_title'];
         $data['post_content'] = $_POST['post_content'];

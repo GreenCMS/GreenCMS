@@ -94,12 +94,18 @@ function is_empty($test)
 /**
  *
  */
-function get_opinion($key)
+function get_opinion($key, $db = false , $cache = true)
 {
-    return C($key);
+    if (!$db)
+        return C($key);
+    else {
+        $res = D('Options')->cache($cache)->where(array('option_name' => $key))->find();
+        return $res['option_value'];
+    }
+
 }
 
-function get_kv($key, $cache = true,$default='')
+function get_kv($key, $cache = true, $default = '')
 {
     if ($cache) {
         $kv_array = C('kv');
@@ -107,7 +113,7 @@ function get_kv($key, $cache = true,$default='')
     }
 
     $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
-    if($options['kv_value']=='')
+    if ($options['kv_value'] == '')
         return $default;
     return $options['kv_value'];
 }
@@ -315,15 +321,17 @@ function remove_xss($val)
  * @param mixed $params 传入参数
  * @return void
  */
-function hook($hook,$params=array()){
-    \Think\Hook::listen($hook,$params);
+function hook($hook, $params = array())
+{
+    \Think\Hook::listen($hook, $params);
 }
 
 /**
  * 获取插件类的类名
  * @param strng $name 插件名
  */
-function get_addon_class($name){
+function get_addon_class($name)
+{
     $class = "Addons\\{$name}\\{$name}Addon";
     return $class;
 }
@@ -332,12 +340,13 @@ function get_addon_class($name){
  * 获取插件类的配置文件数组
  * @param string $name 插件名
  */
-function get_addon_config($name){
+function get_addon_config($name)
+{
     $class = get_addon_class($name);
-    if(class_exists($class)) {
+    if (class_exists($class)) {
         $addon = new $class();
         return $addon->getConfig();
-    }else {
+    } else {
         return array();
     }
 }
@@ -347,15 +356,16 @@ function get_addon_config($name){
  * @param string $url url
  * @param array $param 参数
  */
-function addons_url($url, $param = array()){
-    $url        = parse_url($url);
-    $case       = C('URL_CASE_INSENSITIVE');
-    $addons     = $case ? parse_name($url['scheme']) : $url['scheme'];
+function addons_url($url, $param = array())
+{
+    $url = parse_url($url);
+    $case = C('URL_CASE_INSENSITIVE');
+    $addons = $case ? parse_name($url['scheme']) : $url['scheme'];
     $controller = $case ? parse_name($url['host']) : $url['host'];
-    $action     = trim($case ? strtolower($url['path']) : $url['path'], '/');
+    $action = trim($case ? strtolower($url['path']) : $url['path'], '/');
 
     /* 解析URL带的参数 */
-    if(isset($url['query'])){
+    if (isset($url['query'])) {
         parse_str($url['query'], $query);
         $param = array_merge($query, $param);
     }
@@ -372,35 +382,36 @@ function addons_url($url, $param = array()){
 }
 
 /**
-* 对查询结果集进行排序
-* @access public
-* @param array $list 查询结果
-* @param string $field 排序的字段名
-* @param array $sortby 排序类型
-* asc正向排序 desc逆向排序 nat自然排序
-* @return array
-*/
-function list_sort_by($list,$field, $sortby='asc') {
-   if(is_array($list)){
-       $refer = $resultSet = array();
-       foreach ($list as $i => $data)
-           $refer[$i] = &$data[$field];
-       switch ($sortby) {
-           case 'asc': // 正向排序
+ * 对查询结果集进行排序
+ * @access public
+ * @param array $list 查询结果
+ * @param string $field 排序的字段名
+ * @param array $sortby 排序类型
+ * asc正向排序 desc逆向排序 nat自然排序
+ * @return array
+ */
+function list_sort_by($list, $field, $sortby = 'asc')
+{
+    if (is_array($list)) {
+        $refer = $resultSet = array();
+        foreach ($list as $i => $data)
+            $refer[$i] = & $data[$field];
+        switch ($sortby) {
+            case 'asc': // 正向排序
                 asort($refer);
                 break;
-           case 'desc':// 逆向排序
+            case 'desc': // 逆向排序
                 arsort($refer);
                 break;
-           case 'nat': // 自然排序
+            case 'nat': // 自然排序
                 natcasesort($refer);
                 break;
-       }
-       foreach ( $refer as $key=> $val)
-           $resultSet[] = &$list[$key];
-       return $resultSet;
-   }
-   return false;
+        }
+        foreach ($refer as $key => $val)
+            $resultSet[] = & $list[$key];
+        return $resultSet;
+    }
+    return false;
 }
 
 /**
@@ -409,16 +420,18 @@ function list_sort_by($list,$field, $sortby='asc') {
  * @param  string $glue 分割符
  * @return array
  */
-function str2arr($str, $glue = ','){
+function str2arr($str, $glue = ',')
+{
     return explode($glue, $str);
 }
 
 /**
  * 数组转换为字符串，主要用于把分隔符调整到第二个参数
- * @param  array  $arr  要连接的数组
+ * @param  array $arr  要连接的数组
  * @param  string $glue 分割符
  * @return string
  */
-function arr2str($arr, $glue = ','){
+function arr2str($arr, $glue = ',')
+{
     return implode($glue, $arr);
 }
