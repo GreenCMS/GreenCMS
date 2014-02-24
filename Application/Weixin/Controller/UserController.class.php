@@ -13,14 +13,6 @@ namespace Weixin\Controller;
 class UserController extends WeixinBaseController
 {
 
-    public function test()
-    {
-
-        $User = new \Weixin\Event\UserEvent();
-        $User->sendMessage('ovTdAuEr7c7CNNgOfw6lT8Kp1010','TEST主动发送');
-
-    }
-
     public function index()
     {
 //        $this->updateall();

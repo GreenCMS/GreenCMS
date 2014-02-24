@@ -65,7 +65,7 @@ function simple_post($url,$data){
     }
 
     curl_close($ch);
-    echo $tmpInfo;
+    return $tmpInfo;
 
 
 }

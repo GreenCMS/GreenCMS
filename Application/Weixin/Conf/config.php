@@ -10,12 +10,13 @@
 $menu_arr = array(
 
     'admin_big_menu' => array(
-        'Home'   => '首页',
-        'Reply'  => '预设回复',
+        'Home'    => '首页',
+        'Reply'   => '预设回复',
 //        'Menu'   => '菜单管理',
-        'Rule'   => '回复规则',
-        'User'   => '用户查看',
-        'System' => '系统设置',
+        'Rule'    => '回复规则',
+        'User'    => '用户查看',
+        'Message' => '消息管理',
+        'System'  => '系统设置',
     ),
 
     'admin_sub_menu' => array(
@@ -48,6 +49,13 @@ $menu_arr = array(
         'User'   => array(
             'User/index' => '用户管理',
         ),
+        'Message'   => array(
+            'Message/index' => '消息记录',
+            'Message/new' => '尚未回复',
+            'Message/send' => '发送消息',
+
+        ),
+
 
 
         'System' => array(
@@ -87,11 +95,11 @@ $config_rbac = array(
 
 $setting = array(
 
-    'URL_MODEL'                => 0,
-    'SHOW_PAGE_TRACE'          => false,
-    'SHOW_CHROME_TRACE'        => false,
+    'URL_MODEL'         => 0,
+    'SHOW_PAGE_TRACE'   => false,
+    'SHOW_CHROME_TRACE' => false,
 
-    'Weixin_log'               => true,
+    'Weixin_log'        => true,
 
 );
 

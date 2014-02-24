@@ -87,7 +87,6 @@ class UserEvent extends WeixinCoreController
     public function sendMessage($openid, $content = '', $msgtype = 'text')
     {
         $ACCESS_TOKEN = $this->getAccess();
-        dump($ACCESS_TOKEN);
 
         if ($msgtype == 'text') {
             $data['touser']=$openid;
@@ -98,7 +97,6 @@ class UserEvent extends WeixinCoreController
 
             $url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" . $ACCESS_TOKEN;
             $res=json_decode(simple_post($url, $json),true);
-
 
             return $res;
         }
