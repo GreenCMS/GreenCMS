@@ -10,10 +10,10 @@
 namespace Weixin\Controller;
 
 
-
 class HomeController extends WeixinBaseController
 {
-    public function index(){
+    public function index()
+    {
         $this->display();
     }
 

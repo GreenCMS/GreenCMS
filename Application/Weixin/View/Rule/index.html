@@ -86,10 +86,10 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 8px;">ID</th>
-                                    <th>action_type</th>
-                                    <th>action_name</th>
-                                    <th>reply_type</th>
-                                    <th>reply_id</th>
+                                    <th>事件类型</th>
+                                    <th>键值或者关键字</th>
+                                    <th>返回类型</th>
+                                    <th>返回内容</th>
 
                                     <th style="width:150px;">操作</th>
 
@@ -99,9 +99,9 @@
                                 <foreach name="weixinaction" item="v">
                                     <tr class="odd gradeX">
                                         <td>{$v.wx_action_id}</td>
-                                        <td>{$v.action_type}</td>
+                                        <td>{$v.action_type|getRealText}</td>
                                         <td>{$v.action_name}</td>
-                                        <td>{$v.reply_type}</td>
+                                        <td>{$v.reply_type|getRealText}</td>
                                         <td>{$v.reply_id}</td>
                                         <td>
                                             <a class="btn mini" href="{:U('Weixin/Rule/edit', array('id' => $v['wx_action_id']))}">编辑</a>

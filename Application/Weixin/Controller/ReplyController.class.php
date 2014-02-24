@@ -38,7 +38,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->data($data)->add();
 
         if ($res) {
-            $this->success('添加成功');
+            $this->success('添加成功', 'Weixin/Reply/index');
         } else {
             $this->error('添加失败');
         }
@@ -65,7 +65,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->where(array('wx_re_id' => $id))->data($data)->save();
 
         if ($res) {
-            $this->success('编辑成功');
+            $this->success('编辑成功', 'Weixin/Reply/index');
         } else {
             $this->error('编辑失败或者是没有改变');
         }
@@ -88,7 +88,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->data($data)->add();
 
         if ($res) {
-            $this->success('添加成功');
+            $this->success('添加成功', 'Weixin/Reply/index');
         } else {
             $this->error('添加失败');
         }
@@ -126,7 +126,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->where(array('wx_re_id' => $id))->data($data)->save();
 
         if ($res) {
-            $this->success('编辑成功');
+            $this->success('编辑成功', 'Weixin/Reply/index');
         } else {
             $this->error('编辑失败或者是没有改变');
         }
@@ -140,7 +140,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->data($data)->add();
 
         if ($res) {
-            $this->success('添加成功');
+            $this->success('添加成功', 'Weixin/Reply/index');
         } else {
             $this->error('添加失败');
         }
@@ -152,7 +152,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->where(array('wx_re_id' => $id))->delete();
 
         if ($res) {
-            $this->success('删除成功');
+            $this->success('删除成功', 'Weixin/Reply/index');
         } else {
             $this->error('删除失败');
         }

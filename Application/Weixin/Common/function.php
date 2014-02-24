@@ -7,11 +7,50 @@
  * Time: 下午1:58
  */
 
-//创建菜单
-function createMenu($data, $ACCESS_TOKEN)
+function getRealText($keyword)
 {
+    if ($keyword == 'text')
+        return '文本';
+    elseif ($keyword == 'click') {
+        return '点击';
+    } elseif ($keyword == 'news') {
+        return '图文';
+    } elseif ($keyword == 'text') {
+        return '文本';
+    } elseif ($keyword == 'image') {
+        return '图片';
+    }
+
+}
+
+function getMenuButtons()
+{
+    $menu = C('Weixin_menu');
+    $menu = json_decode($menu, true);
+    $array = $menu['button'];
+
+    static $result_array = array();
+    foreach ($array as $value) {
+        if ($value['name'] != '' && $value['key'] != '') {
+            $result_array [$value['key']] = $value['name'];
+        }
+        if (!empty($value['sub_button'])) {
+            foreach ($value['sub_button'] as $value2) {
+                if ($value2['name'] != '' && $value2['key'] != '') {
+                    $result_array [$value2['key']] = $value2['name'];
+                }
+            }
+        }
+    }
+    return $result_array;
+}
+
+
+function simple_post($url,$data){
+
+
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" . $ACCESS_TOKEN);
+    curl_setopt($ch, CURLOPT_URL,$url );
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -26,20 +65,7 @@ function createMenu($data, $ACCESS_TOKEN)
     }
 
     curl_close($ch);
-    return $tmpInfo;
+    echo $tmpInfo;
+
 
 }
-
-//获取菜单
-function getMenu($ACCESS_TOKEN)
-{
-    return file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=" . $ACCESS_TOKEN);
-}
-
-//删除菜单
-function deleteMenu($ACCESS_TOKEN)
-{
-    return file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=" . $ACCESS_TOKEN);
-}
-
-
