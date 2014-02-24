@@ -8,8 +8,8 @@
  */
 
 namespace Home\Controller;
-use Common\Util\GreenPage;
 use Common\Logic\PostsLogic;
+use Common\Util\GreenPage;
 
 /**
  * Class ArchiveController
@@ -59,17 +59,24 @@ class ArchiveController extends HomeBaseController
      */
     public function single()
     {
-        //TODO year/month/day 按日月归档
+        $year = I('get.year', '%');
+        $month = I('get.month', '%');
+        $day = I('get.day', '%');
+
+        if ($year != '') {
+            $map['post_date'] = array('like', $year . '-' . $month . '-' . $day . '%');
+        }
+
         $PostsList = new PostsLogic();
 
-        $count = $PostsList->countAll('single'); // 查询满足要求的总记录数
+        $count = $PostsList->countAll('single', $map); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER'));
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $res = $PostsList->getList($limit, 'single', 'post_id desc', true);
+            $res = $PostsList->getList($limit, 'single', 'post_id desc', true, $map);
         }
         $this->assign('title', '所有文章');
         $this->assign('res404', $res404); // 赋值数据集
@@ -85,18 +92,24 @@ class ArchiveController extends HomeBaseController
      */
     public function page()
     {
-        //TODO year/month/day  按日月归档
+        $year = I('get.year', '%');
+        $month = I('get.month', '%');
+        $day = I('get.day', '%');
+
+        if ($year != '') {
+            $map['post_date'] = array('like', $year . '-' . $month . '-' . $day . '%');
+        }
 
         $PostsList = new PostsLogic();
 
-        $count = $PostsList->countAll('page'); // 查询满足要求的总记录数
+        $count = $PostsList->countAll('page', $map); // 查询满足要求的总记录数
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER'));
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $res = $PostsList->getList($limit, 'page', 'post_id desc', true);
+            $res = $PostsList->getList($limit, 'page', 'post_id desc', true, $map);
         }
         $this->assign('title', '所有页面');
         $this->assign('res404', $res404); // 赋值数据集
@@ -120,7 +133,6 @@ class ArchiveController extends HomeBaseController
         $this->single($info);
 
     }
-
 
 
 }
