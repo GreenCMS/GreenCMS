@@ -32,6 +32,7 @@ class ArchiveController extends HomeBaseController
      */
     public function search($keyword = '')
     {
+        $info['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
         $info['post_content|post_title'] = array('like', "%$keyword%");
 
         $PostsList = new PostsLogic();
@@ -59,13 +60,8 @@ class ArchiveController extends HomeBaseController
      */
     public function single()
     {
-        $year = I('get.year', '%');
-        $month = I('get.month', '%');
-        $day = I('get.day', '%');
+        $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
 
-        if ($year != '') {
-            $map['post_date'] = array('like', $year . '-' . $month . '-' . $day . '%');
-        }
 
         $PostsList = new PostsLogic();
 
@@ -92,13 +88,7 @@ class ArchiveController extends HomeBaseController
      */
     public function page()
     {
-        $year = I('get.year', '%');
-        $month = I('get.month', '%');
-        $day = I('get.day', '%');
-
-        if ($year != '') {
-            $map['post_date'] = array('like', $year . '-' . $month . '-' . $day . '%');
-        }
+        $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
 
         $PostsList = new PostsLogic();
 
