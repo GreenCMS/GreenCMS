@@ -103,11 +103,11 @@
                                         <td><img src="{$v.headimgurl}"></td>
                                         <td>{:date ('Y-m-d H:i',$v['subscribe_time']) }</td>
                                         <td>
-                                            <a class="btn mini green">发送消息</a>
+                                             <a class="btn mini" href="{:U('Weixin/Message/send',array('openid'=>$v['openid']))}">发送消息</a>
 
                                             <a class="btn mini blue">无</a>
 
-                                            <a class="btn mini">无</a>
+                                            <a class="btn mini green">无</a>
                                         </td>
 
 
