@@ -1,0 +1,11 @@
+Upload
+
+DBbackup
+Log
+Temp
+.idea
+/Data/Install/install.lock
+.tmb
+.quarantine
+
+/db_config.php
