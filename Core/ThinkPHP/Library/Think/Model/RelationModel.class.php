@@ -174,8 +174,11 @@ class RelationModel extends Model
                             } else {
                                 $mappingFk = !empty($val['foreign_key']) ? $val['foreign_key'] : strtolower($model->getModelName()) . '_id'; //  关联外键
                             }
+                            //Patch for thinkphp3.2 by GREENCMS
+                            $mapping_foreign_key = !empty($val['mapping_foreign_key']) ? $val['mapping_foreign_key'] : $model->getPk();
+
                             $fk = $result[$mappingFk];
-                            $mappingCondition .= " AND {$model->getPk()}='{$fk}'";
+                            $mappingCondition .= " AND {$mapping_foreign_key}='{$fk}'";
                             $relationData = $model->where($mappingCondition)->field($mappingFields)->find();
                             if (!empty($val['relation_deep'])) {
                                 $model->getRelation($relationData, $val['relation_deep']);
