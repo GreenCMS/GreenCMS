@@ -1,3 +1,4 @@
+/db_config.php
 /Upload/**
 /Data/DBbackup/*.sql
 /Data/DBbackup/**/*.zip
@@ -15,7 +16,7 @@
 *.log
 .idea/
 .idea/*
-/db_config.php
- 
+
 /Data/Install/install.lock
 /Data/Temp
+/db_config.php
