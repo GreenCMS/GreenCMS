@@ -15,7 +15,7 @@
 *.log
 .idea/
 .idea/*
-
+/db_config.php
  
 /Data/Install/install.lock
 /Data/Temp
