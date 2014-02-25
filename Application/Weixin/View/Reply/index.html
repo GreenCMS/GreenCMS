@@ -104,7 +104,7 @@
                                     <th style="width: 8px;">ID</th>
                                     <th>类型</th>
                                     <th>预览</th>
-                                    <th style="width:50px;">分组</th>
+                                    <th style="width:50px;">预览</th>
                                     <th style="width:130px;">发布日期</th>
                                     <th style="width:150px;">操作</th>
 
@@ -115,10 +115,12 @@
                                     <tr class="odd gradeX">
                                         <td> {$v.wx_re_id}
                                         </td>
-                                        <td>{$v.type}</td>
+                                        <td>{$v.type|getRealText}</td>
                                         <td>{$v['content']|is_empty|mb_substr=0,10,"UTF-8"}
-                                            {$v['title']|mb_substr=0,10,"UTF-8"}                                        </td>
-                                        <td>{$v['group']|is_empty}</td>
+                                            {$v['title']|mb_substr=0,10,"UTF-8"}
+
+                                        </td>
+                                        <td> <img src="{$v['picurl']}" /></td>
                                         <td>{:getTimestamp($v['time'],'Y-m-d H:i') }</td>
                                         <td>
                                             <a class="btn mini" href="{:U('Weixin/Reply/'.$v['type'].'Edit', array('id' => $v['wx_re_id']))}">编辑</a>

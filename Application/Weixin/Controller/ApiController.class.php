@@ -9,7 +9,6 @@
 
 namespace Weixin\Controller;
 
-use Weixin\Event\MenuEvent;
 use Weixin\Util\ThinkWechat;
 use Weixin\Util\ZTSWechat;
 
@@ -61,9 +60,10 @@ class ApiController extends WeixinCoreController
                 $Weixinlog->data($data)->add();
             }
 
-
-            $reply = new ZTSWechat ($data);
             $keyword = trim($keyword);
+
+            $Text = new \Weixin\Event\TextEvent();
+
             if ($keyword == "hi" || $keyword == "hello" || $keyword == "你好" || $keyword == "您好") {
                 $contentStr = "欢迎使用,回复help获得使用帮助"; // .$toUsername
             } else if ($keyword == "help" || $keyword == "HELP") {
@@ -71,9 +71,9 @@ class ApiController extends WeixinCoreController
                 $contentStr .= "weather城市 查询天气\r\n";
             } else if ($keyword == "weather" || preg_match('/weather([^<>]+)/', $keyword)) {
                 $keyword = substr($keyword, 7);
-                $contentStr = $reply->weather($keyword);
+                $contentStr = $Text->weather($keyword);
             } else {
-                $contentStr = $reply->wechat($data);
+                $contentStr = $Text->wechat($data);
             }
 
             $reply = array(
@@ -94,7 +94,7 @@ class ApiController extends WeixinCoreController
             //http://api.map.baidu.com/geocoder/v2/?ak=96a6bf4739da4e7c5bf6e916ff1ad51c&callback=renderReverse&location=32.106186,118.813850&output=json&pois=1
             $reply = new ZTSWechat ($data);
 
-            $contentStr =$reply->poi($data);
+            $contentStr = $reply->poi($data);
 
             $reply = array(
                 $contentStr,

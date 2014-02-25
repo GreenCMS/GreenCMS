@@ -12,7 +12,7 @@ namespace Weixin\Controller;
 use Common\Controller\BaseController;
 use Org\Util\Rbac;
 
-class WeixinBaseController extends BaseController
+class WeixinBaseController extends WeixinCoreController
 {
     public function __construct()
     {

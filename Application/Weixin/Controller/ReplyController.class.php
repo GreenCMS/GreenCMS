@@ -83,15 +83,66 @@ class ReplyController extends WeixinBaseController
 
     public function picAddHandle()
     {
-        $data = I('post.');
-        $data['type'] = "image";
-        $res = D('Weixinre')->data($data)->add();
 
-        if ($res) {
-            $this->success('添加成功', 'Weixin/Reply/index');
+        $config = array(
+            "savePath"   => (Upload_PATH . 'Weixin/' . date('Y') . '/' . date('m') . '/'),
+            "maxSize"    => 30000, // 单位KB
+            "allowFiles" => array(".jpg")
+        );
+
+        $upload = new \Common\Util\Uploader ("img", $config);
+
+        $info = $upload->getFileInfo();
+        $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
+
+        if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
+            $this->error('上传失败' . $info['state']);
         } else {
-            $this->error('添加失败');
+
         }
+
+        $image = new \Think\Image();
+        $image->open(WEB_ROOT . $info['url']);
+        $image->thumb(150, 150)->save(WEB_ROOT . $info['url']);
+        $ACCESS_TOKEN = $this->getAccess();
+
+        $post_data = array(
+            "media" => '@' . WEB_ROOT . $info['url']
+        );
+
+        $URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=$ACCESS_TOKEN&type=image";
+        $res = json_decode(simple_post($URL, $post_data), true);
+
+        dump($res);
+
+        if ($res['errcode'] != '') {
+            $this->error('上传失败' . $res['errmsg']);
+        } else {
+
+            $data['type'] = $res['type'];
+            $data['mediaId'] = $res['media_id'];
+            $data['picurl'] = $img_url;
+            $res = D('Weixinre')->data($data)->add();
+
+            if ($res) {
+                $this->success('上传成功！');
+            }
+
+//
+        }
+        //else { // 上传成功
+//            $this->success('上传成功！');
+//        }
+
+//        $data = I('post.');
+//        $data['type'] = "image";
+//        $res = D('Weixinre')->data($data)->add();
+//
+//        if ($res) {
+//            $this->success('添加成功', 'Weixin/Reply/index');
+//        } else {
+//            $this->error('添加失败');
+//        }
 
     }
 
@@ -137,6 +188,25 @@ class ReplyController extends WeixinBaseController
     {
         $data = I('post.');
         $data['type'] = "news";
+//        if(!empty($_FILES['img'])){
+        $config = array(
+            "savePath"   => (Upload_PATH . 'Weixin/' . date('Y') . '/' . date('m') . '/'),
+            "maxSize"    => 300000, // 单位KB
+            "allowFiles" => array(".jpg", ".png")
+        );
+
+        $upload = new \Common\Util\Uploader ("img", $config);
+
+        $info = $upload->getFileInfo();
+        $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
+
+        if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
+            $this->error('上传失败' . $info['state']);
+        } else {
+            $data['picurl'] = $img_url;
+        }
+//        }
+
         $res = D('Weixinre')->data($data)->add();
 
         if ($res) {
