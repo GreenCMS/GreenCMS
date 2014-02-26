@@ -126,8 +126,35 @@ class SystemController extends AdminBaseController
     public function editlink($id)
     {
         if (IS_POST) {
+            $data = I('post.');
 
-            if (D('Links', 'Logic')->where(array('link_id' => $id))->save($_POST)
+            if ($_FILES['img']['size']!=0) {
+
+                $config = array(
+                    "savePath"   => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
+                    "maxSize"    => 300000, // 单位KB
+                    "allowFiles" => array(".jpg", ".png")
+                );
+
+                $upload = new \Common\Util\Uploader ("img", $config);
+
+                $info = $upload->getFileInfo();
+
+                $image = new \Think\Image();
+                $image->open(WEB_ROOT . $info['url']);
+                $image->thumb(200, 150)->save(WEB_ROOT . $info['url']);
+
+                $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
+
+                if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
+                    $this->error('上传失败' . $info['state']);
+                } else {
+                    unset($data['img']);
+                    $data['link_img'] = $img_url;
+                }
+            }
+
+             if (D('Links', 'Logic')->where(array('link_id' => $id))->save($data)
             ) {
                 $this->success('链接编辑成功', U('Admin/System/links'));
             } else {
