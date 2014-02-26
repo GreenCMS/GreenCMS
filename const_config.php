@@ -17,12 +17,12 @@
  * 缓存目录设置
  * 此目录必须可写，建议移动到非WEB目录
  */
-define ('RUNTIME_PATH', './Data/Temp/');
+define ('RUNTIME_PATH', WEB_ROOT . 'Data/Temp/');
 
 /** 定义项目日志文件路径
  *  此目录必须可写，建议移动到非WEB目录
  */
-define('LOG_PATH', "./Data/Log/");
+define('LOG_PATH', WEB_ROOT . "Data/Log/");
 
 /**定义Cache目录
  *  此目录必须可写，建议移动到非WEB目录
@@ -39,11 +39,13 @@ define("DB_Backup_PATH", WEB_ROOT . "Data/DBbackup/");
  */
 define("System_Backup_PATH", WEB_ROOT . "Data/Backup/");
 
-/**系统升级文件存放目录
+/**
+ * 系统升级文件存放目录
  */
 define("Upgrade_PATH", WEB_ROOT . "Data/Upgrade/");
 
-/**HTML静态缓存存放目录
+/**
+ * HTML静态缓存存放目录
  */
 define("HTML_PATH", WEB_ROOT . "Data/Temp/HTML/");
 
@@ -55,6 +57,7 @@ define("Extend_PATH", WEB_ROOT . "Extend/");
  */
 define("Plugin_PATH", WEB_ROOT . "Extend/Plugin/");
 
-/**上传文件存放目录
+/**
+ * 上传文件存放目录
  */
 define("Upload_PATH", "Upload/");
