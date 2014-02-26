@@ -12,6 +12,7 @@
     <meta name="description" content="GreenCMS"/>
     <meta name="keywords" content="GreenCMS"/>
     <include file="Public:head"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
 
     <title>{$action} | {:get_opinion('title')}</title>
 </head>
@@ -69,7 +70,7 @@
             <div class="row-fluid">
                 <div class="span12">
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                    <form action="{$form_url}" name="change_System" class="form-horizontal" method="post">
+                    <form action="{$form_url}" name="change_System" class="form-horizontal" method="post"   enctype="multipart/form-data">
                         <div class="control-group">
                             <label class="control-label">链接地址</label>
 
@@ -150,6 +151,40 @@
                                 </label>
                             </div>
                         </div>
+
+
+
+
+                        <div class="control-group">
+                            <label class="control-label">图片上传</label>
+
+                            <div class="controls">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img src="{$imgurl}" alt=""/>
+                                    </div>
+                                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                    <div>
+													<span class="btn btn-file"><span class="fileupload-new">选择图片</span>
+													<span class="fileupload-exists">改变</span>
+													<input type="file" class="default"  name="img"/></span>
+                                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                    </div>
+                                </div>
+
+                                <span class="label label-important">注意!</span>
+											<span>
+											实时预览支持最新版Firefox, Chrome, Opera,
+											Safari 和 Internet Explorer 10 以上版本。
+
+											</span>
+                            </div>
+                        </div>
+
+
+
+
+
                         <div class="form-actions">
                             <button type="submit" class="btn blue"><i class="icon-ok"></i> {$buttom}</button>
                         </div>
@@ -168,9 +203,14 @@
 {:W('Common/footer')}
 <!-- END FOOTER -->
 <include file="Public:foot"/>
+<script type="text/javascript" src="__PUBLIC__/admin/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<script src="__PUBLIC__/admin/assets/scripts/form-components.js"></script>
 <script>
     jQuery(document).ready(function () {
         App.init();
+        FormComponents.init();
+
     });
 </script>
 </body>

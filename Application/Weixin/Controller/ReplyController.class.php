@@ -113,7 +113,6 @@ class ReplyController extends WeixinBaseController
         $URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=$ACCESS_TOKEN&type=image";
         $res = json_decode(simple_post($URL, $post_data), true);
 
-        dump($res);
 
         if ($res['errcode'] != '') {
             $this->error('上传失败' . $res['errmsg']);
@@ -125,30 +124,19 @@ class ReplyController extends WeixinBaseController
             $res = D('Weixinre')->data($data)->add();
 
             if ($res) {
-                $this->success('上传成功！');
+                $this->success('上传成功！', 'Weixin/Reply/index');
             }
 
 //
         }
-        //else { // 上传成功
-//            $this->success('上传成功！');
-//        }
 
-//        $data = I('post.');
-//        $data['type'] = "image";
-//        $res = D('Weixinre')->data($data)->add();
-//
-//        if ($res) {
-//            $this->success('添加成功', 'Weixin/Reply/index');
-//        } else {
-//            $this->error('添加失败');
-//        }
 
     }
 
 
     public function news()
     {
+        $this->assign('imgurl', __ROOT__ . '/Public/share/img/no+image.gif');
         $this->assign('form_action', U('Weixin/Reply/newsAddHandle'));
         $this->assign('action_name', '添加');
         $this->display();
@@ -161,6 +149,8 @@ class ReplyController extends WeixinBaseController
         $this->assign('action_url', U('Weixin/Reply/textEdit', array('id' => $id)));
 
         $item = D('Weixinre')->where(array('wx_re_id' => $id))->find();
+        $this->assign('imgurl', $item['picurl']);
+
         $this->assign('item', $item);
         $this->assign('form_action', U('Weixin/Reply/newsEditHandle', array('id' => $id)));
 
@@ -172,8 +162,30 @@ class ReplyController extends WeixinBaseController
 
     public function newsEditHandle($id)
     {
+
+
         $data = I('post.');
         $data['type'] = "news";
+        if ($_FILES['img']['size']!=0) {
+            $config = array(
+                "savePath"   => (Upload_PATH . 'Weixin/' . date('Y') . '/' . date('m') . '/'),
+                "maxSize"    => 300000, // 单位KB
+                "allowFiles" => array(".jpg", ".png")
+            );
+
+            $upload = new \Common\Util\Uploader ("img", $config);
+
+            $info = $upload->getFileInfo();
+            $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
+
+            if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
+                $this->error('上传失败' . $info['state']);
+            } else {
+                $data['picurl'] = $img_url;
+            }
+        }
+
+
         $res = D('Weixinre')->where(array('wx_re_id' => $id))->data($data)->save();
 
         if ($res) {
