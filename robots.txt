@@ -5,8 +5,10 @@
 
 User-agent: *
 
+Disallow: /Addons/
 Disallow: /Extend/
 Disallow: /Data/
-Disallow: /Dev/
+Disallow: /Public/
 Disallow: /Core/
 Disallow: /admin.php
+Disallow: /install.php
