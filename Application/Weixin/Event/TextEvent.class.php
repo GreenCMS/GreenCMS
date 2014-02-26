@@ -18,6 +18,9 @@ class TextEvent extends WeixinCoreController
     public function wechat($keyword)
     {
 
+        $contentStr='您的留言我们已经收到';
+        return $contentStr;
+
     }
 
     public function weather($keyword)
@@ -42,6 +45,28 @@ class TextEvent extends WeixinCoreController
 
         return $contentStr;
     }
+
+
+    public function poi($position)
+    {
+
+        $url = 'http://api.map.baidu.com/geocoder/v2/?ak=96a6bf4739da4e7c5bf6e916ff1ad51c';
+
+        $location = $position['Location_X'] . ',' . $position['Location_Y'];
+        $infourl = $url . '&location=' . $location . '&output=json&pois=1';
+        $JsonInfo = file_get_contents($infourl);
+        $poiInfo = json_decode($JsonInfo, true);
+        $city = $poiInfo['result']['addressComponent']['city'];
+        $length = mb_strlen($city, 'UTF8') - 1;
+        $city = mb_substr($city,
+            0, $length, 'UTF8');
+
+         $contentStr = $this->weather($city);
+
+        return $contentStr;
+
+    }
+
 
 
 }

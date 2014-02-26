@@ -64,6 +64,19 @@
                     <form action="{:U('Weixin/System/indexHandle')}" name="change_System" class="form-horizontal"
                           method="post">
 
+
+                        <div class="control-group">
+                            <label class="control-label">微信Token</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="weixin_token"
+                                       value="{:get_opinion('weixin_token')}"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+
+
                         <div class="control-group">
                             <label class="control-label">网站标题</label>
 

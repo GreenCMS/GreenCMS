@@ -10,7 +10,6 @@
 namespace Weixin\Controller;
 
 use Weixin\Util\ThinkWechat;
-use Weixin\Util\ZTSWechat;
 
 class ApiController extends WeixinCoreController
 {
@@ -20,7 +19,7 @@ class ApiController extends WeixinCoreController
 
         \Think\Log::record('收到消息' . date('Ymd H:m:s'));
 
-        $weixin = new ThinkWechat ('zts147258369');
+        $weixin = new ThinkWechat (get_opinion('weixin_token'));
 
         /* 获取请求信息 */
         $data = $weixin->request();
@@ -70,7 +69,7 @@ class ApiController extends WeixinCoreController
                 $contentStr = "欢迎使用会呼吸,使用方法:\r\n";
                 $contentStr .= "weather城市 查询天气\r\n";
             } else if ($keyword == "weather" || preg_match('/weather([^<>]+)/', $keyword)) {
-                $keyword = substr($keyword, 7);
+                $keyword = trim(substr($keyword, 7));
                 $contentStr = $Text->weather($keyword);
             } else {
                 $contentStr = $Text->wechat($data);
@@ -92,9 +91,9 @@ class ApiController extends WeixinCoreController
         } elseif ('location' == $data ['MsgType']) {
 
             //http://api.map.baidu.com/geocoder/v2/?ak=96a6bf4739da4e7c5bf6e916ff1ad51c&callback=renderReverse&location=32.106186,118.813850&output=json&pois=1
-            $reply = new ZTSWechat ($data);
+            $Text = new \Weixin\Event\TextEvent();
 
-            $contentStr = $reply->poi($data);
+            $contentStr = $Text->poi($data);
 
             $reply = array(
                 $contentStr,
