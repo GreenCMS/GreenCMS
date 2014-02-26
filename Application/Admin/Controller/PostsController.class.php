@@ -28,7 +28,7 @@ class PostsController extends AdminBaseController
         }
 
 
-        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where, $post_ids);
+        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_id desc', true, $where, $post_ids);
 
         $this->assign('posts', $posts);
 
@@ -166,7 +166,7 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'unverified';
 
-        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_date desc', true, $where);
+        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
 
         $this->assign('posts', $posts);
         $this->display();
@@ -194,7 +194,7 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'preDel';
 
-        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where);
+        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_id desc', true, $where);
 
         $this->assign('posts', $posts);
 

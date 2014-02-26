@@ -52,7 +52,7 @@ class CommonWidget extends Controller
         C('admin_big_menu', array_change_key_case(C('admin_big_menu')));
 
         $accessList = RBAC::getAccessList($_SESSION [C('USER_AUTH_KEY')]);
-        $cache_access = array_change_key_case($accessList [strtoupper(MODULE_NAME)]);
+         $cache_access = array_change_key_case($accessList [strtoupper(MODULE_NAME)]);
 
         $cache = C('admin_big_menu');
         if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
