@@ -32,6 +32,7 @@ class PostController extends HomeBaseController
         $Posts = new PostsLogic();
 
         $post_res = $Posts->detail($info, true, $map);
+
         $Posts->viewInc($post_res['post_id']);
 
         $this->if404($post_res, "非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");

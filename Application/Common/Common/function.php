@@ -94,7 +94,7 @@ function is_empty($test)
 /**
  *
  */
-function get_opinion($key, $db = false , $cache = true)
+function get_opinion($key, $db = false, $cache = true)
 {
     if (!$db)
         return C($key);
@@ -212,6 +212,29 @@ function getTimestamp($Timestamp, $need = 'timestamp')
     } else {
         return date($need, $timestamp);
     }
+
+}
+
+function getTimeURL($Timestamp, $type = 'single')
+{
+    $array = explode("-", $Timestamp);
+    $year = $array [0];
+    $month = $array [1];
+
+    $array = explode(":", $array [2]);
+    $minute = $array [1];
+    $second = $array [2];
+
+    $array = explode(" ", $array [0]);
+    $day = $array [0];
+    $hour = $array [1];
+
+    $url='';
+    $url.='<a href="'.get_url('Archive/'.$type,array('year'=>$year)).'">'.$year.'</a>';
+    $url.='-<a href="'.get_url('Archive/'.$type,array('year'=>$year,'month'=>$month)).'">'.$month.'</a>';
+    $url.='-<a href="'.get_url('Archive/'.$type,array('year'=>$year,'month'=>$month,'day'=>$day)).'">'.$day.'</a>';
+
+    return $url;
 
 }
 
