@@ -18,7 +18,7 @@ class TextEvent extends WeixinCoreController
     public function wechat($keyword)
     {
 
-        $contentStr='您的留言我们已经收到';
+        $contentStr = '您的留言我们已经收到';
         return $contentStr;
 
     }
@@ -61,12 +61,11 @@ class TextEvent extends WeixinCoreController
         $city = mb_substr($city,
             0, $length, 'UTF8');
 
-         $contentStr = $this->weather($city);
+        $contentStr = $this->weather($city);
 
         return $contentStr;
 
     }
-
 
 
 }
