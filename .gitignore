@@ -1,7 +1,7 @@
-Upload
+/Upload
 
-DBbackup
-Log
+/Data/DBbackup
+/Data/Log
 Temp
 .idea
 /Data/Install/install.lock
