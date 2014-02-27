@@ -32,54 +32,106 @@ class MessageController extends WeixinBaseController
      */
     public function index()
     {
+        $now = strtotime(date("Y-m-d H:i:s", time()));
+
         $Weixinlog = D('Weixinlog');
         $message_list = $Weixinlog->order('CreateTime desc')->relation(true)->select();
+
 
         foreach ($message_list as $key => $value) {
             if ($value['user'] == null) {
                 unset($message_list[$key]);
+                $Weixinlog->where(array('MsgId' => $value['MsgId']))->delete();
+            } else {
+                $time_remain = $now - (int)$value['CreateTime'] - 60 * 60 * 24 * 2;
+                $time_remain < 0 ? $message_list[$key]['outofdate'] = '0' : $message_list[$key]['outofdate'] = '1'; //是否过期
+                $time_remain < 0 ? $message_list[$key]['color'] = 'blue' : $message_list[$key]['color'] = 'red'; //是否过期
+                $time_remain < 0 ? $message_list[$key]['msg'] = '回复消息' : $message_list[$key]['msg'] = '不能回复'; //是否过期
+                $time_remain < 0 ? $message_list[$key]['msg_url'] =
+                    U('Weixin/Message/send',array('openid'=>$value['user']['openid'],'msgid'=>$value[MsgId]))
+                     : $message_list[$key]['msg_url'] ='#'; //是否过期
+
             }
+
         }
+
 
         $this->assign('message_list', $message_list);
         $this->display();
 
     }
 
+    public function del($msgid)
+    {
+        $Weixinlog = D('Weixinlog');
+        $res = $Weixinlog->where(array('MsgId' => $msgid))->delete();
+
+        if ($res) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+
+    }
+
+    public function delAll()
+    {
+        $Weixinlog = D('Weixinlog');
+        $res = $Weixinlog->where(1)->delete();
+
+        if ($res) {
+            $this->success('删除成功');
+        } else {
+            $this->error('删除失败');
+        }
+    }
+
 
     public function send()
     {
         $Users = D('Weixinuser');
-        $user_list = $Users->select();
+        $user_list = $Users->relation(true)->select();
 
 
         $user_option = '';
 
+        $now = strtotime(date("Y-m-d H:i:s", time()));
         foreach ($user_list as $value) {
-            $user_option .= '<option value="' . $value['openid'] . '"';
-
-            if (I('get.openid') != '' && $value['openid'] == I('get.openid')) {
-                $user_option .= 'selected="selected"';
+            $time_remain = $now - (int)$value['log'][0]['CreateTime'] - 60 * 60 * 24 * 2;
+            if (I('get.openid') != '' && $value['openid'] == I('get.openid') && ($time_remain > 0)) {
+                $this->error('已经超过48小时,不能回复他了');
             }
 
-            $user_option .= '>' . $value['nickname'] . '</option>';
-
+            if ($value['log'][0]['CreateTime'] != null && ($time_remain < 0)) {
+                $user_option .= '<option value="' . $value['openid'] . '"';
+                if (I('get.openid') != '' && $value['openid'] == I('get.openid')) {
+                    $user_option .= 'selected="selected"';
+                }
+                $user_option .= '>' . $value['nickname'] . '</option>';
+            }
         }
 
 
         $this->assign('user_option', $user_option);
 
-        $this->assign('form_action', U('Weixin/Message/sendHandle'));
+        $this->assign('form_action', U('Weixin/Message/sendHandle', array('msgid' => I('get.MsgId', '0'))));
         $this->assign('action_name', '发送');
 
         $this->display();
     }
 
 
-    public function sendHandle()
+    public function sendHandle($msgid = 0)
     {
         $User = new \Weixin\Event\UserEvent();
-        $User->sendMessage(I('post.openid'), I('post.content'));
+        $res = $User->sendMessage(I('post.openid'), I('post.content'));
+
+        if ($res['errcode'] == 0) {
+            $this->success('发送成功');
+        } else {
+            $this->error('发送失败' . $res['errmsg']);
+        }
+
 
     }
 

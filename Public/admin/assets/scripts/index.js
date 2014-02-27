@@ -611,11 +611,11 @@ var Index = function () {
                 var time_str = time.toString('MMM dd, yyyy hh:mm');
                 var tpl = '';
                 tpl += '<li class="out">';
-                tpl += '<img class="avatar" alt="" src="assets/img/avatar1.jpg"/>';
+                tpl += '<img class="avatar" alt="" src="'+PUBLIC+'/admin/assets/img/avatar1.jpg"/>';
                 tpl += '<div class="message">';
                 tpl += '<span class="arrow"></span>';
-                tpl += '<a href="#" class="name">Bob Nilson</a>&nbsp;';
-                tpl += '<span class="datetime">at ' + time_str + '</span>';
+                tpl += '<a href="#" class="name">我</a>&nbsp;';
+                tpl += '<span class="datetime">在 ' + time_str + '说</span>';
                 tpl += '<span class="body">';
                 tpl += text;
                 tpl += '</span>';
@@ -642,6 +642,10 @@ var Index = function () {
                     return false; //<---- Add this line
                 }
             });
+
+
+
+
         },
 
         initDashboardDaterange: function () {

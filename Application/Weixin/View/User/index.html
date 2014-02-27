@@ -71,14 +71,22 @@
                         <div class="portlet-body">
                             <div class="clearfix">
                                 <div class="btn-group">
-                                    <a href="{:U('Weixin/User/updateall')}">
+                                    <a href="{:U('Weixin/User/updatenew')}">
                                         <button type="submit" class="btn green" name="postAdd" value='1'>
-                                            <i class="icon-plus"></i>同步用户
+                                            <i class="icon-plus"></i>更新用户信息
                                         </button>
                                     </a>
 
                                 </div>
 
+                                <div class="btn-group">
+                                    <a href="{:U('Weixin/User/updateall')}">
+                                        <button class="btn purple"  >
+                                            <i class="icon-plus"></i>同步用户
+                                        </button>
+                                    </a>
+
+                                </div>
 
                             </div>
                             <table class="table table-striped table-bordered table-hover"
@@ -88,9 +96,9 @@
                                     <th style="width: 8px;">openid</th>
                                     <th>昵称</th>
                                     <th>地区</th>
-                                    <th style="width:50px;">头像</th>
+                                    <th style="width:75px;">头像</th>
                                     <th style="width:130px;">关注时间</th>
-                                    <th style="width:150px;">操作</th>
+                                    <th style="width:200px;">操作</th>
 
                                 </tr>
                                 </thead>
@@ -103,11 +111,13 @@
                                         <td><img src="{$v.headimgurl}"></td>
                                         <td>{:date ('Y-m-d H:i',$v['subscribe_time']) }</td>
                                         <td>
-                                             <a class="btn mini" href="{:U('Weixin/Message/send',array('openid'=>$v['openid']))}">发送消息</a>
 
-                                            <a class="btn mini blue">无</a>
+                                            <a class="btn green" href="{:U('Weixin/User/detail',array('openid'=>$v['openid']))}">查看用户</a>
 
-                                            <a class="btn mini green">无</a>
+                                            <a class="btn blue" href="{:U('Weixin/User/chat',array('openid'=>$v['openid']))}">查看对话</a>
+
+                                            <a class="btn" href="{:U('Weixin/Message/send',array('openid'=>$v['openid']))}">发送消息</a>
+
                                         </td>
 
 

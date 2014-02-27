@@ -70,14 +70,14 @@
 
                         <div class="portlet-body">
                             <div class="clearfix">
-                                <!--<div class="btn-group">-->
-                                    <!--<a href="{:U('Weixin/User/updateall')}">-->
-                                        <!--<button type="submit" class="btn green" name="postAdd" value='1'>-->
-                                            <!--<i class="icon-plus"></i>同步用户-->
-                                        <!--</button>-->
-                                    <!--</a>-->
+                                <div class="btn-group">
+                                    <a href="{:U('Weixin/Message/delall')}">
+                                        <button type="submit" class="btn green">
+                                            <i class="icon-minus"></i> 清空全部
+                                        </button>
+                                    </a>
 
-                                <!--</div>-->
+                                </div>
 
 
                             </div>
@@ -85,7 +85,7 @@
                                    id="sample_1">
                                 <thead>
                                 <tr>
-                                    <th  ></th>
+                                    <th></th>
                                     <th>昵称</th>
                                     <th>地区</th>
                                     <th>内容</th>
@@ -104,11 +104,13 @@
                                         <td>{:date ('Y-m-d H:i',$v['CreateTime']) }</td>
                                         <td>
 
-                                            <a class="btn mini blue">回复消息</a>
+                                            <a class="btn mini" href="{:U('Weixin/User/chat',array('openid'=>$v['user']['openid']))}">
+                                                对话记录</a>
 
-                                            <a class="btn mini green">无</a>
-
-                                            <a class="btn mini " href="{:U('Weixin/Message/send',array('openid'=>$v['user']['openid']))}">发送消息</a>
+                                            <a class="btn mini {$v.color}" href="{$v.msg_url}">
+                                                {$v.msg}</a>
+                                            <a class="btn mini purple" href="{:U('Weixin/Message/del',array('msgid'=>$v['MsgId']))}">
+                                                删除</a>
 
                                         </td>
 

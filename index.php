@@ -6,9 +6,9 @@
  * Date: 14-1-23
  * Time: 上午11:57
  */
-//ob_start();
+ob_start();
 
-/**
+ /**
  * 下面的内容自己决定
  */
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
