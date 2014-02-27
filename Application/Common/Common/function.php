@@ -14,7 +14,8 @@ const GREENCMS_ADDON_PATH = './Addons/';
 
 function current_timestamp()
 {
-    return date('Y-m-d H:i:s', time());
+    $timestamp=date('Y-m-d H:i:s', time()-TIME_FIX);
+    return $timestamp;
 }
 
 function object_to_array($obj)

@@ -8,14 +8,18 @@
  */
 ob_start();
 
- /**
+
+/**
  * 下面的内容自己决定
  */
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //error_reporting(0);
 @set_time_limit(240);
 //@ini_set("memory_limit",'-1');
- /**
+
+//date_default_timezone_set (PRC);
+
+/**
  * 系统调试设置
  * 项目正式部署后请设置为false
  */

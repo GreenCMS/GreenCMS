@@ -61,3 +61,9 @@ define("Plugin_PATH", WEB_ROOT . "Extend/Plugin/");
  * 上传文件存放目录
  */
 define("Upload_PATH", "Upload/");
+
+
+/**
+ * TIME_FIX
+ */
+define("TIME_FIX", 0);

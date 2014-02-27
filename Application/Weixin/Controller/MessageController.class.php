@@ -48,8 +48,8 @@ class MessageController extends WeixinBaseController
                 $time_remain < 0 ? $message_list[$key]['color'] = 'blue' : $message_list[$key]['color'] = 'red'; //是否过期
                 $time_remain < 0 ? $message_list[$key]['msg'] = '回复消息' : $message_list[$key]['msg'] = '不能回复'; //是否过期
                 $time_remain < 0 ? $message_list[$key]['msg_url'] =
-                    U('Weixin/Message/send',array('openid'=>$value['user']['openid'],'msgid'=>$value[MsgId]))
-                     : $message_list[$key]['msg_url'] ='#'; //是否过期
+                    U('Weixin/Message/send', array('openid' => $value['user']['openid'], 'msgid' => $value[MsgId]))
+                    : $message_list[$key]['msg_url'] = '#'; //是否过期
 
             }
 
@@ -93,7 +93,7 @@ class MessageController extends WeixinBaseController
         $user_list = $Users->relation(true)->select();
 
 
-        $user_option = '';
+        $user_option = '<option value="all">所有人</option>';
 
         $now = strtotime(date("Y-m-d H:i:s", time()));
         foreach ($user_list as $value) {
@@ -123,17 +123,37 @@ class MessageController extends WeixinBaseController
 
     public function sendHandle($msgid = 0)
     {
-        $User = new \Weixin\Event\UserEvent();
-        $res = $User->sendMessage(I('post.openid'), I('post.content'));
+        @set_time_limit(0);
 
-        if ($res['errcode'] == 0) {
-            $this->success('发送成功');
+
+        if (I('post.openid') != 'all') {
+
+            $User = new \Weixin\Event\UserEvent();
+            $res = $User->sendMessage(I('post.openid'), I('post.content'));
+            if ($res['errcode'] == 0) {
+                $this->success('发送成功');
+            } else {
+                $this->error('发送失败' . $res['errmsg']);
+            }
         } else {
-            $this->error('发送失败' . $res['errmsg']);
+            $User = new \Weixin\Event\UserEvent();
+
+            $Users = D('Weixinuser');
+            $user_list = $Users->relation(true)->select();
+
+            $info = '';
+            $now = (int)current_timestamp();
+            foreach ($user_list as $value) {
+                $time_remain = $now - (int)$value['log'][0]['CreateTime'] - 60 * 60 * 24 * 2;
+
+                if ($value['log'][0]['CreateTime'] != null && ($time_remain < 0)) {
+                    $res = $User->sendMessage($value['openid'], I('post.content'));
+                    $info .= $value['openid'] . $res['errmsg'];
+                }
+            }
+
+            $this->success('发送成功:' . $info);
+
         }
-
-
     }
-
-
 }
