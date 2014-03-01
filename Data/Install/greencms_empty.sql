@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}access`
+-- 表的结构 `access`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}access` (
+CREATE TABLE IF NOT EXISTS `access` (
   `role_id` smallint(6) unsigned NOT NULL DEFAULT '1',
   `node_id` smallint(6) unsigned NOT NULL,
   `level` tinyint(1) NOT NULL,
@@ -39,10 +39,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}access` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}addons`
+-- 表的结构 `addons`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}addons` (
+CREATE TABLE IF NOT EXISTS `addons` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL COMMENT '插件名或标识',
   `title` varchar(20) NOT NULL DEFAULT '' COMMENT '中文名',
@@ -57,19 +57,19 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}addons` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='插件表' AUTO_INCREMENT=18 ;
 
 --
--- 转存表中的数据 `{$db_prefix}addons`
+-- 转存表中的数据 `addons`
 --
 
-INSERT INTO `{$db_prefix}addons` (`id`, `name`, `title`, `description`, `status`, `config`, `author`, `version`, `create_time`, `has_adminlist`) VALUES
+INSERT INTO `addons` (`id`, `name`, `title`, `description`, `status`, `config`, `author`, `version`, `create_time`, `has_adminlist`) VALUES
 (9, 'SocialComment', '通用社交化评论', '集成了各种社交化评论插件，轻松集成到系统中。', 1, '{"comment_type":"2","comment_uid_youyan":"1894186","comment_short_name_duoshuo":"greencmsduoshuo","comment_form_pos_duoshuo":"buttom","comment_data_list_duoshuo":"10","comment_data_order_duoshuo":"desc"}', 'xjh1994', '0.1', 1380273962, 0);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}cats`
+-- 表的结构 `cats`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}cats` (
+CREATE TABLE IF NOT EXISTS `cats` (
   `cat_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `cat_father` bigint(10) NOT NULL DEFAULT '0',
   `cat_slug` varchar(200) NOT NULL DEFAULT '',
@@ -83,10 +83,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}cats` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}comments`
+-- 表的结构 `comments`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}comments` (
+CREATE TABLE IF NOT EXISTS `comments` (
   `comment_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `comment_post_ID` bigint(20) unsigned NOT NULL DEFAULT '0',
   `comment_author` tinytext NOT NULL,
@@ -107,10 +107,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}comments` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}feedback`
+-- 表的结构 `feedback`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}feedback` (
+CREATE TABLE IF NOT EXISTS `feedback` (
   `fid` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'anonymous',
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -121,10 +121,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}feedback` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}form`
+-- 表的结构 `form`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}form` (
+CREATE TABLE IF NOT EXISTS `form` (
   `fa_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `class` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -138,10 +138,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}form` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}hooks`
+-- 表的结构 `hooks`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}hooks` (
+CREATE TABLE IF NOT EXISTS `hooks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(40) NOT NULL DEFAULT '' COMMENT '钩子名称',
   `description` text NOT NULL COMMENT '描述',
@@ -153,10 +153,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}hooks` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
--- 转存表中的数据 `{$db_prefix}hooks`
+-- 转存表中的数据 `hooks`
 --
 
-INSERT INTO `{$db_prefix}hooks` (`id`, `name`, `description`, `type`, `update_time`, `addons`) VALUES
+INSERT INTO `hooks` (`id`, `name`, `description`, `type`, `update_time`, `addons`) VALUES
 (1, 'pageHeader', '页面header钩子，一般用于加载插件CSS文件和代码', 1, 0, ''),
 (2, 'pageFooter', '页面footer钩子，一般用于加载插件JS文件和JS代码', 1, 0, 'ReturnTop'),
 (3, 'documentEditForm', '添加编辑表单的 扩展内容钩子', 1, 0, ''),
@@ -172,10 +172,10 @@ INSERT INTO `{$db_prefix}hooks` (`id`, `name`, `description`, `type`, `update_ti
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}kv`
+-- 表的结构 `kv`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}kv` (
+CREATE TABLE IF NOT EXISTS `kv` (
   `kv_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `kv_key` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `kv_value` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -183,20 +183,20 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}kv` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='key-value通用信息存储' AUTO_INCREMENT=3 ;
 
 --
--- 转存表中的数据 `{$db_prefix}kv`
+-- 转存表中的数据 `kv`
 --
 
-INSERT INTO `{$db_prefix}kv` (`kv_id`, `kv_key`, `kv_value`) VALUES
+INSERT INTO `kv` (`kv_id`, `kv_key`, `kv_value`) VALUES
 (1, 'theme_2011college', 'disabled'),
 (2, 'theme_Vena', 'disabled');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}links`
+-- 表的结构 `links`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}links` (
+CREATE TABLE IF NOT EXISTS `links` (
   `link_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `link_sort` smallint(25) DEFAULT '0',
   `link_url` varchar(255) DEFAULT '',
@@ -212,10 +212,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}links` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}log`
+-- 表的结构 `log`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}log` (
+CREATE TABLE IF NOT EXISTS `log` (
   `log_id` int(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`log_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统日志记录' AUTO_INCREMENT=1 ;
@@ -223,10 +223,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}log` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}login_log`
+-- 表的结构 `login_log`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}login_log` (
+CREATE TABLE IF NOT EXISTS `login_log` (
   `login_log_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `log_user_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `log_user_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -239,10 +239,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}login_log` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}menu`
+-- 表的结构 `menu`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}menu` (
+CREATE TABLE IF NOT EXISTS `menu` (
   `menu_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `menu_pid` bigint(20) NOT NULL DEFAULT '0',
   `menu_sort` bigint(20) NOT NULL DEFAULT '99',
@@ -257,10 +257,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}menu` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}node`
+-- 表的结构 `node`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}node` (
+CREATE TABLE IF NOT EXISTS `node` (
   `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `title` varchar(50) DEFAULT NULL,
@@ -277,10 +277,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}node` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='权限节点表' AUTO_INCREMENT=136 ;
 
 --
--- 转存表中的数据 `{$db_prefix}node`
+-- 转存表中的数据 `node`
 --
 
-INSERT INTO `{$db_prefix}node` (`id`, `name`, `title`, `status`, `remark`, `sort`, `pid`, `level`) VALUES
+INSERT INTO `node` (`id`, `name`, `title`, `status`, `remark`, `sort`, `pid`, `level`) VALUES
 (1, 'Admin', '后台管理', 1, '后台管理', 0, 0, 1),
 (2, 'Index', 'IndexController', 1, 'IndexController', 0, 1, 2),
 (3, 'Access', 'AccessController', 1, 'AccessController', 0, 1, 2),
@@ -420,10 +420,10 @@ INSERT INTO `{$db_prefix}node` (`id`, `name`, `title`, `status`, `remark`, `sort
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}options`
+-- 表的结构 `options`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}options` (
+CREATE TABLE IF NOT EXISTS `options` (
   `option_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `option_name` varchar(64) NOT NULL DEFAULT '',
   `option_value` longtext NOT NULL,
@@ -433,10 +433,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}options` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='选项表' AUTO_INCREMENT=32 ;
 
 --
--- 转存表中的数据 `{$db_prefix}options`
+-- 转存表中的数据 `options`
 --
 
-INSERT INTO `{$db_prefix}options` (`option_id`, `option_name`, `option_value`, `autoload`) VALUES
+INSERT INTO `options` (`option_id`, `option_name`, `option_value`, `autoload`) VALUES
 (1, 'site_url', 'http://localhost/greencms', 'yes'),
 (2, 'title', 'GreenCMS v2', 'yes'),
 (3, 'keywords', 'GreenCMS v2', 'yes'),
@@ -472,10 +472,10 @@ INSERT INTO `{$db_prefix}options` (`option_id`, `option_name`, `option_value`, `
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}plugin`
+-- 表的结构 `plugin`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}plugin` (
+CREATE TABLE IF NOT EXISTS `plugin` (
   `plugin_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `plugin_status` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `plugin_title` char(20) NOT NULL,
@@ -490,10 +490,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}plugin` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}posts`
+-- 表的结构 `posts`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}posts` (
+CREATE TABLE IF NOT EXISTS `posts` (
   `post_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned DEFAULT '0',
   `post_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -519,10 +519,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}posts` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}post_cat`
+-- 表的结构 `post_cat`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}post_cat` (
+CREATE TABLE IF NOT EXISTS `post_cat` (
   `pc_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `cat_id` bigint(20) NOT NULL DEFAULT '0',
   `post_id` bigint(20) NOT NULL DEFAULT '0',
@@ -532,10 +532,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}post_cat` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}post_meta`
+-- 表的结构 `post_meta`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}post_meta` (
+CREATE TABLE IF NOT EXISTS `post_meta` (
   `meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `post_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `meta_key` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
@@ -548,10 +548,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}post_meta` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}post_tag`
+-- 表的结构 `post_tag`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}post_tag` (
+CREATE TABLE IF NOT EXISTS `post_tag` (
   `pt_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `tag_id` bigint(20) NOT NULL DEFAULT '0',
   `post_id` bigint(20) NOT NULL DEFAULT '0',
@@ -561,10 +561,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}post_tag` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}role`
+-- 表的结构 `role`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}role` (
+CREATE TABLE IF NOT EXISTS `role` (
   `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `pid` smallint(6) DEFAULT NULL,
@@ -576,10 +576,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}role` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='角色' AUTO_INCREMENT=6 ;
 
 --
--- 转存表中的数据 `{$db_prefix}role`
+-- 转存表中的数据 `role`
 --
 
-INSERT INTO `{$db_prefix}role` (`id`, `name`, `pid`, `status`, `remark`) VALUES
+INSERT INTO `role` (`id`, `name`, `pid`, `status`, `remark`) VALUES
 (1, '超级管理员', 1, 1, '系统内置超级管理员组'),
 (2, '网站管理员', 2, 1, '拥有系统仅此于超级管理员的权限'),
 (3, '内容管理员', 3, 1, '拥有发布文章权利'),
@@ -589,10 +589,10 @@ INSERT INTO `{$db_prefix}role` (`id`, `name`, `pid`, `status`, `remark`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}role_users`
+-- 表的结构 `role_users`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}role_users` (
+CREATE TABLE IF NOT EXISTS `role_users` (
   `role_id` mediumint(9) unsigned DEFAULT NULL,
   `user_id` bigint(32) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
@@ -601,19 +601,19 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}role_users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 
 --
--- 转存表中的数据 `{$db_prefix}role_users`
+-- 转存表中的数据 `role_users`
 --
 
-INSERT INTO `{$db_prefix}role_users` (`role_id`, `user_id`) VALUES
+INSERT INTO `role_users` (`role_id`, `user_id`) VALUES
 (1, 1);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}tags`
+-- 表的结构 `tags`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}tags` (
+CREATE TABLE IF NOT EXISTS `tags` (
   `tag_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `tag_name` varchar(200) NOT NULL DEFAULT '',
   `tag_slug` varchar(200) NOT NULL DEFAULT '',
@@ -626,10 +626,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}tags` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}user`
+-- 表的结构 `user`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `user_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_login` varchar(60) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `user_pass` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '',
@@ -650,10 +650,10 @@ CREATE TABLE IF NOT EXISTS `{$db_prefix}user` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `{$db_prefix}user_detail`
+-- 表的结构 `user_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `{$db_prefix}user_detail` (
+CREATE TABLE IF NOT EXISTS `user_detail` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_into` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`)
