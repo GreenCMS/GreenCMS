@@ -11,6 +11,13 @@ include APP_PATH . 'Common/Common/common_router.php';
 
 const GREENCMS_ADDON_PATH = './Addons/';
 
+
+function current_timestamp()
+{
+    $timestamp=date('Y-m-d H:i:s', time()-TIME_FIX);
+    return $timestamp;
+}
+
 function object_to_array($obj)
 {
     $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
@@ -229,10 +236,10 @@ function getTimeURL($Timestamp, $type = 'single')
     $day = $array [0];
     $hour = $array [1];
 
-    $url='';
-    $url.='<a href="'.get_url('Archive/'.$type,array('year'=>$year)).'">'.$year.'</a>';
-    $url.='-<a href="'.get_url('Archive/'.$type,array('year'=>$year,'month'=>$month)).'">'.$month.'</a>';
-    $url.='-<a href="'.get_url('Archive/'.$type,array('year'=>$year,'month'=>$month,'day'=>$day)).'">'.$day.'</a>';
+    $url = '';
+    $url .= '<a href="' . get_url('Archive/' . $type, array('year' => $year)) . '">' . $year . '</a>';
+    $url .= '-<a href="' . get_url('Archive/' . $type, array('year' => $year, 'month' => $month)) . '">' . $month . '</a>';
+    $url .= '-<a href="' . get_url('Archive/' . $type, array('year' => $year, 'month' => $month, 'day' => $day)) . '">' . $day . '</a>';
 
     return $url;
 

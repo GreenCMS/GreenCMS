@@ -15,6 +15,37 @@ use Weixin\Controller\WeixinCoreController;
 class UserEvent extends WeixinCoreController
 {
 
+    public function renew()
+    {
+
+        $res = $this->getUserList();
+
+        foreach ($res as $openid) {
+
+            $ifuser = D('Weixinuser')->where(array('openid' => $openid))->find();
+            if ($ifuser) {
+                $data = $this->getUserDetail($openid);
+                unset($data['openid']);
+                D('Weixinuser')->where(array('openid' => $openid))->data($data)->save();
+            }
+        }
+
+    }
+
+    public function update()
+    {
+
+        $res = $this->getUserList();
+
+        foreach ($res as $openid) {
+            $ifuser = D('Weixinuser')->where(array('openid' => $openid))->find();
+            if (!$ifuser) {
+                $data = $this->getUserDetail($openid);
+                D('Weixinuser')->data($data)->add();
+            }
+        }
+    }
+
     public function getUserList()
     {
         $user_list = $this->getFirstList();
@@ -89,17 +120,30 @@ class UserEvent extends WeixinCoreController
         $ACCESS_TOKEN = $this->getAccess();
 
         if ($msgtype == 'text') {
-            $data['touser']=$openid;
-            $data['msgtype']="text";
-            $data['text']["content"]=urlencode($content);
+            $data['touser'] = $openid;
+            $data['msgtype'] = "text";
+            $data['text']["content"] = urlencode($content);
 
-            $json=urldecode(json_encode($data));
+            $json = urldecode(json_encode($data));
 
             $url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" . $ACCESS_TOKEN;
-            $res=json_decode(simple_post($url, $json),true);
+            $res = json_decode(simple_post($url, $json), true);
 
-            return $res;
         }
+
+
+        $Weixinsend = D('Weixinsend');
+
+        $send['openid'] = $openid;
+        $send['type'] = $msgtype;
+        $send['content'] = $content;
+        //echo date('Y-m-d h:i:s a') ;die();
+        $send['CreateTime'] = current_timestamp();
+
+        $Weixinsend->data($send)->add();
+
+
+        return $res;
 
 
     }

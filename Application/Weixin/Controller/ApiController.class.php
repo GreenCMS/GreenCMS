@@ -129,16 +129,16 @@ class ApiController extends WeixinCoreController
     }
 
 
-    public function access()
-    {
-        $access = $this->getAccess();
-        dump($access);
-    }
-
-    public function phpinfo()
-    {
-        echo phpinfo();
-    }
+//    public function access()
+//    {
+//        $access = $this->getAccess();
+//        dump($access);
+//    }
+//
+//    public function phpinfo()
+//    {
+//        echo phpinfo();
+//    }
 
 
 }

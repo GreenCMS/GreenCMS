@@ -70,22 +70,5 @@ class ZTSWechat
 
     }
 
-    public function wechat($data)
-    {
-
-        $user['from_user_name'] = $data['FromUserName'];
-        $user['create_time'] = (int)$data['CreateTime'];
-        $user['content'] = $data['Content'];
-        $user['msg_id'] = $data['MsgId'];
-
-
-        $contentStr = array2str($user);
-
-        D('Weixinchat')->data($user)->add();
-        \Think\Log::record('收到回复' . $contentStr);
-
-        return $contentStr;
-
-    }
 
 }
