@@ -7,7 +7,9 @@
  * Time: ����6:08
  */
 return array(
-     'app_end' => array(
+    'app_init'=>array('Common\Behavior\InitHook'),
+
+    'app_end' => array(
         'Behavior\ChromeShowPageTrace'
     )
 );
