@@ -13,13 +13,13 @@
                 <ul class="nav">
                     <li class="visible-phone visible-tablet">
                         <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-                        <form class="sidebar-search">
-                            <div class="input-box">
-                                <a href="javascript:;" class="remove"></a>
-                                <input type="text" placeholder="Search..."/>
-                                <input type="button" class="submit" value=" "/>
-                            </div>
-                        </form>
+                        <!--<form class="sidebar-search">-->
+                            <!--<div class="input-box">-->
+                                <!--<a href="javascript:;" class="remove"></a>-->
+                                <!--<input type="text" placeholder="Search..."/>-->
+                                <!--<input type="button" class="submit" value=" "/>-->
+                            <!--</div>-->
+                        <!--</form>-->
                         <!-- END RESPONSIVE QUICK SEARCH FORM -->
                     </li>
                     <li class="active">
@@ -34,7 +34,9 @@
                             <span class="arrow"></span>
                         </a>
                         <ul class="dropdown-menu">
-                             <li><a href="{:U('Admin/Data/clear')}">缓存清理</a></li>
+                            <li><a href="{:U('Admin/Data/clear')}">缓存清理</a></li>
+
+                            <li><a href="{:U('Admin/Posts/add')}">文章发布</a></li>
                          </ul>
                         <b class="caret-out"></b>
                     </li>
@@ -46,7 +48,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{:U('Weixin/Index/index')}" target="_blank">进入Weixin模块</a></li>
-                            <li><a href="{:U('Admin/Index/main')}" target="_blank">>进入Home模块</a></li>
+                            <li><a href="{:U('Admin/Index/main')}" target="_blank">进入Home模块</a></li>
                         </ul>
                         <b class="caret-out"></b>
                     </li>
@@ -67,18 +69,18 @@
                         </ul>
                         <b class="caret-out"></b>
                     </li>
-                    <li>
-                        <span class="hor-menu-search-form-toggler">&nbsp;</span>
+                    <!--<li>-->
+                        <!--<span class="hor-menu-search-form-toggler">&nbsp;</span>-->
 
-                        <div class="search-form hidden-phone hidden-tablet">
-                            <form class="form-search">
-                                <div class="input-append">
-                                    <input type="text" placeholder="Search..." class="m-wrap">
-                                    <button type="button" class="btn"></button>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
+                        <!--<div class="search-form hidden-phone hidden-tablet">-->
+                            <!--<form class="form-search">-->
+                                <!--<div class="input-append">-->
+                                    <!--<input type="text" placeholder="Search..." class="m-wrap">-->
+                                    <!--<button type="button" class="btn"></button>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </div>
