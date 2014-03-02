@@ -131,33 +131,55 @@
                                         <tr>
                                             <td><strong>数据库主机：</strong></td>
                                             <td>
-                                                <input type="text" id="dbhost" placeholder="" class="m-wrap medium" name="dbhost" value="SAE_MYSQL_HOST_M" disabled="">
+                                                <input type="text" id="dbhost" placeholder="" class="m-wrap medium"
+                                                       name="db_host" value="localhost">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>数据库端口：</strong></td>
+                                            <td>
+                                                <input type="text" placeholder="" class="m-wrap medium"
+                                                       name="db_port" value="3306">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>数据库用户：</strong></td>
                                             <td>
-                                                <input type="text" id="dbuser" placeholder="" class="m-wrap medium" name="dbuser" value="SAE_MYSQL_USER" disabled="">
+                                                <input type="text" id="dbuser" placeholder="" class="m-wrap medium"
+                                                       name="db_user" value="root">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>数据库密码：</strong></td>
                                             <td>
-                                                <input type="password" id="dbpwd" placeholder="" class="m-wrap medium" name="dbpwd" value="SAE_MYSQL_PASS" disabled="">
+                                                <input type="password" id="dbpwd" placeholder="" class="m-wrap medium"
+                                                       name="db_password" value="" onChange="TestDb();">
+
                                                 <div style='float:right' id='dbpwdsta'></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>数据库名称：</strong></td>
                                             <td>
-                                                <input type="text" id="dbname" placeholder="" class="m-wrap medium" name="dbname" value="SAE_MYSQL_DB" disabled="">
+                                                <input type="text" id="dbname" placeholder="" class="m-wrap medium"
+                                                       name="db_name" value="green"
+                                                       onChange="HaveDB();">
+
                                                 <div style='float:right' id='havedbsta'></div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><strong>数据表前缀：</strong></td>
                                             <td>
-                                                <input type="text" id="dbprefix" placeholder="" class="m-wrap medium" name="dbprefix" value=""  disabled="">
+                                                <input type="text" id="dbprefix" placeholder="" class="m-wrap medium"
+                                                       name="db_prefix" value="green_">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>数据库编码：</strong></td>
+                                            <td>
+                                                <input type="radio" name="dblang" id="dblang_utf8" value="utf8"
+                                                       checked="checked"/>&nbsp;<label>UTF8</label>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -232,7 +254,7 @@
                                                     <td>
                                                         <input type="text" id="cfg_title" placeholder=""
                                                                class="m-wrap medium" name="cfg_title"
-                                                               value="GreenCMS v2">
+                                                               value="GreenCMS 2014">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -241,6 +263,14 @@
                                                         <input type="text" id="cfg_basehost" placeholder=""
                                                                class="m-wrap medium" name="cfg_basehost"
                                                                value="{$cfg_basehost}">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>CMS安装目录：</strong></td>
+                                                    <td>
+                                                        <input type="text" id="cfg_cmspath" placeholder=""
+                                                               class="m-wrap medium" name="cfg_cmspath"
+                                                               value="{$cfg_cmspath}">
                                                     </td>
                                                 </tr>
                                                 <tr>

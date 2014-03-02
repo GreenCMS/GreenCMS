@@ -33,8 +33,8 @@ define("WEB_ROOT", dirname(__FILE__) . '/');
  * 应用目录设置
  */
 define ('APP_PATH', './Application/');
-define ('GreenCMS_Version', 'v2.1.0225');
-define ('GreenCMS_Build', '20140225');
+define ('GreenCMS_Version', 'v2.1.0302');
+define ('GreenCMS_Build', '20140302');
 
 if (file_exists(WEB_ROOT . "db_config.php")) require(WEB_ROOT . "db_config.php");
 if (file_exists(WEB_ROOT . "const_config.php")) require(WEB_ROOT . "const_config.php");
