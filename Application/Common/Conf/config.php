@@ -58,7 +58,7 @@ return array(
     'DEFAULT_MODULE'       => 'Home', //T默认分组，
     // 'DEFAULT_M_LAYER'       =>  'Logic', //默认的模型层名称
 
-    'LOAD_EXT_CONFIG'      => 'config_db,config_log,config_oauth,tags', // 加载扩展配置文件 config_alias,config_db,config_system
+    'LOAD_EXT_CONFIG'      => 'config_log,config_oauth,tags', // 加载扩展配置文件 config_alias,config_db,config_system
 
    'TAGLIB_BUILD_IN'  => 'Green,Cx',
 );
