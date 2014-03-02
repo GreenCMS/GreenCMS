@@ -16,8 +16,6 @@ class AccessEvent
     public function initAdmin()
     {
 
-        $test = true;
-
         $NODE = 'Node';
         $data = array();
         $data['name'] = 'Admin';
@@ -27,19 +25,15 @@ class AccessEvent
         $data['sort'] = 0;
         $data['pid'] = 0;
         $data['level'] = 1;
-        if (!$test) dump($data);
 
-        if ($test) D($NODE)->where('1')->delete();
-
-
-        if ($test) D($NODE)->data($data)->add();
+        D($NODE)->where('1')->delete(); //清空
+        D($NODE)->data($data)->add();
 
 
         $level1_map['name'] = 'Admin';
         $level1_map['level'] = 1;
 
         $level1_temp = D($NODE)->field('id')->where($level1_map)->find();
-        if (!$test) dump((int)$level1_temp['id']);
 
 
         $AdminBaseController = get_class_methods(new \Admin\Controller\AdminBaseController());
@@ -54,17 +48,6 @@ class AccessEvent
         $UeditorController = array_diff(get_class_methods(new \Admin\Controller\UeditorController()), $AdminBaseController);
 
 
-//        dump($AdminBaseController);
-//        dump($IndexController);
-//        dump($AccessController);
-//        dump($CustomController);
-//        dump($DataController);
-//        dump($SystemController);
-//        dump($PostsController);
-//        dump($MediaController);
-//        dump($UeditorController);
-
-
         $Controllers = array('IndexController', 'AccessController', 'CustomController', 'DataController'
         , 'SystemController', 'MediaController', 'UeditorController', 'PostsController');
 
@@ -77,13 +60,10 @@ class AccessEvent
             $data['sort'] = 0;
             $data['pid'] = (int)$level1_temp['id'];
             $data['level'] = 2;
-            if (!$test) echo 'Controller:' . $value;
-            if (!$test) dump($data);
-            if ($test) D($NODE)->data($data)->add();
+            D($NODE)->data($data)->add();
         }
         $map['id'] = array('neq', 1);
         $Nodes = D('Node')->field('name')->where($map)->select();
-        if (!$test) dump($Nodes);
 
 
         foreach ($Nodes as $key => $value) {
@@ -94,8 +74,6 @@ class AccessEvent
             $map2['level'] = 2;
 
             $temp2 = D($NODE)->field('id')->where($map2)->find();
-            if (!$test) dump((int)$temp2['id']);
-            if (!$test) dump($temp);
 
             foreach ($temp as $key => $value) {
                 $data = array();
@@ -106,9 +84,8 @@ class AccessEvent
                 $data['sort'] = 0;
                 $data['pid'] = (int)$temp2['id'];
                 $data['level'] = 3;
-                if (!$test) dump($data);
 
-                if ($test) D($NODE)->data($data)->add();
+                D($NODE)->data($data)->add();
 
             }
 
@@ -120,6 +97,81 @@ class AccessEvent
 
     public function initWeixin()
     {
+
+
+        $NODE = 'Node';
+        $data = array();
+        $data['name'] = 'Weixin';
+        $data['title'] = '微信管理';
+        $data['status'] = 1;
+        $data['remark'] = '微信管理';
+        $data['sort'] = 100;
+        $data['pid'] = 0;
+        $data['level'] = 1;
+
+        D($NODE)->data($data)->add();
+
+        $level1_map['name'] = 'Weixin';
+        $level1_map['level'] = 1;
+
+        $level1_temp = D($NODE)->field('id')->where($level1_map)->find();
+
+
+        $WeixinBaseController = get_class_methods(new \Weixin\Controller\WeixinBaseController());
+        //消除继承得到的方法
+        $HomeController = array_diff(get_class_methods(new \Weixin\Controller\HomeController()), $WeixinBaseController);
+        $MenuController = array_diff(get_class_methods(new \Weixin\Controller\MenuController()), $WeixinBaseController);
+        $MessageController = array_diff(get_class_methods(new \Weixin\Controller\MessageController()), $WeixinBaseController);
+        $ReplyController = array_diff(get_class_methods(new \Weixin\Controller\ReplyController()), $WeixinBaseController);
+        $RuleController = array_diff(get_class_methods(new \Weixin\Controller\RuleController()), $WeixinBaseController);
+        $SystemController = array_diff(get_class_methods(new \Weixin\Controller\SystemController()), $WeixinBaseController);
+        $UserController = array_diff(get_class_methods(new \Weixin\Controller\UserController()), $WeixinBaseController);
+
+
+        $Controllers = array('HomeController', 'MenuController', 'MessageController', 'ReplyController'
+        , 'SystemController', 'RuleController', 'UserController');
+
+        foreach ($Controllers as $value) {
+            $data = array();
+            $data['name'] = substr($value, 0, -10);
+            $data['title'] = $value;
+            $data['status'] = 1;
+            $data['remark'] = $value;
+            $data['sort'] = 0;
+            $data['pid'] = (int)$level1_temp['id'];
+            $data['level'] = 2;
+            D($NODE)->data($data)->add();
+        }
+        $map['id'] = array('neq', 1);
+        $Nodes = D('Node')->field('name')->where($map)->select();
+
+
+        foreach ($Nodes as $key => $value) {
+            $value['name'] = $value['name'] . 'Controller';
+            $temp = $$value['name'];
+
+            $map2['name'] = substr($value['name'], 0, -10);
+            $map2['level'] = 2;
+
+            $temp2 = D($NODE)->field('id')->where($map2)->find();
+
+            foreach ($temp as $key => $value) {
+                $data = array();
+                $data['name'] = $value;
+                $data['title'] = $data['name'];
+                $data['status'] = 1;
+                $data['remark'] = $data['name'];
+                $data['sort'] = 0;
+                $data['pid'] = (int)$temp2['id'];
+                $data['level'] = 3;
+
+                D($NODE)->data($data)->add();
+
+            }
+
+
+        }
+
 
     }
 }
