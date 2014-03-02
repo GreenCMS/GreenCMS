@@ -9,15 +9,19 @@
 
 namespace Admin\Controller;
 
+use Common\Logic\PostsLogic;
+use Common\Util\GreenPage;
 use Org\Util\Rbac;
 
 class PostsController extends AdminBaseController
 {
-    public function index($post_type = 'single', $post_status = 'publish')
+    public function index($post_type = 'single', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
     {
         $cat = I('get.cat');
         $tag = I('get.tag');
-        $where = array('post_status' => $post_status);
+        $page = I('get.page', C('PAGER'));
+        $info = array('post_status' => $post_status);
+        $info['post_content|post_title'] = array('like', "%$keyword%");
 
         if ($cat != '') {
             $post_ids = D('Cats', 'Logic')->getPostsId($cat);
@@ -28,11 +32,21 @@ class PostsController extends AdminBaseController
         }
 
 
-        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where, $post_ids);
+        $PostsList = new PostsLogic();
+        $count = $PostsList->countAll($post_type, $info, $post_ids); // 查询满足要求的总记录数
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $posts = $PostsList->getList($limit, $post_type, $order, true, $info, $post_ids);
+        }
+
+//        $posts = D('Posts', 'Logic')->getList(0, $post_type, $order, true, $info, $post_ids);
 
         $this->assign('posts', $posts);
-
-        $this->display('index');
+        $this->assign('pager', $pager_bar);
+        $this->display('index_no_js');
     }
 
     public function indexHandle()
@@ -166,7 +180,7 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'unverified';
 
-        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_date desc', true, $where);
+        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
 
         $this->assign('posts', $posts);
         $this->display();
@@ -194,7 +208,7 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'preDel';
 
-        $posts = D('Posts', 'Logic')->getList(10000, $post_type, 'post_id desc', true, $where);
+        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_id desc', true, $where);
 
         $this->assign('posts', $posts);
 

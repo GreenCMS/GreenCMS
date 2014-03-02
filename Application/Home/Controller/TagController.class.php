@@ -8,10 +8,9 @@
  */
 
 namespace Home\Controller;
-use Common\Util\GreenPage;
-
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
+use Common\Util\GreenPage;
 
 
 /**
@@ -39,9 +38,7 @@ class TagController extends HomeBaseController
 
         $tag = $Tag->detail($info);
 
-        if (empty($tag)) {
-            $this->error404("非常抱歉，没有这个标签，可能它已经躲起来了");
-        }
+        $this->if404($tag, "非常抱歉，没有这个标签，可能它已经躲起来了");
 
         $posts_id = $Tag->getPostsId($tag['tag_id']);
         $count = sizeof($posts_id);
@@ -58,7 +55,7 @@ class TagController extends HomeBaseController
         $this->assign('title', $tag['tag_name']); // 赋值数据集
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集
-        $this->assign('page', $pager_bar); // 赋值分页输出
+        $this->assign('pager', $pager_bar); // 赋值分页输出
 
         $this->display('Archive/single-list');
 

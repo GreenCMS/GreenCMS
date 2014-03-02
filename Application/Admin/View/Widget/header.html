@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <!-- BEGIN LOGO -->
         <a class="brand" href="{:U('Admin/Index/index')}">
-             <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
+            <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
         </a>
         <!-- END LOGO -->
 
@@ -13,18 +13,18 @@
                 <ul class="nav">
                     <li class="visible-phone visible-tablet">
                         <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-                        <form class="sidebar-search">
-                            <div class="input-box">
-                                <a href="javascript:;" class="remove"></a>
-                                <input type="text" placeholder="Search..."/>
-                                <input type="button" class="submit" value=" "/>
-                            </div>
-                        </form>
+                        <!--<form class="sidebar-search">-->
+                            <!--<div class="input-box">-->
+                                <!--<a href="javascript:;" class="remove"></a>-->
+                                <!--<input type="text" placeholder="Search..."/>-->
+                                <!--<input type="button" class="submit" value=" "/>-->
+                            <!--</div>-->
+                        <!--</form>-->
                         <!-- END RESPONSIVE QUICK SEARCH FORM -->
                     </li>
                     <li class="active">
                         <a href="{:U('Admin/Index/index')}">
-                            Dashboard
+                            GreenCMS内容管理
                             <span class="selected"></span>
                         </a>
                     </li>
@@ -34,12 +34,26 @@
                             <span class="arrow"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{:U('Admin/Posts/add')}">文章发布</a></li>
                             <li><a href="{:U('Admin/Data/clear')}">缓存清理</a></li>
-                            <li><a href="{:U('Admin/Index/main')}" target="_blank">返回首页</a></li>
+
+                            <li><a href="{:U('Admin/Posts/add')}">文章发布</a></li>
+                         </ul>
+                        <b class="caret-out"></b>
+                    </li>
+
+                    <li>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+                            模块切换
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{:U('Weixin/Index/index')}" target="_blank">进入Weixin模块</a></li>
+                            <li><a href="{:U('Admin/Index/main')}" target="_blank">进入Home模块</a></li>
                         </ul>
                         <b class="caret-out"></b>
                     </li>
+
+
 
                     <li>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="">关于GreenCMS
@@ -47,26 +61,26 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="http://www.greencms.net">关于我们</a></li>
-                            <li><a href="http://service.greencms.net">服务中心</a></li>
-                            <li><a href="http://help.greencms.net">帮助</a></li>
-                            <li><a href="http://faq.greencms.net">FAQs</a></li>
+                            <!--<li><a href="http://service.greencms.net">服务中心</a></li>-->
+                            <!--<li><a href="http://help.greencms.net">帮助</a></li>-->
+                            <!--<li><a href="http://faq.greencms.net">FAQs</a></li>-->
                             <li><a href="https://github.com/zts1993/GreenCMS">zts1993@GitHub</a></li>
 
                         </ul>
                         <b class="caret-out"></b>
                     </li>
-                    <li>
-                        <span class="hor-menu-search-form-toggler">&nbsp;</span>
+                    <!--<li>-->
+                        <!--<span class="hor-menu-search-form-toggler">&nbsp;</span>-->
 
-                        <div class="search-form hidden-phone hidden-tablet">
-                            <form class="form-search">
-                                <div class="input-append">
-                                    <input type="text" placeholder="Search..." class="m-wrap">
-                                    <button type="button" class="btn"></button>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
+                        <!--<div class="search-form hidden-phone hidden-tablet">-->
+                            <!--<form class="form-search">-->
+                                <!--<div class="input-append">-->
+                                    <!--<input type="text" placeholder="Search..." class="m-wrap">-->
+                                    <!--<button type="button" class="btn"></button>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </div>

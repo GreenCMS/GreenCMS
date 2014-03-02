@@ -7,11 +7,54 @@
  * Time: 下午1:58
  */
 
-//创建菜单
-function createMenu($data, $ACCESS_TOKEN)
+function getRealText($keyword)
 {
+    if ($keyword == 'text')
+        return '文本';
+    elseif ($keyword == 'click') {
+        return '点击';
+    } elseif ($keyword == 'news') {
+        return '图文';
+    } elseif ($keyword == 'text') {
+        return '文本';
+    } elseif ($keyword == 'image') {
+        return '图片';
+    } elseif ($keyword == 0) {
+        return '已';
+    } elseif ($keyword == 1) {
+        return '未';
+    }
+
+}
+
+function getMenuButtons()
+{
+    $menu = C('Weixin_menu');
+    $menu = json_decode($menu, true);
+    $array = $menu['button'];
+
+    static $result_array = array();
+    foreach ($array as $value) {
+        if ($value['name'] != '' && $value['key'] != '') {
+            $result_array [$value['key']] = $value['name'];
+        }
+        if (!empty($value['sub_button'])) {
+            foreach ($value['sub_button'] as $value2) {
+                if ($value2['name'] != '' && $value2['key'] != '') {
+                    $result_array [$value2['key']] = $value2['name'];
+                }
+            }
+        }
+    }
+    return $result_array;
+}
+
+
+function simple_post($url,$data){
+
+
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" . $ACCESS_TOKEN);
+    curl_setopt($ch, CURLOPT_URL,$url );
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -28,18 +71,63 @@ function createMenu($data, $ACCESS_TOKEN)
     curl_close($ch);
     return $tmpInfo;
 
-}
 
-//获取菜单
-function getMenu($ACCESS_TOKEN)
-{
-    return file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=" . $ACCESS_TOKEN);
-}
-
-//删除菜单
-function deleteMenu($ACCESS_TOKEN)
-{
-    return file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=" . $ACCESS_TOKEN);
 }
 
 
+
+/**
+ *
+ * @package 二维数组排序
+ * @version $Id: FunctionsMain.inc.php,v 1.32 2005/09/24 11:38:37 wwccss Exp $
+ *
+ *
+ *          Sort an two-dimension array by some level two items use
+ *          array_multisort() function.
+ *
+ *
+ *
+ *          sysSortArray($Array,&quot;Key1&quot;,&quot;SORT_ASC&quot;,&quot;SORT_RETULAR&quot;,&quot;Key2&quot;……)
+ * @param array $ArrayData
+ *        	the array to sort.
+ * @param string $KeyName1
+ *        	the first item to sort by.
+ * @param string $SortOrder1
+ *        	the order to sort by(&quot;SORT_ASC&quot;|&quot;SORT_DESC&quot;)
+ * @param string $SortType1
+ *        	the sort
+ *        	type(&quot;SORT_REGULAR&quot;|&quot;SORT_NUMERIC&quot;|&quot;SORT_STRING&quot;)
+ * @return array sorted array.
+ */
+function sysSortArray($ArrayData, $KeyName1, $SortOrder1 = "SORT_ASC", $SortType1 = "SORT_REGULAR") {
+    if (! is_array ( $ArrayData )) {
+        return $ArrayData;
+    }
+
+    // Get args number.
+    $ArgCount = func_num_args ();
+
+    // Get keys to sort by and put them to SortRule array.
+    for($I = 1; $I < $ArgCount; $I ++) {
+        $Arg = func_get_arg ( $I );
+        if (! eregi ( "SORT", $Arg )) {
+            $KeyNameList [] = $Arg;
+            $SortRule [] = '$' . $Arg;
+        } else {
+            $SortRule [] = $Arg;
+        }
+    }
+
+    // Get the values according to the keys and put them to array.
+    foreach ( $ArrayData as $Key => $Info ) {
+        foreach ( $KeyNameList as $KeyName ) {
+            ${
+            $KeyName} [$Key] = $Info [$KeyName];
+        }
+    }
+
+    // Create the eval string and eval it.
+    $EvalString = 'array_multisort(' . join ( ",", $SortRule ) . ',$ArrayData);';
+    eval ( $EvalString );
+    return $ArrayData;
+}

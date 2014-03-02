@@ -3,10 +3,10 @@ $config_router = array(
 
     'URL_HTML_SUFFIX' => 'html',
     //URL模式
-      'URL_MODEL' => 2,
+    'URL_MODEL'       => 2,
     //开启路由!!建议url模型选择2，否则的话建议使用native模式
 
-    'URL_ROUTER_ON'   => true,
+    'URL_ROUTER_ON'   => false,
     //路由定义
     'URL_ROUTE_RULES' => array(
         'Post/single/:year/:month/:day/:info' => 'Post/single', //年月日规则路由
@@ -14,10 +14,10 @@ $config_router = array(
         'Post/single/:year/:info'             => 'Post/single', //年规则路由
         'Post/single/:info'                   => 'Post/single', //普通规则路由
 
-        'Post/Page/:year/:month/:day/:info'   => 'Post/page', //年月日规则路由
-        'Post/Page/:year/:month/:info'        => 'Post/page', //年月规则路由
-        'Post/Page/:year/:info'               => 'Post/page', //年规则路由
-        'Post/Page/:info'                     => 'Post/page', //普通规则路由
+        'Post/page/:year/:month/:day/:info'   => 'Post/page', //年月日规则路由
+        'Post/page/:year/:month/:info'        => 'Post/page', //年月规则路由
+        'Post/page/:year/:info'               => 'Post/page', //年规则路由
+        'Post/page/:info'                     => 'Post/page', //普通规则路由
 
         'Tag/:info'                           => 'Tag/detail', //普通规则路由
 

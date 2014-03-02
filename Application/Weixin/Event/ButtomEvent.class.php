@@ -40,7 +40,14 @@ class ButtomEvent extends WeixinCoreController
                 );
                 return $reply;
 
+            } elseif ($reply['type'] == 'image') {
+                $reply = array(
+                    array($reply['mediaId']),
+                    'image'
+                );
+                return $reply;
             }
+
         }
         $reply = array(
             '建设中:你点击了未定义回复的按钮,魔术方法回复' . $method,
@@ -48,11 +55,6 @@ class ButtomEvent extends WeixinCoreController
         );
         return $reply;
 
-
-    }
-
-    private function _empty($method, $args)
-    {
 
     }
 
@@ -68,89 +70,6 @@ class ButtomEvent extends WeixinCoreController
         return $reply;
     }
 
-
-//    public function brand()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//    }
-//
-//    public function category()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//    }
-//
-//    public function timeline()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//    }
-//
-//    public function discount()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//    }
-//
-//    public function assess()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//    }
-//
-//    public function gifts()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//    }
-//
-//    public function gain()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//    }
-//
-//    public function platform()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//
-//    }
-//
-//    public function feedback()
-//    {
-//        $reply = array(
-//            '建设中:你点击了按钮' . __FUNCTION__,
-//            'text'
-//        );
-//        return $reply;
-//    }
-//
 //    public function contact()
 //    {
 //        $reply = array(

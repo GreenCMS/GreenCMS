@@ -10,23 +10,23 @@
 $menu_arr = array(
 
     'admin_big_menu' => array(
-        'Home'   => '首页',
-        'Reply'  => '回复管理',
+        'Home'    => '首页',
+        'Reply'   => '预设回复',
 //        'Menu'   => '菜单管理',
-        'Rule'   => '回复规则',
-        'User'  => '用户查看',
-        'System' => '系统设置',
+        'Rule'    => '回复规则',
+        'User'    => '用户查看',
+        'Message' => '消息管理',
+        'System'  => '系统设置',
     ),
 
     'admin_sub_menu' => array(
         'Home'   => array(
-            'Home/index'      => '仪表盘',
+            'Home/index'      => '微信仪表盘',
             'Home/changePass' => '修改密码',
-            'Posts/add'       => '文章发布',
         ),
 
         'Reply'  => array(
-            'Reply/index' => '回复管理',
+            'Reply/index' => '预设回复内容',
             'Reply/text'  => '文字回复',
             'Reply/pic'   => '图片回复',
             'Reply/news'  => '图文回复',
@@ -46,9 +46,16 @@ $menu_arr = array(
         ),
 
 
-        'User'  => array(
+        'User'   => array(
             'User/index' => '用户管理',
-         ),
+        ),
+        'Message'   => array(
+            'Message/index' => '消息记录',
+            'Message/new' => '尚未回复',
+            'Message/send' => '发送消息',
+
+        ),
+
 
 
         'System' => array(
@@ -88,89 +95,11 @@ $config_rbac = array(
 
 $setting = array(
 
-    'URL_MODEL'                => 0,
-    'SHOW_PAGE_TRACE'          => false,
-    'SHOW_CHROME_TRACE'        => false,
+    'URL_MODEL'         => 0,
+    'SHOW_PAGE_TRACE'   => false,
+    'SHOW_CHROME_TRACE' => false,
 
-    'Weixin_reply_subscribe'   => '欢迎使用Z的博客微信服务平台！回复help获得使用帮助',
-    'Weixin_reply_unsubscribe' => '欢迎下次关注',
-
-    'Weixin_log'               => true,
-    'Weixin_appid'             => 'wx7c7c42e93b3cae50',
-    'Weixin_secret'            => 'a489beed09bb0d201d3e35396ef0cbc0',
-    'Weixin_menu'              => '{   "button": [
-                  {
-                      "name": "品牌介绍",
-                      "sub_button": [
-                          {
-                              "type": "click",
-                              "name": "品牌介绍",
-                              "key": "brand"
-                          },
-                          {
-                              "type": "click",
-                              "name": "产品分类",
-                              "key": "category"
-                          },
-                          {
-                              "type": "click",
-                              "name": "努力时间轴",
-                              "key": "timeline"
-                          },
-                          {
-                              "type": "click",
-                              "name": "TEST2",
-                              "key": "mtest"
-                          }
-                      ]
-                  },
-                  {
-                      "name": "最新活动",
-                      "sub_button": [
-                          {
-                              "type": "click",
-                              "name": "节日优惠",
-                              "key": "discount"
-                          },
-                          {
-                              "type": "click",
-                              "name": "用户测评",
-                              "key": "assess"
-                          },
-                          {
-                              "type": "click",
-                              "name": "礼品方案",
-                              "key": "gifts"
-                          }
-                      ]
-                  },
-                  {
-                      "name": "我的园艺",
-                      "sub_button": [
-                          {
-                              "type": "click",
-                              "name": "园艺心得",
-                              "key": "gain"
-                          },
-                          {
-                              "type": "click",
-                              "name": "花友平台",
-                              "key": "platform"
-                          },
-                          {
-                              "type": "click",
-                              "name": "售后反馈",
-                              "key": "feedback"
-                          },
-                          {
-                              "type": "click",
-                              "name": "联系我们",
-                              "key": "contact"
-                          }
-                      ]
-                  }
-              ]
-          }',
+    'Weixin_log'        => true,
 
 );
 

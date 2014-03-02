@@ -36,9 +36,7 @@ class CatController extends HomeBaseController
         $Posts = new PostsLogic();
         $cat = $Cat->detail($info);
 
-        if (empty($cat)) {
-            $this->error404("非常抱歉，没有这个分类，可能它已经躲起来了");
-        }
+        $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了");
 
         $posts_id = $Cat->getPostsId($cat['cat_id']);
         $count = sizeof($posts_id);
@@ -56,7 +54,7 @@ class CatController extends HomeBaseController
         $this->assign('title', $cat['cat_name']); // 赋值数据集
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集
-        $this->assign('page', $pager_bar); // 赋值分页输出
+        $this->assign('pager', $pager_bar); // 赋值分页输出
 
 
         $this->display('Archive/single-list');

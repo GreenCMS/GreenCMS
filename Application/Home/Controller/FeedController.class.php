@@ -8,8 +8,8 @@
  */
 
 namespace Home\Controller;
-use Common\Util\Rss;
 use Common\Logic\PostsLogic;
+use Common\Util\Rss;
 
 /**
  * Class FeedController
@@ -25,8 +25,9 @@ class FeedController extends HomeBaseController
     {
         parent::__construct();
         if (get_opinion('feed_open') == 0) {
-            $this->error("没FEED功能关闭");
+            $this->error404("Feed功能关闭");
         }
+        C('SHOW_CHROME_TRACE')==0;//防止sql输出过多导致header过大
     }
 
     /**
@@ -43,22 +44,19 @@ class FeedController extends HomeBaseController
     public function listSingle()
     {
 
-        $PostsList =new PostsLogic();
+        $PostsList = new PostsLogic();
         $post_list = $PostsList->getList(get_opinion('feed_num'), 'single', 'post_id desc', true);
-        $RSS = new RSS (get_opinion('all_title'), '', get_opinion('all_title'), ''); // 站点标题的链接
+        $RSS = new RSS (get_opinion('title'), '', get_opinion('description'), ''); // 站点标题的链接
         foreach ($post_list as $list) {
             $RSS->AddItem(
                 $list ['post_title'],
-
-                $list ['post_id'],
-
+                //               $list ['post_id'],
+                'http://'.$_SERVER["SERVER_NAME"].getSingleURLByID($list ['post_id']) ,
                 $list ['post_content'],
-
                 $list ['post_date']);
         }
 
         $RSS->Display();
-
     }
 
     /**
@@ -69,15 +67,12 @@ class FeedController extends HomeBaseController
 
         $PostsList = new PostsLogic();
         $post_list = $PostsList->getList(get_opinion('feed_num'), 'page', 'post_id desc', true);
-        $RSS = new RSS (get_opinion('ALL_TITLE'), '', get_opinion('ALL_TITLE'), ''); // 站点标题的链接
+        $RSS = new RSS (get_opinion('title'), '', get_opinion('description'), ''); // 站点标题的链接
         foreach ($post_list as $list) {
             $RSS->AddItem(
                 $list ['post_title'],
-
-                $list ['post_id'],
-
+                'http://' . $_SERVER["SERVER_NAME"] . getPageURLByID($list ['post_id']),
                 $list ['post_content'],
-
                 $list ['post_date']);
         }
 

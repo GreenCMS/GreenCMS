@@ -16,7 +16,7 @@ define("GreenCMS_DB_USR", '~dbuser~');
 define("GreenCMS_DB_PWD", '~dbpwd~');
 
 //端口
-define("GreenCMS_DB_PORT", '3306');
+define("GreenCMS_DB_PORT", '~dbport~');
 
 //前缀,生产环境需要自形添加 如 green_
 define("GreenCMS_DB_PREFIX", '~dbprefix~');

@@ -5,7 +5,7 @@ GreenCMS  v2 基于ThinkPHP的CMS系统
 GreenCMS 仅供学习交流，版权归作者所有，未经作者同意，不得删除代码中作者信息
 
 关于商业用途：
-需经过作者同意,不得使用代码中尚存版权问题的代码(首页Vena主题)
+需在Footer注明使用GreenCMS
 
 联系方式:
     Email: admin@njut.asia
@@ -17,6 +17,6 @@ GreenCMS交流群
 官方网站
     http://www.greencms.net
 
-如果有疑问欢迎大家反馈 (^_^)
+如果有疑问欢迎大家反馈
 BUG提交可以直接发ISSUE
                                               2014/2/12

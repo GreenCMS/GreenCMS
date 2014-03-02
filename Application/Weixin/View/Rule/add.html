@@ -66,45 +66,91 @@
                           method="post">
 
                         <div class="control-group">
-                            <label class="control-label">action_type</label>
+                            <label class="control-label">事件类型</label>
 
                             <div class="controls">
-                                <input type="text" placeholder="action_type" class="m-wrap large" name="action_type" value="{$item.action_type}">
-                                <span class="help-inline">可选:text,click</span>
+
+
+                                <select class="small m-wrap" tabindex="1" name="action_type">
+                                    <option value="text"
+                                    <php>
+                                        if($item['action_type']=='text')
+                                        echo 'selected="selected"';
+                                    </php>
+                                    >文字</option>
+                                    <option value="click"
+                                    <php>
+                                        if($item['action_type']=='click')
+                                        echo 'selected="selected"';
+                                    </php>
+                                    >菜单点击</option>
+                                </select>
+
+
                             </div>
 
                         </div>
 
-                        <div class="control-group">
-                            <label class="control-label">action_name</label>
+                        <div class="control-group" id='key'>
+                            <label class="control-label">按键</label>
+
+                            <div class="controls">
+
+                                <select class="small m-wrap" tabindex="1" name="action_name_key">
+                                    {$buttom_option}
+                                </select>
+
+                                <span class="help-inline">仅在选择菜单条件下有效</span>
+
+                            </div>
+                        </div>
+
+                        <div class="control-group" id='keyword'>
+                            <label class="control-label">关键字</label>
 
                             <div class="controls">
                                 <input type="text" placeholder="action_name"
-                                       class="m-wrap large" name="action_name" value="{$item.action_name}">
-                                <span class="help-inline">关键字或者是按钮id</span>
+                                       class="m-wrap large" name="action_name_keyword" value="{$item.action_name}">
+                                <span class="help-inline">仅在选择关键字条件下有效</span>
 
                             </div>
-
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">reply_type</label>
+                            <label class="control-label">回复类型</label>
 
                             <div class="controls">
-                                <input type="text" placeholder="reply_type" class="m-wrap large" name="reply_type" value="{$item.reply_type}">
+                                <select class="small m-wrap" tabindex="1" name="reply_type">
 
-                                <span class="help-inline">可选image,news,text</span>
-
+                                    <option value="news"
+                                    <php>
+                                        if($item['reply_type']=='news')
+                                        echo 'selected="selected"';
+                                    </php>
+                                    >图文</option>
+                                    <option value="image"
+                                    <php>
+                                        if($item['reply_type']=='image')
+                                        echo 'selected="selected"';
+                                    </php>
+                                    >图片</option>
+                                    <option value="text"
+                                    <php>
+                                        if($item['reply_type']=='text')
+                                        echo 'selected="selected"';
+                                    </php>
+                                    >文字</option>
+                                </select>
                             </div>
 
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">reply_id</label>
+                            <label class="control-label">预设定消息的ID</label>
 
                             <div class="controls">
                                 <input type="text" placeholder="reply_id" class="m-wrap large" name="reply_id" value="{$item.reply_id}">
-                                <span class="help-inline">回复消息的ID <a href="{:U('Weixin/Reply/index')}" target="_blank">点击这里查看ID</a> </span>
+                                <span class="help-inline">预设定消息的ID <a href="{:U('Weixin/Reply/index')}" target="_blank">点击这里查看ID</a> </span>
 
                             </div>
 

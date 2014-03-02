@@ -28,23 +28,6 @@ class IndexController extends HomeBaseController
      */
     public function index()
     {
-
-        /**
-         * $this->news = D('Cats', 'Logic')->getPostsByCat(16, 7);
-        $this->policy = D('Cats', 'Logic')->getPostsByCat(17, 7);
-        $this->tech = D('Cats', 'Logic')->getPostsByCat(18, 7);
-        $this->college = D('Cats', 'Logic')->getPostsByCat(19, 7);
-        $this->school = D('Cats', 'Logic')->getPostsByCat(20, 7);
-         */
-        //$this->news = D('Cats', 'Logic')->getPostsByCat(1, 7);
-        $this->policy = D('Cats', 'Logic')->getPostsByCat(1, 7);
-        $this->tech = D('Cats', 'Logic')->getPostsByCat(1, 7);
-        $this->college = D('Cats', 'Logic')->getPostsByCat(1, 7);
-        $this->school = D('Cats', 'Logic')->getPostsByCat(1, 7);
-
-        /**
-         *
-         */
         $this->display();
     }
 

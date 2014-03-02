@@ -64,6 +64,19 @@
                     <form action="{:U('Weixin/System/indexHandle')}" name="change_System" class="form-horizontal"
                           method="post">
 
+
+                        <div class="control-group">
+                            <label class="control-label">微信Token</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="weixin_token"
+                                       value="{:get_opinion('weixin_token')}"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+
+
                         <div class="control-group">
                             <label class="control-label">网站标题</label>
 
@@ -76,32 +89,47 @@
 
 
                         <div class="control-group">
-                            <label class="control-label">Weixin_reply_subscribe</label>
+                            <label class="control-label">订阅消息</label>
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="Weixin_reply_subscribe"
                                        value="{:get_opinion('Weixin_reply_subscribe')}"/>
-                                <span class="help-inline"></span>
+                                <span class="help-inline">当用户第一次关注时返回的内容</span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">Weixin_appid</label>
+                            <label class="control-label">微信App_ID</label>
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="Weixin_appid"
                                        value="{:get_opinion('Weixin_appid')}"/>
-                                <span class="help-inline"></span>
+                                <span class="help-inline">公共平台后台查询</span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">Weixin_secret</label>
+                            <label class="control-label">微信App_secret</label>
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="Weixin_secret"
                                        value="{:get_opinion('Weixin_secret')}"/>
-
+                                <span class="help-inline">公共平台后台查询</span>
                             </div>
                         </div>
+
+
+
+                        <div class="control-group">
+                            <label class="control-label">菜单</label>
+
+
+                            <div class="controls">
+                                <textarea style="height: 300px;" class="large m-wrap" rows="3" name="Weixin_menu">
+                                    {:C('Weixin_menu')}</textarea>
+                            </div>
+
+                        </div>
+
+
 
 
                         <div class="form-actions">

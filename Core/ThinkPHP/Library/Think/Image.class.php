@@ -154,7 +154,7 @@ class Image{
      * @param  integer $type   缩略图裁剪类型
      * @return Object          当前图片处理库对象
      */
-    public function thumb($width, $height, $type = self::IMAGE_THUMB_SCALE){
+    public function thumb($width, $height, $type = self::IMAGE_THUMB_SCALING){
         $this->img->thumb($width, $height, $type);
         return $this;
     }

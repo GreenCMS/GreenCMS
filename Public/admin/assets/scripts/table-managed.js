@@ -4,7 +4,7 @@ var TableManaged = function () {
 
         //main function to initiate the module
         init: function () {
-            
+
             if (!jQuery().dataTable) {
                 return;
             }
@@ -12,12 +12,12 @@ var TableManaged = function () {
             // begin first table
             $('#sample_1').dataTable({
                 "aoColumns": [
-                  { "bSortable": false },
-                  null,
-                  { "bSortable": false },
-                  null,
-                  { "bSortable": false },
-                  { "bSortable": false }
+                    { "bSortable": false },
+                    null,
+                    { "bSortable": false },
+                    null,
+                    { "bSortable": false },
+                    { "bSortable": false }
                 ],
                 "aLengthMenu": [
                     [5, 15, 20, -1],
@@ -34,7 +34,8 @@ var TableManaged = function () {
                         "sNext": "下一页"
                     }
                 },
-                "aoColumnDefs": [{
+                "aoColumnDefs": [
+                    {
                         'bSortable': false,
                         'aTargets': [0]
                     }
@@ -75,7 +76,8 @@ var TableManaged = function () {
                         "sNext": "Next"
                     }
                 },
-                "aoColumnDefs": [{
+                "aoColumnDefs": [
+                    {
                         'bSortable': false,
                         'aTargets': [0]
                     }
@@ -116,7 +118,8 @@ var TableManaged = function () {
                         "sNext": "下一页"
                     }
                 },
-                "aoColumnDefs": [{
+                "aoColumnDefs": [
+                    {
                         'bSortable': false,
                         'aTargets': [0]
                     }
@@ -139,6 +142,27 @@ var TableManaged = function () {
             jQuery('#sample_3_wrapper .dataTables_filter input').addClass("m-wrap small"); // modify table search input
             jQuery('#sample_3_wrapper .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
             jQuery('#sample_3_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
+
+
+
+
+            jQuery('#post_table .group-checkable').change(function () {
+                var set = jQuery(this).attr("data-set");
+                var checked = jQuery(this).is(":checked");
+                jQuery(set).each(function () {
+                    if (checked) {
+                        $(this).attr("checked", true);
+                    } else {
+                        $(this).attr("checked", false);
+                    }
+                });
+                jQuery.uniform.update(set);
+            });
+
+            jQuery('#post_table .dataTables_filter input').addClass("m-wrap medium"); // modify table search input
+            jQuery('#post_table .dataTables_length select').addClass("m-wrap small"); // modify table per page dropdown
+            //jQuery('#sample_1_wrapper .dataTables_length select').select2(); // initialzie select2 dropdown
+
 
         }
 

@@ -9,9 +9,7 @@
 
 namespace Weixin\Controller;
 
-use Weixin\Event\MenuEvent;
 use Weixin\Util\ThinkWechat;
-use Weixin\Util\ZTSWechat;
 
 class ApiController extends WeixinCoreController
 {
@@ -21,7 +19,7 @@ class ApiController extends WeixinCoreController
 
         \Think\Log::record('收到消息' . date('Ymd H:m:s'));
 
-        $weixin = new ThinkWechat ('zts147258369');
+        $weixin = new ThinkWechat (get_opinion('weixin_token'));
 
         /* 获取请求信息 */
         $data = $weixin->request();
@@ -61,19 +59,20 @@ class ApiController extends WeixinCoreController
                 $Weixinlog->data($data)->add();
             }
 
-
-            $reply = new ZTSWechat ($data);
             $keyword = trim($keyword);
+
+            $Text = new \Weixin\Event\TextEvent();
+
             if ($keyword == "hi" || $keyword == "hello" || $keyword == "你好" || $keyword == "您好") {
                 $contentStr = "欢迎使用,回复help获得使用帮助"; // .$toUsername
             } else if ($keyword == "help" || $keyword == "HELP") {
                 $contentStr = "欢迎使用会呼吸,使用方法:\r\n";
                 $contentStr .= "weather城市 查询天气\r\n";
             } else if ($keyword == "weather" || preg_match('/weather([^<>]+)/', $keyword)) {
-                $keyword = substr($keyword, 7);
-                $contentStr = $reply->weather($keyword);
+                $keyword = trim(substr($keyword, 7));
+                $contentStr = $Text->weather($keyword);
             } else {
-                $contentStr = $reply->wechat($data);
+                $contentStr = $Text->wechat($data);
             }
 
             $reply = array(
@@ -92,9 +91,9 @@ class ApiController extends WeixinCoreController
         } elseif ('location' == $data ['MsgType']) {
 
             //http://api.map.baidu.com/geocoder/v2/?ak=96a6bf4739da4e7c5bf6e916ff1ad51c&callback=renderReverse&location=32.106186,118.813850&output=json&pois=1
-            $reply = new ZTSWechat ($data);
+            $Text = new \Weixin\Event\TextEvent();
 
-            $contentStr =$reply->poi($data);
+            $contentStr = $Text->poi($data);
 
             $reply = array(
                 $contentStr,
@@ -130,16 +129,16 @@ class ApiController extends WeixinCoreController
     }
 
 
-    public function access()
-    {
-        $access = $this->getAccess();
-        dump($access);
-    }
-
-    public function phpinfo()
-    {
-        echo phpinfo();
-    }
+//    public function access()
+//    {
+//        $access = $this->getAccess();
+//        dump($access);
+//    }
+//
+//    public function phpinfo()
+//    {
+//        echo phpinfo();
+//    }
 
 
 }
