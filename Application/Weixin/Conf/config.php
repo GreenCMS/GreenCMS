@@ -101,6 +101,9 @@ $setting = array(
 
     'Weixin_log'        => true,
 
+
+
+
 );
 
 $ra = array_merge($config_rbac, $menu_arr);

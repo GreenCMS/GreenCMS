@@ -124,6 +124,8 @@ $config_other = array(
     // (测试功能)该值不可太大，否则会导致恢复失败，建议5M一卷
     // 5M=5*1024*1024=5242880
 
+
+
 );
 $config = array_merge($config_rbac, $menu_arr);
 return array_merge($config, $config_other);
