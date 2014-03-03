@@ -33,6 +33,30 @@ class ApiController extends WeixinCoreController
 
     }
 
+    public function test()
+    {
+        $code = I('get.code');
+        $APPID = C('Weixin_appid');
+        $SECRET = C('Weixin_secret');
+
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$APPID&secret=$SECRET&code=$code&grant_type=authorization_code";
+        $res = json_decode(file_get_contents($url),true);
+
+        dump($res);
+
+        $access_token = $res['access_token'];
+        $openid = $res['openid'];
+
+        $url2 = "https://api.weixin.qq.com/sns/userinfo?access_token=$access_token&openid=$openid";
+
+        $res2 = json_decode(file_get_contents($url2),true);
+        dump($res2);
+
+
+        // $this->index();
+    }
+
+
     private function reply($data)
     {
         /**

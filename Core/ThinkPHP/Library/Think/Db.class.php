@@ -128,6 +128,7 @@ class Db {
                   'database'  =>  $db_config['db_name'],
                   'dsn'       =>  $db_config['db_dsn'],
                   'params'    =>  $db_config['db_params'],
+                  'charset'   =>  $db_config['db_charset'],
              );
         }elseif(empty($db_config)) {
             // 如果配置为空，读取配置文件设置
@@ -143,6 +144,7 @@ class Db {
                     'database'  =>  C('DB_NAME'),
                     'dsn'       =>  C('DB_DSN'),
                     'params'    =>  C('DB_PARAMS'),
+                    'charset'   =>  C('DB_CHARSET'),
                 );
             }
         }
@@ -204,13 +206,14 @@ class Db {
             'database'  =>  isset($_config['database'][$r])?$_config['database'][$r]:$_config['database'][0],
             'dsn'       =>  isset($_config['dsn'][$r])?$_config['dsn'][$r]:$_config['dsn'][0],
             'params'    =>  isset($_config['params'][$r])?$_config['params'][$r]:$_config['params'][0],
+            'charset'   =>  isset($_config['charset'][$r])?$_config['charset'][$r]:$_config['charset'][0],            
         );
         return $this->connect($db_config,$r);
     }
 
     /**
      * DSN解析
-     * 格式： mysql://username:passwd@localhost:3306/DbName
+     * 格式： mysql://username:passwd@localhost:3306/DbName#charset
      * @static
      * @access public
      * @param string $dsnStr
@@ -226,7 +229,8 @@ class Db {
             'password'  =>  isset($info['pass']) ? $info['pass'] : '',
             'hostname'  =>  isset($info['host']) ? $info['host'] : '',
             'hostport'  =>  isset($info['port']) ? $info['port'] : '',
-            'database'  =>  isset($info['path']) ? substr($info['path'],1) : ''
+            'database'  =>  isset($info['path']) ? substr($info['path'],1) : '',
+            'charset'   =>  isset($info['fragment'])?$info['fragment']:'utf8',
             );
         }else {
             preg_match('/^(.*?)\:\/\/(.*?)\:(.*?)\@(.*?)\:([0-9]{1, 6})\/(.*?)$/',trim($dsnStr),$matches);
@@ -397,8 +401,7 @@ class Db {
             $tables  =  explode(',',$tables);
             array_walk($tables, array(&$this, 'parseKey'));
         }
-        //将__TABLE_NAME__这样的字符串替换成正规的表名,并且带上前缀
-        $tables = preg_replace_callback("/__([A-Z_-]+)__/sU", function($match){ return C('DB_PREFIX').strtolower($match[1]);}, implode(',',$tables));
+        $tables = implode(',',$tables);
         return $tables;
     }
 
@@ -584,17 +587,13 @@ class Db {
     /**
      * join分析
      * @access protected
-     * @param mixed $join
+     * @param array $join
      * @return string
      */
     protected function parseJoin($join) {
         $joinStr = '';
         if(!empty($join)) {
-            foreach ($join as $key=>$_join){
-                $joinStr .= false !== stripos($_join,'JOIN')? ' '.$_join : ' JOIN ' .$_join;
-            }
-            //将__TABLE_NAME__这样的字符串替换成正规的表名,并且带上前缀和后缀
-            $joinStr  = preg_replace_callback("/__([A-Z_-]+)__/sU", function($match){ return C('DB_PREFIX').strtolower($match[1]);}, $joinStr);
+            $joinStr    =   ' '.implode(' ',$join).' ';
         }
         return $joinStr;
     }
@@ -775,19 +774,8 @@ class Db {
      */
     public function select($options=array()) {
         $this->model  =   $options['model'];
-        $sql    = $this->buildSelectSql($options);
-        $cache  =  isset($options['cache'])?$options['cache']:false;
-        if($cache) { // 查询缓存检测
-            $key    =  is_string($cache['key'])?$cache['key']:md5($sql);
-            $value  =  S($key,'',$cache);
-            if(false !== $value) {
-                return $value;
-            }
-        }
-        $result   = $this->query($sql,$this->parseBind(!empty($options['bind'])?$options['bind']:array()));
-        if($cache && false !== $result ) { // 查询缓存写入
-            S($key,$result,$cache);
-        }
+        $sql        =   $this->buildSelectSql($options);
+        $result     =   $this->query($sql,$this->parseBind(!empty($options['bind'])?$options['bind']:array()));
         return $result;
     }
 
@@ -817,8 +805,8 @@ class Db {
                 return $value;
             }
         }
-        $sql  =   $this->parseSql($this->selectSql,$options);
-        $sql .= $this->parseLock(isset($options['lock'])?$options['lock']:false);
+        $sql  =     $this->parseSql($this->selectSql,$options);
+        $sql .=     $this->parseLock(isset($options['lock'])?$options['lock']:false);
         if(isset($key)) { // 写入SQL创建缓存
             S($key,$sql,array('expire'=>0,'length'=>C('DB_SQL_BUILD_LENGTH'),'queue'=>C('DB_SQL_BUILD_QUEUE')));
         }

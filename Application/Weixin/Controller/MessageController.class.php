@@ -37,7 +37,6 @@ class MessageController extends WeixinBaseController
         $Weixinlog = D('Weixinlog');
         $message_list = $Weixinlog->order('CreateTime desc')->relation(true)->select();
 
-
         foreach ($message_list as $key => $value) {
             if ($value['user'] == null) {
                 unset($message_list[$key]);

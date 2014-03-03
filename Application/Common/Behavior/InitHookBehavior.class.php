@@ -12,8 +12,6 @@ class InitHookBehavior extends Behavior
 {
     public function __construct()
     {
-        parent::__construct();
-
 
     }
 
@@ -26,22 +24,28 @@ class InitHookBehavior extends Behavior
 //真不知道说什么好。。。
 
         } else {
-            if (isset($_GET['m']) && $_GET['m'] === 'Install') return;
+             if (isset($_GET['m']) && $_GET['m'] === 'Install') return;
 
-            $data = S('hooks');
+         //   $data = S('hooks');
 
 
             if ((!$data)) {
                 $hooks = M('Hooks')->getField('name,addons');
+
+
                 foreach ($hooks as $key => $value) {
                     if ($value) {
+
                         $map['status'] = 1;
                         $names = explode(',', $value);
                         $map['name'] = array('IN', $names);
                         $data = M('Addons')->where($map)->getField('id,name');
                         if ($data) {
                             $addons = array_intersect($names, $data);
-                            Hook::add($key, $addons);
+                           // dump($addons);
+                           // $addons[0]= 'Addons\\'.$addons[0];
+
+                            Hook::add($key,$addons);
                         }
                     }
                 }
