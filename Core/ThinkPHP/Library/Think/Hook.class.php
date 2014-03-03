@@ -126,7 +126,9 @@ class Hook
             // 行为扩展（只有一个run入口方法）
             $class = $name;
             $tag = 'run';
-        }
+        }else{
+            return false;
+		}
 
 
         $addon = new $class();
