@@ -10,6 +10,12 @@ use Think\Hook;
 
 class InitHookBehavior extends Behavior
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+
+    }
 
 
     // 行为扩展的执行入口必须是run
