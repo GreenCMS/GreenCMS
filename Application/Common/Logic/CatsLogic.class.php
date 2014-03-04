@@ -94,17 +94,24 @@ class CatsLogic extends RelationModel
     /**
      * @param $info 分类info
      *
+     * @param string $post_status
      * @return mixed 找到的话返回post_id数组集合
      */
-    public function getPostsId($info)
+    public function getPostsId($info, $post_status = 'publish')
     {
         $cat_info ['cat_id'] = $info;
         $cat = D('Post_cat')->field('post_id')->where($cat_info)->select();
 
+        $ids = array();
         foreach ($cat as $key => $value) {
-            $cat[$key] = $cat[$key]['post_id'];
+            $posts = D('Posts')->field('post_status')->where(array('post_id' => $cat[$key]['post_id']))->cache(true)->find();
+
+            if ($posts['post_status'] == $post_status) {
+                $ids[] = $cat[$key]['post_id'];
+            }
         }
-        return $cat;
+
+        return $ids;
     }
 
     /**
@@ -122,10 +129,10 @@ class CatsLogic extends RelationModel
                 unset($cat[sizeof($cat) - 1]);
             }
         }
-         if ($cat != null) {
+        if ($cat != null) {
             $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
             return $posts;
-        }else {
+        } else {
             return false;
         }
 
