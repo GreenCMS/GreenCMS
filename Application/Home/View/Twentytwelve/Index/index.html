@@ -89,11 +89,11 @@
                                     {$post['post_date']|getTimeURL=$post['post_type']}
                                 </time>
                             </a>。属于
-                            <volist name="post.post_cat" id="cat" empty="无分类..">
+                            <volist name="post.post_cat" id="cat"  >
                                 <a href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
                             </volist>
                             分类 。标签：
-                            <volist name="post.post_tag" id="tag" empty="无标签.">
+                            <volist name="post.post_tag" id="tag"  >
                                 <a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
                             </volist>
                             <span class="by-author">作者是 <span class="author vcard">

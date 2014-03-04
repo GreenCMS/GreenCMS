@@ -224,7 +224,7 @@ CREATE TABLE `{$db_prefix}posts` (
   `user_id` bigint(20) unsigned DEFAULT '0',
   `post_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `post_content` longtext NOT NULL,
-  `post_title` text NOT NULL,
+  `post_title` varchar(255) NOT NULL,
   `post_status` varchar(20) DEFAULT 'publish',
   `post_comment_status` varchar(20) DEFAULT 'open',
   `post_password` varchar(20) DEFAULT '',
