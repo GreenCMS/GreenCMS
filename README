@@ -33,3 +33,5 @@ BUG提交可以直接发ISSUE
   目前已知的需要Patch的文件有
     /Core/ThinkPHHP/Library/Think/Model/RelationModel.class.php （两处）// since thinkphp 3.2
     /Core/ThinkPHHP/Library/Think/Hook.class.php (一处) // since thinkphp 3.2.1
+    /Core/ThinkPHHP/Library/Think/Template/TagLib/Cx.class.php (一处) // since thinkphp 3.2.1
+
