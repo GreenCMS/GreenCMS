@@ -28,17 +28,28 @@ class TagsLogic extends RelationModel
     /**
      * @param $info 输入tag_id|tag_slug
      *
+     * @param string $post_status
      * @return mixed 找到的话返回post_id数组集合
      */
-    public function getPostsId($info)
+    public function getPostsId($info, $post_status = 'publish')
     {
         $tag_info ['tag_id'] = $info;
         $tag = D('Post_tag')->field('post_id')->where($tag_info)->select();
+        $ids = array();
+
         foreach ($tag as $key => $value) {
-            $tag[$key] = $tag[$key]['post_id'];
+
+            $posts = D('Posts')->field('post_status')->where(array('post_id' => $tag[$key]['post_id']))->cache(true)->find();
+
+
+            if ($posts['post_status'] == $post_status) {
+                $ids[] = $tag[$key]['post_id'];
+            }
         }
-        return $tag;
+        return $ids;
     }
+
+
 
     /**
      * @param $tag_id

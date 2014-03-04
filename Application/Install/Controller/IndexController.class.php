@@ -14,7 +14,7 @@ use Think\Controller;
 use Think\Hook;
 use Think\Think;
 
-class IndexController extends InstallBaseController
+class IndexController extends \Think\Controller
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class IndexController extends InstallBaseController
 
         $lockFile = WEB_ROOT . 'Data/Install/install.lock';
 
-        if (file_exists($lockFile)) {
+        if (File::file_exists($lockFile)) {
             $this->error(" 你已经安装过GreenCMS，如果想重新安装，请先删除站点Data/install目录下的 install.lock 文件，然后再安装。");
         }
     }
@@ -73,11 +73,6 @@ class IndexController extends InstallBaseController
 
     public function step3()
     {
-
-//        if (!empty($_SERVER['REQUEST_URI']))
-//            $scriptName = $_SERVER['REQUEST_URI'];
-//        else
-//            $scriptName = $_SERVER['PHP_SELF'];
 
         $basepath = __ROOT__;
         $cfg_cmspath = $basepath;
@@ -141,7 +136,7 @@ class IndexController extends InstallBaseController
 
         $file = WEB_ROOT . 'Data/Install/db_config_sample.php';
 
-        if (!file_exists($file))
+        if (!File::file_exists($file))
             $this->error('Data/Install/db_config_sample.php文件不存在,请检查');
         $content = File::readFile($file);
 

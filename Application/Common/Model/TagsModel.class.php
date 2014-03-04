@@ -23,7 +23,7 @@ class TagsModel extends RelationModel
     public $_link = array(
         'Post_tags' => array(
 
-            'mapping_type' => HAS_MANY,
+            'mapping_type' => self::HAS_MANY,
 
             'class_name'   => 'Post_tag',
 

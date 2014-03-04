@@ -25,20 +25,15 @@ class AccessController extends AdminBaseController
     public function index()
     {
         $this->listname = '管理组用户';
-
-
         $list = D('Access', 'Logic')->adminList();
-
         $this->assign('list', $list);
-
-        //dump($list);
         $this->display('userlist');
     }
 
     // 游客列表
     public function guest()
     {
-        $this->listname = '游客组用户';
+        $this->listname = '游客用户';
         $this->list = D('Access', 'Logic')->guestList();
         $this->display('userlist');
     }
@@ -98,30 +93,8 @@ class AccessController extends AdminBaseController
         $this->display();
     }
 
-    //TODO 即将删除
-    /**
-     * +----------------------------------------------------------
-     * 添加管理员
-     * +----------------------------------------------------------
-
-    public function addAdmin() {
-    if (IS_POST) {
-
-    header ( 'Content-Type:application/json; charset=utf-8' );
-    echo json_encode ( D ( "Access" )->addAdmin () );
-    } else {
-    $this->assign ( "info", $this->getRoleListOption ( array (
-    'role_id' => 0
-    ) ) );
-    $this->assign ( "handle", "addAdmin" );
-    $this->display ();
-    }
-    }
-     */
-
 
     // 添加用户
-
     public function addUser()
     {
         $this->action_name = 'addUser';

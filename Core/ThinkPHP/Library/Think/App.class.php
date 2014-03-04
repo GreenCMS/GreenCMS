@@ -50,11 +50,33 @@ class App {
      * @return void
      */
     static public function exec() {
+    
         if(!preg_match('/^[A-Za-z](\/|\w)*$/',CONTROLLER_NAME)){ // 安全检测
             $module  =  false;
+        }elseif(C('ACTION_BIND_CLASS')){
+            // 操作绑定到类：模块\Controller\控制器\操作
+            $layer  =   C('DEFAULT_C_LAYER');
+            if(is_dir(MODULE_PATH.$layer.'/'.CONTROLLER_NAME)){
+                $namespace  =   MODULE_NAME.'\\'.$layer.'\\'.CONTROLLER_NAME.'\\';
+            }else{
+                // 空控制器
+                $namespace  =   MODULE_NAME.'\\'.$layer.'\\_empty\\';                    
+            }
+            $actionName     =   strtolower(ACTION_NAME);
+            if(class_exists($namespace.$actionName)){
+                $class   =  $namespace.$actionName;
+            }elseif(class_exists($namespace.'_empty')){
+                // 空操作
+                $class   =  $namespace.'_empty';
+            }else{
+                E(L('_ERROR_ACTION_').':'.ACTION_NAME);
+            }
+            $module  =  new $class;
+            // 操作绑定到类后 固定执行run入口
+            $action  =  'run';
         }else{
-            //创建Action控制器实例
-            $module  =  A(CONTROLLER_NAME);
+            //创建控制器实例
+            $module  =  A(CONTROLLER_NAME);                
         }
 
         if(!$module) {
@@ -69,9 +91,11 @@ class App {
                 E(L('_CONTROLLER_NOT_EXIST_').':'.CONTROLLER_NAME);
             }
         }
+
         // 获取当前操作名 支持动态路由
-        $action     =   C('ACTION_NAME')?C('ACTION_NAME'):ACTION_NAME;
-        $action    .=   C('ACTION_SUFFIX');
+        if(!isset($action)){
+            $action    =   ACTION_NAME.C('ACTION_SUFFIX');  
+        }
         try{
             if(!preg_match('/^[A-Za-z](\w)*$/',$action)){
                 // 非法操作
@@ -89,7 +113,7 @@ class App {
                     }
                 }
                 // URL参数绑定检测
-                if(C('URL_PARAMS_BIND') && $method->getNumberOfParameters()>0){
+                if($method->getNumberOfParameters()>0 && C('URL_PARAMS_BIND')){
                     switch($_SERVER['REQUEST_METHOD']) {
                         case 'POST':
                             $vars    =  array_merge($_GET,$_POST);

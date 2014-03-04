@@ -21,7 +21,7 @@ class WeixinlogModel extends RelationModel
 
         'user' => array(
 
-            'mapping_type'        => BELONGS_TO,
+            'mapping_type'        => self::BELONGS_TO,
 
             'class_name'          => 'Weixinuser',
 

@@ -42,8 +42,6 @@ class PostsController extends AdminBaseController
             $posts = $PostsList->getList($limit, $post_type, $order, true, $info, $post_ids);
         }
 
-//        $posts = D('Posts', 'Logic')->getList(0, $post_type, $order, true, $info, $post_ids);
-
         $this->assign('posts', $posts);
         $this->assign('pager', $pager_bar);
         $this->display('index_no_js');

@@ -19,13 +19,14 @@ use Think\Model;
  * @subpackage  Model
  * @author    liu21st <liu21st@gmail.com>
  */
-define('HAS_ONE', 1);
-define('BELONGS_TO', 2);
-define('HAS_MANY', 3);
-define('MANY_TO_MANY', 4);
-
 class RelationModel extends Model
 {
+
+    const   HAS_ONE = 1;
+    const   BELONGS_TO = 2;
+    const   HAS_MANY = 3;
+    const   MANY_TO_MANY = 4;
+
     // 关联定义
     protected $_link = array();
 
@@ -159,23 +160,27 @@ class RelationModel extends Model
                     // 获取关联模型对象
                     $model = D($mappingClass);
                     switch ($mappingType) {
-                        case HAS_ONE:
+                        case self::HAS_ONE:
                             $pk = $result[$mappingKey];
                             $mappingCondition .= " AND {$mappingFk}='{$pk}'";
+
+
                             $relationData = $model->where($mappingCondition)->field($mappingFields)->find();
                             if (!empty($val['relation_deep'])) {
                                 $model->getRelation($relationData, $val['relation_deep']);
                             }
                             break;
-                        case BELONGS_TO:
+                        case self::BELONGS_TO:
                             if (strtoupper($mappingClass) == strtoupper($this->name)) {
                                 // 自引用关联 获取父键名
                                 $mappingFk = !empty($val['parent_key']) ? $val['parent_key'] : 'parent_id';
                             } else {
                                 $mappingFk = !empty($val['foreign_key']) ? $val['foreign_key'] : strtolower($model->getModelName()) . '_id'; //  关联外键
                             }
-                            //Patch for thinkphp3.2 by GREENCMS
+
+                            //TODO Patch for thinkphp3.2 by GREENCMS
                             $mapping_foreign_key = !empty($val['mapping_foreign_key']) ? $val['mapping_foreign_key'] : $model->getPk();
+
 
                             $fk = $result[$mappingFk];
                             $mappingCondition .= " AND {$mapping_foreign_key}='{$fk}'";
@@ -184,7 +189,7 @@ class RelationModel extends Model
                                 $model->getRelation($relationData, $val['relation_deep']);
                             }
                             break;
-                        case HAS_MANY:
+                        case self::HAS_MANY:
                             $pk = $result[$mappingKey];
                             $mappingCondition .= " AND {$mappingFk}='{$pk}'";
                             $mappingOrder = !empty($val['mapping_order']) ? $val['mapping_order'] : '';
@@ -198,7 +203,7 @@ class RelationModel extends Model
                                 }
                             }
                             break;
-                        case MANY_TO_MANY:
+                        case self::MANY_TO_MANY:
                             $pk = $result[$mappingKey];
                             $mappingCondition = " {$mappingFk}='{$pk}'";
                             //TODO ThinkPHP3.2 Patch By ZTS
@@ -209,7 +214,10 @@ class RelationModel extends Model
                             if (array_key_exists('mapping_order', $val)) $mappingOrder = $val['mapping_order'];
                             if (array_key_exists('mapping_limit', $val)) $mappingLimit = $val['mapping_limit'];
                             $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id';
-                            $mappingRelationTable = $val['relation_table'] ? C('DB_PREFIX') . $val['relation_table'] : $this->getRelationTableName($model);
+                            $mappingRelationTable = $val['relation_table'] ? $val['relation_table'] : $this->getRelationTableName($model);
+                            //TODO ThinkPHP3.2 Patch By ZTS
+                            $mappingRelationTable = C('DB_PREFIX') . $mappingRelationTable;
+
                             $sql = "SELECT b.{$mappingFields} FROM {$mappingRelationTable} AS a, " . $model->getTableName() . " AS b WHERE a.{$mappingRelationFk} = b.{$model->getPk()} AND a.{$mappingCondition}";
                             if (!empty($val['condition'])) {
                                 $sql .= ' AND ' . $val['condition'];
@@ -230,7 +238,7 @@ class RelationModel extends Model
                             break;
                     }
                     if (!$return) {
-                        if (isset($val['as_fields']) && in_array($mappingType, array(HAS_ONE, BELONGS_TO))) {
+                        if (isset($val['as_fields']) && in_array($mappingType, array(self::HAS_ONE, self::BELONGS_TO))) {
                             // 支持直接把关联的字段值映射成数据对象中的某个字段
                             // 仅仅支持HAS_ONE BELONGS_TO
                             $fields = explode(',', $val['as_fields']);
@@ -301,7 +309,7 @@ class RelationModel extends Model
                     $mappingData = isset($data[$mappingName]) ? $data[$mappingName] : false;
                     if (!empty($mappingData) || $opType == 'DEL') {
                         switch ($mappingType) {
-                            case HAS_ONE:
+                            case self::HAS_ONE:
                                 switch (strtoupper($opType)) {
                                     case 'ADD': // 增加关联数据
                                         $mappingData[$mappingFk] = $pk;
@@ -315,9 +323,9 @@ class RelationModel extends Model
                                         break;
                                 }
                                 break;
-                            case BELONGS_TO:
+                            case self::BELONGS_TO:
                                 break;
-                            case HAS_MANY:
+                            case self::HAS_MANY:
                                 switch (strtoupper($opType)) {
                                     case 'ADD'   : // 增加关联数据
                                         $model->startTrans();
@@ -346,12 +354,10 @@ class RelationModel extends Model
                                         break;
                                 }
                                 break;
-                            case MANY_TO_MANY:
+                            case self::MANY_TO_MANY:
                                 $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id'; // 关联
-
-                                //TODO
-
-                                $mappingRelationTable = $val['relation_table'] ? C('DB_PREFIX') . $val['relation_table'] : $this->getRelationTableName($model);
+                                $mappingRelationTable = $val['relation_table'] ? $val['relation_table'] : $this->getRelationTableName($model);
+                                $mappingRelationTable = C('DB_PREFIX') . $mappingRelationTable;
                                 if (is_array($mappingData)) {
                                     $ids = array();
                                     foreach ($mappingData as $vo)

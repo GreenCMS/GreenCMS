@@ -20,7 +20,7 @@ class SystemController extends AdminBaseController
     {
 //        $data ['option_name'] = 'smtp_user';
 //        $data ['option_value'] = '1412128697@qq.com';
-         D('Options')->data($data)->add();
+        D('Options')->data($data)->add();
     }
 
     public function index()
@@ -79,9 +79,8 @@ class SystemController extends AdminBaseController
     {
 
         if (IS_POST) {
-             $data = I('post.');
-            if ($_FILES['img']['size']!=0) {
-
+            $data = I('post.');
+            if ($_FILES['img']['size'] != 0) {
 
 
                 $config = array(
@@ -128,7 +127,7 @@ class SystemController extends AdminBaseController
         if (IS_POST) {
             $data = I('post.');
 
-            if ($_FILES['img']['size']!=0) {
+            if ($_FILES['img']['size'] != 0) {
 
                 $config = array(
                     "savePath"   => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
@@ -154,7 +153,7 @@ class SystemController extends AdminBaseController
                 }
             }
 
-             if (D('Links', 'Logic')->where(array('link_id' => $id))->save($data)
+            if (D('Links', 'Logic')->where(array('link_id' => $id))->save($data)
             ) {
                 $this->success('链接编辑成功', U('Admin/System/links'));
             } else {
@@ -162,11 +161,11 @@ class SystemController extends AdminBaseController
             }
         } else {
 
-            $this->form_url = U('Admin/System/editlink', array( 'id' => $id));
+            $this->form_url = U('Admin/System/editlink', array('id' => $id));
             $link = D('Links', 'Logic')->detail($id);
 
-            $this->assign('imgurl',$link['link_img']);
-            $this->assign('link',$link);
+            $this->assign('imgurl', $link['link_img']);
+            $this->assign('link', $link);
             // print_array($this->link);
             $this->action = '编辑链接';
             $this->buttom = '编辑';
@@ -328,7 +327,6 @@ class SystemController extends AdminBaseController
         if (!is_dir($dir))
             $this->error('未检测到更新内容!');
 
-        import('@.ORG.File');
         $content = File::read_file(LOG_PATH . $date . '/log.txt');
         $this->assign('log', explode('###', $content));
         $this->action = '更新结果';

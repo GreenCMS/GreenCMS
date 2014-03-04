@@ -28,12 +28,14 @@ class IndexController extends HomeBaseController
      */
     public function index()
     {
-        $this->display();
+        $this->display('index');
     }
 
 
-    function wordpressImport(){
-        $Wordpress=new \Common\Event\WordpressEvent();
+
+    function wordpressImport()
+    {
+        $Wordpress = new \Common\Event\WordpressEvent();
         $Wordpress->catImport();
         $Wordpress->tagImport();
         $Wordpress->postImport();

@@ -1,4 +1,4 @@
-GreenCMS  v2 基于ThinkPHP的CMS系统
+GreenCMS 2014 基于ThinkPHP的CMS系统
 全新一代内容管理系统 By GreenStudio
 
 版权申明：
@@ -17,6 +17,19 @@ GreenCMS交流群
 官方网站
     http://www.greencms.net
 
+微博
+    http://weibo.com/u/3228716083
+
 如果有疑问欢迎大家反馈
 BUG提交可以直接发ISSUE
-                                              2014/2/12
+                                              2014/3/3
+
+
+
+
+其他信息
+虽然GreenCMS是基于ThinkPHP开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，
+但是由于编者自生水平不足或者ThinkPHP自身不合理，所以部分文件可能需要替换（或者说打Patch）
+  目前已知的需要Patch的文件有
+    /Core/ThinkPHHP/Library/Think/Model/RelationModel.class.php （两处）// since thinkphp 3.2
+    /Core/ThinkPHHP/Library/Think/Hook.class.php (一处) // since thinkphp 3.2.1

@@ -24,7 +24,7 @@ class UserModel extends RelationModel
 
         'Name' => array(
 
-            'mapping_type'         => MANY_TO_MANY,
+            'mapping_type'         => self::MANY_TO_MANY,
 
             'class_name'           => 'Role',
 
@@ -39,7 +39,7 @@ class UserModel extends RelationModel
 
         'Role' => array(
 
-            'mapping_type' => BELONGS_TO,
+            'mapping_type' => self::BELONGS_TO,
 
             'class_name'   => 'Role_users',
 

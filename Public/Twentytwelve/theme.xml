@@ -1,0 +1,13 @@
+<theme>
+    <name>Twentytwelve</name>
+    <version>2</version>
+    <build>20140303</build>
+    <description>Twentytwelve from wordpress</description>
+    <author>ZTS</author>
+    <preview>/Twentytwelve/preview.jpg</preview>
+    <preview_big>/Twentytwelve/preview_big.jpg</preview_big>
+    <copyright>GreenStudio 2011</copyright>
+    <tpl_view>Apllication/Home/View/Twentytwelve</tpl_view>
+    <tpl_static>Public/Twentytwelve</tpl_static>
+    <introduction>Twentytwelve博客主题</introduction>
+</theme>
