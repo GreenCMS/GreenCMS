@@ -211,6 +211,7 @@ class IndexController extends \Think\Controller
         File::delAll(LOG_PATH);
         File::delAll(WEB_CACHE_PATH);
         File::delAll(WEB_ROOT . 'Data/Cache');
+        File::delAll(WEB_ROOT . 'Data/Temp');
 
 
         if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {

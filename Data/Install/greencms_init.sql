@@ -146,3 +146,15 @@ INSERT INTO `{$db_prefix}post_cat` VALUES (null,'1','1');
 -- Records of {$db_prefix}post_tag
 -- ----------------------------
 INSERT INTO `{$db_prefix}post_tag` VALUES (null,'1','1');
+
+
+-- ----------------------------
+-- Records of {$db_prefix}plugin
+-- ----------------------------
+INSERT INTO `{$db_prefix}plugin` VALUES ('1', '1', 'Duoshuo', '多说第三方评论', 'XJH1994', 'GreenCMS',CURRENT_TIMESTAMP);
+
+
+-- ----------------------------
+-- Records of {$db_prefix}addons
+-- ----------------------------
+INSERT INTO `{$db_prefix}addons` VALUES ('9', 'SocialComment', '通用社交化评论', '集成了各种社交化评论插件，轻松集成到系统中。', '1', '{\"comment_type\":\"2\",\"comment_uid_youyan\":\"1894186\",\"comment_short_name_duoshuo\":\"greencmsduoshuo\",\"comment_form_pos_duoshuo\":\"buttom\",\"comment_data_list_duoshuo\":\"10\",\"comment_data_order_duoshuo\":\"desc\"}', 'xjh1994', '0.1', '1380273962', '0');
