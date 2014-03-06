@@ -67,3 +67,15 @@ define("Upload_PATH", "Upload/");
  * TIME_FIX
  */
 define("TIME_FIX", 0);
+
+
+/**
+ * version code
+ */
+define ('GreenCMS_Version', 'v2.1.0306');
+define ('GreenCMS_Build', '2014030');
+
+/**
+ * BUILD_DIR_SECURE 目录安全，设置详细参考thinkphp手册
+ */
+define('BUILD_DIR_SECURE', false);
