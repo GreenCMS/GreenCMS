@@ -184,7 +184,7 @@ class PostsController extends AdminBaseController
             }
 
         } else {
-            cookie('post_add', gzcompress(json_encode($data)), 3600000);
+            cookie('post_add', gzcompress(json_encode($data)), 3600000); //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
             $this->json_return(0, "发布失败");
         }
 
