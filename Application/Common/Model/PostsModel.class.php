@@ -18,8 +18,6 @@ class PostsModel extends RelationModel
 {
 
 
-
-
     /**
      * @var array
      */
