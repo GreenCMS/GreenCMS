@@ -54,11 +54,10 @@ INSERT INTO `{$db_prefix}links` VALUES (null, '123', 'http://www.greencms.net/',
 -- ----------------------------
 -- Records of green_menu
 -- ----------------------------
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '10000', 'Code', '_self', 'getCatURLByID', 'head', '2');
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '消息公告', '_self', 'none', 'head', null);
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '联系我们', '_self', 'getSingleURLByID', 'head', '[\"95\",\"page\"]');
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '加入我们', '_self', 'get_url', 'head', 'Form/apply');
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '技术分享', '_self', 'getCatURLByID', 'head', '18');
+INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '10000', '测试分类', '_self', 'getCatURLByID', 'head', '1');
+INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '空链接', '_self', 'none', 'head', null);
+INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '测试页面', '_self', 'getSingleURLByID', 'head', '[\"2\",\"page\"]');
+INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '测试文章', '_self', 'getSingleURLByID', 'head', '[\"1\",\"single\"]');
 
 -- ----------------------------
 -- Records of green_options
@@ -111,12 +110,14 @@ INSERT INTO `{$db_prefix}options` VALUES ('41', 'weixin_token', ' ', 'yes');
 -- ----------------------------
 -- Records of green_kv
 -- ----------------------------
-INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'Vena');
+INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'Twentytwelve');
 INSERT INTO `{$db_prefix}kv` VALUES ('2', 'home_url_model', '2');
 INSERT INTO `{$db_prefix}kv` VALUES ('3', 'home_cat_model', 'native');
 INSERT INTO `{$db_prefix}kv` VALUES ('4', 'home_tag_model', 'native');
 INSERT INTO `{$db_prefix}kv` VALUES ('5', 'home_post_model', 'native');
 INSERT INTO `{$db_prefix}kv` VALUES ('7', 'theme_Vena', 'enabled');
 INSERT INTO `{$db_prefix}kv` VALUES ('8', 'theme_2011college', 'enabled');
-INSERT INTO `{$db_prefix}kv` VALUES ('9', 'HTML_CACHE_ON', 'true');
+INSERT INTO `{$db_prefix}kv` VALUES ('9', 'theme_Twentytwelve', 'enabled');
+INSERT INTO `{$db_prefix}kv` VALUES ('10', 'HTML_CACHE_ON', 'true');
+
 
