@@ -141,11 +141,11 @@ class PostsController extends AdminBaseController
     private function dataHandle()
     {
         $data['post_type'] = I('post.post_type', 'single');
-        $data['post_title'] = I('post.post_title');
-        $data['post_content'] = I('post.post_content');
+        $data['post_title'] = I('post.post_title', '', '');
+        $data['post_content'] = I('post.post_content', '', '');
         $data['post_template'] = I('post.post_template', $data['post_type']);
 
-        $data['post_name'] = I('post.post_title');
+        $data['post_name'] = I('post.post_name', $data['post_title'], '');
         $data['post_modified'] = $data['post_date'] = date("Y-m-d H:m:s", time());
         $data['user_id'] = I('post.post_user') ? I('post.post_user') : $_SESSION [C('USER_AUTH_KEY')];
 
@@ -173,7 +173,7 @@ class PostsController extends AdminBaseController
 
         if ($post_id = D('Posts')->relation(true)->add($data)) { //, 'Logic'
 
-            cookie('post', null);
+            cookie('post_add',null);
 
             if ($data['post_type'] == 'single') {
                 $this->json_return(1, "发布成功", U('Admin/Posts/index'));
