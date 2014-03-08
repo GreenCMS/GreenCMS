@@ -25,14 +25,14 @@ class ButtomEvent extends WeixinCoreController
             $reply = D('Weixinre')->where(array('wx_re_id' => $reply_id))->find();
             if ($reply['type'] == 'text') {
                 $reply = array(
-                    $reply['content'],
+                    htmlspecialchars_decode($reply['content']) ,
                     'text'
                 );
                 return $reply;
             } elseif ($reply['type'] == 'news') {
 
                 $articles = array();
-                $articles[0] = array($reply['title'], $reply['description'], $reply['picurl'], $reply['url']);
+                $articles[0] = array(htmlspecialchars_decode($reply['title']),htmlspecialchars_decode($reply['description']) ,htmlspecialchars_decode($reply['picurl']) ,htmlspecialchars_decode($reply['url']));
 
                 $reply = array(
                     $articles,

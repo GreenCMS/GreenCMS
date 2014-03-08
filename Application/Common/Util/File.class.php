@@ -13,6 +13,10 @@ namespace Common\Util;
 class File
 {
 
+    public static function file_exists($filename)
+    {
+       return file_exists($filename);
+    }
 
     public static function byteFormat($bytes)
     {

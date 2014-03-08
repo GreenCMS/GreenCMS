@@ -94,7 +94,9 @@ class Cx extends TagLib {
         $parseStr .= '$mod = ($'.$key.' % '.$mod.' );';
         $parseStr .= '++$'.$key.';?>';
         $parseStr .= $this->tpl->parse($content);
-        $parseStr .= '<?php endforeach; endif; else: echo "'.$empty.'" ;endif; ?>';
+        //TODO Patch for ThinkPHP 3.2.1
+        //@origin
+        $parseStr .= '<?php endforeach; endif;  endif; ?>';
 
         if(!empty($parseStr)) {
             return $parseStr;

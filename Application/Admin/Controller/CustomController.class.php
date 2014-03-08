@@ -548,7 +548,7 @@ str;
         $addons = new $class;
         $info = $addons->info;
         if (!$info || !$addons->checkInfo()) //检测信息的正确性
-            $this->error('插件信息缺失');
+        $this->error('插件信息缺失');
         session('addons_install_error', null);
         $install_flag = $addons->install();
         if (!$install_flag) {

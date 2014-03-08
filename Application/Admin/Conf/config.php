@@ -115,7 +115,7 @@ $config_rbac = array(
 $config_other = array(
     'URL_MODEL'       => 0,
 
-    'SHOW_PAGE_TRACE' => true,
+    'SHOW_PAGE_TRACE' => false,
 
     /*
     * 系统备份数据库时每个sql分卷大小，单位字节
@@ -123,6 +123,8 @@ $config_other = array(
     'sqlFileSize'     => 5242880,
     // (测试功能)该值不可太大，否则会导致恢复失败，建议5M一卷
     // 5M=5*1024*1024=5242880
+
+
 
 );
 $config = array_merge($config_rbac, $menu_arr);

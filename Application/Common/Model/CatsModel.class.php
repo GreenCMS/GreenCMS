@@ -24,7 +24,7 @@ class CatsModel extends RelationModel
     public $_link = array(
         'Post_cat' => array(
 
-            'mapping_type' => HAS_MANY,
+            'mapping_type' => self::HAS_MANY,
 
             'class_name'   => 'Post_cat',
 

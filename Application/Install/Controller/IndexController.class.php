@@ -14,7 +14,7 @@ use Think\Controller;
 use Think\Hook;
 use Think\Think;
 
-class IndexController extends InstallBaseController
+class IndexController extends \Think\Controller
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class IndexController extends InstallBaseController
 
         $lockFile = WEB_ROOT . 'Data/Install/install.lock';
 
-        if (file_exists($lockFile)) {
+        if (File::file_exists($lockFile)) {
             $this->error(" 你已经安装过GreenCMS，如果想重新安装，请先删除站点Data/install目录下的 install.lock 文件，然后再安装。");
         }
     }
@@ -55,10 +55,6 @@ class IndexController extends InstallBaseController
         $this->assign('sp_gd', ($sp_gd > 0 ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>'));
         $this->assign('sp_mysql', (function_exists('mysql_connect') ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>'));
 
-
-        // $this->assign('sp_host', (empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_HOST'] : $_SERVER['REMOTE_ADDR']));
-
-
         $test_dirs = array(
             '/',
             '/Core/*',
@@ -71,19 +67,12 @@ class IndexController extends InstallBaseController
 
         $this->assign('sp_testdirs', $test_dirs);
 
-
         $this->display();
-
     }
 
 
     public function step3()
     {
-
-        if (!empty($_SERVER['REQUEST_URI']))
-            $scriptName = $_SERVER['REQUEST_URI'];
-        else
-            $scriptName = $_SERVER['PHP_SELF'];
 
         $basepath = __ROOT__;
         $cfg_cmspath = $basepath;
@@ -106,8 +95,6 @@ class IndexController extends InstallBaseController
 
     public function step4()
     {
-        header("Content-type:text/html;charset=utf-8");
-
         $time = date("Y-m-d H:m:s");
 
         $db_host = $_POST["db_host"];
@@ -127,27 +114,34 @@ class IndexController extends InstallBaseController
             $admin_password = encrypt($_POST['admin_password']);
             $admin_email = $_POST['admin_email'];
             $user_session = encrypt($admin_user . $admin_password . time());
-
-
         }
 
         $title = $_POST['cfg_title'];
         $site_url = $_POST['cfg_basehost'] . $_POST['cfg_cmspath'];
 
 
-        if (!testDB(SAE_MYSQL_HOST_M.':'.SAE_MYSQL_PORT, SAE_MYSQL_USER, SAE_MYSQL_PASS))
+        if (!testDB($db_host . ":" . $db_port, $db_user, $db_password))
             $this->error("数据库服务器或登录密码无效，\n\n无法连接数据库，请重新设定！");
 
-        $conn = mysql_connect(SAE_MYSQL_HOST_M.':'.SAE_MYSQL_PORT, SAE_MYSQL_USER, SAE_MYSQL_PASS);
+        $conn = mysql_connect($db_host . ":" . $db_port, $db_user, $db_password);
 
-        mysql_select_db(SAE_MYSQL_DB, $conn); 
 
-        /*$file = WEB_ROOT . 'Data/Install/db_config_sample.php';
+        mysql_query("CREATE DATABASE IF NOT EXISTS `" . $db_name . "`;", $conn);
 
-        if (!file_exists($file))
+        if (!mysql_select_db($db_name)) $this->error("选择数据库失败，可能是你没权限，请预先创建一个数据库！");
+
+        mysql_query("set character set 'utf8'");
+        mysql_query("set names 'utf8'");
+
+
+        $file = WEB_ROOT . 'Data/Install/db_config_sample.php';
+
+        if (!File::file_exists($file))
             $this->error('Data/Install/db_config_sample.php文件不存在,请检查');
         $content = File::readFile($file);
+
         $content = str_replace("~dbhost~", $db_host, $content);
+        $content = str_replace("~dbport~", $db_port, $content);
         $content = str_replace("~dbname~", $db_name, $content);
         $content = str_replace("~dbuser~", $db_user, $content);
         $content = str_replace("~dbpwd~", $db_password, $content);
@@ -155,40 +149,50 @@ class IndexController extends InstallBaseController
 
         if (!File::writeFile(WEB_ROOT . 'db_config.php', $content, 'w+')) {
             $this->error("数据库配置文件写入失败，请您手动根据Data/Install/db_config_sample.php文件在根目录创建文件");
-        }*/
+        }
 
-        /*$sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_empty.sql');
-        insertDB($sql_empty, $conn);
+        File::makeDir(WEB_ROOT . 'Data/Cache');
+
+        $sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_empty.sql');
+        $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
+        $file = WEB_ROOT . 'Data/Cache/greencms_sample.sql';
+
+        File::writeFile($file, $sql_query, 'w+');
+        insertDB($file, $conn);
+        File::delFile($file);
 
         $sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_init.sql');
-        insertDB($sql_empty, $conn);*/
+        $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
+        $file2 = WEB_ROOT . 'Data/Cache/greencms_init_sample.sql';
+
+        File::writeFile($file2, $sql_query, 'w+');
+        insertDB($file2, $conn);
+        File::delFile($file2);
 
         /**
          * 插入管理员数据&更新配置
          */
-        $admin_query = "INSERT INTO `user` (`user_id`, `user_login`, `user_pass`, `user_nicename`, `user_email`,
+        $admin_query = "INSERT INTO `{$db_prefix}user` (`user_id`, `user_login`, `user_pass`, `user_nicename`, `user_email`,
         `user_url`, `user_registered`, `user_activation_key`, `user_status`,  `user_intro`,
         `user_level`, `user_session`) VALUES(1, '{$admin_user}', '" . $admin_password . "', '管理员', '{$admin_email}',
          '', '{$time}', '', 1, '我是admin，欢迎使用', 2, '{$user_session}');";
         if (!mysql_query($admin_query, $conn)) $this->error(' 插入管理员数据出错');
-        $cquery = "Update `options` set option_value='{$title}' where option_name='title';";
+        $cquery = "Update `{$db_prefix}options` set option_value='{$title}' where option_name='title';";
         if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
-        $cquery = "Update `options` set option_value='{$site_url}' where option_name='site_url';";
+        $cquery = "Update `{$db_prefix}options` set option_value='{$site_url}' where option_name='site_url';";
         if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
 
         $software_version = GreenCMS_Version;
         $software_build = GreenCMS_Build;
 
-        $cquery = "Update `options` set option_value='{$software_version}' where option_name='software_version';";
+        $cquery = "Update `{$db_prefix}options` set option_value='{$software_version}' where option_name='software_version';";
         if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
-        $cquery = "Update `options` set option_value='{$software_build}' where option_name='software_build';";
+        $cquery = "Update `{$db_prefix}options` set option_value='{$software_build}' where option_name='software_build';";
         if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
 
-        //TODO       今天就写到这里
-
-
+        //TODO              写不下去了
         $this->redirect('Install/Index/step5');
     }
 
@@ -198,14 +202,21 @@ class IndexController extends InstallBaseController
 
         //A('Install/Test')->init($key = 'zts');
 
-        // $this->init();
-        // File::delAll(RUNTIME_PATH);
-        // File::delAll(LOG_PATH);
-        // File::delAll(WEB_CACHE_PATH);
-        // if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {
-        //     $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
-        // }
-        $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
+        $Access = new \Install\Event\AccessEvent();
+        $Access->initAdmin();
+        $Access->initWeixin();
+
+
+        File::delAll(RUNTIME_PATH);
+        File::delAll(LOG_PATH);
+        File::delAll(WEB_CACHE_PATH);
+        File::delAll(WEB_ROOT . 'Data/Cache');
+        File::delAll(WEB_ROOT . 'Data/Temp');
+
+
+        if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {
+            $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
+        }
 
     }
 

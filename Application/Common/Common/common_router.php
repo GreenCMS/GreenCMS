@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 function getRealURL($menu_item = array(), $is_home = false)
 {
 

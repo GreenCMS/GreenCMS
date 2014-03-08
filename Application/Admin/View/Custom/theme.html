@@ -93,8 +93,9 @@
                         <tbody>
                         <volist name="theme_list" id="vo" key="k">
                             <tr align="center" id="{$k}">
-                                <td><img src="__PUBLIC__{$vo.preview}"/></td>
-
+                                <td>
+                                    <a href="__PUBLIC__{$vo.preview_big}" target="_blank"><img src="__PUBLIC__{$vo.preview}"/></a>
+                                </td>
                                 <!--<td>{$vo.menu_id}</td>-->
                                 <td>{$vo.name}</td>
                                 <td align="left">{$vo.description}</td>

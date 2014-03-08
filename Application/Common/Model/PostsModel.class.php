@@ -17,6 +17,7 @@ use Think\Model\RelationModel;
 class PostsModel extends RelationModel
 {
 
+
     /**
      * @var array
      */
@@ -24,9 +25,9 @@ class PostsModel extends RelationModel
 
         'Tag'  => array(
 
-            'mapping_type'         => MANY_TO_MANY,
+            'mapping_type'         => self::MANY_TO_MANY,
 
-            'class_name'           => 'Tags',
+            'class_name'           =>  "Tags",
 
             'mapping_name'         => 'post_tag',
 
@@ -39,7 +40,7 @@ class PostsModel extends RelationModel
 
         'Cat'  => array(
 
-            'mapping_type'         => MANY_TO_MANY,
+            'mapping_type'         => self::MANY_TO_MANY,
 
             'class_name'           => 'Cats',
 
@@ -54,7 +55,7 @@ class PostsModel extends RelationModel
 
         'User' => array(
 
-            'mapping_type' => BELONGS_TO,
+            'mapping_type' => self::BELONGS_TO,
 
             'class_name'   => 'User',
 

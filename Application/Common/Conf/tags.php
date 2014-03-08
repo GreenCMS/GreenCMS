@@ -4,11 +4,12 @@
  * File: config_tags.php
  * User: TianShuo
  * Date: 14-2-16
- * Time: ÏÂÎç6:08
+ * Time: ï¿½ï¿½ï¿½ï¿½6:08
  */
 return array(
-	'app_init'=>array('Common\Behavior\InitHook'),
+    'app_init'=>array('Common\Behavior\InitHookBehavior'),
+
     'app_end' => array(
-        'Behavior\ChromeShowPageTrace'
+        'Behavior\ChromeShowPageTraceBehavior'
     )
 );
