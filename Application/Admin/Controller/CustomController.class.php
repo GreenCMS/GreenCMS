@@ -179,6 +179,23 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
+    //todo 需要检查是否真的成功
+    public function themeDisableHandle($theme_name = 'Vena')
+    {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
+        set_kv('theme_' . $theme_name, 'disabled');
+        $this->success('禁用成功', 'Admin/Custom/theme');
+    }
+
+    public function themeEnableHandle($theme_name = 'Vena')
+    {
+
+        set_kv('theme_' . $theme_name, 'enabled');
+        $this->success('启用成功', 'Admin/Custom/theme');
+    }
+
+
+
     public function themeChangeHandle($theme_name = 'Vena')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
@@ -531,7 +548,7 @@ str;
         $addons = new $class;
         $info = $addons->info;
         if (!$info || !$addons->checkInfo()) //检测信息的正确性
-        $this->error('插件信息缺失');
+            $this->error('插件信息缺失');
         session('addons_install_error', null);
         $install_flag = $addons->install();
         if (!$install_flag) {

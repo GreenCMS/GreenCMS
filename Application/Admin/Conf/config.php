@@ -115,7 +115,7 @@ $config_rbac = array(
 $config_other = array(
     'URL_MODEL'       => 0,
 
-    'SHOW_PAGE_TRACE' => false,
+    'SHOW_PAGE_TRACE' => true,
 
     /*
     * 系统备份数据库时每个sql分卷大小，单位字节

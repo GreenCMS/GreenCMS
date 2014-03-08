@@ -13,7 +13,7 @@ return array(
 
     'AUTOLOAD_NAMESPACE' => array('Addons' => './Addons/'), //扩展模块列表    
 
-    'SHOW_PAGE_TRACE'      => false,
+    'SHOW_PAGE_TRACE'      => true,
 
     'URL_MODEL'            => 2,
 
