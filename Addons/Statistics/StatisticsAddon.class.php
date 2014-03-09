@@ -38,6 +38,6 @@ class StatisticsAddon extends Addon
     {
       //  die('StatisticsAddon');
   //      $this->assign('addons_config', $this->getConfig());
-   //     $this->display('comment');
+    //     $this->display('comment');
     }
 }

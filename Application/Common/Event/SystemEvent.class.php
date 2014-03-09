@@ -14,6 +14,46 @@ use Common\Util\File;
 class SystemEvent
 {
 
+    public function post_integrity()
+    {
+
+
+        $post_ids = D('Posts')->field('post_id')->select();
+
+        foreach ($post_ids as $key => $value) {
+            $post_ids[$key] = $post_ids[$key]['post_id'];
+        }
+
+        $tag_ids = D('Tags')->field('tag_id')->select();
+        foreach ($tag_ids as $key => $value) {
+            $tag_ids[$key] = $tag_ids[$key]['tag_id'];
+        }
+
+        $cat_ids = D('Cats')->field('cat_id')->select();
+        foreach ($cat_ids as $key => $value) {
+            $cat_ids[$key] = $cat_ids[$key]['cat_id'];
+        }
+
+
+        $Post_cat = D('Post_cat');
+        $pc = $Post_cat->select();
+        foreach ($pc as $key => $value) {
+            if ((!in_array($value["post_id"], $post_ids)) || (!in_array($value["cat_id"], $cat_ids))) {
+                $Post_cat->where($value)->delete();
+            }
+        }
+
+        $Post_tag = D('Post_tag');
+        $pt = $Post_tag->select();
+        foreach ($pt as $key => $value) {
+            if ((!in_array($value["post_id"], $post_ids)) || (!in_array($value["tag_id"], $tag_ids))) {
+                $Post_tag->where($value)->delete();
+            }
+        }
+
+
+    }
+
 
     public function backupFile($dir = '', $backup_path = System_Backup_PATH)
     {
@@ -27,18 +67,18 @@ class SystemEvent
         $Zip = new \ZipArchive();
         $PHPZip = new \Common\Util\PHPZip();
 
-        $file_name=$backup_path . date(Ymd) . "_system_backup.zip";
+        $file_name = $backup_path . date(Ymd) . "_system_backup.zip";
         $Zip->open($file_name, \ZIPARCHIVE::CREATE);;
 
         foreach ($dir as $value) {
             if ($value[0] != '.' && $value != 'Data') {
-                 $PHPZip::folderToZip($value, $Zip);
+                $PHPZip::folderToZip($value, $Zip);
             }
         }
 
         $Zip->close();
 
-        return array("status" => 1, "info" => $file_name );
+        return array("status" => 1, "info" => $file_name);
     }
 
     public function clearCacheAll()

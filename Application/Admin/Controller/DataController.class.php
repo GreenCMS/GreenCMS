@@ -177,7 +177,8 @@ class DataController extends AdminBaseController
                         $imported += $execute;
                         $_SESSION['cacheRestore']['imported'] = $imported;
                         echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>',
-                                               "url" => U('Admin/Data/restoreData')));//, array(randCode() => randCode())
+                                               "url"    => U('Admin/Data/restoreData')));
+                        //, array(randCode() => randCode())
                         exit;
                     }
                 } else {
@@ -211,8 +212,8 @@ class DataController extends AdminBaseController
             foreach ($files as $file) {
                 File::delFile(DB_Backup_PATH . $file);
             }
-           // echo json_encode(array("status" => 1, "info" => "已删除：" . implode("、", $files), "url" => __URL__));
-            $this->json_return( 1,  "已删除：" . implode("、", $files),__URL__);
+
+            $this->json_return(1, "已删除：" . implode("、", $files), __URL__);
 
         }
     }
@@ -473,40 +474,12 @@ class DataController extends AdminBaseController
     /**
      * cat tag被删除之后完整性不能保证
      */
-    private function integrity_testing()
+    //private
+    function integrity_testing()
     {
 
-
-        $post_ids = D('Posts')->field('post_id')->select();
-        foreach ($post_ids as $key => $value) {
-            $post_ids[$key] = $post_ids[$key]['post_id'];
-        }
-
-        $tag_ids = D('Tags')->field('tag_id')->select();
-        foreach ($tag_ids as $key => $value) {
-            $tag_ids[$key] = $tag_ids[$key]['tag_id'];
-        }
-
-        $cat_ids = D('Cats')->field('cat_id')->select();
-        foreach ($cat_ids as $key => $value) {
-            $cat_ids[$key] = $cat_ids[$key]['cat_id'];
-        }
-
-        $map['post_id'] = array('not in', $post_ids);
-        $map['cat_id'] = array('not in', $cat_ids);
-        $map['_logic'] = 'OR';
-
-        $un = D('Post_cat')->where($map)->delete();
-
-        unset($map);
-
-
-        $map['post_id'] = array('not in', $post_ids);
-        $map['tag_id'] = array('not in', $tag_ids);
-        $map['_logic'] = 'OR';
-
-        //print_array($map);
-        $un2 = D('Post_tag')->where($map)->delete();
+        $System = new \Common\Event\SystemEvent();
+        $System->integrity_testing();
 
 
     }
@@ -520,7 +493,8 @@ class DataController extends AdminBaseController
         $M = M();
         if (IS_POST) {
 
-            $this->integrity_testing();
+            $System = new \Common\Event\SystemEvent();
+            $System->post_integrity();
 
             if (empty($_POST['table']) || count($_POST['table']) == 0) {
                 $this->json_return(0, "请选择要处理的表");
@@ -632,7 +606,7 @@ class DataController extends AdminBaseController
 
         // p($_POST['cache']);die;
         if (IS_POST) {
-            $paths=$_POST ['cache'];
+            $paths = $_POST ['cache'];
             foreach ($paths as $path) {
                 if (isset ($caches [$path])) {
                     $res = File::delAll($caches [$path] ['path'], true);
@@ -651,8 +625,6 @@ class DataController extends AdminBaseController
             $this->display();
         }
     }
-
-
 
 
 }
