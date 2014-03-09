@@ -39,6 +39,8 @@ define ('APP_PATH', './Application/');
 
 if (file_exists(WEB_ROOT . "db_config.php")) require(WEB_ROOT . "db_config.php");
 elseif (strtolower($_GET['m']) != 'install') die('<a href="install.php">click here to install</a>');
+
+
 if (file_exists(WEB_ROOT . "const_config.php")) require(WEB_ROOT . "const_config.php");
 
 
