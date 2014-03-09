@@ -65,7 +65,7 @@ INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '测试文章', '_self',
 INSERT INTO `{$db_prefix}options` VALUES ('1', 'site_url', 'http://127.0.0.1/green2014', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('2', 'title', 'GreenCMS 2014', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('3', 'keywords', 'GreenCMS v2 based on ThinkPHP 3.2.1', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('4', 'description', 'GreenCMS is support by GreenStudio From NJUT', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('4', 'description', 'GreenCMS created by GreenStudio ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('5', 'foot', '', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('6', 'ip_geo', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('7', 'software_author', 'GreenStudio', 'yes');

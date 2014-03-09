@@ -230,7 +230,7 @@ CREATE TABLE `{$db_prefix}posts` (
   `post_password` varchar(20) DEFAULT '',
   `post_name` varchar(200) DEFAULT NULL,
   `post_template` varchar(255) NOT NULL DEFAULT 'single',
-  `post_modified` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `post_modified` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `post_comment_count` bigint(20) DEFAULT '0',
   `post_view_count` bigint(20) DEFAULT '0',
   `post_type` varchar(255) NOT NULL DEFAULT 'single',
