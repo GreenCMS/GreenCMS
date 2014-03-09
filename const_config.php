@@ -74,8 +74,8 @@ define("TIME_FIX", 0);
 /**
  * version code
  */
-define ('GreenCMS_Version', 'v2.1.0306');
-define ('GreenCMS_Build', '2014030');
+define ('GreenCMS_Version', 'v2.1.0309');
+define ('GreenCMS_Build', '20140309');
 
 /**
  * BUILD_DIR_SECURE 目录安全，设置详细参考thinkphp手册
