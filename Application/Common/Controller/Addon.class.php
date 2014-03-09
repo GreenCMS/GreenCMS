@@ -33,7 +33,7 @@ abstract class Addon{
 
     public function __construct(){
         $this->view         =   \Think\Think::instance('Think\View');
-        $this->addon_path   =   GREENCMS_ADDON_PATH.$this->getName().'/';
+        $this->addon_path   =   Addon_PATH.$this->getName().'/';
         $TMPL_PARSE_STRING = C('TMPL_PARSE_STRING');
         $TMPL_PARSE_STRING['__ADDONROOT__'] = __ROOT__ . '/Addons/'.$this->getName();
         C('TMPL_PARSE_STRING', $TMPL_PARSE_STRING);

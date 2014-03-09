@@ -57,6 +57,8 @@ define("Extend_PATH", WEB_ROOT . "Extend/");
  */
 define("Plugin_PATH", WEB_ROOT . "Extend/Plugin/");
 
+
+define('Addon_PATH', WEB_ROOT . '/Addons/');
 /**
  * 上传文件存放目录
  */
@@ -79,3 +81,4 @@ define ('GreenCMS_Build', '2014030');
  * BUILD_DIR_SECURE 目录安全，设置详细参考thinkphp手册
  */
 define('BUILD_DIR_SECURE', false);
+

@@ -21,10 +21,10 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 
 /**
- * 系统调试设置
- * 项目正式部署后请设置为false
+ * 系统调试设置true
+ * 项目正式部署后请设置为
  */
-define('APP_DEBUG', true);
+define('APP_DEBUG',false );
 
 /**
  * 定义网站根目录

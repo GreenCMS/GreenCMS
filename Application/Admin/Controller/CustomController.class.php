@@ -159,11 +159,7 @@ class CustomController extends AdminBaseController
 
                 }
 
-                /**
-                 *     <a class="btn " href="{:U('Admin/Custom/themeEnableHandle',array('theme_name'=>$vo['name']))}">启用</a>
-                <a class="btn purple" href="{:U('Admin/Custom/themeDisableHandle',array('theme_name'=>$vo['name']))}">禁用</a>
 
-                 */
                 array_push($theme_list, $theme_temp);
             }
 
@@ -195,7 +191,6 @@ class CustomController extends AdminBaseController
     }
 
 
-
     public function themeChangeHandle($theme_name = 'Vena')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
@@ -207,7 +202,7 @@ class CustomController extends AdminBaseController
 
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
-            $cache_control=new \Common\Event\SystemEvent();
+            $cache_control = new \Common\Event\SystemEvent();
             $cache_control->clearCacheAll();
             $this->success('切换成功');
         } else {
@@ -231,13 +226,18 @@ class CustomController extends AdminBaseController
 
     public function plugin()
     {
+        $page = I('get.page', C('PAGER'));
+
         $Addons = M('Addons');
 
-        $list = D('Addons')->getList();
+        $list = D('Addons')->getList(); //这里得到是未安装的
         $count = count($list);
-        $fenye = 20;
-        $p = new GreenPage ($count, 10);
-        $list = $Addons->order('create_time')->limit($p->firstRow . ',' . $p->listRows)->select(); //->where($where)
+
+
+        $p = new GreenPage ($count, $page);
+        //这里得到是已安装的  =_=+++++
+     //   $list = $Addons->order('create_time')->limit($p->firstRow . ',' . $p->listRows)->select(); //->where($where)
+
 
         $this->assign('page', $p->show());
         $this->assign('list', $list);
@@ -248,7 +248,7 @@ class CustomController extends AdminBaseController
     //创建向导首页
     public function create()
     {
-        if (!is_writable(GREENCMS_ADDON_PATH))
+        if (!is_writable(Addon_PATH))
             $this->error('您没有创建目录写入权限，无法使用此功能');
 
         $hooks = M('Hooks')->field('name,description')->select();
@@ -468,6 +468,7 @@ str;
         M('Addons')->where(array('id' => $id))->setField('status', 1);
         S('hooks', null);
         $this->json_return(1, "启用成功", U('Admin/Custom/plugin'));
+
     }
 
     /**
@@ -484,26 +485,26 @@ str;
     /**
      * 设置插件页面
      */
-    public function config(){
-        $id     =   (int)I('id');
-        $addon  =   M('Addons')->find($id);
-        if(!$addon)
-            $this->error('插件未安装');
+    public function config()
+    {
+        $id = (int)I('id');
+        $addon = M('Addons')->find($id);
+        if (!$addon)   $this->error('插件未安装');
         $addon_class = get_addon_class($addon['name']);
-        if(!class_exists($addon_class))
-            trace("插件{$addon['name']}无法实例化,",'ADDONS','ERR');
-        $data  =   new $addon_class;
+        if (!class_exists($addon_class))
+            trace("插件{$addon['name']}无法实例化,", 'ADDONS', 'ERR');
+        $data = new $addon_class;
         $addon['addon_path'] = $data->addon_path;
         $addon['custom_config'] = $data->custom_config;
-        $this->meta_title   =   '设置插件-'.$data->info['title'];
+        $this->meta_title = '设置插件-' . $data->info['title'];
         $db_config = $addon['config'];
         $addon['config'] = include $data->config_file;
-        if($db_config){
+        if ($db_config) {
             $db_config = json_decode($db_config, true);
             foreach ($addon['config'] as $key => $value) {
-                if($value['type'] != 'group'){
+                if ($value['type'] != 'group') {
                     $addon['config'][$key]['value'] = $db_config[$key];
-                }else{
+                } else {
                     foreach ($value['options'] as $gourp => $options) {
                         foreach ($options['options'] as $gkey => $value) {
                             $addon['config'][$key]['options'][$gourp]['options'][$gkey]['value'] = $db_config[$gkey];
@@ -512,11 +513,11 @@ str;
                 }
             }
         }
-        $this->assign('data',$addon);
+        $this->assign('data', $addon);
 //        dump($addon);
-        if($addon['custom_config'])
-            $this->assign('custom_config', $this->fetch($addon['addon_path'].$addon['custom_config']));
-        $this->assign('action','插件配置');
+        if ($addon['custom_config'])
+            $this->assign('custom_config', $this->fetch($addon['addon_path'] . $addon['custom_config']));
+        $this->assign('action', '插件配置');
         $this->display();
     }
 

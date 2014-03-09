@@ -26,7 +26,7 @@ class InitHookBehavior extends Behavior
         } else {
              if (isset($_GET['m']) && $_GET['m'] === 'Install') return;
 
-         //   $data = S('hooks');
+           $data = S('hooks');
 
 
             if ((!$data)) {

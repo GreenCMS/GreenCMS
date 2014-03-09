@@ -24,8 +24,9 @@ class AccessController extends AdminBaseController
     // 用户列表
     public function index()
     {
-        $this->listname = '管理组用户';
         $list = D('Access', 'Logic')->adminList();
+
+        $this->assign('listname', '管理组用户');
         $this->assign('list', $list);
         $this->display('userlist');
     }
@@ -33,22 +34,22 @@ class AccessController extends AdminBaseController
     // 游客列表
     public function guest()
     {
-        $this->listname = '游客用户';
-        $this->list = D('Access', 'Logic')->guestList();
+        $list = D('Access', 'Logic')->guestList();
+
+        $this->assign('listname', '游客用户');
+        $this->assign('list', $list);
+
         $this->display('userlist');
     }
 
     // 用户锁定处理
-    public function indexlocked()
+    public function indexlocked($id)
     {
-        $id = $_GET ['id'];
         // 锁定用户
         if ($id == 1) { // 判断用户是否为超级管理员，如果是不能做任何操作（我的超级管理员ID为1）
             $this->error('对不起，您不能对此用户做任何操作！');
         } else {
-            $i = M('User')->where(array(
-                'id' => $id
-            ))->setField('lock', '1');
+            $i = M('User')->where(array('id' => $id))->setField('user_status', '0');
             $this->success('用户已关闭！');
         }
     }
@@ -60,9 +61,7 @@ class AccessController extends AdminBaseController
         if ($id == 1) { // 判断用户是否为超级管理员，如果是不能做任何操作（我的超级管理员ID为1）
             $this->error('对不起，您不能对此用户做任何操作！');
         } else {
-            $i = M('User')->where(array(
-                'id' => $id
-            ))->setField('lock', '0');
+            $i = M('User')->where(array('id' => $id))->setField('lock', '1');
             $this->success('用户已开启！');
         }
     }
@@ -79,12 +78,12 @@ class AccessController extends AdminBaseController
     // 节点列表
     public function nodelist()
     {
-        $field = array(
-            'id',
-            'name',
-            'title',
-            'pid'
-        );
+//        $field = array(
+//            'id',
+//            'name',
+//            'title',
+//            'pid'
+//        );
         // $node = M('node')->field($field)->order('sort')->select();
         $node = D('Access', 'Logic')->nodeList();
         // $node=node_merge($node);
@@ -109,21 +108,21 @@ class AccessController extends AdminBaseController
     {
         $w = htmlspecialchars(trim($_POST ['user_login']));
         $i = D('user')->where(array(
-            'user_login' => $w
-        ))->select();
+                                   'user_login' => $w
+                              ))->select();
         if ($i != '') {
             $this->error('用户名已存在！');
         } else {
             // 组合用户信息并添加
 
             $user = array(
-                'user_login'    => htmlspecialchars(trim($_POST ['user_login'])),
-                'user_nicename' => htmlspecialchars(trim($_POST ['user_nicename'])),
-                'user_pass'     => encrypt($_POST ['password']),
-                'user_email'    => htmlspecialchars($_POST ['user_email']),
-                'user_url'      => htmlspecialchars($_POST ['user_url']),
-                'user_intro'    => htmlspecialchars($_POST ['user_intro']),
-                'user_status'   => htmlspecialchars($_POST ['user_status']),
+                'user_login'    => I('post.user_login'),
+                'user_nicename' => I('post.user_nicename'),
+                'user_pass'     => encrypt(I('post.password')),
+                'user_email'    => I('post.user_email'),
+                'user_url'      => I('post.user_url'),
+                'user_intro'    => I('post.user_intro'),
+                'user_status'   => I('post.user_status'),
 
                 // 'logintime'=>time(),
                 // 'loginip'=>get_client_ip(),
@@ -131,23 +130,22 @@ class AccessController extends AdminBaseController
             );
             // 添加用户与角色关系
 
-            $user ['user_level'] = $_POST ['role_id'];
+            $user ['user_level'] = I('post.role_id');
 
             $User = D('User');
-            $User_users = D('Role_users');
+            $Role_users = D('Role_users');
             if ($new_id = $User->add($user)) {
 
                 $role = array(
                     'role_id' => $_POST ['role_id'],
                     'user_id' => $new_id
                 );
-                if ($User_users->add($role)) {
+                if ($Role_users->add($role)) {
                     $this->success('添加成功！', U('Admin/Access/index'));
                 } else {
                     $this->error('添加用户权限失败！', U('Admin/Access/index'));
                 }
             } else {
-                //    die(D('User')->getlastsql());
                 $this->error('添加用户失败！', U('Admin/Access/index'));
             }
         }
@@ -173,8 +171,8 @@ class AccessController extends AdminBaseController
         } else {
 
             $info = D('User')->where(array(
-                'user_id' => $aid
-            ))->relation(true)->find();
+                                          'user_id' => $aid
+                                     ))->relation(true)->find();
 
             if (empty ($info ['user_id'])) {
                 $this->error("不存在该用户ID", U('Admin/Access/index'));
@@ -194,32 +192,17 @@ class AccessController extends AdminBaseController
 
     public function delUser($aid = -1)
     {
-        $user = M('User')->where(array(
-            "user_id" => $aid
-        ))->find();
+        $user = M('User')->where(array("user_id" => $aid))->find();
         if ($user ['user_login'] == 'admin') {
             $this->error("管理员信息不允许操作");
         } else {
-            if (D('User')->where(array(
-                'user_id' => $aid
-            ))->delete()
-            ) {
-                if (D('Role_users')->where(array(
-                    'user_id' => $aid
-                ))->delete()
-                ) {
+            if (D('User')->where(array('user_id' => $aid))->delete()) {
+                if (D('Role_users')->where(array('user_id' => $aid))->delete()) {
 
-                    if (M('Posts')->where(array(
-                        "user_id" => $aid
-                    ))->find()
-                    ) {
-                        $post = M('Posts')->where(array(
-                            "user_id" => $aid
-                        ))->select();
+                    if (M('Posts')->where(array("user_id" => $aid))->find()) {
+                        $post = M('Posts')->where(array("user_id" => $aid))->select();
                         foreach ($post as $v) {
-                            M('Post_cat')->where(array(
-                                "user_id" => $v ['user_id']
-                            ))->setField('user_id', 1);
+                            M('Post_cat')->where(array("user_id" => $v ['user_id']))->setField('user_id', 1);
                         }
                     }
 
@@ -254,8 +237,8 @@ class AccessController extends AdminBaseController
             header('Content-Type:application/json; charset=utf-8'); // p($_POST);die;
             echo json_encode(D('Access', 'Logic')->editRole());
         } else {
-            $M = M("Role");
-            $info = $M->where("id=" . ( int )$_GET ['id'])->find();
+            $Role = M("Role");
+            $info = $Role->where("id=" . ( int )$_GET ['id'])->find();
             if (empty ($info ['id'])) {
                 $this->error("不存在该角色", U('Admin/Access/roleList'));
             }
@@ -323,15 +306,9 @@ class AccessController extends AdminBaseController
         $datas ['sort'] = ( int )I("post.sort");
         header('Content-Type:application/json; charset=utf-8');
         if ($M->save($datas)) {
-            echo json_encode(array(
-                'status' => 1,
-                'info'   => "处理成功"
-            ));
+            $this->json_return(1, "处理成功");
         } else {
-            echo json_encode(array(
-                'status' => 0,
-                'info'   => "处理失败"
-            ));
+            $this->json_return(0, "处理失败");
         }
     }
 
@@ -356,9 +333,7 @@ class AccessController extends AdminBaseController
             header('Content-Type:application/json; charset=utf-8');
             echo json_encode(D('Access', 'Logic')->addNode());
         } else {
-            $this->assign("info", $this->getPid(array(
-                'level' => 1
-            )));
+            $this->assign("info", $this->getPid(array('level' => 1)));
             $this->assign("handle", "addNode");
             $this->display();
         }
@@ -378,8 +353,8 @@ class AccessController extends AdminBaseController
                 $this->error("不存在该节点", U('Admin/Access/nodeList'));
             }
             $this->assign("info", $this->getPid($info));
-            $this->action = '编辑节点';
-            $this->action_name = "editNode";
+            $this->assign('action', '编辑节点');
+            $this->assign('action_name', 'editNode');
             $this->assign("handle", "editNode");
             $this->display('addnode');
         }
@@ -452,11 +427,11 @@ class AccessController extends AdminBaseController
         }
         $level = $info ['level'] - 1;
         $cat = new Category ('Node', array(
-            'id',
-            'pid',
-            'title',
-            'fullname'
-        ));
+                                          'id',
+                                          'pid',
+                                          'title',
+                                          'fullname'
+                                     ));
         $list = $cat->getList(); // 获取分类结构
         $option = $level == 0 ? '<option value="0" level="-1">根节点</option>' : '<option value="0" disabled="disabled">根节点</option>';
         foreach ($list as $k => $v) {
