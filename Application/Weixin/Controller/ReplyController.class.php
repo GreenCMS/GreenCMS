@@ -33,7 +33,7 @@ class ReplyController extends WeixinBaseController
 
     public function textAddHandle()
     {
-        $data = I('post.');
+        $data = I('post.','',null);
         $data['type'] = "text";
         $res = D('Weixinre')->data($data)->add();
 
@@ -164,7 +164,7 @@ class ReplyController extends WeixinBaseController
     {
 
 
-        $data = I('post.');
+        $data = I('post.','',null);
         $data['type'] = "news";
         if ($_FILES['img']['size']!=0) {
             $config = array(

@@ -345,7 +345,7 @@ class PostsController extends AdminBaseController
 
 
         $this->assign('cats', $cats);
-        $this->display();
+        $this->display('addcategory');
     }
 
     public function addCategoryHandle()
@@ -379,7 +379,7 @@ class PostsController extends AdminBaseController
         $this->assign('cats', $cats);
 
 
-        $this->display();
+        $this->display('editcategory');
     }
 
     public function editCategoryHandle($id)

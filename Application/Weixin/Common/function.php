@@ -29,9 +29,10 @@ function getRealText($keyword)
 
 function getMenuButtons()
 {
-    $menu = C('Weixin_menu');
+    $menu = trim(C('Weixin_menu'));
+
     $menu = json_decode($menu, true);
-    $array = $menu['button'];
+    $array = $menu['menu']['button'];
 
     static $result_array = array();
     foreach ($array as $value) {
