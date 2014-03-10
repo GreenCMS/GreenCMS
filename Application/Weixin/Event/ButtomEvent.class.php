@@ -25,14 +25,14 @@ class ButtomEvent extends WeixinCoreController
             $reply = D('Weixinre')->where(array('wx_re_id' => $reply_id))->find();
             if ($reply['type'] == 'text') {
                 $reply = array(
-                    htmlspecialchars_decode($reply['content']) ,
+                    htmlspecialchars_decode($reply['content']),
                     'text'
                 );
                 return $reply;
             } elseif ($reply['type'] == 'news') {
 
                 $articles = array();
-                $articles[0] = array(htmlspecialchars_decode($reply['title']),htmlspecialchars_decode($reply['description']) ,htmlspecialchars_decode($reply['picurl']) ,htmlspecialchars_decode($reply['url']));
+                $articles[0] = array(htmlspecialchars_decode($reply['title']), htmlspecialchars_decode($reply['description']), htmlspecialchars_decode($reply['picurl']), htmlspecialchars_decode($reply['url']));
 
                 $reply = array(
                     $articles,
@@ -68,7 +68,7 @@ class ButtomEvent extends WeixinCoreController
             'news'
         );
         return $reply;
-    }
+
 
 //    public function contact()
 //    {
@@ -79,5 +79,25 @@ class ButtomEvent extends WeixinCoreController
 //        return $reply;
 //    }
 
+
+    }
+
+
+    public function category()
+    {
+        $articles = array();
+        $articles[0] = array('产品分类0', '产品分类0', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
+        $articles[1] = array('产品分类1', '产品分类1', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
+        $articles[2] = array('产品分类2', '产品分类2', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
+        $articles[3] = array('产品分类3', '产品分类3', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
+        $articles[4] = array('产品分类4', '产品分类4', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
+
+        $reply = array(
+            $articles,
+            'news'
+        );
+        return $reply;
+
+    }
 
 }

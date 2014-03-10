@@ -40,13 +40,8 @@ class MenuEvent extends WeixinCoreController
                         "type": "click",
                         "name": "努力时间轴",
                         "key": "timeline"
-                    },
-                    {
-                        "type": "click",
-                        "name": "TEST0",
-                        "key": "mtest"
                     }
-                ]
+                                  ]
             },
             {
                 "name": "最新活动",
@@ -97,9 +92,9 @@ class MenuEvent extends WeixinCoreController
 
 }';
 
-       // $array = json_decode($data, true);
+        // $array = json_decode($data, true);
 
-       // dump($array);
+        // dump($array);
         $ACCESS_TOKEN = $this->getAccess();
 
 
