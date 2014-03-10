@@ -27,10 +27,19 @@
         <div class="row">
             <div class="site-navigation-inner col-12">
                 <div class="navbar">
+                    <!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
                     <!-- Your site title as branding in the menu -->
                     <a class="navbar-brand" href="{:get_opinion('site_url')}" title="{:get_opinion('title')}" rel="home">
                         {:get_opinion('title')} </a>
+
+                    <!-- The WordPress Menu goes here -->
+                    {:W('Common/mainMenu',array('ul_attr' => ' id="main-menu" class="nav navbar-nav"',  'li_attr' => 'class="menu-item menu-item-type-post_type menu-item-object-page" ' ) )}
 
                 </div>
                 <!-- .navbar -->
@@ -63,8 +72,15 @@
 
                 <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
 
+                    <div class="col-2 left-meta">
+                        <div class="postdate">
+                            {$post.post_date|getTimeStamp='year'}
 
-                    <div class="col-12">
+                            <span>{$post.post_date|getTimeStamp='month'}/{$post.post_date|getTimeStamp='day'}</span>
+                        </div>
+                        <div class="postcoment">{$post.post_view_count} views</div>
+                    </div>
+                    <div class="col-10">
                         <article id="{$post.post_id}" class="post-{$post.post_id} post type-post status-publish format-standard hentry">
                             <header class="page-header">
                                 <div class="post-thumb-home">
@@ -135,10 +151,12 @@
 
             <div class="sidebar col-12 col-lg-4">
                 <div class="sidebar-padder">
-                    <!--{:W('Widget/search')}-->
-                     {:W('Widget/categories')}
+                    {:W('Widget/search')}
+                    {:W('Widget/tag')}
+                    {:W('Widget/categories')}
                     {:W('Widget/links')}
-                 </div>
+                    {:W('Widget/aboutus')}
+                </div>
                 <!-- close .sidebar-padder -->
             </div>
             <!-- close .*-inner (main-content or sidebar, depending if sidebar is used) -->
@@ -159,6 +177,7 @@
 
 <!-- close #colophon -->
 
+<script type='text/javascript' src='__PUBLIC__/RootStrap/includes/js/skip-link-focus-fix.js?ver=20130115'></script>
 
 </body>
 </html>
