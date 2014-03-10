@@ -1,0 +1,408 @@
+/*
+Theme Name: WP RootStrap
+Theme URI: http://crayonux.com/projects/wp-rootstrap/
+Author: Basanta Moharana
+Author URI: http://crayonux.com/
+
+Description: WP RootStrap is a flat and minimal design theme powered by TwitterBootstrap 3.0. It has unique designed for SEO optimization with faster page loading. It can be  used as a started theme for development of any website. It has lots of theme hook to help developer for further development.  The flat look starter theme having a lot of theme functionality to manage logo fav icon and social media profile etc. The theme can be used for any kind of blog or news websites. This is fully responsive theme, works perfectly with any mobile devices or tablet.
+
+Version: 1.1
+License: GNU General Public License v3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Tags: white, light, green,  three-columns, two-columns, right-sidebar, flexible-width, custom-menu, featured-images
+Text Domain: rootstrap
+Theme Demo: http://demo.crayonux.com/rootstrap/
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+/* Import the necessary Bootstrap WP CSS additions */
+@import url( includes/css/bootstrap-wp.css );
+/* Import the google font  */
+@import url(http://fonts.googleapis.com/css?family=Coda+Caption:800);
+@import url(http://fonts.googleapis.com/css?family=Archivo+Narrow:400,400italic,700,700italic);
+
+
+/* My Minimal WordPress Styling comes here */
+body.admin-bar .navbar-fixed-top {
+	top: 28px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Archivo Narrow', sans-serif !important;
+}
+.main-content a {
+	color: #16a085 !important;
+}
+.navbar-toggle {
+	margin-top: 15px;
+}
+
+.nav-collapse {
+	padding: 15px 0px 0px 20px;
+}
+.navbar {
+	margin: 0px !important;
+	background: #2c3e50 !important;
+	-webkit-border-radius: 1px !important;
+	-moz-border-radius: 1px !important;
+	border-radius: 1px !important;
+}
+.navbar .container {
+	margin: 0px auto !important;
+	padding: 0px 10px 0px 10px;
+}
+.navbar-brand  {
+	font-family: 'Coda Caption', sans-serif;
+	max-width: 100% !important;
+	padding: 0px !important;
+	line-height: 80px !important;
+	font-size: 30px !important;
+	text-transform: uppercase;
+	color: #fff !important;
+}
+.page-title {
+	word-wrap: break-word;
+}
+table tr td {
+	padding: 5px;
+	border-bottom: 1px solid #fff;
+	border-right: 1px solid #fff;
+	background: #ecf0f1;
+}
+.navbar-nav > li > a {
+	color: #fff !important;
+}
+.site-header {
+	
+	background: #16a085;
+	padding: 20px 0px;
+	border-bottom: 1px solid #ccc;
+}
+
+.site-header h1 {
+	font-size: 30px;
+	padding: 0px;
+	margin: 0px;
+	color: #fff;
+	max-width: 70%;
+	display: inline;
+}
+
+.site-header .container {
+	margin: 0px auto !important;
+	padding: 0px 10px;
+}
+.postdate {
+	background: #1abc9c;
+	color: #fff;
+	padding-top: 5px;
+	font-size: 18px;
+	text-align: center;
+}
+.postdate span {
+	display: block;
+	clear: both;
+	padding: 5px 0px;
+	font-size: 25px;
+	font-weight: bold;
+}
+.postcoment {
+	background: #7f8c8d;
+	color: #fff;
+	padding: 5px;
+	font-size: 18px;
+	text-align: center;
+}
+/* Alignment */
+.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 1.5em;
+}
+.alignright {
+	display: inline;
+	float: right;
+	margin-left: 1.5em;
+}
+.aligncenter {
+	clear: both;
+	display: block;
+	margin: 0 auto;
+}
+
+
+/* Images and wp-captions should always fit and be responsive */
+img {
+	display: inline-block;
+	height: auto;
+	max-width: 100%;
+}
+img[class*="wp-image-"] {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.navbar-nav>.active>a, .navbar-nav>.active>a:hover, .navbar-nav>.active>a:focus {
+	background: #1abc9c !important;
+}
+.navbar-nav>.open>a, .navbar-nav>.open>a:hover, .navbar-nav>.open>a:focus {
+	background: #1abc9c !important;
+}
+.wp-caption {
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+	max-width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 0 10px;
+}
+.wp-caption.aligncenter {
+	margin-bottom: 10px;
+}
+.wp-caption img[class*="wp-image-"] {
+	display: block;
+}
+.wp-caption .wp-caption-text {
+	text-align: center;
+	margin-top: 10px;
+}
+.widget {
+	background: #ecf0f1;
+}
+.widget h3.widget-title {
+	background: #16a085;
+	color: #fff;
+	padding: 5px 10px;
+	margin: 0px;
+}
+/* WP Gallery */
+.sidebar {
+	padding-top: 30px;
+}
+.gallery {
+	margin-bottom: 1.5em;
+}
+.gallery a img {
+	border: none;
+	height: auto;
+	max-width: 90%;
+}
+.gallery dd {
+	margin: 0;
+}
+
+.left-meta {
+	margin-top: 40px;
+}
+
+.post-thumb-home {
+	max-height: 200px;
+	overflow: hidden;
+	background: #ecf0f1;
+	text-align: center;
+}
+#primery-footer {
+	padding: 10px 0px;
+	background: #2c3e50;
+}
+#primery-footer  .widget {
+	background: none !important;
+}
+#primery-footer  .widget h3 {
+	background: none !important;
+	padding: 5px 0px;
+}
+#primery-footer  .widget a {
+	color: #1abc9c !important;
+	padding: 2px 0px;
+}
+#primery-footer  .widget a:hover {
+	background: none !important;
+	text-decoration: underline;
+}
+.site-footer {
+	padding: 10px 0px;
+	background: #34495e;
+	color: #fff;
+}
+.site-footer a {
+	padding: 10px 0px;
+	color: #1abc9c !important;
+}
+#primery-footer  .widget {
+	color: #fff !important;
+}
+.paging-navigation {
+	clear: both;
+	
+}
+.paging-navigation a {
+	color: #fff !important;
+	padding: 10px !important;
+	display: block;
+	background: #95a5a6;
+	font-size: 16px;
+}
+.paging-navigation a:hover {
+	background: #7f8c8d;
+}
+.paging-navigation div {
+	width: 49%;
+	display: inline-block !important;
+	min-width: 300px;
+}
+.paging-navigation div {
+	width: 49%;
+	display: inline-block !important;
+	min-width: 300px;
+}
+.paging-navigation div.nav-next {
+	text-align: right;
+}
+
+.post-navigation {
+	clear: both;
+	padding-top: 20px;
+	min-height: 100px;
+	
+}
+.post-navigation a {
+	color: #fff !important;
+	padding: 10px !important;
+	display: block;
+	background: #95a5a6;
+	font-size: 16px;
+}
+.post-navigation a:hover {
+	background: #7f8c8d;
+}
+.post-navigation div {
+	width: 49%;
+	display: inline-block !important;
+	min-width: 300px;
+}
+.post-navigation div {
+	width: 49%;
+	display: inline-block !important;
+	min-width: 300px;
+}
+.post-navigation div.nav-next {
+	text-align: right;
+	float: right;
+}
+.comments-area {
+	margin-top: 20px;
+	border-top: 2px solid #95a5a6;
+}
+.comments-area  label{
+	display: inline-block;
+	width: 100px;
+}
+.comments-area  .btn{
+	background: #16a085;
+	border: none;
+	color: #fff !important;
+}
+.comments-area  .alert-info{
+	background: #ecf0f1;
+	border: none;
+}
+#social {
+	float: right;
+	text-align: right;
+	vertical-align: top;
+}
+#social a  {
+	display: inline-block;
+	margin-left: 15px;
+	width: 32px;
+	height: 32px;
+	font-size: 0px !important;
+	vertical-align: top;
+}
+#social a:hover  {
+	opacity: 0.5;
+}
+#social  a.facebook  {
+	background: url(images/02_facebook.png);
+}
+#social  a.twitter  {
+	background: url(images/01_twitter.png);
+}
+#social  a.gplus  {
+	background: url(images/14_google+.png);
+}
+#social  a.linkedin  {
+	background: url(images/07_linkedin.png);
+}
+#social  a.youtube  {
+	background: url(images/03_youtube.png);
+}
+#social  a.pinterest  {
+	background: url(images/13_pinterest.png);
+}
+/* Make sure embeds and iframes fit their containers */
+embed,
+iframe,
+object {
+	max-width: 100%;
+}
+
+
+/* Text meant only for screen readers */
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+}
+.screen-reader-text:hover,
+.screen-reader-text:active,
+.screen-reader-text:focus {
+	background-color: #f1f1f1;
+	border-radius: 3px;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+	clip: auto !important;
+	color: #21759b;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000; /* Above WP toolbar */
+}
+
+
+/* Content */
+.main-content-inner {
+	padding-bottom: 1.5em;
+}
+.hentry {
+	margin: 0 0 1.5em;
+}
+.sticky {
+}
+.gallery-caption {
+}
+.bypostauthor {
+}
+.nav>li>a {
+	display: inline-block !important;
+}
+/* Clearing */
+.clear {
+	clear: both;
+}
+.widget { margin-bottom: 2em; }
+.widget_nav_menu ul.sub-menu li, .widget_pages ul.children li { padding-left: 15px; }
+
+.widget_search .search-form input[type="submit"] { display: none; }
+
+.widget select {
+	max-width: 100%;
+}
+ .comment .children { margin-left: 1.5em; } 
+ 

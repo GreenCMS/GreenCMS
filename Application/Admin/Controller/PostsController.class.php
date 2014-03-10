@@ -173,7 +173,7 @@ class PostsController extends AdminBaseController
 
         if ($post_id = D('Posts')->relation(true)->add($data)) { //, 'Logic'
 
-            cookie('post_add',null);
+            cookie('post_add', null);
 
             if ($data['post_type'] == 'single') {
                 $this->json_return(1, "发布成功", U('Admin/Posts/index'));
@@ -345,7 +345,7 @@ class PostsController extends AdminBaseController
 
 
         $this->assign('cats', $cats);
-        $this->display();
+        $this->display('addcategory');
     }
 
     public function addCategoryHandle()
@@ -379,7 +379,7 @@ class PostsController extends AdminBaseController
         $this->assign('cats', $cats);
 
 
-        $this->display();
+        $this->display('editcategory');
     }
 
     public function editCategoryHandle($id)

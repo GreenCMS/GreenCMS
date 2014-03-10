@@ -180,14 +180,14 @@ class CustomController extends AdminBaseController
     {
         if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
         set_kv('theme_' . $theme_name, 'disabled');
-        $this->success('禁用成功', 'Admin/Custom/theme');
+        $this->success('禁用成功');
     }
 
     public function themeEnableHandle($theme_name = 'Vena')
     {
 
         set_kv('theme_' . $theme_name, 'enabled');
-        $this->success('启用成功', 'Admin/Custom/theme');
+        $this->success('启用成功');
     }
 
 

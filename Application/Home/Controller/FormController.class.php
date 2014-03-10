@@ -8,8 +8,9 @@
  */
 
 namespace Home\Controller;
-use Home\Model\FormModel;
 
+
+use Home\Model\FormModel;
 
 class FormController extends HomeBaseController
 {
@@ -35,6 +36,12 @@ class FormController extends HomeBaseController
 
         } else
             $this->display();
+    }
+
+    public function feedback()
+    {
+
+        $this->show('feedback');
     }
 
 

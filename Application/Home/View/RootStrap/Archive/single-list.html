@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{$title}|{:get_opinion('title')}</title>
+    <meta name="description" content="{:get_opinion('keywords')}"/>
+    <include file="Public:head"/>
+</head>
+
+<body class="home blog">
+
+
+
+<header id="masthead" class="site-header" role="banner">
+    <div class="container">
+        <div id="social">
+        </div>
+        <h1>{$title}</h1>
+    </div>
+</header>
+<!-- #masthead -->
+
+<div class="main-content">
+    <div class="container" id="content">
+        <div class="row">
+            <div class="main-content-inner col-12 col-lg-12">
+
+                <if condition="$res404 eq 0 ">
+                    没有相关文章
+                </if>
+
+
+                <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
+
+                    <div class="col-12">
+                        <article id="{$post.post_id}" class="post-{$post.post_id} post type-post status-publish format-standard hentry">
+                            <header class="page-header">
+                                <div class="post-thumb-home">
+                                </div>
+                                <h2 class="page-title">
+                                    <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" rel="bookmark">
+                                        {$post.post_top|is_top}{$post.post_title}</a>
+                                </h2>
+
+                                <div class="entry-meta">
+                                <span class="posted-on">Posted on
+                                        {$post['post_date'] }
+  </span><span class="byline"> by <span class="author vcard">{$post.post_user.user_nicename}</span></span>
+                                </div>
+                                <!-- .entry-meta -->
+                            </header>
+                            <!-- .entry-header -->
+
+                            <div class="entry-content">
+                                {$post.post_content|strip_tags|mb_substr=0,200,"UTF-8"}
+                            </div>
+                            <!-- .entry-content -->
+
+                            <footer class="entry-meta">
+                                <br/>
+                            </footer>
+                            <!-- .entry-meta -->
+
+                        </article>
+                    </div>
+                    <!-- #post-## -->
+                </volist>
+
+
+                <div class="clear"></div>
+                <nav id="nav-below" class="navigation" role="navigation">
+
+                    <div class="blog-navi nomargin">
+                        <ul>
+                            {$pager}
+                        </ul>
+                    </div>
+                </nav>
+                <div class="clear"></div>
+
+
+            </div>
+            <!-- close .main-content-inner -->
+
+
+            <!-- close .*-inner (main-content or sidebar, depending if sidebar is used) -->
+        </div>
+        <!-- close .row -->
+    </div>
+    <!-- close .container -->
+</div>
+<!-- close .main-content -->
+<div id="primery-footer">
+    <div class="container">
+    </div>
+
+</div>
+
+
+<include file="Public:footer"/>
+
+<!-- close #colophon -->
+
+
+</body>
+</html>

@@ -53,12 +53,12 @@ return array(
      * TP 3.1升级
      */
 
-    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Install', 'Weixin'), //配置你原来的分组列表
-    'MODULE_DENY_LIST'     => array('Common'),
+    'MODULE_ALLOW_LIST'    => array('Admin', 'Weixin', 'Home'), //配置你原来的分组列表
+    'MODULE_DENY_LIST'     => array('Common', 'Install'),
     'DEFAULT_MODULE'       => 'Home', //T默认分组，
     // 'DEFAULT_M_LAYER'       =>  'Logic', //默认的模型层名称
 
     'LOAD_EXT_CONFIG'      => 'tags', // 加载扩展配置文件 config_alias,config_db,config_system
 
-    'TAGLIB_BUILD_IN'      => 'Green,Cx',
+  'TAGLIB_BUILD_IN'      => 'Green,Cx',
 );

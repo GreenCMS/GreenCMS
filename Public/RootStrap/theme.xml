@@ -1,0 +1,13 @@
+<theme>
+    <name>RootStrap</name>
+    <version>2</version>
+    <build>20140303</build>
+    <description>RootStrap from wordpress</description>
+    <author>ZTS</author>
+    <preview>/RootStrap/preview.jpg</preview>
+    <preview_big>/RootStrap/preview_big.jpg</preview_big>
+    <copyright>GreenStudio 2011</copyright>
+    <tpl_view>Apllication/Home/View/RootStrap</tpl_view>
+    <tpl_static>Public/RootStrap</tpl_static>
+    <introduction>RootStrap博客主题</introduction>
+</theme>
