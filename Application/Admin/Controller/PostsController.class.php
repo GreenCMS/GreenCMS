@@ -32,10 +32,10 @@ class PostsController extends AdminBaseController
 
         if ($cat != '') {
             $post_ids = D('Cats', 'Logic')->getPostsId($cat);
-            $post_ids = null ? array('post_id' => 0) : $post_ids;
+            $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
         } else if ($tag != '') {
             $post_ids = D('Tags', 'Logic')->getPostsId($tag);
-            $post_ids = null ? array('post_id' => 0) : $post_ids;
+            $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
         }
 
 
@@ -173,7 +173,7 @@ class PostsController extends AdminBaseController
 
         if ($post_id = D('Posts')->relation(true)->add($data)) { //, 'Logic'
 
-            cookie('post_add',null);
+            cookie('post_add', null);
 
             if ($data['post_type'] == 'single') {
                 $this->json_return(1, "发布成功", U('Admin/Posts/index'));
