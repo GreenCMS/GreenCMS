@@ -48,7 +48,6 @@ BUG提交可以直接发ISSUE
     /Core/ThinkPHHP/Library/Think/Hook.class.php (一处) // since thinkphp 3.2.1
     /Core/ThinkPHHP/Library/Think/Template/TagLib/Cx.class.php (一处) // since thinkphp 3.2.1
 
-
 NginX用户须知:
     使用ThinkPHP的PATHINFO需要将/Home/config/config_router.php的url_mode改成0或者1
     更多信息参考ThinkPHP3.2.1手册
