@@ -17,5 +17,22 @@ class HomeController extends WeixinBaseController
         $this->display();
     }
 
+    public function changePass()
+    {
+        $this->display();
+    }
+
+    public function changePassHandle()
+    {
+        $User = D('User', 'Logic');
+        $User->user_id = (int)$_SESSION [C('USER_AUTH_KEY')];
+        $User->user_pass = encrypt($_POST['password']);
+
+        if ($User->save()) {
+            $this->success('密码修改成功', U("Admin/Login/logout"), false);
+        } else {
+            $this->error('密码修改失败');
+        }
+    }
 
 }

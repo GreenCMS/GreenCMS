@@ -20,12 +20,12 @@ $menu_arr = array(
     ),
 
     'admin_sub_menu' => array(
-        'Home'   => array(
+        'Home'    => array(
             'Home/index'      => '微信仪表盘',
             'Home/changePass' => '修改密码',
         ),
 
-        'Reply'  => array(
+        'Reply'   => array(
             'Reply/index' => '预设回复内容',
             'Reply/text'  => '文字回复',
             'Reply/pic'   => '图片回复',
@@ -35,30 +35,29 @@ $menu_arr = array(
         ),
 
 
-        'Menu'   => array(
+        'Menu'    => array(
             'Menu/index' => '菜单管理',
             'Menu/add'   => '菜单添加',
         ),
 
-        'Rule'   => array(
+        'Rule'    => array(
             'Rule/index' => '规则管理',
             'Rule/add'   => '规则添加',
         ),
 
 
-        'User'   => array(
+        'User'    => array(
             'User/index' => '用户管理',
         ),
-        'Message'   => array(
+        'Message' => array(
             'Message/index' => '消息记录',
-            'Message/new' => '尚未回复',
-            'Message/send' => '发送消息',
+            //      'Message/new' => '尚未回复',
+            'Message/send'  => '发送消息',
 
         ),
 
 
-
-        'System' => array(
+        'System'  => array(
             'System/index' => '系统设置',
 
         )
@@ -100,8 +99,6 @@ $setting = array(
     'SHOW_CHROME_TRACE' => false,
 
     'Weixin_log'        => true,
-
-
 
 
 );

@@ -40,7 +40,7 @@ class ApiController extends WeixinCoreController
         $SECRET = C('Weixin_secret');
 
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$APPID&secret=$SECRET&code=$code&grant_type=authorization_code";
-        $res = json_decode(file_get_contents($url),true);
+        $res = json_decode(file_get_contents($url), true);
 
         dump($res);
 
@@ -49,7 +49,7 @@ class ApiController extends WeixinCoreController
 
         $url2 = "https://api.weixin.qq.com/sns/userinfo?access_token=$access_token&openid=$openid";
 
-        $res2 = json_decode(file_get_contents($url2),true);
+        $res2 = json_decode(file_get_contents($url2), true);
         dump($res2);
 
 
@@ -153,11 +153,21 @@ class ApiController extends WeixinCoreController
     }
 
 
-//    public function access()
-//    {
-//        $access = $this->getAccess();
-//        dump($access);
-//    }
+    public function menu()
+    {
+
+        $Menu = new \Weixin\Event\MenuEvent();
+
+        $Menu->create();
+        $Menu->get();
+
+    }
+
+    public function access()
+    {
+        $access = $this->getAccess();
+        dump($access);
+    }
 //
 //    public function phpinfo()
 //    {

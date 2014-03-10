@@ -51,17 +51,16 @@ $menu_arr = array(
         ),
 
         'Custom' => array(
-            'Custom/plugin' => '插件管理',
-            'Custom/theme'  => '主题管理',
-            'Custom/menu'   => '菜单管理'
+            //   'Custom/plugin' => '插件管理',
+            'Custom/theme' => '主题管理',
+            'Custom/menu'  => '菜单管理'
         ),
 
 
-
         'Media'  => array(
-            'Media/file'       => '文件管理',
-            'Media/backupFile' => '文件备份',
-            'Media/restoreFile' => '文件恢复',
+            'Media/file' => '文件管理',
+            //      'Media/backupFile' => '文件备份',
+            //     'Media/restoreFile' => '文件恢复',
         ),
 
         'Access' => array(
@@ -123,7 +122,6 @@ $config_other = array(
     'sqlFileSize'     => 5242880,
     // (测试功能)该值不可太大，否则会导致恢复失败，建议5M一卷
     // 5M=5*1024*1024=5242880
-
 
 
 );

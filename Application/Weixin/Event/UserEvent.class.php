@@ -49,6 +49,7 @@ class UserEvent extends WeixinCoreController
     public function getUserList()
     {
         $user_list = $this->getFirstList();
+
         static $user_ids = array();
         if ($user_list['count'] == $user_list['total']) {
             //不足10000人
@@ -87,11 +88,14 @@ class UserEvent extends WeixinCoreController
     public function getFirstList()
     {
         $ACCESS_TOKEN = $this->getAccess();
+
+
+        if($ACCESS_TOKEN==false ) return false;
+
         $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=$ACCESS_TOKEN";
 
         $user_list = file_get_contents($url);
         $user_list = json_decode($user_list, true);
-
         return $user_list;
     }
 

@@ -10,7 +10,6 @@
 namespace Weixin\Controller;
 
 use Common\Controller\BaseController;
-use Think\Controller;
 
 abstract class WeixinCoreController extends BaseController
 {
@@ -27,13 +26,15 @@ abstract class WeixinCoreController extends BaseController
 
     public function getAccess()
     {
-         //使用缓存保存access_token , access_token有效时间是7200秒
-        if (S('access_token') == '') {
+
+
+        //使用缓存保存access_token , access_token有效时间是7200秒
+        if (S('access_token') == '' || S('access_token') == false) {
             $appid = C('Weixin_appid');
             $secret = C('Weixin_secret');
 
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret";
-            // echo $url;
+            dump($url);
             $json = file_get_contents($url);
             $res = json_decode($json, true);
             // dump($res);

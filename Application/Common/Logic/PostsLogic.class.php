@@ -45,7 +45,7 @@ class PostsLogic extends RelationModel
      * @return mixed 返回文章列表
      */
     public function getList($limit = 20, $type = 'single', $order = 'post_id desc',
-                            $relation = true, $info_with = array(),$ids = array())
+                            $relation = true, $info_with = array(), $ids = array())
     {
         $info = $info_with;
         if ($type != 'all') $info['post_type'] = $type;
@@ -65,13 +65,14 @@ class PostsLogic extends RelationModel
      */
     public function countAll($type = 'single', $info_with = array(), $ids = array())
     {
+
         $info = $info_with;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if ($type != 'all') $info['post_type'] = $type;
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
-        $count = (int)$this->where($info)->count();
-        return $count;
+        $count = $this->where($info)->count();
+         return $count;
     }
 
     /**
