@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {$post.post_title}|{:get_opinion('title')} </title>
     <meta name="keywords" content='{:get_opinion("keywords")},<volist name="post.post_tag" id="tag">{$tag.tag_name}, </volist>'/>
-     <include file="Public:head"/>
+    <include file="Public:head"/>
 </head>
 
 <body class="home blog">
@@ -15,20 +15,14 @@
         <div class="row">
             <div class="site-navigation-inner col-12">
                 <div class="navbar">
-                    <!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+
 
                     <!-- Your site title as branding in the menu -->
                     <a class="navbar-brand" href="{:get_opinion('site_url')}" title="{:get_opinion('title')}" rel="home">
                         {:get_opinion('title')} </a>
 
                     <!-- The WordPress Menu goes here -->
-                    {:W('Common/mainMenu',array('ul_attr' => ' id="main-menu" class="nav navbar-nav"', 'li_attr' =>
-                    'class="menu-item menu-item-type-post_type menu-item-object-page" ' ) )}
+
 
                 </div>
                 <!-- .navbar -->
@@ -44,7 +38,7 @@
     <div class="container">
         <div id="social">
         </div>
-        <h1>{$title}</h1>
+        <h1>{$post.post_title} </h1>
     </div>
 </header>
 <!-- #masthead -->
@@ -52,73 +46,33 @@
 <div class="main-content">
     <div class="container" id="content">
         <div class="row">
-            <div class="main-content-inner col-12 col-lg-8">
-
-
-                <div class="col-2 left-meta">
-                    <div class="postdate">
-                        {$post.post_date|getTimeStamp='year'}
-
-                        <span>{$post.post_date|getTimeStamp='month'}/{$post.post_date|getTimeStamp='day'}</span>
-                    </div>
-                    <div class="postcoment">{$post.post_view_count} views</div>
-                </div>
-                <div class="col-10">
+            <div class="main-content-inner col-12 col-lg-12">
+                <div class="col-12">
                     <article id="{$post.post_id}" class="post-{$post.post_id} post type-post status-publish format-standard hentry">
                         <header class="page-header">
                             <div class="post-thumb-home">
                             </div>
                             <h2 class="page-title">
-                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" rel="bookmark">
-                                    {$post.post_top|is_top}{$post.post_title}</a>
+
+
                             </h2>
 
                             <div class="entry-meta">
-                                <span class="posted-on">Posted on <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" rel="bookmark">
-                                    <time class="entry-date published" datetime="{$post['post_date']}">
-                                        {$post['post_date']|getTimeURL=$post['post_type']}
+                                <span class="posted-on">Posted on        {$post['post_date']}
 
-                                    </time>
-                                </a></span><span class="byline"> by <span class="author vcard"><a class="url fn n" href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a></span></span>
-                      		<span class="cat-links">
-				Posted in <volist name="post.post_cat" id="cat" empty="无分类.">
-                                <a href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
-                            </volist></span>
-
-						<span class="tags-links">
-				Tagged <volist name="post.post_tag" id="tag" empty="无标签.">
-                            <a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
-                        </volist></span>
-
+                                 </span>
 
                             </div>
                             <!-- .entry-meta -->
                         </header>
                         <!-- .entry-header -->
 
-                        <div class="entry-content">
+                        <div class="entry-content auto-content">
                             {$post.post_content}
                         </div>
                         <!-- .entry-content -->
 
-                        <footer class="entry-meta">
-                            <br/>
-                                		<span class="cat-links">
-				Posted in <volist name="post.post_cat" id="cat" empty="无分类.">
-                                            <a href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
-                                        </volist></span>
 
-						<span class="tags-links">
-				Tagged <volist name="post.post_tag" id="tag" empty="无标签.">
-                            <a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
-                        </volist></span>
-
-
-
-                            <span class="comments-link"><a href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments">{$post.post_comment_count}
-                                Comment</a></span>
-
-                        </footer>
                         <!-- .entry-meta -->
 
                     </article>
@@ -127,49 +81,27 @@
 
 
                 <div class="clear"></div>
-                <nav id="nav-below" class="navigation" role="navigation">
-
-                    <div class="blog-navi nomargin">
-                        <ul>
-                            {$pager}
-                        </ul>
-                    </div>
-                </nav>
-                <div class="clear"></div>
 
 
             </div>
             <!-- close .main-content-inner -->
 
-            <div class="sidebar col-12 col-lg-4">
-                <div class="sidebar-padder">
-                    {:W('Widget/search')}
-                    {:W('Widget/tag')}
-                    {:W('Widget/categories')}
-                    {:W('Widget/links')}
-                    {:W('Widget/aboutus')}
-                </div>
-                <!-- close .sidebar-padder -->
-            </div>
+
             <!-- close .*-inner (main-content or sidebar, depending if sidebar is used) -->
         </div>
         <!-- close .row -->
     </div>
     <!-- close .container -->
 </div>
-<!-- close .main-content -->
-<div id="primery-footer">
-    <div class="container">
-    </div>
-
-</div>
-
 
 <include file="Public:footer"/>
-
 <!-- close #colophon -->
 
 <script type='text/javascript' src='__PUBLIC__/RootStrap/includes/js/skip-link-focus-fix.js?ver=20130115'></script>
+
+
+<!--<script type='text/javascript' src='__PUBLIC__/RootStrap/auto.js'></script>-->
+
 
 </body>
 </html>
