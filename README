@@ -34,10 +34,11 @@ BUG提交可以直接发ISSUE
 其他信息:
 
 安装之后需要的操作:
-删除Install模块( /Application/Install)
-删除Install数据( /Data/Install)
-关闭HTML_CACHE_ON(系统后台设置)
-不要忘记开启rewrite或者将/Home/config/router_config.php的url_mode改成0
+删除Install模块( /Application/Install)  --重要
+删除Install数据( /Data/Install) --重要
+关闭HTML_CACHE_ON(系统后台设置) --新版已经不需要了
+不要忘记开启rewrite 或者 将/Home/config/config_router.php的url_mode改成0
+
 
 关于与ThinkPHP的不同：
 虽然GreenCMS是基于ThinkPHP开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，
@@ -47,3 +48,7 @@ BUG提交可以直接发ISSUE
     /Core/ThinkPHHP/Library/Think/Hook.class.php (一处) // since thinkphp 3.2.1
     /Core/ThinkPHHP/Library/Think/Template/TagLib/Cx.class.php (一处) // since thinkphp 3.2.1
 
+
+NginX用户须知:
+    使用ThinkPHP的PATHINFO需要将/Home/config/config_router.php的url_mode改成0或者1
+    更多信息参考ThinkPHP3.2.1手册
