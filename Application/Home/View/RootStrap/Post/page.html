@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {$post.post_title}|{:get_opinion('title')} </title>
     <meta name="keywords" content='{:get_opinion("keywords")},<volist name="post.post_tag" id="tag">{$tag.tag_name}, </volist>'/>
-     <include file="Public:head"/>
+
+    <include file="Public:head"/>
 </head>
 
 <body class="home blog">
