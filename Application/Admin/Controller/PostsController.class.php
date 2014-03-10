@@ -32,10 +32,10 @@ class PostsController extends AdminBaseController
 
         if ($cat != '') {
             $post_ids = D('Cats', 'Logic')->getPostsId($cat);
-            $post_ids = null ? array('post_id' => 0) : $post_ids;
+            $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
         } else if ($tag != '') {
             $post_ids = D('Tags', 'Logic')->getPostsId($tag);
-            $post_ids = null ? array('post_id' => 0) : $post_ids;
+            $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
         }
 
 
