@@ -32,6 +32,14 @@ BUG提交可以直接发ISSUE
 
 
 其他信息:
+
+安装之后需要的操作:
+删除Install模块( /Application/Install)
+删除Install数据( /Data/Install)
+关闭HTML_CACHE_ON(系统后台设置)
+不要忘记开启rewrite或者将/Home/config/router_config.php的url_mode改成0
+
+关于与ThinkPHP的不同：
 虽然GreenCMS是基于ThinkPHP开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，
 但是由于编者自生水平不足或者ThinkPHP自身不合理，所以部分文件可能需要替换
   目前已知的需要Patch的文件有

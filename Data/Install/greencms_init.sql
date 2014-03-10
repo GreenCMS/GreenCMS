@@ -75,7 +75,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('10', 'software_version', 'v2.1.0306',
 INSERT INTO `{$db_prefix}options` VALUES ('11', 'software_name', 'GreenCMS v2', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('12', 'LOG_RECORD', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('13', 'software_build', '20140306', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('14', 'HTML_CACHE_ON', '1', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('14', 'HTML_CACHE_ON', '0', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('15', 'sqlFileSize', '5000000', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('16', 'send_mail', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('17', 'smtp_host', 'mail.njut.edu.cn', 'yes');
