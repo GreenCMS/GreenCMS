@@ -51,7 +51,7 @@ $menu_arr = array(
         ),
 
         'Custom' => array(
-            //   'Custom/plugin' => '插件管理',
+            'Custom/plugin' => '插件管理',
             'Custom/theme' => '主题管理',
             'Custom/menu'  => '菜单管理'
         ),

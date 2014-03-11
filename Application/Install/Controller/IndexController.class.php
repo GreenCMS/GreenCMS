@@ -212,7 +212,7 @@ class IndexController extends \Think\Controller
         File::delAll(WEB_CACHE_PATH);
         File::delAll(WEB_ROOT . 'Data/Cache');
         File::delAll(WEB_ROOT . 'Data/Temp');
-
+       // File::delAll(WEB_ROOT . 'Data/Install');
 
         if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {
             $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
