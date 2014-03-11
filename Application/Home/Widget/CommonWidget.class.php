@@ -24,6 +24,5 @@ class CommonWidget extends Controller
 
         $this->display('Widget:mainMenu');
 
-        W();
-    }
+     }
 }

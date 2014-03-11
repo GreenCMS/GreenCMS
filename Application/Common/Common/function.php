@@ -114,6 +114,23 @@ function get_opinion($key, $realtime = false, $default = '')
 
 }
 
+
+function set_opinion($key, $value)
+{
+    $options = D('Options');
+    $data['option_name'] = $key;
+    $data['option_value'] = $value;
+
+    $find = $options->where(array('option_name' => $key))->select();
+    if (!$find) {
+        $options->data($data)->add();
+    } else {
+        $data ['option_id'] = $find [0] ['option_id'];
+        $options->save($data);
+    }
+
+}
+
 function get_kv($key, $realtime = false, $default = '')
 {
     if (!$realtime) {
@@ -180,7 +197,7 @@ function array2str($res)
 //
 //     }
 
-    $str = join(",",$res);
+    $str = join(",", $res);
     return $str;
 }
 

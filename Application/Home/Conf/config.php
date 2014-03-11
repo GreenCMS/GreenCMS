@@ -8,6 +8,7 @@ $config = array(
     ),
 
     'DEFAULT_THEME'    => get_kv('home_theme', true, 'Vena'),
+    'SHOW_PAGE_TRACE'  => get_kv('SHOW_PAGE_TRACE', true, false),
 
 );
 

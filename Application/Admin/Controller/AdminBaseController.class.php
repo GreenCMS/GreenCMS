@@ -41,20 +41,6 @@ class AdminBaseController extends BaseController
     }
 
 
-    protected function checkToken()
-    {
-        if (IS_POST) {
-            if (!M("Admin")->autoCheckToken($_POST)) {
-                die (json_encode(array(
-                    'status' => 0,
-                    'info'   => '令牌验证失败'
-                )));
-            }
-            unset ($_POST [C("TOKEN_NAME")]);
-        }
-    }
-
-
     private function _currentPostion()
     {
 
@@ -90,7 +76,7 @@ class AdminBaseController extends BaseController
 
     }
 
-    private function _currentUser()
+    protected function _currentUser()
     {
         $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
         $user = D('User', 'Logic')->detail($user_id);
@@ -98,9 +84,23 @@ class AdminBaseController extends BaseController
     }
 
 
+    protected function saveKv()
+    {
+        S('kv_array', null); //清空缓存
+
+        $data = array();
+        foreach ($_POST as $key => $value) {
+            unset ($data ['kv_id']); // 删除上次保存配置时产生的option_id，否则无法插入下一条数据
+            set_kv($key, $value);
+        }
+
+
+    }
+
+
     public function saveConfig()
     {
-        S('customConfig',null); //清空缓存
+        S('customConfig', null); //清空缓存
 
         $options = D('Options');
         $data = array();
@@ -110,8 +110,8 @@ class AdminBaseController extends BaseController
             $data ['option_value'] = $value;
 
             $find = $options->where(array(
-                'option_name' => $name
-            ))->select();
+                                         'option_name' => $name
+                                    ))->select();
             if (!$find) {
                 $options->data($data)->add();
             } else {

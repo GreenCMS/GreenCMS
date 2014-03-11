@@ -18,8 +18,7 @@ class AccessController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-        $this->checkToken();
-    }
+     }
 
     // 用户列表
     public function index()
