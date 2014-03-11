@@ -112,4 +112,4 @@ $config_admin = array(
 );
 
 
-return aarray_merge($config_admin, $menu_arr);
+return array_merge($config_admin, $menu_arr);
