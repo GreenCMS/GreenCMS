@@ -26,7 +26,14 @@ abstract class BaseController extends Controller
 
     function getKvs()
     {
-        $Kvs = D('Kv')->where(1)->cache(true, 60)->select();
+        $kv_cached = S('kv_cached');
+        if ($kv_cached && APP_Cache) {
+            $Kvs = $kv_cached;
+        } else {
+            $Kvs = D('Kv')->where(1)->select();
+        }
+
+
         $res_array = array();
         foreach ($Kvs as $kv) {
             $res_array[$kv['kv_key']] = $kv['kv_value'];
@@ -38,21 +45,11 @@ abstract class BaseController extends Controller
 
 
     /**
-     * 获取配置
-     * @return mixed
-     */
-    function getConfig()
-    {
-        $options = D('Options')->where(array('autoload' => 'yes'))->select();
-        return $options;
-    }
-
-    /**
      * 用户存放在数据库中的配置，覆盖config中的
      */
     function customConfig()
     {
-        $options = $this->getConfig();
+        $options = D('Options')->where(array('autoload' => 'yes'))->select();
         foreach ($options as $config) {
             C($config['option_name'], $config['option_value']);
         }

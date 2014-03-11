@@ -51,3 +51,7 @@ BUG提交可以直接发ISSUE
 NginX用户须知:
     使用ThinkPHP的PATHINFO需要将/Home/config/config_router.php的url_mode改成0或者1
     更多信息参考ThinkPHP3.2.1手册
+
+
+缓存选项:
+    kv_cached

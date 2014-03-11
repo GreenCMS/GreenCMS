@@ -31,13 +31,14 @@ function getRealURL($menu_item = array(), $is_home = false)
 // 路由动态获取url
 function getSingleURLByID($ID, $type = 'single')
 {
-    $Posts = D('Posts');
+    $Posts = D('Posts','Logic');
 
     $url_base = get_url("Post/" . $type);
 
     $home_post_model = get_kv('home_post_model');
 
-    if ($home_post_model === 'native') {
+
+    if ($home_post_model == 'native') {
         $URL = get_url("Post/" . $type, array('info' => $ID));
 
     } else {

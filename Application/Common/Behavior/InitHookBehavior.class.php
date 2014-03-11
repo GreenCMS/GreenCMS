@@ -20,18 +20,15 @@ class InitHookBehavior extends Behavior
     public function run(&$content)
     {
 
-        if ((C('DB_TYPE') == 'GreenCMS_DB_TYPE')) {
-//真不知道说什么好。。。
+        if ((C('DB_TYPE') == 'GreenCMS_DB_TYPE')) { //真不知道说什么好。。。
 
         } else {
-             if (isset($_GET['m']) && $_GET['m'] === 'Install') return;
+            if (isset($_GET['m']) && strtolower($_GET['m']) == 'install') return;
 
-           $data = S('hooks');
-
+            $data = S('hooks');
 
             if ((!$data)) {
                 $hooks = M('Hooks')->getField('name,addons');
-
 
                 foreach ($hooks as $key => $value) {
                     if ($value) {
@@ -42,10 +39,8 @@ class InitHookBehavior extends Behavior
                         $data = M('Addons')->where($map)->getField('id,name');
                         if ($data) {
                             $addons = array_intersect($names, $data);
-                           // dump($addons);
-                           // $addons[0]= 'Addons\\'.$addons[0];
 
-                            Hook::add($key,$addons);
+                            Hook::add($key, $addons);
                         }
                     }
                 }
@@ -53,7 +48,7 @@ class InitHookBehavior extends Behavior
             } else {
                 Hook::import($data, false);
             }
-            Hook::add('test', "Test");
+//           Hook::add('test', "Test");
 //        dump(Hook::get());
 //        die;
 //        dump(S('hooks'));
