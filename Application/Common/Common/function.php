@@ -9,8 +9,7 @@
 
 include APP_PATH . 'Common/Common/common_router.php';
 
-const GREENCMS_ADDON_PATH = './Addons/';
-
+//const GREENCMS_ADDON_PATH = './Addons/';
 
 function current_timestamp()
 {
@@ -136,6 +135,12 @@ function get_kv($key, $realtime = false, $default = '')
 
 }
 
+/**
+ * saveOrUpdate KV
+ * @param $key
+ * @param $value
+ * @return mixed
+ */
 function set_kv($key, $value)
 {
     $data['kv_value'] = $value;
@@ -148,10 +153,13 @@ function set_kv($key, $value)
     return $res;
 }
 
-
+/**
+ * 检测是否存在key值
+ * @param $key
+ * @return bool
+ */
 function exist_kv($key)
 {
-
     $options = D('Kv')->where(array('kv_key' => $key))->find();
 
     if ($options == null) {
@@ -166,10 +174,13 @@ function exist_kv($key)
  */
 function array2str($res)
 {
-    $str = '';
-    foreach ($res as $each) {
-        $str .= $each . ',';
-    }
+//    $str = '';
+//    foreach ($res as $each) {
+//        $str .= $each . ',';
+//
+//     }
+
+    $str = join(",",$res);
     return $str;
 }
 
