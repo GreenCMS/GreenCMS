@@ -52,8 +52,8 @@ $menu_arr = array(
 
         'Custom' => array(
             'Custom/plugin' => '插件管理',
-            'Custom/theme' => '主题管理',
-            'Custom/menu'  => '菜单管理'
+            'Custom/theme'  => '主题管理',
+            'Custom/menu'   => '菜单管理'
         ),
 
 
@@ -86,7 +86,7 @@ $menu_arr = array(
 
 );
 
-$config_rbac = array(
+$config_admin = array(
     /*
      * RBAC认证配置信息
     */
@@ -111,19 +111,5 @@ $config_rbac = array(
 
 );
 
-$config_other = array(
-    'URL_MODEL'       => 0,
 
-    'SHOW_PAGE_TRACE' => false,
-
-    /*
-    * 系统备份数据库时每个sql分卷大小，单位字节
-   */
-    'sqlFileSize'     => 5242880,
-    // (测试功能)该值不可太大，否则会导致恢复失败，建议5M一卷
-    // 5M=5*1024*1024=5242880
-
-
-);
-$config = array_merge($config_rbac, $menu_arr);
-return array_merge($config, $config_other);
+return aarray_merge($config_admin, $menu_arr);
