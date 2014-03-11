@@ -14,7 +14,7 @@ const GREENCMS_ADDON_PATH = './Addons/';
 
 function current_timestamp()
 {
-    $timestamp=date('Y-m-d H:i:s', time()-TIME_FIX);
+    $timestamp = date('Y-m-d H:i:s', time() - TIME_FIX);
     return $timestamp;
 }
 
@@ -101,31 +101,39 @@ function is_empty($test)
 /**
  * 获取设置
  */
-function get_opinion($key, $realtime = false, $cache = true)
+function get_opinion($key, $realtime = false, $default = '')
 {
     if (!$realtime) //实时查询数据库
-        return C($key);
+    return C($key);
     else {
-        $res = D('Options')->cache($cache)->where(array('option_name' => $key))->find();
+        $res = D('Options')->cache(true)->where(array('option_name' => $key))->find();
 
-        if(empty($res))  return get_kv($key); //查找失败的话用kv数据库查询
+        if (empty($res)) return $default; //返回默认值
 
         return $res['option_value'];
     }
 
 }
 
-function get_kv($key, $cache = true, $default = '')
+function get_kv($key, $realtime = false, $default = '')
 {
-    if ($cache) {
+    if (!$realtime) {
         $kv_array = C('kv');
-        if ($kv_array[$key] != '') return $kv_array[$key];
+        if ($kv_array[$key] != '') {
+            return $kv_array[$key];
+        } else {
+            return $default;
+        }
+    } else {
+        $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
+        if ($options['kv_value'] == '') {
+            return $default;
+        } else {
+            return $options['kv_value'];
+        }
     }
 
-    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
-    if ($options['kv_value'] == '')
-        return $default;
-    return $options['kv_value'];
+
 }
 
 function set_kv($key, $value)

@@ -112,7 +112,7 @@ class CustomController extends AdminBaseController
 
     private function themeStatus($theme_name = 'Vena')
     {
-        $res = get_kv('theme_' . $theme_name, false);
+        $res = get_kv('theme_' . $theme_name, true);
         if ($res == null) {
             set_kv('theme_' . $theme_name, 'disabled');
             return 'disabled';

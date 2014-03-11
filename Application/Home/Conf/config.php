@@ -7,7 +7,7 @@ $config = array(
         '*' => array('{$_SERVER.REQUEST_URI|md5}', '36000', ''), //全局静态缓存，第二个参数为时间单位秒
     ),
 
-    'DEFAULT_THEME'    => get_kv('home_theme', false, 'Vena'),
+    'DEFAULT_THEME'    => get_kv('home_theme', true, 'Vena'),
 
 );
 
