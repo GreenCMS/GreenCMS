@@ -26,17 +26,20 @@ abstract class BaseController extends Controller
 
     function getKvs()
     {
-        $kv_cached = S('kv_cached');
-        if ($kv_cached && APP_Cache) {
-            $Kvs = $kv_cached;
+        $kv_array = S('kv_array');
+
+        if ($kv_array && APP_Cache) {
+            $res_array = $kv_array;
         } else {
+
             $Kvs = D('Kv')->where(1)->select();
-        }
 
+            $res_array = array();
+            foreach ($Kvs as $kv) {
+                $res_array[$kv['kv_key']] = $kv['kv_value'];
+            }
 
-        $res_array = array();
-        foreach ($Kvs as $kv) {
-            $res_array[$kv['kv_key']] = $kv['kv_value'];
+            if (APP_Cache) S('kv_array', $res_array);
         }
 
         C('kv', $res_array);
@@ -49,10 +52,19 @@ abstract class BaseController extends Controller
      */
     function customConfig()
     {
-        $options = D('Options')->where(array('autoload' => 'yes'))->select();
+        $customConfig = S('customConfig');
+        if ($customConfig && APP_Cache) {
+            $options = $customConfig;
+        } else {
+            $options = D('Options')->where(array('autoload' => 'yes'))->select();
+
+            if (APP_Cache) S('customConfig', $options);
+        }
         foreach ($options as $config) {
             C($config['option_name'], $config['option_value']);
         }
+
+
     }
 
 

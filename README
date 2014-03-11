@@ -54,4 +54,5 @@ NginX用户须知:
 
 
 缓存选项:
-    kv_cached
+    kv_array
+    customConfig

@@ -15,10 +15,10 @@ $config_router = array(
 
     'URL_HTML_SUFFIX' => 'html',
     //URL模式
-    'URL_MODEL'       => get_kv('home_url_model', true, 0),
-    //开启路由!!建议url模型选择2，否则的话建议使用native模式
 
+    //开启路由!!建议url模型选择2，否则的话建议使用native模式
     'URL_ROUTER_ON'   => false,
+
     //路由定义
     'URL_ROUTE_RULES' => array(
         'Post/single/:year/:month/:day/:info' => 'Post/single', //年月日规则路由

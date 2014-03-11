@@ -100,6 +100,8 @@ class AdminBaseController extends BaseController
 
     public function saveConfig()
     {
+        S('customConfig',null); //清空缓存
+
         $options = D('Options');
         $data = array();
         foreach ($_POST as $name => $value) {

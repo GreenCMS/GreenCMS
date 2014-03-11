@@ -99,14 +99,17 @@ function is_empty($test)
 
 
 /**
- *
+ * 获取设置
  */
-function get_opinion($key, $db = false, $cache = true)
+function get_opinion($key, $realtime = false, $cache = true)
 {
-    if (!$db)
+    if (!$realtime) //实时查询数据库
         return C($key);
     else {
         $res = D('Options')->cache($cache)->where(array('option_name' => $key))->find();
+
+        if(empty($res))  return get_kv($key); //查找失败的话用kv数据库查询
+
         return $res['option_value'];
     }
 
