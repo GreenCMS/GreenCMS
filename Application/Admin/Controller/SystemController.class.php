@@ -20,7 +20,7 @@ class SystemController extends AdminBaseController
     {
 //        $data ['option_name'] = 'smtp_user';
 //        $data ['option_value'] = '1412128697@qq.com';
-        D('Options')->data($data)->add();
+        //D('Options')->data($data)->add();
     }
 
     public function index()
@@ -34,6 +34,21 @@ class SystemController extends AdminBaseController
     public function indexHandle()
     {
         $this->saveConfig();
+        $this->success('配置成功');
+    }
+
+    public function kvset()
+    {
+
+        $this->assign('SHOW_PAGE_TRACE', get_kv('SHOW_PAGE_TRACE',true));
+        $this->assign('home_url_model', get_kv('home_url_model',true));
+
+          $this->display();
+    }
+
+    public function kvsetHandle()
+    {
+        $this->saveKv();
         $this->success('配置成功');
     }
 

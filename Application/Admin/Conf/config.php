@@ -76,6 +76,7 @@ $menu_arr = array(
         'System' => array(
             'System/index'          => '站点设置',
             'System/special'        => '附加设置',
+            'System/kvset'        => '其他设置',
             'System/setEmailConfig' => '邮箱配置',
             'System/setSafeConfig'  => '安全选项',
             'System/links'          => '链接管理',

@@ -88,9 +88,7 @@ class AdminBaseController extends BaseController
     {
         S('kv_array', null); //清空缓存
 
-        $data = array();
         foreach ($_POST as $key => $value) {
-            unset ($data ['kv_id']); // 删除上次保存配置时产生的option_id，否则无法插入下一条数据
             set_kv($key, $value);
         }
 
