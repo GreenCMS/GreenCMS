@@ -1,0 +1,51 @@
+/* reset */
+html, body, div, ul, ol, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, fieldset, input, abbr, article, aside, command, details, figcaption, figure, footer, header, hgroup, mark, meter, nav, output, progress, section, summary, time {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, pre, code, address, caption, cite, code, em, strong, th, figcaption {
+    font-size: 1em;
+    font-weight: normal;
+    font-style: normal;
+}
+
+fieldset, iframe {
+    border: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+article, aside, footer, header, hgroup, nav, section, figure, figcaption {
+    display: block;
+}
+
+input, button, select, textarea {
+    outline: none
+}
+
+textarea {
+    resize: none
+}
+
+/* universal */
+body {
+    width: 100%;
+    background: #EDEDED;
+    font-family: "microsoft yahei";
+}
+
+#footer {
+    clear: both;
+    height: 30px;
+    text-align: center;
+    color: gray;
+    font-size: 12px;
+}
