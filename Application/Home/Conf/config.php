@@ -7,6 +7,7 @@ $config = array(
         '*' => array('{$_SERVER.REQUEST_URI|md5}', '36000', ''), //全局静态缓存，第二个参数为时间单位秒
     ),
 
+    'URL_MODEL'    =>  get_kv('home_url_model', true, 0),
     'DEFAULT_THEME'    => get_kv('home_theme', true, 'Vena'),
     'SHOW_PAGE_TRACE'  => get_kv('SHOW_PAGE_TRACE', true, false),
 
