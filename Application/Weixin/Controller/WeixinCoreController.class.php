@@ -34,7 +34,7 @@ abstract class WeixinCoreController extends BaseController
             $secret = C('Weixin_secret');
 
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret";
-            dump($url);
+
             $json = file_get_contents($url);
             $res = json_decode($json, true);
             // dump($res);

@@ -17,7 +17,7 @@ class UserController extends WeixinBaseController
     {
 //        $this->updateall();
         $Users = D('Weixinuser');
-        $user_list = $Users->select();
+        $user_list = $Users->order('subscribe_time')->select();
 
         $this->assign('user_list', $user_list);
         $this->display();

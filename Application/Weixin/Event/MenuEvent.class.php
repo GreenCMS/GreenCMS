@@ -16,11 +16,9 @@ class MenuEvent extends WeixinCoreController
 
     private $access = '';
 
-    public function create()
+
+    public function restore()
     {
-
-        $this->delete();
-
         $data = '{
      "button":[
      {
@@ -33,7 +31,7 @@ class MenuEvent extends WeixinCoreController
                     },
                     {
                         "type": "click",
-                        "name": "产品分类",
+                        "name": "产品列表",
                         "key": "category"
                     },
                     {
@@ -48,7 +46,7 @@ class MenuEvent extends WeixinCoreController
                 "sub_button": [
                     {
                         "type": "click",
-                        "name": "节日优惠",
+                        "name": "优惠活动",
                         "key": "discount"
                     },
                     {
@@ -92,6 +90,16 @@ class MenuEvent extends WeixinCoreController
 
 }';
 
+        return $this->create($data);
+    }
+
+
+    public function create($data)
+    {
+
+        if ($data != '') {
+            $this->delete();
+        }
         // $array = json_decode($data, true);
 
         // dump($array);
@@ -114,13 +122,13 @@ class MenuEvent extends WeixinCoreController
         }
 
         curl_close($ch);
-        echo $tmpInfo;
+        return $tmpInfo;
     }
 
     public function delete()
     {
         $ACCESS_TOKEN = $this->getAccess();
-        echo file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=" . $ACCESS_TOKEN);
+        return file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=" . $ACCESS_TOKEN);
     }
 
 
@@ -129,10 +137,21 @@ class MenuEvent extends WeixinCoreController
         $ACCESS_TOKEN = $this->getAccess();
         $menu_json = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=" . $ACCESS_TOKEN);
 
+        $menu_array = json_decode($menu_json, true);
+        $menu_json = decodeUnicode(json_encode($menu_array['menu']));
+        //  $menu = json_decode(trim($menu_json), true);
+        //   $data['option_value'] = decodeUnicode(json_encode($menu['menu']));
+        //    $res = D('Options')->where(array('option_name' => 'Weixin_menu'))->data($data)->save();
+
+        return $menu_json;
+    }
+
+    public function save($menu_json)
+    {
         $data['option_value'] = $menu_json;
         $res = D('Options')->where(array('option_name' => 'Weixin_menu'))->data($data)->save();
 
-        echo $menu_json;
+        return $res;
     }
 
 

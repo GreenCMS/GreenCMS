@@ -116,7 +116,7 @@ class RuleController extends WeixinBaseController
         $res = D('Weixinaction')->data($data)->add();
 
         if ($res) {
-            $this->success('添加成功', 'Weixin/Rule/index');
+            $this->success('添加成功', U('Weixin/Rule/index'));
         } else {
             $this->error('添加失败');
         }
@@ -130,7 +130,7 @@ class RuleController extends WeixinBaseController
         $res = D('Weixinaction')->where(array('wx_action_id' => $id))->delete();
 
         if ($res) {
-            $this->success('删除成功', 'Weixin/Rule/index');
+            $this->success('删除成功', U('Weixin/Rule/index'));
         } else {
             $this->error('删除失败');
         }

@@ -47,10 +47,8 @@
                         <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
                     </h3>
                     <ul class="breadcrumb">
-                        <li>
-                            <a href="{$module_url}">{$module}</a>
-                            <i class="icon-angle-right"></i>
-                        </li>
+                        <li><a href="{$module_url}">{$module}</a> <i
+                                class="icon-angle-right"></i></li>
                         <li><a href="{$action_url}">{$action}</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
@@ -90,38 +88,50 @@
 
                             </div>
                             <table class="table table-striped table-bordered table-hover"
-                                   id="sample_1">
+                                 >
                                 <thead>
                                 <tr>
-                                    <th style="width:130px;">关注时间</th>
-
-                                    <th style="width:75px;">昵称</th>
+                                    <th style="width: 8px;">openid</th>
+                                    <th>昵称</th>
                                     <th>地区</th>
                                     <th style="width:75px;">头像</th>
-                                    <th style="width: 8px;">openid</th>
-
+                                    <th style="width:130px;">关注时间</th>
                                     <th style="width:200px;">操作</th>
 
                                 </tr>
                                 </thead>
+
                                 <tbody>
-                                <foreach name="user_list" item="v">
+                                <foreach name="posts" item="v">
                                     <tr class="odd gradeX">
-                                        <td>{:date ('Y-m-d H:i',$v['subscribe_time']) }</td>
-
-                                        <td>{$v.nickname}</td>
-                                        <td>{$v.country}-{$v.province}-{$v.city}</td>
-                                        <td><img src="{$v.headimgurl}"></td>
-                                        <td> {$v.openid}</td>
-
+                                        <td><input type="checkbox" class="checkboxes" value="{$v['post_id']}"
+                                                   name="posts[]"/>
+                                        </td>
+                                        <td><a href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}"
+                                               title="{$v.post_title}">{$v.post_title}</a></td>
                                         <td>
+                                            <a href="{:U('Admin/access/editUser', array('aid' => $v['post_user']['user_id']))}">{$v.post_user.user_nicename}</a>
+                                        </td>
+                                        <td>
+                                            分类:
+                                            <volist name="v['post_cat']" id="v_pcs" empty="无分类">
+                                                <a class="btn mini grey" href="{:U('Admin/Posts/category', array('id' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
+                                            </volist>
+                                            标签:
+                                            <volist name="v['post_tag']" id="v_pts" empty="无标签">
+                                                <a class="btn mini grey" href="{:U('Admin/Posts/tag', array('id' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
+                                            </volist>
+                                        </td>
+                                        <td>{:getTimestamp($v['post_date'],'Y-m-d H:i') }</td>
+                                        <td>
+                                            <a class="btn mini" href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}">编辑</a>
+                                            &nbsp;&nbsp;&nbsp;
 
-                                            <a class="btn green" href="{:U('Weixin/User/detail',array('openid'=>$v['openid']))}">查看用户</a>
-
-                                            <a class="btn blue" href="{:U('Weixin/User/chat',array('openid'=>$v['openid']))}">查看对话</a>
-
-                                            <a class="btn" href="{:U('Weixin/Message/send',array('openid'=>$v['openid']))}">发送消息</a>
-
+                                            <a class="btn mini blue" href="{:U('Home/Post/'.$v['post_type'], array('info' => $v['post_id']))}" target="_blank">查看</a>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <a class="btn mini purple" href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v['post_id'],'post_status' => 'unverified'))}">审核</a>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <a class="btn mini red" href="{:U('Admin/Posts/preDel', array('id' => $v['post_id']))}">删除</a>
                                         </td>
 
 
@@ -129,7 +139,9 @@
                                 </foreach>
                                 </tbody>
                             </table>
-
+                            <div class="pagination">
+                                <ul> {$pager}</ul>
+                            </div>
                         </div>
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->
@@ -146,6 +158,7 @@
 {:W('Common/footer')}
 <!-- END FOOTER -->
 <include file="Public:foot"/>
+
 <script>
     jQuery(document).ready(function () {
         App.init();
@@ -153,6 +166,8 @@
 
     });
 </script>
+
+
 </body>
 <!-- END BODY -->
 </html>

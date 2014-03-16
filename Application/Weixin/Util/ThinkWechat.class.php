@@ -21,7 +21,10 @@ class ThinkWechat
     public function __construct($token)
     {
 
-        $this->checkSignature($token) || exit;
+        /**
+         * warning 不检测签名加快速度
+         */
+        //$this->checkSignature($token) || exit;
 
 
         if (IS_GET) {
@@ -192,6 +195,11 @@ class ThinkWechat
     }
 
 
+    /**
+     * 新版签名检测算法
+     * @param $token
+     * @return bool
+     */
     private function checkSignature($token)
     {
         $signature = $_GET["signature"];
@@ -210,6 +218,5 @@ class ThinkWechat
             return false;
         }
     }
-
 
 }

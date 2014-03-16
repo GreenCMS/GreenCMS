@@ -12,7 +12,7 @@ $menu_arr = array(
     'admin_big_menu' => array(
         'Home'    => '首页',
         'Reply'   => '预设回复',
-//        'Menu'   => '菜单管理',
+        'Menu'    => '菜单管理',
         'Rule'    => '回复规则',
         'User'    => '用户查看',
         'Message' => '消息管理',
@@ -36,9 +36,8 @@ $menu_arr = array(
 
 
         'Menu'    => array(
-            'Menu/index' => '菜单管理',
-            'Menu/add'   => '菜单添加',
-        ),
+            'Menu/index'   => '菜单管理',
+         ),
 
         'Rule'    => array(
             'Rule/index' => '规则管理',

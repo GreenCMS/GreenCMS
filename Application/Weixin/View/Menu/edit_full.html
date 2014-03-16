@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="GreenCMS"/>
+    <meta name="keywords" content="GreenCMS"/>
+    <include file="Public:head"/>
+
+    <title>{$action} | {:get_opinion('title')}</title>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    {:W('Common/header')}
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar nav-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        {:W('Common/sideBar')}
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        {$action}
+                        <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{$module_url}">{$module}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li><a href="{$action_url}">{$action}</a></li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+                <div class="span12">
+
+
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                    <form action="{$form_action}" name="change" class="form-horizontal"
+                          method="post">
+
+                        <div class="control-group">
+                            <label class="control-label">名称</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="name"
+                                       value="{$weixin_menu_now.name}"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label">类型</label>
+
+                            <div class="controls">
+                                <select class="small m-wrap" tabindex="1" name="reply_type" id="reply_type">
+                                    <option value="click"  selected="selected" >点击</option>
+                                    <option value="view">链接</option>
+                                    <option value="empty">空(建一个同等级的节点)</option>
+
+
+                                </select>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="control-group" id="key">
+                            <label class="control-label">键值</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="key"
+                                       value="{$weixin_menu_now.key}"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="control-group" id="url">
+                            <label class="control-label">URL</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large" name="url"
+                                       value="{$weixin_menu_now.url}"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue"><i class="icon-ok"></i>{$action_name}</button>
+                        </div>
+
+                    </form>
+
+
+
+
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+{:W('Common/footer')}
+<!-- END FOOTER -->
+<include file="Public:foot"/>
+<script>
+    jQuery(document).ready(function () {
+        App.init();
+
+
+
+        var reply_type=$('#reply_type option:selected').val();
+        if(reply_type=='click'){
+            $('#url').fadeOut();
+            $('#key').fadeIn();
+
+        } else if(reply_type=='view'){
+            $('#url').fadeIn();
+            $('#key').fadeOut();
+
+        } else if(reply_type=='empty'){
+            $('#url').fadeOut();
+            $('#key').fadeOut();
+
+        }
+
+
+
+
+        $('#reply_type').change(function(){
+            var reply_type=$('#reply_type option:selected').val();
+
+            if(reply_type=='click'){
+                $('#url').fadeOut();
+                $('#key').fadeIn();
+            } else if(reply_type=='view'){
+                $('#url').fadeIn();
+                $('#key').fadeOut();
+
+            }else if(reply_type=='empty'){
+                $('#url').fadeOut();
+                $('#key').fadeOut();
+
+            }
+
+        });
+
+
+
+    });
+</script>
+</body>
+<!-- END BODY -->
+</html>

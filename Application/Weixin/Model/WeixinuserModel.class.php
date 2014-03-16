@@ -24,7 +24,7 @@ class WeixinuserModel extends RelationModel
 
         'log' => array(
 
-            'mapping_type'        =>  HAS_MANY,
+            'mapping_type'        =>  self::HAS_MANY,
 
             'class_name'          => 'Weixinlog',
 

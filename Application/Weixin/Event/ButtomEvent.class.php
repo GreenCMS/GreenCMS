@@ -86,11 +86,9 @@ class ButtomEvent extends WeixinCoreController
     public function category()
     {
         $articles = array();
-        $articles[0] = array('产品分类0', '产品分类0', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
-        $articles[1] = array('产品分类1', '产品分类1', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
-        $articles[2] = array('产品分类2', '产品分类2', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
-        $articles[3] = array('产品分类3', '产品分类3', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
-        $articles[4] = array('产品分类4', '产品分类4', 'http://demo.greencms.net/Public/baracktocat.jpg', 'http://demo.greencms.net');
+        $articles[0] = array('会呼吸迷你陶盆', '会呼吸迷你陶盆', 'http://www.easypot.cn/home/Public/huihuxi/001.jpg', 'http://www.easypot.cn/goods/goods_info.html');
+        $articles[1] = array('会呼吸白色陶盆', '会呼吸白色陶盆', 'http://www.easypot.cn/home/Public/huihuxi/002.jpg', 'http://www.easypot.cn/goods/goods_info.html');
+        $articles[2] = array('会呼吸彩绘陶盆', '会呼吸彩绘陶盆', 'http://www.easypot.cn/home/Public/huihuxi/003.jpg', 'http://www.easypot.cn/goods/goods_info.html');
 
         $reply = array(
             $articles,

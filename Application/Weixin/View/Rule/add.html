@@ -65,13 +65,13 @@
                     <form action="{$form_action}" name="change_System" class="form-horizontal"
                           method="post">
 
-                        <div class="control-group">
+                        <div class="control-group" >
                             <label class="control-label">事件类型</label>
 
                             <div class="controls">
 
 
-                                <select class="small m-wrap" tabindex="1" name="action_type">
+                                <select class="small m-wrap" tabindex="1" name="action_type" id="action_type" >
                                     <option value="text"
                                     <php>
                                         if($item['action_type']=='text')
@@ -149,7 +149,7 @@
                             <label class="control-label">预设定消息的ID</label>
 
                             <div class="controls">
-                                <input type="text" placeholder="reply_id" class="m-wrap large" name="reply_id" value="{$item.reply_id}">
+                                <input type="number" placeholder="reply_id" class="m-wrap large" name="reply_id" value="{$item.reply_id}">
                                 <span class="help-inline">预设定消息的ID <a href="{:U('Weixin/Reply/index')}" target="_blank">点击这里查看ID</a> </span>
 
                             </div>
@@ -180,7 +180,35 @@
 <script>
     jQuery(document).ready(function () {
         App.init();
+
+        var action_type=$('#action_type option:selected').val();
+        if(action_type=='text'){
+            $('#key').fadeOut();
+            $('#keyword').fadeIn();
+
+        } else if(action_type=='click'){
+            $('#key').fadeIn();
+            $('#keyword').fadeOut();
+
+        }
+
+        $('#action_type').change(function(){
+            var action_type=$('#action_type option:selected').val();
+
+            if(action_type=='text'){
+                $('#key').fadeOut();
+                $('#keyword').fadeIn();
+
+            } else if(action_type=='click'){
+                $('#key').fadeIn();
+                $('#keyword').fadeOut();
+
+            }
+        });
+
     });
+
+
 </script>
 </body>
 <!-- END BODY -->

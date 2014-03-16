@@ -33,12 +33,12 @@ class ReplyController extends WeixinBaseController
 
     public function textAddHandle()
     {
-        $data = I('post.','',null);
+        $data = I('post.', '', null);
         $data['type'] = "text";
         $res = D('Weixinre')->data($data)->add();
 
         if ($res) {
-            $this->success('添加成功', 'Weixin/Reply/index');
+            $this->success('添加成功', U('Weixin/Reply/index'));
         } else {
             $this->error('添加失败');
         }
@@ -65,7 +65,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->where(array('wx_re_id' => $id))->data($data)->save();
 
         if ($res) {
-            $this->success('编辑成功', 'Weixin/Reply/index');
+            $this->success('编辑成功', U('Weixin/Reply/index'));
         } else {
             $this->error('编辑失败或者是没有改变');
         }
@@ -124,7 +124,7 @@ class ReplyController extends WeixinBaseController
             $res = D('Weixinre')->data($data)->add();
 
             if ($res) {
-                $this->success('上传成功！', 'Weixin/Reply/index');
+                $this->success('上传成功！', U('Weixin/Reply/index'));
             }
 
 //
@@ -164,9 +164,9 @@ class ReplyController extends WeixinBaseController
     {
 
 
-        $data = I('post.','',null);
+        $data = I('post.', '', null);
         $data['type'] = "news";
-        if ($_FILES['img']['size']!=0) {
+        if ($_FILES['img']['size'] != 0) {
             $config = array(
                 "savePath"   => (Upload_PATH . 'Weixin/' . date('Y') . '/' . date('m') . '/'),
                 "maxSize"    => 300000, // 单位KB
@@ -189,7 +189,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->where(array('wx_re_id' => $id))->data($data)->save();
 
         if ($res) {
-            $this->success('编辑成功', 'Weixin/Reply/index');
+            $this->success('编辑成功', U('Weixin/Reply/index'));
         } else {
             $this->error('编辑失败或者是没有改变');
         }
@@ -222,7 +222,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->data($data)->add();
 
         if ($res) {
-            $this->success('添加成功', 'Weixin/Reply/index');
+            $this->success('添加成功', U('Weixin/Reply/index'));
         } else {
             $this->error('添加失败');
         }
@@ -234,7 +234,7 @@ class ReplyController extends WeixinBaseController
         $res = D('Weixinre')->where(array('wx_re_id' => $id))->delete();
 
         if ($res) {
-            $this->success('删除成功', 'Weixin/Reply/index');
+            $this->success('删除成功', U('Weixin/Reply/index'));
         } else {
             $this->error('删除失败');
         }
