@@ -1220,7 +1220,10 @@ exit;
 
             setTimeout("getJSONData()", 1000);
 
-            $.getJSON('?act=rt&callback=?', displayData);
+            $.getJSON('{:U('Admin/System/tz',array('act'=>'rt'))}&callback=?', displayData);
+
+
+
 
         }
         function ForDight(Dight, How) {
