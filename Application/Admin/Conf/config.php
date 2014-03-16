@@ -81,7 +81,8 @@ $menu_arr = array(
             'System/setSafeConfig'  => '安全选项',
             'System/links'          => '链接管理',
 //            'System/update'         => '系统升级',
-            'System/info'           => '系统信息'
+            'System/info'           => '系统信息',
+            'System/tz'           => '雅黑探针'
         )
     )
 

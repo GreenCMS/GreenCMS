@@ -95,3 +95,11 @@ function int_to_status($i)
 
     return $map['status'][$i];
 }
+
+function getRealString($string)
+{
+
+    $map = array('single' => '文章', 'page' => '页面');
+
+    return $map[$string];
+}

@@ -33,9 +33,11 @@ class PostsController extends AdminBaseController
         if ($cat != '') {
             $post_ids = D('Cats', 'Logic')->getPostsId($cat);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
+            $cat = '关于分类' . $cat . ' 的';
         } else if ($tag != '') {
             $post_ids = D('Tags', 'Logic')->getPostsId($tag);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
+            $tag = '关于标签' . $tag . ' 的';
         }
 
 
@@ -49,6 +51,7 @@ class PostsController extends AdminBaseController
             $posts = $PostsList->getList($limit, $post_type, $order, true, $info, $post_ids);
         }
 
+        $this->assign('action', $cat . $tag . getRealString($post_type) . '列表');
         $this->assign('posts', $posts);
         $this->assign('pager', $pager_bar);
         $this->display('index_no_js');
