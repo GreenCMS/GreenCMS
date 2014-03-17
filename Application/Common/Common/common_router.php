@@ -28,12 +28,7 @@ function getRealURL($menu_item = array(), $is_home = false)
     return $real_url;
 }
 
-// 路由动态获取url
-function getPageURLByID($ID, $type = 'page')
-{
-    getSingleURLByID($ID, $type);
 
-}
 
 // 路由动态获取url
 function getSingleURLByID($ID, $type = 'single')
@@ -79,6 +74,13 @@ function getSingleURLByID($ID, $type = 'single')
         }
     }
     return $URL;
+}
+
+// 路由动态获取url
+function getPageURLByID($ID, $type = 'page')
+{
+    getSingleURLByID($ID, $type);
+
 }
 
 // 路由动态获取url
