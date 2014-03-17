@@ -16,13 +16,6 @@ class SystemController extends AdminBaseController
     //TODO Upgrade
     //TODO Email mail()
 
-    public function add()
-    {
-//        $data ['option_name'] = 'smtp_user';
-//        $data ['option_value'] = '1412128697@qq.com';
-        //D('Options')->data($data)->add();
-    }
-
     public function index()
     {
 
@@ -40,10 +33,10 @@ class SystemController extends AdminBaseController
     public function kvset()
     {
 
-        $this->assign('SHOW_PAGE_TRACE', get_kv('SHOW_PAGE_TRACE',true));
-        $this->assign('home_url_model', get_kv('home_url_model',true));
+        $this->assign('SHOW_PAGE_TRACE', get_kv('SHOW_PAGE_TRACE', true));
+        $this->assign('home_url_model', get_kv('home_url_model', true));
 
-          $this->display();
+        $this->display();
     }
 
     public function kvsetHandle()
@@ -62,7 +55,6 @@ class SystemController extends AdminBaseController
     public function setEmailConfigHandle()
     {
         $this->saveConfig();
-
         $this->success('配置成功');
     }
 
@@ -83,6 +75,13 @@ class SystemController extends AdminBaseController
         $this->success('配置成功');
     }
 
+    public function checkupdate()
+    {
+        $Update=new \Common\Event\UpdateEvent();
+        $Update->check();
+
+
+    }
 
     public function update()
     {
@@ -217,9 +216,7 @@ class SystemController extends AdminBaseController
         File::write_file(LOG_PATH . $date . '/log.txt', $logcontent);
 
         // 跳转到更新展示页面
-        $this->success('更新完毕!', U('Admin/System/over', array(
-                                                            "date" => $date
-                                                       )));
+        $this->success('更新完毕!', U('Admin/System/over', array("date" => $date)));
     }
 
     public function over()
@@ -296,9 +293,6 @@ class SystemController extends AdminBaseController
 
     public function info()
     {
-
-
-
         if (function_exists('gd_info')) {
             $gd = gd_info();
             $gd = $gd ['GD Version'];
@@ -316,13 +310,13 @@ class SystemController extends AdminBaseController
             // 'MYSQL版本' => mysql_get_server_info(),
             '上传附件限制'               => ini_get('upload_max_filesize'),
             '执行时间限制'               => ini_get('max_execution_time') . "秒",
-            '内存使用状况'                 => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
-            '硬盘使用状况'                 => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
+            '内存使用状况'               => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
+            '硬盘使用状况'               => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
             '服务器时间'                => date("Y年n月j日 H:i:s"),
             '北京时间'                 => gmdate("Y年n月j日 H:i:s", time() + 8 * 3600),
-            'allow_url_fopen'               => ini_get('allow_url_fopen') ? '√' : '×',
+            'allow_url_fopen'      => ini_get('allow_url_fopen') ? '√' : '×',
             'register_globals'     => get_cfg_var("register_globals") == "1" ? '√' : '×',
-            'magic_quotes_gpc'     => (1 === get_magic_quotes_gpc()) ? '√' :  '×',
+            'magic_quotes_gpc'     => (1 === get_magic_quotes_gpc()) ? '√' : '×',
             'magic_quotes_runtime' => (1 === get_magic_quotes_runtime()) ? '√' : '×',
         );
         $this->assign('server_info', $info);

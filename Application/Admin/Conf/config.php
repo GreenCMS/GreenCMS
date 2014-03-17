@@ -14,9 +14,11 @@ $menu_arr = array(
         'Index'  => '首页',
         'Posts'  => '文章页面',
         'Data'   => '数据缓存',
+        //  'Comments'=>'留言评论',
         'Media'  => '文件附件',
         'Custom' => '定制中心',
         'Access' => '用户权限',
+        'Tools'  => '小工具',
         'System' => '系统设置',
     ),
 
@@ -38,6 +40,13 @@ $menu_arr = array(
             'Posts/recycle'    => '回收站'
         ),
 
+
+//        'Comments' => array(
+//            'Comments/index' => '留言',
+//
+//        ),
+
+
         'Data'   => array(
             'Data/db'      => '数据库设置',
             'Data/index'   => '数据库备份',
@@ -54,7 +63,7 @@ $menu_arr = array(
             'Custom/plugin' => '插件管理',
             'Custom/theme'  => '主题管理',
             'Custom/menu'   => '菜单管理',
-            'Custom/links'          => '链接管理',
+            'Custom/links'  => '链接管理',
         ),
 
 
@@ -74,10 +83,19 @@ $menu_arr = array(
             'Access/addRole'  => '添加角色'
         ),
 
+        'Tools'  => array(
+            'Tools/index'     => '可用工具',
+            'Tools/wordpress' => '从wordpress导入',
+            // 'Tools/rss'    => '从rss导入',
+            // 'Tools/export'    => '导出',
+
+        ),
+
+
         'System' => array(
             'System/index'          => '站点设置',
             'System/special'        => '附加设置',
-            'System/kvset'        => '其他设置',
+            'System/kvset'          => '其他设置',
             'System/setEmailConfig' => '邮箱配置',
             'System/setSafeConfig'  => '安全选项',
 
