@@ -3,7 +3,7 @@
 function getRealURL($menu_item = array(), $is_home = false)
 {
 
-     if ($menu_item['menu_function'] == 'direct') {
+    if ($menu_item['menu_function'] == 'direct') {
         $real_url = $menu_item['menu_url'];
     } elseif ($menu_item['menu_function'] == 'none') {
         $real_url = '#';
@@ -29,9 +29,16 @@ function getRealURL($menu_item = array(), $is_home = false)
 }
 
 // 路由动态获取url
+function getPageURLByID($ID, $type = 'page')
+{
+    getSingleURLByID($ID, $type);
+
+}
+
+// 路由动态获取url
 function getSingleURLByID($ID, $type = 'single')
 {
-    $Posts = D('Posts','Logic');
+    $Posts = D('Posts', 'Logic');
 
     $url_base = get_url("Post/" . $type);
 
