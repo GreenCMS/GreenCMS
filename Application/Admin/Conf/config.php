@@ -12,11 +12,11 @@ $menu_arr = array(
 
     'admin_big_menu' => array(
         'Index'  => '首页',
-        'Posts'  => '文章管理',
+        'Posts'  => '文章页面',
         'Data'   => '数据缓存',
         'Media'  => '文件附件',
-        'Custom' => '个性设置',
-        'Access' => '权限管理',
+        'Custom' => '定制中心',
+        'Access' => '用户权限',
         'System' => '系统设置',
     ),
 
@@ -24,16 +24,16 @@ $menu_arr = array(
         'Index'  => array(
             'Index/index'      => '仪表盘',
             'Index/changePass' => '修改密码',
-            'Posts/add'        => '文章发布',
+            'Posts/add'        => '添加文章',
             'Index/main'       => '返回首页'
         ),
 
         'Posts'  => array(
-            'Posts/index'      => '文章列表',
+            'Posts/index'      => '所有文章',
             'Posts/page'       => '页面列表',
             'Posts/category'   => '分类管理',
             'Posts/tag'        => '标签管理',
-            'Posts/add'        => '发布文章',
+            'Posts/add'        => '添加文章',
             'Posts/unverified' => '待审核',
             'Posts/recycle'    => '回收站'
         ),
@@ -53,7 +53,8 @@ $menu_arr = array(
         'Custom' => array(
             'Custom/plugin' => '插件管理',
             'Custom/theme'  => '主题管理',
-            'Custom/menu'   => '菜单管理'
+            'Custom/menu'   => '菜单管理',
+            'Custom/links'          => '链接管理',
         ),
 
 
@@ -79,10 +80,10 @@ $menu_arr = array(
             'System/kvset'        => '其他设置',
             'System/setEmailConfig' => '邮箱配置',
             'System/setSafeConfig'  => '安全选项',
-            'System/links'          => '链接管理',
+
 //            'System/update'         => '系统升级',
             'System/info'           => '系统信息',
-            'System/tz'           => '雅黑探针'
+//            'System/tz'           => '雅黑探针'
         )
     )
 

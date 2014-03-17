@@ -71,7 +71,7 @@
                         <div class="portlet-body">
                             <div class="clearfix">
                                 <div class="btn-group">
-                                    <a href="{:U('Admin/System/addlink')}">
+                                    <a href="{:U('Admin/Custom/addlink')}">
                                         <button id="sample_editable_1_new" class="btn green">
                                             添加链接<i class="icon-plus"></i>
                                         </button>
@@ -110,11 +110,11 @@
                                         <td>{$v.link_description}</td>
                                         <td>
                                             <a
-                                                    href="{:U('Admin/System/editlink', array('id' => $v['link_id']))}">编辑</a>
+                                                    href="{:U('Admin/Custom/editlink', array('id' => $v['link_id']))}">编辑</a>
                                             &nbsp;&nbsp;&nbsp;
 
                                             <a
-                                                    href="{:U('Admin/System/dellink', array('id' => $v['link_id']))}">删除</a>
+                                                    href="{:U('Admin/Custom/dellink', array('id' => $v['link_id']))}">删除</a>
                                         </td>
 
 
