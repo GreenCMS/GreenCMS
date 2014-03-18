@@ -31,6 +31,7 @@ $config_router = array(
 
         'Post/single/:info'                   => 'Post/single', //普通规则路由
 
+        'Post/page/info/:info'                     => 'Post/page', //普通规则路由
         'Post/page/:year/:month/:day/:info'   => 'Post/page', //年月日规则路由
         'Post/page/:year/:month/:info'        => 'Post/page', //年月规则路由
         'Post/page/:year/:info'               => 'Post/page', //年规则路由
