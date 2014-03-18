@@ -60,69 +60,80 @@
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
                 <div class="span12">
-                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <form action="{:U('Admin/System/saveHandle')}" name="change_System" class="form-horizontal"
                           method="post">
+
+
+
+
                         <div class="control-group">
-                            <label class="control-label">网站地址</label>
+                            <label class="control-label">Feed显示数量</label>
 
                             <div class="controls">
-                                <input type="text" placeholder="" class="m-wrap large" name="site_url"
-                                       value="{:get_opinion('site_url')}"/>
-                                <span class="help-inline"></span>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">网站标题</label>
-
-                            <div class="controls">
-                                <input type="text" placeholder="" class="m-wrap large" name="title"
-                                       value="{:get_opinion('title')}"/>
-                                <span class="help-inline"></span>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">网站关键词</label>
-
-                            <div class="controls">
-                                <input type="text" placeholder="" class="m-wrap large" name="keywords"
-                                       value="{:get_opinion('keywords')}"/>
-                                <span class="help-inline">多个关键词用英文逗号,分隔</span>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">网站描述信息</label>
-
-                            <div class="controls">
-                                <input type="text" placeholder="" class="m-wrap large" name="description"
-                                       value="{:get_opinion('description')}"/>
-                                <span class="help-inline">一般是一句话描述你的网站</span>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">网站底部信息</label>
-                            <textarea class="" id="post_content" name="foot" style="margin-left:18px; width:23em;"
-                                      rows="6">{:get_opinion('foot')}</textarea>
-                            <span class="help-inline">版权信息、统计代码</span>
+                                <input type="number" placeholder="" class="m-wrap large" name="feed_num"
+                                       value="{:get_opinion('feed_num')}"/>
+                             </div>
                         </div>
 
 
                         <div class="control-group">
-                            <label class="control-label">关于我们</label>
+                            <label class="control-label">每页显示的文章数</label>
 
                             <div class="controls">
-                                <input type="text" placeholder="" class="m-wrap large" name="widget_about_us"
-                                       value="{:get_opinion('widget_about_us')}"/>
-                                <span class="help-inline">首页右侧</span>
+                                <input type="number" placeholder="" class="m-wrap large" name="PAGER"
+                                       value="{:get_opinion('PAGER')}"/>
                             </div>
                         </div>
 
 
-                      <div class="form-actions">
+
+
+                        <div class="control-group">
+                            <label class="control-label">是否开启Feed订阅功能</label>
+                            <div class="controls">
+
+                                <label class="radio">
+
+                                    <switch name="feed_open">
+                                        <case value="1"><input type="radio" name="feed_open"
+                                                               checked="checked" value="1"/></case>
+                                        <case value="0"><input type="radio" name="feed_open" value="1"/></case>
+
+                                        <default/>
+                                        <input type="radio" name="feed_open"
+                                               checked="checked" value="1"/>
+                                    </switch>
+                                    是
+
+
+                                </label>
+
+
+                                <label class="radio">
+                                    <switch name="feed_open">
+                                        <case value="1"><input type="radio" name="feed_open" value="0"/></case>
+                                        <case value="0"><input type="radio" name="feed_open" checked="checked"
+                                                               value="0"/></case>
+
+                                        <default/>
+                                        <input type="radio" name="feed_open" checked=
+                                                value="0"/>
+                                    </switch>
+                                    否
+                                </label>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="form-actions">
                             <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
                         </div>
+
+
                     </form>
-                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
             </div>
             <!-- END PAGE CONTENT-->

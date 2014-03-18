@@ -20,7 +20,7 @@ abstract class BaseController extends Controller
     {
         parent::__construct();
 
-        $this->getKvs();
+        //$this->getKvs();
 
     }
 
@@ -46,7 +46,6 @@ abstract class BaseController extends Controller
         return $res_array;
     }
 
-
     /**
      * 用户存放在数据库中的配置，覆盖config中的
      */
@@ -67,7 +66,6 @@ abstract class BaseController extends Controller
 
     }
 
-
     /**
      * check_verify
      */
@@ -78,7 +76,6 @@ abstract class BaseController extends Controller
                 $this->error('验证码错误！');
         }
     }
-
 
     function is_sae()
     {

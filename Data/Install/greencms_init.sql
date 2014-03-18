@@ -75,7 +75,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('10', 'software_version', 'v2.1.0306',
 INSERT INTO `{$db_prefix}options` VALUES ('11', 'software_name', 'GreenCMS v2', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('12', 'LOG_RECORD', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('13', 'software_build', '20140306', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('14', 'HTML_CACHE_ON', '0', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('14', 'HTML_CACHE_ON', '0', 'false');
 INSERT INTO `{$db_prefix}options` VALUES ('15', 'sqlFileSize', '5000000', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('16', 'send_mail', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('17', 'smtp_host', 'mail.njut.edu.cn', 'yes');
@@ -103,20 +103,18 @@ INSERT INTO `{$db_prefix}options` VALUES ('38', 'Weixin_appid', ' ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('39', 'Weixin_secret', ' ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('40', 'Weixin_menu', ' ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('41', 'weixin_token', ' ', 'yes');
-
+INSERT INTO `{$db_prefix}options` VALUES ('42', 'home_url_model', '2');
+INSERT INTO `{$db_prefix}options` VALUES ('43', 'home_cat_model', 'native');
+INSERT INTO `{$db_prefix}options` VALUES ('44', 'home_tag_model', 'native');
+INSERT INTO `{$db_prefix}options` VALUES ('45', 'home_post_model', 'native');
 
 -- ----------------------------
 -- Records of {$db_prefix}kv
 -- ----------------------------
 INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'Twentytwelve');
-INSERT INTO `{$db_prefix}kv` VALUES ('2', 'home_url_model', '2');
-INSERT INTO `{$db_prefix}kv` VALUES ('3', 'home_cat_model', 'native');
-INSERT INTO `{$db_prefix}kv` VALUES ('4', 'home_tag_model', 'native');
-INSERT INTO `{$db_prefix}kv` VALUES ('5', 'home_post_model', 'native');
-INSERT INTO `{$db_prefix}kv` VALUES ('7', 'theme_Vena', 'enabled');
-INSERT INTO `{$db_prefix}kv` VALUES ('8', 'theme_2011college', 'enabled');
-INSERT INTO `{$db_prefix}kv` VALUES ('9', 'theme_Twentytwelve', 'enabled');
-INSERT INTO `{$db_prefix}kv` VALUES ('10', 'HTML_CACHE_ON', 'false');
+INSERT INTO `{$db_prefix}kv` VALUES ('2', 'theme_Vena', 'enabled');
+INSERT INTO `{$db_prefix}kv` VALUES ('3', 'theme_2011college', 'enabled');
+INSERT INTO `{$db_prefix}kv` VALUES ('4', 'theme_Twentytwelve', 'enabled');
 
 -- ----------------------------
 -- Records of {$db_prefix}posts

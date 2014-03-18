@@ -19,12 +19,18 @@ class SystemController extends AdminBaseController
     public function index()
     {
 
-        $this->assign('feed_open', get_opinion('feed_open'));
         $this->assign('users_can_register', get_opinion('users_can_register'));
         $this->display();
     }
 
-    public function indexHandle()
+    public function post()
+    {
+        $this->assign('feed_open', get_opinion('feed_open'));
+        $this->display();
+    }
+
+
+    public function saveHandle()
     {
         $this->saveConfig();
         $this->success('配置成功');
@@ -33,8 +39,6 @@ class SystemController extends AdminBaseController
     public function kvset()
     {
 
-        $this->assign('SHOW_PAGE_TRACE', get_kv('SHOW_PAGE_TRACE', true));
-        $this->assign('home_url_model', get_kv('home_url_model', true));
 
         $this->display();
     }
@@ -46,33 +50,31 @@ class SystemController extends AdminBaseController
     }
 
 
-    public function setEmailConfig()
+    public function url()
+    {
+        $this->assign('home_url_model', get_opinion('home_url_model', true,0));
+
+        $this->display();
+    }
+
+
+
+    public function email()
     {
         $this->assign('send_mail', C('send_mail'));
         $this->display();
     }
 
-    public function setEmailConfigHandle()
-    {
-        $this->saveConfig();
-        $this->success('配置成功');
-    }
 
-    public function setSafeConfig()
-    {
 
+    public function safe()
+    {
         $this->assign('db_fieldtype_check', C('db_fieldtype_check'));
         $this->assign('LOG_RECORD', C('LOG_RECORD'));
         $this->assign('SHOW_CHROME_TRACE', C('SHOW_CHROME_TRACE'));
+        $this->assign('SHOW_PAGE_TRACE', C('SHOW_PAGE_TRACE'));
 
         $this->display();
-    }
-
-    public function setSafeConfigHandle()
-    {
-        $this->saveConfig();
-
-        $this->success('配置成功');
     }
 
     public function checkupdate()
@@ -332,11 +334,5 @@ class SystemController extends AdminBaseController
 
     }
 
-    public function special()
-    {
 
-        $this->display();
-
-
-    }
 }

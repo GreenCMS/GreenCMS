@@ -21,7 +21,7 @@ class TagsLogic extends RelationModel
     public function detail($id, $relation = true)
     {
         $map = array();
-        $map['tag_id|tag_slug'] = $id;
+        $map['tag_id|tag_slug'] = urlencode($id);
         return D('Tags')->where($map)->relation($relation)->find();
     }
 

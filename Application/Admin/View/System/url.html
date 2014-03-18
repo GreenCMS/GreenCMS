@@ -60,17 +60,25 @@
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
                 <div class="span12">
-                    <form action="{:U('Admin/System/indexHandle')}" name="change_System" class="form-horizontal"
-                          method="post">
-                        <div class="control-group">
-                            <label class="control-label">关于我们</label>
 
-                            <div class="controls">
-                                <input type="text" placeholder="" class="m-wrap large" name="widget_about_us"
-                                       value="{:get_opinion('widget_about_us')}"/>
-                                <span class="help-inline">首页右侧</span>
-                            </div>
+
+                    <form action="{:U('Admin/System/saveHandle')}" name="change_System" class="form-horizontal"
+                          method="post">
+
+
+
+                    <div class="control-group">
+                        <label class="control-label">链接模式</label>
+
+                        <div class="controls">
+                            <input  type="number" placeholder="不知道请填0" class="m-wrap large" name="home_url_model"
+                                    value="{:C('home_url_model')}"/>
+                            <span class="help-inline">普通模式0, PATHINFO模式1, REWRITE模式2, 兼容模式3</span>
+
                         </div>
+
+
+                    </div>
 
 
                         <div class="control-group">
@@ -78,38 +86,49 @@
 
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="URL_HTML_SUFFIX"
-                                       value="{:get_opinion('URL_HTML_SUFFIX')}"/>
+                                       value="{:C('URL_HTML_SUFFIX')}"/>
                             </div>
                         </div>
 
 
 
-
                         <div class="control-group">
-                            <label class="control-label">Feed显示数量</label>
+                        <label class="control-label">文章链接模式</label>
 
-                            <div class="controls">
-                                <input type="number" placeholder="" class="m-wrap large" name="feed_num"
-                                       value="{:get_opinion('feed_num')}"/>
-                             </div>
+                        <div class="controls">
+                            <input type="text" placeholder="" class="m-wrap large" name="home_post_model"
+                                   value="{:C('home_post_model')}"/>
                         </div>
+                    </div>
 
 
-                        <div class="control-group">
-                            <label class="control-label">每页显示的文章数</label>
+                    <div class="control-group">
+                        <label class="control-label">TAG链接模式</label>
 
-                            <div class="controls">
-                                <input type="number" placeholder="" class="m-wrap large" name="PAGER"
-                                       value="{:get_opinion('PAGER')}"/>
-                            </div>
+                        <div class="controls">
+                            <input type="text" placeholder="" class="m-wrap large" name="home_tag_model"
+                                   value="{:C('home_cat_model')}"/>
                         </div>
+                    </div>
 
-                        <div class="form-actions">
-                            <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
+
+                    <div class="control-group">
+                        <label class="control-label">CAT链接模式</label>
+
+                        <div class="controls">
+                            <input type="text" placeholder="" class="m-wrap large" name="home_cat_model"
+                                   value="{:C('home_tag_model')}"/>
                         </div>
+                    </div>
+
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
+                    </div>
 
 
                     </form>
+
                 </div>
             </div>
             <!-- END PAGE CONTENT-->

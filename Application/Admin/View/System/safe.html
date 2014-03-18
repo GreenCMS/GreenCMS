@@ -61,7 +61,7 @@
             <div class="row-fluid">
                 <div class="span12">
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                    <form action="{:U('Admin/System/SetSafeConfigHandle')}" name="change_System"
+                    <form action="{:U('Admin/System/saveHandle')}" name="change_System"
                           class="form-horizontal" method="post">
 
                         <h3 class="form-section">Cookie设置</h3>
@@ -113,7 +113,7 @@
 
 
                         <div class="control-group">
-                            <label class="control-label">开启Chrome Console<br/>调试记录</label>
+                            <label class="control-label">Chrome Console<br/>调试记录</label>
 
                             <div class="controls">
                                 <label class="radio">
@@ -140,6 +140,53 @@
                                 </label>
                             </div>
                         </div>
+
+
+
+
+
+                        <div class="control-group">
+                            <label class="control-label">页面TRACE调试</label>
+
+                            <div class="controls">
+
+                                <label class="radio">
+
+                                    <switch name="SHOW_PAGE_TRACE">
+                                        <case value="1"><input type="radio" name="SHOW_PAGE_TRACE"
+                                                               checked="checked" value="1"/></case>
+                                        <case value="0"><input type="radio" name="SHOW_PAGE_TRACE" value="1"/></case>
+
+                                        <default/>
+                                        <input type="radio" name="SHOW_PAGE_TRACE"
+                                               checked="checked" value="1"/>
+                                    </switch>
+                                    开
+
+                                </label>
+
+
+                                <label class="radio">
+                                    <switch name="SHOW_PAGE_TRACE">
+                                        <case value="1"><input type="radio" name="SHOW_PAGE_TRACE" value="0"/></case>
+                                        <case value="0"><input type="radio" name="SHOW_PAGE_TRACE" checked="checked"
+                                                               value="0"/></case>
+
+                                        <default/>
+                                        <input type="radio" name="SHOW_PAGE_TRACE"
+                                               value="0"/>
+                                    </switch>
+                                    关
+                                </label>
+
+
+
+                            </div>
+
+
+                        </div>
+
+
 
 
                         <div class="control-group">

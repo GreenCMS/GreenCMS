@@ -55,6 +55,7 @@ class ToolsController extends AdminBaseController
                 $Wordpress->tagImport($info['url']);
                 $Wordpress->postImport($info['url']);
 
+                File::delFile($info['url']);
                 $this->success('导入完成');
             }
 
