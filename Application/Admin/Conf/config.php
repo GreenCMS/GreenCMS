@@ -97,8 +97,8 @@ $menu_arr = array(
             'System/post'  => '文章设置',
             'System/url'   => '链接设置',
             'System/safe'  => '安全选项',
-            'System/kvset' => '其他设置',
             'System/email' => '邮箱配置',
+            'System/kvset' => '其他设置',
 
 //            'System/update'         => '系统升级',
             'System/info'  => '系统信息',

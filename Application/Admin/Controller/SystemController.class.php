@@ -316,7 +316,7 @@ class SystemController extends AdminBaseController
             '硬盘使用状况'               => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
             '服务器时间'                => date("Y年n月j日 H:i:s"),
             '北京时间'                 => gmdate("Y年n月j日 H:i:s", time() + 8 * 3600),
-            'allow_url_fopen'      => ini_get('allow_url_fopen') ? '√' : '×',
+
             'register_globals'     => get_cfg_var("register_globals") == "1" ? '√' : '×',
             'magic_quotes_gpc'     => (1 === get_magic_quotes_gpc()) ? '√' : '×',
             'magic_quotes_runtime' => (1 === get_magic_quotes_runtime()) ? '√' : '×',
