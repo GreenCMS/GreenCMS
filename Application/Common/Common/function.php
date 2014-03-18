@@ -32,11 +32,16 @@ function get_url($url = '', $vars = '')
 {
     $url_arr = preg_split('/\//', $url);
 
+    $URL_MODEL_TEMP = (int)get_opinion('home_url_model');
+
     if (sizeof($url_arr) == 2) {
-         $url_return = U('Home/' . $url, $vars, $suffix = true, $domain = false);
+        $url_return = U('Home/' . $url, $vars, $suffix = true, $domain = false);
     } else {
         $url_return = U($url, $vars, $suffix = true, $domain = false);
     }
+
+    if ($URL_MODEL_TEMP == 2) $url_return = str_replace('/home', '', $url_return);
+
 
     return $url_return;
 
@@ -90,18 +95,19 @@ function is_empty($test)
 
 /**
  * 获取设置
+ *
  */
 function get_opinion($key, $realtime = false, $default = '')
 {
-    if (!$realtime) {
-        $res=C($key);
 
-        if($res){
+    if (!$realtime) {
+        $res = C($key);
+         if ($res!=null) {
             return $res;
-        }else{
-            $res=S('option_' . $key, $res['option_value']);
-            if($res)return $res;
-            else return $default;
+        } else {
+            $res = S('option_' . $key);
+            if ($res) return $res;
+            else return get_opinion($key, true, $default = '');
         }
     } else {
         $res = D('Options')->where(array('option_name' => $key))->find();

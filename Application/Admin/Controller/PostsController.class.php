@@ -148,7 +148,7 @@ class PostsController extends AdminBaseController
         $data['post_content'] = I('post.post_content', '', '');
         $data['post_template'] = I('post.post_template', $data['post_type']);
 
-        $data['post_name'] = I('post.post_name', $data['post_title'], '');
+        $data['post_name'] =urlencode(I('post.post_name', $data['post_title'],'')) ;
         $data['post_modified'] = $data['post_date'] = date("Y-m-d H:m:s", time());
         $data['user_id'] = I('post.post_user') ? I('post.post_user') : $_SESSION [C('USER_AUTH_KEY')];
 

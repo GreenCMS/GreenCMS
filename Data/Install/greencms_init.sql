@@ -103,7 +103,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('38', 'Weixin_appid', ' ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('39', 'Weixin_secret', ' ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('40', 'Weixin_menu', ' ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('41', 'weixin_token', ' ', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('42', 'home_url_model', '2', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('42', 'home_url_model', '0', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('43', 'home_cat_model', 'native', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('44', 'home_tag_model', 'native', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('45', 'home_post_model', 'native', 'yes');

@@ -29,7 +29,6 @@ function getRealURL($menu_item = array(), $is_home = false)
 }
 
 
-
 // 路由动态获取url
 function getSingleURLByID($ID, $type = 'single')
 {
@@ -44,7 +43,7 @@ function getSingleURLByID($ID, $type = 'single')
         $URL = get_url("Post/" . $type, array('info' => $ID));
 
     } else {
-
+        $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
         C('URL_HTML_SUFFIX', '');
         if ($home_post_model === 'post_id') {
             $URL = $url_base . '/' . $ID;
@@ -72,6 +71,7 @@ function getSingleURLByID($ID, $type = 'single')
         } else {
             $URL = $url_base . '/' . $ID;
         }
+        $URL = $URL . $URL_HTML_SUFFIX;
     }
     return $URL;
 }
@@ -91,13 +91,21 @@ function getTagURLByID($ID)
     $Tags = D('Tags', 'Logic');
     if ($home_tag_model === 'native') {
         $URL = get_url('Tag/detail', array("info" => $ID));
-    } elseif ($home_tag_model === 'ID') {
-        $URL = get_url('/Tag') . '/' . $ID;
-    } else if ($home_tag_model === 'slug') {
-        $tag = $Tags->detail($ID);
-        $URL = get_url('/Tag') . '/' . $tag ['tag_slug'];
-     } else {
-        $URL = get_url('Tag/detail', array("info" => $ID));
+    } else {
+        $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
+        C('URL_HTML_SUFFIX', '');
+
+
+        if ($home_tag_model === 'ID') {
+            $URL = get_url('/Tag') . '/' . $ID;
+        } else if ($home_tag_model === 'slug') {
+            $tag = $Tags->detail($ID);
+            $URL = get_url('/Tag') . '/' . $tag ['tag_slug'];
+        } else {
+            $URL = get_url('Tag/detail', array("info" => $ID));
+        }
+        $URL = str_replace('//', '/', $URL) . $URL_HTML_SUFFIX;
+
     }
 
     return $URL;
@@ -110,13 +118,24 @@ function getCatURLByID($ID)
     $Tags = D('Cats', 'Logic');
     if ($home_cat_model == 'native') {
         $URL = get_url('Cat/detail', array("info" => $ID));
-    } elseif ($home_cat_model == 'ID') {
-        $URL = get_url('/Cat') . '/' . $ID;
-    } else if ($home_cat_model == 'slug') {
-        $cat = $Tags->detail($ID);
-        $URL = get_url('/Cat') . '/' . $cat ['cat_slug'];
     } else {
-        $URL = get_url('Cat/detail', array("info" => $ID));
+
+        $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
+        C('URL_HTML_SUFFIX', '');
+
+
+        if ($home_cat_model == 'ID') {
+            $URL = get_url('/Cat') . '/' . $ID;
+        } else if ($home_cat_model == 'slug') {
+            $cat = $Tags->detail($ID);
+            $URL = get_url('/Cat') . '/' . $cat ['cat_slug'];
+        } else {
+            $URL = get_url('Cat/detail', array("info" => $ID));
+        }
+
+
+        $URL = str_replace('//', '/', $URL) . $URL_HTML_SUFFIX;
+
     }
 
 
