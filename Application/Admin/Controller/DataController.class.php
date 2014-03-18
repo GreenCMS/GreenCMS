@@ -587,18 +587,18 @@ class DataController extends AdminBaseController
                 "size" => File::realSize(RUNTIME_PATH . "Data"),
             ),
             "AdminLog"    => array(
-                "name" => "网站日志缓存文件",
+                "name" => "网站日志文件",
                 "path" => LOG_PATH,
                 "size" => File::realSize(LOG_PATH),
             ),
             "AdminTemp"   => array(
-                "name" => "网站临时缓存文件",
+                "name" => "网站临时文件",
                 "path" => RUNTIME_PATH . "Temp",
                 "size" => File::realSize(RUNTIME_PATH . "Temp"),
             ),
             "Homeruntime" => array(
                 "name" => "网站~runtime.php缓存文件",
-                "path" => RUNTIME_PATH . "~runtime.php",
+                "path" => RUNTIME_PATH . "common~runtime.php",
                 //  "size" => $Dir->realsize(RUNTIME_PATH . "~runtime.php"),
                 "size" => File::realSize(RUNTIME_PATH . "common~runtime.php"),
             )
