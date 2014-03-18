@@ -69,8 +69,8 @@ $menu_arr = array(
 
         'Media'  => array(
             'Media/file' => '文件管理',
-            //      'Media/backupFile' => '文件备份',
-            //     'Media/restoreFile' => '文件恢复',
+            // 'Media/backupFile' => '文件备份',
+            // 'Media/restoreFile' => '文件恢复',
         ),
 
         'Access' => array(
@@ -99,7 +99,6 @@ $menu_arr = array(
             'System/safe'  => '安全选项',
             'System/email' => '邮箱配置',
             'System/kvset' => '其他设置',
-
 //            'System/update'         => '系统升级',
             'System/info'  => '系统信息',
 //            'System/tz'           => '雅黑探针'
@@ -113,7 +112,7 @@ $config_admin = array(
      * RBAC认证配置信息
     */
     'USER_AUTH_ON'        => true,
-    'USER_AUTH_TYPE'      => 1 , // 默认认证类型 1 登录认证 2 实时认证
+    'USER_AUTH_TYPE'      => 1, // 默认认证类型 1 登录认证 2 实时认证
     'USER_AUTH_KEY'       => 'authId', // 用户认证SESSION标记
     'ADMIN_AUTH_KEY'      => 'ADMIN',
     'USER_AUTH_MODEL'     => 'User', // 默认验证数据表模型
