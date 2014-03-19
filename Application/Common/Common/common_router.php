@@ -33,11 +33,7 @@ function getRealURL($menu_item = array(), $is_home = false)
 function getSingleURLByID($ID, $type = 'single')
 {
     $Posts = D('Posts', 'Logic');
-
-    $url_base = get_url("Post/" . $type);
-
     $home_post_model = get_opinion('home_post_model');
-
 
     if ($home_post_model == 'native') {
         $URL = get_url("Post/" . $type, array('info' => $ID));
@@ -45,6 +41,9 @@ function getSingleURLByID($ID, $type = 'single')
     } else {
         $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
         C('URL_HTML_SUFFIX', '');
+
+        $url_base = get_url("Post/" . $type);
+
         if ($home_post_model === 'post_id') {
             $URL = $url_base . '/' . $ID;
         } else if ($home_post_model === 'post_name') {
