@@ -59,63 +59,159 @@
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid profile">
                 <div class="span12">
-                    <!--BEGIN TABS-->
-                    <div class="tabbable tabbable-custom tabbable-full-width">
-                        <div class="tab-content">
-                            <div class="tab-pane row-fluid active" id="tab_1_1">
-                                <ul class="unstyled profile-nav span3">
-                                    <li><img src="__PUBLIC__/baracktocat.jpg" alt=""/></li>
-                                </ul>
-                                <div class="span9">
-                                    <div class="row-fluid">
-                                        <div class="alert alert-success">
-                                            <button class="close" data-dismiss="alert"></button>
-                                            <strong>欢迎回来!</strong>
-                                        </div>
-                                        <div class="span8 profile-info">
-                                            <h1>{$user.user_name}</h1>
 
-                                            <p>{$user.user_intro}</p>
-
-                                            <p><a href="{$user_url}" target="_blank">{$user.user_url}</a></p>
-                                            <ul class="unstyled inline">
-                                                <li><i class="icon-star"></i>{$user.user_nicename}</li>
-                                                <li><i class="icon-heart"></i>{$user.user_email}</li>
-                                                <li><i class="icon-calendar"></i>{$user.user_registered}</li>
-                                            </ul>
-                                        </div>
-                                        <!--end span8-->
-                                    </div>
-                                    <!--end row-fluid-->
-
+                    <div class="span6">
+                        <div class="portlet">
+                            <div class="portlet-title">
+                                <div class="caption"><i class="icon-reorder"></i>系统通知</div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"></a>
+                                    <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                    <!--<a href="javascript:;" class="reload"></a>-->
+                                    <a href="javascript:;" class="remove"></a>
                                 </div>
-                                <!--end span9-->
                             </div>
-                            <!--end tab-pane-->
+                            <div class="portlet-body">
+                                <div class="well">
+                                    <h4>系统发布</h4>
+                                    GreenCMS_v2.1.3.19已发布
+                                </div>
+                                <div class="well well-large">
+                                    <h4>QQ讨论</h4>
+                                    群号：123085170
+                                </div>
+                            </div>
                         </div>
+
+
+                        <div class="portlet">
+                            <div class="portlet-title">
+                                <div class="caption"><i class="icon-reorder"></i>其他信息</div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"></a>
+                                    <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                    <!--<a href="javascript:;" class="reload"></a>-->
+                                    <a href="javascript:;" class="remove"></a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+
+                                暂无
+                            </div>
+                        </div>
+
+
                     </div>
-                    <!--END TABS-->
+
+                    <div class="span6">
+
+
+                        <div class="portlet">
+                            <div class="portlet-title">
+                                <div class="caption"><i class="icon-reorder"></i>用户信息</div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"></a>
+                                    <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                    <!--<a href="javascript:;" class="reload"></a>-->
+                                    <a href="javascript:;" class="remove"></a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+
+
+                                <!--BEGIN TABS-->
+                                <div class="tabbable tabbable-custom tabbable-full-width">
+                                    <div class="tab-content">
+                                        <div class="tab-pane row-fluid active" id="tab_1_1">
+                                            <ul class="unstyled profile-nav span3">
+                                                <li><img src="__PUBLIC__/baracktocat.jpg" alt=""/></li>
+                                            </ul>
+                                            <div class="span9">
+                                                <div class="row-fluid">
+                                                    <div class="alert alert-success">
+                                                        <button class="close" data-dismiss="alert"></button>
+                                                        <strong>欢迎回来!</strong>
+                                                    </div>
+                                                    <div class="span8 profile-info">
+                                                        <h1>{$user.user_name}</h1>
+
+                                                        <p>{$user.user_intro}</p>
+
+                                                        <p><a href="{$user_url}" target="_blank">{$user.user_url}</a>
+                                                        </p>
+                                                        <ul class="unstyled inline">
+                                                            <li><i class="icon-star"></i>{$user.user_nicename}</li>
+                                                            <li><i class="icon-heart"></i>{$user.user_email}</li>
+                                                            <li><i class="icon-calendar"></i>{$user.user_registered}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!--end span8-->
+                                                </div>
+                                                <!--end row-fluid-->
+
+                                            </div>
+                                            <!--end span9-->
+                                        </div>
+                                        <!--end tab-pane-->
+                                    </div>
+                                </div>
+                                <!--END TABS-->
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="portlet">
+                            <div class="portlet-title">
+                                <div class="caption"><i class="icon-reorder"></i>关于我们</div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"></a>
+                                    <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                                    <!--<a href="javascript:;" class="reload"></a>-->
+                                    <a href="javascript:;" class="remove"></a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="well">
+                                    <h4>GreenStudio团队</h4>
+                                    green.njut.asia
+                                </div>
+                                <div class="well">
+                                    <h4>联系方式</h4>
+                                    邮箱：admin@njut.asia
+                                </div>
+                                <div class="well">
+                                    <h4>Github</h4>
+                                    Github：https://github.com/zts1993/greencms
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
                 </div>
+                <!-- END PAGE CONTENT-->
             </div>
-            <!-- END PAGE CONTENT-->
+            <!-- END PAGE CONTAINER-->
         </div>
-        <!-- END PAGE CONTAINER-->
+        <!-- END PAGE -->
     </div>
-    <!-- END PAGE -->
-</div>
-<!-- END CONTAINER -->
-<!-- BEGIN FOOTER -->
-{:W('Common/footer')}
-<!-- END FOOTER -->
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    {:W('Common/footer')}
+    <!-- END FOOTER -->
 
-<include file="Public:foot"/>
+    <include file="Public:foot"/>
 
-<script>
-    jQuery(document).ready(function () {
-        App.init();
-        TableManaged.init();
-    });
-</script>
+    <script>
+        jQuery(document).ready(function () {
+            App.init();
+            TableManaged.init();
+        });
+    </script>
 </body>
 <!-- END BODY -->
 </html>
