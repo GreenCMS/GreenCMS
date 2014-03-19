@@ -66,19 +66,68 @@
                           method="post">
 
 
+                        <div class="control-group">
+                            <label class="control-label">链接模式</label>
 
-                    <div class="control-group">
-                        <label class="control-label">链接模式</label>
+                            <div class="controls">
 
-                        <div class="controls">
-                            <input  type="number" placeholder="不知道请填0" class="m-wrap large" name="home_url_model"
-                                    value="{:C('home_url_model')}"/>
-                            <span class="help-inline">普通模式0, PATHINFO模式1, REWRITE模式2, 兼容模式3</span>
+
+                                <select class="small m-wrap" tabindex="1" name="home_url_model" id="home_url_model">
+
+                                    {$url_mode}
+
+                                </select>
+                                <span class="help-inline">具体使用参考ThinkPHP手册</span>
+
+
+                            </div>
 
                         </div>
 
 
-                    </div>
+
+
+
+                        <div class="control-group">
+                            <label class="control-label">文章链接模式</label>
+
+
+                            <div class="controls">
+
+                                <select class="m-wrap" tabindex="1" name="home_post_model" id="home_post_model">
+                                    {$home_post_model}
+
+                                </select>
+                                <span class="help-inline">建议使用native模式</span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label">TAG链接模式</label>
+
+                            <div class="controls">
+                                <select class="m-wrap" tabindex="1" name="home_tag_model" id="home_tag_model">
+                                    {$home_tag_model}
+
+                                </select>
+                                <span class="help-inline">建议使用native模式</span>
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label class="control-label">CAT链接模式</label>
+
+                            <div class="controls">
+                                <select class="m-wrap" tabindex="1" name="home_cat_model" id="home_cat_model">
+                                    {$home_cat_model}
+
+                                </select>
+                                <span class="help-inline">建议使用native模式</span>
+                            </div>
+                        </div>
 
 
                         <div class="control-group">
@@ -87,44 +136,16 @@
                             <div class="controls">
                                 <input type="text" placeholder="" class="m-wrap large" name="URL_HTML_SUFFIX"
                                        value="{:C('URL_HTML_SUFFIX')}"/>
+
+                                <span class="help-inline">普通模式下无效</span>
+
                             </div>
                         </div>
 
 
-
-                        <div class="control-group">
-                        <label class="control-label">文章链接模式</label>
-
-                        <div class="controls">
-                            <input type="text" placeholder="" class="m-wrap large" name="home_post_model"
-                                   value="{:C('home_post_model')}"/>
+                        <div class="form-actions">
+                            <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
                         </div>
-                    </div>
-
-
-                    <div class="control-group">
-                        <label class="control-label">TAG链接模式</label>
-
-                        <div class="controls">
-                            <input type="text" placeholder="" class="m-wrap large" name="home_tag_model"
-                                   value="{:C('home_cat_model')}"/>
-                        </div>
-                    </div>
-
-
-                    <div class="control-group">
-                        <label class="control-label">CAT链接模式</label>
-
-                        <div class="controls">
-                            <input type="text" placeholder="" class="m-wrap large" name="home_cat_model"
-                                   value="{:C('home_tag_model')}"/>
-                        </div>
-                    </div>
-
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
-                    </div>
 
 
                     </form>

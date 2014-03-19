@@ -52,11 +52,27 @@ class SystemController extends AdminBaseController
 
     public function url()
     {
-        $this->assign('home_url_model', get_opinion('home_url_model', true,0));
+        //普通模式0, PATHINFO模式1, REWRITE模式2, 兼容模式3
+        $url_mode = array(0 => '普通模式', 1 => 'PATHINFO模式', 2 => 'REWRITE模式', 3 => '兼容模式');
+        $home_post_model = array('native'                   => '原生模式',
+                                 'year/month/day/post_id'   => '年/月/日/post_id',
+                                 'year/month/day/post_name' => '年/月/日/post_name',
+                                 'year/month/post_id'       => '年/月/post_id',
+                                 'year/month/post_name'     => '年/月/post_name',
+                                 'year/post_id'             => '年/post_id',
+                                 'year/post_name'           => '年/post_name');
+
+        $home_tag_model = array('native' => '原生模式','slug' => 'slug短语');
+        $home_cat_model = array('native' => '原生模式','slug' => 'slug短语');
+
+        $this->assign('home_post_model', gen_opinion_list($home_post_model, get_opinion('home_post_model', true)));
+        $this->assign('home_tag_model', gen_opinion_list($home_tag_model, get_opinion('home_tag_model', true)));
+        $this->assign('home_cat_model', gen_opinion_list($home_cat_model, get_opinion('home_cat_model', true)));
+
+        $this->assign('url_mode', gen_opinion_list($url_mode, (int)get_opinion('home_url_model', true)));
 
         $this->display();
     }
-
 
 
     public function email()
@@ -64,7 +80,6 @@ class SystemController extends AdminBaseController
         $this->assign('send_mail', C('send_mail'));
         $this->display();
     }
-
 
 
     public function safe()
@@ -79,7 +94,7 @@ class SystemController extends AdminBaseController
 
     public function checkupdate()
     {
-        $Update=new \Common\Event\UpdateEvent();
+        $Update = new \Common\Event\UpdateEvent();
         $Update->check();
 
 

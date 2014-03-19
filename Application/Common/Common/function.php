@@ -102,7 +102,7 @@ function get_opinion($key, $realtime = false, $default = '')
 
     if (!$realtime) {
         $res = C($key);
-         if ($res!=null) {
+        if ($res != null) {
             return $res;
         } else {
             $res = S('option_' . $key);
@@ -112,7 +112,7 @@ function get_opinion($key, $realtime = false, $default = '')
     } else {
         $res = D('Options')->where(array('option_name' => $key))->find();
 
-        if (empty($res)) {
+         if (empty($res)) {
             return $default;
         } else {
             S('option_' . $key, $res['option_value']);
@@ -516,3 +516,14 @@ function arr2str($arr, $glue = ',')
 }
 
 
+function gen_opinion_list($list, $select = '')
+{
+    $res = '';
+    foreach ($list as $key => $value) {
+        $select == $key ? $se = 'selected="selected"' : $se = '';
+        $res .= '<option value="' . $key . '" ' . $se . ' >' . $value . '</option>';
+    }
+
+    return $res;
+
+}
