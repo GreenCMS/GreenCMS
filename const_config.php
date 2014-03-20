@@ -82,5 +82,5 @@ define ('GreenCMS_Build', '20140320');
  */
 define('BUILD_DIR_SECURE', false);
 
-define('Server_API', "http://127.0.0.1:8000/");
+define('Server_API', "http://greenapi.sinaapp.com/");
 
