@@ -16,8 +16,6 @@ class SystemEvent
 
     public function post_integrity()
     {
-
-
         $post_ids = D('Posts')->field('post_id')->select();
 
         foreach ($post_ids as $key => $value) {

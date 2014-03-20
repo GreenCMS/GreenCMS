@@ -30,8 +30,6 @@
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
         <!-- BEGIN SIDEBAR MENU -->
-
-
         {:W('Common/sideBar')}
         <!-- END SIDEBAR MENU -->
     </div>
@@ -53,7 +51,7 @@
                             <a href="{$module_url}">{$module}</a>
                             <i class="icon-angle-right"></i>
                         </li>
-                        <li><a href="{$action_url}">{$action}</a> beta</li>
+                        <li><a href="{$action_url}">{$action}</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
                 </div>
@@ -62,34 +60,47 @@
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
                 <div class="span12">
+                    <h4>
+                        当前版本{$versions["user_version"]} &nbsp; &nbsp; &nbsp; &nbsp;
+                        最新版本{$versions["lastest_version"]}&nbsp; &nbsp; &nbsp; &nbsp;
+                    </h4>
+                    <br/>
+
                     <table class="table table-bordered table-hover">
+                        <thead>
                         <tr>
-                            <th class="hidden-480">系统名称</th>
                             <th class="hidden-480">系统版本</th>
+                            <th class="hidden-480">原始版本</th>
                             <th class="hidden-480">发布时间</th>
-                            <th class="hidden-480">官方网址</th>
+                            <th class="hidden-480">操作</th>
                         </tr>
-                        <tr>
-                            <td class="hidden-480">{:get_opinion('software_name')}</td>
-                            <td class="hidden-480">{:get_opinion('software_version',true)}</td>
-                            <td class="hidden-480">{:get_opinion('software_build',true)}</td>
-                            <td class="hidden-480"><a href="{:get_opinion('software_homepage')}">GreenCMS.net</a></td>
-                        </tr>
+                        </thead>
+                        <tbody>
+                        <foreach name="versions['file_list']" item="v">
+                            <tr>
+                                <td class="hidden-480">{$v.version}</td>
+                                <td class="hidden-480">{$v.build_from}</td>
+                                <td class="hidden-480">{$v.version}</td>
+                                <td class="hidden-480">
+
+                                    <if condition="($v.build_from eq $versions['user_version'] ) ">
+                                        <a class="btn mini green" href="{:U('Admin/System/updateHandle', array('version' => $v['version']))}">立即开始升级</a>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <else/>
+                                        <a class="btn mini red">不可从此版本升级</a>
+                                        &nbsp;&nbsp;&nbsp;
+
+                                    </if>
+
+
+                                </td>
+                            </tr>
+                        </foreach>
+                        </tbody>
                     </table>
+
                 </div>
             </div>
-
-            <form action="{:U('Admin/System/update')}" method="post">
-                <input name="version" type="hidden" value="{:get_opinion('software_build',true)}"/>
-                <div class="form-actions" style="text-align: center">
-                    <div class="span4">
-                        <button type="submit" class="btn green check_update">
-                            <i class="m-icon-swapright m-icon-white"></i>检测更新
-                        </button>
-                    </div>
-                </div>
-
-            </form>
             <!-- END PAGE CONTENT-->
         </div>
         <!-- END PAGE CONTAINER-->
@@ -102,11 +113,8 @@
 <!-- END FOOTER -->
 <include file="Public:foot"/>
 <script>
-
     jQuery(document).ready(function () {
         App.init();
-
-
     });
 </script>
 </body>
