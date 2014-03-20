@@ -99,9 +99,10 @@ $menu_arr = array(
             'System/safe'   => '安全选项',
             'System/email'  => '邮箱配置',
             'System/kvset'  => '其他设置',
+            'System/green'  => '系统设置',
             'System/update' => '系统升级',
             'System/info'   => '系统信息',
-//            'System/tz'           => '雅黑探针'
+
         )
     )
 

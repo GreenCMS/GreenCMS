@@ -388,7 +388,7 @@ class SystemController extends AdminBaseController
         $this->display('info');
     }
 
-    public function tz()
+    public function green()
     {
 
         $this->display();
