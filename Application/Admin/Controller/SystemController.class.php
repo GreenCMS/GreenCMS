@@ -123,13 +123,14 @@ class SystemController extends AdminBaseController
     public function updateHandle()
     {
 
+
         $version = I('get.version');
         $now_version = get_opinion('software_build', true);
         $url = Server_API . 'api/update/' . $now_version;
         $json = json_decode(file_get_contents($url), true);
         $target_version_info = ($json['file_list'][$version]);
         if (!empty($target_version_info)) {
-
+            File::mkDir(WEB_CACHE_PATH);
             $file_downloaded = WEB_CACHE_PATH . $target_version_info['file_name'];
             $file = file_get_contents($target_version_info['file_url']);
             File::writeFile($file_downloaded, $file);
