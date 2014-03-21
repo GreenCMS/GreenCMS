@@ -61,7 +61,7 @@ class ArchiveController extends HomeBaseController
     public function single()
     {
         $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
-
+        if(I('get.uid')!='') $map['user_id']=I('get.uid');
 
         $PostsList = new PostsLogic();
 

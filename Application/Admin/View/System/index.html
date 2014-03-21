@@ -61,7 +61,7 @@
             <div class="row-fluid">
                 <div class="span12">
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                    <form action="{:U('Admin/System/indexHandle')}" name="change_System" class="form-horizontal"
+                    <form action="{:U('Admin/System/saveHandle')}" name="change_System" class="form-horizontal"
                           method="post">
                         <div class="control-group">
                             <label class="control-label">网站地址</label>
@@ -106,43 +106,19 @@
                             <span class="help-inline">版权信息、统计代码</span>
                         </div>
 
+
                         <div class="control-group">
-                            <label class="control-label">是否开启Feed订阅功能</label>
+                            <label class="control-label">关于我们</label>
 
                             <div class="controls">
-
-                                <label class="radio">
-
-                                    <switch name="feed_open">
-                                        <case value="1"><input type="radio" name="feed_open"
-                                                               checked="checked" value="1"/></case>
-                                        <case value="0"><input type="radio" name="feed_open" value="1"/></case>
-
-                                        <default/>
-                                        <input type="radio" name="feed_open"
-                                               checked="checked" value="1"/>
-                                    </switch>
-                                    是
-
-
-                                </label>
-
-
-                                <label class="radio">
-                                    <switch name="feed_open">
-                                        <case value="1"><input type="radio" name="feed_open" value="0"/></case>
-                                        <case value="0"><input type="radio" name="feed_open" checked="checked"
-                                                               value="0"/></case>
-
-                                        <default/>
-                                        <input type="radio" name="feed_open" checked=
-                                                value="0"/>
-                                    </switch>
-                                    否
-                                </label>
+                                <input type="text" placeholder="" class="m-wrap large" name="widget_about_us"
+                                       value="{:get_opinion('widget_about_us')}"/>
+                                <span class="help-inline">首页右侧</span>
                             </div>
                         </div>
-                        <div class="form-actions">
+
+
+                      <div class="form-actions">
                             <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
                         </div>
                     </form>

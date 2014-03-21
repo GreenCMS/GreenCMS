@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width"/>
-    <title>{:get_opinion('title')} </title>
+    <title>{$title}|{:get_opinion('title')} </title>
     <meta name="description" content="{:get_opinion('keywords')}"/>
     <include file="Public:head"/>
 
@@ -75,7 +75,7 @@
                                     {$post['post_date']|getTimeURL=$post['post_type']}
                                 </time>
                             </a>。属于
-                            <volist name="post.post_cat" id="cat" empty="无分类..">
+                            <volist name="post.post_cat" id="cat" empty="无分类.">
                                 <a href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
                             </volist>
                             分类 。标签：
@@ -115,8 +115,10 @@
             {:W('Widget/tag')}
 
             {:W('Widget/categories')}
-            {:W('Widget/aboutus')}
 
+            {:W('Widget/links')}
+
+            {:W('Widget/aboutus')}
 
 
         </div>

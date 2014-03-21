@@ -81,7 +81,7 @@
 
                                 <div class="btn-group">
                                     <a href="{:U('Weixin/User/updateall')}">
-                                        <button class="btn purple"  >
+                                        <button class="btn purple">
                                             <i class="icon-plus"></i>同步用户
                                         </button>
                                     </a>
@@ -93,11 +93,13 @@
                                    id="sample_1">
                                 <thead>
                                 <tr>
-                                    <th style="width: 8px;">openid</th>
-                                    <th>昵称</th>
+                                    <th style="width:130px;">关注时间</th>
+
+                                    <th style="width:75px;">昵称</th>
                                     <th>地区</th>
                                     <th style="width:75px;">头像</th>
-                                    <th style="width:130px;">关注时间</th>
+                                    <th style="width: 8px;">openid</th>
+
                                     <th style="width:200px;">操作</th>
 
                                 </tr>
@@ -105,11 +107,13 @@
                                 <tbody>
                                 <foreach name="user_list" item="v">
                                     <tr class="odd gradeX">
-                                        <td> {$v.openid}</td>
+                                        <td>{:date ('Y-m-d H:i',$v['subscribe_time']) }</td>
+
                                         <td>{$v.nickname}</td>
                                         <td>{$v.country}-{$v.province}-{$v.city}</td>
                                         <td><img src="{$v.headimgurl}"></td>
-                                        <td>{:date ('Y-m-d H:i',$v['subscribe_time']) }</td>
+                                        <td> {$v.openid}</td>
+
                                         <td>
 
                                             <a class="btn green" href="{:U('Weixin/User/detail',array('openid'=>$v['openid']))}">查看用户</a>

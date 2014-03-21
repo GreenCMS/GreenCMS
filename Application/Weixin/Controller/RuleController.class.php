@@ -20,9 +20,9 @@ class RuleController extends WeixinBaseController
         $weixin_button = getMenuButtons();
         $weixinaction = D('Weixinaction')->select();
 
-        foreach($weixinaction as $key=>$value){
-            if($weixinaction[$key]['action_type']=='click'){
-                $weixinaction[$key]['action_name']=$weixin_button[ $weixinaction[$key]['action_name']];
+        foreach ($weixinaction as $key => $value) {
+            if ($weixinaction[$key]['action_type'] == 'click') {
+                $weixinaction[$key]['action_name'] = $weixin_button[$weixinaction[$key]['action_name']];
             }
         }
         $this->assign('weixinaction', $weixinaction);
@@ -84,10 +84,10 @@ class RuleController extends WeixinBaseController
     {
         $data = I('post.');
         if ($data['action_type'] == 'text') {
-            $data['action_name']=$data['action_name_keyword'];
+            $data['action_name'] = $data['action_name_keyword'];
             unset($data['action_name_keyword']);
-        }elseif($data['action_type'] == 'click'){
-            $data['action_name']=$data['action_name_key'];
+        } elseif ($data['action_type'] == 'click') {
+            $data['action_name'] = $data['action_name_key'];
             unset($data['action_name_key']);
         }
 
@@ -106,17 +106,17 @@ class RuleController extends WeixinBaseController
     {
         $data = I('post.');
         if ($data['action_type'] == 'text') {
-            $data['action_name']=$data['action_name_keyword'];
+            $data['action_name'] = $data['action_name_keyword'];
             unset($data['action_name_keyword']);
-        }elseif($data['action_type'] == 'click'){
-            $data['action_name']=$data['action_name_key'];
+        } elseif ($data['action_type'] == 'click') {
+            $data['action_name'] = $data['action_name_key'];
             unset($data['action_name_key']);
         }
 
         $res = D('Weixinaction')->data($data)->add();
 
         if ($res) {
-            $this->success('添加成功', 'Weixin/Rule/index');
+            $this->success('添加成功', U('Weixin/Rule/index'));
         } else {
             $this->error('添加失败');
         }
@@ -130,7 +130,7 @@ class RuleController extends WeixinBaseController
         $res = D('Weixinaction')->where(array('wx_action_id' => $id))->delete();
 
         if ($res) {
-            $this->success('删除成功', 'Weixin/Rule/index');
+            $this->success('删除成功', U('Weixin/Rule/index'));
         } else {
             $this->error('删除失败');
         }

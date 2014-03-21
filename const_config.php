@@ -57,6 +57,8 @@ define("Extend_PATH", WEB_ROOT . "Extend/");
  */
 define("Plugin_PATH", WEB_ROOT . "Extend/Plugin/");
 
+
+define('Addon_PATH', WEB_ROOT . '/Addons/');
 /**
  * 上传文件存放目录
  */
@@ -67,3 +69,18 @@ define("Upload_PATH", "Upload/");
  * TIME_FIX
  */
 define("TIME_FIX", 0);
+
+
+/**
+ * version code
+ */
+define ('GreenCMS_Version', 'v2.1.0321');
+define ('GreenCMS_Build', '20140321');
+
+/**
+ * BUILD_DIR_SECURE 目录安全，设置详细参考thinkphp手册
+ */
+define('BUILD_DIR_SECURE', false);
+
+define('Server_API', "http://greenapi.sinaapp.com/");
+

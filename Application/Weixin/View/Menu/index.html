@@ -61,9 +61,95 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    empty
+                    <div class="clearfix">
+                        <div class="btn-group">
+                            <a href="{:U('Weixin/Menu/sync')}">
+                                <button type="submit" class="btn green">
+                                    <i class="icon-white"></i> 同步菜单
+                                </button>
+                            </a>
 
-                   </div>
+                        </div>
+                        <div class="btn-group">
+                            <a href="{:U('Weixin/Menu/update')}">
+
+                                <button type="submit" class="btn red">
+                                    <i class="icon-white"></i> 更新菜单
+                                </button>
+                            </a>
+
+                        </div>
+                        <div class="btn-group">
+                            <a href="{:U('Weixin/Menu/del')}">
+
+                                <button type="submit" class="btn blue">
+                                    <i class="icon-white"></i> 删除菜单
+                                </button>
+                            </a>
+                        </div>
+
+                        <div class="btn-group">
+                            <a href="{:U('Weixin/Menu/restore')}">
+                                <button type="submit" class="btn red">
+                                    <i class="icon-white"></i> 还原初始菜单
+                                </button>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <br/>
+
+
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th style="width:100px;">按钮</th>
+                            <th style="width:500px;">名称</th>
+                            <th style="width:200px;" >类型</th>
+                            <th>编辑</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <foreach name="weixin_menu" item="v">
+                            <tr class="odd gradeX">
+                                <td>按钮{$key}</td>
+                                <td>{$v.name}</td>
+                                <th>{$v.type|getRealText}</th>
+
+                                <td>
+                                    <a class="btn mini red green" href="{:U('Weixin/Menu/additem',array('level'=>'1','pid'=>$key,'id'=>$key,'type'=>$v_sub['type']))}">添加</a>
+
+                                    <a class="btn mini" href="{:U('Weixin/Menu/edit',array('level'=>'1','pid'=>$key,'id'=>$key,'type'=>$v['type']))}">编辑</a>&nbsp;&nbsp;
+                                    <a class="btn mini red" href="{:U('Weixin/Menu/delitem',array('level'=>'1','pid'=>$key,'id'=>$key,'type'=>$v_sub['type']))}">删除</a>
+
+                                </td>
+                            </tr>
+
+                            <foreach name="v.sub_button" item="v_sub" key="key2">
+                                <tr class="odd gradeX">
+                                    <td>&nbsp;&nbsp;&nbsp;├ {$key2}</td>
+                                    <td>&nbsp;&nbsp;&nbsp;├----{$v_sub.name}</td>
+                                    <th>{$v_sub.type|getRealText}-{$v_sub.key}{$v_sub.url|get_alink}</th>
+
+                                    <td>
+                                        <a class="btn mini red green" href="{:U('Weixin/Menu/additem',array('level'=>'2','pid'=>$key,'id'=>$key2,'type'=>$v_sub['type']))}">添加</a>
+
+                                        <a class="btn mini" href="{:U('Weixin/Menu/edit',array('level'=>'2','pid'=>$key,'id'=>$key2,'type'=>$v_sub['type']))}">编辑</a>&nbsp;&nbsp;
+                                        <a class="btn mini red" href="{:U('Weixin/Menu/delitem',array('level'=>'2','pid'=>$key,'id'=>$key2,'type'=>$v_sub['type']))}">删除</a>
+                                    </td>
+
+                                </tr>
+                            </foreach>
+
+                        </foreach>
+                        </tbody>
+                    </table>
+
+
+                </div>
             </div>
             <!-- END PAGE CONTENT-->
         </div>

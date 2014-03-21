@@ -33,13 +33,14 @@ class IndexController extends HomeBaseController
 
 
 
-    function wordpressImport()
-    {
-        $Wordpress = new \Common\Event\WordpressEvent();
-        $Wordpress->catImport();
-        $Wordpress->tagImport();
-        $Wordpress->postImport();
 
-    }
+//    function wordpressImport()
+//    {
+//        $Wordpress = new \Common\Event\WordpressEvent();
+//        $Wordpress->catImport(WEB_CACHE_PATH . '/wordpress.xml');
+//        $Wordpress->tagImport(WEB_CACHE_PATH . '/wordpress.xml');
+//        $Wordpress->postImport(WEB_CACHE_PATH . '/wordpress.xml');
+//
+//    }
 
 }

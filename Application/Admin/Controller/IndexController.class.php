@@ -19,16 +19,16 @@ class IndexController extends AdminBaseController
 
     public function main()
     {
-        $this->redirect(get_url('Index/index'));
+        $this->redirect(getURL('Index/index'));
     }
 
 
     public function changePass()
     {
-        $this->display();
+        $this->display('changepass');
     }
 
-    public function changePassHandle()
+    public function changepassHandle()
     {
         $User = D('User', 'Logic');
         $User->user_id = (int)$_SESSION [C('USER_AUTH_KEY')];

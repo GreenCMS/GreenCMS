@@ -20,31 +20,30 @@ abstract class BaseController extends Controller
     {
         parent::__construct();
 
-        $this->getKvs();
+        //$this->getKvs();
 
     }
 
     function getKvs()
     {
-        $Kvs = D('Kv')->where(1)->cache(true, 60)->select();
-        $res_array = array();
-        foreach ($Kvs as $kv) {
-            $res_array[$kv['kv_key']] = $kv['kv_value'];
+        $kv_array = S('kv_array');
+
+        if ($kv_array && APP_Cache) {
+            $res_array = $kv_array;
+        } else {
+
+            $Kvs = D('Kv')->where(1)->select();
+
+            $res_array = array();
+            foreach ($Kvs as $kv) {
+                $res_array[$kv['kv_key']] = $kv['kv_value'];
+            }
+
+            if (APP_Cache) S('kv_array', $res_array);
         }
 
         C('kv', $res_array);
         return $res_array;
-    }
-
-
-    /**
-     * 获取配置
-     * @return mixed
-     */
-    function getConfig()
-    {
-        $options = D('Options')->where(array('autoload' => 'yes'))->select();
-        return $options;
     }
 
     /**
@@ -52,12 +51,20 @@ abstract class BaseController extends Controller
      */
     function customConfig()
     {
-        $options = $this->getConfig();
+        $customConfig = S('customConfig');
+        if ($customConfig && APP_Cache) {
+            $options = $customConfig;
+        } else {
+            $options = D('Options')->where(array('autoload' => 'yes'))->select();
+
+            if (APP_Cache) S('customConfig', $options);
+        }
         foreach ($options as $config) {
             C($config['option_name'], $config['option_value']);
         }
-    }
 
+
+    }
 
     /**
      * check_verify
@@ -69,7 +76,6 @@ abstract class BaseController extends Controller
                 $this->error('验证码错误！');
         }
     }
-
 
     function is_sae()
     {

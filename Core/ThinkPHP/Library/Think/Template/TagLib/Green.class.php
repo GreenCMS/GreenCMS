@@ -26,6 +26,12 @@ class Green extends TagLib
             'attr'  => 'length,order,num,link_tag,li_attr,ul_attr',
             'alias' => 'fli'
         ),
+
+//        'optionlist' => array(
+//            'attr'  => 'value,selected',
+//            'alias' => 'opli'
+//        ),
+
         'green'      => array()
 
 
@@ -163,6 +169,9 @@ class Green extends TagLib
 
 
     }
+
+
+
 }
 	
 	

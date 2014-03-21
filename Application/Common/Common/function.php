@@ -9,12 +9,9 @@
 
 include APP_PATH . 'Common/Common/common_router.php';
 
-const GREENCMS_ADDON_PATH = './Addons/';
-
-
 function current_timestamp()
 {
-    $timestamp=date('Y-m-d H:i:s', time()-TIME_FIX);
+    $timestamp = date('Y-m-d H:i:s', time() - TIME_FIX);
     return $timestamp;
 }
 
@@ -29,29 +26,6 @@ function object_to_array($obj)
     return $arr;
 }
 
-function get_url($url = '', $vars = '')
-{
-    $url_arr = preg_split('/\//', $url);
-
-    if (sizeof($url_arr) == 2) {
-        $url = 'Home/' . $url;
-
-        $URL_MODEL_TEMP = C('URL_MODEL');
-        C('URL_MODEL', (int)get_kv('home_url_model'));
-        $url_return = U($url, $vars, $suffix = true, $domain = false);
-        C('URL_MODEL', $URL_MODEL_TEMP);
-
-        if ($URL_MODEL_TEMP == 2) $url_return = str_replace('/home', '', $url_return);
-        if ($URL_MODEL_TEMP == 0) $url_return = str_replace('?m=home&', '/index.php?', $url_return);
-        $url_return = str_replace('index.php/index.php', 'index.php', $url_return);
-
-    } else {
-        $url_return = U($url, $vars, $suffix = true, $domain = false);
-    }
-    return $url_return;
-
-}
-
 function encrypt($data)
 {
     //return md5($data);
@@ -60,38 +34,25 @@ function encrypt($data)
 
 
 /**
- * @param $res
- *
- * @function        打印数组
- */
-function print_array(& $res)
-{
-    //dump($res);
-    echo '<pre>';
-    print_r($res);
-    echo '</pre>';
-
-
-}
-
-/**
  * @param $i
+ * @param string $string
  * 判断是否置顶
  */
-function is_top($i)
+function is_top($i, $string = '【固顶】')
 {
     if ($i == 1) {
-        echo '【固顶】';
+        echo $string;
     }
 }
 
 /**
  * @param $test判断是否为空
+ * @param string $string
  */
-function is_empty($test)
+function is_empty($test, $string = '空')
 {
     if ($test == '') {
-        echo '空';
+        echo $string;
     } else {
         echo $test;
     }
@@ -99,32 +60,78 @@ function is_empty($test)
 
 
 /**
+ * 获取设置
  *
  */
-function get_opinion($key, $db = false, $cache = true)
+function get_opinion($key, $realtime = false, $default = '')
 {
-    if (!$db)
-        return C($key);
-    else {
-        $res = D('Options')->cache($cache)->where(array('option_name' => $key))->find();
-        return $res['option_value'];
+
+    if (!$realtime) {
+        $res = C($key);
+        if ($res != null) {
+            return $res;
+        } else {
+            $res = S('option_' . $key);
+            if ($res) return $res;
+            else return get_opinion($key, true, $default = '');
+        }
+    } else {
+        $res = D('Options')->where(array('option_name' => $key))->find();
+
+        if (empty($res)) {
+            return $default;
+        } else {
+            S('option_' . $key, $res['option_value']);
+            return $res['option_value'];
+        }
+
+
     }
 
 }
 
-function get_kv($key, $cache = true, $default = '')
+
+function set_opinion($key, $value)
 {
-    if ($cache) {
-        $kv_array = C('kv');
-        if ($kv_array[$key] != '') return $kv_array[$key];
+    $options = D('Options');
+    $data['option_name'] = $key;
+    $data['option_value'] = $value;
+
+    $find = $options->where(array('option_name' => $key))->select();
+    if (!$find) {
+        $options->data($data)->add();
+    } else {
+        $data ['option_id'] = $find [0] ['option_id'];
+        $options->save($data);
     }
 
-    $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
-    if ($options['kv_value'] == '')
-        return $default;
-    return $options['kv_value'];
 }
 
+function get_kv($key, $realtime = false, $default = '')
+{
+    if (!$realtime) {
+
+        return S($key);
+
+    } else {
+        $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
+        if ($options['kv_value'] == '') {
+            return $default;
+        } else {
+            S($key, $options['kv_value']);
+            return $options['kv_value'];
+        }
+    }
+
+
+}
+
+/**
+ * saveOrUpdate KV
+ * @param $key
+ * @param $value
+ * @return mixed
+ */
 function set_kv($key, $value)
 {
     $data['kv_value'] = $value;
@@ -137,10 +144,13 @@ function set_kv($key, $value)
     return $res;
 }
 
-
+/**
+ * 检测是否存在key值
+ * @param $key
+ * @return bool
+ */
 function exist_kv($key)
 {
-
     $options = D('Kv')->where(array('kv_key' => $key))->find();
 
     if ($options == null) {
@@ -155,10 +165,8 @@ function exist_kv($key)
  */
 function array2str($res)
 {
-    $str = '';
-    foreach ($res as $each) {
-        $str .= $each . ',';
-    }
+
+    $str = join(",", $res);
     return $str;
 }
 
@@ -182,68 +190,7 @@ function array_sort($arr, $keys, $type = 'desc')
 }
 
 
-/**
- * @param $Timestamp
- * @param string $need
- *
- * @return mixed
- */
-function getTimestamp($Timestamp, $need = 'timestamp')
-{
-    $array = explode("-", $Timestamp);
-    $year = $array [0];
-    $month = $array [1];
 
-    $array = explode(":", $array [2]);
-    $minute = $array [1];
-    $second = $array [2];
-
-    $array = explode(" ", $array [0]);
-    $day = $array [0];
-    $hour = $array [1];
-
-    $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
-
-    if ($need === 'hour') {
-        return $hour;
-    } else if ($need === 'minute') {
-        return $minute;
-    } else if ($need === 'second') {
-        return $second;
-    } else if ($need === 'month') {
-        return $month;
-    } else if ($need === 'day') {
-        return $day;
-    } else if ($need === 'year') {
-        return $year;
-    } else {
-        return date($need, $timestamp);
-    }
-
-}
-
-function getTimeURL($Timestamp, $type = 'single')
-{
-    $array = explode("-", $Timestamp);
-    $year = $array [0];
-    $month = $array [1];
-
-    $array = explode(":", $array [2]);
-    $minute = $array [1];
-    $second = $array [2];
-
-    $array = explode(" ", $array [0]);
-    $day = $array [0];
-    $hour = $array [1];
-
-    $url = '';
-    $url .= '<a href="' . get_url('Archive/' . $type, array('year' => $year)) . '">' . $year . '</a>';
-    $url .= '-<a href="' . get_url('Archive/' . $type, array('year' => $year, 'month' => $month)) . '">' . $month . '</a>';
-    $url .= '-<a href="' . get_url('Archive/' . $type, array('year' => $year, 'month' => $month, 'day' => $day)) . '">' . $day . '</a>';
-
-    return $url;
-
-}
 
 /**
  * 二位数组转化为一维数组
@@ -464,4 +411,17 @@ function str2arr($str, $glue = ',')
 function arr2str($arr, $glue = ',')
 {
     return implode($glue, $arr);
+}
+
+
+function gen_opinion_list($list, $select = '')
+{
+    $res = '';
+    foreach ($list as $key => $value) {
+        $select == $key ? $se = 'selected="selected"' : $se = '';
+        $res .= '<option value="' . $key . '" ' . $se . ' >' . $value . '</option>';
+    }
+
+    return $res;
+
 }

@@ -75,24 +75,21 @@
                                 <td class="hidden-480">{$vo.title}</td>
                                 <td class="hidden-480">{$vo.name}</td>
                                 <td class="hidden-480">{$vo.description}</td>
-                                <td class="hidden-480">
-                                    <eq name="vo.status" value="1">
-                                        启用
-                                    <else/>
-                                        禁用
-                                    </eq>
-                                </td>
+                                <td class="hidden-480"> {$vo.status|int_to_status}</td>
                                 <td class="hidden-480">{$vo.author}</td>
                                 <td class="hidden-480">{$vo.version}</td>
                                 <td class="hidden-480">
                                     <a href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>|
                                     <eq name="vo.status" value="1">
-                                        <a href='javascript:;' onclick="off({$vo.id})">禁用
+                                        <a href='javascript:;' onclick="off({$vo.id})">禁用</a>|
                                         <else/>
-                                        <a href='javascript:;' onclick="on({$vo.id})">启用
+                                        <a href='javascript:;' onclick="on({$vo.id})">启用</a>|
                                     </eq>
-                                    </a>|
-                                    <a href="{:U('Admin/Custom/uninstall')}&id={$vo.id}">卸载</a>
+                                    <eq name="vo.status" value="99">
+                                        <a href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
+                                        <else/>
+                                        <a href="{:U('Admin/Custom/uninstall',array('id'=>$vo['id']) )}">卸载</a>
+                                    </eq>
                                 </td>
                             </tr>
                         </volist>
@@ -125,12 +122,12 @@
         $.post("{:U('Admin/Custom/enable')}", {id: id},
                 function (data) {
                     /*if (data.status == 1) {
-                        window.location.reload(true);
-                    }
-                    else {
-                        //$.dialog.alert(data);
-                        alert(data);
-                    }*/
+                     window.location.reload(true);
+                     }
+                     else {
+                     //$.dialog.alert(data);
+                     alert(data);
+                     }*/
                     window.location.reload(true);
                 });
     }
@@ -139,12 +136,12 @@
         $.post("{:U('Admin/Custom/disable')}", {id: id},
                 function (data) {
                     /*if (data.status == 1) {
-                        window.location.reload(true);
-                    }
-                    else {
-                        //$.dialog.alert(data);
-                        alert(data);
-                    }*/
+                     window.location.reload(true);
+                     }
+                     else {
+                     //$.dialog.alert(data);
+                     alert(data);
+                     }*/
                     window.location.reload(true);
                 });
     }

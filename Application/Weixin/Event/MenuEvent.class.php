@@ -16,9 +16,93 @@ class MenuEvent extends WeixinCoreController
 
     private $access = '';
 
-    public function create()
+
+    public function restore()
     {
-        $data = C('Weixin_menu');
+        $data = '{
+     "button":[
+     {
+                "name": "品牌介绍",
+                "sub_button": [
+                    {
+                        "type": "click",
+                        "name": "品牌介绍",
+                        "key": "brand"
+                    },
+                    {
+                        "type": "click",
+                        "name": "产品列表",
+                        "key": "category"
+                    },
+                    {
+                        "type": "click",
+                        "name": "努力时间轴",
+                        "key": "timeline"
+                    }
+                                  ]
+            },
+            {
+                "name": "最新活动",
+                "sub_button": [
+                    {
+                        "type": "click",
+                        "name": "优惠活动",
+                        "key": "discount"
+                    },
+                    {
+                        "type": "view",
+                        "name": "用户测评",
+                        "url": "http://www.easypot.cn/home/index.php/Home/Cat/detail/info/3.html"
+                    },
+                    {
+                        "type": "click",
+                        "name": "礼品方案",
+                        "key": "gifts"
+                    }
+                ]
+            },
+            {
+                "name": "我的园艺",
+                "sub_button": [
+                    {
+                        "type": "click",
+                        "name": "园艺心得",
+                        "key": "gain"
+                    },
+                    {
+                        "type": "view",
+                        "name": "花友平台",
+                        "url": "http://www.easypot.cn/home/index.php/Home/Cat/detail/info/4.html"
+                    },
+                    {
+                        "type": "view",
+                        "name": "售后反馈",
+                        "url": "http://www.easypot.cn/home/index.php/Form/feedback"
+                    },
+                    {
+                        "type": "view",
+                        "name": "联系我们",
+                        "url": "http://www.easypot.cn/home/index.php?m=Home&c=Post&a=page&info=4"
+                    }
+                ]
+            }
+        ]
+
+}';
+
+        return $this->create($data);
+    }
+
+
+    public function create($data)
+    {
+
+        if ($data != '') {
+            $this->delete();
+        }
+        // $array = json_decode($data, true);
+
+        // dump($array);
         $ACCESS_TOKEN = $this->getAccess();
 
 
@@ -38,23 +122,37 @@ class MenuEvent extends WeixinCoreController
         }
 
         curl_close($ch);
-        echo $tmpInfo;
+        return $tmpInfo;
     }
 
     public function delete()
     {
         $ACCESS_TOKEN = $this->getAccess();
-        echo file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=" . $ACCESS_TOKEN);
+        return file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=" . $ACCESS_TOKEN);
     }
 
 
     public function get()
     {
         $ACCESS_TOKEN = $this->getAccess();
-        echo file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=" . $ACCESS_TOKEN);
-     }
+        $menu_json = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=" . $ACCESS_TOKEN);
 
+        $menu_array = json_decode($menu_json, true);
+        $menu_json = decodeUnicode(json_encode($menu_array['menu']));
+        //  $menu = json_decode(trim($menu_json), true);
+        //   $data['option_value'] = decodeUnicode(json_encode($menu['menu']));
+        //    $res = D('Options')->where(array('option_name' => 'Weixin_menu'))->data($data)->save();
 
+        return $menu_json;
+    }
+
+    public function save($menu_json)
+    {
+        $data['option_value'] = $menu_json;
+        $res = D('Options')->where(array('option_name' => 'Weixin_menu'))->data($data)->save();
+
+        return $res;
+    }
 
 
 }

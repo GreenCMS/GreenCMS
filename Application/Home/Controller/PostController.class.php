@@ -28,7 +28,7 @@ class PostController extends HomeBaseController
 
 
         $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
-
+        $map['post_type'] ='single';
         $Posts = new PostsLogic();
 
         $post_res = $Posts->detail($info, true, $map);
@@ -51,9 +51,10 @@ class PostController extends HomeBaseController
     public function page($info = -1)
     {
         $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
+        $map['post_type'] ='page';
 
         $Posts = new PostsLogic();
-        $post_res = $Posts->detail($info);
+        $post_res = $Posts->detail($info, true, $map);
         $this->if404($post_res, "非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.");
 
         $Posts->viewInc($post_res['post_id']);

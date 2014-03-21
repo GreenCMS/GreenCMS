@@ -91,19 +91,22 @@ class MessageController extends WeixinBaseController
         $Users = D('Weixinuser');
         $user_list = $Users->relation(true)->select();
 
+        $openid=I('get.openid');
 
         $user_option = '<option value="all">所有人</option>';
 
         $now = strtotime(date("Y-m-d H:i:s", time()));
+
+
         foreach ($user_list as $value) {
             $time_remain = $now - (int)$value['log'][0]['CreateTime'] - 60 * 60 * 24 * 2;
-            if (I('get.openid') != '' && $value['openid'] == I('get.openid') && ($time_remain > 0)) {
+            if ($openid!= '' && $value['openid'] == $openid && ($time_remain > 0)) {
                 $this->error('已经超过48小时,不能回复他了');
             }
 
             if ($value['log'][0]['CreateTime'] != null && ($time_remain < 0)) {
                 $user_option .= '<option value="' . $value['openid'] . '"';
-                if (I('get.openid') != '' && $value['openid'] == I('get.openid')) {
+                if ($openid != '' && $value['openid'] == I('get.openid')) {
                     $user_option .= 'selected="selected"';
                 }
                 $user_option .= '>' . $value['nickname'] . '</option>';
@@ -113,10 +116,18 @@ class MessageController extends WeixinBaseController
 
         $this->assign('user_option', $user_option);
 
-        $this->assign('form_action', U('Weixin/Message/sendHandle', array('msgid' => I('get.MsgId', '0'))));
+        $this->assign('form_action', U('Weixin/Message/sendHandle', array('msgid' => I('get.MsgId', '0'),'msgtype'=>I('get.msgtype', 'text'))));
         $this->assign('action_name', '发送');
 
-        $this->display();
+        if(I('get.msgtype', 'text')=='text'){
+          $this->display('sendtext');
+        } elseif(I('get.msgtype')=='image'){
+            $this->display('sendimage');
+
+        } elseif(I('get.msgtype')=='news'){
+            $this->display('sendnews');
+
+        }
     }
 
 

@@ -17,7 +17,7 @@ class ApiController extends WeixinCoreController
     public function index()
     {
 
-        \Think\Log::record('收到消息' . date('Ymd H:m:s'));
+        \Think\Log::record('收到消息' . date('Ymd H:m:s') . 'Form:' . get_client_ip());
 
         $weixin = new ThinkWechat (get_opinion('weixin_token'));
 
@@ -30,6 +30,7 @@ class ApiController extends WeixinCoreController
         /* 响应当前请求 */
         $weixin->response($content, $type);
 
+        \Think\Log::record('发送消息' . date('Ymd H:m:s'));
 
     }
 
@@ -40,7 +41,7 @@ class ApiController extends WeixinCoreController
         $SECRET = C('Weixin_secret');
 
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$APPID&secret=$SECRET&code=$code&grant_type=authorization_code";
-        $res = json_decode(file_get_contents($url),true);
+        $res = json_decode(file_get_contents($url), true);
 
         dump($res);
 
@@ -49,7 +50,7 @@ class ApiController extends WeixinCoreController
 
         $url2 = "https://api.weixin.qq.com/sns/userinfo?access_token=$access_token&openid=$openid";
 
-        $res2 = json_decode(file_get_contents($url2),true);
+        $res2 = json_decode(file_get_contents($url2), true);
         dump($res2);
 
 
@@ -153,11 +154,29 @@ class ApiController extends WeixinCoreController
     }
 
 
-//    public function access()
-//    {
-//        $access = $this->getAccess();
-//        dump($access);
-//    }
+    public function menu()
+    {
+
+
+        $Menu = new \Weixin\Event\MenuEvent();
+
+        //   $Menu->restore();
+
+        //from remote
+        $menu_array = json_decode($Menu->get(), true);
+
+        //from db
+        $Weixin_menu_decode = json_decode(trim(C('Weixin_menu')), true);
+        $menu = decodeUnicode(json_encode($Weixin_menu_decode));
+
+        dump($Menu->create($menu));
+    }
+
+    public function access()
+    {
+        $access = $this->getAccess();
+        dump($access);
+    }
 //
 //    public function phpinfo()
 //    {
