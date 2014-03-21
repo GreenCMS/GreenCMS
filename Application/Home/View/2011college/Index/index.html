@@ -33,10 +33,13 @@
 
     <php>
         $news = D('Cats', 'Logic')->getPostsByCat(16, 7);
-        $policy = D('Cats', 'Logic')->getPostsByCat(17, 7);
+        $policy = D('Cats', 'Logic')->getPostsByCat(17, 14);
         $tech = D('Cats', 'Logic')->getPostsByCat(18, 7);
         $college = D('Cats', 'Logic')->getPostsByCat(19, 7);
         $school = D('Cats', 'Logic')->getPostsByCat(20, 7);
+        $notice = D('Cats', 'Logic')->getPostsByCat(26, 7);
+
+
     </php>
 
     <script type="text/javascript">
@@ -61,28 +64,34 @@
     </dl>
     <dl class='news article' style="width:48%;float:right;">
         <dt>
-            <a class="more" href="{:getCatURLByID(17)}">更多</a>政策与发展
+            公告通知<a class="more" href="{:getCatURLByID(26)}">更多</a>
         </dt>
 
 
-
-        <volist name="policy" id="v">
+        <volist name="notice" id="v">
             <dd>
                 <a href="{$v['post_id']|getSingleURLByID}"><i>·&nbsp;&nbsp;</i>{$v['post_title']}</a>
                 <span>({$v['post_date']|substr=0,10})</span>
             </dd>
         </volist>
+
+
     </dl>
             <dl class="stroke article">
                 <dt>
-                    讲座通知
+                    政策与发展
+
                 </dt>
-                <volist>
-                        <dd>
-                            <a href="{$v['post_id']|getSingleURLByID}"><i>·&nbsp;&nbsp;</i>{$v['post_title']}</a>
-                            <span>({$v['post_date']|substr=0,10})</span>
-                        </dd>
-                    </volist>
+
+
+
+                <volist name="policy" id="v">
+                    <dd>
+                        <a href="{$v['post_id']|getSingleURLByID}"><i>·&nbsp;&nbsp;</i>{$v['post_title']}</a>
+                        <span>({$v['post_date']|substr=0,10})</span>
+                    </dd>
+                </volist>
+
                 <!--<dd>
                     <span class="date">周五<b>10月11日</b></span>
                     <h4><a href="#">大学生学习生涯规划</a>主讲人：管国锋 教授</h4>
