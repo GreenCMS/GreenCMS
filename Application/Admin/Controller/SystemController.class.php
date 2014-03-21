@@ -144,7 +144,7 @@ class SystemController extends AdminBaseController
                 $zip->extractTo(WEB_ROOT); //假设解压缩到在当前路径下images文件夹内
                 $zip->close(); //关闭处理的zip文件
                 File::delFile($file_downloaded);
-
+                $System->clearCacheAll();
             } else {
                 $this->error('文件损坏');
             }
