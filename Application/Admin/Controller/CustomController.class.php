@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Common\Logic\PostsLogic;
 use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
@@ -236,7 +237,7 @@ class CustomController extends AdminBaseController
 
         $p = new GreenPage ($count, $page);
         //这里得到是已安装的  =_=+++++
-     //   $list = $Addons->order('create_time')->limit($p->firstRow . ',' . $p->listRows)->select(); //->where($where)
+        //   $list = $Addons->order('create_time')->limit($p->firstRow . ',' . $p->listRows)->select(); //->where($where)
 
 
         $this->assign('page', $p->show());
@@ -489,7 +490,7 @@ str;
     {
         $id = (int)I('id');
         $addon = M('Addons')->find($id);
-        if (!$addon)   $this->error('插件未安装');
+        if (!$addon) $this->error('插件未安装');
         $addon_class = get_addon_class($addon['name']);
         if (!class_exists($addon_class))
             trace("插件{$addon['name']}无法实例化,", 'ADDONS', 'ERR');
@@ -802,13 +803,46 @@ str;
 
     public function dellink($id)
     {
-        if (D('Links','Logic')->del($id)) {
+        if (D('Links', 'Logic')->del($id)) {
             $this->success('链接删除成功');
         } else {
             $this->error('链接删除失败');
         }
     }
 
+    /**
+     * 轮播说明
+     * post_img->幻灯图片 url
+     * post_top->顺序
+     * post_template->分组
+     * post_name->链接URL
+     * post_content->文字
+     * */
+    public function slider()
+    {
+        $PostsList = new PostsLogic();
+        $slider = $PostsList->getList(0, 'slider', 'post_top',false);
 
+        $this->assign('slider', $slider);
+
+        $this->display();
+    }
+
+    public function addslider()
+    {
+
+        $this->display();
+    }
+
+    public function delslider($id)
+    {
+
+        if (D("Posts", 'Logic')->where(array('post_type' => 'slider', 'post_type' => $id))->delete()) {
+            $this->success('永久删除成功');
+        } else {
+            $this->error('永久删除失败');
+        }
+
+    }
 
 }
