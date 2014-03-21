@@ -9,8 +9,8 @@
 
 namespace Home\Controller;
 use Common\Logic\PostsLogic;
-use Common\Util\GreenPage;
 use Common\Util\File;
+use Common\Util\GreenPage;
 
 /**
  * Class ArchiveController
@@ -143,17 +143,14 @@ class ArchiveController extends HomeBaseController
         $this->assign('pager', $pager_bar); // 赋值分页输出
 
 
-
-        if(File::file_exists(T('Home@Archive/'.$post_type.'-list'))){
+        if (File::file_exists(T('Home@Archive/' . $post_type . '-list'))) {
 
             $this->display($post_type);
-        }else{
+        } else {
             //TODO   这里怎么处理却决于你自己了。
-            //  $this->error404('缺少对应的模版而不能显示');
-           $this->display('single-list');
+            $this->error404('缺少对应的模版而不能显示');
+            //  $this->display('single-list');
         }
-
-
 
 
     }
