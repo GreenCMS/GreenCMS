@@ -6,7 +6,7 @@
  * Date: 14-2-6
  * Time: 下午9:50
  */
-function testDB($dbhost, $dbuser, $dbpwd)
+function test_db_connect($dbhost, $dbuser, $dbpwd)
 {
     if (mysql_connect($dbhost, $dbuser, $dbpwd))
         return true;
@@ -35,7 +35,7 @@ function gdversion()
 }
 
 
-function TestWrite($d)
+function test_write($d)
 {
     $tfile = '_green.txt';
     $d = preg_replace("#\/$#", '', $d);
@@ -48,44 +48,6 @@ function TestWrite($d)
         else return false;
     }
 }
-
-//
-//function delDir($dirName)
-//{
-//    if (!file_exists($dirName)) {
-//        return false;
-//    }
-//
-//    $dir = opendir($dirName);
-//    while ($fileName = readdir($dir)) {
-//        $file = $dirName . '/' . $fileName;
-//        if ($fileName != '.' && $fileName != '..') {
-//            if (is_dir($file)) {
-//                delDir($file);
-//            } else {
-//                unlink($file);
-//            }
-//        }
-//    }
-//    closedir($dir);
-//    return rmdir($dirName);
-//}
-
-
-//function GetIP()
-//{
-//    if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
-//        $ip = getenv("HTTP_CLIENT_IP");
-//    else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
-//        $ip = getenv("HTTP_X_FORWARDED_FOR");
-//    else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
-//        $ip = getenv("REMOTE_ADDR");
-//    else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
-//        $ip = $_SERVER['REMOTE_ADDR'];
-//    else
-//        $ip = "unknown";
-//    return ($ip);
-//}
 
 
 function insertDB($file, $conn)

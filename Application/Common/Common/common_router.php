@@ -1,5 +1,89 @@
 <?php
 
+/**
+ * @param $Timestamp
+ * @param string $need
+ *
+ * @return mixed
+ */
+function getTimestamp($Timestamp, $need = 'timestamp')
+{
+    $array = explode("-", $Timestamp);
+    $year = $array [0];
+    $month = $array [1];
+
+    $array = explode(":", $array [2]);
+    $minute = $array [1];
+    $second = $array [2];
+
+    $array = explode(" ", $array [0]);
+    $day = $array [0];
+    $hour = $array [1];
+
+    $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
+
+    if ($need === 'hour') {
+        return $hour;
+    } else if ($need === 'minute') {
+        return $minute;
+    } else if ($need === 'second') {
+        return $second;
+    } else if ($need === 'month') {
+        return $month;
+    } else if ($need === 'day') {
+        return $day;
+    } else if ($need === 'year') {
+        return $year;
+    } else {
+        return date($need, $timestamp);
+    }
+
+}
+
+function getTimeURL($Timestamp, $type = 'single')
+{
+    $array = explode("-", $Timestamp);
+    $year = $array [0];
+    $month = $array [1];
+
+    $array = explode(":", $array [2]);
+    $minute = $array [1];
+    $second = $array [2];
+
+    $array = explode(" ", $array [0]);
+    $day = $array [0];
+    $hour = $array [1];
+
+    $url = '';
+    $url .= '<a href="' . getURL('Archive/' . $type, array('year' => $year)) . '">' . $year . '</a>';
+    $url .= '-<a href="' . getURL('Archive/' . $type, array('year' => $year, 'month' => $month)) . '">' . $month . '</a>';
+    $url .= '-<a href="' . getURL('Archive/' . $type, array('year' => $year, 'month' => $month, 'day' => $day)) . '">' . $day . '</a>';
+
+    return $url;
+
+}
+
+
+function getURL($url = '', $vars = '')
+{
+    $url_arr = preg_split('/\//', $url);
+
+    $URL_MODEL_TEMP = (int)get_opinion('home_url_model');
+
+    if (sizeof($url_arr) == 2) {
+        $url_return = U('Home/' . $url, $vars, $suffix = true, $domain = false);
+    } else {
+        $url_return = U($url, $vars, $suffix = true, $domain = false);
+    }
+
+    if ($URL_MODEL_TEMP == 2) $url_return = str_replace('/home', '', $url_return);
+
+
+    return $url_return;
+
+}
+
+
 function getRealURL($menu_item = array(), $is_home = false)
 {
 
@@ -36,13 +120,13 @@ function getSingleURLByID($ID, $type = 'single')
     $home_post_model = get_opinion('home_post_model');
 
     if ($home_post_model == 'native') {
-        $URL = get_url("Post/" . $type, array('info' => $ID));
+        $URL = getURL("Post/" . $type, array('info' => $ID));
 
     } else {
         $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
         C('URL_HTML_SUFFIX', '');
 
-        $url_base = get_url("Post/" . $type);
+        $url_base = getURL("Post/" . $type);
 
         if ($home_post_model === 'post_id') {
             $URL = $url_base . '/' . $ID;
@@ -89,19 +173,19 @@ function getTagURLByID($ID)
 
     $Tags = D('Tags', 'Logic');
     if ($home_tag_model === 'native') {
-        $URL = get_url('Tag/detail', array("info" => $ID));
+        $URL = getURL('Tag/detail', array("info" => $ID));
     } else {
         $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
         C('URL_HTML_SUFFIX', '');
 
 
         if ($home_tag_model === 'ID') {
-            $URL = get_url('/Tag') . '/' . $ID;
+            $URL = getURL('/Tag') . '/' . $ID;
         } else if ($home_tag_model === 'slug') {
             $tag = $Tags->detail($ID);
-            $URL = get_url('/Tag') . '/' . $tag ['tag_slug'];
+            $URL = getURL('/Tag') . '/' . $tag ['tag_slug'];
         } else {
-            $URL = get_url('Tag/detail', array("info" => $ID));
+            $URL = getURL('Tag/detail', array("info" => $ID));
         }
         $URL = str_replace('//', '/', $URL) . $URL_HTML_SUFFIX;
 
@@ -116,7 +200,7 @@ function getCatURLByID($ID)
 
     $Tags = D('Cats', 'Logic');
     if ($home_cat_model == 'native') {
-        $URL = get_url('Cat/detail', array("info" => $ID));
+        $URL = getURL('Cat/detail', array("info" => $ID));
     } else {
 
         $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
@@ -124,12 +208,12 @@ function getCatURLByID($ID)
 
 
         if ($home_cat_model == 'ID') {
-            $URL = get_url('/Cat') . '/' . $ID;
+            $URL = getURL('/Cat') . '/' . $ID;
         } else if ($home_cat_model == 'slug') {
             $cat = $Tags->detail($ID);
-            $URL = get_url('/Cat') . '/' . $cat ['cat_slug'];
+            $URL = getURL('/Cat') . '/' . $cat ['cat_slug'];
         } else {
-            $URL = get_url('Cat/detail', array("info" => $ID));
+            $URL = getURL('Cat/detail', array("info" => $ID));
         }
 
 

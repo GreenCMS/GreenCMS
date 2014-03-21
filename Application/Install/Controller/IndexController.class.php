@@ -120,7 +120,7 @@ class IndexController extends \Think\Controller
         $site_url = $_POST['cfg_basehost'] . $_POST['cfg_cmspath'];
 
 
-        if (!testDB($db_host . ":" . $db_port, $db_user, $db_password))
+        if (!test_db_connect($db_host . ":" . $db_port, $db_user, $db_password))
             $this->error("数据库服务器或登录密码无效，\n\n无法连接数据库，请重新设定！");
 
         $conn = mysql_connect($db_host . ":" . $db_port, $db_user, $db_password);
@@ -222,7 +222,7 @@ class IndexController extends \Think\Controller
 
     public function dbTest($db_host, $db_port, $db_user, $db_password)
     {
-        if (testDB($db_host . ":" . $db_port, $db_user, $db_password))
+        if (test_db_connect($db_host . ":" . $db_port, $db_user, $db_password))
             return 'ok';
         else
             return "数据库服务器或登录密码无效，\n\n无法连接数据库，请重新设定！";

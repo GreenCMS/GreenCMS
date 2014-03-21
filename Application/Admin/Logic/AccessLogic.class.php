@@ -308,7 +308,7 @@ class AccessLogic extends RelationModel
         if (count($data) == 0) {
             return array(
                 'status' => 1,
-                'info'   => "清除所有权限成功" . array2str($data),
+                'info'   => "清除所有权限成功",
                 'url'    => U("Admin/Access/roleList")
             );
         }

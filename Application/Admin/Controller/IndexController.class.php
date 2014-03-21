@@ -19,7 +19,7 @@ class IndexController extends AdminBaseController
 
     public function main()
     {
-        $this->redirect(get_url('Index/index'));
+        $this->redirect(getURL('Index/index'));
     }
 
 

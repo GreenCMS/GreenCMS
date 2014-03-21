@@ -51,7 +51,7 @@ class PostsController extends AdminBaseController
             $posts = $PostsList->getList($limit, $post_type, $order, true, $info, $post_ids);
         }
 
-        $this->assign('action', $cat . $tag . getRealString($post_type) . '列表');
+        $this->assign('action', $cat . $tag . get_real_string($post_type) . '列表');
         $this->assign('posts', $posts);
         $this->assign('pager', $pager_bar);
         $this->display('index_no_js');

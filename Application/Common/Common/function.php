@@ -9,8 +9,6 @@
 
 include APP_PATH . 'Common/Common/common_router.php';
 
-//const GREENCMS_ADDON_PATH = './Addons/';
-
 function current_timestamp()
 {
     $timestamp = date('Y-m-d H:i:s', time() - TIME_FIX);
@@ -28,25 +26,6 @@ function object_to_array($obj)
     return $arr;
 }
 
-function get_url($url = '', $vars = '')
-{
-    $url_arr = preg_split('/\//', $url);
-
-    $URL_MODEL_TEMP = (int)get_opinion('home_url_model');
-
-    if (sizeof($url_arr) == 2) {
-        $url_return = U('Home/' . $url, $vars, $suffix = true, $domain = false);
-    } else {
-        $url_return = U($url, $vars, $suffix = true, $domain = false);
-    }
-
-    if ($URL_MODEL_TEMP == 2) $url_return = str_replace('/home', '', $url_return);
-
-
-    return $url_return;
-
-}
-
 function encrypt($data)
 {
     //return md5($data);
@@ -55,38 +34,25 @@ function encrypt($data)
 
 
 /**
- * @param $res
- *
- * @function        打印数组
- */
-function print_array(& $res)
-{
-    //dump($res);
-    echo '<pre>';
-    print_r($res);
-    echo '</pre>';
-
-
-}
-
-/**
  * @param $i
+ * @param string $string
  * 判断是否置顶
  */
-function is_top($i)
+function is_top($i, $string = '【固顶】')
 {
     if ($i == 1) {
-        echo '【固顶】';
+        echo $string;
     }
 }
 
 /**
  * @param $test判断是否为空
+ * @param string $string
  */
-function is_empty($test)
+function is_empty($test, $string = '空')
 {
     if ($test == '') {
-        echo '空';
+        echo $string;
     } else {
         echo $test;
     }
@@ -112,7 +78,7 @@ function get_opinion($key, $realtime = false, $default = '')
     } else {
         $res = D('Options')->where(array('option_name' => $key))->find();
 
-         if (empty($res)) {
+        if (empty($res)) {
             return $default;
         } else {
             S('option_' . $key, $res['option_value']);
@@ -144,17 +110,15 @@ function set_opinion($key, $value)
 function get_kv($key, $realtime = false, $default = '')
 {
     if (!$realtime) {
-        $kv_array = C('kv');
-        if ($kv_array[$key] != '') {
-            return $kv_array[$key];
-        } else {
-            return $default;
-        }
+
+        return S($key);
+
     } else {
         $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
         if ($options['kv_value'] == '') {
             return $default;
         } else {
+            S($key, $options['kv_value']);
             return $options['kv_value'];
         }
     }
@@ -201,11 +165,6 @@ function exist_kv($key)
  */
 function array2str($res)
 {
-//    $str = '';
-//    foreach ($res as $each) {
-//        $str .= $each . ',';
-//
-//     }
 
     $str = join(",", $res);
     return $str;
@@ -231,68 +190,7 @@ function array_sort($arr, $keys, $type = 'desc')
 }
 
 
-/**
- * @param $Timestamp
- * @param string $need
- *
- * @return mixed
- */
-function getTimestamp($Timestamp, $need = 'timestamp')
-{
-    $array = explode("-", $Timestamp);
-    $year = $array [0];
-    $month = $array [1];
 
-    $array = explode(":", $array [2]);
-    $minute = $array [1];
-    $second = $array [2];
-
-    $array = explode(" ", $array [0]);
-    $day = $array [0];
-    $hour = $array [1];
-
-    $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
-
-    if ($need === 'hour') {
-        return $hour;
-    } else if ($need === 'minute') {
-        return $minute;
-    } else if ($need === 'second') {
-        return $second;
-    } else if ($need === 'month') {
-        return $month;
-    } else if ($need === 'day') {
-        return $day;
-    } else if ($need === 'year') {
-        return $year;
-    } else {
-        return date($need, $timestamp);
-    }
-
-}
-
-function getTimeURL($Timestamp, $type = 'single')
-{
-    $array = explode("-", $Timestamp);
-    $year = $array [0];
-    $month = $array [1];
-
-    $array = explode(":", $array [2]);
-    $minute = $array [1];
-    $second = $array [2];
-
-    $array = explode(" ", $array [0]);
-    $day = $array [0];
-    $hour = $array [1];
-
-    $url = '';
-    $url .= '<a href="' . get_url('Archive/' . $type, array('year' => $year)) . '">' . $year . '</a>';
-    $url .= '-<a href="' . get_url('Archive/' . $type, array('year' => $year, 'month' => $month)) . '">' . $month . '</a>';
-    $url .= '-<a href="' . get_url('Archive/' . $type, array('year' => $year, 'month' => $month, 'day' => $day)) . '">' . $day . '</a>';
-
-    return $url;
-
-}
 
 /**
  * 二位数组转化为一维数组
