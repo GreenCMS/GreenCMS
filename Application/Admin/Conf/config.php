@@ -64,6 +64,8 @@ $menu_arr = array(
             'Custom/theme'  => '主题管理',
             'Custom/menu'   => '菜单管理',
             'Custom/links'  => '链接管理',
+            'Custom/slider'  => '轮播管理',
+
         ),
 
 
