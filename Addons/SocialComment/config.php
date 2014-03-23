@@ -34,7 +34,7 @@ return array(
 						'tip'=>'每个站点一个域名'
 					),
 					'comment_form_pos_duoshuo'=>array(
-						'title'=>'表单位置:',
+						'title'=>'表单位置',
 						'type'=>'radio',
 						'options'=>array(
 							'top'=>'顶部',

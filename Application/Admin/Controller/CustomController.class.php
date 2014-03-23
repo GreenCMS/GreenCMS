@@ -19,8 +19,7 @@ class CustomController extends AdminBaseController
 
     public function index()
     {
-
-
+        $this->display();
     }
 
     //TODO menu
@@ -255,7 +254,9 @@ class CustomController extends AdminBaseController
         $hooks = M('Hooks')->field('name,description')->select();
         $this->assign('Hooks', $hooks);
         $this->meta_title = '创建向导';
-        $this->display('create');
+        $this->model = '插件管理';
+        $this->action = '创建插件';
+        $this->display();
     }
 
     //预览
@@ -303,7 +304,7 @@ str;
         //实现的{$value}钩子方法
         public function {$value}(\$param){
 
-    }
+        }
 
 str;
         }
@@ -332,11 +333,11 @@ use Common\Controller\Addon;
 
         public function install(){
             return true;
-    }
+        }
 
         public function uninstall(){
             return true;
-    }
+        }
 
 {$hook}
     }
@@ -354,9 +355,9 @@ str;
         if (!$data['info']['name'])
             $this->error('插件标识必须');
         //检测插件名是否合法
-        $addons_dir = ONETHINK_ADDON_PATH;
+        $addons_dir = Addon_PATH;
         if (file_exists("{$addons_dir}{$data['info']['name']}")) {
-            $this->error('插件已经存在了');
+            $this->error('插件已存在');
         }
         $this->success('可以创建');
     }
@@ -366,7 +367,7 @@ str;
         $data = $_POST;
         $data['info']['name'] = trim($data['info']['name']);
         $addonFile = $this->preview(false);
-        $addons_dir = ONETHINK_ADDON_PATH;
+        $addons_dir = Addon_PATH;
         //创建目录结构
         $files = array();
         $addon_dir = "$addons_dir{$data['info']['name']}/";
@@ -427,7 +428,7 @@ str;
         if ($data['has_config'] == 1)
             file_put_contents("{$addon_dir}config.php", $data['config']);
 
-        $this->success('创建成功', U('index'));
+        $this->success('创建成功', U('Admin/Custom/plugin'));
     }
 
     /**
@@ -448,7 +449,7 @@ str;
         extract($param);
         $this->assign('title', $addon->info['title']);
         if ($addon->custom_adminlist)
-            $this->assign('custom_adminlist', $this->fetch($addon->addon_path . $addon->custom_adminlist));
+            $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
         $this->assign($param);
         if (!isset($fields))
             $fields = '*';
@@ -495,7 +496,7 @@ str;
         if (!class_exists($addon_class))
             trace("插件{$addon['name']}无法实例化,", 'ADDONS', 'ERR');
         $data = new $addon_class;
-        $addon['addon_path'] = $data->addon_path;
+        $addon['Addon_PATH'] = $data->Addon_PATH;
         $addon['custom_config'] = $data->custom_config;
         $this->meta_title = '设置插件-' . $data->info['title'];
         $db_config = $addon['config'];
@@ -517,7 +518,13 @@ str;
         $this->assign('data', $addon);
 //        dump($addon);
         if ($addon['custom_config'])
-            $this->assign('custom_config', $this->fetch($addon['addon_path'] . $addon['custom_config']));
+            $this->assign('custom_config', $this->fetch($addon['Addon_PATH'] . $addon['custom_config']));
+
+        $addons_dir = Addon_PATH;
+        $file = $addons_dir . $addon['name'] . '/config.html';
+
+        $config = file_get_contents($file);
+
         $this->assign('action', '插件配置');
         $this->display();
     }
