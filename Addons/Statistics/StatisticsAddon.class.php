@@ -34,10 +34,9 @@ class StatisticsAddon extends Addon
     }
 
     //实现的pageFooter钩子方法
-    public function documentDetailAfter($param)
+    public function pageFooter($param)
     {
-      //  die('StatisticsAddon');
-  //      $this->assign('addons_config', $this->getConfig());
-    //     $this->display('comment');
+        $this->assign('addons_config', $this->getConfig());
+        $this->display('analysis');
     }
 }

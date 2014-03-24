@@ -58,7 +58,7 @@ define("Extend_PATH", WEB_ROOT . "Extend/");
 define("Plugin_PATH", WEB_ROOT . "Extend/Plugin/");
 
 
-define('Addon_PATH', WEB_ROOT . '/Addons/');
+define('Addon_PATH', WEB_ROOT . "Addons/");
 /**
  * 上传文件存放目录
  */
