@@ -16,7 +16,6 @@ use Think\Model;
  */
 class RelationModel extends Model
 {
-
     const   HAS_ONE = 1;
     const   BELONGS_TO = 2;
     const   HAS_MANY = 3;
@@ -199,7 +198,7 @@ class RelationModel extends Model
                         case self::MANY_TO_MANY:
                             $pk = $result[$mappingKey];
                             $prefix = $this->tablePrefix;
-                            $mappingCondition = " {$mappingFk}='{$pk}'";
+                             $mappingCondition = " {$mappingFk}='{$pk}'";
                             $mappingOrder = $val['mapping_order'];
                             $mappingLimit = $val['mapping_limit'];
                             $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id';
@@ -210,6 +209,7 @@ class RelationModel extends Model
                             } else {
                                 $mappingRelationTable = $this->getRelationTableName($model);
                             }
+                            $mappingRelationTable=$prefix.$mappingRelationTable;
                             $sql = "SELECT b.{$mappingFields} FROM {$mappingRelationTable} AS a, " . $model->getTableName() . " AS b WHERE a.{$mappingRelationFk} = b.{$model->getPk()} AND a.{$mappingCondition}";
                             if (!empty($val['condition'])) {
                                 $sql .= ' AND ' . $val['condition'];
@@ -227,7 +227,7 @@ class RelationModel extends Model
                                     $relationData[$key] = $data;
                                 }
                             }
-                            break;
+                             break;
                     }
                     if (!$return) {
                         if (isset($val['as_fields']) && in_array($mappingType, array(self::HAS_ONE, self::BELONGS_TO))) {
@@ -356,6 +356,8 @@ class RelationModel extends Model
                                 } else {
                                     $mappingRelationTable = $this->getRelationTableName($model);
                                 }
+                                $mappingRelationTable=$prefix.$mappingRelationTable;
+
                                 if (is_array($mappingData)) {
 
                                     $ids = array();

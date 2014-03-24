@@ -126,8 +126,9 @@ class SystemController extends AdminBaseController
 
         $version = I('get.version');
         $now_version = get_opinion('software_build', true);
-        $url = Server_API . 'api/update/' . $now_version;
-        $json = json_decode(file_get_contents($url), true);
+        $url = Server_API . 'api/update/' . $now_version.'/';
+         $json = json_decode(file_get_contents($url), true);
+
         $target_version_info = ($json['file_list'][$version]);
         if (!empty($target_version_info)) {
             File::mkDir(WEB_CACHE_PATH);
