@@ -14,3 +14,6 @@ define ('GreenCMS_Version', 'v2.1.0324');
 define ('GreenCMS_Build', '20140324');
 
 define('Server_API', "http://greenapi.sinaapp.com/");
+
+//backup api
+#define('Server_API', "http://api.greencms.net/");

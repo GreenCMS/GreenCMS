@@ -106,7 +106,7 @@ class SystemController extends AdminBaseController
 
         if (IS_POST) {
             $version = I('post.version');
-            $url = Server_API . 'api/update/' . $version;
+            $url = Server_API . 'api/update/' . $version.'/';
             $json = json_decode(file_get_contents($url), true);
 
             $this->assign('versions', $json);
