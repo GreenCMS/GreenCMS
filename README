@@ -17,10 +17,13 @@ GreenCMS交流群:
 官方网站:
     http://www.greencms.net
 
-微博:
+官方论坛:
+    http://bbs.greencms.net
+
+GreenStudio微博:
     http://weibo.com/u/3228716083
 
-Contributor:
+Contributors:
     xjh1994
     zts1993
 
@@ -49,10 +52,11 @@ BUG提交可以直接发ISSUE
     /Core/ThinkPHHP/Library/Think/Template/TagLib/Cx.class.php (一处) // since thinkphp 3.2.1
 
 NginX用户须知:
-    使用ThinkPHP的PATHINFO需要将/Home/config/config_router.php的url_mode改成0或者1
+    使用NginX的用户可能需要配置rewrite
     更多信息参考ThinkPHP3.2.1手册
 
 
 缓存选项:
-    kv_array
-    customConfig
+    APP_CACHE选项控制的缓存主要有(不建议关闭):
+        kv_array
+        customConfig
