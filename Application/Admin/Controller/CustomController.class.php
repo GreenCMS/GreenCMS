@@ -844,7 +844,7 @@ str;
     public function delslider($id)
     {
 
-        if (D("Posts", 'Logic')->where(array('post_type' => 'slider', 'post_type' => $id))->delete()) {
+        if (D("Posts", 'Logic')->where(array('post_type' => 'slider', 'post_id' => $id))->delete()) {
             $this->success('永久删除成功');
         } else {
             $this->error('永久删除失败');

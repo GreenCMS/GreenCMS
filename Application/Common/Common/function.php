@@ -305,7 +305,8 @@ function hook($hook, $params = array())
 
 /**
  * 获取插件类的类名
- * @param strng $name 插件名
+ * @param string $name 插件名
+ * @return string
  */
 function get_addon_class($name)
 {
@@ -316,6 +317,7 @@ function get_addon_class($name)
 /**
  * 获取插件类的配置文件数组
  * @param string $name 插件名
+ * @return array
  */
 function get_addon_config($name)
 {
@@ -332,6 +334,7 @@ function get_addon_config($name)
  * 插件显示内容里生成访问插件的url
  * @param string $url url
  * @param array $param 参数
+ * @return string
  */
 function addons_url($url, $param = array())
 {
@@ -363,7 +366,7 @@ function addons_url($url, $param = array())
  * @access public
  * @param array $list 查询结果
  * @param string $field 排序的字段名
- * @param array $sortby 排序类型
+ * @param array|string $sortby 排序类型
  * asc正向排序 desc逆向排序 nat自然排序
  * @return array
  */

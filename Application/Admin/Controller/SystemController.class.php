@@ -285,19 +285,19 @@ class SystemController extends AdminBaseController
 //        $this->success('更新完毕!', U('Admin/System/over', array("date" => $date)));
 //    }
 
-    public function over()
-    {
-        $date = isset ($_GET ['date']) ? $_GET ['date'] : 0;
-        $dir = SystemBackDir . $date;
-        if (!is_dir($dir))
-            $this->error('未检测到更新内容!');
-
-        $content = File::read_file(LOG_PATH . $date . '/log.txt');
-        $this->assign('log', explode('###', $content));
-        $this->action = '更新结果';
-        $this->clear();
-        $this->display();
-    }
+//    public function over()
+//    {
+//        $date = isset ($_GET ['date']) ? $_GET ['date'] : 0;
+//        $dir = SystemBackDir . $date;
+//        if (!is_dir($dir))
+//            $this->error('未检测到更新内容!');
+//
+//        $content = File::read_file(LOG_PATH . $date . '/log.txt');
+//        $this->assign('log', explode('###', $content));
+//        $this->action = '更新结果';
+//        $this->clear();
+//        $this->display();
+//    }
 
     public function backupsql($date)
     {

@@ -38,6 +38,7 @@ class AddonsModel extends Model
     /**
      * 获取插件列表
      * @param string $addon_dir
+     * @return array|bool
      */
     public function getList($addon_dir = '')
     {

@@ -206,7 +206,6 @@ class ThinkWechat
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
 
-        $token = $token;
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );

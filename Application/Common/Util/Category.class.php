@@ -191,6 +191,7 @@ class Category
     /**
      * 检查分类参数$cat_id,是否为空
      * @param   int $cat_id        分类cat_id
+     * @return bool
      */
     private function _searchPath($cat_id)
     {

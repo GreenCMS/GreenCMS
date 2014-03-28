@@ -113,11 +113,11 @@ class AccessLogic extends RelationModel
         $M = M("Node");
         return $M->save($_POST) ? array(
             'status' => 1,
-            info     => '更新节点信息成功',
+            'info'     => '更新节点信息成功',
             'url'    => U('Admin/Access/nodeList')
         ) : array(
             'status' => 0,
-            info     => '更新节点信息失败'
+            'info'     => '更新节点信息失败'
         );
     }
 
@@ -126,11 +126,11 @@ class AccessLogic extends RelationModel
         $M = M("Node");
         return $M->add($_POST) ? array(
             'status' => 1,
-            info     => $_POST ['id'] . '添加节点信息成功',
+            'info'     => $_POST ['id'] . '添加节点信息成功',
             'url'    => U('Admin/Access/nodeList')
         ) : array(
             'status' => 0,
-            info     => '添加节点信息失败'
+            'info'     => '添加节点信息失败'
         );
     }
 

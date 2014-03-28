@@ -354,7 +354,7 @@ class DataController extends AdminBaseController
         if (IS_POST) {
             header('Content-Type:application/json; charset=utf-8');
             $sqlFiles = explode(',', $_POST['sqlFiles']);
-            if (empty($sqlFiles) || count(sqlFiles) == 0 || $_POST['sqlFiles'] == "")
+            if (empty($sqlFiles) || count($sqlFiles) == 0 || $_POST['sqlFiles'] == "")
                 $this->json_return(0, "请选择要打包的sql文件");
 
             $files = $sqlFiles;

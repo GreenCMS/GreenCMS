@@ -14,7 +14,6 @@ use Weixin\Controller\WeixinCoreController;
 class MenuEvent extends WeixinCoreController
 {
 
-    private $access = '';
 
 
     public function restore()

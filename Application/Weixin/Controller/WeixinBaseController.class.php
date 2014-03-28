@@ -9,8 +9,7 @@
 
 namespace Weixin\Controller;
 
-use Common\Controller\BaseController;
-use Org\Util\Rbac;
+ use Org\Util\Rbac;
 
 class WeixinBaseController extends WeixinCoreController
 {
