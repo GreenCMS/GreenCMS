@@ -1,0 +1,206 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="GreenCMS"/>
+    <meta name="keywords" content="GreenCMS"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="/green2014/Public/admin/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/green2014/Public/admin/assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"
+      type="text/css"/>
+<link href="/green2014/Public/admin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+      type="text/css"/>
+<link href="/green2014/Public/admin/assets/css/style-metro.css" rel="stylesheet" type="text/css"/>
+<link href="/green2014/Public/admin/assets/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="/green2014/Public/admin/assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="/green2014/Public/admin/assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="/green2014/Public/admin/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="/green2014/Public/admin/assets/plugins/select2/select2_metro.css"/>
+<link rel="stylesheet" href="/green2014/Public/admin/assets/plugins/data-tables/DT_bootstrap.css"/>
+
+<link href="/green2014/Public/admin/assets/plugins/chosen-bootstrap/chosen/chosen.css" rel="stylesheet"
+      type="text/css"/>
+<link href="/green2014/Public/admin/assets/css/pages/profile.css" rel="stylesheet" type="text/css"/>
+<!--<link href="/green2014/Public/css/tab.css" rel="stylesheet" type="text/css"/>-->
+
+<!-- END PAGE LEVEL STYLES -->
+<link rel="shortcut icon" href="/green2014/Public/images/logo.png"/>
+
+<link rel="stylesheet" type="text/css" href="/green2014/Public/share/jquery.confirm/jquery.confirm/jquery.confirm.css" />
+
+
+
+    <title><?php echo ($action); ?> | <?php echo get_opinion('title');?></title>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    <?php echo W('Common/header');?>
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar nav-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        <ul class="page-sidebar-menu">
+            <li>
+
+
+            </li>
+            <?php echo W('Common/sideBar');?>
+        </ul>
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        <?php echo ($action); ?>
+                        <small>&nbsp;&nbsp;<?php echo get_opinion('title');?></small>
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="<?php echo ($module_url); ?>"><?php echo ($module); ?></a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li><a href="<?php echo ($action_url); ?>"><?php echo ($action); ?></a></li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <h4><?php echo ($action); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="control-group success"
+                                                                      style="font-size:16px;color: red;text-align: left; display:none;"></span>
+                    </h4>
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <td>序号</td>
+                            <td>组ID</td>
+                            <td>组名</td>
+                            <td>描述</td>
+                            <td>状态</td>
+                            <td>操作</td>
+                        </tr>
+                        </thead>
+                        <?php if(is_array($rolelist)): $k = 0; $__LIST__ = $rolelist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($k % 2 );++$k;?><tr align="center" id="<?php echo ($vo["id"]); ?>">
+                                <td><?php echo ($k); ?></td>
+                                <td><?php echo ($vo["id"]); ?></td>
+                                <td><?php echo ($vo["name"]); ?></td>
+                                <td align="left"><?php echo ($vo["remark"]); ?></td>
+                                <td><?php echo ($vo["statusTxt"]); ?></td>
+                                <td>
+                                    <?php if($vo["pid"] == 0): else: ?>
+                                        [ <a href="javascript:void(0);" class="opStatus" val="<?php echo ($vo["status"]); ?>"><?php echo ($vo["chStatusTxt"]); ?></a>
+                                        ] [ <a href="/green2014/index.php/admin/access/editRole?id=<?php echo ($vo["id"]); ?>" class="edit">编辑</a> ] [ <a
+                                            href="/green2014/index.php/admin/access/changeRole?id=<?php echo ($vo["id"]); ?>" class="edit">权限分配</a> ]<?php endif; ?>
+                                </td>
+                            </tr><?php endforeach; endif; endif; ?>
+                    </table>
+
+                    <!-- END EXAMPLE TABLE PORTLET-->
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<?php echo W('Common/footer');?>
+<!-- END FOOTER -->
+<!-- BEGIN CORE PLUGINS -->
+<script type="text/javascript" src="/green2014/Public/share/js/jquery-1.9.0.min.js"></script>
+<!--<script src="/green2014/Public/admin/assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
+-->
+<script src="/green2014/Public/admin/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="/green2014/Public/admin/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+<script src="/green2014/Public/admin/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!--[if lt IE 9]>
+<script src="/green2014/Public/admin/assets/plugins/excanvas.min.js"></script>
+<script src="/green2014/Public/admin/assets/plugins/respond.min.js"></script>
+<![endif]-->
+
+
+<script src="/green2014/Public/admin/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/green2014/Public/admin/assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+<script src="/green2014/Public/admin/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script type="text/javascript" src="/green2014/Public/admin/assets/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="/green2014/Public/admin/assets/plugins/data-tables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/green2014/Public/admin/assets/plugins/data-tables/DT_bootstrap.js"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="/green2014/Public/admin/assets/scripts/app.js"></script>
+<script src="/green2014/Public/admin/assets/scripts/table-managed.js"></script>
+<!-- <script type="text/javascript"
+        src="/green2014/Public/admin/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script> -->
+<script type="text/javascript"
+        src="/green2014/Public/admin/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+<script src="/green2014/Public/admin/assets/scripts/form-wizard.js"></script>
+<script type="text/javascript"
+        src="/green2014/Public/admin/assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script type="text/javascript"
+        src="/green2014/Public/admin/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+<!---->
+<script type="text/javascript" src="/green2014/Public/admin/assets/js/jquery.form.js"></script>
+<script type="text/javascript" src="/green2014/Public/admin/assets/js/functions.js"></script>
+
+<script src="/green2014/Public/share/jquery.confirm/jquery.confirm/jquery.confirm.js"></script>
+<script>
+    jQuery(document).ready(function () {
+
+        App.init();
+        //快捷启用禁用操作
+        $(".opStatus").click(function () {
+            var obj = $(this);
+            var id = $(this).parents("tr").attr("id");
+            var status = $(this).attr("val");
+            var div = $(".success");
+            var url = "<?php echo U('Admin/Access/opRoleStatus');?>";
+            $.getJSON(url, { id: id, status: status }, function (json) {
+                if (json.status == 1) {
+                    div.fadeIn().html(json.info);
+                    div.fadeOut(3000);
+                    $(obj).attr("val", json.data.status).html(status == 1 ? "启用" : "禁用").parents("td").prev().html(status == 1 ? "禁用" : "启用");
+                } else {
+                    div.fadeIn().html(json.info);
+                    div.fadeOut(3000);
+                }
+            });
+        });
+    });
+</script>
+</body>
+<!-- END BODY -->
+</html>

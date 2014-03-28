@@ -1,0 +1,3 @@
+<?php
+//000000000000s:77:"SELECT * FROM `green_links` ORDER BY link_sort desc ,link_id asc LIMIT 1000  ";
+?>

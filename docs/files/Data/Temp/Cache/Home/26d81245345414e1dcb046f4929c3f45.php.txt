@@ -1,0 +1,3 @@
+<?php if (!defined('THINK_PATH')) exit();?><aside id="meta-2" class="widget widget_meta"><h3 class="widget-title">友情链接</h3>
+    <ul ><li ><a href="http://www.zts1993.com/" title="Z的博客"> Z的博客 </a></li><li ><a href="http://www.greencms.net/" title="GreenCMS"> GreenCMS </a></li></ul>
+</aside>

@@ -1,0 +1,3 @@
+<?php if (!defined('THINK_PATH')) exit();?><div class="nav-menu">
+    <?php echo ($home_menu); ?>
+</div>

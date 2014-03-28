@@ -1,0 +1,1 @@
+a:5:{i:0;s:5:"kv_id";i:1;s:6:"kv_key";i:2;s:8:"kv_value";s:3:"_pk";s:5:"kv_id";s:5:"_type";a:3:{s:5:"kv_id";s:10:"bigint(20)";s:6:"kv_key";s:11:"varchar(50)";s:8:"kv_value";s:11:"varchar(50)";}}

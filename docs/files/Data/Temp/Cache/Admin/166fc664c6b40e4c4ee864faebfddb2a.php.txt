@@ -1,0 +1,8 @@
+<?php if (!defined('THINK_PATH')) exit();?><ul class="page-sidebar-menu">
+    <li>
+        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+        <div class="sidebar-toggler hidden-phone"></div>
+        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+    </li>
+    <?php echo ($menu); ?>
+</ul>

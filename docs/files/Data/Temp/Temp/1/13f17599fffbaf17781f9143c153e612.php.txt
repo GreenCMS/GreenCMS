@@ -1,0 +1,3 @@
+<?php
+//000000000000s:85:"SELECT `kv_value` FROM `green_kv` WHERE ( `kv_key` = 'theme_Twentytwelve' ) LIMIT 1  ";
+?>

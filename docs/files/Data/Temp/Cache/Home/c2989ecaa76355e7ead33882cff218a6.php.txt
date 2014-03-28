@@ -1,0 +1,192 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="zh-CN">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="zh-CN">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title><?php echo get_opinion('title');?> </title>
+    <meta name="description" content="<?php echo get_opinion('keywords');?>"/>
+    
+<!--[if lt IE 9]>
+<script src="/Green2014/Public/Twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<!--<link rel='stylesheet' id='twentytwelve-fonts-css' href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all'/>-->
+<link rel='stylesheet' id='twentytwelve-style-css' href='/Green2014/Public/Twentytwelve/style.css' type='text/css' media='all'/>
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css' href='/Green2014/Public/Twentytwelve/css/ie.css' type='text/css' media='all'/>
+<![endif]-->
+<style type="text/css">.recentcomments a {
+    display: inline !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.blog-navi {
+    display: block;
+    float: left;
+    margin-bottom: 50px;
+    margin-left: 95px;
+}
+
+.blog-navi ul li {
+    display: inline-block;
+    /*float: left;*/
+}
+
+.blog-navi ul li a {
+    display: block;
+    margin-right: 4px;
+    padding: 6px 11px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    background: #e5e8ea;
+
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+.blog-navi ul li a:hover,
+.blog-navi ul li a.current {
+    color: #fff;
+
+}
+
+.blog-navi ul li a:active,
+.blog-navi ul li a.current:active {
+    margin-top: 2px;
+    margin-bottom: -2px;
+}
+
+
+</style>
+
+</head>
+
+<body class="home blog custom-font-enabled single-author">
+<?php $PostsList = new Common\Logic\PostsLogic(); $count = $PostsList->countAll('single'); ($count == 0) ? $res404 = 0 : $res404 = 1; if ($count != 0) { $Page = new Common\Util\GreenPage($count, C('PAGER')); $pager = $Page->show(); $limit = $Page->firstRow . ',' . $Page->listRows; $postslist= $PostsList->getList($limit, 'single', 'post_id desc', true); } ?>
+
+
+<div id="page" class="hfeed site">
+    <header id="masthead" class="site-header" role="banner">
+        <hgroup>
+            <h1 class="site-title">
+                <a href="<?php echo get_opinion('site_url');?>" title="Green" rel="home"><?php echo get_opinion('title');?></a></h1>
+
+            <h2 class="site-description"><?php echo get_opinion('description');?></h2>
+        </hgroup>
+
+        <nav id="site-navigation" class="main-navigation" role="navigation">
+            <h3 class="menu-toggle">菜单</h3>
+            <a class="assistive-text" href="#content" title="跳至内容">跳至内容</a>
+            <?php echo W('Common/mainMenu');?>
+        </nav>
+        <!-- #site-navigation -->
+
+    </header>
+    <!-- #masthead -->
+
+    <div id="main" class="wrapper">
+        <div id="primary" class="site-content">
+            <div id="content" role="main">
+
+                <?php if($res404 == 0 ): ?><article class="post">
+                        <div class="post-content medium clearfix">
+                            没有相关文章
+                            <div class="ten columns omega"></div>
+                        </div>
+                    </article><?php endif; ?>
+
+
+                <?php if(is_array($postslist)): $i = 0; $__LIST__ = $postslist;if( count($__LIST__)==0 ) : echo "没有相关文章.." ;else: foreach($__LIST__ as $key=>$post): $mod = ($i % 2 );++$i;?><!-- Post Start -->
+
+
+                    <article id="post-<?php echo ($post["post_id"]); ?>" class="post-<?php echo ($post["post_id"]); ?> post type-post status-publish format-standard">
+                        <header class="entry-header">
+                            <h1 class="entry-title">
+                                <a href="<?php echo (getsingleurlbyid($post["post_id"],$post['post_type'])); ?>" title=" <?php echo (is_top($post["post_top"])); echo ($post["post_title"]); ?>" rel="bookmark">
+                                    <?php echo (is_top($post["post_top"])); echo ($post["post_title"]); ?></a>
+                            </h1>
+
+                        </header>
+                        <!-- .entry-header -->
+
+                        <div class="entry-content">
+                            <p><?php echo (mb_substr(strip_tags($post["post_content"]),0,200,"UTF-8")); ?></p>
+                        </div>
+                        <!-- .entry-content -->
+                        <footer class="entry-meta">
+                            本条目发布于
+                            <a href="<?php echo (getsingleurlbyid($post["post_id"],$post['post_type'])); ?>" title="上午 4:23" rel="bookmark">
+                                <time class="entry-date" datetime="<?php echo ($post['post_date']); ?>">
+                                    <?php echo (gettimeurl($post['post_date'],$post['post_type'])); ?>
+                                </time>
+                            </a>。属于
+                            <?php if(is_array($post["post_cat"])): $i = 0; $__LIST__ = $post["post_cat"];if( count($__LIST__)==0 ) : echo "无分类.." ;else: foreach($__LIST__ as $key=>$cat): $mod = ($i % 2 );++$i;?><a href="<?php echo (getcaturlbyid($cat["cat_id"])); ?>"><?php echo ($cat["cat_name"]); ?></a>,<?php endforeach; endif; endif; ?>
+                            分类 。标签：
+                            <?php if(is_array($post["post_tag"])): $i = 0; $__LIST__ = $post["post_tag"];if( count($__LIST__)==0 ) : echo "无标签.." ;else: foreach($__LIST__ as $key=>$tag): $mod = ($i % 2 );++$i;?><a href="<?php echo (gettagurlbyid($tag["tag_id"])); ?>"><?php echo ($tag["tag_name"]); ?></a>,<?php endforeach; endif; endif; ?>
+                            <span class="by-author">作者是 <span class="author vcard">
+                            <a class="url fn n" href="<?php echo ($post["post_user"]["user_url"]); ?>" rel="author"><?php echo ($post["post_user"]["user_nicename"]); ?></a></span>  。</span>
+
+                        </footer>
+                        <!-- .entry-meta -->
+                    </article>
+                    <!-- #post --><?php endforeach; endif; endif; ?>
+            </div>
+
+
+            <nav id="nav-below" class="navigation" role="navigation">
+                <h3 class="assistive-text">文章导航</h3>
+
+                <div class="blog-navi nomargin">
+                    <ul>
+                        <?php echo ($pager); ?>
+                    </ul>
+                </div>
+            </nav>
+
+
+
+            <!-- #content -->
+        </div>
+        <!-- #primary -->
+
+        <div id="secondary" class="widget-area" role="complementary">
+
+
+            <?php echo W('Widget/search');?>
+            <?php echo W('Widget/tag');?>
+
+            <?php echo W('Widget/categories');?>
+
+            <?php echo W('Widget/links');?>
+
+            <?php echo W('Widget/aboutus');?>
+
+
+        </div>
+        <!-- #secondary -->
+    </div>
+    <!-- #main .wrapper -->
+    <footer id="colophon" role="contentinfo">
+    <div class="site-info">
+        <a href="http://www.greencms.net/" title="优雅的个人发布平台">自豪地采用 GreenCMS</a>
+    </div>
+    <!-- .site-info -->
+    <?php echo hook('pageFooter', 'widget');?>
+</footer>
+    <!-- #colophon -->
+</div>
+<!-- #page -->
+
+<script type='text/javascript' src='/Green2014/Public/Twentytwelve/js/navigation.js'></script>
+</body>
+</html>

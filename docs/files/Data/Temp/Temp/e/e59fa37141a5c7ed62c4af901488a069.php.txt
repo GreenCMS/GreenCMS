@@ -1,0 +1,3 @@
+<?php
+//000000000000s:222:"SELECT `user_id`,`user_login`,`user_pass`,`user_nicename`,`user_email`,`user_url`,`user_registered`,`user_activation_key`,`user_status`,`user_intro`,`user_level`,`user_session` FROM `green_user` WHERE ( `user_level` = 5 ) ";
+?>

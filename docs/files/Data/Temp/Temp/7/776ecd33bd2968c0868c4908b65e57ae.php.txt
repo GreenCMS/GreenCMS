@@ -1,0 +1,3 @@
+<?php
+//000000000000s:105:"SELECT * FROM `green_links` WHERE ( `link_tag` = 'Home' ) ORDER BY link_sort desc ,link_id asc LIMIT 10  ";
+?>

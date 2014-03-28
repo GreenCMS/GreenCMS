@@ -1,0 +1,3 @@
+<?php
+//000000000000s:144:"SELECT * FROM `green_posts` WHERE ( `post_type` = 'single' ) AND ( `post_status` = 'publish' ) ORDER BY post_top desc ,post_id desc LIMIT 0,20  ";
+?>

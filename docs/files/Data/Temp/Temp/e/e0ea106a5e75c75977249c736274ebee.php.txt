@@ -1,0 +1,3 @@
+<?php
+//000000000000s:123:"SELECT COUNT(*) AS tp_count FROM `green_posts` WHERE ( `post_status` = 'publish' ) AND ( `post_type` = 'single' ) LIMIT 1  ";
+?>

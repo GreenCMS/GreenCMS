@@ -1,0 +1,114 @@
+<?php if (!defined('THINK_PATH')) exit();?><div class="navbar-inner">
+    <div class="container-fluid">
+        <!-- BEGIN LOGO -->
+        <a class="brand" href="<?php echo U('Admin/Index/index');?>">
+            <img src="/green2014/Public/admin/assets/img/logo.png" alt="logo"/>
+        </a>
+        <!-- END LOGO -->
+
+
+        <!-- BEGIN HORIZANTAL MENU -->
+        <div class="navbar hor-menu hidden-phone hidden-tablet">
+            <div class="navbar-inner">
+                <ul class="nav">
+                    <li class="visible-phone visible-tablet">
+                        <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+                        <!--<form class="sidebar-search">-->
+                            <!--<div class="input-box">-->
+                                <!--<a href="javascript:;" class="remove"></a>-->
+                                <!--<input type="text" placeholder="Search..."/>-->
+                                <!--<input type="button" class="submit" value=" "/>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                        <!-- END RESPONSIVE QUICK SEARCH FORM -->
+                    </li>
+                    <li class="active">
+                        <a href="<?php echo U('Admin/Index/index');?>">
+                            GreenCMS内容管理
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+                            快速访问
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo U('Admin/Data/clear');?>">缓存清理</a></li>
+
+                            <li><a href="<?php echo U('Admin/Posts/add');?>">文章发布</a></li>
+                         </ul>
+                        <b class="caret-out"></b>
+                    </li>
+
+                    <li>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+                            模块切换
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo U('Weixin/Index/index');?>" target="_blank">进入Weixin模块</a></li>
+                            <li><a href="<?php echo U('Admin/Index/main');?>" target="_blank">进入Home模块</a></li>
+                        </ul>
+                        <b class="caret-out"></b>
+                    </li>
+
+
+
+                    <li>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="">关于GreenCMS
+                            <span class="arrow"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://www.greencms.net">关于我们</a></li>
+                            <!--<li><a href="http://service.greencms.net">服务中心</a></li>-->
+                            <!--<li><a href="http://help.greencms.net">帮助</a></li>-->
+                            <!--<li><a href="http://faq.greencms.net">FAQs</a></li>-->
+                            <li><a href="https://github.com/zts1993/GreenCMS">zts1993@GitHub</a></li>
+
+                        </ul>
+                        <b class="caret-out"></b>
+                    </li>
+                    <!--<li>-->
+                        <!--<span class="hor-menu-search-form-toggler">&nbsp;</span>-->
+
+                        <!--<div class="search-form hidden-phone hidden-tablet">-->
+                            <!--<form class="form-search">-->
+                                <!--<div class="input-append">-->
+                                    <!--<input type="text" placeholder="Search..." class="m-wrap">-->
+                                    <!--<button type="button" class="btn"></button>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </div>
+        <!-- END HORIZANTAL MENU -->
+
+
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+            <img src="/green2014/Public/admin/assets/img/menu-toggler.png" alt=""/>
+        </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <ul class="nav pull-right">
+            <!-- BEGIN USER LOGIN DROPDOWN -->
+            <li class="dropdown user">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img alt="" src="/green2014/Public/admin/assets/img/avatar1_small.jpg"/>
+                    <span class="username"><?php echo ($user["user_nicename"]); ?></span>
+                    <i class="icon-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo U('Admin/Index/index');?>"><i class="icon-user"></i>个人信息</a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?php echo U('Admin/Login/logout');?>"><i class="icon-key"></i>退出</a></li>
+                </ul>
+            </li>
+            <!-- END USER LOGIN DROPDOWN -->
+        </ul>
+        <!-- END TOP NAVIGATION MENU -->
+    </div>
+</div>

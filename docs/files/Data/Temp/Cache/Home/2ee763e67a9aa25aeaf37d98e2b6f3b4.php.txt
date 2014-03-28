@@ -1,0 +1,10 @@
+<?php if (!defined('THINK_PATH')) exit();?><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title">TAG</h3>
+
+    <div class="tagcloud">
+
+        <?php if(is_array($tagClouds)): $i = 0; $__LIST__ = $tagClouds;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><a href="<?php echo (gettagurlbyid($vo["tag_id"])); ?>">
+                <?php echo ($vo["tag_name"]); ?>
+            </a>&nbsp;&nbsp;<?php endforeach; endif; endif; ?>
+
+    </div>
+</aside>
