@@ -10,9 +10,16 @@
 namespace Install\Event;
 
 
+/**
+ * Class AccessEvent
+ * @package Install\Event
+ */
 class AccessEvent
 {
     //测试型节点批量添加
+    /**
+     *
+     */
     public function initAdmin()
     {
 
@@ -95,6 +102,9 @@ class AccessEvent
 
     }
 
+    /**
+     *
+     */
     public function initWeixin()
     {
 

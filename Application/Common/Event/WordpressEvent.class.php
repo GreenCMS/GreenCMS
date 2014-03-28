@@ -10,17 +10,30 @@
 namespace Common\Event;
 
 
+/**
+ * Class WordpressEvent
+ * @package Common\Event
+ */
 class WordpressEvent
 {
 
+    /**
+     * @var null
+     */
     private $file;
 
+    /**
+     * @param null $file
+     */
     function __construct($file=null)
     {
         $this->file = $file;
     }
 
 
+    /**
+     * @param $filename
+     */
     public function postImport($filename)
     {
 
@@ -109,6 +122,9 @@ class WordpressEvent
 
     }
 
+    /**
+     * @param $filename
+     */
     public function tagImport($filename)
     {
         if (!file_exists($filename)) exit();
@@ -139,6 +155,9 @@ class WordpressEvent
     }
 
 
+    /**
+     * @param $filename
+     */
     public function catImport($filename)
     {
         if (!file_exists($filename)) exit();

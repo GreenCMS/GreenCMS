@@ -13,9 +13,16 @@ use Common\Logic\CatsLogic;
 use Common\Logic\TagsLogic;
 use Think\Controller;
 
+/**
+ * Class WidgetWidget
+ * @package Home\Widget
+ */
 class WidgetWidget extends Controller
 {
 
+    /**
+     *
+     */
     public function search()
     {
 
@@ -23,6 +30,9 @@ class WidgetWidget extends Controller
 
     }
 
+    /**
+     *
+     */
     public function aboutUs()
     {
 
@@ -32,6 +42,9 @@ class WidgetWidget extends Controller
         $this->display('Widget:aboutus');
     }
 
+    /**
+     *
+     */
     public function categories()
     {
         $CatList = new CatsLogic();
@@ -41,6 +54,9 @@ class WidgetWidget extends Controller
         $this->display('Widget:categories');
     }
 
+    /**
+     *
+     */
     public function tag()
     {
 
@@ -55,6 +71,9 @@ class WidgetWidget extends Controller
     }
 
 
+    /**
+     *
+     */
     public function links()
     {
         $this->display('Widget:links');

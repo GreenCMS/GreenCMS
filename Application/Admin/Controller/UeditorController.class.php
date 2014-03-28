@@ -12,9 +12,16 @@ namespace Admin\Controller;
 use Common\Util\File;
 use Common\Util\Uploader;
 
+/**
+ * Class UeditorController
+ * @package Admin\Controller
+ */
 class UeditorController extends AdminBaseController
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -22,11 +29,17 @@ class UeditorController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function index()
     {
         $this->display();
     }
 
+    /**
+     *
+     */
     public function getContent()
     {
 
@@ -49,6 +62,9 @@ class UeditorController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function fileUp()
     {
         header("Content-Type: text/html; charset=utf-8");
@@ -88,6 +104,9 @@ class UeditorController extends AdminBaseController
         echo '{"url":"' . $info["url"] . '","fileType":"' . $info["type"] . '","original":"' . $info["originalName"] . '","state":"' . $info["state"] . '"}';
     }
 
+    /**
+     *
+     */
     public function scrawlUp()
     {
         header("Content-Type:text/html;charset=utf-8");
@@ -148,6 +167,9 @@ class UeditorController extends AdminBaseController
         }
     }
 
+    /**
+     *
+     */
     public function getRemoteImage()
     {
         header("Content-Type: text/html; charset=utf-8");
@@ -245,6 +267,9 @@ class UeditorController extends AdminBaseController
         echo "{'url':'" . implode("ue_separate_ue", $tmpNames) . "','tip':'远程图片抓取成功！','srcUrl':'" . $uri . "'}";
     }
 
+    /**
+     *
+     */
     public function getMovie()
     {
 
@@ -255,6 +280,9 @@ class UeditorController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function imageManager()
     {
 
@@ -312,6 +340,9 @@ class UeditorController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function imageUp()
     {
         header("Content-Type: text/html; charset=utf-8");

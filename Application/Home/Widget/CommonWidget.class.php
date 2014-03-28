@@ -12,8 +12,16 @@ namespace Home\Widget;
 use Home\Logic\MenuLogic;
 use Think\Controller;
 
+/**
+ * Class CommonWidget
+ * @package Home\Widget
+ */
 class CommonWidget extends Controller
 {
+    /**
+     * @param string $ul_attr
+     * @param string $li_attr
+     */
     public function mainMenu($ul_attr = 'class="navigation"', $li_attr = '')
     {
 

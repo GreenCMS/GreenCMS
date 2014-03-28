@@ -19,6 +19,10 @@ namespace Common\Util;
  * Class IpLocation
  * @package Common\Util
  */
+/**
+ * Class IpLocation
+ * @package Common\Util
+ */
 class IpLocation
 {
 

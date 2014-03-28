@@ -11,11 +11,17 @@ namespace Weixin\Event;
 
 use Weixin\Controller\WeixinCoreController;
 
+/**
+ * Class MenuEvent
+ * @package Weixin\Event
+ */
 class MenuEvent extends WeixinCoreController
 {
 
 
-
+    /**
+     * @return mixed|string
+     */
     public function restore()
     {
         $data = '{
@@ -93,6 +99,10 @@ class MenuEvent extends WeixinCoreController
     }
 
 
+    /**
+     * @param $data
+     * @return mixed|string
+     */
     public function create($data)
     {
 
@@ -124,6 +134,9 @@ class MenuEvent extends WeixinCoreController
         return $tmpInfo;
     }
 
+    /**
+     * @return string
+     */
     public function delete()
     {
         $ACCESS_TOKEN = $this->getAccess();
@@ -131,6 +144,9 @@ class MenuEvent extends WeixinCoreController
     }
 
 
+    /**
+     * @return mixed
+     */
     public function get()
     {
         $ACCESS_TOKEN = $this->getAccess();
@@ -145,6 +161,10 @@ class MenuEvent extends WeixinCoreController
         return $menu_json;
     }
 
+    /**
+     * @param $menu_json
+     * @return mixed
+     */
     public function save($menu_json)
     {
         $data['option_value'] = $menu_json;

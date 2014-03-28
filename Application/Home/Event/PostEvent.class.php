@@ -11,6 +11,10 @@ namespace Home\Event;
 
 use Home\Controller\HomeBaseController;
 
+/**
+ * Class PostEvent
+ * @package Home\Event
+ */
 class PostEvent extends HomeBaseController
 {
 

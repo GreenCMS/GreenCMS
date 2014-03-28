@@ -14,6 +14,10 @@ namespace Common\Util;
  * Class Rss
  * @package Common\Util
  */
+/**
+ * Class Rss
+ * @package Common\Util
+ */
 class Rss
 {
 

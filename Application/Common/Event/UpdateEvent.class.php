@@ -11,8 +11,15 @@ namespace Common\Event;
 
 use Common\Util\File;
 
+/**
+ * Class UpdateEvent
+ * @package Common\Event
+ */
 class UpdateEvent {
 
+    /**
+     *
+     */
     public function check(){
 
         $software_build=get_opinion('software_build');

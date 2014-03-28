@@ -12,6 +12,10 @@ namespace Weixin\Model;
 
 use Think\Model\RelationModel;
 
+/**
+ * Class WeixinlogModel
+ * @package Weixin\Model
+ */
 class WeixinlogModel extends RelationModel
 {
     /**

@@ -9,12 +9,19 @@
 
 include APP_PATH . 'Common/Common/common_router.php';
 
+/**
+ * @return bool|string
+ */
 function current_timestamp()
 {
     $timestamp = date('Y-m-d H:i:s', time() - TIME_FIX);
     return $timestamp;
 }
 
+/**
+ * @param $obj
+ * @return mixed
+ */
 function object_to_array($obj)
 {
     $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
@@ -26,6 +33,10 @@ function object_to_array($obj)
     return $arr;
 }
 
+/**
+ * @param $data
+ * @return string
+ */
 function encrypt($data)
 {
     //return md5($data);
@@ -91,6 +102,10 @@ function get_opinion($key, $realtime = false, $default = '')
 }
 
 
+/**
+ * @param $key
+ * @param $value
+ */
 function set_opinion($key, $value)
 {
     $options = D('Options');
@@ -107,6 +122,12 @@ function set_opinion($key, $value)
 
 }
 
+/**
+ * @param $key
+ * @param bool $realtime
+ * @param string $default
+ * @return mixed|string
+ */
 function get_kv($key, $realtime = false, $default = '')
 {
     if (!$realtime) {
@@ -171,6 +192,12 @@ function array2str($res)
 }
 
 
+/**
+ * @param $arr
+ * @param $keys
+ * @param string $type
+ * @return array
+ */
 function array_sort($arr, $keys, $type = 'desc')
 {
     $key_value = $new_array = array();
@@ -417,6 +444,11 @@ function arr2str($arr, $glue = ',')
 }
 
 
+/**
+ * @param $list
+ * @param string $select
+ * @return string
+ */
 function gen_opinion_list($list, $select = '')
 {
     $res = '';
@@ -430,6 +462,9 @@ function gen_opinion_list($list, $select = '')
 }
 
 //基于数组创建目录和文件
+/**
+ * @param $files
+ */
 function create_dir_or_files($files){
     foreach ($files as $key => $value) {
         if(substr($value, -1) == '/'){

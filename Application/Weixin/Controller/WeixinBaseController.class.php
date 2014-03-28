@@ -11,9 +11,16 @@ namespace Weixin\Controller;
 
  use Org\Util\Rbac;
 
-class WeixinBaseController extends WeixinCoreController
+ /**
+  * Class WeixinBaseController
+  * @package Weixin\Controller
+  */
+ class WeixinBaseController extends WeixinCoreController
 {
-    public function __construct()
+     /**
+      *
+      */
+     public function __construct()
     {
         parent::__construct();
         $this->_initialize();
@@ -25,7 +32,10 @@ class WeixinBaseController extends WeixinCoreController
 
     }
 
-    protected function _initialize()
+     /**
+      *
+      */
+     protected function _initialize()
     {
         if (!RBAC::AccessDecision('Weixin')) // AccessDecision中间使用分组名
         {
@@ -39,7 +49,10 @@ class WeixinBaseController extends WeixinCoreController
     }
 
 
-    private function _currentPostion()
+     /**
+      *
+      */
+     private function _currentPostion()
     {
 
         //  echo CONTROLLER_NAME;
@@ -74,7 +87,10 @@ class WeixinBaseController extends WeixinCoreController
 
     }
 
-    private function _currentUser()
+     /**
+      *
+      */
+     private function _currentUser()
     {
         $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
         $user = D('User', 'Logic')->detail($user_id);
@@ -82,7 +98,10 @@ class WeixinBaseController extends WeixinCoreController
     }
 
 
-    public function saveConfig()
+     /**
+      *
+      */
+     public function saveConfig()
     {
         $options = D('Options');
         $data = array();

@@ -12,11 +12,18 @@ namespace Home\Logic;
 
 use Think\Model;
 
+/**
+ * Class MenuLogic
+ * @package Home\Logic
+ */
 class MenuLogic extends Model
 {
 
 
-
+    /**
+     * @param string $menu_position
+     * @return array
+     */
     public function getMenu($menu_position = 'head')
     {
         $home_menu = D('Menu')->where(array('menu_position' => $menu_position))->select();
@@ -43,6 +50,12 @@ class MenuLogic extends Model
         return array_sort($home_menu_res, 'menu_sort');
     }
 
+    /**
+     * @param string $menu_position
+     * @param string $ul_attr
+     * @param string $li_attr
+     * @return string
+     */
     public function genMenu($menu_position = 'head',$ul_attr='class="navigation"',$li_attr='')
     {
 

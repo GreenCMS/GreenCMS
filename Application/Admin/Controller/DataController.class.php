@@ -18,6 +18,9 @@ use Common\Util\File;
 class DataController extends AdminBaseController
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -26,6 +29,9 @@ class DataController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function db()
     {
 
@@ -35,6 +41,9 @@ class DataController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function dbHandle()
     {
         $this->saveConfig();
@@ -475,6 +484,9 @@ class DataController extends AdminBaseController
      * cat tag被删除之后完整性不能保证
      */
     //private
+    /**
+     *
+     */
     function integrity_testing()
     {
 

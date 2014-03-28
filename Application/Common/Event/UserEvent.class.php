@@ -10,6 +10,10 @@
 namespace Common\Event;
 
 
+/**
+ * Class UserEvent
+ * @package Common\Event
+ */
 class UserEvent {
 
 }

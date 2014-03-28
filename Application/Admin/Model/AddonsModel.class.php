@@ -19,6 +19,10 @@ class AddonsModel extends Model
 
     }
 
+    /**
+     * @param $result
+     * @param $options
+     */
     protected function _after_select(&$result, $options)
     {
 

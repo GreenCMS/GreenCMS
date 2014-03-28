@@ -11,10 +11,17 @@ namespace Weixin\Controller;
 
 use Common\Controller\BaseController;
 
+/**
+ * Class WeixinCoreController
+ * @package Weixin\Controller
+ */
 abstract class WeixinCoreController extends BaseController
 {
 
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -24,6 +31,9 @@ abstract class WeixinCoreController extends BaseController
 
     }
 
+    /**
+     * @return bool|mixed
+     */
     public function getAccess()
     {
 

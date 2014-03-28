@@ -12,9 +12,16 @@ namespace Admin\Controller;
 use Common\Util\File;
 use Think\Think;
 
+/**
+ * Class MediaController
+ * @package Admin\Controller
+ */
 class MediaController extends AdminBaseController
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -22,11 +29,17 @@ class MediaController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function file()
     {
         $this->display();
     }
 
+    /**
+     *
+     */
     public function fileConnect()
     {
         $roots = array('Upload/', 'Public/', 'Application/');
@@ -37,6 +50,10 @@ class MediaController extends AdminBaseController
         include WEB_ROOT . 'Extend/GreenFinder/php/connector.php'; //包含elfinder自带php接口的入口文件
     }
 
+    /**
+     * @param array $paths
+     * @return array
+     */
     private function __array($paths = array())
     {
         $opts = array(
@@ -60,6 +77,9 @@ class MediaController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function backupFile()
     {
         $root = File::scanDir(WEB_ROOT,true);
@@ -78,6 +98,9 @@ class MediaController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     *
+     */
     public function backupFileHandle()
     {
 
@@ -88,6 +111,9 @@ class MediaController extends AdminBaseController
             $this->success('成功备份到文件'.$res['info']);
     }
 
+    /**
+     *
+     */
     public function restoreFile()
     {
 

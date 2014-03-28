@@ -3,6 +3,10 @@
 namespace Weixin\Util;
 
 
+/**
+ * Class ThinkWechat
+ * @package Weixin\Util
+ */
 class ThinkWechat
 {
 

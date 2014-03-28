@@ -16,6 +16,9 @@ use Think\Controller;
  */
 abstract class BaseController extends Controller
 {
+    /**
+     *
+     */
     function __construct()
     {
         parent::__construct();
@@ -24,6 +27,9 @@ abstract class BaseController extends Controller
 
     }
 
+    /**
+     * @return array|mixed
+     */
     function getKvs()
     {
         $kv_array = S('kv_array');
@@ -77,6 +83,9 @@ abstract class BaseController extends Controller
         }
     }
 
+    /**
+     *
+     */
     function is_sae()
     {
         if (defined('SAE_TMP_PATH')) {
@@ -84,6 +93,11 @@ abstract class BaseController extends Controller
         }
     }
 
+    /**
+     * @param int $status
+     * @param string $info
+     * @param string $url
+     */
     function json_return($status = 1, $info = '', $url = '')
     {
         die(json_encode(array("status" => $status, "info" => $info, "url" => $url)));

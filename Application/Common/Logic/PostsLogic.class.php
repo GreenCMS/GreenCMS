@@ -110,6 +110,10 @@ class PostsLogic extends RelationModel
             return false;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function verify($id)
     {
         $info['post_id'] = $id;
@@ -121,6 +125,10 @@ class PostsLogic extends RelationModel
 
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function unverify($id)
     {
         $info['post_id'] = $id;
