@@ -21,16 +21,17 @@ class CommonWidget extends Controller
     /**
      * @param string $ul_attr
      * @param string $li_attr
+     * @param string $split
      */
-    public function mainMenu($ul_attr = 'class="navigation"', $li_attr = '')
+    public function mainMenu($ul_attr = 'class="navigation"', $li_attr = '', $split = '')
     {
 
         $Menu = new MenuLogic();
-        $home_menu = $Menu->genMenu('head', $ul_attr, $li_attr);
+        $home_menu = $Menu->genMenu('head', $ul_attr, $li_attr, $split);
 
         $this->assign('home_menu', $home_menu);
 
         $this->display('Widget:mainMenu');
 
-     }
+    }
 }

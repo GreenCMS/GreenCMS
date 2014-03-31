@@ -7,6 +7,7 @@
  * Time: 下午1:40
  */
 namespace Home\Controller;
+use Think\Hook;
 
 /**
  * Class IndexController
@@ -28,11 +29,19 @@ class IndexController extends HomeBaseController
      */
     public function index()
     {
+
+        Hook::listen('home_index');
+
         $this->display('index');
     }
 
 
+    public function _empty($method, $args)
+    {
+        Hook::listen('home_index_empty');
 
+
+    }
 
 //    function wordpressImport()
 //    {

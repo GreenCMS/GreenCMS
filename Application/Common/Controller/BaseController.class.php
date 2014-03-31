@@ -7,7 +7,7 @@
  * Time: 下午1:44
  */
 namespace Common\Controller;
-
+use Think\Hook;
 use Think\Controller;
 
 /**
@@ -48,6 +48,8 @@ abstract class BaseController extends Controller
             if (APP_Cache) S('kv_array', $res_array);
         }
 
+        Hook::listen('base_getKvs');
+
         C('kv', $res_array);
         return $res_array;
     }
@@ -69,6 +71,7 @@ abstract class BaseController extends Controller
             C($config['option_name'], $config['option_value']);
         }
 
+        Hook::listen('base_customConfig');
 
     }
 

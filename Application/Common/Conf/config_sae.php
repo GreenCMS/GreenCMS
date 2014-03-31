@@ -9,6 +9,11 @@ return array(
     'DB_USER'   => SAE_MYSQL_USER,
     'DB_PWD'    => SAE_MYSQL_PASS,
     'DB_PORT'   => SAE_MYSQL_PORT,
-    'DB_PREFIX' => ''
+    'DB_PREFIX' => '',
+
+
+    'SaeStorage' => 'upload'
+
+
 
     );

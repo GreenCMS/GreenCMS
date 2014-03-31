@@ -54,33 +54,36 @@ class MenuLogic extends Model
      * @param string $menu_position
      * @param string $ul_attr
      * @param string $li_attr
+     * @param string $split
      * @return string
      */
-    public function genMenu($menu_position = 'head',$ul_attr='class="navigation"',$li_attr='')
+    public function genMenu($menu_position = 'head', $ul_attr = 'class="navigation"', $li_attr = '', $split = '')
     {
 
-        $menu = $this->getMenu('head');
+        $menu = $this->getMenu($menu_position);
 
-        $res = '<ul '.$ul_attr.'>';
+        $res = '<ul ' . $ul_attr . '>';
         foreach ($menu as $key => $value) {
             $class = '';
             if (!empty($value['menu_children'])) {
                 $class = 'class="arrow"';
             }
-            $res .= ' <li '.$li_attr.'><a ' . $class . ' target="' . $value['menu_action'] . '" href="' . $value['menu_abs_url'] . '">' . $value['menu_name'] . '</a>';
+            $res .= ' <li ' . $li_attr . '><a ' . $class . ' target="' . $value['menu_action'] . '" href="' . $value['menu_abs_url'] . '">' . $value['menu_name'] . '</a>';
 
             if (!empty($value['menu_children'])) {
                 $res .= '<ul>';
 
                 foreach (array_sort($value['menu_children'], 'menu_sort') as $key => $value) {
-                    $res .= ' <li '.$li_attr.'><a target="' . $value['menu_action'] . '" href="' . $value['menu_abs_url'] . '">' . $value['menu_name'] . '</a></li>';
+                    $res .= ' <li ' . $li_attr . '><a target="' . $value['menu_action'] . '" href="' . $value['menu_abs_url'] . '">' . $value['menu_name'] . '</a></li>';
 
                 }
                 $res .= '</ul>';
             }
 
-
             $res .= '</li>';
+
+            $res .= $split;
+
         }
 
         $res .= '</ul>';

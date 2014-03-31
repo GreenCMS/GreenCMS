@@ -28,7 +28,6 @@ class UeditorController extends AdminBaseController
         error_reporting(E_ERROR | E_WARNING);
     }
 
-
     /**
      *
      */
@@ -136,35 +135,13 @@ class UeditorController extends AdminBaseController
             $up = new Uploader("content", $config, true);
             //上传成功后删除临时目录
             if (file_exists($tmpPath)) {
-                delDir($tmpPath);
+                File::delDir($tmpPath);
+                // delDir($tmpPath);
             }
             $info = $up->getFileInfo();
             echo "{'url':'" . $info["url"] . "',state:'" . $info["state"] . "'}";
         }
-        /**
-         * 删除整个目录
-         * @param $dir
-         *
-         * @return bool
-         */
-        function delDir($dir)
-        {
-            //先删除目录下的所有文件：
-            $dh = opendir($dir);
-            while ($file = readdir($dh)) {
-                if ($file != "." && $file != "..") {
-                    $fullpath = $dir . "/" . $file;
-                    if (!is_dir($fullpath)) {
-                        unlink($fullpath);
-                    } else {
-                        delDir($fullpath);
-                    }
-                }
-            }
-            closedir($dh);
-            //删除当前文件夹：
-            return rmdir($dir);
-        }
+
     }
 
     /**
@@ -223,9 +200,9 @@ class UeditorController extends AdminBaseController
             ob_start();
             $context = stream_context_create(
                 array(
-                    'http' => array(
-                        'follow_location' => false // don't follow redirects
-                    )
+                     'http' => array(
+                         'follow_location' => false // don't follow redirects
+                     )
                 )
             );
             //请确保php.ini中的fopen wrappers已经激活
@@ -243,14 +220,15 @@ class UeditorController extends AdminBaseController
             //创建保存位置
             $savePath = $config['savePath'];
             if (!file_exists($savePath)) {
-                mkdir("$savePath", 0777, true);
+                mkdir($savePath, 0777, true);
             }
             //写入文件
             $tmpName = $savePath . rand(1, 10000) . time() . strrchr($imgUrl, '.');
             try {
-                $fp2 = @fopen($tmpName, "a");
-                fwrite($fp2, $img);
-                fclose($fp2);
+                File::writeFile($tmpName, $img, "a");
+//                $fp2 = @fopen($tmpName, "a");
+//                fwrite($fp2, $img);
+//                fclose($fp2);
                 array_push($tmpNames, $tmpName);
             } catch (Exception $e) {
                 array_push($tmpNames, "error");
@@ -268,7 +246,8 @@ class UeditorController extends AdminBaseController
     }
 
     /**
-     *
+     * 无需移植
+     * @function getMovie
      */
     public function getMovie()
     {
@@ -279,9 +258,8 @@ class UeditorController extends AdminBaseController
         echo $html;
     }
 
-
     /**
-     *
+     * @function imageManager
      */
     public function imageManager()
     {
@@ -325,7 +303,7 @@ class UeditorController extends AdminBaseController
                 *  参数：存储域，路径前缀，返回条数，起始条数
                 */
                 $num = 0;
-                while ($ret = $st->getList("upload", null, 100, $num)) {
+                while ($ret = $st->getList(C('SaeStorage'), null, 100, $num)) {
                     foreach ($ret as $file) {
                         if (preg_match("/\.(gif|jpeg|jpg|png|bmp)$/i", $file))
                             echo $st->getUrl('upload', $file) . "ue_separate_ue";
@@ -341,7 +319,7 @@ class UeditorController extends AdminBaseController
     }
 
     /**
-     *
+     * @function imageUp
      */
     public function imageUp()
     {
