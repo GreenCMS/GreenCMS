@@ -14,6 +14,10 @@ namespace Common\Util;
  * Class GreenPage
  * @package Common\Util
  */
+/**
+ * Class GreenPage
+ * @package Common\Util
+ */
 class GreenPage
 {
 

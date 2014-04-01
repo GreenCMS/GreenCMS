@@ -41,6 +41,10 @@ class UserLogic extends RelationModel
     }
 
 
+    /**
+     * @param $authInfo
+     * @return string
+     */
     public function genHash(& $authInfo)
     {
         $User = D('User', 'Logic');

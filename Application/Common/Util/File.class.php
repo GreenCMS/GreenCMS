@@ -10,14 +10,26 @@
 namespace Common\Util;
 
 
+/**
+ * Class File
+ * @package Common\Util
+ */
 class File
 {
 
+    /**
+     * @param $filename
+     * @return bool
+     */
     public static function file_exists($filename)
     {
        return file_exists($filename);
     }
 
+    /**
+     * @param $bytes
+     * @return string
+     */
     public static function byteFormat($bytes)
     {
         $size_text = array(" B", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB");
@@ -25,6 +37,10 @@ class File
     }
 
 
+    /**
+     * @param $filename
+     * @return string
+     */
     static public function readFile($filename)
     {
         $content = '';
@@ -40,6 +56,12 @@ class File
     }
 
 
+    /**
+     * @param $filename
+     * @param $writetext
+     * @param string $openmod
+     * @return bool
+     */
     public static function writeFile($filename, $writetext, $openmod = 'w')
     {
         if (@$fp = fopen($filename, $openmod)) {
@@ -53,6 +75,10 @@ class File
     }
 
 
+    /**
+     * @param $file
+     * @return bool
+     */
     public static function delFile($file)
     {
         if (file_exists($file)) {
@@ -63,6 +89,11 @@ class File
     }
 
 
+    /**
+     * @param $path
+     * @param bool $delDir
+     * @return bool
+     */
     public static function delAll($path, $delDir = false)
     {
         $handle = opendir($path);
@@ -84,6 +115,10 @@ class File
     }
 
 
+    /**
+     * @param $dirName
+     * @return bool
+     */
     public static function delDir($dirName)
     {
         if (!file_exists($dirName)) {
@@ -106,6 +141,11 @@ class File
     }
 
 
+    /**
+     * @param $surDir
+     * @param $toDir
+     * @return bool
+     */
     public static function copyDir($surDir, $toDir)
     {
         $surDir = rtrim($surDir, '/') . '/';
@@ -133,6 +173,10 @@ class File
         return true;
     }
 
+    /**
+     * @param $dir
+     * @return bool
+     */
     public static function mkDir($dir)
     {
         $dir = rtrim($dir, '/') . '/';
@@ -173,6 +217,11 @@ class File
         return $files;
     }
 
+    /**
+     * @param $dir
+     * @param bool $doc
+     * @return array
+     */
     public static function getDirs($dir, $doc = false)
     {
         $dir = rtrim($dir, '/') . '/';
@@ -201,6 +250,10 @@ class File
     }
 
 
+    /**
+     * @param $dir
+     * @return int|string
+     */
     public static function dirSize($dir)
     {
         if (self::readable($dir)) {
@@ -222,6 +275,10 @@ class File
         }
     }
 
+    /**
+     * @param null $dir
+     * @return string
+     */
     public static function realSize($dir = null)
     {
         if (self::readable($dir)) {
@@ -236,6 +293,10 @@ class File
     }
 
 
+    /**
+     * @param null $dir
+     * @return bool
+     */
     public static function readable($dir = null)
     {
         if (($frst = file_get_contents($dir)) && is_file($dir)) {
@@ -249,6 +310,10 @@ class File
         }
     }
 
+    /**
+     * @param null $dir
+     * @return bool
+     */
     public static function writeable($dir = null)
     {
         if (is_file($dir)) { // 对文件的判断
@@ -268,6 +333,10 @@ class File
         };
     }
 
+    /**
+     * @param $dir
+     * @return bool
+     */
     public static function emptyDir($dir)
     {
         if (($files = @scandir($dir)) && count($files) <= 2)
@@ -276,11 +345,21 @@ class File
 
     }
 
+    /**
+     * @param $path
+     * @param int $property
+     * @return bool
+     */
     public static function makeDir($path, $property = 0777)
     {
         return is_dir($path) or (self::makeDir(dirname($path), $property) and @mkdir($path, $property));
     }
 
+    /**
+     * @param $dir
+     * @param bool $file
+     * @return array
+     */
     public static function scanDir($dir, $file = false)
     {
         if ($file == true) {

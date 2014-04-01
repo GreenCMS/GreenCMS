@@ -13,6 +13,10 @@ use Common\Logic\PostsLogic;
 use Common\Util\GreenPage;
 use Org\Util\Rbac;
 
+/**
+ * Class PostsController
+ * @package Admin\Controller
+ */
 class PostsController extends AdminBaseController
 {
     /**
@@ -141,6 +145,9 @@ class PostsController extends AdminBaseController
     }
 
 
+    /**
+     * @return mixed
+     */
     private function dataHandle()
     {
         $data['post_type'] = I('post.post_type', 'single');
@@ -194,6 +201,9 @@ class PostsController extends AdminBaseController
 
     }
 
+    /**
+     * @param int $id
+     */
     public function preDel($id = 0)
     {
         if (D('Posts', 'Logic')->preDel($id)) {
@@ -203,6 +213,9 @@ class PostsController extends AdminBaseController
         }
     }
 
+    /**
+     * @param int $id
+     */
     public function del($id = 0)
     {
 
@@ -213,6 +226,9 @@ class PostsController extends AdminBaseController
         }
     }
 
+    /**
+     * @param string $post_type
+     */
     public function unverified($post_type = "all")
     {
         $where['post_status'] = 'unverified';
@@ -223,6 +239,10 @@ class PostsController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     * @param $id
+     * @param string $post_status
+     */
     public function unverifiedHandle($id, $post_status = 'publish')
     {
 
@@ -241,6 +261,9 @@ class PostsController extends AdminBaseController
 
     }
 
+    /**
+     * @param string $post_type
+     */
     public function recycle($post_type = "all")
     {
         $where['post_status'] = 'preDel';
@@ -252,6 +275,9 @@ class PostsController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     * @param int $id
+     */
     public function recycleHandle($id = 0)
     {
 
@@ -263,6 +289,9 @@ class PostsController extends AdminBaseController
         }
     }
 
+    /**
+     * @param $id
+     */
     public function posts($id = -1)
     {
 
@@ -324,6 +353,9 @@ class PostsController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function category()
     {
 
@@ -340,6 +372,9 @@ class PostsController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     *
+     */
     public function addCategory()
     {
         $action = '添加';
@@ -351,6 +386,9 @@ class PostsController extends AdminBaseController
         $this->display('addcategory');
     }
 
+    /**
+     *
+     */
     public function addCategoryHandle()
     {
 
@@ -370,6 +408,9 @@ class PostsController extends AdminBaseController
         }
     }
 
+    /**
+     * @param $id
+     */
     public function editCategory($id)
     {
 
@@ -385,6 +426,9 @@ class PostsController extends AdminBaseController
         $this->display('editcategory');
     }
 
+    /**
+     * @param $id
+     */
     public function editCategoryHandle($id)
     {
 
@@ -402,6 +446,9 @@ class PostsController extends AdminBaseController
         }
     }
 
+    /**
+     * @param $id
+     */
     public function delCategory($id = -1)
     {
 
@@ -425,6 +472,9 @@ class PostsController extends AdminBaseController
         }
     }
 
+    /**
+     *
+     */
     public function tag()
     {
 
@@ -434,12 +484,18 @@ class PostsController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     *
+     */
     public function addTag()
     {
 
         $this->display();
     }
 
+    /**
+     *
+     */
     public function addTagHandle()
     {
         $data['tag_name'] = I('post.tag_name');
@@ -454,6 +510,9 @@ class PostsController extends AdminBaseController
         }
     }
 
+    /**
+     * @param $id
+     */
     public function editTag($id)
     {
         $action = '编辑';
@@ -465,6 +524,9 @@ class PostsController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     * @param $id
+     */
     public function editTagHandle($id)
     {
 
@@ -480,6 +542,9 @@ class PostsController extends AdminBaseController
         }
     }
 
+    /**
+     * @param $id
+     */
     public function delTag($id = -1)
     {
         if (D('Tags')->relation(true)->delete($id)) {

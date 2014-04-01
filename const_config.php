@@ -19,54 +19,63 @@
  */
 define ('RUNTIME_PATH', WEB_ROOT . 'Data/Temp/');
 
-/** 定义项目日志文件路径
- *  此目录必须可写，建议移动到非WEB目录
+/**
+ * 定义项目日志文件路径
+ * 此目录必须可写，建议移动到非WEB目录
  */
 define('LOG_PATH', WEB_ROOT . "Data/Log/");
 
-/**定义Cache目录
- *  此目录必须可写，建议移动到非WEB目录
+/**
+ * 定义Cache目录
+ * 此目录必须可写，建议移动到非WEB目录
  */
 define('WEB_CACHE_PATH', WEB_ROOT . "Data/Cache/");
 
-/**系统备份数据库文件存放目录
- *  此目录必须可写，建议移动到非WEB目录
+/**
+ * 系统备份数据库文件存放目录
+ * 此目录必须可写，建议移动到非WEB目录
  */
 define("DB_Backup_PATH", WEB_ROOT . "Data/DBbackup/");
 
 /**
  * 系统备份文件存放目录
+ * 此目录必须可写，建议移动到非WEB目录
  */
 define("System_Backup_PATH", WEB_ROOT . "Data/Backup/");
 
 /**
  * 系统升级文件存放目录
+ * 此目录必须可写，建议移动到非WEB目录
  */
 define("Upgrade_PATH", WEB_ROOT . "Data/Upgrade/");
 
 /**
  * HTML静态缓存存放目录
+ * 此目录必须可写，建议移动到非WEB目录
  */
 define("HTML_PATH", WEB_ROOT . "Data/Temp/HTML/");
 
 /**
+ * 扩展存放目录
+ * 此目录必须可写，建议移动到非WEB目录
  */
 define("Extend_PATH", WEB_ROOT . "Extend/");
 
 /**
+ * 插件存放目录
+ * 此目录必须可写，建议移动到非WEB目录
  */
-define("Plugin_PATH", WEB_ROOT . "Extend/Plugin/");
-
-
 define('Addon_PATH', WEB_ROOT . "Addons/");
+
 /**
  * 上传文件存放目录
+ * 此目录必须可写
  */
 define("Upload_PATH", "Upload/");
 
-
 /**
  * TIME_FIX
+ *
  */
 define("TIME_FIX", 0);
 

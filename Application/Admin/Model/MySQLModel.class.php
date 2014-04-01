@@ -12,6 +12,10 @@ namespace Admin\Model;
 
 use Think\Model;
 
+/**
+ * Class MySQLModel
+ * @package Admin\Model
+ */
 class MySQLModel // extends Model
 {
 

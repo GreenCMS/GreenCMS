@@ -13,9 +13,16 @@ use Common\Controller\BaseController;
 use Org\Util\Rbac;
 use Think\Controller;
 
+/**
+ * Class LoginController
+ * @package Admin\Controller
+ */
 class LoginController extends BaseController
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -25,6 +32,9 @@ class LoginController extends BaseController
     }
 
 
+    /**
+     *
+     */
     public function _before_index()
     {
         $user_session = cookie('user_session');
@@ -45,11 +55,17 @@ class LoginController extends BaseController
         }
     }
 
+    /**
+     *
+     */
     public function index()
     {
         $this->display();
     }
 
+    /**
+     *
+     */
     public function login()
     {
         // $ipLocation = new IpLocation();
@@ -92,11 +108,17 @@ class LoginController extends BaseController
     }
 
 
+    /**
+     *
+     */
     public function forgetPassword()
     {
 
     }
 
+    /**
+     *
+     */
     public function logout()
     {
         $User = D('User', 'Logic');

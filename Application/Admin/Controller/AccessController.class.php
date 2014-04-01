@@ -12,15 +12,25 @@ namespace Admin\Controller;
 
 use Common\Util\Category;
 
+/**
+ * Class AccessController
+ * @package Admin\Controller
+ */
 class AccessController extends AdminBaseController
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
      }
 
     // 用户列表
+    /**
+     *
+     */
     public function index()
     {
         $list = D('Access', 'Logic')->adminList();
@@ -31,6 +41,9 @@ class AccessController extends AdminBaseController
     }
 
     // 游客列表
+    /**
+     *
+     */
     public function guest()
     {
         $list = D('Access', 'Logic')->guestList();
@@ -42,6 +55,9 @@ class AccessController extends AdminBaseController
     }
 
     // 用户锁定处理
+    /**
+     * @param $id
+     */
     public function indexlocked($id)
     {
         // 锁定用户
@@ -54,6 +70,9 @@ class AccessController extends AdminBaseController
     }
 
     // 用户解锁处理
+    /**
+     * @param $id
+     */
     public function indexlock($id)
     {
         // 解锁用户
@@ -67,6 +86,9 @@ class AccessController extends AdminBaseController
 
 
     // 角色列表
+    /**
+     *
+     */
     public function rolelist()
     {
         $this->assign('rolelist', D('Access', 'Logic')->roleList());
@@ -75,6 +97,9 @@ class AccessController extends AdminBaseController
 
 
     // 节点列表
+    /**
+     *
+     */
     public function nodelist()
     {
 //        $field = array(
@@ -93,6 +118,9 @@ class AccessController extends AdminBaseController
 
 
     // 添加用户
+    /**
+     *
+     */
     public function addUser()
     {
         $this->action_name = 'addUser';
@@ -103,6 +131,9 @@ class AccessController extends AdminBaseController
     }
 
     // 添加用户表单接受
+    /**
+     *
+     */
     public function addUserHandle()
     {
         $w = htmlspecialchars(trim($_POST ['user_login']));
@@ -189,6 +220,9 @@ class AccessController extends AdminBaseController
         }
     }
 
+    /**
+     * @param $aid
+     */
     public function delUser($aid = -1)
     {
         $user = M('User')->where(array("user_id" => $aid))->find();
@@ -216,6 +250,9 @@ class AccessController extends AdminBaseController
     }
 
     // 添加角色
+    /**
+     *
+     */
     public function addRole()
     {
         if (IS_POST) {
@@ -229,6 +266,9 @@ class AccessController extends AdminBaseController
         }
     }
 
+    /**
+     *
+     */
     public function editRole()
     {
         if (IS_POST) {
@@ -249,6 +289,9 @@ class AccessController extends AdminBaseController
         }
     }
 
+    /**
+     *
+     */
     public function changeRole()
     {
         if (IS_POST) {
@@ -286,18 +329,27 @@ class AccessController extends AdminBaseController
         }
     }
 
+    /**
+     *
+     */
     public function opNodeStatus()
     {
         header('Content-Type:application/json; charset=utf-8');
         echo json_encode(D('Access', 'Logic')->opStatus("Node"));
     }
 
+    /**
+     *
+     */
     public function opRoleStatus()
     {
         header('Content-Type:application/json; charset=utf-8');
         echo json_encode(D('Access', 'Logic')->opStatus("Role"));
     }
 
+    /**
+     *
+     */
     public function opSort()
     {
         $M = M("Node");
@@ -312,6 +364,9 @@ class AccessController extends AdminBaseController
     }
 
     // 添加角色接受表单
+    /**
+     *
+     */
     public function addRoleHandle()
     {
         if (M('Role')->add($_POST)) {
@@ -322,6 +377,9 @@ class AccessController extends AdminBaseController
     }
 
     // 添加节点
+    /**
+     *
+     */
     public function addNode()
     {
         /*
@@ -339,6 +397,9 @@ class AccessController extends AdminBaseController
     }
 
     // 编辑节点
+    /**
+     *
+     */
     public function editNode()
     {
         if (IS_POST) {
@@ -360,6 +421,9 @@ class AccessController extends AdminBaseController
     }
 
     // 添加节点接受表单
+    /**
+     *
+     */
     public function addNodeHandle()
     {
         // print_r($_POST);
@@ -372,6 +436,10 @@ class AccessController extends AdminBaseController
 
     /*
      * // 配置权限 public function access() { $rid = $_GET ['rid']; // 读取有用字段 $field = array ( 'id', 'name', 'title', 'pid' ); $node = M ( 'node' )->order ( 'sort' )->field ( $field )->select (); // 读取用户原有权限 $access = M ( 'access' )->where ( array ( 'role_id' => $rid ) )->getField ( 'node_id', true ); $node = node_merge ( $node, $access ); $this->assign ( 'rid', $rid ); $this->assign ( 'node', $node ); $this->display (); } // 配置权限接受表单 public function setAccess() { $rid = $_POST ['rid']; $db = M ( 'access' ); // 删除原权限 $db->where ( array ( 'role_id' => $rid ) )->delete (); // 组合新权限 $data = array (); foreach ( $_POST ['access'] as $v ) { $tmp = explode ( '_', $v ); $data [] = array ( 'role_id' => $rid, 'node_id' => $tmp [0], 'level' => $tmp [1] ); } // 插入新权限 if ($db->addAll ( $data )) { $this->success ( '修改成功！', U ( 'relo' ) ); } else { $this->error ( '修改失败！' ); } }
+     */
+    /**
+     * @param array $info
+     * @return array
      */
     private function getRole($info = array())
     {
@@ -388,6 +456,10 @@ class AccessController extends AdminBaseController
         return $info;
     }
 
+    /**
+     * @param array $info
+     * @return array
+     */
     private function getRoleListOption($info = array())
     {
         // $cat = new Category('Role', array('id', 'pid', 'name', 'remark'));
@@ -412,6 +484,10 @@ class AccessController extends AdminBaseController
         return $info;
     }
 
+    /**
+     * @param $info
+     * @return mixed
+     */
     private function getPid($info)
     {
         $arr = array(

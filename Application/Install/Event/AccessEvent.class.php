@@ -10,9 +10,16 @@
 namespace Install\Event;
 
 
+/**
+ * Class AccessEvent
+ * @package Install\Event
+ */
 class AccessEvent
 {
     //测试型节点批量添加
+    /**
+     *
+     */
     public function initAdmin()
     {
 
@@ -46,10 +53,11 @@ class AccessEvent
         $PostsController = array_diff(get_class_methods(new \Admin\Controller\PostsController()), $AdminBaseController);
         $MediaController = array_diff(get_class_methods(new \Admin\Controller\MediaController()), $AdminBaseController);
         $UeditorController = array_diff(get_class_methods(new \Admin\Controller\UeditorController()), $AdminBaseController);
+        $ToolsController = array_diff(get_class_methods(new \Admin\Controller\ToolsController()), $AdminBaseController);
 
 
         $Controllers = array('IndexController', 'AccessController', 'CustomController', 'DataController'
-        , 'SystemController', 'MediaController', 'UeditorController', 'PostsController');
+        , 'SystemController', 'MediaController', 'UeditorController', 'PostsController', 'ToolsController');
 
         foreach ($Controllers as $value) {
             $data = array();
@@ -95,6 +103,9 @@ class AccessEvent
 
     }
 
+    /**
+     *
+     */
     public function initWeixin()
     {
 

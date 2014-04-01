@@ -18,12 +18,20 @@ class HooksModel extends Model {
 
     }
 
+    /**
+     * @param $result
+     * @param $options
+     */
     protected function _after_select(&$result,$options){
 
         foreach($result as &$record){
             $this->_after_find($record,$options);
         }
     }
+
+    /**
+     * @var array
+     */
     protected $_validate = array(
         array('name','require','钩子名称必须！'), //默认情况下用正则进行验证
         array('description','require','钩子描述必须！'), //默认情况下用正则进行验证

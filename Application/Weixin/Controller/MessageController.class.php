@@ -47,7 +47,7 @@ class MessageController extends WeixinBaseController
                 $time_remain < 0 ? $message_list[$key]['color'] = 'blue' : $message_list[$key]['color'] = 'red'; //是否过期
                 $time_remain < 0 ? $message_list[$key]['msg'] = '回复消息' : $message_list[$key]['msg'] = '不能回复'; //是否过期
                 $time_remain < 0 ? $message_list[$key]['msg_url'] =
-                    U('Weixin/Message/send', array('openid' => $value['user']['openid'], 'msgid' => $value[MsgId]))
+                    U('Weixin/Message/send', array('openid' => $value['user']['openid'], 'msgid' => $value['MsgId']))
                     : $message_list[$key]['msg_url'] = '#'; //是否过期
 
             }

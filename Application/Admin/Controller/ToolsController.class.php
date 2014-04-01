@@ -10,19 +10,32 @@
 namespace Admin\Controller;
 use Common\Util\File;
 
+/**
+ * Class ToolsController
+ * @package Admin\Controller
+ */
 class ToolsController extends AdminBaseController
 {
+    /**
+     *
+     */
     public function index()
     {
         $this->display();
 
     }
 
+    /**
+     *
+     */
     public function wordpress()
     {
         $this->display();
     }
 
+    /**
+     *
+     */
     public function wordpressHandle()
     {
 

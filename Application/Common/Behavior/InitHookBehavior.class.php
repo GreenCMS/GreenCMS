@@ -8,8 +8,15 @@ use Common\Util\File;
 use Think\Behavior;
 use Think\Hook;
 
+/**
+ * Class InitHookBehavior
+ * @package Common\Behavior
+ */
 class InitHookBehavior extends Behavior
 {
+    /**
+     *
+     */
     public function __construct()
     {
 
@@ -17,6 +24,9 @@ class InitHookBehavior extends Behavior
 
 
     // 行为扩展的执行入口必须是run
+    /**
+     * @param mixed $content
+     */
     public function run(&$content)
     {
 

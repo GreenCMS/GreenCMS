@@ -14,15 +14,25 @@ use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
 
+/**
+ * Class CustomController
+ * @package Admin\Controller
+ */
 class CustomController extends AdminBaseController
 {
 
+    /**
+     *
+     */
     public function index()
     {
         $this->display();
     }
 
     //TODO menu
+    /**
+     *
+     */
     public function menu()
     {
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
@@ -34,6 +44,10 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     * @param $id
+     * @param bool $child
+     */
     public function menuDel($id, $child = false)
     {
         $Menu = D('Menu');
@@ -50,6 +64,9 @@ class CustomController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function menuAdd()
     {
 
@@ -70,6 +87,9 @@ class CustomController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function menuAddHandle()
     {
         $data = $_POST;
@@ -78,6 +98,9 @@ class CustomController extends AdminBaseController
         if ($result) $this->success('添加成功', 'Admin/Custom/menu');
     }
 
+    /**
+     * @param $id
+     */
     public function menuEdit($id)
     {
         $action = '编辑菜单';
@@ -100,6 +123,9 @@ class CustomController extends AdminBaseController
 
     }
 
+    /**
+     * @param $id
+     */
     public function menuEditHandle($id)
     {
         $data = $_POST;
@@ -110,6 +136,10 @@ class CustomController extends AdminBaseController
     }
 
 
+    /**
+     * @param string $theme_name
+     * @return mixed|string
+     */
     private function themeStatus($theme_name = 'Vena')
     {
         $res = get_kv('theme_' . $theme_name, true);
@@ -122,6 +152,9 @@ class CustomController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function theme()
     {
         $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
@@ -170,12 +203,18 @@ class CustomController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function themeAdd()
     {
         $this->display();
     }
 
     //todo 需要检查是否真的成功
+    /**
+     * @param string $theme_name
+     */
     public function themeDisableHandle($theme_name = 'Vena')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
@@ -183,6 +222,9 @@ class CustomController extends AdminBaseController
         $this->success('禁用成功');
     }
 
+    /**
+     * @param string $theme_name
+     */
     public function themeEnableHandle($theme_name = 'Vena')
     {
 
@@ -191,6 +233,9 @@ class CustomController extends AdminBaseController
     }
 
 
+    /**
+     * @param string $theme_name
+     */
     public function themeChangeHandle($theme_name = 'Vena')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
@@ -210,6 +255,9 @@ class CustomController extends AdminBaseController
         }
     }
 
+    /**
+     * @param string $theme_name
+     */
     public function themeDelHandle($theme_name = '')
     {
         if ($this->themeStatus($theme_name) == 'enabled') {
@@ -224,6 +272,9 @@ class CustomController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function plugin()
     {
         $page = I('get.page', C('PAGER'));
@@ -246,6 +297,9 @@ class CustomController extends AdminBaseController
     }
 
     //创建向导首页
+    /**
+     *
+     */
     public function create()
     {
         if (!is_writable(Addon_PATH))
@@ -260,6 +314,10 @@ class CustomController extends AdminBaseController
     }
 
     //预览
+    /**
+     * @param bool $output
+     * @return string
+     */
     public function preview($output = true)
     {
         $data = $_POST;
@@ -348,6 +406,9 @@ str;
             return $tpl;
     }
 
+    /**
+     *
+     */
     public function checkForm()
     {
         $data = $_POST;
@@ -362,6 +423,9 @@ str;
         $this->success('可以创建');
     }
 
+    /**
+     *
+     */
     public function build()
     {
         $data = $_POST;
@@ -634,6 +698,9 @@ str;
         $this->display();
     }
 
+    /**
+     *
+     */
     public function addhook()
     {
         $this->assign('data', null);
@@ -642,6 +709,9 @@ str;
     }
 
     //钩子出编辑挂载插件页面
+    /**
+     * @param $id
+     */
     public function edithook($id)
     {
         $hook = M('Hooks')->field(true)->find($id);
@@ -651,6 +721,9 @@ str;
     }
 
     //超级管理员删除钩子
+    /**
+     * @param $id
+     */
     public function delhook($id)
     {
         if (M('Hooks')->delete($id) !== false) {
@@ -660,6 +733,9 @@ str;
         }
     }
 
+    /**
+     *
+     */
     public function updateHook()
     {
         $hookModel = D('Hooks');
@@ -683,6 +759,11 @@ str;
         }
     }
 
+    /**
+     * @param null $_addons
+     * @param null $_controller
+     * @param null $_action
+     */
     public function execute($_addons = null, $_controller = null, $_action = null)
     {
         if (C('URL_CASE_INSENSITIVE')) {
@@ -710,6 +791,9 @@ str;
         $this->display();
     }
 
+    /**
+     *
+     */
     public function addlink()
     {
 
@@ -757,6 +841,9 @@ str;
         }
     }
 
+    /**
+     * @param $id
+     */
     public function editlink($id)
     {
         if (IS_POST) {
@@ -808,6 +895,9 @@ str;
         }
     }
 
+    /**
+     * @param $id
+     */
     public function dellink($id)
     {
         if (D('Links', 'Logic')->del($id)) {
@@ -835,16 +925,22 @@ str;
         $this->display();
     }
 
+    /**
+     *
+     */
     public function addslider()
     {
 
         $this->display();
     }
 
+    /**
+     * @param $id
+     */
     public function delslider($id)
     {
 
-        if (D("Posts", 'Logic')->where(array('post_type' => 'slider', 'post_type' => $id))->delete()) {
+        if (D("Posts", 'Logic')->where(array('post_type' => 'slider', 'post_id' => $id))->delete()) {
             $this->success('永久删除成功');
         } else {
             $this->error('永久删除失败');

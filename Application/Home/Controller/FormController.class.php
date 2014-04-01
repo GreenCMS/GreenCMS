@@ -12,9 +12,16 @@ namespace Home\Controller;
 
 use Home\Model\FormModel;
 
+/**
+ * Class FormController
+ * @package Home\Controller
+ */
 class FormController extends HomeBaseController
 {
 
+    /**
+     *
+     */
     public function apply()
     {
         if (IS_POST) {
@@ -38,6 +45,9 @@ class FormController extends HomeBaseController
             $this->display();
     }
 
+    /**
+     *
+     */
     public function feedback()
     {
 
