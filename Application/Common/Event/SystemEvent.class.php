@@ -77,7 +77,7 @@ class SystemEvent
         $Zip = new \ZipArchive();
         $PHPZip = new \Common\Util\PHPZip();
 
-        $file_name = $backup_path . date('Ymd') . "_system_backup.zip";
+        $file_name = $backup_path .'system_backup-'. date('Ymd').'-'.md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768)) . ".zip";
         $Zip->open($file_name, \ZIPARCHIVE::CREATE);;
 
         foreach ($dir as $value) {

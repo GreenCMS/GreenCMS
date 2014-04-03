@@ -61,9 +61,58 @@
             <div class="row-fluid">
                 <div class="span12">
 
-                    empty
+                    <form id="myForm">
 
-                   </div>
+                        <table
+                                class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width: 8px;">选择</th>
+                                <th>备份文件名</th>
+                                <th>备份时间</th>
+                                <th class="">文件大小</th>
+                                <th class="">还原</th>
+                                <th class="">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="cache_table">
+                            <volist name="backup" id="backup">
+                                <tr id="{$backup.name}" align="center"><!--|del_sql=###-->
+                                    <td><input type="checkbox" name="backupFiles" value="{$backup.id}"/>
+                                    </td>
+                                    <td style="width: 25%">{$backup.name}</td>
+                                    <td>{$backup.create_time}</td>
+                                    <td>{$backup.size}</td>
+                                    <td>
+
+                                        <a class="btn blue" href="
+                                        {:U('Admin/Media/restoreFileHandle', array('id' => $backup['id']))}
+                                       ">还原</a>
+
+                                    </td>
+                                    <td>
+                                        <a class="btn red" href="{:U('Admin/Media/delFileHandle', array('id' => $backup['id']))}">删除</a>
+
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+
+                    </form>
+
+                </div>
             </div>
             <!-- END PAGE CONTENT-->
         </div>

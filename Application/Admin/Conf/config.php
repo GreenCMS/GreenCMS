@@ -71,8 +71,8 @@ $menu_arr = array(
 
         'Media'  => array(
             'Media/file' => '文件管理',
-            // 'Media/backupFile' => '文件备份',
-            // 'Media/restoreFile' => '文件恢复',
+             'Media/backupFile' => '文件备份',
+             'Media/restoreFile' => '文件恢复',
         ),
 
         'Access' => array(

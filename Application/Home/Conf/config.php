@@ -16,7 +16,7 @@ $config = array(
 
 $config_router = array(
 
-    'URL_HTML_SUFFIX' => 'html',
+    'URL_HTML_SUFFIX' => get_opinion('URL_HTML_SUFFIX', false, 'html'),
     //URL模式
 
     //开启路由!!建议url模型选择2，否则的话建议使用native模式
