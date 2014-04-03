@@ -23,7 +23,7 @@ class File
      */
     public static function file_exists($filename)
     {
-       return file_exists($filename);
+        return file_exists($filename);
     }
 
     /**
@@ -195,20 +195,21 @@ class File
      * @param array $files
      *  文件类型数组
      *
+     * @param string $preg
      * @return array 所有文件路径
      */
-    public static function getFiles($path, &$files = array())
+    public static function getFiles($path, &$files = array(), $preg = "/\.(gif|jpeg|jpg|png|bmp)$/i")
     {
         if (!is_dir($path))
             return null;
         $handle = opendir($path);
         while (false !== ($file = readdir($handle))) {
             if ($file != '.' && $file != '..') {
-                $path2 = $path . '/' . $file;
+                $path2 = $path . $file; //'/' .
                 if (is_dir($path2)) {
                     self::getFiles($path2, $files);
                 } else {
-                    if (preg_match("/\.(gif|jpeg|jpg|png|bmp)$/i", $file)) {
+                    if (preg_match($preg, $file)) {
                         $files [] = $path2;
                     }
                 }
@@ -437,5 +438,27 @@ class File
         return true;
     }
 
+
+    public static function filemtime($file)
+    {
+        return filemtime($file);
+
+    }
+
+
+    public static function filectime($file)
+    {
+        return filectime($file);
+
+
+    }
+
+
+    public static function fileatime($file)
+    {
+        return fileatime($file);
+
+
+    }
 
 }

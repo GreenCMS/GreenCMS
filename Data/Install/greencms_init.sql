@@ -134,7 +134,7 @@ INSERT INTO `{$db_prefix}cats` VALUES ('2','1','test_cat2','测试子分类','')
 -- Records of {$db_prefix}tags
 -- ----------------------------
 INSERT INTO `{$db_prefix}tags` VALUES ('1','测试标签','test_tag','0');
-INSERT INTO `{$db_prefix}tags` VALUES ('1','hello','hello','0');
+INSERT INTO `{$db_prefix}tags` VALUES ('2','hello','hello','0');
 
 -- ----------------------------
 -- Records of {$db_prefix}post_cat
