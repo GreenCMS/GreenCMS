@@ -60,4 +60,16 @@ class CatController extends HomeBaseController
         $this->display('Archive/single-list');
 
     }
+
+
+    public function channel($info)
+    {
+        //TODO 兼容旧式CMS深目录结构的二级cat结构
+        $Cat = new CatsLogic();
+        $cat = $Cat->detail($info);
+        dump($Cat->getChildren($cat['cat_id']));
+
+    }
+
+
 }
