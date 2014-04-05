@@ -140,12 +140,14 @@ class Uploader
                 }
             } else {
                 // SAE环境中
-                $st = new SaeStorage();
+                $st = new \SaeStorage();
                 $url = $st->upload('upload', $this->fullName, $file["tmp_name"]);
                 if (!$url) {
                     $this->stateInfo = $this->getStateInfo("MOVE");
                 } else {
-                    $this->fullName = $url;
+
+
+                    $this->fullName = str_replace('/http', 'http', $url);
                 }
             }
 

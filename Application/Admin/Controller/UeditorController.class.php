@@ -226,9 +226,7 @@ class UeditorController extends AdminBaseController
             $tmpName = $savePath . rand(1, 10000) . time() . strrchr($imgUrl, '.');
             try {
                 File::writeFile($tmpName, $img, "a");
-//                $fp2 = @fopen($tmpName, "a");
-//                fwrite($fp2, $img);
-//                fclose($fp2);
+
                 array_push($tmpNames, $tmpName);
             } catch (Exception $e) {
                 array_push($tmpNames, "error");
@@ -296,7 +294,7 @@ class UeditorController extends AdminBaseController
                 echo $str;
             } else {
                 // SAE环境下
-                $st = new SaeStorage(); // 实例化
+                $st = new \SaeStorage(); // 实例化
                 /*
                 *  getList:获取指定domain下的文件名列表
                 *  return: 执行成功时返回文件列表数组，否则返回false
@@ -306,7 +304,8 @@ class UeditorController extends AdminBaseController
                 while ($ret = $st->getList(C('SaeStorage'), null, 100, $num)) {
                     foreach ($ret as $file) {
                         if (preg_match("/\.(gif|jpeg|jpg|png|bmp)$/i", $file))
-                            echo $st->getUrl('upload', $file) . "ue_separate_ue";
+
+                        echo  $st->getUrl('upload', $file). "ue_separate_ue";
                         $num++;
                     }
                 }
