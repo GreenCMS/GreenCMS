@@ -217,8 +217,6 @@ function array_sort($arr, $keys, $type = 'desc')
 }
 
 
-
-
 /**
  * 二位数组转化为一维数组
  * @param 二维数组
@@ -465,12 +463,36 @@ function gen_opinion_list($list, $select = '')
 /**
  * @param $files
  */
-function create_dir_or_files($files){
+function create_dir_or_files($files)
+{
     foreach ($files as $key => $value) {
-        if(substr($value, -1) == '/'){
+        if (substr($value, -1) == '/') {
             mkdir($value);
-        }else{
+        } else {
             @file_put_contents($value, '');
+        }
+    }
+}
+
+
+//缩略图获取
+function get_post_thumbnail($post)
+{
+
+    if (!empty($post['post_img'])) {
+        echo '<a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic">';
+        echo '<img src="' . $post['post_img'] . '" alt="' . trim(strip_tags($post['post_title'])) . '" />';
+        echo '</a>';
+    } else {
+        $content = $post['post_content'];
+        preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
+        $n = count($strResult[1]);
+        $random = mt_rand(1, 20);
+        if ($n > 0) {
+            echo '<a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="' . $strResult[1][0] . '" alt="' . $post['post_title'] . '" title="' . $post['post_title'] . '"/></a>';
+        } else {
+            echo '<a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="'.get_opinion('site_url').'/Public/share/img/random/tb' . $random . '.jpg" alt="' . $post['post_title'] . '"
+title="' . $post['post_title'] . '"/></a>';
         }
     }
 }
