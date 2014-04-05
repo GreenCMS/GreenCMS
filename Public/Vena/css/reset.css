@@ -142,7 +142,7 @@
 		max-width: 100%;
 		height: auto;}
 		
-	img, object, embed {max-width: 200%; border: 0;}
+	img, object, embed {max-width: 100%; border: 0;}
 	img {height:auto;display: block;}
 	
 	.video-container {

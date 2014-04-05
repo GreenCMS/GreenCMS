@@ -89,7 +89,7 @@ abstract class BaseController extends Controller
     /**
      *
      */
-    function is_sae()
+    function isSae()
     {
         if (defined('SAE_TMP_PATH')) {
             $this->error("当前功能不支持SAE下使用");

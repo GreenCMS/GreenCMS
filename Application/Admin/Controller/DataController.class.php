@@ -24,7 +24,7 @@ class DataController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-        $this->is_sae();
+        $this->isSae();
 
     }
 

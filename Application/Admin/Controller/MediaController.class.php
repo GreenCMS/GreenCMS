@@ -25,7 +25,7 @@ class MediaController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-        $this->is_sae();
+        $this->isSae();
 
     }
 
@@ -153,6 +153,8 @@ class MediaController extends AdminBaseController
 
     public function restoreFileHandle($id = '')
     {
+
+
 
         $file_name = base64_decode($id);
         $System = new \Common\Event\SystemEvent();

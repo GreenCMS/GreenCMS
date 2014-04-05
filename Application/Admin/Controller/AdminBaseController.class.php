@@ -31,6 +31,7 @@ class AdminBaseController extends BaseController
 
         $this->customConfig();
 
+
     }
 
     /**
@@ -139,6 +140,14 @@ class AdminBaseController extends BaseController
                 $options->save($data);
             }
         }
+    }
+
+
+    public function isSuperAdmin()
+    {
+        $uid = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        if ($uid == 1) return true;
+        else return false;
     }
 
 }

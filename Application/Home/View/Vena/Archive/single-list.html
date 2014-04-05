@@ -69,8 +69,11 @@
                 <article class="post">
 
                     <div class="post-content medium clearfix">
+                        <div class="three columns alpha">
+                            {$post|get_post_thumbnail}
+                        </div>
 
-                        <div class="eleven columns omega">
+                        <div class="nine columns omega">
                             <!-- Title -->
                             <h2>
                                 <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
@@ -114,6 +117,7 @@
                                 More</a>
 
                         </div>
+
                     </div>
 
                 </article>
