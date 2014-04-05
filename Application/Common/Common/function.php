@@ -480,7 +480,7 @@ function get_post_thumbnail($post)
 {
 
     if (!empty($post['post_img'])) {
-        echo '<a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic">';
+        echo '<a class="thumbnail" href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic">';
         echo '<img src="' . $post['post_img'] . '" alt="' . trim(strip_tags($post['post_title'])) . '" />';
         echo '</a>';
     } else {
@@ -489,9 +489,9 @@ function get_post_thumbnail($post)
         $n = count($strResult[1]);
         $random = mt_rand(1, 20);
         if ($n > 0) {
-            echo '<a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="' . $strResult[1][0] . '" alt="' . $post['post_title'] . '" title="' . $post['post_title'] . '"/></a>';
+            echo '<a class="thumbnail" href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="' . $strResult[1][0] . '" alt="' . $post['post_title'] . '" title="' . $post['post_title'] . '"/></a>';
         } else {
-            echo '<a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="'.get_opinion('site_url').'/Public/share/img/random/tb' . $random . '.jpg" alt="' . $post['post_title'] . '"
+            echo '<a class="thumbnail" href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="' . get_opinion('site_url') . '/Public/share/img/random/tb' . $random . '.jpg" alt="' . $post['post_title'] . '"
 title="' . $post['post_title'] . '"/></a>';
         }
     }
