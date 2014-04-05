@@ -626,18 +626,28 @@ str;
     {
         $this->meta_title = '钩子列表';
         $map = $fields = array();
-        $list = $this->lists(D("Hooks")->field($fields), $map);
-        int_to_string($list, array('type' => C('HOOKS_TYPE')));
+        $order = "id DESC";
+        $list = D("Hooks")->field($fields)->order($order)->select();
+        // dump($list);die;
+        // int_to_string($list, array('type' => "C('HOOKS_TYPE')"));
         // 记录当前列表页的cookie
         Cookie('__forward__', $_SERVER['REQUEST_URI']);
+        // dump($list);die;
+        
+        $count = count($list);
+        $page = I('get.page', C('PAGER'));
+        $p = new GreenPage ($count, $page);
+        $this->assign('page', $p->show());
+
         $this->assign('list', $list);
+        $this->assign('action', '钩子管理');
         $this->display();
     }
 
     public function addhook()
     {
-        $this->assign('data', null);
-        $this->meta_title = '新增钩子';
+        $this->assign('info', null);
+        $this->action = '添加钩子';
         $this->display('edithook');
     }
 
@@ -645,8 +655,8 @@ str;
     public function edithook($id)
     {
         $hook = M('Hooks')->field(true)->find($id);
-        $this->assign('data', $hook);
-        $this->meta_title = '编辑钩子';
+        $this->assign('info', $hook);
+        $this->action = '编辑钩子';
         $this->display('edithook');
     }
 

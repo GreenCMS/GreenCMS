@@ -12,6 +12,7 @@
     <meta name="description" content="GreenCMS"/>
     <meta name="keywords" content="GreenCMS"/>
     <include file="Public:head"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
 
     <title>{$action} | {:get_opinion('title')}</title>
 </head>
@@ -30,6 +31,8 @@
     <!-- BEGIN SIDEBAR -->
     <div class="page-sidebar nav-collapse collapse">
         <!-- BEGIN SIDEBAR MENU -->
+
+
         {:W('Common/sideBar')}
         <!-- END SIDEBAR MENU -->
     </div>
@@ -51,6 +54,12 @@
                             <a href="{$module_url}">{$module}</a>
                             <i class="icon-angle-right"></i>
                         </li>
+
+                        <li>
+                            <a href="{:U('Admin/Custom/plugin')}">插件管理</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+
                         <li><a href="{$action_url}">{$action}</a></li>
                     </ul>
                     <!-- END PAGE TITLE & BREADCRUMB-->
@@ -60,19 +69,13 @@
             <!-- BEGIN PAGE CONTENT-->
             <div class="row-fluid">
                 <div class="span12">
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <div class="portlet-body">
                         <div class="clearfix">
                             <div class="btn-group">
-                                <a href="{:U('Admin/Custom/create')}">
-                                    <button type="submit" class="btn green" name="postAdd" value='1'>
-                                        <i class="icon-plus"></i> 创建插件
-                                    </button>
-                                </a>
-                            </div>
-                            <div class="btn-group">
-                                <a href="{:U('Admin/Custom/hooks')}">
-                                    <button type="submit" class="btn red" name="hooks" value='1'>
-                                        <i class="icon-plus"></i> 钩子管理
+                                <a href="{:U('Admin/Custom/addhook')}">
+                                    <button type="submit" class="btn green" name="addhook" value='1'>
+                                        <i class="icon-plus"></i> 添加钩子
                                     </button>
                                 </a>
                             </div>
@@ -80,34 +83,21 @@
                     </div>
                     <table class="table table-bordered table-hover" class="tab">
                         <tr>
+                            <th class="hidden-480">ID</th>
                             <th class="hidden-480">名称</th>
-                            <th class="hidden-480">标识</th>
                             <th class="hidden-480">描述</th>
-                            <th class="hidden-480">状态</th>
-                            <th class="hidden-480">作者</th>
-                            <th class="hidden-480">版本</th>
+                            <th class="hidden-480">类型</th>
                             <th class="hidden-480">操作</th>
                         </tr>
                         <volist name="list" id="vo">
                             <tr>
-                                <td class="hidden-480">{$vo.title}</td>
-                                <td class="hidden-480">{$vo.name}</td>
+                                <td class="hidden-480">{$vo.id}</td>
+                                <td class="hidden-480"><a href="{:U('edithook?id='.$vo['id'])}">{$vo.name}</a></td>
                                 <td class="hidden-480">{$vo.description}</td>
-                                <td class="hidden-480"> {$vo.status|int_to_status}</td>
-                                <td class="hidden-480">{$vo.author}</td>
-                                <td class="hidden-480">{$vo.version}</td>
+                                <td class="hidden-480"><eq name="vo.type" value="1">视图<else />控制器</eq></td>
                                 <td class="hidden-480">
-                                    <a href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>|
-                                    <eq name="vo.status" value="1">
-                                        <a href='javascript:;' onclick="off({$vo.id})">禁用</a>|
-                                        <else/>
-                                        <a href='javascript:;' onclick="on({$vo.id})">启用</a>|
-                                    </eq>
-                                    <eq name="vo.status" value="99">
-                                        <a href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
-                                        <else/>
-                                        <a href="{:U('Admin/Custom/uninstall',array('id'=>$vo['id']) )}">卸载</a>
-                                    </eq>
+                                    <a href="{:U('Admin/Custom/edithook', array('id'=>$vo['id']))}">编辑</a>|
+                                    <a href="{:U('Admin/Custom/delhook', array('id'=>$vo['id']))}">删除</a>
                                 </td>
                             </tr>
                         </volist>
@@ -116,6 +106,7 @@
                         <ul> {$page}</ul>
 
                     </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
             </div>
             <!-- END PAGE CONTENT-->
@@ -129,46 +120,15 @@
 {:W('Common/footer')}
 <!-- END FOOTER -->
 <include file="Public:foot"/>
+<script type="text/javascript" src="__PUBLIC__/admin/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<script src="__PUBLIC__/admin/assets/scripts/form-components.js"></script>
 <script>
-
     jQuery(document).ready(function () {
         App.init();
+        FormComponents.init();
+
     });
-</script>
-<script>
-    function on(id) {
-        $.post("{:U('Admin/Custom/enable')}", {id: id},
-                function (data) {
-                    /*if (data.status == 1) {
-                     window.location.reload(true);
-                     }
-                     else {
-                     //$.dialog.alert(data);
-                     alert(data);
-                     }*/
-                    window.location.reload(true);
-                });
-    }
-
-    function off(id) {
-        $.post("{:U('Admin/Custom/disable')}", {id: id},
-                function (data) {
-                    /*if (data.status == 1) {
-                     window.location.reload(true);
-                     }
-                     else {
-                     //$.dialog.alert(data);
-                     alert(data);
-                     }*/
-                    window.location.reload(true);
-                });
-    }
-
-    function jconfirm(str, url) {
-        $.dialog.confirm(str, function () {
-            window.location.href = url;
-        });
-    }
 </script>
 </body>
 <!-- END BODY -->
