@@ -52,6 +52,8 @@ class ArchiveController extends HomeBaseController
         $this->assign('postslist', $res);
         $this->assign('pager', $pager_bar);
 
+
+        $this->assign('breadcrumbs', get_breadcrumbs('关于"' . $keyword . '"文章搜索结果'));
         $this->display('single-list');
 
     }
@@ -79,6 +81,7 @@ class ArchiveController extends HomeBaseController
         $this->assign('res404', $res404); // 赋值数据集
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
+        $this->assign('breadcrumbs', get_breadcrumbs('所有文章'));
 
         $this->display('single-list');
     }
@@ -106,6 +109,7 @@ class ArchiveController extends HomeBaseController
         $this->assign('res404', $res404); // 赋值数据集
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
+        $this->assign('breadcrumbs', get_breadcrumbs('所有页面'));
 
         $this->display('single-list');
     }

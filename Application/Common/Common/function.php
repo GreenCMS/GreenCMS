@@ -496,3 +496,49 @@ title="' . $post['post_title'] . '"/></a>';
         }
     }
 }
+
+
+function get_breadcrumbs($type, $info='', $ul_attr = ' class="breadcrumbs "',
+                         $li_attr = '', $separator = ' <li><i class="icon-angle-right"></i></li>'
+    , $init = '首页')
+{
+
+    $res = '<ul class="breadcrumbs">
+            <li><a href="' . U("/") . '">' . $init . '</a></li>
+           ' ;
+    if ($type == 'cats') {
+        $Cat = D('Cats', 'Logic');
+        $cat = $Cat->getFather($info);
+        $cat_father = array();
+        $res .= extra_father($cat,$separator);
+    } elseif ($type == 'tags') {
+        $Tag = D('Tags', 'Logic');
+         $tag=$Tag->detail($info,false);
+        $res .= $separator. '<li><a href="' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . '</a></li>' ;
+
+    } elseif ($type == 'single') {
+
+    } elseif ($type == 'page') {
+
+    }else{
+        $res .=$separator.' <li>'.$type.'</li>';
+    }
+
+    $res .= '</ul>';
+    return $res;
+}
+
+
+function extra_father($cat,$separator)
+{
+    $res = '';
+    if ($cat['cat_father_detail'] != '') {
+        $res .= extra_father(($cat['cat_father_detail']),$separator);
+    }
+
+
+    $res .= $separator. '<li><a href="' . getCatURLByID($cat['cat_id']) . '">' . $cat['cat_name'] . '</a></li>' ;
+    return $res;
+
+}
+

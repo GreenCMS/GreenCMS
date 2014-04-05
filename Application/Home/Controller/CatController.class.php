@@ -55,7 +55,7 @@ class CatController extends HomeBaseController
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
-
+        $this->assign('breadcrumbs', get_breadcrumbs('cats',$cat['cat_id']));
 
         $this->display('Archive/single-list');
 
@@ -67,7 +67,7 @@ class CatController extends HomeBaseController
         //TODO 兼容旧式CMS深目录结构的二级cat结构
         $Cat = new CatsLogic();
         $cat = $Cat->detail($info);
-        dump($Cat->getChildren($cat['cat_id']));
+        dump($Cat->getFather($cat['cat_id']));
 
     }
 

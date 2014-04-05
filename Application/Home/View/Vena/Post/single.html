@@ -50,51 +50,53 @@
 
 					</span>
                     <span><img src="__PUBLIC__/Vena/images/icons/ticket.png"
-                                   alt="tags"/> <span>标签 : <volist name="post.post_tag" id="tag">
-                            <a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
-                        </volist>
+                               alt="tags"/> 标签 : <volist name="post.post_tag" id="tag">
+                        <a href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
+                    </volist>
                     </span>
+
             </div>
         </div>
-    </div>
 
-    <div class="four columns">
-        <ul class="share-post">
-            <li><a href="#" class="gplus">
-                <div class="badge">
-                    <i class="icon-google-plus"></i>
-                </div>
-                <div class="shares">15</div>
-            </a></li>
-            <li><a href="#" class="pinterest">
-                <div class="badge">
-                    <i class="icon-pinterest"></i>
-                </div>
-                <div class="shares">24</div>
-            </a></li>
-            <li><a href="#" class="facebook">
-                <div class="badge">
-                    <i class="icon-facebook"></i>
-                </div>
-                <div class="shares">182</div>
-            </a></li>
-            <li><a href="#" class="twitter">
-                <div class="badge">
-                    <i class="icon-twitter"></i>
-                </div>
-                <div class="shares"><span class="ds-thread-count" data-thread-key="{$post.post_id|md5}"
-                                          data-count-type="weibo_reposts"></span>
-                </div>
-            </a></li>
-            <li><a style="padding: 0;" href="{:U('/Feed')}">
-                <div class="badge" style="background: none;">
-                    <i class="icon-rss"></i>
-                </div>
-                <div class="shares"></div>
+        <div class="four columns">
+            <ul class="share-post">
+                <li><a href="#" class="gplus">
+                    <div class="badge">
+                        <i class="icon-google-plus"></i>
+                    </div>
+                    <div class="shares">15</div>
+                </a></li>
+                <li><a href="#" class="pinterest">
+                    <div class="badge">
+                        <i class="icon-pinterest"></i>
+                    </div>
+                    <div class="shares">24</div>
+                </a></li>
+                <li><a href="#" class="facebook">
+                    <div class="badge">
+                        <i class="icon-facebook"></i>
+                    </div>
+                    <div class="shares">182</div>
+                </a></li>
+                <li><a href="#" class="twitter">
+                    <div class="badge">
+                        <i class="icon-twitter"></i>
+                    </div>
+                    <div class="shares"><span class="ds-thread-count" data-thread-key="{$post.post_id|md5}"
+                                              data-count-type="weibo_reposts"></span>
+                    </div>
+                </a></li>
+                <li><a style="padding: 0;" href="{:U('Feed/index')}">
+                    <div class="badge" style="background: none;">
+                        <i class="icon-rss"></i>
+                    </div>
+                    <div class="shares"></div>
 
-            </a></li>
+                </a></li>
 
-        </ul>
+            </ul>
+        </div>
+
     </div>
 </div>
 </div>
@@ -133,17 +135,16 @@
             <!-- About Author -->
             <article class="post-author">
 
-                <div class="author-avatar">
-                    <img src="__PUBLIC__/Vena/images/avatar.png" alt=""/>
-                </div>
+            <div class="author-avatar">
+                        <img width="80px" src="__PUBLIC__/baracktocat.jpg" alt=""/>
+                    </div>
 
-                <h4>
-                    关于作者<a href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a>
-                </h4>
+                    <h4>
+                        关于作者<a href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a>
+                    </h4>
 
-                <p>{$post.post_user.user_intro}</p>
-
-            </article>
+                    <p>{$post.post_user.user_intro}</p>
+             </article>
 
             {:hook('documentDetailAfter', $post)}
 

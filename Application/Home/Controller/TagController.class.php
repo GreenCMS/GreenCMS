@@ -56,6 +56,7 @@ class TagController extends HomeBaseController
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
+        $this->assign('breadcrumbs', get_breadcrumbs('tags',$tag['tag_id']));
 
         $this->display('Archive/single-list');
 
