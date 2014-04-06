@@ -42,6 +42,9 @@ class PostsController extends AdminBaseController
             $post_ids = D('Tags', 'Logic')->getPostsId($tag);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
             $tag = '关于标签' . $tag . ' 的';
+        } else if ($keyword != '') {
+            $key = '关于' . $keyword . ' 的';
+
         }
 
 
@@ -55,7 +58,8 @@ class PostsController extends AdminBaseController
             $posts = $PostsList->getList($limit, $post_type, $order, true, $info, $post_ids);
         }
 
-        $this->assign('action', $cat . $tag . get_real_string($post_type) . '列表');
+        $this->assign('post_type',$post_type);
+        $this->assign('action', $key . $cat . $tag . get_real_string($post_type) . '列表');
         $this->assign('posts', $posts);
         $this->assign('pager', $pager_bar);
         $this->display('index_no_js');
@@ -66,6 +70,12 @@ class PostsController extends AdminBaseController
      */
     public function indexHandle()
     {
+        if (I('post.keyword') !='') {
+
+            $this->redirect('Admin/Posts/'.I('post.post_type','single'),array('keyword'=>I('post.keyword')));
+        }
+
+
         if (I('post.delAll') == 1) {
             $post_ids = I('post.posts');
             is_string($post_ids) == true ? $num = 0 : $num = count($post_ids);
@@ -89,15 +99,24 @@ class PostsController extends AdminBaseController
             $this->redirect('Admin/Posts/add');
         }
 
+
     }
 
 
     /**
      * 页面列表
      */
-    public function page()
+    public function single($post_type = 'single', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
     {
-        $this->index('page');
+        $this->index($post_type,$post_status,$order,$keyword);
+    }
+
+    /**
+     * 页面列表
+     */
+    public function page($post_type = 'page', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
+    {
+        $this->index($post_type,$post_status,$order,$keyword);
     }
 
     /**
@@ -155,7 +174,7 @@ class PostsController extends AdminBaseController
         $data['post_content'] = I('post.post_content', '', '');
         $data['post_template'] = I('post.post_template', $data['post_type']);
 
-        $data['post_name'] =urlencode(I('post.post_name', $data['post_title'],'')) ;
+        $data['post_name'] = urlencode(I('post.post_name', $data['post_title'], ''));
         $data['post_modified'] = $data['post_date'] = date("Y-m-d H:m:s", time());
         $data['user_id'] = I('post.post_user') ? I('post.post_user') : $_SESSION [C('USER_AUTH_KEY')];
 
