@@ -59,6 +59,9 @@
                         <p>{$post.post_content}</p>
                     </div>
                     <!-- .entry-content -->
+
+                    {:hook('Guestbook', $post)}
+
                     <footer class="entry-meta">
                         本条目发布于
                         <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" title="上午 4:23" rel="bookmark">
