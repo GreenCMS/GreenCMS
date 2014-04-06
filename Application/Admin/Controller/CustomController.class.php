@@ -553,6 +553,9 @@ str;
      */
     public function config()
     {
+        $this->assign('action', '插件配置');
+
+
         $id = (int)I('id');
         $addon = M('Addons')->find($id);
         if (!$addon) $this->error('插件未安装');
@@ -581,16 +584,20 @@ str;
         }
         $this->assign('data', $addon);
 //        dump($addon);
-        if ($addon['custom_config'])
-            $this->assign('custom_config', $this->fetch($addon['Addon_PATH'] . $addon['custom_config']));
+
 
         $addons_dir = Addon_PATH;
-        $file = $addons_dir . $addon['name'] . '/config.html';
+        $file = $addons_dir . $addon['name'] . '/'. $addon['name'].'_config.html';
 
-        $config = file_get_contents($file);
+        if ($addon['custom_config']){
+            $custom_configs=$this->fetch($file);
+            $this->assign('custom_configs', $custom_configs);
+             $this->display('custom_config');
 
-        $this->assign('action', '插件配置');
-        $this->display();
+        } else{
+            $this->display();
+
+        }
     }
 
 

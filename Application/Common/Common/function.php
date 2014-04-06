@@ -476,6 +476,9 @@ function create_dir_or_files($files)
 
 
 //缩略图获取
+/**
+ * @param $post
+ */
 function get_post_thumbnail($post)
 {
 
@@ -498,6 +501,15 @@ title="' . $post['post_title'] . '"/></a>';
 }
 
 
+/**
+ * @param $type
+ * @param string $info
+ * @param string $ul_attr
+ * @param string $li_attr
+ * @param string $separator
+ * @param string $init
+ * @return string
+ */
 function get_breadcrumbs($type, $info='', $ul_attr = ' class="breadcrumbs "',
                          $li_attr = '', $separator = ' <li><i class="icon-angle-right"></i></li>'
     , $init = '首页')
@@ -529,6 +541,11 @@ function get_breadcrumbs($type, $info='', $ul_attr = ' class="breadcrumbs "',
 }
 
 
+/**
+ * @param $cat
+ * @param $separator
+ * @return string
+ */
 function extra_father($cat,$separator)
 {
     $res = '';
@@ -542,3 +559,62 @@ function extra_father($cat,$separator)
 
 }
 
+
+/**
+ * 友好时间显示
+ * @param $time
+ * @return bool|string
+ */
+function fdate($time) {
+    if (!$time)
+        return false;
+    $fdate = '';
+    $d = time() - intval($time);
+    $ld = $time - mktime(0, 0, 0, 0, 0, date('Y')); //得出年
+    $md = $time - mktime(0, 0, 0, date('m'), 0, date('Y')); //得出月
+    $byd = $time - mktime(0, 0, 0, date('m'), date('d') - 2, date('Y')); //前天
+    $yd = $time - mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')); //昨天
+    $dd = $time - mktime(0, 0, 0, date('m'), date('d'), date('Y')); //今天
+    $td = $time - mktime(0, 0, 0, date('m'), date('d') + 1, date('Y')); //明天
+    $atd = $time - mktime(0, 0, 0, date('m'), date('d') + 2, date('Y')); //后天
+    if ($d == 0) {
+        $fdate = '刚刚';
+    } else {
+        switch ($d) {
+            case $d < $atd:
+                $fdate = date('Y年m月d日', $time);
+                break;
+            case $d < $td:
+                $fdate = '后天' . date('H:i', $time);
+                break;
+            case $d < 0:
+                $fdate = '明天' . date('H:i', $time);
+                break;
+            case $d < 60:
+                $fdate = $d . '秒前';
+                break;
+            case $d < 3600:
+                $fdate = floor($d / 60) . '分钟前';
+                break;
+            case $d < $dd:
+                $fdate = floor($d / 3600) . '小时前';
+                break;
+            case $d < $yd:
+                $fdate = '昨天' . date('H:i', $time);
+                break;
+            case $d < $byd:
+                $fdate = '前天' . date('H:i', $time);
+                break;
+            case $d < $md:
+                $fdate = date('m月d日 H:i', $time);
+                break;
+            case $d < $ld:
+                $fdate = date('m月d日', $time);
+                break;
+            default:
+                $fdate = date('Y年m月d日', $time);
+                break;
+        }
+    }
+    return $fdate;
+}

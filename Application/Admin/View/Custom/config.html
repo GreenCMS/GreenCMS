@@ -115,23 +115,20 @@
                                                 <input type="text" placeholder="" class="m-wrap large" name="config[{$o_key}]" value="{$form.value}" />
                                                 <span class="help-inline"></span>
                                             </div>
-                                        </div>
-                                        </case>
+                                         </case>
                                         <case value="password">
                                         
                                              <div class="controls">
                                                 <input type="password" placeholder="" class="m-wrap large" name="config[{$o_key}]" value="{$form.value}" />
                                                 <span class="help-inline"></span>
                                             </div>
-                                        </div>
-                                        </case>
+                                         </case>
                                         <case value="hidden">
                                             
                                                  <div class="controls">
                                                     <input type="hidden" name="config[{$o_key}]" value="{$form.value}" />
                                                 </div>
-                                            </div>
-                                        </case>
+                                         </case>
                                         <case value="radio">
                                         <div class="controls">
                                             <foreach name="form.options" item="opt" key="opt_k">
@@ -154,8 +151,7 @@
                                                     </label>
                                                 </foreach>
                                             </div>
-                                        </div>
-                                        </case>
+                                         </case>
                                         <case value="select">
                                         
                                              <div class="controls">
@@ -164,16 +160,14 @@
                                                         <option value="{$opt_k}" <eq name="form.value" value="$opt_k"> selected</eq>>{$opt}</option>
                                                     </foreach>
                                                 </select>
-                                            </div>
-                                        </div>
+                                         </div>
                                         </case>
                                         <case value="textarea">
                                         
                                              <div class="controls">
                                                 <textarea name="config[{$o_key}]" class="medium m-wrap" rows="3">{$form.value}</textarea>
                                             </div>
-                                        </div>
-                                        </case>
+                                         </case>
                                         <case value="group">
                                             <ul class="tab-nav nav">
                                                 <volist name="form.options" id="li">
@@ -182,7 +176,7 @@
                                             </ul>
                                             <div class="tab-content">
                                             <volist name="form.options" id="tab">
-                                                <div id="tab{$i}" class="tab-pane <eq name="i" value="1">in</eq> tab{$i}">
+                                                <div id="tab{$i}" class="tab-pane <eq name='i' value='1'>in</eq> tab{$i}">
                                                     <foreach name="tab['options']" item="tab_form" key="o_tab_key">
 
 
@@ -231,10 +225,12 @@
                                                             </case>
                                                             </switch>
                                                             <span class="help-inline">{$tab_form.tip}</span>
-                                                        </div>
+                                                    </div>
 
 
-                                                 </div>   </foreach>
+                                                         </div>
+                                                    </foreach>
+
                                                 </div>
                                             </volist>
                                             </div>
