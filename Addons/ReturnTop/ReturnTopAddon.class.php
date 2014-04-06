@@ -17,7 +17,7 @@ use Common\Controller\Addon;
 
 	class ReturnTopAddon extends Addon{
 
-		//public $custom_config = 'return_config';
+		//public $custom_config = 'return_config.html';
 
 		public $info = array(
 				'name'=>'ReturnTop',

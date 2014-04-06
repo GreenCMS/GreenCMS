@@ -587,14 +587,15 @@ str;
 
 
         $addons_dir = Addon_PATH;
-        $file = $addons_dir . $addon['name'] . '/'. $addon['name'].'_config.html';
 
-        if ($addon['custom_config']){
-            $custom_configs=$this->fetch($file);
+        $file = $addons_dir . $addon['name'] . '/' . $data->custom_config;
+
+        if ($addon['custom_config']) {
+            $custom_configs = $this->fetch($file);
             $this->assign('custom_configs', $custom_configs);
-             $this->display('custom_config');
+            $this->display('custom_config');
 
-        } else{
+        } else {
             $this->display();
 
         }
@@ -925,7 +926,7 @@ str;
     public function slider()
     {
         $PostsList = new PostsLogic();
-        $slider = $PostsList->getList(0, 'slider', 'post_top',false);
+        $slider = $PostsList->getList(0, 'slider', 'post_top', false);
 
         $this->assign('slider', $slider);
 
