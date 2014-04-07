@@ -14,6 +14,9 @@ function test_db_connect($dbhost, $dbuser, $dbpwd)
         return false;
 }
 
+/**
+ * @return int|string
+ */
 function gdversion()
 {
     //没启用php.ini函数的情况下如果有GD默认视作2.0以上版本
@@ -35,6 +38,10 @@ function gdversion()
 }
 
 
+/**
+ * @param $d
+ * @return bool
+ */
 function test_write($d)
 {
     $tfile = '_green.txt';
@@ -50,6 +57,10 @@ function test_write($d)
 }
 
 
+/**
+ * @param $file
+ * @param $conn
+ */
 function insertDB($file, $conn)
 {
     if ($file == '')

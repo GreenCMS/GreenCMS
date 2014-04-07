@@ -12,8 +12,15 @@ namespace Addons\Statistics;
 
 use Common\Controller\Addon;
 
+/**
+ * Class StatisticsAddon
+ * @package Addons\Statistics
+ */
 class StatisticsAddon extends Addon
 {
+    /**
+     * @var array
+     */
     public $info = array(
         'name'        => 'Statistics',
         'title'       => '统计插件',
@@ -23,21 +30,29 @@ class StatisticsAddon extends Addon
         'version'     => '0.1'
     );
 
+    /**
+     * @return bool
+     */
     public function install()
     {
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function uninstall()
     {
         return true;
     }
 
     //实现的pageFooter钩子方法
-    public function documentDetailAfter($param)
+    /**
+     * @param $param
+     */
+    public function pageFooter($param)
     {
-      //  die('StatisticsAddon');
-  //      $this->assign('addons_config', $this->getConfig());
-    //     $this->display('comment');
+        $this->assign('addons_config', $this->getConfig());
+        $this->display('analysis');
     }
 }

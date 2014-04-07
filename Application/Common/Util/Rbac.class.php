@@ -73,9 +73,18 @@ CREATE TABLE IF NOT EXISTS `think_role_user` (
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 */
+/**
+ * Class Rbac
+ * @package Common\Util
+ */
 class Rbac
 {
     // 认证方法
+    /**
+     * @param $map
+     * @param string $model
+     * @return mixed
+     */
     static public function authenticate($map, $model = '')
     {
         if (empty($model)) $model = C('USER_AUTH_MODEL');
@@ -84,6 +93,9 @@ class Rbac
     }
 
     //用于检测用户权限的方法,并保存到Session中
+    /**
+     * @param null $authId
+     */
     static function saveAccessList($authId = null)
     {
         if (null === $authId) $authId = $_SESSION[C('USER_AUTH_KEY')];
@@ -95,6 +107,11 @@ class Rbac
     }
 
     // 取得模块的所属记录访问权限列表 返回有权限的记录ID数组
+    /**
+     * @param null $authId
+     * @param string $module
+     * @return array
+     */
     static function getRecordAccessList($authId = null, $module = '')
     {
         if (null === $authId) $authId = $_SESSION[C('USER_AUTH_KEY')];
@@ -105,6 +122,9 @@ class Rbac
     }
 
     //检查当前操作是否需要认证
+    /**
+     * @return bool
+     */
     static function checkAccess()
     {
         //如果项目要求认证，并且当前模块需要认证，则进行权限认证
@@ -141,6 +161,9 @@ class Rbac
     }
 
     // 登录检查
+    /**
+     * @return bool
+     */
     static public function checkLogin()
     {
         //检查当前操作是否需要认证
@@ -162,6 +185,10 @@ class Rbac
     }
 
     //权限认证的过滤器方法
+    /**
+     * @param mixed|string $appName
+     * @return bool
+     */
     static public function AccessDecision($appName = MODULE_NAME)
     {
         //检查是否需要认证
@@ -203,6 +230,7 @@ class Rbac
      * @param integer $authId 用户ID
     +----------------------------------------------------------
      *
+     * @return array
      * @access public
     +----------------------------------------------------------
      */
@@ -275,6 +303,11 @@ class Rbac
     }
 
     // 读取模块所属的记录访问权限
+    /**
+     * @param $authId
+     * @param $module
+     * @return array
+     */
     static public function getModuleAccessList($authId, $module)
     {
         // Db方式

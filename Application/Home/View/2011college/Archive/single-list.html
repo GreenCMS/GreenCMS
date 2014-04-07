@@ -23,8 +23,6 @@
         {$post['post_title']}
     </div>
 
-    <br/>
-    <br/>
 
     <div class="article">
 
@@ -34,19 +32,19 @@
             <!-- -->
             <if condition="$res404 eq 0 ">
 
-                <article class="post">
+                <div class="post">
                     <div class="post-content medium clearfix">
                         没有相关文章
                         <div class="ten columns omega"></div>
                     </div>
-                </article>
+                </div>
 
 
             </if>
 
 
             <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
-                <article class="post">
+                <div class="post">
 
                     <div class="post-content medium clearfix">
 
@@ -60,11 +58,11 @@
                             <!-- Meta -->
                             <div class="meta clearfix">
 								<span><img src="__PUBLIC__/Vena/images/icons/calendar.png"
-                                           alt="date"/> {$post.post_date}</span> <span><img
+                                           alt="date"/>  {$post['post_date']}</span> <span><img
                                     src="__PUBLIC__/Vena/images/icons/user.png" alt="author"/> 作者 : <a
                                     href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a></span>
 								<span><img src="__PUBLIC__/Vena/images/icons/ribbon.png"
-                                           alt="cat"/> 分类 :<volist name="post.post_cat" id="cat"><a
+                                           alt="cat"/> 分类 : <volist name="post.post_cat" id="cat"><a
                                         href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
                                 </volist></span> <span><img
                                     src="__PUBLIC__/Vena/images/icons/ticket.png" alt="tags"/> 标签 : <volist
@@ -72,7 +70,7 @@
                                     href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
                             </volist> </span> <span><img
                                     src="__PUBLIC__/Vena/images/icons/comments.png" alt="comments"/> <a
-                                    href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments">{$post.post_comment_count}条评论</a></span>
+                                    href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments"> {$post.post_comment_count}条评论</a></span>
                                 </span>
                             </div>
 
@@ -80,13 +78,12 @@
                             <p>{$post.post_content|strip_tags|mb_substr=0,200,"UTF-8"}</p>
 
                             <!-- Read More -->
-                            <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" class="btn continue">Read
-                                More</a>
+                            <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" class="btn continue">阅读全文>></a>
 
                         </div>
                     </div>
 
-                </article>
+                </div>
                 <!-- Post End --> </volist>
             <!-- Navigation -->
             <div class="blog-navi nomargin">
@@ -99,9 +96,7 @@
 
     </div>
 
-    <include file="Public:foot"/>
-
 </div>
-
+    <include file="Public:foot"/>
 </body>
 </html>

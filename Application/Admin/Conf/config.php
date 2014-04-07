@@ -64,13 +64,15 @@ $menu_arr = array(
             'Custom/theme'  => '主题管理',
             'Custom/menu'   => '菜单管理',
             'Custom/links'  => '链接管理',
+            //      'Custom/slider'  => '轮播管理',
+
         ),
 
 
         'Media'  => array(
             'Media/file' => '文件管理',
-            // 'Media/backupFile' => '文件备份',
-            // 'Media/restoreFile' => '文件恢复',
+             'Media/backupFile' => '文件备份',
+             'Media/restoreFile' => '文件恢复',
         ),
 
         'Access' => array(
@@ -98,7 +100,7 @@ $menu_arr = array(
             'System/url'    => '链接设置',
             'System/safe'   => '安全选项',
             'System/email'  => '邮箱配置',
-            'System/kvset'  => '其他设置',
+//            'System/kvset'  => '其他设置',
             'System/green'  => '系统设置',
             'System/update' => '系统升级',
             'System/info'   => '系统信息',

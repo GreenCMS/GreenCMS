@@ -9,12 +9,19 @@
 
 include APP_PATH . 'Common/Common/common_router.php';
 
+/**
+ * @return bool|string
+ */
 function current_timestamp()
 {
     $timestamp = date('Y-m-d H:i:s', time() - TIME_FIX);
     return $timestamp;
 }
 
+/**
+ * @param $obj
+ * @return mixed
+ */
 function object_to_array($obj)
 {
     $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
@@ -26,6 +33,10 @@ function object_to_array($obj)
     return $arr;
 }
 
+/**
+ * @param $data
+ * @return string
+ */
 function encrypt($data)
 {
     //return md5($data);
@@ -91,6 +102,10 @@ function get_opinion($key, $realtime = false, $default = '')
 }
 
 
+/**
+ * @param $key
+ * @param $value
+ */
 function set_opinion($key, $value)
 {
     $options = D('Options');
@@ -107,6 +122,12 @@ function set_opinion($key, $value)
 
 }
 
+/**
+ * @param $key
+ * @param bool $realtime
+ * @param string $default
+ * @return mixed|string
+ */
 function get_kv($key, $realtime = false, $default = '')
 {
     if (!$realtime) {
@@ -171,6 +192,12 @@ function array2str($res)
 }
 
 
+/**
+ * @param $arr
+ * @param $keys
+ * @param string $type
+ * @return array
+ */
 function array_sort($arr, $keys, $type = 'desc')
 {
     $key_value = $new_array = array();
@@ -188,8 +215,6 @@ function array_sort($arr, $keys, $type = 'desc')
     }
     return $new_array;
 }
-
-
 
 
 /**
@@ -305,7 +330,8 @@ function hook($hook, $params = array())
 
 /**
  * 获取插件类的类名
- * @param strng $name 插件名
+ * @param string $name 插件名
+ * @return string
  */
 function get_addon_class($name)
 {
@@ -316,6 +342,7 @@ function get_addon_class($name)
 /**
  * 获取插件类的配置文件数组
  * @param string $name 插件名
+ * @return array
  */
 function get_addon_config($name)
 {
@@ -332,10 +359,12 @@ function get_addon_config($name)
  * 插件显示内容里生成访问插件的url
  * @param string $url url
  * @param array $param 参数
+ * @return string
  */
 function addons_url($url, $param = array())
 {
     $url = parse_url($url);
+
     $case = C('URL_CASE_INSENSITIVE');
     $addons = $case ? parse_name($url['scheme']) : $url['scheme'];
     $controller = $case ? parse_name($url['host']) : $url['host'];
@@ -363,7 +392,7 @@ function addons_url($url, $param = array())
  * @access public
  * @param array $list 查询结果
  * @param string $field 排序的字段名
- * @param array $sortby 排序类型
+ * @param array|string $sortby 排序类型
  * asc正向排序 desc逆向排序 nat自然排序
  * @return array
  */
@@ -414,6 +443,11 @@ function arr2str($arr, $glue = ',')
 }
 
 
+/**
+ * @param $list
+ * @param string $select
+ * @return string
+ */
 function gen_opinion_list($list, $select = '')
 {
     $res = '';
@@ -424,4 +458,164 @@ function gen_opinion_list($list, $select = '')
 
     return $res;
 
+}
+
+//基于数组创建目录和文件
+/**
+ * @param $files
+ */
+function create_dir_or_files($files)
+{
+    foreach ($files as $key => $value) {
+        if (substr($value, -1) == '/') {
+            mkdir($value);
+        } else {
+            @file_put_contents($value, '');
+        }
+    }
+}
+
+
+//缩略图获取
+/**
+ * @param $post
+ */
+function get_post_thumbnail($post)
+{
+
+    if (!empty($post['post_img'])) {
+        echo '<a class="thumbnail" href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic">';
+        echo '<img src="' . $post['post_img'] . '" alt="' . trim(strip_tags($post['post_title'])) . '" />';
+        echo '</a>';
+    } else {
+        $content = $post['post_content'];
+        preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
+        $n = count($strResult[1]);
+        $random = mt_rand(1, 20);
+        if ($n > 0) {
+            echo '<a class="thumbnail" href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="' . $strResult[1][0] . '" alt="' . $post['post_title'] . '" title="' . $post['post_title'] . '"/></a>';
+        } else {
+            echo '<a class="thumbnail" href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="' . get_opinion('site_url') . '/Public/share/img/random/tb' . $random . '.jpg" alt="' . $post['post_title'] . '"
+title="' . $post['post_title'] . '"/></a>';
+        }
+    }
+}
+
+
+/**
+ * @param $type
+ * @param string $info
+ * @param string $ul_attr
+ * @param string $li_attr
+ * @param string $separator
+ * @param string $init
+ * @return string
+ */
+function get_breadcrumbs($type, $info='', $ul_attr = ' class="breadcrumbs "',
+                         $li_attr = '', $separator = ' <li><i class="icon-angle-right"></i></li>'
+    , $init = '首页')
+{
+
+    $res = '<ul class="breadcrumbs">
+            <li><a href="' . U("/") . '">' . $init . '</a></li>
+           ' ;
+    if ($type == 'cats') {
+        $Cat = D('Cats', 'Logic');
+        $cat = $Cat->getFather($info);
+        $cat_father = array();
+        $res .= extra_father($cat,$separator);
+    } elseif ($type == 'tags') {
+        $Tag = D('Tags', 'Logic');
+         $tag=$Tag->detail($info,false);
+        $res .= $separator. '<li><a href="' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . '</a></li>' ;
+
+    } elseif ($type == 'single') {
+
+    } elseif ($type == 'page') {
+
+    }else{
+        $res .=$separator.' <li>'.$type.'</li>';
+    }
+
+    $res .= '</ul>';
+    return $res;
+}
+
+
+/**
+ * @param $cat
+ * @param $separator
+ * @return string
+ */
+function extra_father($cat,$separator)
+{
+    $res = '';
+    if ($cat['cat_father_detail'] != '') {
+        $res .= extra_father(($cat['cat_father_detail']),$separator);
+    }
+
+
+    $res .= $separator. '<li><a href="' . getCatURLByID($cat['cat_id']) . '">' . $cat['cat_name'] . '</a></li>' ;
+    return $res;
+
+}
+
+
+/**
+ * 友好时间显示
+ * @param $time
+ * @return bool|string
+ */
+function fdate($time) {
+    if (!$time)
+        return false;
+    $fdate = '';
+    $d = time() - intval($time);
+    $ld = $time - mktime(0, 0, 0, 0, 0, date('Y')); //得出年
+    $md = $time - mktime(0, 0, 0, date('m'), 0, date('Y')); //得出月
+    $byd = $time - mktime(0, 0, 0, date('m'), date('d') - 2, date('Y')); //前天
+    $yd = $time - mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')); //昨天
+    $dd = $time - mktime(0, 0, 0, date('m'), date('d'), date('Y')); //今天
+    $td = $time - mktime(0, 0, 0, date('m'), date('d') + 1, date('Y')); //明天
+    $atd = $time - mktime(0, 0, 0, date('m'), date('d') + 2, date('Y')); //后天
+    if ($d == 0) {
+        $fdate = '刚刚';
+    } else {
+        switch ($d) {
+            case $d < $atd:
+                $fdate = date('Y年m月d日', $time);
+                break;
+            case $d < $td:
+                $fdate = '后天' . date('H:i', $time);
+                break;
+            case $d < 0:
+                $fdate = '明天' . date('H:i', $time);
+                break;
+            case $d < 60:
+                $fdate = $d . '秒前';
+                break;
+            case $d < 3600:
+                $fdate = floor($d / 60) . '分钟前';
+                break;
+            case $d < $dd:
+                $fdate = floor($d / 3600) . '小时前';
+                break;
+            case $d < $yd:
+                $fdate = '昨天' . date('H:i', $time);
+                break;
+            case $d < $byd:
+                $fdate = '前天' . date('H:i', $time);
+                break;
+            case $d < $md:
+                $fdate = date('m月d日 H:i', $time);
+                break;
+            case $d < $ld:
+                $fdate = date('m月d日', $time);
+                break;
+            default:
+                $fdate = date('Y年m月d日', $time);
+                break;
+        }
+    }
+    return $fdate;
 }

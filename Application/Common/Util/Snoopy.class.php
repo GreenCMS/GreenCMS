@@ -30,60 +30,151 @@ http://snoopy.sourceforge.net/
 *************************************************/
 namespace Common\Util;
 
+/**
+ * Class Snoopy
+ * @package Common\Util
+ */
 class Snoopy
 {
 	/**** Public variables ****/
 	
 	/* user definable vars */
 
-	var $host			=	"www.php.net";		// host name we are connecting to
-	var $port			=	80;					// port we are connecting to
-	var $proxy_host		=	"";					// proxy host to use
-	var $proxy_port		=	"";					// proxy port to use
-	var $proxy_user		=	"";					// proxy user to use
-	var $proxy_pass		=	"";					// proxy password to use
-	
-	var $agent			=	"Snoopy v1.2.4";	// agent we masquerade as
-	var	$referer		=	"";					// referer info to pass
-	var $cookies		=	array();			// array of cookies to pass
+    /**
+     * @var string
+     */
+    var $host			=	"www.php.net";		// host name we are connecting to
+    /**
+     * @var int
+     */
+    var $port			=	80;					// port we are connecting to
+    /**
+     * @var string
+     */
+    var $proxy_host		=	"";					// proxy host to use
+    /**
+     * @var string
+     */
+    var $proxy_port		=	"";					// proxy port to use
+    /**
+     * @var string
+     */
+    var $proxy_user		=	"";					// proxy user to use
+    /**
+     * @var string
+     */
+    var $proxy_pass		=	"";					// proxy password to use
+
+    /**
+     * @var string
+     */
+    var $agent			=	"Snoopy v1.2.4";	// agent we masquerade as
+    /**
+     * @var string
+     */
+    var	$referer		=	"";					// referer info to pass
+    /**
+     * @var array
+     */
+    var $cookies		=	array();			// array of cookies to pass
 												// $cookies["username"]="joe";
-	var	$rawheaders		=	array();			// array of raw headers to send
+    /**
+     * @var array
+     */
+    var	$rawheaders		=	array();			// array of raw headers to send
 												// $rawheaders["Content-type"]="text/html";
 
-	var $maxredirs		=	5;					// http redirection depth maximum. 0 = disallow
-	var $lastredirectaddr	=	"";				// contains address of last redirected address
-	var	$offsiteok		=	true;				// allows redirection off-site
-	var $maxframes		=	0;					// frame content depth maximum. 0 = disallow
-	var $expandlinks	=	true;				// expand links to fully qualified URLs.
+    /**
+     * @var int
+     */
+    var $maxredirs		=	5;					// http redirection depth maximum. 0 = disallow
+    /**
+     * @var string
+     */
+    var $lastredirectaddr	=	"";				// contains address of last redirected address
+    /**
+     * @var bool
+     */
+    var	$offsiteok		=	true;				// allows redirection off-site
+    /**
+     * @var int
+     */
+    var $maxframes		=	0;					// frame content depth maximum. 0 = disallow
+    /**
+     * @var bool
+     */
+    var $expandlinks	=	true;				// expand links to fully qualified URLs.
 												// this only applies to fetchlinks()
 												// submitlinks(), and submittext()
-	var $passcookies	=	true;				// pass set cookies back through redirects
+    /**
+     * @var bool
+     */
+    var $passcookies	=	true;				// pass set cookies back through redirects
 												// NOTE: this currently does not respect
 												// dates, domains or paths.
-	
-	var	$user			=	"";					// user for http authentication
-	var	$pass			=	"";					// password for http authentication
+
+    /**
+     * @var string
+     */
+    var	$user			=	"";					// user for http authentication
+    /**
+     * @var string
+     */
+    var	$pass			=	"";					// password for http authentication
 	
 	// http accept types
-	var $accept			=	"image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*";
-	
-	var $results		=	"";					// where the content is put
-		
-	var $error			=	"";					// error messages sent here
-	var	$response_code	=	"";					// response code returned from server
-	var	$headers		=	array();			// headers returned from server sent here
-	var	$maxlength		=	500000;				// max return data length (body)
-	var $read_timeout	=	0;					// timeout on read operations, in seconds
+    /**
+     * @var string
+     */
+    var $accept			=	"image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, */*";
+
+    /**
+     * @var string
+     */
+    var $results		=	"";					// where the content is put
+
+    /**
+     * @var string
+     */
+    var $error			=	"";					// error messages sent here
+    /**
+     * @var string
+     */
+    var	$response_code	=	"";					// response code returned from server
+    /**
+     * @var array
+     */
+    var	$headers		=	array();			// headers returned from server sent here
+    /**
+     * @var int
+     */
+    var	$maxlength		=	500000;				// max return data length (body)
+    /**
+     * @var int
+     */
+    var $read_timeout	=	0;					// timeout on read operations, in seconds
 												// supported only since PHP 4 Beta 4
 												// set to 0 to disallow timeouts
-	var $timed_out		=	false;				// if a read operation timed out
-	var	$status			=	0;					// http request status
+    /**
+     * @var bool
+     */
+    var $timed_out		=	false;				// if a read operation timed out
+    /**
+     * @var int
+     */
+    var	$status			=	0;					// http request status
 
-	var $temp_dir		=	"/tmp";				// temporary directory that the webserver
+    /**
+     * @var string
+     */
+    var $temp_dir		=	"/tmp";				// temporary directory that the webserver
 												// has permission to write to.
 												// under Windows, this should be C:\temp
 
-	var	$curl_path		=	"/usr/local/bin/curl";
+    /**
+     * @var string
+     */
+    var	$curl_path		=	"/usr/local/bin/curl";
 												// Snoopy will use cURL for fetching
 												// SSL content if a full system path to
 												// the cURL binary is supplied here.
@@ -98,19 +189,52 @@ class Snoopy
 	/**** Private variables ****/	
 	
 	var	$_maxlinelen	=	4096;				// max line length (headers)
-	
-	var $_httpmethod	=	"GET";				// default http request method
-	var $_httpversion	=	"HTTP/1.0";			// default http request version
-	var $_submit_method	=	"POST";				// default submit method
-	var $_submit_type	=	"application/x-www-form-urlencoded";	// default submit type
-	var $_mime_boundary	=   "";					// MIME boundary for multipart/form-data submit type
-	var $_redirectaddr	=	false;				// will be set if page fetched is a redirect
-	var $_redirectdepth	=	0;					// increments on an http redirect
-	var $_frameurls		= 	array();			// frame src urls
-	var $_framedepth	=	0;					// increments on frame depth
-	
-	var $_isproxy		=	false;				// set if using a proxy server
-	var $_fp_timeout	=	30;					// timeout for socket connection
+
+    /**
+     * @var string
+     */
+    var $_httpmethod	=	"GET";				// default http request method
+    /**
+     * @var string
+     */
+    var $_httpversion	=	"HTTP/1.0";			// default http request version
+    /**
+     * @var string
+     */
+    var $_submit_method	=	"POST";				// default submit method
+    /**
+     * @var string
+     */
+    var $_submit_type	=	"application/x-www-form-urlencoded";	// default submit type
+    /**
+     * @var string
+     */
+    var $_mime_boundary	=   "";					// MIME boundary for multipart/form-data submit type
+    /**
+     * @var bool
+     */
+    var $_redirectaddr	=	false;				// will be set if page fetched is a redirect
+    /**
+     * @var int
+     */
+    var $_redirectdepth	=	0;					// increments on an http redirect
+    /**
+     * @var array
+     */
+    var $_frameurls		= 	array();			// frame src urls
+    /**
+     * @var int
+     */
+    var $_framedepth	=	0;					// increments on frame depth
+
+    /**
+     * @var bool
+     */
+    var $_isproxy		=	false;				// set if using a proxy server
+    /**
+     * @var int
+     */
+    var $_fp_timeout	=	30;					// timeout for socket connection
 
 /*======================================================================*\
 	Function:	fetch
@@ -121,7 +245,11 @@ class Snoopy
 	Output:		$this->results	the output text from the fetch
 \*======================================================================*/
 
-	function fetch($URI)
+    /**
+     * @param $URI
+     * @return bool
+     */
+    function fetch($URI)
 	{
 	
 		//preg_match("|^([^:]+)://([^:/]+)(:[\d]+)*(.*)|",$URI,$URI_PARTS);
@@ -271,7 +399,13 @@ class Snoopy
 	Output:		$this->results	the text output from the post
 \*======================================================================*/
 
-	function submit($URI, $formvars="", $formfiles="")
+    /**
+     * @param $URI
+     * @param string $formvars
+     * @param string $formfiles
+     * @return bool
+     */
+    function submit($URI, $formvars="", $formfiles="")
 	{
 		unset($postdata);
 		
@@ -433,7 +567,11 @@ class Snoopy
 	Output:		$this->results	an array of the URLs
 \*======================================================================*/
 
-	function fetchlinks($URI)
+    /**
+     * @param $URI
+     * @return bool
+     */
+    function fetchlinks($URI)
 	{
 		if ($this->fetch($URI))
 		{			
@@ -462,7 +600,11 @@ class Snoopy
 	Output:		$this->results	the resulting html form
 \*======================================================================*/
 
-	function fetchform($URI)
+    /**
+     * @param $URI
+     * @return bool
+     */
+    function fetchform($URI)
 	{
 		
 		if ($this->fetch($URI))
@@ -490,7 +632,11 @@ class Snoopy
 	Output:		$this->results	the text from the web page
 \*======================================================================*/
 
-	function fetchtext($URI)
+    /**
+     * @param $URI
+     * @return bool
+     */
+    function fetchtext($URI)
 	{
 		if($this->fetch($URI))
 		{			
@@ -514,7 +660,13 @@ class Snoopy
 	Output:		$this->results	an array of the links from the post
 \*======================================================================*/
 
-	function submitlinks($URI, $formvars="", $formfiles="")
+    /**
+     * @param $URI
+     * @param string $formvars
+     * @param string $formfiles
+     * @return bool
+     */
+    function submitlinks($URI, $formvars="", $formfiles="")
 	{
 		if($this->submit($URI,$formvars, $formfiles))
 		{			
@@ -548,7 +700,13 @@ class Snoopy
 	Output:		$this->results	the text from the web page
 \*======================================================================*/
 
-	function submittext($URI, $formvars = "", $formfiles = "")
+    /**
+     * @param $URI
+     * @param string $formvars
+     * @param string $formfiles
+     * @return bool
+     */
+    function submittext($URI, $formvars = "", $formfiles = "")
 	{
 		if($this->submit($URI,$formvars, $formfiles))
 		{			
@@ -582,7 +740,10 @@ class Snoopy
 	Purpose:	Set the form submission content type to
 				multipart/form-data
 \*======================================================================*/
-	function set_submit_multipart()
+    /**
+     *
+     */
+    function set_submit_multipart()
 	{
 		$this->_submit_type = "multipart/form-data";
 	}
@@ -593,7 +754,10 @@ class Snoopy
 	Purpose:	Set the form submission content type to
 				application/x-www-form-urlencoded
 \*======================================================================*/
-	function set_submit_normal()
+    /**
+     *
+     */
+    function set_submit_normal()
 	{
 		$this->_submit_type = "application/x-www-form-urlencoded";
 	}
@@ -613,7 +777,11 @@ class Snoopy
 	Output:		$match		an array of the links
 \*======================================================================*/
 
-	function _striplinks($document)
+    /**
+     * @param $document
+     * @return array
+     */
+    function _striplinks($document)
 	{	
 		preg_match_all("'<\s*a\s.*?href\s*=\s*			# find <a href=
 						([\"\'])?					# find single or double quote
@@ -647,7 +815,11 @@ class Snoopy
 	Output:		$match		an array of the links
 \*======================================================================*/
 
-	function _stripform($document)
+    /**
+     * @param $document
+     * @return string
+     */
+    function _stripform($document)
 	{	
 		preg_match_all("'<\/?(FORM|INPUT|SELECT|TEXTAREA|(OPTION))[^<>]*>(?(2)(.*(?=<\/?(option|select)[^<>]*>[\r\n]*)|(?=[\r\n]*))|(?=[\r\n]*))'Usi",$document,$elements);
 		
@@ -667,7 +839,11 @@ class Snoopy
 	Output:		$text		the resulting text
 \*======================================================================*/
 
-	function _striptext($document)
+    /**
+     * @param $document
+     * @return mixed
+     */
+    function _striptext($document)
 	{
 		
 		// I didn't use preg eval (//e) since that is only available in PHP 4.0.
@@ -736,7 +912,12 @@ class Snoopy
 	Output:		$expandedLinks	the expanded links
 \*======================================================================*/
 
-	function _expandlinks($links,$URI)
+    /**
+     * @param $links
+     * @param $URI
+     * @return mixed
+     */
+    function _expandlinks($links,$URI)
 	{
 		
 		preg_match("/^[^\?]+/",$URI,$match);
@@ -775,8 +956,17 @@ class Snoopy
 				$body		body contents to send if any (POST)
 	Output:		
 \*======================================================================*/
-	
-	function _httprequest($url,$fp,$URI,$http_method,$content_type="",$body="")
+
+    /**
+     * @param $url
+     * @param $fp
+     * @param $URI
+     * @param $http_method
+     * @param string $content_type
+     * @param string $body
+     * @return bool
+     */
+    function _httprequest($url,$fp,$URI,$http_method,$content_type="",$body="")
 	{
 		$cookie_headers = '';
 		if($this->passcookies && $this->_redirectaddr)
@@ -938,8 +1128,16 @@ class Snoopy
 				$body		body contents to send if any (POST)
 	Output:		
 \*======================================================================*/
-	
-	function _httpsrequest($url,$URI,$http_method,$content_type="",$body="")
+
+    /**
+     * @param $url
+     * @param $URI
+     * @param $http_method
+     * @param string $content_type
+     * @param string $body
+     * @return bool
+     */
+    function _httpsrequest($url,$URI,$http_method,$content_type="",$body="")
 	{  
 		if($this->passcookies && $this->_redirectaddr)
 			$this->setcookies();
@@ -1082,8 +1280,11 @@ class Snoopy
 	Function:	setcookies()
 	Purpose:	set cookies for a redirection
 \*======================================================================*/
-	
-	function setcookies()
+
+    /**
+     *
+     */
+    function setcookies()
 	{
 		for($x=0; $x<count($this->headers); $x++)
 		{
@@ -1099,7 +1300,11 @@ class Snoopy
 	Input:		$fp	file pointer
 \*======================================================================*/
 
-	function _check_timeout($fp)
+    /**
+     * @param $fp
+     * @return bool
+     */
+    function _check_timeout($fp)
 	{
 		if ($this->read_timeout > 0) {
 			$fp_status = socket_get_status($fp);
@@ -1116,8 +1321,12 @@ class Snoopy
 	Purpose:	make a socket connection
 	Input:		$fp	file pointer
 \*======================================================================*/
-	
-	function _connect(&$fp)
+
+    /**
+     * @param $fp
+     * @return bool
+     */
+    function _connect(&$fp)
 	{
 		if(!empty($this->proxy_host) && !empty($this->proxy_port))
 			{
@@ -1169,8 +1378,12 @@ class Snoopy
 	Purpose:	disconnect a socket connection
 	Input:		$fp	file pointer
 \*======================================================================*/
-	
-	function _disconnect($fp)
+
+    /**
+     * @param $fp
+     * @return bool
+     */
+    function _disconnect($fp)
 	{
 		return(fclose($fp));
 	}
@@ -1183,8 +1396,13 @@ class Snoopy
 				$formfiles - form upload files
 	Output:		post body
 \*======================================================================*/
-	
-	function _prepare_post_body($formvars, $formfiles)
+
+    /**
+     * @param $formvars
+     * @param $formfiles
+     * @return string
+     */
+    function _prepare_post_body($formvars, $formfiles)
 	{
 		settype($formvars, "array");
 		settype($formfiles, "array");

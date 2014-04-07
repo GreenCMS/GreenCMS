@@ -27,7 +27,7 @@ class CatsLogic extends RelationModel
     public function detail($id, $relation = true)
     {
         $map = array();
-        $map['cat_id|cat_slug'] =urlencode($id);
+        $map['cat_id|cat_slug'] = urlencode($id);
         return D('Cats')->where($map)->relation($relation)->find();
     }
 
@@ -45,11 +45,12 @@ class CatsLogic extends RelationModel
     /**
      * @param int $id  分类id
      *
+     * @param bool $relation
      * @return mixed 找到所有父类
      */
-    public function getFather($id = 0)
+    public function getFather($id = 0, $relation = false)
     {
-        $info = $this->detail($id);
+        $info = $this->detail($id,$relation);
         if ($info['cat_father'] != 0) {
             $info['cat_father_detail'] = $this->getFather($info['cat_father']);
         }
@@ -59,21 +60,23 @@ class CatsLogic extends RelationModel
     /**
      * @param int $id 分类id
      *
+     * @param bool $relation
      * @return mixed  找到所有子节点
      */
-    public function getChildren($id = 0)
+    public function getChildren($id = 0, $relation = false)
     {
+        $info = $this->detail($id,$relation);
+
         if ($id) {
-            $info = $this->getChild($id);
-            if (sizeof($info) == 1) {
-                $info[0]['cat_children'] = $this->getChild($info[0]['cat_id']);
-            } else {
-                foreach ($info as $key => $value) {
-                    $info[$key]['cat_children'] = $this->getChildren($value['cat_id']);
-                }
+            $children = $this->getChild($id);
+
+            foreach ($children as $key => $value) {
+                $info['cat_children'] [$key]['cat_children'] = $this->getChildren($value['cat_id']);
             }
             return $info;
+
         }
+
         return false;
     }
 

@@ -18,6 +18,11 @@ class TagsLogic extends RelationModel
 {
 
 
+    /**
+     * @param $id
+     * @param bool $relation
+     * @return mixed
+     */
     public function detail($id, $relation = true)
     {
         $map = array();

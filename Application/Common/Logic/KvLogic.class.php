@@ -11,9 +11,16 @@ namespace Common\Logic;
 
 use Think\Model;
 
+/**
+ * Class KvLogic
+ * @package Common\Logic
+ */
 class KvLogic extends Model
 {
 
+    /**
+     * @return mixed
+     */
     public function getAll()
     {
         $kvs = $this->where(1)->select();

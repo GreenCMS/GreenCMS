@@ -12,21 +12,33 @@ namespace Admin\Controller;
 use Common\Util\File;
 use Common\Util\Uploader;
 
+/**
+ * Class UeditorController
+ * @package Admin\Controller
+ */
 class UeditorController extends AdminBaseController
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
         error_reporting(E_ERROR | E_WARNING);
     }
 
-
+    /**
+     *
+     */
     public function index()
     {
         $this->display();
     }
 
+    /**
+     *
+     */
     public function getContent()
     {
 
@@ -49,6 +61,9 @@ class UeditorController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function fileUp()
     {
         header("Content-Type: text/html; charset=utf-8");
@@ -88,6 +103,9 @@ class UeditorController extends AdminBaseController
         echo '{"url":"' . $info["url"] . '","fileType":"' . $info["type"] . '","original":"' . $info["originalName"] . '","state":"' . $info["state"] . '"}';
     }
 
+    /**
+     *
+     */
     public function scrawlUp()
     {
         header("Content-Type:text/html;charset=utf-8");
@@ -117,37 +135,18 @@ class UeditorController extends AdminBaseController
             $up = new Uploader("content", $config, true);
             //上传成功后删除临时目录
             if (file_exists($tmpPath)) {
-                delDir($tmpPath);
+                File::delDir($tmpPath);
+                // delDir($tmpPath);
             }
             $info = $up->getFileInfo();
             echo "{'url':'" . $info["url"] . "',state:'" . $info["state"] . "'}";
         }
-        /**
-         * 删除整个目录
-         * @param $dir
-         *
-         * @return bool
-         */
-        function delDir($dir)
-        {
-            //先删除目录下的所有文件：
-            $dh = opendir($dir);
-            while ($file = readdir($dh)) {
-                if ($file != "." && $file != "..") {
-                    $fullpath = $dir . "/" . $file;
-                    if (!is_dir($fullpath)) {
-                        unlink($fullpath);
-                    } else {
-                        delDir($fullpath);
-                    }
-                }
-            }
-            closedir($dh);
-            //删除当前文件夹：
-            return rmdir($dir);
-        }
+
     }
 
+    /**
+     *
+     */
     public function getRemoteImage()
     {
         header("Content-Type: text/html; charset=utf-8");
@@ -201,9 +200,9 @@ class UeditorController extends AdminBaseController
             ob_start();
             $context = stream_context_create(
                 array(
-                    'http' => array(
-                        'follow_location' => false // don't follow redirects
-                    )
+                     'http' => array(
+                         'follow_location' => false // don't follow redirects
+                     )
                 )
             );
             //请确保php.ini中的fopen wrappers已经激活
@@ -221,14 +220,13 @@ class UeditorController extends AdminBaseController
             //创建保存位置
             $savePath = $config['savePath'];
             if (!file_exists($savePath)) {
-                mkdir("$savePath", 0777, true);
+                mkdir($savePath, 0777, true);
             }
             //写入文件
             $tmpName = $savePath . rand(1, 10000) . time() . strrchr($imgUrl, '.');
             try {
-                $fp2 = @fopen($tmpName, "a");
-                fwrite($fp2, $img);
-                fclose($fp2);
+                File::writeFile($tmpName, $img, "a");
+
                 array_push($tmpNames, $tmpName);
             } catch (Exception $e) {
                 array_push($tmpNames, "error");
@@ -245,6 +243,10 @@ class UeditorController extends AdminBaseController
         echo "{'url':'" . implode("ue_separate_ue", $tmpNames) . "','tip':'远程图片抓取成功！','srcUrl':'" . $uri . "'}";
     }
 
+    /**
+     * 无需移植
+     * @function getMovie
+     */
     public function getMovie()
     {
 
@@ -254,7 +256,9 @@ class UeditorController extends AdminBaseController
         echo $html;
     }
 
-
+    /**
+     * @function imageManager
+     */
     public function imageManager()
     {
 
@@ -290,17 +294,18 @@ class UeditorController extends AdminBaseController
                 echo $str;
             } else {
                 // SAE环境下
-                $st = new SaeStorage(); // 实例化
+                $st = new \SaeStorage(); // 实例化
                 /*
                 *  getList:获取指定domain下的文件名列表
                 *  return: 执行成功时返回文件列表数组，否则返回false
                 *  参数：存储域，路径前缀，返回条数，起始条数
                 */
                 $num = 0;
-                while ($ret = $st->getList("upload", null, 100, $num)) {
+                while ($ret = $st->getList(C('SaeStorage'), null, 100, $num)) {
                     foreach ($ret as $file) {
                         if (preg_match("/\.(gif|jpeg|jpg|png|bmp)$/i", $file))
-                            echo $st->getUrl('upload', $file) . "ue_separate_ue";
+
+                        echo  $st->getUrl('upload', $file). "ue_separate_ue";
                         $num++;
                     }
                 }
@@ -312,6 +317,9 @@ class UeditorController extends AdminBaseController
 
     }
 
+    /**
+     * @function imageUp
+     */
     public function imageUp()
     {
         header("Content-Type: text/html; charset=utf-8");

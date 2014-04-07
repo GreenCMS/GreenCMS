@@ -12,9 +12,18 @@ namespace Weixin\Event;
 
 use Weixin\Controller\WeixinCoreController;
 
+/**
+ * Class ButtomEvent
+ * @package Weixin\Event
+ */
 class ButtomEvent extends WeixinCoreController
 {
 
+    /**
+     * @param string $method
+     * @param array $args
+     * @return array
+     */
     public function __call($method, $args)
     {
         $where = array('action_name' => $method, 'action_type' => 'click');
@@ -58,6 +67,9 @@ class ButtomEvent extends WeixinCoreController
 
     }
 
+    /**
+     * @return array
+     */
     public function mtest()
     {
         $articles = array();
@@ -83,6 +95,9 @@ class ButtomEvent extends WeixinCoreController
     }
 
 
+    /**
+     * @return array
+     */
     public function category()
     {
         $articles = array();

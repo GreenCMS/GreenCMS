@@ -12,6 +12,10 @@ namespace Weixin\Model;
 
 use Think\Model\RelationModel;
 
+/**
+ * Class WeixinuserModel
+ * @package Weixin\Model
+ */
 class WeixinuserModel extends RelationModel
 {
 //    protected $fields = array('openid','_pk'=>'openid');
@@ -40,6 +44,11 @@ class WeixinuserModel extends RelationModel
         )
     );
 
+    /**
+     * @param $openid
+     * @param bool $relation
+     * @return mixed
+     */
     public function detail($openid, $relation = true)
     {
 

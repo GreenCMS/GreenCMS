@@ -14,6 +14,10 @@ namespace Common\Util;
  * Class QRMaker
  * @package Common\Util
  */
+/**
+ * Class QRMaker
+ * @package Common\Util
+ */
 class QRMaker
 {
 

@@ -10,6 +10,9 @@ use Common\Controller\Addon;
 class SocialCommentAddon extends Addon
 {
 
+    /**
+     * @var array $info 描述信息
+     */
     public $info = array(
         'name'        => 'SocialComment',
         'title'       => '通用社交化评论',
@@ -19,17 +22,29 @@ class SocialCommentAddon extends Addon
         'version'     => '0.1'
     );
 
+
+    /**
+     * @function install 安装
+     * @return bool
+     */
     public function install()
     {
         return true;
     }
 
+    /**
+     * @function uninstall 卸载
+     * @return bool
+     */
     public function uninstall()
     {
         return true;
     }
 
-    //实现的pageFooter钩子方法
+     /**
+     * @function documentDetailAfter 实现的documentDetailAfter钩子方法
+     * @param $param
+     */
     public function documentDetailAfter($param)
     {
         $this->assign('addons_config', $this->getConfig());

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="GreenCMS"/>
+    <meta name="keywords" content="GreenCMS"/>
+    <include file="Public:head"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+
+    <title>{$action} | {:get_opinion('title')}</title>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    {:W('Common/header')}
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar nav-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+
+
+        {:W('Common/sideBar')}
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        {$action}
+                        <small>&nbsp;&nbsp;{:get_opinion('title')}</small>
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{$module_url}">{$module}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+
+                        <li>
+                            <a href="{:U('Admin/Custom/plugin')}">插件管理</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+
+                        <li><a href="{$action_url}">{$action}</a></li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                    <div class="portlet-body">
+                        <div class="clearfix">
+                            <div class="btn-group">
+                                <a href="{:U('Admin/Custom/addhook')}">
+                                    <button type="submit" class="btn green" name="addhook" value='1'>
+                                        <i class="icon-plus"></i> 添加钩子
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover" class="tab">
+                        <tr>
+                            <th class="hidden-480">ID</th>
+                            <th class="hidden-480">名称</th>
+                            <th class="hidden-480">描述</th>
+                            <th class="hidden-480">类型</th>
+                            <th class="hidden-480">操作</th>
+                        </tr>
+                        <volist name="list" id="vo">
+                            <tr>
+                                <td class="hidden-480">{$vo.id}</td>
+                                <td class="hidden-480"><a href="{:U('edithook?id='.$vo['id'])}">{$vo.name}</a></td>
+                                <td class="hidden-480">{$vo.description}</td>
+                                <td class="hidden-480"><eq name="vo.type" value="1">视图<else />控制器</eq></td>
+                                <td class="hidden-480">
+                                    <a href="{:U('Admin/Custom/edithook', array('id'=>$vo['id']))}">编辑</a>|
+                                    <a href="{:U('Admin/Custom/delhook', array('id'=>$vo['id']))}">删除</a>
+                                </td>
+                            </tr>
+                        </volist>
+                    </table>
+                    <div class="pagination">
+                        <ul> {$page}</ul>
+
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+{:W('Common/footer')}
+<!-- END FOOTER -->
+<include file="Public:foot"/>
+<script type="text/javascript" src="__PUBLIC__/admin/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/admin/assets/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+<script src="__PUBLIC__/admin/assets/scripts/form-components.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        App.init();
+        FormComponents.init();
+
+    });
+</script>
+</body>
+<!-- END BODY -->
+</html>

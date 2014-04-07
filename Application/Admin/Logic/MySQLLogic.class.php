@@ -12,8 +12,15 @@ namespace Admin\Logic;
 use Common\Util\File;
 use Think\Model;
 
+/**
+ * Class MySQLLogic
+ * @package Admin\Logic
+ */
 class MySQLLogic // extends Model
 {
+    /**
+     * @var int
+     */
     static public $sqlFilesSize = 0;
 
     /**
@@ -103,6 +110,9 @@ class MySQLLogic // extends Model
         return array("list" => $newArr, "size" => File::byteFormat($size));
     }
 
+    /**
+     * @return array
+     */
     public function getZipFilesList()
     {
         $list = array();

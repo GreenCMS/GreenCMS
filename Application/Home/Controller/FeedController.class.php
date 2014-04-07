@@ -24,10 +24,10 @@ class FeedController extends HomeBaseController
     function __construct()
     {
         parent::__construct();
+
         if (get_opinion('feed_open') == 0) {
             $this->error404("Feed功能关闭");
         }
-        C('SHOW_CHROME_TRACE')==0;//防止sql输出过多导致header过大
     }
 
     /**

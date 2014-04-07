@@ -11,6 +11,10 @@ namespace Admin\Model;
 
 use Think\Model\RelationModel;
 
+/**
+ * Class AccessModel
+ * @package Admin\Model
+ */
 class AccessModel extends RelationModel
 {
 

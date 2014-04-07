@@ -14,8 +14,15 @@ use Think\Controller;
 use Think\Hook;
 use Think\Think;
 
+/**
+ * Class IndexController
+ * @package Install\Controller
+ */
 class IndexController extends \Think\Controller
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -28,12 +35,18 @@ class IndexController extends \Think\Controller
     }
 
 
+    /**
+     *
+     */
     public function index()
     {
 
         $this->redirect('Install/Index/step1');
     }
 
+    /**
+     *
+     */
     public function step1()
     {
         $this->assign('version', GreenCMS_Version);
@@ -42,6 +55,9 @@ class IndexController extends \Think\Controller
         $this->display();
     }
 
+    /**
+     *
+     */
     public function step2()
     {
         $sp_gd = gdversion();
@@ -71,6 +87,9 @@ class IndexController extends \Think\Controller
     }
 
 
+    /**
+     *
+     */
     public function step3()
     {
 
@@ -93,6 +112,9 @@ class IndexController extends \Think\Controller
 
     }
 
+    /**
+     *
+     */
     public function step4()
     {
         $time = date("Y-m-d H:m:s");
@@ -197,6 +219,9 @@ class IndexController extends \Think\Controller
     }
 
 
+    /**
+     *
+     */
     public function step5()
     {
 
@@ -220,6 +245,13 @@ class IndexController extends \Think\Controller
 
     }
 
+    /**
+     * @param $db_host
+     * @param $db_port
+     * @param $db_user
+     * @param $db_password
+     * @return string
+     */
     public function dbTest($db_host, $db_port, $db_user, $db_password)
     {
         if (test_db_connect($db_host . ":" . $db_port, $db_user, $db_password))

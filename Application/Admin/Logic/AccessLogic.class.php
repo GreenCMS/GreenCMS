@@ -12,6 +12,10 @@ namespace Admin\Logic;
 use Common\Util\Category;
 use Think\Model\RelationModel;
 
+/**
+ * Class AccessLogic
+ * @package Admin\Logic
+ */
 class AccessLogic extends RelationModel
 {
 
@@ -51,6 +55,9 @@ class AccessLogic extends RelationModel
         return $res;
     }
 
+    /**
+     * @return mixed
+     */
     public function nodeList()
     {
         $cat = new Category ('Node', array(
@@ -75,6 +82,9 @@ class AccessLogic extends RelationModel
         return $list;
     }
 
+    /**
+     * @return mixed
+     */
     public function roleList()
     {
         $M = M("Role");
@@ -86,6 +96,10 @@ class AccessLogic extends RelationModel
         return $list;
     }
 
+    /**
+     * @param string $op
+     * @return array
+     */
     public function opStatus($op = 'Node')
     {
         $M = M("$op");
@@ -108,29 +122,35 @@ class AccessLogic extends RelationModel
         }
     }
 
+    /**
+     * @return array
+     */
     public function editNode()
     {
         $M = M("Node");
         return $M->save($_POST) ? array(
             'status' => 1,
-            info     => '更新节点信息成功',
+            'info'     => '更新节点信息成功',
             'url'    => U('Admin/Access/nodeList')
         ) : array(
             'status' => 0,
-            info     => '更新节点信息失败'
+            'info'     => '更新节点信息失败'
         );
     }
 
+    /**
+     * @return array
+     */
     public function addNode()
     {
         $M = M("Node");
         return $M->add($_POST) ? array(
             'status' => 1,
-            info     => $_POST ['id'] . '添加节点信息成功',
+            'info'     => $_POST ['id'] . '添加节点信息成功',
             'url'    => U('Admin/Access/nodeList')
         ) : array(
             'status' => 0,
-            info     => '添加节点信息失败'
+            'info'     => '添加节点信息失败'
         );
     }
 
@@ -250,6 +270,9 @@ class AccessLogic extends RelationModel
         }
     }
 
+    /**
+     * @param $id
+     */
     public function delAdmin($id = -1)
     {
     }
@@ -298,6 +321,9 @@ class AccessLogic extends RelationModel
         }
     }
 
+    /**
+     * @return array
+     */
     public function changeRole()
     {
         $Access = D("Access");
