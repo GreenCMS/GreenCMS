@@ -73,7 +73,7 @@ class WeatherAddon extends Addon
     //实现的AdminIndex钩子方法
     public function AdminIndex()
     {
-        $config = $this->getConfig();
+         $config = $this->getConfig();
         $this->assign('addons_config', $config);
         foreach ($config['showplace'] as $k => $v) {
             if ($v == '0' && $config['display'])

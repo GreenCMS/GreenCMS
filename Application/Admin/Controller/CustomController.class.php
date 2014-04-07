@@ -511,9 +511,14 @@ str;
             $this->error('插件列表信息不正确');
         $this->meta_title = $addon->info['title'];
         extract($param);
+
+
         $this->assign('title', $addon->info['title']);
+
         if ($addon->custom_adminlist)
-            $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
+          $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
+
+
         $this->assign($param);
         if (!isset($fields))
             $fields = '*';

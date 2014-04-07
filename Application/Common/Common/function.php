@@ -364,6 +364,7 @@ function get_addon_config($name)
 function addons_url($url, $param = array())
 {
     $url = parse_url($url);
+
     $case = C('URL_CASE_INSENSITIVE');
     $addons = $case ? parse_name($url['scheme']) : $url['scheme'];
     $controller = $case ? parse_name($url['host']) : $url['host'];
@@ -383,7 +384,7 @@ function addons_url($url, $param = array())
     );
     $params = array_merge($params, $param); //添加额外参数
 
-    return U('Addons/execute', $params);
+    return U('Home/Addons/execute', $params);
 }
 
 /**

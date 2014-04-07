@@ -8,7 +8,9 @@ return array(
 	'city'=>array(
 		'title'=>'显示城市',
 		'type'=>'text',
-		'tip'=>''
+        'value'=>'南京',
+
+        'tip'=>''
 	),
 	'showplace'=>array(
 		'title'=>'显示位置',
@@ -17,9 +19,9 @@ return array(
 			'1'=>'前台',
 			'0'=>'后台'
 		),
-		'value'=>'1'
+		'value'=>'0'
 	),
-	'showday'=>array(
+ 	'showday'=>array(
 		'title'=>'显示天数',
 		'type'=>'select',
 		'options'=>array(
@@ -40,9 +42,15 @@ return array(
 		'options'=>array(
 			'1'=>'1格',
 			'2'=>'2格',
-			'4'=>'4格'
-		),
-		'value'=>'2'
+			'4'=>'4格',
+            '6'=>'6格',
+            '8'=>'8格',
+            '10'=>'10格',
+            '12'=>'12格',
+            '14'=>'14格',
+
+        ),
+		'value'=>'4'
 	),
 	'display'=>array(
 		'title'=>'是否显示:',
