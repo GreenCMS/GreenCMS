@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 use Common\Logic\PostsLogic;
+use Common\Util\File;
 use Common\Util\GreenPage;
 use Org\Util\Rbac;
 
@@ -58,7 +59,7 @@ class PostsController extends AdminBaseController
             $posts = $PostsList->getList($limit, $post_type, $order, true, $info, $post_ids);
         }
 
-        $this->assign('post_type',$post_type);
+        $this->assign('post_type', $post_type);
         $this->assign('action', $key . $cat . $tag . get_real_string($post_type) . '列表');
         $this->assign('posts', $posts);
         $this->assign('pager', $pager_bar);
@@ -70,9 +71,9 @@ class PostsController extends AdminBaseController
      */
     public function indexHandle()
     {
-        if (I('post.keyword') !='') {
+        if (I('post.keyword') != '') {
 
-            $this->redirect('Admin/Posts/'.I('post.post_type','single'),array('keyword'=>I('post.keyword')));
+            $this->redirect('Admin/Posts/' . I('post.post_type', 'single'), array('keyword' => I('post.keyword')));
         }
 
 
@@ -108,7 +109,7 @@ class PostsController extends AdminBaseController
      */
     public function single($post_type = 'single', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
     {
-        $this->index($post_type,$post_status,$order,$keyword);
+        $this->index($post_type, $post_status, $order, $keyword);
     }
 
     /**
@@ -116,7 +117,7 @@ class PostsController extends AdminBaseController
      */
     public function page($post_type = 'page', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
     {
-        $this->index($post_type,$post_status,$order,$keyword);
+        $this->index($post_type, $post_status, $order, $keyword);
     }
 
     /**
@@ -124,6 +125,24 @@ class PostsController extends AdminBaseController
      */
     public function add()
     {
+
+        $tpl_static_path = WEB_ROOT . 'Public/' . get_kv('home_theme') . '/';
+        if (file_exists($tpl_static_path . 'theme.xml')) {
+            $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
+            $tpl_type = (object_to_array($theme->post));
+            $tpl_type_list = array();
+            foreach ($tpl_type as $key => $value) {
+                $tpl_type_list[$value['tpl']] = $value['name'];
+            }
+        } else {
+            $tpl_type_list = array(
+                ["single"] => "文章",
+                ["page"]   => "页面"
+            );
+        }
+
+        $this->assign('tpl_type', gen_opinion_list($tpl_type_list));
+
 
         $post = json_decode(gzuncompress(cookie('post_add')), true);
 
@@ -359,6 +378,24 @@ class PostsController extends AdminBaseController
             if (empty($post)) {
                 $this->error("不存在该记录");
             }
+
+            $tpl_static_path = WEB_ROOT . 'Public/' . get_kv('home_theme') . '/';
+            if (file_exists($tpl_static_path . 'theme.xml')) {
+                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
+                $tpl_type = (object_to_array($theme->post));
+                $tpl_type_list = array();
+                foreach ($tpl_type as $key => $value) {
+                    $tpl_type_list[$value['tpl']] = $value['name'];
+                }
+            } else {
+                $tpl_type_list = array(
+                    "single" => "文章",
+                    "page"   => "页面"
+                );
+            }
+
+            $this->assign('tpl_type', gen_opinion_list($tpl_type_list,$post['post_template']));
+
 
             $this->cats = D('Cats', 'Logic')->category();;
             $this->tags = M('Tags')->select();
