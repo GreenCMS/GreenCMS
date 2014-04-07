@@ -136,8 +136,8 @@ class PostsController extends AdminBaseController
             }
         } else {
             $tpl_type_list = array(
-                ["single"] => "文章",
-                ["page"]   => "页面"
+               "single" => "文章",
+                "page"  => "页面"
             );
         }
 
