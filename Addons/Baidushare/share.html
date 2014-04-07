@@ -21,32 +21,26 @@
                 bdTop: 100
             }
         ],
-            <
-    if condition = "$addons_config['openimg'] eq 0" >
+            <if condition = "$addons_config['openimg'] eq 0" >
             image :
     [{
         viewType: 'list',
         viewPos: 'top',
         viewColor: 'black',
         viewSize: {$addons_config['img_size'] == null ? 16 : $addons_config['img_size']},
-        viewList: [ < volist name = "addons_config.imglist" id = "vo" > <
-    if condition = "$key eq 0" > '{$vo}' < else
-    />,'{$vo}'</i
-    f > < /volist>]
+        viewList: [
+             <volist name = "addons_config.imglist" id = "vo" >
+            <if condition = "$key eq 0" > '{$vo}' <else />,'{$vo}'</if> </volist>]
     }],
-    <
-    /if>
-    <
-    if condition = "$addons_config['openselect'] eq 0" >
+    </if>
+    <if condition = "$addons_config['openselect'] eq 0" >
             selectShare :
     [{
-        "bdselectMiniList": [ < volist name = "addons_config.selectlist" id = "vo" > <
-    if condition = "$key eq 0" > '{$vo}' < else
-    />,'{$vo}'</i
-    f > < /volist>]
+        "bdselectMiniList": [ <volist name = "addons_config.selectlist" id = "vo" >
+            <if condition = "$key eq 0" > '{$vo}' <else />,'{$vo}'
+    </if > </volist>]
     }]
-    <
-    /if>
+    </if>
     }
     with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=86835285.js?cdnversion=' + ~(-new Date() / 36e5)];
 </script>

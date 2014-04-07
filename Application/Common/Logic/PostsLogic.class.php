@@ -51,7 +51,7 @@ class PostsLogic extends RelationModel
                             $relation = true, $info_with = array(), $ids = array())
     {
         $info = $info_with;
-        if ($type != 'all') $info['post_type'] = $type;
+        if ($type != 'all') $info['post_type|post_template'] = $type;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
@@ -71,7 +71,7 @@ class PostsLogic extends RelationModel
 
         $info = $info_with;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
-        if ($type != 'all') $info['post_type'] = $type;
+        if ($type != 'all') $info['post_type|post_template'] = $type;
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
         $count = $this->where($info)->count();

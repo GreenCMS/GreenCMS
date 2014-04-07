@@ -511,9 +511,14 @@ str;
             $this->error('插件列表信息不正确');
         $this->meta_title = $addon->info['title'];
         extract($param);
+
+
         $this->assign('title', $addon->info['title']);
+
         if ($addon->custom_adminlist)
-            $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
+          $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
+
+
         $this->assign($param);
         if (!isset($fields))
             $fields = '*';
@@ -553,6 +558,9 @@ str;
      */
     public function config()
     {
+        $this->assign('action', '插件配置');
+
+
         $id = (int)I('id');
         $addon = M('Addons')->find($id);
         if (!$addon) $this->error('插件未安装');
@@ -581,16 +589,21 @@ str;
         }
         $this->assign('data', $addon);
 //        dump($addon);
-        if ($addon['custom_config'])
-            $this->assign('custom_config', $this->fetch($addon['Addon_PATH'] . $addon['custom_config']));
+
 
         $addons_dir = Addon_PATH;
-        $file = $addons_dir . $addon['name'] . '/config.html';
 
-        $config = file_get_contents($file);
+        $file = $addons_dir . $addon['name'] . '/' . $data->custom_config;
 
-        $this->assign('action', '插件配置');
-        $this->display();
+        if ($addon['custom_config']) {
+            $custom_configs = $this->fetch($file);
+            $this->assign('custom_configs', $custom_configs);
+            $this->display('custom_config');
+
+        } else {
+            $this->display();
+
+        }
     }
 
 
@@ -928,7 +941,7 @@ str;
     public function slider()
     {
         $PostsList = new PostsLogic();
-        $slider = $PostsList->getList(0, 'slider', 'post_top',false);
+        $slider = $PostsList->getList(0, 'slider', 'post_top', false);
 
         $this->assign('slider', $slider);
 

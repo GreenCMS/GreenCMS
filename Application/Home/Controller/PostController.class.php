@@ -39,7 +39,13 @@ class PostController extends HomeBaseController
 //        if (empty($post_res)) $this->error404("非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
 
         $this->assign('post', $post_res); // 赋值数据集
-        $this->display('single');
+
+        if (File::file_exists(T('Home@Post/' . $post_res['post_template']))) {
+            $this->display($post_res['post_template']);
+        } else {
+            $this->display('single');
+        }
+
 
     }
 
@@ -60,8 +66,12 @@ class PostController extends HomeBaseController
         $Posts->viewInc($post_res['post_id']);
 
         $this->assign('post', $post_res); // 赋值数据集
-        $this->display('page');
+         if (File::file_exists(T('Home@Post/' . $post_res['post_template']))) {
 
+            $this->display($post_res['post_template']);
+        } else {
+            $this->display('page');
+        }
     }
 
     /**
@@ -80,18 +90,17 @@ class PostController extends HomeBaseController
 
         $this->assign('post', $post_res); // 赋值数据集
 
-        if(File::file_exists(T('Home@Post/'.$post_res['post_type']))){
+        if (File::file_exists(T('Home@Post/' . $post_res['post_template']))) {
 
-            $this->display($post_res['post_type']);
-        }else{
+            $this->display($post_res['post_template']);
+        } else {
 
             //TODO   这里怎么处理却决于你自己了。
             $this->error404('缺少对应的模版而不能显示');
-          //  $this->display('single');
+            //  $this->display('single');
         }
 
-       // $this->display($post_res['post_type']);
-
+        // $this->display($post_res['post_type']);
 
 
     }

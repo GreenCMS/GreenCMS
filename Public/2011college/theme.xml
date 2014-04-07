@@ -10,4 +10,15 @@
     <tpl_view>Apllication/Home/View/2011college</tpl_view>
     <tpl_static>Public/2011college</tpl_static>
     <introduction>南工大2011学院网站</introduction>
+    <post>
+        <single>
+            <name>文章</name>
+            <tpl>single</tpl>
+        </single>
+        <page>
+            <name>无侧栏</name>
+            <tpl>page</tpl>
+        </page>
+
+    </post>
 </theme>

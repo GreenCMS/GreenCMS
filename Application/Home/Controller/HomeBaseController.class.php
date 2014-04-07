@@ -10,7 +10,7 @@
 namespace Home\Controller;
 use Common\Controller\BaseController;
 use Think\Hook;
-
+use Common\Util\File;
 /**
  * Class HomeBaseController
  * @package Home\Controller
@@ -28,7 +28,6 @@ abstract class HomeBaseController extends BaseController
         $this->customConfig();
 
     }
-
 
 
     /**
@@ -55,7 +54,13 @@ abstract class HomeBaseController extends BaseController
         Hook::listen('home_error404');
 
         $this->assign("message", $message);
-        $this->display('Index/404');
+
+        if (File::file_exists(T('Home@Index/404'))) {
+            $this->display('Index/404');
+        } else {
+            $this->error('缺少对应的模版而不能显示',U('Home/Index/index'));
+        }
+
         Hook::listen('app_end');
         die();
     }

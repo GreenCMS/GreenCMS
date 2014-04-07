@@ -69,6 +69,8 @@
                         <form method="POST" action="{:U('Admin/Posts/indexHandle')}" id="posts">
                             <div class="portlet-body">
                                 <div class="clearfix">
+
+                                    <div class="span6">
                                     <div class="btn-group">
                                         <a href="{:U('Admin/Posts/add')}">
                                             <button type="submit" class="btn green" name="postAdd" value='1'>
@@ -90,11 +92,20 @@
                                         </i> 批量删除
                                         </button>
                                     </div>
+                                    </div>
 
+                                    <div class="span6">
+                                        <div class="dataTables_filter"  >
+                                             <label>搜索:
 
+                                            <input type="text"  name="keyword" class="m-wrap medium"
+                                        placeholder="输入关键字,回车搜索"    value="{:I('get.keyword')}"     ></label>
+                                                <input type="hidden" name="post_type" value="{$post_type}">
+                                        </div>
+                                    </div>
                                 </div>
                                 <table class="table table-striped table-bordered table-hover"
-                                       id="post_table"  >
+                                       id="post_table">
                                     <thead>
                                     <tr>
                                         <th style="width: 8px;"><input type="checkbox" class="group-checkable"

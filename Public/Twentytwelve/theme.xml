@@ -10,4 +10,15 @@
     <tpl_view>Apllication/Home/View/Twentytwelve</tpl_view>
     <tpl_static>Public/Twentytwelve</tpl_static>
     <introduction>Twentytwelve博客主题</introduction>
+    <post>
+        <single>
+            <name>文章</name>
+            <tpl>single</tpl>
+        </single>
+        <page>
+            <name>无侧栏</name>
+            <tpl>page</tpl>
+        </page>
+
+    </post>
 </theme>
