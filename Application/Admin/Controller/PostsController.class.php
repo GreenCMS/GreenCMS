@@ -394,7 +394,7 @@ class PostsController extends AdminBaseController
                 );
             }
 
-            $this->assign('tpl_type', gen_opinion_list($tpl_type_list,$post['post_template']));
+            $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
 
 
             $this->cats = D('Cats', 'Logic')->category();;
@@ -610,4 +610,12 @@ class PostsController extends AdminBaseController
         }
     }
 
+
+    /**
+     * @function 未知类型单页
+     */
+    public function _empty($method, $args)
+    {
+        $this->index($method, I('get.post_status', 'publish'), I('get.order', 'post_id desc'), I('get.keyword', ''));
+    }
 }
