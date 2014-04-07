@@ -1,0 +1,130 @@
+<!-- 留言板前台 -->
+<link href="__PUBLIC__/admin/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="__PUBLIC__/admin/assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"
+      type="text/css"/>
+<link href="__PUBLIC__/admin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+      type="text/css"/>
+<link href="__PUBLIC__/admin/assets/css/style-metro.css" rel="stylesheet" type="text/css"/>
+<link href="__PUBLIC__/admin/assets/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="__PUBLIC__/admin/assets/css/pages/blog.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+    .pagination ul li .current {
+        color: #a00;
+    }
+
+    .pagination {
+        float: right;
+    }
+
+    h4.media-heading {
+        position: relative;
+    }
+
+    h4.media-heading span a {
+        color: #78cff8;
+    }
+
+    h5.media-object {
+        padding-top: 20px;
+    }
+</style>
+<br /><br />
+<form id="form" action="{:addons_url('Guestbook://Guestbook/add')}" method="post" class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label">姓名</label>
+        <div class="controls">
+            <input name="name" type="text" placeholder="" class="m-wrap medium name" />
+            <span class="help-inline" style="color:red; display:none;">请输入姓名</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Email</label>
+        <div class="controls">
+            <input name="email" type="text" placeholder="" class="m-wrap medium email" />
+            <span class="help-inline" style="color:red; display:none;">请输入邮箱</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">电话</label>
+        <div class="controls">
+            <input name="tel" type="text" placeholder="" class="m-wrap medium tel" />
+            <span class="help-inline"></span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">咨询标题</label>
+        <div class="controls">
+            <input name="title" type="text" placeholder="" class="m-wrap medium title" />
+            <span class="help-inline" style="color:red; display:none;">请输入标题</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">咨询内容</label>
+        <div class="controls">
+            <textarea name="content" class="large m-wrap content" rows="3"></textarea>
+            <span class="help-inline" style="color:red; display:none;">请输入内容</span>
+        </div>
+    </div>
+    <input type="hidden" name="post_id" value="{$post_id}" />
+    <div class="form-actions">
+        <button type="button" class="btn submit">提交</button>
+        <button type="reset" class="btn">重写</button>
+    </div>
+</form>
+<div class="media">
+    <h3>留言列表<span style="float:right;font-size:12px;">{$count}条/{$pages}页</span></h3>
+    <hr />
+    <volist name="guestbook" id="guestbook">
+    <a href="#{$guestbook.id}" class="pull-left">
+    <h5 class="media-object">{$guestbook['name']}:</h5>
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading">{$guestbook['title']} <span style="float:right;">{$guestbook['date'] | substr=###, 0, 10} / <span style="font-size:12px;">{$guestbook['ip']}</span></span></h4>
+        <p>{$guestbook['content']}</p>
+        <hr>
+        <!-- Nested media object -->
+        <div class="media">
+            <a href="#" class="pull-left">
+            <h5 class="media-object">回复:</h5>
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading"></h4>
+                <p style="margin-top:30px;">{$guestbook['reply']} </p>
+            </div>
+        </div>
+        <!--end media-->
+        <hr>
+    </div>
+    </volist>
+</div>
+
+<div class="pagination">
+    <ul>{$pager}</ul>
+</div>
+<br /><br />
+
+<script type="text/javascript" src="__PUBLIC__/admin/assets/plugins/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    
+    $(".submit").click(function() {
+
+        $(".help-inline").fadeOut();
+
+        if($(".name").val() == "") {
+            $(".name + .help-inline").fadeIn();
+        }
+        else if($(".email").val() == "") {
+            $(".email + .help-inline").fadeIn();
+        }
+        else if($(".title").val() == "") {
+            $(".title + .help-inline").fadeIn();
+        }
+        else if($(".content").val() == "") {
+            $(".content + .help-inline").fadeIn();
+        }
+        else {
+            $("#form").submit();
+        }
+    });
+</script>
