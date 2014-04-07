@@ -384,7 +384,7 @@ function addons_url($url, $param = array())
     );
     $params = array_merge($params, $param); //添加额外参数
 
-    return U('Home/Addons/execute', $params);
+    return U('Addons/execute', $params);
 }
 
 /**

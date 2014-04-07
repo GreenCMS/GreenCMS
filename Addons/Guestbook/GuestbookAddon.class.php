@@ -26,30 +26,19 @@ use Common\Util\GreenPage;
             'map'=>'',              //查询条件, 如果需要可以再插件类的构造方法里动态重置这个属性
             'order'=>'date desc',     //排序,
             'listKey'=>array(       //这里定义的是除了id序号外的表格里字段显示的表头名
-                
+
             ),
         );
 
         public function install(){
-            return true;
-        }
 
-        public function uninstall(){
-            return true;
-        }
-
-        //实现的Guestbook钩子方法
-        public function Guestbook($param){
-            // dump($param);die;
-            if($param['post_title'] == "留言板") { //前台创建的“留言板”页面
-                //第一次使用，创建留言本表
-                $sql = "
+            $sql = "
                     CREATE TABLE IF NOT EXISTS `" . C('DB_PREFIX') . "guestbook` (
                       `id` int(11) NOT NULL AUTO_INCREMENT,
                       `name` tinytext NOT NULL,
                       `email` varchar(100) NOT NULL,
-                      `tel` var(100) NULL,
-                      `title` var(255) NOT NULL,
+                      `tel` varchar(100) NULL,
+                      `title` varchar(255) NOT NULL,
                       `content` text NOT NULL,
                       `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                       `ip` varchar(100) NOT NULL,
@@ -58,7 +47,24 @@ use Common\Util\GreenPage;
                       PRIMARY KEY (`id`)
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
                 ";
-                M()->query($sql);
+            M()->query($sql);
+            return true;
+        }
+
+        public function uninstall(){
+            $sql = "DROP TABLE IF EXISTS `" . C('DB_PREFIX') . "guestbook` ";
+
+            M()->query($sql);
+
+            return true;
+        }
+
+        //实现的Guestbook钩子方法
+        public function Guestbook($param){
+            // dump($param);die;
+            if($param['post_title'] == "留言板") { //前台创建的“留言板”页面
+                //第一次使用，创建留言本表
+
 
                 $where['status'] = 1;
                 $where['reply'] = array('exp', 'is not null');
@@ -75,11 +81,11 @@ use Common\Util\GreenPage;
                     $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
                     $pager_bar = $Page->show();
                     $limit = $Page->firstRow . ',' . $Page->listRows;
-                }                
+                }
 
                 $message = M('guestbook')->where($where)->order($order)->limit($limit)->select();
                 // dump(M('guestbook')->getLastSql());die;
-                
+
                 $this->assign('count', $count);
                 $this->assign('pages', ceil ($count / $page));
                 $this->assign('pager', $pager_bar);
@@ -91,8 +97,8 @@ use Common\Util\GreenPage;
             }
             elseif($param = 'menu') {
                 echo "
-                    <li><a href='" . 
-                    addons_url('Guestbook://Guestbook/manage') .  
+                    <li><a href='" .
+                    addons_url('Guestbook://Guestbook/manage') .
                     "'>留言板</a></li>
                 ";
             }
