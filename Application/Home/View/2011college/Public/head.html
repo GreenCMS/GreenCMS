@@ -11,14 +11,36 @@
 <script src="__PUBLIC__/2011college/js/jquery.js" type="text/javascript"></script>
 
 <style type="text/css">
-body {
-	min-width: 1100px;
+* {
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    min-width: 1100px;
+}
+
 .header {
     background: url(__PUBLIC__/2011college/images/1.png) 0 30px repeat-x;
     height: 198px;
 }
- 
+
+.menu a {
+
+
+    display: block;
+    /*position:relative;发现放在a元素中，
+    在标准游览器中惨不忍睹，
+    和纯CSS相册3的第一个运行框在chrome中遇到的bug一样*/
+    height: 32px;
+    width: 100px;
+    line-height: 32px;
+    color: #fffbff;
+    text-decoration: none;
+    text-align: center;
+    overflow: hidden; /*★★★★*/
+}
+
 .topbar {
     background: #000000;
     height: 30px;
@@ -81,6 +103,80 @@ body {
     margin: 0 36px;
 }
 
+.menu {
+
+    clear: both;
+    text-align: center;
+    position: relative;
+    top: 34px;
+    font-size: 12px;
+
+    width: 87%;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu li {
+    /*水平菜单*/
+    float: left;
+    list-style: none;
+    position: relative; /*把包含块移动li元素*/
+}
+
+.menu a {
+
+    font-size: 16px;
+
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 36px;
+
+
+    display: block;
+    /*position:relative;发现放在a元素中，
+    在标准游览器中惨不忍睹，
+    和纯CSS相册3的第一个运行框在chrome中遇到的bug一样*/
+    height: 32px;
+    width: 100px;
+    line-height: 32px;
+     color: #fffbff;
+    text-decoration: none;
+    text-align: center;
+    overflow: hidden; /*★★★★*/
+}
+
+.menu a:hover {
+    color: #fff;
+}
+
+    /*新增的二级菜单部分*/
+.menu ul ul {
+    visibility: hidden; /*开始时是隐藏的*/
+    position: absolute;
+    left: 0px;
+    top: 32px;
+
+    z-index: 99;
+}
+
+.menu ul li:hover ul, /*非IE6*/
+.menu ul a:hover ul {
+    /*IE6*/
+    visibility: visible;
+}
+
+.menu ul ul li {
+    clear: both; /*垂直显示*/
+    text-align: center;
+}
+
+
+.menu ul li ul li  a{
+
+    background: #2b62af;
+    padding: 10px;
+}
 .slide {
     width: 100%;
     height: 400px;
@@ -178,10 +274,11 @@ body {
 
 .article dd {
     position: relative;
-}	
+}
+
 .article dd a {
     display: block;
-	margin-right: 100px;
+    margin-right: 100px;
     height: 32px;
     line-height: 32px;
     position: relative;
@@ -192,14 +289,16 @@ body {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
 .article dd a i {
     font-size: 12pt;
     width: 1em;
     font-weight: bold;
     color: #379adc;
-} 
+}
+
 .article dd a:hover {
-	color: #000;
+    color: #000;
 }
 
 .article dd  span {
@@ -213,7 +312,7 @@ body {
 }
 
 .notification_out {
-    padding:5px;
+    padding: 5px;
     width: 1100px;
     height: 900px;
     background-color: #fff;
@@ -232,12 +331,12 @@ body {
 }
 
 .stroke dt {
-	height: 60px;
-	line-height: 60px;
+    height: 60px;
+    line-height: 60px;
     font-size: 18pt;
     text-indent: 35px;
     color: #fff;
-	background-color: #c0392b;
+    background-color: #c0392b;
     margin-bottom: 6px;
 }
 
@@ -275,7 +374,6 @@ body {
     background-color: #7d7d7d;
 }
 
-
 .article2 {
     width: 48%;
     height: 300px;
@@ -290,7 +388,7 @@ body {
     height: 300px;
     margin-bottom: 10px;
     margin-right: 0px;
- }
+}
 
 .article2 dt {
     background-color: #3a7797;
@@ -335,10 +433,12 @@ body {
 #tbIndex td.focus {
     background: url(__PUBLIC__/2011college/images/selected.png) 0 0 no-repeat
 }
+
 .containerIndex {
-	margin: 0 auto;
-	height: 0;
+    margin: 0 auto;
+    height: 0;
 }
+
 #turnTo {
     position: relative;
     z-index: 998;
@@ -384,14 +484,10 @@ body {
     background-color: #000000;
 }
 
-.nav ul li{
-    display:Inline;
-    color:#ffffff;
+.nav ul li {
+    display: Inline;
+    color: #ffffff;
 }
-
-
-
-
 
 .topbar ul {
     width: 1100px;
@@ -411,7 +507,6 @@ body {
     text-decoration: none;
     color: #ffffff;
 }
-
 
 .slide {
     width: 100%;
@@ -523,83 +618,99 @@ body {
 }
 
 .post {
-	margin-bottom: 1em;
+    margin-bottom: 1em;
 }
+
 .post h2 {
-	background-color: #ECECEC;
-	text-indent: 1em;
+    background-color: #ECECEC;
+    text-indent: 1em;
 }
+
 .post h2 a {
-	height: 2em;
-	line-height: 2em;
-	font-size: 1.2em;
-	color: #000;
-	text-decoration: none;
+    height: 2em;
+    line-height: 2em;
+    font-size: 1.2em;
+    color: #000;
+    text-decoration: none;
 }
+
 .post h2 a:hover {
-	color: #103DBF;
+    color: #103DBF;
 }
+
 .post .meta {
-	font-size: 12px;
-	text-indent: 1.5em;
-	margin-top: 6px;
+    font-size: 12px;
+    text-indent: 1.5em;
+    margin-top: 6px;
 }
+
 .post .meta span {
-	margin-right: 2em;
+    margin-right: 2em;
 }
+
 .post .meta a {
-	cursor: auto;
-	text-decoration: none;
-	color: #4D4D4D;
+    cursor: auto;
+    text-decoration: none;
+    color: #4D4D4D;
 }
+
 .post p {
-	margin: .5em 1em;
-	
+    margin: .5em 1em;
+
 }
+
 .post .continue {
-	color: #e67e22;
-	font-size: .8em;
-	margin-left: 1em;
-	text-decoration: none;
+    color: #e67e22;
+    font-size: .8em;
+    margin-left: 1em;
+    text-decoration: none;
 }
+
 .post .continue:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
+
 .blog-navi {
-	text-align: center;
-	margin: 24px 0;
+    text-align: center;
+    margin: 24px 0;
 }
+
 .blog-navi ul {
-	display: inline-block;
-	list-style: none;
-	overflow: hidden;
-	margin: 0 auto;
+    display: inline-block;
+    list-style: none;
+    overflow: hidden;
+    margin: 0 auto;
 }
+
 .blog-navi ul {
-	*display: inline;
+    *display: inline;
 }
+
 .blog-navi ul li {
-	float: left;
-	text-align: center;
-	margin: 0 6px;
+    float: left;
+    text-align: center;
+    margin: 0 6px;
 }
+
 .blog-navi ul li a {
-	text-decoration: none;
-	padding: 4px 8px;
-	display: block;
-	border: solid 1px #AAAAEE;
-	color: #1A63BA;
-	
+    text-decoration: none;
+    padding: 4px 8px;
+    display: block;
+    border: solid 1px #AAAAEE;
+    color: #1A63BA;
+
 }
+
 .blog-navi ul li a.current {
-	color: #fff;
-	background-color: #1A63BA;
+    color: #fff;
+    background-color: #1A63BA;
 }
+
 .clear {
-	display: inline-block;
-	margin-top: 402px;
-	clear: both;
-	height: 0;
-	overflow: hidden;
+    display: inline-block;
+    margin-top: 402px;
+    clear: both;
+    height: 0;
+    overflow: hidden;
 }
 </style>

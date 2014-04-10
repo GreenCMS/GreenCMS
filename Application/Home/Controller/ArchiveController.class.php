@@ -13,6 +13,7 @@ use Common\Util\File;
 use Common\Util\GreenPage;
 
 /**
+ * 文章归档控制器
  * Class ArchiveController
  * @package Home\Controller
  */
@@ -20,7 +21,7 @@ class ArchiveController extends HomeBaseController
 {
 
     /**
-     *初始化
+     * 初始化
      */
     function __construct()
     {
@@ -29,7 +30,9 @@ class ArchiveController extends HomeBaseController
     }
 
     /**
-     * @param string $keyword 关键字
+     * 用于搜索的关键字关键字 同时支持年月日参数传递
+     * @param string $keyword 用于搜索的关键字关键字
+     *
      */
     public function search($keyword = '')
     {
@@ -43,7 +46,7 @@ class ArchiveController extends HomeBaseController
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
-            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
 
             $res = $PostsList->getList($limit, 'all', 'post_id desc', true, $info);
         }
@@ -59,7 +62,8 @@ class ArchiveController extends HomeBaseController
     }
 
     /**
-     * 文章归档
+     * 文章归档 支持年月日参数传递 和用户id
+     * @param null 文章归档
      */
     public function single()
     {
@@ -72,9 +76,9 @@ class ArchiveController extends HomeBaseController
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
-            $Page = new GreenPage($count, C('PAGER'));
+            $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
-            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
             $res = $PostsList->getList($limit, 'single', 'post_id desc', true, $map);
         }
         $this->assign('title', '所有文章');
@@ -88,7 +92,8 @@ class ArchiveController extends HomeBaseController
 
 
     /**
-     * 页面归档
+     * 页面归档 支持年月日参数传递 和用户id
+     * @param null 页面归档
      */
     public function page()
     {
@@ -99,9 +104,9 @@ class ArchiveController extends HomeBaseController
         $count = $PostsList->countAll('page', $map); // 查询满足要求的总记录数
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
-            $Page = new GreenPage($count, C('PAGER'));
+            $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
-            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
 
             $res = $PostsList->getList($limit, 'page', 'post_id desc', true, $map);
         }
@@ -116,7 +121,9 @@ class ArchiveController extends HomeBaseController
 
 
     /**
-     * @function 未知类型
+     *  未知类型归档  支持年月日参数传递 和用户id
+     * @param $method 未知类型
+     * @param array $args 参数
      */
     public function _empty($method, $args)
     {

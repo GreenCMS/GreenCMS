@@ -14,6 +14,7 @@ use Common\Util\GreenPage;
 
 
 /**
+ * 标签控制器
  * Class TagController
  * @package Home\Controller
  */
@@ -29,7 +30,8 @@ class TagController extends HomeBaseController
     }
 
     /**
-     * @param $info
+     * 查询指定标签的详细信息
+     * @param $info  detail 查询的 id 或者slug
      */
     public function detail($info)
     {

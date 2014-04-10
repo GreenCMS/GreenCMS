@@ -54,13 +54,12 @@ class WeatherAddon extends Addon
         $url = "http://api.map.baidu.com/telematics/v2/weather?location=" . $this->getAddress() . "&ak=" . $config['ak'] . "";
 
         $result = file_get_contents($url);
-
         $content = simplexml_load_string($result);
         $i = 1;
         foreach ($content->results->result as $result) {
             if ($i > $config['showday'])
                 break;
-            $list[$i]['date'] = (string)$result->date;
+            $list[$i]['date'] =mb_substr((string)$result->date,0,2,"UTF-8") ;
             $list[$i]['weather'] = (string)$result->weather;
             $list[$i]['wind'] = (string)$result->wind;
             $list[$i]['temperature'] = (string)$result->temperature;
@@ -85,7 +84,7 @@ class WeatherAddon extends Addon
     public function pageHeader()
     {
         $config = $this->getConfig();
-        $this->assign('width', $config['showday'] * 140);
+        $this->assign('width', $config['showday'] * 160);
         $this->assign('location', $this->getAddress());
         $this->assign('lists', $this->getWeather());
         $this->assign('addons_config', $config);

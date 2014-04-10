@@ -13,6 +13,7 @@ use Common\Logic\PostsLogic;
 use Common\Util\GreenPage;
 
 /**
+ * 分类控制器
  * Class CatController
  * @package Home\Controller
  */
@@ -20,7 +21,7 @@ class CatController extends HomeBaseController
 {
 
     /**
-     *
+     * @param null 无实现
      */
     public function index()
     {
@@ -28,7 +29,8 @@ class CatController extends HomeBaseController
     }
 
     /**
-     * @param $info id
+     * 查询指定分类的详细信息
+     * @param $info detail 查询的 id 或者slug
      */
     public function detail($info)
     {
@@ -36,7 +38,7 @@ class CatController extends HomeBaseController
         $Posts = new PostsLogic();
         $cat = $Cat->detail($info);
 
-        $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了");
+        $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了"); //优雅的404
 
         $posts_id = $Cat->getPostsId($cat['cat_id']);
         $count = sizeof($posts_id);
@@ -55,13 +57,17 @@ class CatController extends HomeBaseController
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
-        $this->assign('breadcrumbs', get_breadcrumbs('cats',$cat['cat_id']));
+        $this->assign('breadcrumbs', get_breadcrumbs('cats', $cat['cat_id']));
 
         $this->display('Archive/single-list');
 
     }
 
 
+    /**
+     * 兼容旧式CMS深目录结构的二级cat结构
+     * @param $info
+     */
     public function channel($info)
     {
         //TODO 兼容旧式CMS深目录结构的二级cat结构

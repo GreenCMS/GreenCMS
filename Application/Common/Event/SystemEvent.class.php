@@ -12,6 +12,7 @@ namespace Common\Event;
 use Common\Util\File;
 
 /**
+ * 系统事件 包括数据缓存文件 备份清理操作
  * Class SystemEvent
  * @package Common\Event
  */
@@ -19,7 +20,7 @@ class SystemEvent
 {
 
     /**
-     *
+     * 文章关联完整性检查
      */
     public function post_integrity()
     {
@@ -61,6 +62,7 @@ class SystemEvent
 
 
     /**
+     * 备份文件夹
      * @param string $dir
      * @param string $backup_path
      * @return array
@@ -92,6 +94,7 @@ class SystemEvent
     }
 
     /**
+     * 清空所有缓存
      * @return bool
      */
     public function clearCacheAll()
@@ -111,6 +114,7 @@ class SystemEvent
     }
 
     /**
+     * 清空日志
      * @return bool
      */
     public function clearLog()
@@ -119,6 +123,7 @@ class SystemEvent
     }
 
     /**
+     * 清空缓存
      * @param $cache_path
      * @return bool
      */
@@ -128,6 +133,7 @@ class SystemEvent
     }
 
     /**
+     * 备份数据库
      * @param string $type
      * @param array $tables
      * @param string $path
@@ -223,6 +229,7 @@ class SystemEvent
     }
 
     /**
+     * 备份所有数据看
      * @return array
      */
     public function backupDBAll()

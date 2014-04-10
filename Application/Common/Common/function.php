@@ -10,6 +10,7 @@
 include APP_PATH . 'Common/Common/common_router.php';
 
 /**
+ * 获取当前时间戳 使用TIME_FIX常量修正
  * @return bool|string
  */
 function current_timestamp()
@@ -19,6 +20,7 @@ function current_timestamp()
 }
 
 /**
+ * 对象转数组
  * @param $obj
  * @return mixed
  */
@@ -34,6 +36,7 @@ function object_to_array($obj)
 }
 
 /**
+ * GreenCMS用户密码加密
  * @param $data
  * @return string
  */
@@ -45,9 +48,9 @@ function encrypt($data)
 
 
 /**
- * @param $i
- * @param string $string
  * 判断是否置顶
+ * @param $i
+ * @param string $string 置顶时显示的文字
  */
 function is_top($i, $string = '【固顶】')
 {
@@ -57,8 +60,9 @@ function is_top($i, $string = '【固顶】')
 }
 
 /**
+ * 判断是否为空
  * @param $test判断是否为空
- * @param string $string
+ * @param string $string 为空时显示的文字
  */
 function is_empty($test, $string = '空')
 {
@@ -72,7 +76,10 @@ function is_empty($test, $string = '空')
 
 /**
  * 获取设置
- *
+ * @param $key key
+ * @param bool $realtime 是否直接从数据库中，为false时从缓存中取
+ * @param string $default 为空时默认值
+ * @return mixed|string
  */
 function get_opinion($key, $realtime = false, $default = '')
 {
@@ -103,6 +110,7 @@ function get_opinion($key, $realtime = false, $default = '')
 
 
 /**
+ * 设置opinion
  * @param $key
  * @param $value
  */
@@ -123,6 +131,7 @@ function set_opinion($key, $value)
 }
 
 /**
+ * 获取kv
  * @param $key
  * @param bool $realtime
  * @param string $default
@@ -186,13 +195,13 @@ function exist_kv($key)
  */
 function array2str($res)
 {
-
     $str = join(",", $res);
     return $str;
 }
 
 
 /**
+ * 二维数组排序
  * @param $arr
  * @param $keys
  * @param string $type
@@ -218,9 +227,8 @@ function array_sort($arr, $keys, $type = 'desc')
 
 
 /**
- * 二位数组转化为一维数组
- * @param 二维数组
- *
+ * 多维数组转化为一维数组
+ * @param 多维数组
  * @return array 一维数组
  */
 function array_multi2single($array)
@@ -478,6 +486,7 @@ function create_dir_or_files($files)
 
 //缩略图获取
 /**
+ * 缩略图获取
  * @param $post
  */
 function get_post_thumbnail($post)
@@ -503,6 +512,7 @@ title="' . $post['post_title'] . '"/></a>';
 
 
 /**
+ * 面包屑
  * @param $type
  * @param string $info
  * @param string $ul_attr
@@ -543,6 +553,7 @@ function get_breadcrumbs($type, $info='', $ul_attr = ' class="breadcrumbs "',
 
 
 /**
+ * 展开父类
  * @param $cat
  * @param $separator
  * @return string

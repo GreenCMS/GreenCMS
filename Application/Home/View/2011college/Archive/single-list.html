@@ -52,34 +52,27 @@
                             <!-- Title -->
                             <h2>
                                 <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
-                                    {$post.post_top|is_top}{$post.post_title}</a>
+                                    {$post.post_top|is_top}{$post.post_title}</a>                                                                          <a style="float:right">   {$post['post_date']}</a>                                        
                             </h2>
 
                             <!-- Meta -->
-                            <div class="meta clearfix">
+                            <div class="meta clearfix"><!--
 								<span><img src="__PUBLIC__/Vena/images/icons/calendar.png"
-                                           alt="date"/>  {$post['post_date']}</span> <span><img
+                                           alt="date"/>  {$post['post_date']}</span>  -->                                     <!--<span><img
                                     src="__PUBLIC__/Vena/images/icons/user.png" alt="author"/> 作者 : <a
                                     href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a></span>
 								<span><img src="__PUBLIC__/Vena/images/icons/ribbon.png"
                                            alt="cat"/> 分类 : <volist name="post.post_cat" id="cat"><a
                                         href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
-                                </volist></span> <span><img
-                                    src="__PUBLIC__/Vena/images/icons/ticket.png" alt="tags"/> 标签 : <volist
-                                    name="post.post_tag" id="tag"><a
-                                    href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
-                            </volist> </span> <span><img
-                                    src="__PUBLIC__/Vena/images/icons/comments.png" alt="comments"/> <a
-                                    href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments"> {$post.post_comment_count}条评论</a></span>
-                                </span>
+                                </volist></span>  </span>  -->
+                               
                             </div>
-
-                            <!-- Content -->
+                            <!-- Content
                             <p>{$post.post_content|strip_tags|mb_substr=0,200,"UTF-8"}</p>
-
-                            <!-- Read More -->
+ -->
+                            <!-- Read More
                             <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" class="btn continue">阅读全文>></a>
-
+ -->
                         </div>
                     </div>
 

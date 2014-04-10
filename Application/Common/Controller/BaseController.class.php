@@ -11,6 +11,7 @@ use Think\Hook;
 use Think\Controller;
 
 /**
+ * GreenCMS基类控制器
  * Class BaseController
  * @package Common\Controller
  */
@@ -22,12 +23,10 @@ abstract class BaseController extends Controller
     function __construct()
     {
         parent::__construct();
-
-        //$this->getKvs();
-
     }
 
     /**
+     * 获取kv
      * @return array|mixed
      */
     function getKvs()
@@ -76,7 +75,7 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * check_verify
+     * 检查验证码
      */
     function check_verify()
     {
@@ -87,7 +86,7 @@ abstract class BaseController extends Controller
     }
 
     /**
-     *
+     * 判断是否为Sae平台
      */
     function isSae()
     {
@@ -97,6 +96,7 @@ abstract class BaseController extends Controller
     }
 
     /**
+     * 简化tp json返回
      * @param int $status
      * @param string $info
      * @param string $url
