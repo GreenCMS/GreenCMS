@@ -10,6 +10,11 @@ class AddonsController extends Controller{
 
     protected $addons = null;
 
+    /**
+     * @param null $_addons
+     * @param null $_controller
+     * @param null $_action
+     */
     public function execute($_addons = null, $_controller = null, $_action = null){
         if(C('URL_CASE_INSENSITIVE')){
             $_addons = ucfirst(parse_name($_addons, 1));

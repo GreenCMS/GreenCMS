@@ -13,6 +13,7 @@ use Think\Controller;
 /**
  * Class BaseController
  * @package Common\Controller
+ * GreenCMS基类控制器
  */
 abstract class BaseController extends Controller
 {
