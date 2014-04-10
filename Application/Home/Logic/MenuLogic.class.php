@@ -13,6 +13,7 @@ namespace Home\Logic;
 use Think\Model;
 
 /**
+ * Menu逻辑组件
  * Class MenuLogic
  * @package Home\Logic
  */
@@ -21,6 +22,7 @@ class MenuLogic extends Model
 
 
     /**
+     * 得到菜单
      * @param string $menu_position
      * @return array
      */
@@ -51,11 +53,12 @@ class MenuLogic extends Model
     }
 
     /**
-     * @param string $menu_position
-     * @param string $ul_attr
-     * @param string $li_attr
-     * @param string $split
-     * @return string
+     * 获取菜单 <ul> 返回的内容</ul>
+     * @param string $menu_position 位置或者说标签
+     * @param string $ul_attr ul属性可以是class id
+     * @param string $li_attr li属性可以是class id
+     * @param string $split 分割符  例如 ->首页  $split 栏目
+     * @return string <ul> 返回的内容</ul>
      */
     public function genMenu($menu_position = 'head', $ul_attr = 'class="navigation"', $li_attr = '', $split = '')
     {

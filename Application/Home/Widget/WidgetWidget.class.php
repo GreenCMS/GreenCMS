@@ -14,6 +14,7 @@ use Common\Logic\TagsLogic;
 use Think\Controller;
 
 /**
+ * Widget
  * Class WidgetWidget
  * @package Home\Widget
  */
@@ -21,7 +22,8 @@ class WidgetWidget extends Controller
 {
 
     /**
-     *
+     * 搜索框
+     * @usage {:W('Widget/search')}
      */
     public function search()
     {
@@ -31,7 +33,8 @@ class WidgetWidget extends Controller
     }
 
     /**
-     *
+     * 关于我们
+     * @usage {:W('Widget/aboutUs')}
      */
     public function aboutUs()
     {
@@ -43,7 +46,8 @@ class WidgetWidget extends Controller
     }
 
     /**
-     *
+     * 所有分类
+     * @usage {:W('Widget/categories')}
      */
     public function categories()
     {
@@ -55,7 +59,8 @@ class WidgetWidget extends Controller
     }
 
     /**
-     *
+     * 所有标签
+     * @usage {:W('Widget/tag')}
      */
     public function tag()
     {
@@ -72,7 +77,8 @@ class WidgetWidget extends Controller
 
 
     /**
-     *
+     * 所有链接
+     * @usage {:W('Widget/links')}
      */
     public function links()
     {
