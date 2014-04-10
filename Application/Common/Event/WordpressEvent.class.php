@@ -11,6 +11,7 @@ namespace Common\Event;
 
 
 /**
+ * Wordpress导入工具 Beta
  * Class WordpressEvent
  * @package Common\Event
  */

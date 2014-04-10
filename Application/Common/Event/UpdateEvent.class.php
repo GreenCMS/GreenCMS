@@ -12,6 +12,7 @@ namespace Common\Event;
 use Common\Util\File;
 
 /**
+ * 升级事件
  * Class UpdateEvent
  * @package Common\Event
  */
