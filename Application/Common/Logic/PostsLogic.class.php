@@ -11,6 +11,7 @@ namespace Common\Logic;
 use Think\Model\RelationModel;
 
 /**
+ * 文章逻辑定义
  * Class PostsLogic
  * @package Home\Logic
  */
