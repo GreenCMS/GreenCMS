@@ -106,7 +106,7 @@
                                         </td>
                                         <td>
                                             <a class="btn mini" href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}">编辑</a>
-                                            <a  class="btn mini red" href="{:U('Admin/Posts/delTag', array('id' => $v['tag_id']))}">删除</a>
+                                            <a  onclick="javascript:return a_confirm()"  class="btn mini red" href="{:U('Admin/Posts/delTag', array('id' => $v['tag_id']))}">删除</a>
                                         </td>
 
 

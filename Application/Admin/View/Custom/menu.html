@@ -107,7 +107,7 @@
 
 
                                     <a class="btn mini purple" href="{:U('Admin/Custom/menuEdit',array('id'=>$vo['menu_id']))}">编辑</a>
-                                    <a class="btn mini red" href="{:U('Admin/Custom/menuDel',array('id'=>$vo['menu_id']))}">删除</a>
+                                    <a  onclick="javascript:return a_confirm()" class="btn mini red" href="{:U('Admin/Custom/menuDel',array('id'=>$vo['menu_id']))}">删除</a>
 
                                 </td>
                                 <td>
