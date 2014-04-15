@@ -112,7 +112,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('45', 'home_post_model', 'native', 'ye
 -- ----------------------------
 -- Records of {$db_prefix}kv
 -- ----------------------------
-INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'Twentytwelve');
+INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'Vena');
 INSERT INTO `{$db_prefix}kv` VALUES ('2', 'theme_Vena', 'enabled');
 INSERT INTO `{$db_prefix}kv` VALUES ('3', 'theme_2011college', 'enabled');
 INSERT INTO `{$db_prefix}kv` VALUES ('4', 'theme_Twentytwelve', 'enabled');
