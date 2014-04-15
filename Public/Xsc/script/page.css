@@ -1,0 +1,20 @@
+.page1 {
+		BORDER-RIGHT: #e6e6e6 1px solid;
+	    BORDER-TOP: #e6e6e6 1px solid;
+		DISPLAY: inline; 
+		BORDER-LEFT: #e6e6e6 1px solid; 
+		CURSOR: pointer; MARGIN-RIGHT: 5px; 
+		BORDER-BOTTOM: #e6e6e6 1px solid; 
+		LIST-STYLE-TYPE: none;
+		font-size:12px;
+}
+.page2 {
+		CURSOR: pointer;
+		BORDER-RIGHT: #b7d8ee 1px solid; 
+		BORDER-TOP: #b7d8ee 1px solid; 
+		BORDER-LEFT: #b7d8ee 1px solid; 
+		BORDER-BOTTOM: #b7d8ee 1px solid; 
+		BACKGROUND-COLOR: #d2eaf6;
+		FONT-WEIGHT: bold; COLOR: #444444; 
+		font-size:12px;
+}

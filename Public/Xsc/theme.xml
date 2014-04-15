@@ -1,0 +1,13 @@
+<theme>
+    <name>Xsc</name>
+    <version>1</version>
+    <build>20140415</build>
+    <description>南工大学生处学院网站</description>
+    <author>GreenStudio</author>
+    <preview>/Xsc/preview.jpg</preview>
+    <preview_big>/Xsc/preview_big.jpg</preview_big>
+    <copyright>GreenStudio 2014</copyright>
+    <tpl_view>Apllication/Home/View/Xsc</tpl_view>
+    <tpl_static>Public/Xsc</tpl_static>
+    <introduction>南工大学生处学院网站</introduction>
+</theme>
