@@ -1,85 +1,89 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]>
-<html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]>
-<html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]>
-<html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en">
-<!--<![endif]-->
+<html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <!-- Basic Page Needs -->
-    <meta charset="utf-8"/>
     <title>{$title}|{:get_opinion('title')}</title>
     <meta name="description" content="{:get_opinion('description')}"/>
     <meta name="keywords" content="{:get_opinion('keywords')}"/>
 
+    <include file="Public:head"/>
 
 </head>
 <body>
 
+<php>
+    $xgxw = D('Cats', 'Logic')->getPostsByCat(7, 8);
 
-<!-- Title Bar / Srart
-================================================== -->
-<div class="page-title">
-    <div class="container">
+    $ggtz = D('Cats', 'Logic')->getPostsByCat(8, 6);
+    $xyfc = D('Cats', 'Logic')->getPostsByCat(10, 6);
+    $llqy = D('Cats', 'Logic')->getPostsByCat(11, 6);
+    $xjdx = D('Cats', 'Logic')->getPostsByCat(12, 6);
 
-        <div class="ten columns">
-            <h1>{$title}</h1>
+</php>
+
+{:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
+
+<div id="content" class="clearfix">
+
+    <!-- Title Bar / Srart
+    ================================================== -->
+    <div class="page-title">
+        <div class="container">
+
+            <div class="ten columns">
+                <h1>{$title}</h1>
+            </div>
+
+
+            <nav class="six columns">
+                {$breadcrumbs}
+
+                <!--{:get_breadcrumbs('cats','1')}-->
+
+            </nav>
         </div>
-
-
-        <nav class="six columns">
-            {$breadcrumbs}
-
-             <!--{:get_breadcrumbs('cats','1')}-->
-
-        </nav>
     </div>
-</div>
-<!-- Title Bar / End
-================================================== -->
+    <!-- Title Bar / End
+    ================================================== -->
 
-<!-- Blog / Srart
-================================================== -->
-<section class="blog">
-    <div class="container">
+    <!-- Blog / Srart
+    ================================================== -->
+    <div class="blog">
+        <div class="container">
 
-        <div class="three_fourth column">
+            <div class="three_fourth column">
 
-            <!-- -->
-            <if condition="$res404 eq 0 ">
+                <!-- -->
+                <if condition="$res404 eq 0 ">
 
-                <article class="post">
-                    <div class="post-content medium clearfix">
-                        没有相关文章
-                        <div class="ten columns omega"></div>
-                    </div>
-                </article>
-
-
-            </if>
-
-
-            <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
-                <article class="post">
-
-                    <div class="post-content medium clearfix">
-                        <div class="three columns alpha">
-                            {$post|get_post_thumbnail}
+                    <article class="post">
+                        <div class="post-content medium clearfix">
+                            没有相关文章
+                            <div class="ten columns omega"></div>
                         </div>
+                    </article>
 
-                        <div class="nine columns omega">
-                            <!-- Title -->
-                            <h2>
-                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
-                                    {$post.post_top|is_top}{$post.post_title}</a>
-                            </h2>
 
-                            <!-- Meta -->
-                            <div class="meta clearfix">
+                </if>
+
+
+                <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
+                    <article class="post">
+
+                        <div class="post-content medium clearfix">
+                            <div class="three columns alpha">
+                                {$post|get_post_thumbnail}
+                            </div>
+
+                            <div class="nine columns omega">
+                                <!-- Title -->
+                                <h2>
+                                    <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                                        {$post.post_top|is_top}{$post.post_title}</a>
+                                </h2>
+
+                                <!-- Meta -->
+                                <div class="meta clearfix">
 
                                   <span><img src="__PUBLIC__/Vena/images/icons/calendar.png"
                                              alt="date"/> {$post['post_date']|getTimeURL=$post['post_type']}
@@ -103,36 +107,38 @@
                                 <span><img
                                         src="__PUBLIC__/Vena/images/icons/comments.png" alt="comments"/> <a
                                         href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments">{$post.post_comment_count}条评论</a></span>
-                                </span>
+                                    </span>
+
+                                </div>
+
+                                <!-- Content -->
+                                <p>{$post.post_content|strip_tags|mb_substr=0,200,"UTF-8"}</p>
+
+                                <!-- Read More -->
+                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" class="btn continue">Read
+                                    More</a>
 
                             </div>
 
-                            <!-- Content -->
-                            <p>{$post.post_content|strip_tags|mb_substr=0,200,"UTF-8"}</p>
-
-                            <!-- Read More -->
-                            <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" class="btn continue">Read
-                                More</a>
-
                         </div>
 
-                    </div>
+                    </article>
+                    <!-- Post End --> </volist>
+                <!-- Navigation -->
+                <div class="blog-navi nomargin">
 
-                </article>
-                <!-- Post End --> </volist>
-            <!-- Navigation -->
-            <div class="blog-navi nomargin">
+                    <ul>{$pager}
+                    </ul>
+                </div>
 
-                <ul>{$pager}
-                </ul>
             </div>
 
         </div>
-
     </div>
-</section>
-<!-- Blog / End
-================================================== -->
+
+    <include file="Public:footer"/>
+
+</div>
 
 </body>
 </html>

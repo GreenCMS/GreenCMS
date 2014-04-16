@@ -1,4 +1,64 @@
-<div class="head-nav">
+
+
+<div class="headerwrap">
+    <div class="header">
+        <div class="left">
+            <script language="JavaScript">
+                <!--
+                var enabled = 0;
+                today = new Date();
+                var day;
+                var date;
+                if (today.getDay() == 0) day = "星期日"
+                if (today.getDay() == 1) day = "星期一"
+                if (today.getDay() == 2) day = "星期二"
+                if (today.getDay() == 3) day = "星期三"
+                if (today.getDay() == 4) day = "星期四"
+                if (today.getDay() == 5) day = "星期五"
+                if (today.getDay() == 6) day = "星期六"
+                date1 = (today.getFullYear()) + "年" + (today.getMonth() + 1 ) + "月" + today.getDate() + "日 ";
+                date2 = day;
+                document.write(date1);//.fontsize为定义字号
+                document.write(date2);
+                //----->
+            </script>
+        </div>
+        <div class="right"><span class="userarea">链接</span>
+            <a href="#" target="_blank">链接</a>
+            <a href="#" target="_blank">链接</a>
+            <span class="userarea">链接</span>
+
+            <a href="#" target="_blank">老师</a>
+            <a href="#" target="_blank">访客</a>
+
+            <a href="#" target="_blank"><b>旧版主页</b></a>
+        </div>
+    </div>
+    <div class="logoarea">
+        <a class="logo" href="{:U('/')}"><img src="__PUBLIC__/Xsc/images/logo.png" alt=""></a>
+
+        <div class="searcharea">
+            <div class="searchdiv clearfix">
+                <div class="en"><a href="#">English Version</a>　　　|</div>
+                <div class="searinput">
+                    <form action="{:U('Archive/search')}"
+                          target="_blank"  ><input type="text" class="searchinput" placeholder="搜索"
+                                                            name="keyword">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="green_background" style="width: 100%;">
+
+<div class="head-nav ">
     {$home_menu}
 </div>
 
+</div>

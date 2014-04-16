@@ -200,7 +200,7 @@ img {
 }
 
 .center_middle .left .left_half .body {
-    padding-left:10px;
+    padding-left: 10px;
     float: left;
     width: 325px;
     height: 180px;
@@ -416,6 +416,7 @@ img {
     float: right;
     display: inline;
     margin-top: 40px;
+    width: 318px;
 }
 
 .headerwrap .logoarea .searchdiv {
@@ -680,4 +681,165 @@ img {
 
 .clearfix {
     display: block;
+}
+
+.right_box {
+    margin-left: 25px;
+    border: 2px solid #1b68af;
+    height: 357px;
+    float: left;
+
+    width: 350px;
+    margin-top: 25px;
+
+}
+
+.right_box .header {
+    background-color: #2957a2;
+    height: 40px;
+    font-size: 20px;
+    color: #FFFFFF;
+    line-height: 40px;
+
+}
+
+.right_box .header span {
+    background: url(./images/titleIcon.png) 0 5px no-repeat;
+    padding-left: 28px;
+    margin-left: 10px;
+
+}
+
+.right_box .header a {
+    color: #FFFFFF;
+    display: block;
+    float: right;
+    margin-right: 10px;
+    width: 53px;
+    /* height: 20px; */
+    /* background: url(../images/more.png) 0 0 no-repeat; */
+    /* text-indent: -9999px; */
+    overflow: hidden;
+    /* margin-top: 10px; */
+}
+
+.right_box .body {
+    margin-top: 8px;
+    padding: 10px 15px;
+}
+
+.right_box .body .box {
+    border: none;
+    padding-bottom: 14px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.right_box .body ul li {
+    padding-left: 20px;
+    background: url(./images/dot.png) 0 5px no-repeat;
+    line-height: 32px;
+}
+
+.right_box .body ul li a {
+    color: #000000;
+    font-size: 14px;
+
+}
+
+.right_box .body ul li a:hover {
+    color: #1b68af;
+
+}
+
+#content {
+    width: 1140px;
+    margin: 0 auto;
+    background: #FFFFFF;
+}
+
+.news-slide {
+    width: 724px;
+    height: 357px;
+    overflow: hidden;
+    position: relative;
+}
+
+.preBtn {
+    position: absolute;
+    top: 140px;
+    left: 30px;
+    cursor: pointer;
+    width: 54px;
+    height: 54px;
+    background: url(./images/preBtn.png) 0 0 no-repeat;
+}
+
+.nextBtn {
+    position: absolute;
+    top: 140px;
+    right: 30px;
+    cursor: pointer;
+    width: 54px;
+    height: 54px;
+    background: url(./images/nexttn.png) 0 0 no-repeat;
+}
+
+.news-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #cacaca;
+    font-size: 18px;
+    line-height: 55px;
+    z-index: 999;
+    padding: 0 15px;
+}
+
+.news-title-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 55px;
+    width: 724px;
+    background: #000000;
+    filter: alpha(opacity=40);
+    -moz-opacity: 0.4;
+    opacity: 0.4;
+    z-index: 99;
+}
+
+.w1 {
+    width: 350px;
+    margin-top: 25px;
+}
+
+.w2 {
+    width: 725px;
+    margin-top: 25px;
+}
+
+.w3 {
+    width: 1100px;
+    margin-top: 25px;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+
+.ml25 {
+    margin-left: 25px;
+}
+
+.mt {
+    margin-top: 20px;
 }

@@ -1,114 +1,26 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script language="javascript" src="__PUBLIC__/Xsc/static/jquery.js"></script>
 
-    <title>南京工业大学学生工作部(处) | xsc.njut.edu.cn</title>
-    <meta name="keywords" content="南京工业大学,南京工业大学学生工作部(处)">
+    <title>{:get_opinion('title')} </title>
+    <meta name="description" content="{:get_opinion('keywords')}"/>
 
-    <link href="__PUBLIC__/Xsc/static/index.css" rel="stylesheet" type="text/css">
-    <link href="__PUBLIC__/Xsc/static/style.css" rel="stylesheet" type="text/css">
-    <link href="__PUBLIC__/Xsc/static/css/reset.css" rel="stylesheet"/>
-    <link href="__PUBLIC__/Xsc/static/css/common.css" rel="stylesheet"/>
+    <include file="Public:head"/>
 
-    <script type="text/javascript" src="__PUBLIC__/Xsc/static/index.js"></script>
-
-    <script type="text/javascript" src="__PUBLIC__/Xsc/static/js/jquery.KinSlideshow-1.2.1.min.js"></script>
-
-
-    <script type="text/javascript">
-        $(function () {
-            $("#slide").KinSlideshow({
-                titleBar: { titleBar_height: 30, titleBar_bgColor: "#08355c", titleBar_alpha: 0.5 },
-                titleFont: { TitleFont_size: 12, TitleFont_color: "#FFFFFF", TitleFont_weight: "normal" },
-                btn: { btn_bgColor: "#FFFFFF", btn_bgHoverColor: "#1072aa", btn_fontColor: "#000000",
-                    btn_fontHoverColor: "#FFFFFF", btn_borderColor: "#cccccc",
-                    btn_borderHoverColor: "#1188c0", btn_borderWidth: 1 }
-            });
-        })
-    </script>
 </head>
 <body>
 
 <php>
     $xgxw = D('Cats', 'Logic')->getPostsByCat(7, 8);
 
-
+    $ggtz = D('Cats', 'Logic')->getPostsByCat(8, 6);
+    $xyfc = D('Cats', 'Logic')->getPostsByCat(10, 6);
+    $llqy = D('Cats', 'Logic')->getPostsByCat(11, 6);
+    $xjdx = D('Cats', 'Logic')->getPostsByCat(12, 6);
 
 </php>
 
-
-<div class="headerwrap">
-    <div class="header">
-        <div class="left">
-            <script language="JavaScript">
-                <!--
-                var enabled = 0;
-                today = new Date();
-                var day;
-                var date;
-                if (today.getDay() == 0) day = "星期日"
-                if (today.getDay() == 1) day = "星期一"
-                if (today.getDay() == 2) day = "星期二"
-                if (today.getDay() == 3) day = "星期三"
-                if (today.getDay() == 4) day = "星期四"
-                if (today.getDay() == 5) day = "星期五"
-                if (today.getDay() == 6) day = "星期六"
-                date1 = (today.getFullYear()) + "年" + (today.getMonth() + 1 ) + "月" + today.getDate() + "日 ";
-                date2 = day;
-                document.write(date1);//.fontsize为定义字号
-                document.write(date2);
-                //----->
-            </script>
-        </div>
-        <div class="right"><span class="userarea">链接</span>
-            <a href="#" target="_blank">链接</a>
-            <a href="#" target="_blank">链接</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="userarea">链接</span>
-            <a href="#">考生</a>
-            <a href="#" target="_blank">老师</a>
-            <a href="#">访客</a>
-
-
-            <a href="#" target="_blank"><b>旧版主页</b></a>
-        </div>
-    </div>
-    <div class="logoarea">
-        <a class="logo" href="#"><img src="__PUBLIC__/Xsc/images/logo.png" alt=""></a>
-
-        <div class="searcharea">
-            <div class="searchdiv clearfix">
-                <div class="en"><a href="#">English Version</a>　　　|</div>
-                <div class="searinput">
-                    <form action="#"
-                          target="_blank" id="qForm"><input type="text" class="searchinput" value="全文检索" id="q"
-                                                            name="q">
-                        <input type="hidden" name="pagemode" value="result"><input type="hidden" name="appid" value="1"><input
-                                type="hidden" name="style" value="1"><input type="hidden" name="ck" value="o"> <input
-                                id="pos" type="hidden" name="pos" value="title,content"> <input id="webid" type="hidden"
-                                                                                                name="webid"
-                                                                                                value="1"><input
-                                class="searchbtn" type="submit" value="" name="imageField2"></form>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-    <tbody>
-    <tr>
-        <td class="green_background">
-
-            {:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
-        </td>
-    </tr>
-
-
-    </tbody>
-</table>
+{:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
 <div id="content" class="clearfix">
 
 <div id="slide" class="news-slide w2 ml20 fl">
@@ -121,16 +33,11 @@
             src="__PUBLIC__/Xsc/pictures/article/140303084637_8360.jpg" alt="分享故事 共话成长——校长黄维院士与青年学生座谈" width="725"
             height="357"/></a>
 </div>
-
-
-
-
-<div class="box w1 fl ml25">
-    <div class="hd"><a href="{:getCatURLByID(7)}"
+<div class="right_box">
+    <div class="header"><a href="{:getCatURLByID(7)}"
                        class="more">更多</a><span>学工新闻</span></div>
-    <div class="ct">
-        <div class="ct-top clearfix">
-
+    <div class="body">
+        <div class="box">
 
 
             <ul class="list1">
@@ -143,8 +50,6 @@
                 </volist>
 
 
-
-
             </ul>
         </div>
     </div>
@@ -152,96 +57,62 @@
 </div>
 
 
-<table style="width: 1140px;background: #FFFFFF;" border="0" cellpadding="0" cellspacing="0" align="center">
+<table border="0" cellpadding="0" cellspacing="0" align="center">
 <tbody>
+
+
 <tr>
     <td>
-<tr>
-    <td>
-        <div class="center_middle" style="margin-left:auto; margin-right:auto;">
+        <div class="center_middle">
             <div class="left">
-                <!--教学教研-->
+
                 <div class="left_half">
                     <div class="header">
-                        <a href="#" target="_blank">更多+</a>
+                        <a href="{:getCatURLByID(8)}" target="_blank">更多+</a>
 
                         <div class="tip">公告通知</div>
                     </div>
                     <div class="body">
                         <ul>
-                            <li><span>
-                                        03-14</span><a href="#" title="" target="_blank">浦江学院举行让理想照进现实</a>
-                            </li>
 
-                            <li><span>
-                                        02-19</span><a href="#" title="" target="_blank">浦举实、示范课、研究课授课...</a>
-                            </li>
 
-                            <li><span>
-                                        12-08</span><a href="#" title="" target="_blank">环境学院办新生风采大赛</a>
-                            </li>
+                            <volist name="ggtz" id="v">
+                                <li>
+                                  <span>
+                                        {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+                                    <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
 
-                            <li><span>
-                                        11-25</span><a href="#" title="" target="_blank">城建学院举办“新生杯”篮球赛 </a>
-                            </li>
+                                </li>
+                            </volist>
 
-                            <li><span>
-                                        11-18</span><a href="#" title="" target="_blank">城建学院举办“新生杯”篮球赛</a>
-                            </li>
-
-                            <li><span>
-                                        09-25</span><a href="#" title="" target="_blank">机械学院学生会与新生见面会圆 </a>
-                            </li>
 
                         </ul>
                     </div>
                 </div>
-                <!--教学教研结束-->
-                <!--德育之窗-->
+
+
                 <div class="left_half">
                     <div class="header">
-                        <a href="#" target="_blank">更多+</a>
+                        <a href="{:getCatURLByID(10)}" target="_blank">更多+</a>
 
                         <div class="tip">学院风采</div>
                     </div>
                     <div class="body">
                         <ul>
-
-                            <li><span>
-                                        03-24</span><a href="#"
-                                                       title="" target="_blank">抵制毒品，参与禁毒</a></li>
-
-                            <li><span>
-                                        03-03</span><a href="#"
-                                                       title="" target="_blank">机械学院赵旻喆同学在第五届</a>
-                            </li>
-
-                            <li><span>
-                                        12-26</span><a href="#"
-                                                       title="" target="_blank">交通学院举行“安居奖学金”颁.</a>
-                            </li>
-
-                            <li><span>
-                                        12-22</span><a href="#"
-                                                       title="" target="_blank">长江学者金太军教授应邀来我院.</a>
-                            </li>
-
-                            <li><span>
-                                        12-03</span><a href="#"
-                                                       title="" target="_blank">机械学院招生就业工作再次获得</a>
-                            </li>
-
-                            <li><span>
-                                        11-20</span><a href="#"
-                                                       title="我校开展“创卫宣传”社会实践活动" target="_blank">我校开展“创卫宣传”社会实践活动</a>
-                            </li>
+                            <volist name="xyfc" id="v">
+                                <li>
+                                  <span>
+                                        {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+                                    <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
+                                </li>
+                            </volist>
 
                         </ul>
                     </div>
                 </div>
-                <!--德育之窗结束-->
+
             </div>
-            <!--学校专题专栏-->
+
             <div class="cright">
                 <div class="header">
                     <a href="" target="_blank">更多+</a>
@@ -264,9 +135,6 @@
                        target="_blank">
                         <img src="" width="264" height="60" border="0"></a>
 
-                    <!--<a href=""-->
-                    <!--target="_blank">-->
-                    <!--<img src="" width="264" height="42" border="0"></a>-->
 
                 </div>
             </div>
@@ -280,88 +148,42 @@
             <div class="left">
                 <div class="left_half">
                     <div class="header">
-                        <a href=""
-                           target="_blank">
-                            更多+</a>
+                        <a href="{:getCatURLByID(11)}" target="_blank"> 更多+</a>
 
                         <div class="tip">理论前沿</div>
                     </div>
                     <div class="body">
                         <ul>
 
-                            <li><span>
-                                        04-04</span><a href="#"
-                                                       title="" target="_blank">我校2014年艺术类招生校考</a>
-                            </li>
+                            <volist name="llqy" id="v">
+                                <li>
+                                  <span>
+                                        {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+                                    <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
+                                </li>
+                            </volist>
 
-                            <li><span>
-                                        03-25</span><a href="#"
-                                                       title=""
-                                                       target="_blank">我校2014年高水平运动员招</a></li>
-
-                            <li><span>
-                                        06-25</span><a href="#"
-                                                       title="" target="_blank">我校举办2014年自主选拔录</a>
-                            </li>
-
-                            <li><span>
-                                        06-22</span><a href="#"
-                                                       title=""
-                                                       target="_blank">南京工业大学2014年自主选…</a></li>
-
-                            <li><span>
-                                        04-28</span><a href="#"
-                                                       title="南京工业大学2014年艺术类"
-                                                       target="_blank">南京工业大学2014年艺术类</a></li>
-
-                            <li><span>
-                                        04-16</span><a href="#"
-                                                       title="" target="_blank">南京工业大学2014年艺术类</a>
-                            </li>
 
                         </ul>
                     </div>
                 </div>
-                <!--招生考试结束-->
-                <!--党建工会-->
                 <div class="left_half">
                     <div class="header">
-                        <a href=""
-                           target="_blank">
-                            更多+</a>
+                        <a href="{:getCatURLByID(12)}" target="_blank">更多+</a>
 
                         <div class="tip">先进典型</div>
                     </div>
                     <div class="body">
                         <ul>
 
-                            <li><span>
-                                        03-24</span><a href="#"
-                                                       title="" target="_blank">苏州工业园区专场招聘会 拉开… </a>
-                            </li>
+                            <volist name="xjdx" id="v">
+                                <li>
+                                  <span>
+                                        {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+                                    <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
+                                </li>
+                            </volist>
 
-                            <li><span>
-                                        03-24</span><a href="#"
-                                                       title="什么样的人可以申请入党？ " target="_blank">信息学院举办首场2014届毕？ </a></li>
-
-                            <li><span>
-                                        03-24</span><a href="#"
-                                                       title="“百千万工程”就业指导公益巡… " target="_blank">“百千万工程”就业指导公益巡…</a>
-                            </li>
-
-                            <li><span>
-                                        03-24</span><a href="#"
-                                                       title="11月28日（周三）招聘会信…"
-                                                       target="_blank">11月28日（周三）招聘会信…</a></li>
-
-                            <li><span>
-                                        03-24</span><a href="#"
-                                                       title="11月23日（周五）招聘会信…  " target="_blank">11月23日（周五）招聘会信… </a>
-                            </li>
-
-                            <li><span>
-                                        03-24</span><a href="#"
-                                                       title="党的群众路线基本观点 " target="_blank">党的群众路线基本观点 </a></li>
 
                         </ul>
                     </div>
@@ -451,13 +273,8 @@
 </table>
 
 
-<div style="text-align:center;" class="footer">
-    <br/>
-    南京工业大学 版权所有 ©2014
-    <br/>
+<include file="Public:footer"/>
 
 </div>
-
-
 </body>
 </html>
