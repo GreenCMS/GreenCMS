@@ -1,4 +1,10 @@
 <?php
+if (APP_DEBUG) {
+    $DEFAULT_THEME = I('get.theme', get_kv('home_theme', true, 'Vena'));
+} else {
+    $DEFAULT_THEME = get_kv('home_theme', true, 'Vena');
+}
+
 $config = array(
     //静态缓存
     'HTML_CACHE_ON'    => get_opinion('HTML_CACHE_ON', false, false), //生产环境设置为开启
@@ -10,7 +16,7 @@ $config = array(
 
     'SHOW_PAGE_TRACE'  => get_opinion('SHOW_PAGE_TRACE', false, false),
     'URL_MODEL'        => get_opinion('home_url_model', false, 0),
-    'DEFAULT_THEME'    => get_kv('home_theme', true, 'Vena'),
+    'DEFAULT_THEME'    => $DEFAULT_THEME,
 
 );
 
