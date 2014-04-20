@@ -57,6 +57,8 @@ class IndexController extends HomeBaseController
     {
 
 
+        dump(check_access("admin/posts/post"));
+
     }
 
 }

@@ -17,6 +17,7 @@ return array(
 
     'SESSION_OPTIONS'      => array(), // session 配置数组 支持type name id path expire domain 等参数
     'SESSION_PREFIX'       => '', // session 前缀
+    'USER_AUTH_KEY'       => 'authId', // 用户认证SESSION标记
 
     'AUTH_CODE'            => "ZTS", //安装完毕之后不要改变，否则所有密码都会出错
     'ADMIN'                => 'admin',

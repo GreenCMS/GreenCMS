@@ -658,3 +658,18 @@ function get_previous_post($post_id, $post_cat)
     $res = ' <a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . '</a>';
     return $res;
 }
+
+
+function check_access($access = "")
+{
+
+    $path = explode('/', strtoupper($access));
+
+    $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
+
+     if ($accessList[$path[0]][$path[1]][$path[2]] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+        return true;
+    } else {
+        return false;
+    }
+}

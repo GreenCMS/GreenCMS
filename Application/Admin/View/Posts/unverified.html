@@ -112,9 +112,16 @@
                                         <td>
                                             <a class="btn mini" href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}">编辑</a>
                                             &nbsp;
-                                            <a class="btn mini green" href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v[post_id]))}">通过</a>
-                                            &nbsp;
-                                            <a class="btn mini red" href="{:U('Admin/Posts/preDel', array('id' => $v[post_id]))}">删除</a>
+
+                                            <control access="Admin/Posts/NOVERIFY">
+
+                                                <a class="btn mini green" href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v[post_id]))}">通过</a>
+                                                &nbsp;
+                                                <a class="btn mini red" href="{:U('Admin/Posts/preDel', array('id' => $v[post_id]))}">删除</a>
+
+                                            </control>
+
+
                                         </td>
 
                                     </tr>
