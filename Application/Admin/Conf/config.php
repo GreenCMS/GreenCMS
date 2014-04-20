@@ -31,6 +31,7 @@ $menu_arr = array(
         ),
 
         'Posts'  => array(
+
             'Posts/index'      => '所有文章',
             'Posts/page'       => '页面列表',
             'Posts/category'   => '分类管理',
@@ -115,7 +116,7 @@ $config_admin = array(
      * RBAC认证配置信息
     */
     'USER_AUTH_ON'        => true,
-    'USER_AUTH_TYPE'      => 1, // 默认认证类型 1 登录认证 2 实时认证
+    'USER_AUTH_TYPE'      => 2, // 默认认证类型 1 登录认证 2 实时认证
     'USER_AUTH_KEY'       => 'authId', // 用户认证SESSION标记
     'ADMIN_AUTH_KEY'      => 'ADMIN',
     'USER_AUTH_MODEL'     => 'User', // 默认验证数据表模型

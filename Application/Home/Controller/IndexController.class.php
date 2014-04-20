@@ -7,6 +7,7 @@
  * Time: 下午1:40
  */
 namespace Home\Controller;
+use Common\Util\File;
 use Think\Hook;
 
 /**
@@ -54,6 +55,7 @@ class IndexController extends HomeBaseController
      */
     function test()
     {
+
 
     }
 

@@ -34,6 +34,10 @@ class PostsController extends AdminBaseController
         $page = I('get.page', C('PAGER'));
         $info = array('post_status' => $post_status);
         $info['post_content|post_title'] = array('like', "%$keyword%");
+        //投稿员只能看到自己的
+        if (!$this->noVerify()) {
+            $info['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        }
 
         if ($cat != '') {
             $post_ids = D('Cats', 'Logic')->getPostsId($cat);
@@ -103,7 +107,6 @@ class PostsController extends AdminBaseController
 
     }
 
-
     /**
      * 页面列表
      */
@@ -136,8 +139,8 @@ class PostsController extends AdminBaseController
             }
         } else {
             $tpl_type_list = array(
-               "single" => "文章",
-                "page"  => "页面"
+                "single" => "文章",
+                "page"   => "页面"
             );
         }
 
@@ -155,8 +158,25 @@ class PostsController extends AdminBaseController
             $post['post_cat'][$key]['cat_id'] = $value;
         }
 
-        $cats = D('Cats', 'Logic')->category();
-        $tags = D('Tags', 'Logic')->select();
+
+        //投稿员只能看到自己的
+        if (!$this->noVerify()) {
+            $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
+            $user = D('User', 'Logic')->cache(true)->detail($user_id);
+            $role_id = $user["user_role"] ["role_id"];
+            $role = D('Role')->where(array('id' => $role_id))->find();
+            $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
+            $cats = D('Cats', 'Logic')->where($where)->select();
+            foreach ($cats as $key => $value) {
+                $cats[$key]['cat_slug']=$cats[$key]['cat_name'];
+            }
+
+        } else {
+
+            $cats = D('Cats', 'Logic')->category();
+            $tags = D('Tags', 'Logic')->select();
+        }
+
 
         $this->assign("info", $post);
         $this->assign("tags", $tags);
@@ -181,7 +201,6 @@ class PostsController extends AdminBaseController
         }
 
     }
-
 
     /**
      * @return mixed
@@ -271,6 +290,10 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'unverified';
 
+        //投稿员只能看到自己的
+        if (!$this->noVerify()) {
+            $where['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        }
         $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
 
         $this->assign('posts', $posts);
@@ -374,7 +397,18 @@ class PostsController extends AdminBaseController
             }
         } else {
 
-            $post = D('Posts')->relation(true)->where(array("post_id" => $post_id))->find();
+            //投稿员只能看到自己的
+            if (!$this->noVerify()) {
+                $where['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
+            }
+
+
+
+
+
+            $where["post_id"] = $post_id;
+
+            $post = D('Posts')->relation(true)->where($where)->find();
             if (empty($post)) {
                 $this->error("不存在该记录");
             }
@@ -397,8 +431,29 @@ class PostsController extends AdminBaseController
             $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
 
 
-            $this->cats = D('Cats', 'Logic')->category();;
-            $this->tags = M('Tags')->select();
+            //投稿员只能看到自己的
+            if (!$this->noVerify()) {
+                $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
+                $user = D('User', 'Logic')->cache(true)->detail($user_id);
+                $role_id = $user["user_role"] ["role_id"];
+                $role = D('Role')->where(array('id' => $role_id))->find();
+                $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
+                $cats = D('Cats', 'Logic')->where($where)->select();
+                foreach ($cats as $key => $value) {
+                    $cats[$key]['cat_slug']=$cats[$key]['cat_name'];
+                }
+
+            } else {
+
+                $cats = D('Cats', 'Logic')->category();
+                $tags = D('Tags', 'Logic')->select();
+            }
+
+
+
+            $this->assign("cats", $cats);
+            $this->assign("cats", $cats);
+
             $this->assign("info", $post);
             $this->assign("handle", U('Admin/Posts/posts'));
 
