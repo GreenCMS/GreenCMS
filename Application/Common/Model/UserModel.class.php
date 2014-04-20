@@ -11,6 +11,7 @@ use Think\Model\RelationModel;
 
 
 /**
+ * 用户模型定义
  * Class UserModel
  * @package Home\Model
  */

@@ -17,13 +17,13 @@
  * 缓存目录设置
  * 此目录必须可写，建议移动到非WEB目录
  */
-define ('RUNTIME_PATH', WEB_ROOT . 'Data/Temp/');
+define ("RUNTIME_PATH", WEB_ROOT . 'Data/Temp/');
 
 /**
  * 定义项目日志文件路径
  * 此目录必须可写，建议移动到非WEB目录
  */
-define('LOG_PATH', WEB_ROOT . "Data/Log/");
+define("LOG_PATH", WEB_ROOT . "Data/Log/");
 
 /**
  * 定义Cache目录

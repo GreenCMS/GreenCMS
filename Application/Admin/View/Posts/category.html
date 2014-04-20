@@ -107,7 +107,7 @@
                                         </td>
                                         <td>
                                             <a class="btn mini" href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">编辑</a>
-                                            <a class="btn mini red" href="{:U('Admin/Posts/delCategory', array('id' => $v['cat_id']))}">删除</a>
+                                            <a onclick="javascript:return a_confirm()" class="btn mini red" href="{:U('Admin/Posts/delCategory', array('id' => $v['cat_id']))}">删除</a>
 
                                         </td>
 

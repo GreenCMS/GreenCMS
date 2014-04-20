@@ -140,7 +140,7 @@ class SystemController extends AdminBaseController
 
         if (IS_POST) {
             $version = I('post.version');
-            $url = Server_API . 'api/update/' . $version.'/';
+            $url = Server_API . 'api/update/' . $version . '/';
             $json = json_decode(file_get_contents($url), true);
 
             $this->assign('versions', $json);
@@ -163,8 +163,8 @@ class SystemController extends AdminBaseController
 
         $version = I('get.version');
         $now_version = get_opinion('software_build', true);
-        $url = Server_API . 'api/update/' . $now_version.'/';
-         $json = json_decode(file_get_contents($url), true);
+        $url = Server_API . 'api/update/' . $now_version . '/';
+        $json = json_decode(file_get_contents($url), true);
 
         $target_version_info = ($json['file_list'][$version]);
         if (!empty($target_version_info)) {
@@ -187,9 +187,21 @@ class SystemController extends AdminBaseController
                 $this->error('文件损坏');
             }
 
+            $old_build = get_opinion('software_build');
+            $new_build = $target_version_info['build_to'];
 
             set_opinion('software_version', $target_version_info['version_to']);
             set_opinion('software_build', $target_version_info['build_to']);
+
+            if (File::file_exists(Upgrade_PATH . 'init.php')) {
+                include(Upgrade_PATH . 'init.php');
+                if (function_exists("upgrade_" . $old_build . "_to_" . $new_build)) {
+                    $fuction_name = "upgrade_" . $old_build . "_to_" . $new_build;
+                    call_user_func($fuction_name);
+
+                }
+            }
+
             $this->success('升级成功' . $target_version_info['build_to']);
 
         } else {

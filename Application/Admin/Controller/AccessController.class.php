@@ -25,7 +25,7 @@ class AccessController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-     }
+    }
 
     // 用户列表
     /**
@@ -328,6 +328,37 @@ class AccessController extends AdminBaseController
             $this->display();
         }
     }
+
+    /**
+     * 投稿员指定分类
+     */
+    public function setrolecat($id)
+    {
+        if (IS_POST) {
+
+            $data["cataccess"] = json_encode(I('post.cats'));
+
+            $res = D('Role')->where(array('id' => $id))->data($data)->save();
+            if ($res) {
+                $this->success("保存成功");
+            } else {
+                $this->error("保存失败");
+            }
+
+        } else {
+            $role = D('Role')->where(array('id' => $id))->find();
+
+            $this->user_cats = json_decode($role['cataccess']);
+
+            $this->action = '指定分类';
+            $this->action_name = "setrolecat";
+            $this->assign("handle", "setrolecat?id=" . $id);
+            $this->cats = D('Cats', 'Logic')->category();
+            $this->display();
+        }
+
+    }
+
 
     /**
      *

@@ -169,7 +169,7 @@ class CustomController extends AdminBaseController
                 $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
 
                 $theme_temp = (array)$theme;
-                if ($theme_temp['name'] == get_kv('home_theme')) {
+                if ($theme_temp['name'] == get_kv('home_theme',true)) {
                     $theme_temp['status_name'] = '正在使用';
                     $theme_temp['status_url'] = '#';
                     $theme_temp['using_color'] = 'green';

@@ -521,30 +521,30 @@ title="' . $post['post_title'] . '"/></a>';
  * @param string $init
  * @return string
  */
-function get_breadcrumbs($type, $info='', $ul_attr = ' class="breadcrumbs "',
+function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
                          $li_attr = '', $separator = ' <li><i class="icon-angle-right"></i></li>'
     , $init = '首页')
 {
 
     $res = '<ul class="breadcrumbs">
             <li><a href="' . U("/") . '">' . $init . '</a></li>
-           ' ;
+           ';
     if ($type == 'cats') {
         $Cat = D('Cats', 'Logic');
         $cat = $Cat->getFather($info);
         $cat_father = array();
-        $res .= extra_father($cat,$separator);
+        $res .= extra_father($cat, $separator);
     } elseif ($type == 'tags') {
         $Tag = D('Tags', 'Logic');
-         $tag=$Tag->detail($info,false);
-        $res .= $separator. '<li><a href="' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . '</a></li>' ;
+        $tag = $Tag->detail($info, false);
+        $res .= $separator . '<li><a href="' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . '</a></li>';
 
     } elseif ($type == 'single') {
 
     } elseif ($type == 'page') {
 
-    }else{
-        $res .=$separator.' <li>'.$type.'</li>';
+    } else {
+        $res .= $separator . ' <li>' . $type . '</li>';
     }
 
     $res .= '</ul>';
@@ -558,15 +558,15 @@ function get_breadcrumbs($type, $info='', $ul_attr = ' class="breadcrumbs "',
  * @param $separator
  * @return string
  */
-function extra_father($cat,$separator)
+function extra_father($cat, $separator)
 {
     $res = '';
     if ($cat['cat_father_detail'] != '') {
-        $res .= extra_father(($cat['cat_father_detail']),$separator);
+        $res .= extra_father(($cat['cat_father_detail']), $separator);
     }
 
 
-    $res .= $separator. '<li><a href="' . getCatURLByID($cat['cat_id']) . '">' . $cat['cat_name'] . '</a></li>' ;
+    $res .= $separator . '<li><a href="' . getCatURLByID($cat['cat_id']) . '">' . $cat['cat_name'] . '</a></li>';
     return $res;
 
 }
@@ -577,7 +577,8 @@ function extra_father($cat,$separator)
  * @param $time
  * @return bool|string
  */
-function fdate($time) {
+function friend_date($time)
+{
     if (!$time)
         return false;
     $fdate = '';
@@ -629,4 +630,31 @@ function fdate($time) {
         }
     }
     return $fdate;
+}
+
+
+function get_next_post($post_id, $post_cat)
+{
+
+    $where ["cat_id"] = $post_cat [0]["cat_id"];
+    $where ["post_id"] = array('gt', $post_id);
+    $next_post_id = D('Post_cat')->field('post_id')->where($where)->find();
+    $post = D('Posts', 'Logic')->detail($next_post_id["post_id"], false);
+
+
+    if (!$post) return null;
+
+    $res = ' <a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . '</a>';
+    return $res;
+}
+
+function get_previous_post($post_id, $post_cat)
+{
+    $where ["cat_id"] = $post_cat [0]["cat_id"];
+    $where ["post_id"] = array('lt', $post_id);
+    $next_post_id = D('Post_cat')->field('post_id')->where($where)->find();
+    $post = D('Posts', 'Logic')->detail($next_post_id["post_id"], false);
+    if (!$post) return null;
+    $res = ' <a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . '</a>';
+    return $res;
 }

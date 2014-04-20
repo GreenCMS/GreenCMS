@@ -10,29 +10,30 @@ class Green extends TagLib
     // 标签定义
     protected $tags = array(
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'catlist'    => array(
+        'catlist'      => array(
             'attr'  => 'cat_id,num,start,length,li_attr,ul_attr',
             'alias' => 'cli'
         ),
-        'taglist'    => array(
+        'taglist'      => array(
             'attr'  => 'tag_id,num,start,length,li_attr,ul_attr',
             'alias' => 'tli'
         ),
-        'recentlist' => array(
+        'recentlist'   => array(
             'attr'  => 'num,type,order,relation,li_attr,ul_attr',
             'alias' => 'rli'
         ),
-        'friendlist' => array(
+        'friendlist'   => array(
             'attr'  => 'length,order,num,link_tag,li_attr,ul_attr',
             'alias' => 'fli'
         ),
+
 
 //        'optionlist' => array(
 //            'attr'  => 'value,selected',
 //            'alias' => 'opli'
 //        ),
 
-        'green'      => array()
+        'green'        => array()
 
 
     );
@@ -169,6 +170,7 @@ class Green extends TagLib
 
 
     }
+
 
 
 

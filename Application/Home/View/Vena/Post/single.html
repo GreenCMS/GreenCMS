@@ -141,6 +141,12 @@
 
                     <h4>
                         关于作者<a href="{$post.post_user.user_url}">{$post.post_user.user_nicename}</a>
+
+                        <br />
+                        上一篇:{$post['post_id']|get_previous_post=$post['post_cat']|is_empty=没有了}
+                        <br />
+
+                        下一篇: {$post['post_id']|get_next_post=$post['post_cat']|is_empty=没有了}
                     </h4>
 
                     <p>{$post.post_user.user_intro}</p>

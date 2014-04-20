@@ -12,6 +12,7 @@ use Common\Model;
 use Think\Model\RelationModel;
 
 /**
+ * 分类模型定义
  * Class CatsModel
  * @package Home\Model
  */

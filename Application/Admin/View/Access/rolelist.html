@@ -67,7 +67,7 @@
             <div class="row-fluid">
                 <div class="span12">
                     <h4>{$action}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="control-group success"
-                                                                      style="font-size:16px;color: red;text-align: left; display:none;"></span>
+                                                                           style="font-size:16px;color: red;text-align: left; display:none;"></span>
                     </h4>
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
 
@@ -92,9 +92,10 @@
                                 <td>
                                     <if condition="$vo.pid eq 0">
                                         <else/>
-                                        [ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>
-                                        ] [ <a href="__URL__/editRole?id={$vo.id}" class="edit">编辑</a> ] [ <a
-                                            href="__URL__/changeRole?id={$vo.id}" class="edit">权限分配</a> ]
+                                        [ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>]
+                                        [ <a href="__URL__/editRole?id={$vo.id}" class="edit">编辑</a> ]
+                                        [ <a href="__URL__/changeRole?id={$vo.id}" class="edit">权限分配</a> ]
+                                        [ <a href="__URL__/setrolecat?id={$vo.id}" class="edit">投稿分类</a> ]
                                     </if>
                                 </td>
                             </tr>

@@ -12,6 +12,7 @@ use Common\Util\Category;
 use Think\Model\RelationModel;
 
 /**
+ * 分类逻辑定义
  * Class CatsLogic
  * @package Home\Logic
  */
@@ -19,6 +20,7 @@ class CatsLogic extends RelationModel
 {
 
     /**
+     * 获取分类详细
      * @param $id 分类id
      * @param bool $relation 是否关联
      *
@@ -32,6 +34,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 获取分类列表
      * @param int $limit limit
      * @param bool $relation 是否关联
      *
@@ -43,6 +46,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 获取分类所有父类
      * @param int $id  分类id
      *
      * @param bool $relation
@@ -58,6 +62,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 分类所有子类
      * @param int $id 分类id
      *
      * @param bool $relation
@@ -81,6 +86,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 得到子节点
      * @param int $id 分类id
      *
      * @return mixed 返回子节点
@@ -95,6 +101,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 获取指定分类的post id
      * @param $info 分类info
      *
      * @param string $post_status
@@ -118,6 +125,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 获取分类的文章
      * @param $cat_id 分类id
      * @param int $num 数量
      *
@@ -157,7 +165,7 @@ class CatsLogic extends RelationModel
 
 
     /**
-     *
+     * 获取结构化分类
      * @return array
      */
     public function category()

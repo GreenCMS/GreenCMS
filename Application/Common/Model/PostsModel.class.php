@@ -11,6 +11,7 @@ namespace Common\Model;
 use Think\Model\RelationModel;
 
 /**
+ * 文章模型定义
  * Class PostsModel
  * @package Home\Model
  */
