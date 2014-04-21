@@ -64,6 +64,7 @@ sup, sub {
 }
 /* remember to highlight anchors and inserts somehow! */
 :link, :visited , ins {
+    color: #000000;
     text-decoration: none;
 }
 blockquote, q {

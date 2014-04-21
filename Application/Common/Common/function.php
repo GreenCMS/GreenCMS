@@ -522,7 +522,7 @@ title="' . $post['post_title'] . '"/></a>';
  * @return string
  */
 function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
-                         $li_attr = '', $separator = ' <li><i class="icon-angle-right"></i></li>'
+                         $li_attr = '', $separator = ' <li><i class="icon-angle-right"> &gt;&gt; </i></li>'
     , $init = '首页')
 {
 
@@ -532,7 +532,6 @@ function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
     if ($type == 'cats') {
         $Cat = D('Cats', 'Logic');
         $cat = $Cat->getFather($info);
-        $cat_father = array();
         $res .= extra_father($cat, $separator);
     } elseif ($type == 'tags') {
         $Tag = D('Tags', 'Logic');

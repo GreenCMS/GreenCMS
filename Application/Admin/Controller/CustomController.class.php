@@ -287,10 +287,9 @@ class CustomController extends AdminBaseController
 
         $p = new GreenPage ($count, $page);
         //这里得到是已安装的  =_=+++++
-        //   $list = $Addons->order('create_time')->limit($p->firstRow . ',' . $p->listRows)->select(); //->where($where)
 
 
-        $this->assign('page', $p->show());
+        //$this->assign('page', $p->show());
         $this->assign('list', $list);
         $this->display();
 

@@ -1,0 +1,80 @@
+.title {
+    width: 1140px;
+}
+
+.title h1 {
+    padding-top: 10px;
+    margin-left: 50px;
+    font-size: 30px;
+}
+
+.breadcrumbs {
+    margin-left: 65px;
+}
+
+.breadcrumbs li {
+    float: left;
+    font-size: 15px;
+}
+
+.breadcrumbs li a {
+    float: left;
+    font-size: 15px;
+}
+
+.blog {
+    width: 1000px;
+    margin: 20px auto;
+}
+
+.Titlenamelist {
+    width: 1000px;
+}
+
+.Titlename {
+    width: 1000px;
+    margin-top: 20px;
+    /*float: left;*/
+}
+
+.Titlename a {
+    color: rgb(70, 70, 70);
+
+}
+
+.Titlename h2 a {
+    margin: 20px 10px 20px 10px;
+
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(70, 70, 70);
+}
+
+.Titlename h2 a:hover {
+    color: rgb(0, 0, 0);
+
+}
+
+.Titletip {
+
+    margin: 15px 10px 20px 10px;
+}
+
+.continue {
+    float: right;
+}
+
+.foot {
+    width: 1000px;
+}
+
+.footlist {
+    text-align: center;
+    width: 400px;
+    margin: 20px auto;
+}
+
+.footlist li {
+    display: inline;
+    margin: 3px;
+}
