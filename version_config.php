@@ -10,8 +10,8 @@
 /**
  * version code
  */
-define ('GreenCMS_Version', 'v2.1.0421');
-define ('GreenCMS_Build', '20140421');
+define ('GreenCMS_Version', 'v2.1.0422');
+define ('GreenCMS_Build', '20140422');
 
 define('Server_API', "http://greenapi.sinaapp.com/");
 
