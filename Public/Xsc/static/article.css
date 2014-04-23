@@ -17,13 +17,20 @@
     text-indent: 28px;
 }
 
+.article .main-info .date {
 
+    margin: 10px auto;
+    width: 600px;
+    text-align: center;
+}
 
-.article h4{
+.article h4 {
     font-size: 16px;
     margin: 14px 0 14px 0;
 }
 
-.article h4 a{
+.article h4 a {
     font-size: 16px;
 }
+
+

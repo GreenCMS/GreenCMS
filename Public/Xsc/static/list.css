@@ -47,12 +47,11 @@
 
     font-size: 22px;
     font-weight: bold;
-    color: rgb(70, 70, 70);
+    color: #4D4D4D;
 }
 
 .Titlename h2 a:hover {
-    color: rgb(0, 0, 0);
-
+    color: #336ec5;
 }
 
 .Titletip {
@@ -76,5 +75,18 @@
 
 .footlist li {
     display: inline;
-    margin: 3px;
+    margin: 5px;
 }
+
+.footlist a {
+    font-size: 16px;
+    /*display: block;*/
+    border: solid 1px #AAAAEE;
+    color: #1A63BA;
+    text-decoration: none;
+    padding: 4px 8px;
+
+}
+
+
+/*display: block;*/
