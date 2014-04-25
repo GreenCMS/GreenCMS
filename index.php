@@ -47,6 +47,7 @@ elseif (strtolower($_GET['m']) != 'install') die('<a href="install.php">click he
 
 
 if (file_exists(WEB_ROOT . "const_config.php")) require(WEB_ROOT . "const_config.php");
+if (file_exists(WEB_ROOT . "version_config.php")) require(WEB_ROOT . "version_config.php");
 
 
 /**

@@ -18,14 +18,20 @@ use Common\Util\File;
 class DataController extends AdminBaseController
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
-        $this->is_sae();
+        $this->isSae();
 
     }
 
 
+    /**
+     *
+     */
     public function db()
     {
 
@@ -35,6 +41,9 @@ class DataController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function dbHandle()
     {
         $this->saveConfig();
@@ -354,7 +363,7 @@ class DataController extends AdminBaseController
         if (IS_POST) {
             header('Content-Type:application/json; charset=utf-8');
             $sqlFiles = explode(',', $_POST['sqlFiles']);
-            if (empty($sqlFiles) || count(sqlFiles) == 0 || $_POST['sqlFiles'] == "")
+            if (empty($sqlFiles) || count($sqlFiles) == 0 || $_POST['sqlFiles'] == "")
                 $this->json_return(0, "请选择要打包的sql文件");
 
             $files = $sqlFiles;
@@ -475,6 +484,9 @@ class DataController extends AdminBaseController
      * cat tag被删除之后完整性不能保证
      */
     //private
+    /**
+     *
+     */
     function integrity_testing()
     {
 

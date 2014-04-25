@@ -11,6 +11,7 @@ namespace Common\Logic;
 use Think\Model\RelationModel;
 
 /**
+ * 文章逻辑定义
  * Class PostsLogic
  * @package Home\Logic
  */
@@ -27,7 +28,7 @@ class PostsLogic extends RelationModel
     public function detail($id, $relation = true, $info_with = array())
     {
         $info = $info_with;
-        $info['post_id|post_name'] = urlencode($id) ;
+        $info['post_id|post_name'] = urlencode($id);
 
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
 
@@ -52,6 +53,7 @@ class PostsLogic extends RelationModel
     {
         $info = $info_with;
         if ($type != 'all') $info['post_type'] = $type;
+        //  if ($type != 'all') $info['post_type|post_template'] = $type;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
@@ -71,11 +73,11 @@ class PostsLogic extends RelationModel
 
         $info = $info_with;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
-        if ($type != 'all') $info['post_type'] = $type;
+        if ($type != 'all') $info['post_type|post_template'] = $type;
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
         $count = $this->where($info)->count();
-         return $count;
+        return $count;
     }
 
     /**
@@ -110,6 +112,10 @@ class PostsLogic extends RelationModel
             return false;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function verify($id)
     {
         $info['post_id'] = $id;
@@ -121,6 +127,10 @@ class PostsLogic extends RelationModel
 
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function unverify($id)
     {
         $info['post_id'] = $id;

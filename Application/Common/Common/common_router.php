@@ -40,6 +40,12 @@ function getTimestamp($Timestamp, $need = 'timestamp')
 
 }
 
+/**
+ * 获取带时间链接的 年月日
+ * @param $Timestamp
+ * @param string $type
+ * @return string
+ */
 function getTimeURL($Timestamp, $type = 'single')
 {
     $array = explode("-", $Timestamp);
@@ -64,6 +70,12 @@ function getTimeURL($Timestamp, $type = 'single')
 }
 
 
+/**
+ * 得到真实的URL 可以替换 U方法
+ * @param string $url
+ * @param string $vars
+ * @return mixed|string
+ */
 function getURL($url = '', $vars = '')
 {
     $url_arr = preg_split('/\//', $url);
@@ -84,6 +96,12 @@ function getURL($url = '', $vars = '')
 }
 
 
+/**
+ *  同样得到真实的URL 可以替换 U方法
+ * @param array $menu_item
+ * @param bool $is_home
+ * @return mixed|string
+ */
 function getRealURL($menu_item = array(), $is_home = false)
 {
 
@@ -113,7 +131,12 @@ function getRealURL($menu_item = array(), $is_home = false)
 }
 
 
-// 路由动态获取url
+/**
+ * 动态获取文章url
+ * @param $ID
+ * @param string $type
+ * @return mixed|string
+ */
 function getSingleURLByID($ID, $type = 'single')
 {
     $Posts = D('Posts', 'Logic');
@@ -159,14 +182,22 @@ function getSingleURLByID($ID, $type = 'single')
     return $URL;
 }
 
-// 路由动态获取url
+/**
+ * 动态获取页面url
+ * @param $ID
+ * @param string $type
+ */
 function getPageURLByID($ID, $type = 'page')
 {
     getSingleURLByID($ID, $type);
 
 }
 
-// 路由动态获取url
+/**
+ * 动态获取标签url
+ * @param $ID
+ * @return mixed|string
+ */
 function getTagURLByID($ID)
 {
     $home_tag_model = get_opinion('home_tag_model');
@@ -194,6 +225,11 @@ function getTagURLByID($ID)
     return $URL;
 }
 
+/**
+ * 动态获取分类url
+ * @param $ID
+ * @return mixed|string
+ */
 function getCatURLByID($ID)
 {
     $home_cat_model = get_opinion('home_cat_model');

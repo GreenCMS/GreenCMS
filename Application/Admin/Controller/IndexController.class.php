@@ -9,25 +9,41 @@
 
 namespace Admin\Controller;
 
+/**
+ * Class IndexController
+ * @package Admin\Controller
+ */
 class IndexController extends AdminBaseController
 {
+    /**
+     *
+     */
     public function index()
     {
         $this->display();
     }
 
 
+    /**
+     *
+     */
     public function main()
     {
         $this->redirect(getURL('Index/index'));
     }
 
 
+    /**
+     *
+     */
     public function changePass()
     {
         $this->display('changepass');
     }
 
+    /**
+     *
+     */
     public function changepassHandle()
     {
         $User = D('User', 'Logic');

@@ -2,26 +2,20 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2013 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-
 namespace Think\Model;
 use Think\Model;
 
 /**
  * ThinkPHP关联模型扩展
- * @category   Extend
- * @package  Extend
- * @subpackage  Model
- * @author    liu21st <liu21st@gmail.com>
  */
 class RelationModel extends Model
 {
-
     const   HAS_ONE = 1;
     const   BELONGS_TO = 2;
     const   HAS_MANY = 3;
@@ -163,8 +157,6 @@ class RelationModel extends Model
                         case self::HAS_ONE:
                             $pk = $result[$mappingKey];
                             $mappingCondition .= " AND {$mappingFk}='{$pk}'";
-
-
                             $relationData = $model->where($mappingCondition)->field($mappingFields)->find();
                             if (!empty($val['relation_deep'])) {
                                 $model->getRelation($relationData, $val['relation_deep']);
@@ -205,19 +197,19 @@ class RelationModel extends Model
                             break;
                         case self::MANY_TO_MANY:
                             $pk = $result[$mappingKey];
-                            $mappingCondition = " {$mappingFk}='{$pk}'";
-                            //TODO ThinkPHP3.2 Patch By ZTS
-                            /**
-                             *  $mappingRelationTable  =  $val['relation_table']?$val['relation_table']:$this->getRelationTableName($model);
-                             *  $mappingRelationTable  =  $val['relation_table']?C('DB_PREFIX').$val['relation_table']:$this->getRelationTableName($model);
-                             */
-                            if (array_key_exists('mapping_order', $val)) $mappingOrder = $val['mapping_order'];
-                            if (array_key_exists('mapping_limit', $val)) $mappingLimit = $val['mapping_limit'];
+                            $prefix = $this->tablePrefix;
+                             $mappingCondition = " {$mappingFk}='{$pk}'";
+                            $mappingOrder = $val['mapping_order'];
+                            $mappingLimit = $val['mapping_limit'];
                             $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id';
-                            $mappingRelationTable = $val['relation_table'] ? $val['relation_table'] : $this->getRelationTableName($model);
-                            //TODO ThinkPHP3.2 Patch By ZTS
-                            $mappingRelationTable = C('DB_PREFIX') . $mappingRelationTable;
-
+                            if (isset($val['relation_table'])) {
+                                $mappingRelationTable = preg_replace_callback("/__([A-Z_-]+)__/sU", function ($match) use ($prefix) {
+                                    return $prefix . strtolower($match[1]);
+                                }, $val['relation_table']);
+                            } else {
+                                $mappingRelationTable = $this->getRelationTableName($model);
+                            }
+                            $mappingRelationTable=$prefix.$mappingRelationTable;
                             $sql = "SELECT b.{$mappingFields} FROM {$mappingRelationTable} AS a, " . $model->getTableName() . " AS b WHERE a.{$mappingRelationFk} = b.{$model->getPk()} AND a.{$mappingCondition}";
                             if (!empty($val['condition'])) {
                                 $sql .= ' AND ' . $val['condition'];
@@ -235,7 +227,7 @@ class RelationModel extends Model
                                     $relationData[$key] = $data;
                                 }
                             }
-                            break;
+                             break;
                     }
                     if (!$return) {
                         if (isset($val['as_fields']) && in_array($mappingType, array(self::HAS_ONE, self::BELONGS_TO))) {
@@ -356,13 +348,28 @@ class RelationModel extends Model
                                 break;
                             case self::MANY_TO_MANY:
                                 $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id'; // 关联
-                                $mappingRelationTable = $val['relation_table'] ? $val['relation_table'] : $this->getRelationTableName($model);
-                                $mappingRelationTable = C('DB_PREFIX') . $mappingRelationTable;
+                                $prefix = $this->tablePrefix;
+                                if (isset($val['relation_table'])) {
+                                    $mappingRelationTable = preg_replace_callback("/__([A-Z_-]+)__/sU", function ($match) use ($prefix) {
+                                        return $prefix . strtolower($match[1]);
+                                    }, $val['relation_table']);
+                                } else {
+                                    $mappingRelationTable = $this->getRelationTableName($model);
+                                }
+                                $mappingRelationTable=$prefix.$mappingRelationTable;
+
                                 if (is_array($mappingData)) {
+
                                     $ids = array();
-                                    foreach ($mappingData as $vo)
-                                        $ids[] = $vo[$mappingKey];
+                                    foreach ($mappingData as $vo) {
+                                        // $ids[] = $vo[$mappingKey];
+                                        //Todo ThinkPHP Patch FOR GreenCMS
+                                        //This line contains error should be:
+                                        $ids[] = $vo;
+                                    }
                                     $relationId = implode(',', $ids);
+
+
                                 }
                                 switch (strtoupper($opType)) {
                                     case 'ADD': // 增加关联数据

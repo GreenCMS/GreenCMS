@@ -38,7 +38,7 @@ textarea {
 /* universal */
 body {
     width: 100%;
-    background: #EDEDED;
+    background: #fff;/*#EDEDED;*/
     font-family: "microsoft yahei";
 }
 

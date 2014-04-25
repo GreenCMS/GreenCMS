@@ -46,22 +46,30 @@
 
     <section class="footer-bar">
         <div class="container">
-            <div class="nine  columns">
+            <div class="five  columns">
                 <div class="footer-logo">
                     <img src="__PUBLIC__/Vena/images/logo.png" alt="" title=""/>
-                    <span>
-						2003-{:date('Y')} © Copyright <a href="{:get_opinion('site_url')}">{:get_opinion('software_author')}</a>
-						@ <a
-                            href="http://www.njtech.edu.cn/">NJUT</a><br/> <br/>  &nbsp;&nbsp; &nbsp;   Powered By
-						<a href="{:get_opinion('software_homepage')}">GreenCMS {:get_opinion('software_version')}</a>
-						&nbsp;&nbsp;&nbsp;<a href="{:U('Admin/Index/index')}">管理入口</a>
-                          <br/> <br/>
-					</span>
 
                 </div>
             </div>
 
-            <div class="seven columns">
+            <div class="five  columns">                <div class="footer-logo">
+
+                   <span>
+						2003-{:date('Y')} © Copyright <a href="{:get_opinion('site_url')}">{:get_opinion('software_author')}</a>
+						@ <a
+                           href="http://www.njtech.edu.cn/">NanjingTech</a><br/> <br/>  &nbsp;&nbsp; &nbsp;   Powered By
+						<a href="{:get_opinion('software_homepage')}">GreenCMS {:get_opinion('software_version')}</a>
+						&nbsp;&nbsp;&nbsp;<a href="{:U('Admin/Index/index')}">管理入口</a>
+                          <br/> <br/>
+					</span>
+            </div>
+
+
+
+            </div>
+
+            <div class="five columns">
                 <ul class="footer-links">
                     <li><a href="http://page.renren.com/601038207"><i class="icon-twitter"></i></a></li>
                     <li><a
@@ -77,6 +85,7 @@
         </div>
     </section>
 </footer>
+{:hook('pageFooter', 'widget')}
 <!-- ==================================================
 Footer / End -->
 {:get_opinion('foot')}

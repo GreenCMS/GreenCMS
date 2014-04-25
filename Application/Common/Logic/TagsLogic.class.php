@@ -11,6 +11,7 @@ namespace Common\Logic;
 use Think\Model\RelationModel;
 
 /**
+ * 标签逻辑定义
  * Class TagsLogic
  * @package Home\Logic
  */
@@ -18,6 +19,12 @@ class TagsLogic extends RelationModel
 {
 
 
+    /**
+     * 获取指定标签信息
+     * @param $id id或者slug
+     * @param bool $relation 是否关联
+     * @return mixed
+     */
     public function detail($id, $relation = true)
     {
         $map = array();
@@ -26,6 +33,7 @@ class TagsLogic extends RelationModel
     }
 
     /**
+     *
      * @param $info 输入tag_id|tag_slug
      *
      * @param string $post_status
@@ -52,6 +60,7 @@ class TagsLogic extends RelationModel
 
 
     /**
+     * 获取指定tag的post id
      * @param $tag_id
      * @param int $num 数量
      *
@@ -72,6 +81,7 @@ class TagsLogic extends RelationModel
     }
 
     /**
+     * 获取列表
      * @param int $limit
      * @param bool $relation
      *

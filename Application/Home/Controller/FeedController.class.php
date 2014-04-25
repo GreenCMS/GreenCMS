@@ -12,6 +12,7 @@ use Common\Logic\PostsLogic;
 use Common\Util\Rss;
 
 /**
+ * 站点Feed功能
  * Class FeedController
  * @package Home\Controller
  */
@@ -20,18 +21,20 @@ class FeedController extends HomeBaseController
 
     /**
      * 初始化 判断feed功能是否开启
+     *  @param null
      */
     function __construct()
     {
         parent::__construct();
+
         if (get_opinion('feed_open') == 0) {
             $this->error404("Feed功能关闭");
         }
-        C('SHOW_CHROME_TRACE')==0;//防止sql输出过多导致header过大
     }
 
     /**
-     *
+     * 默认显示文章feed
+     *  @param null
      */
     public function index()
     {
@@ -40,6 +43,8 @@ class FeedController extends HomeBaseController
 
     /**
      * 文章feed
+     * @param null
+     * 显示数量由 feed_num决定
      */
     public function listSingle()
     {
@@ -61,6 +66,8 @@ class FeedController extends HomeBaseController
 
     /**
      * 页面feed
+     * @param null
+     * 显示数量由 feed_num决定
      */
     public function listsPage()
     {

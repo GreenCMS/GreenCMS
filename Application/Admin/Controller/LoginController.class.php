@@ -11,11 +11,17 @@ namespace Admin\Controller;
 
 use Common\Controller\BaseController;
 use Org\Util\Rbac;
-use Think\Controller;
 
+/**
+ * Class LoginController
+ * @package Admin\Controller
+ */
 class LoginController extends BaseController
 {
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -25,6 +31,9 @@ class LoginController extends BaseController
     }
 
 
+    /**
+     *
+     */
     public function _before_index()
     {
         $user_session = cookie('user_session');
@@ -45,18 +54,24 @@ class LoginController extends BaseController
         }
     }
 
+    /**
+     *
+     */
     public function index()
     {
         $this->display();
     }
 
+    /**
+     *
+     */
     public function login()
     {
         // $ipLocation = new IpLocation();
         // $ip_info = $ipLocation->getIpInfo();
 
         $map = array();
-        $map['user_login'] = $_POST['username'];
+        $map['user_login'] = I('post.username');
         $map['user_status'] = array('gt', 0);
 
         $authInfo = RBAC::authenticate($map);
@@ -64,7 +79,7 @@ class LoginController extends BaseController
         if (false === $authInfo) {
             $this->error('帐号不存在或已禁用！');
         } else {
-            if ($authInfo['user_pass'] != encrypt($_POST['password'])) {
+            if ($authInfo['user_pass'] != encrypt(I('post.password'))) {
                 $this->error('密码错误或者帐号已禁用');
             }
             $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
@@ -92,11 +107,17 @@ class LoginController extends BaseController
     }
 
 
+    /**
+     *
+     */
     public function forgetPassword()
     {
 
     }
 
+    /**
+     *
+     */
     public function logout()
     {
         $User = D('User', 'Logic');

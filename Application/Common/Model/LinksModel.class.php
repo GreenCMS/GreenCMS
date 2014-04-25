@@ -11,6 +11,7 @@ namespace Common\Model;
 use Think\Model;
 
 /**
+ * 链接模型定义
  * Class LinksModel
  * @package Home\Model
  */

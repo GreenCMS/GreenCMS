@@ -14,6 +14,7 @@ use Common\Util\GreenPage;
 
 
 /**
+ * 标签控制器
  * Class TagController
  * @package Home\Controller
  */
@@ -29,7 +30,8 @@ class TagController extends HomeBaseController
     }
 
     /**
-     * @param $info
+     * 查询指定标签的详细信息
+     * @param $info  detail 查询的 id 或者slug
      */
     public function detail($info)
     {
@@ -56,6 +58,7 @@ class TagController extends HomeBaseController
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
+        $this->assign('breadcrumbs', get_breadcrumbs('tags',$tag['tag_id']));
 
         $this->display('Archive/single-list');
 

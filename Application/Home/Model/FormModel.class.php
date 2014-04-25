@@ -11,8 +11,15 @@ namespace Home\Model;
 
 use Think\Model;
 
+/**
+ * Class FormModel
+ * @package Home\Model
+ */
 class FormModel extends Model
 {
+    /**
+     * @var array
+     */
     protected $_validate = array(
         array('name', 'require', '名字是必须的~~'),
         array('class', 'require', '添加一下学号吧~'),

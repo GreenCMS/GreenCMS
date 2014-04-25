@@ -19,6 +19,10 @@ class AddonsModel extends Model
 
     }
 
+    /**
+     * @param $result
+     * @param $options
+     */
     protected function _after_select(&$result, $options)
     {
 
@@ -38,8 +42,9 @@ class AddonsModel extends Model
     /**
      * 获取插件列表
      * @param string $addon_dir
+     * @return array|bool
      */
-    public function getList($addon_dir = '')
+    public function getList($addon_dir = '',$limit=0)
     {
         if (!$addon_dir) $addon_dir = Addon_PATH;
         $dirs = array_map('basename', glob($addon_dir . '*', GLOB_ONLYDIR));
@@ -49,7 +54,7 @@ class AddonsModel extends Model
         }
         $addons = array();
         $where['name'] = array('in', $dirs);
-        $list = $this->where($where)->field(true)->select();
+        $list = $this->where($where)->field(true)->limit($limit)->select();
 
         foreach ($list as $addon) {
             $addon['uninstall'] = 0;

@@ -11,11 +11,18 @@ namespace Admin\Controller;
 
 use Common\Util\File;
 
+/**
+ * Class SystemController
+ * @package Admin\Controller
+ */
 class SystemController extends AdminBaseController
 {
     //TODO Upgrade
     //TODO Email mail()
 
+    /**
+     *
+     */
     public function index()
     {
 
@@ -23,6 +30,9 @@ class SystemController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     *
+     */
     public function post()
     {
         $this->assign('feed_open', get_opinion('feed_open'));
@@ -30,12 +40,18 @@ class SystemController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function saveHandle()
     {
         $this->saveConfig();
         $this->success('配置成功');
     }
 
+    /**
+     *
+     */
     public function kvset()
     {
 
@@ -43,6 +59,9 @@ class SystemController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     *
+     */
     public function kvsetHandle()
     {
         $this->saveKv();
@@ -50,6 +69,9 @@ class SystemController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function url()
     {
         //普通模式0, PATHINFO模式1, REWRITE模式2, 兼容模式3
@@ -75,6 +97,9 @@ class SystemController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function email()
     {
         $this->assign('send_mail', C('send_mail'));
@@ -82,6 +107,9 @@ class SystemController extends AdminBaseController
     }
 
 
+    /**
+     *
+     */
     public function safe()
     {
         $this->assign('db_fieldtype_check', C('db_fieldtype_check'));
@@ -92,6 +120,9 @@ class SystemController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     *
+     */
     public function checkupdate()
     {
         $Update = new \Common\Event\UpdateEvent();
@@ -100,13 +131,16 @@ class SystemController extends AdminBaseController
 
     }
 
+    /**
+     *
+     */
     public function update()
     {
 
 
         if (IS_POST) {
             $version = I('post.version');
-            $url = Server_API . 'api/update/' . $version;
+            $url = Server_API . 'api/update/' . $version . '/';
             $json = json_decode(file_get_contents($url), true);
 
             $this->assign('versions', $json);
@@ -120,14 +154,18 @@ class SystemController extends AdminBaseController
         }
     }
 
+    /**
+     *
+     */
     public function updateHandle()
     {
 
 
         $version = I('get.version');
         $now_version = get_opinion('software_build', true);
-        $url = Server_API . 'api/update/' . $now_version;
+        $url = Server_API . 'api/update/' . $now_version . '/';
         $json = json_decode(file_get_contents($url), true);
+
         $target_version_info = ($json['file_list'][$version]);
         if (!empty($target_version_info)) {
             File::mkDir(WEB_CACHE_PATH);
@@ -144,14 +182,26 @@ class SystemController extends AdminBaseController
                 $zip->extractTo(WEB_ROOT); //假设解压缩到在当前路径下images文件夹内
                 $zip->close(); //关闭处理的zip文件
                 File::delFile($file_downloaded);
-
+                $System->clearCacheAll();
             } else {
                 $this->error('文件损坏');
             }
 
+            $old_build = get_opinion('software_build');
+            $new_build = $target_version_info['build_to'];
 
             set_opinion('software_version', $target_version_info['version_to']);
             set_opinion('software_build', $target_version_info['build_to']);
+
+            if (File::file_exists(Upgrade_PATH . 'init.php')) {
+                include(Upgrade_PATH . 'init.php');
+                if (function_exists("upgrade_" . $old_build . "_to_" . $new_build)) {
+                    $fuction_name = "upgrade_" . $old_build . "_to_" . $new_build;
+                    call_user_func($fuction_name);
+
+                }
+            }
+
             $this->success('升级成功' . $target_version_info['build_to']);
 
         } else {
@@ -284,20 +334,24 @@ class SystemController extends AdminBaseController
 //        $this->success('更新完毕!', U('Admin/System/over', array("date" => $date)));
 //    }
 
-    public function over()
-    {
-        $date = isset ($_GET ['date']) ? $_GET ['date'] : 0;
-        $dir = SystemBackDir . $date;
-        if (!is_dir($dir))
-            $this->error('未检测到更新内容!');
+//    public function over()
+//    {
+//        $date = isset ($_GET ['date']) ? $_GET ['date'] : 0;
+//        $dir = SystemBackDir . $date;
+//        if (!is_dir($dir))
+//            $this->error('未检测到更新内容!');
+//
+//        $content = File::read_file(LOG_PATH . $date . '/log.txt');
+//        $this->assign('log', explode('###', $content));
+//        $this->action = '更新结果';
+//        $this->clear();
+//        $this->display();
+//    }
 
-        $content = File::read_file(LOG_PATH . $date . '/log.txt');
-        $this->assign('log', explode('###', $content));
-        $this->action = '更新结果';
-        $this->clear();
-        $this->display();
-    }
-
+    /**
+     * @param $date
+     * @return string
+     */
     public function backupsql($date)
     {
         // 数据备份
@@ -338,6 +392,11 @@ class SystemController extends AdminBaseController
     }
 
     // 生成SQL备份语句
+    /**
+     * @param $table
+     * @param $row
+     * @return string
+     */
     public function insertsql($table, $row)
     {
         $sql = "INSERT INTO `{$table}` VALUES (";
@@ -350,12 +409,18 @@ class SystemController extends AdminBaseController
     }
 
     // ajax 设置cookie,下次不再自动提醒更新
+    /**
+     *
+     */
     public function applycookie()
     {
         cookie('updatenotice', 1);
     }
 
 
+    /**
+     *
+     */
     public function info()
     {
         if (function_exists('gd_info')) {
@@ -389,6 +454,9 @@ class SystemController extends AdminBaseController
         $this->display('info');
     }
 
+    /**
+     *
+     */
     public function green()
     {
 

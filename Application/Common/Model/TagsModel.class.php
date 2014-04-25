@@ -11,6 +11,7 @@ namespace Common\Model;
 use Think\Model\RelationModel;
 
 /**
+ * 标签模型定义
  * Class TagsModel
  * @package Home\Model
  */

@@ -64,6 +64,15 @@
                     <form action="{:U('Admin/Data/cacheHandle')}" name="change_System" class="form-horizontal"
                           method="post">
 
+                        <div class="control-group">
+                            <label class="control-label">全局静态缓存有效期</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" class="m-wrap large"
+                        name="HTML_CACHE_TIME"   value="{:get_opinion('HTML_CACHE_TIME', true, 600)}"  />
+                            </div>
+                        </div>
+
 
                         <div class="control-group">
                             <label class="control-label">静态缓存缓存</label>

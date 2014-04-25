@@ -5,6 +5,10 @@ namespace Common\Controller;
 /**
  * 插件类
  */
+/**
+ * Class Addon
+ * @package Common\Controller
+ */
 abstract class Addon{
     /**
      * 视图实例对象
@@ -24,13 +28,34 @@ abstract class Addon{
      *  )
      */
     public $info                =   array();
+    /**
+     * @var string
+     */
     public $addon_path          =   '';
+    /**
+     * @var string
+     */
     public $config_file         =   '';
+    /**
+     * @var string
+     */
     public $custom_config       =   '';
+    /**
+     * @var array
+     */
     public $admin_list          =   array();
+    /**
+     * @var string
+     */
     public $custom_adminlist    =   '';
+    /**
+     * @var array
+     */
     public $access_url          =   array();
 
+    /**
+     *
+     */
     public function __construct(){
         $this->view         =   \Think\Think::instance('Think\View');
         $this->addon_path   =   Addon_PATH.$this->getName().'/';
@@ -54,6 +79,9 @@ abstract class Addon{
     }
 
     //显示方法
+    /**
+     * @param string $template
+     */
     final protected function display($template=''){
         if($template == '')
             $template = CONTROLLER_NAME;
@@ -74,6 +102,11 @@ abstract class Addon{
 
 
     //用于显示模板的方法
+    /**
+     * @param mixed|string $templateFile
+     * @return mixed
+     * @throws \Exception
+     */
     final protected function fetch($templateFile = CONTROLLER_NAME){
         if(!is_file($templateFile)){
             $templateFile = $this->addon_path.$templateFile.C('TMPL_TEMPLATE_SUFFIX');
@@ -84,11 +117,17 @@ abstract class Addon{
         return $this->view->fetch($templateFile);
     }
 
+    /**
+     * @return string
+     */
     final public function getName(){
         $class = get_class($this);
         return substr($class,strrpos($class, '\\')+1, -5);
     }
 
+    /**
+     * @return bool
+     */
     final public function checkInfo(){
         $info_check_keys = array('name','title','description','status','author','version');
         foreach ($info_check_keys as $value) {
@@ -126,8 +165,14 @@ abstract class Addon{
     }
 
     //必须实现安装
+    /**
+     * @return mixed
+     */
     abstract public function install();
 
     //必须卸载插件方法
+    /**
+     * @return mixed
+     */
     abstract public function uninstall();
 }

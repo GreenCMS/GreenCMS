@@ -12,9 +12,17 @@ namespace Weixin\Event;
 
 use Weixin\Controller\WeixinCoreController;
 
+/**
+ * Class TextEvent
+ * @package Weixin\Event
+ */
 class TextEvent extends WeixinCoreController
 {
 
+    /**
+     * @param $keyword
+     * @return string
+     */
     public function wechat($keyword)
     {
 
@@ -23,6 +31,10 @@ class TextEvent extends WeixinCoreController
 
     }
 
+    /**
+     * @param $keyword
+     * @return mixed
+     */
     public function weather($keyword)
     {
         $resultStr = "";
@@ -47,6 +59,10 @@ class TextEvent extends WeixinCoreController
     }
 
 
+    /**
+     * @param $position
+     * @return mixed
+     */
     public function poi($position)
     {
 

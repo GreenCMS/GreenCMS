@@ -12,9 +12,16 @@ namespace Weixin\Event;
 
 use Weixin\Controller\WeixinCoreController;
 
+/**
+ * Class UserEvent
+ * @package Weixin\Event
+ */
 class UserEvent extends WeixinCoreController
 {
 
+    /**
+     *
+     */
     public function renew()
     {
 
@@ -32,6 +39,9 @@ class UserEvent extends WeixinCoreController
 
     }
 
+    /**
+     *
+     */
     public function update()
     {
 
@@ -46,6 +56,9 @@ class UserEvent extends WeixinCoreController
         }
     }
 
+    /**
+     * @return array
+     */
     public function getUserList()
     {
         $user_list = $this->getFirstList();
@@ -63,6 +76,10 @@ class UserEvent extends WeixinCoreController
         return $user_ids;
     }
 
+    /**
+     * @param $next_openid
+     * @return array
+     */
     public function getNextUser($next_openid)
     {
         $ACCESS_TOKEN = $this->getAccess();
@@ -85,6 +102,9 @@ class UserEvent extends WeixinCoreController
     }
 
     //todo 处理关注量10000以上
+    /**
+     * @return bool|mixed
+     */
     public function getFirstList()
     {
         $ACCESS_TOKEN = $this->getAccess();
@@ -99,6 +119,10 @@ class UserEvent extends WeixinCoreController
         return $user_list;
     }
 
+    /**
+     * @param $openid
+     * @return mixed
+     */
     public function getUserDetail($openid)
     {
         $ACCESS_TOKEN = $this->getAccess();

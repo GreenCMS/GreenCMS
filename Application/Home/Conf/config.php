@@ -1,22 +1,28 @@
 <?php
+if (APP_DEBUG) {
+    $DEFAULT_THEME = I('get.theme', get_kv('home_theme', true, 'Vena'));
+} else {
+    $DEFAULT_THEME = get_kv('home_theme', true, 'Vena');
+}
+
 $config = array(
     //静态缓存
     'HTML_CACHE_ON'    => get_opinion('HTML_CACHE_ON', false, false), //生产环境设置为开启
-    'HTML_CACHE_TIME'  => 600, // 全局静态缓存有效期（秒）
+    'HTML_CACHE_TIME'  => get_opinion('HTML_CACHE_TIME', false, 600),
     'HTML_CACHE_RULES' => array(
-        '*' => array('{$_SERVER.REQUEST_URI|md5}', '36000', ''), //全局静态缓存，第二个参数为时间单位秒
+        '*' => array('{$_SERVER.REQUEST_URI|md5}'), //全局静态缓存，第二个参数为时间单位秒
     ),
 
 
     'SHOW_PAGE_TRACE'  => get_opinion('SHOW_PAGE_TRACE', false, false),
     'URL_MODEL'        => get_opinion('home_url_model', false, 0),
-    'DEFAULT_THEME'    => get_kv('home_theme', true, 'Vena'),
+    'DEFAULT_THEME'    => $DEFAULT_THEME,
 
 );
 
 $config_router = array(
 
-    'URL_HTML_SUFFIX' => 'html',
+    'URL_HTML_SUFFIX' => get_opinion('URL_HTML_SUFFIX', false, 'html'),
     //URL模式
 
     //开启路由!!建议url模型选择2，否则的话建议使用native模式
@@ -31,7 +37,7 @@ $config_router = array(
 
         'Post/single/:info'                   => 'Post/single', //普通规则路由
 
-        'Post/page/info/:info'                     => 'Post/page', //普通规则路由
+        'Post/page/info/:info'                => 'Post/page', //普通规则路由
         'Post/page/:year/:month/:day/:info'   => 'Post/page', //年月日规则路由
         'Post/page/:year/:month/:info'        => 'Post/page', //年月规则路由
         'Post/page/:year/:info'               => 'Post/page', //年规则路由

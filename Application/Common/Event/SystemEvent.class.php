@@ -11,9 +11,17 @@ namespace Common\Event;
 
 use Common\Util\File;
 
+/**
+ * 系统事件 包括数据缓存文件 备份清理操作
+ * Class SystemEvent
+ * @package Common\Event
+ */
 class SystemEvent
 {
 
+    /**
+     * 文章关联完整性检查
+     */
     public function post_integrity()
     {
         $post_ids = D('Posts')->field('post_id')->select();
@@ -53,6 +61,12 @@ class SystemEvent
     }
 
 
+    /**
+     * 备份文件夹
+     * @param string $dir
+     * @param string $backup_path
+     * @return array
+     */
     public function backupFile($dir = '', $backup_path = System_Backup_PATH)
     {
         if ($dir == '') {
@@ -65,7 +79,7 @@ class SystemEvent
         $Zip = new \ZipArchive();
         $PHPZip = new \Common\Util\PHPZip();
 
-        $file_name = $backup_path . date(Ymd) . "_system_backup.zip";
+        $file_name = $backup_path .'system_backup-'. date('Ymd').'-'.md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768)) . ".zip";
         $Zip->open($file_name, \ZIPARCHIVE::CREATE);;
 
         foreach ($dir as $value) {
@@ -79,6 +93,10 @@ class SystemEvent
         return array("status" => 1, "info" => $file_name);
     }
 
+    /**
+     * 清空所有缓存
+     * @return bool
+     */
     public function clearCacheAll()
     {
         $caches = array(
@@ -95,16 +113,32 @@ class SystemEvent
         return true;
     }
 
+    /**
+     * 清空日志
+     * @return bool
+     */
     public function clearLog()
     {
         return File::delAll(LOG_PATH, true);
     }
 
+    /**
+     * 清空缓存
+     * @param $cache_path
+     * @return bool
+     */
     public function clearCache($cache_path)
     {
         return File::delAll($cache_path, true);
     }
 
+    /**
+     * 备份数据库
+     * @param string $type
+     * @param array $tables
+     * @param string $path
+     * @return array
+     */
     public function backupDB($type = "系统自动备份", $tables = array(), $path = DB_Backup_PATH)
     {
         $M = M();
@@ -194,6 +228,10 @@ class SystemEvent
         return $res;
     }
 
+    /**
+     * 备份所有数据看
+     * @return array
+     */
     public function backupDBAll()
     {
         $type = "系统自动备份";

@@ -127,7 +127,7 @@ class Category
             }
             $childs[$i][$this->fields['cat_name']] = ($space ? $space . $pre : "") . $childs[$i][$this->fields['cat_slug']];
             $this->formatList[] = $childs[$i];
-            $this->_searchList($childs[$i][$this->fields['cat_id']], $space . $pad . "&nbsp;&nbsp;"); //递归下一级分类
+            $this->_searchList($childs[$i][$this->fields['cat_id']], $space . $pad . "&nbsp;"); //递归下一级分类 &nbsp;
             $m++;
         }
     }
@@ -191,6 +191,7 @@ class Category
     /**
      * 检查分类参数$cat_id,是否为空
      * @param   int $cat_id        分类cat_id
+     * @return bool
      */
     private function _searchPath($cat_id)
     {

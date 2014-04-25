@@ -12,8 +12,15 @@ namespace Admin\Controller;
 use Common\Controller\BaseController;
 use Org\Util\Rbac;
 
+/**
+ * Class AdminBaseController
+ * @package Admin\Controller
+ */
 class AdminBaseController extends BaseController
 {
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
@@ -24,8 +31,12 @@ class AdminBaseController extends BaseController
 
         $this->customConfig();
 
+
     }
 
+    /**
+     *
+     */
     protected function _initialize()
     {
         if (!RBAC::AccessDecision('Admin')) // AccessDecision中间使用分组名
@@ -41,6 +52,9 @@ class AdminBaseController extends BaseController
     }
 
 
+    /**
+     *
+     */
     private function _currentPostion()
     {
 
@@ -76,14 +90,20 @@ class AdminBaseController extends BaseController
 
     }
 
+    /**
+     *
+     */
     protected function _currentUser()
     {
         $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
-        $user = D('User', 'Logic')->detail($user_id);
+        $user = D('User', 'Logic')->cache(true)->detail($user_id);
         $this->assign('user', $user);
     }
 
 
+    /**
+     *
+     */
     protected function saveKv()
     {
         S('kv_array', null); //清空缓存
@@ -96,6 +116,9 @@ class AdminBaseController extends BaseController
     }
 
 
+    /**
+     *
+     */
     public function saveConfig()
     {
         S('customConfig', null); //清空缓存
@@ -117,6 +140,14 @@ class AdminBaseController extends BaseController
                 $options->save($data);
             }
         }
+    }
+
+
+    public function isSuperAdmin()
+    {
+        $uid = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        if ($uid == 1) return true;
+        else return false;
     }
 
 }

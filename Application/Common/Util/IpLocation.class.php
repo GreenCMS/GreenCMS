@@ -19,6 +19,10 @@ namespace Common\Util;
  * Class IpLocation
  * @package Common\Util
  */
+/**
+ * Class IpLocation
+ * @package Common\Util
+ */
 class IpLocation
 {
 
@@ -156,12 +160,12 @@ class IpLocation
      */
     public static function getIpInfo()
     {
-        $ip = get_client_ip();
-        $Ip = new IpLocation(IpData);
-        $ip_info = $Ip->getlocation($ip);
+//        $ip = get_client_ip();
+//        $Ip = new IpLocation(IpData);
+//        $ip_info = $Ip->getlocation($ip);
 
 
-        return $ip_info;
+//        return $ip_info;
     }
 
     /**

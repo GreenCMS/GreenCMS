@@ -9,8 +9,18 @@
 
 namespace Common\Util;
 
+/**
+ * Class PHPZip
+ * @package Common\Util
+ */
 class PHPZip
 {
+    /**
+     * @param $folder
+     * @param $zipFile
+     * @param null $subfolder
+     * @return bool
+     */
     public static function folderToZip($folder, &$zipFile, $subfolder = null)
     {
         if ($zipFile == null) {

@@ -7,23 +7,28 @@
  * Time: 下午1:44
  */
 namespace Common\Controller;
-
+use Think\Hook;
 use Think\Controller;
 
 /**
+ * GreenCMS基类控制器
  * Class BaseController
  * @package Common\Controller
  */
 abstract class BaseController extends Controller
 {
+    /**
+     *
+     */
     function __construct()
     {
         parent::__construct();
-
-        //$this->getKvs();
-
     }
 
+    /**
+     * 获取kv
+     * @return array|mixed
+     */
     function getKvs()
     {
         $kv_array = S('kv_array');
@@ -41,6 +46,8 @@ abstract class BaseController extends Controller
 
             if (APP_Cache) S('kv_array', $res_array);
         }
+
+        Hook::listen('base_getKvs');
 
         C('kv', $res_array);
         return $res_array;
@@ -63,11 +70,12 @@ abstract class BaseController extends Controller
             C($config['option_name'], $config['option_value']);
         }
 
+        Hook::listen('base_customConfig');
 
     }
 
     /**
-     * check_verify
+     * 检查验证码
      */
     function check_verify()
     {
@@ -77,13 +85,22 @@ abstract class BaseController extends Controller
         }
     }
 
-    function is_sae()
+    /**
+     * 判断是否为Sae平台
+     */
+    function isSae()
     {
         if (defined('SAE_TMP_PATH')) {
             $this->error("当前功能不支持SAE下使用");
         }
     }
 
+    /**
+     * 简化tp json返回
+     * @param int $status
+     * @param string $info
+     * @param string $url
+     */
     function json_return($status = 1, $info = '', $url = '')
     {
         die(json_encode(array("status" => $status, "info" => $info, "url" => $url)));

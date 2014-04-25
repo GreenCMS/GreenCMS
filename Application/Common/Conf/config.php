@@ -17,6 +17,7 @@ return array(
 
     'SESSION_OPTIONS'      => array(), // session 配置数组 支持type name id path expire domain 等参数
     'SESSION_PREFIX'       => '', // session 前缀
+    'USER_AUTH_KEY'       => 'authId', // 用户认证SESSION标记
 
     'AUTH_CODE'            => "ZTS", //安装完毕之后不要改变，否则所有密码都会出错
     'ADMIN'                => 'admin',
@@ -38,7 +39,7 @@ return array(
 
     // 'LOAD_EXT_CONFIG'      => '', // 加载扩展配置文件 config_alias,config_db,config_system
 
-    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install'), //配置你原来的分组列表
+    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install','Api'), //配置你原来的分组列表
     'MODULE_DENY_LIST'     => array('Common'),
     'DEFAULT_MODULE'       => 'Home',
 

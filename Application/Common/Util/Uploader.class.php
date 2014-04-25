@@ -10,17 +10,51 @@
 namespace Common\Util;
 
 
+/**
+ * Class Uploader
+ * @package Common\Util
+ */
 class Uploader
 {
+    /**
+     * @var string
+     */
     private $fileField; //文件域名
+    /**
+     * @var
+     */
     private $file; //文件上传对象
+    /**
+     * @var array
+     */
     private $config; //配置信息
+    /**
+     * @var
+     */
     private $oriName; //原始文件名
+    /**
+     * @var
+     */
     private $fileName; //新文件名
+    /**
+     * @var
+     */
     private $fullName; //完整文件名,即从当前配置目录开始的URL
+    /**
+     * @var
+     */
     private $fileSize; //文件大小
+    /**
+     * @var
+     */
     private $fileType; //文件类型
+    /**
+     * @var
+     */
     private $stateInfo; //上传状态信息,
+    /**
+     * @var array
+     */
     private $stateMap = array( //上传状态映射表，国际化用户需考虑此处数据的国际化
         "SUCCESS", //上传成功标记，在UEditor中内不可改变，否则flash判断会出错
         "文件大小超出 upload_max_filesize 限制",
@@ -106,12 +140,14 @@ class Uploader
                 }
             } else {
                 // SAE环境中
-                $st = new SaeStorage();
+                $st = new \SaeStorage();
                 $url = $st->upload('upload', $this->fullName, $file["tmp_name"]);
                 if (!$url) {
                     $this->stateInfo = $this->getStateInfo("MOVE");
                 } else {
-                    $this->fullName = $url;
+
+
+                    $this->fullName = str_replace('/http', 'http', $url);
                 }
             }
 
