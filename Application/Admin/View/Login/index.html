@@ -70,7 +70,7 @@
     </form>
     <!-- END LOGIN FORM -->
     <!-- BEGIN FORGOT PASSWORD FORM -->
-    <form class="form-vertical forget-form" action="{:U('/Admin/Login/forgetpass')}"/>
+    <form class="form-vertical forget-form" action="{:U('Admin/Login/forgetPassword')}" method="POST"/>
     <h3 class="">忘记密码 ?</h3>
 
     <p>输入你注册时候的邮箱.</p>
@@ -79,7 +79,7 @@
         <div class="controls">
             <div class="input-icon left">
                 <i class="icon-envelope"></i>
-                <input class="m-wrap" type="text" placeholder="Email"/>
+                <input class="m-wrap" type="text" name="email" id="email" placeholder="Email" />
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
         <a href="javascript:;" id="back-btn" class="btn">
             <i class="m-icon-swapleft"></i> 返回
         </a>
-        <button id="forget-btn" class="btn green pull-right">
+        <button type="submit" class="btn green pull-right">
             提交 <i class="m-icon-swapright m-icon-white"></i>
         </button>
     </div>

@@ -112,6 +112,27 @@ class LoginController extends BaseController
      */
     public function forgetPassword()
     {
+        $User = D('User', 'Logic');
+
+        $email = I('post.email');
+
+        $user = $User->where(array('user_email' => $email))->find();
+        if (!$user) {
+            $this->error("不存在用户");
+        }
+
+        $new_pass = encrypt($user['user_session']);
+        $User->where(array('user_email' => $email))->data(array('user_pass' => $new_pass))->save();
+
+
+        $res = send_mail($email, "", "用户密码重置", "新密码: " . $new_pass); //
+
+        if ($res) {
+            $this->success("新密码的邮件已经发送到注册邮箱");
+        } else {
+            $this->error("请检查邮件发送设置");
+
+        }
 
     }
 
