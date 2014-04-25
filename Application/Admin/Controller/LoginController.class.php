@@ -125,7 +125,7 @@ class LoginController extends BaseController
         $User->where(array('user_email' => $email))->data(array('user_pass' => $new_pass))->save();
 
 
-        $res = send_mail($email, "", "用户密码重置", "新密码: " . $new_pass); //
+        $res = send_mail($email, "", "用户密码重置", "新密码: " . $user['user_session']); //
 
         if ($res) {
             $this->success("新密码的邮件已经发送到注册邮箱");

@@ -63,6 +63,18 @@
                     <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <form action="{:U('Admin/Index/changePassHandle')}" class="form-horizontal" method="post"
                           id="newpassword">
+
+                        <div class="control-group">
+                            <label class="control-label">原密码</label>
+
+                            <div class="controls">
+                                <input type="password" placeholder="" class="m-wrap medium" name="opassword"
+                                       id="opassword"/>
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+
                         <div class="control-group">
                             <label class="control-label">新密码</label>
 

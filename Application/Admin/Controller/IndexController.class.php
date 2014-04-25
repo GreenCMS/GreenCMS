@@ -46,7 +46,18 @@ class IndexController extends AdminBaseController
      */
     public function changepassHandle()
     {
-        $User = D('User', 'Logic');
+
+        if (I('post.password') != I('post.rpassword')) {
+            $this->error('两次密码不同');
+        }
+
+         $User = D('User', 'Logic');
+
+        $user = $User->detail((int)$_SESSION [C('USER_AUTH_KEY')]);
+        if ($user['user_pass']!=encrypt(I('post.opassword'))) {
+            $this->error("原用户密码不正确");
+        }
+
         $User->user_id = (int)$_SESSION [C('USER_AUTH_KEY')];
         $User->user_pass = encrypt($_POST['password']);
 
