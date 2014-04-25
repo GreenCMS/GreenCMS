@@ -26,6 +26,13 @@ a {
     cursor: pointer;
 }
 
+a i{
+    font-size: 12pt;
+    width: 1em;
+    font-weight: bold;
+    color: #379adc;
+}
+
 ul {
     list-style: none;
 }
@@ -332,12 +339,12 @@ img {
 }
 
 #c4_right_2 ul li {
-    width: 83px;
-    height: 22px;
+    width: 90px;
+    height: 30px;
     /*background: url(../images/1/xuekebg1.jpg) no-repeat;*/
     margin: 7px 0px;
     float: left;
-    line-height: 22px;
+    line-height: 30px;
     text-align: center;
 }
 
@@ -641,10 +648,6 @@ img {
 
 }
 
-#content {
-    width: 1140px;
-    margin: 0 auto;
-}
 
 .news-slide {
     width: 724px;
@@ -736,9 +739,7 @@ img {
 }
 
 .right_box .body ul li {
-    padding-left: 20px;
-    background: url(./images/dot.png) 0 5px no-repeat;
-    line-height: 32px;
+     line-height: 32px;
 }
 
 .right_box .body ul li a {

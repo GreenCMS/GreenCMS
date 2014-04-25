@@ -403,9 +403,6 @@ class PostsController extends AdminBaseController
             }
 
 
-
-
-
             $where["post_id"] = $post_id;
 
             $post = D('Posts')->relation(true)->where($where)->find();
@@ -448,8 +445,6 @@ class PostsController extends AdminBaseController
                 $cats = D('Cats', 'Logic')->category();
                 $tags = D('Tags', 'Logic')->select();
             }
-
-
 
             $this->assign("cats", $cats);
             $this->assign("cats", $cats);

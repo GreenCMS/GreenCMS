@@ -21,29 +21,9 @@
 
     <div class="article">
         <h1>{$post.post_top|is_top}{$post.post_title}</h1>
-        <!-- Post Start -->
 
         <div class="main-info">
-            <!-- Date -->
-            <div class="date">
-                发布时间:<span><a>{$post['post_date']|getTimeURL=$post['post_type']}</a> </span>
-
-                浏览: <span>{$post.post_view_count}</span>
-
-                <span>
-                    <control access="Admin/Posts/posts">
-                        <a href="{:U('Admin/Posts/posts',array('id'=>$post['post_id']))}">编辑</a>
-                    </control>
-                </span>
-
-                </a>
-            </div>
-
-
-            <div class="post-content">{$post.post_content}</div>
-
-
-
+            {:hook('Guestbook', $post)}
         </div>
 
 

@@ -11,7 +11,6 @@ namespace Admin\Controller;
 
 use Common\Controller\BaseController;
 use Org\Util\Rbac;
-use Think\Controller;
 
 /**
  * Class LoginController
@@ -72,7 +71,7 @@ class LoginController extends BaseController
         // $ip_info = $ipLocation->getIpInfo();
 
         $map = array();
-        $map['user_login'] = $_POST['username'];
+        $map['user_login'] = I('post.username');
         $map['user_status'] = array('gt', 0);
 
         $authInfo = RBAC::authenticate($map);
@@ -80,7 +79,7 @@ class LoginController extends BaseController
         if (false === $authInfo) {
             $this->error('帐号不存在或已禁用！');
         } else {
-            if ($authInfo['user_pass'] != encrypt($_POST['password'])) {
+            if ($authInfo['user_pass'] != encrypt(I('post.password'))) {
                 $this->error('密码错误或者帐号已禁用');
             }
             $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];

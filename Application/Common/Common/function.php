@@ -522,7 +522,7 @@ title="' . $post['post_title'] . '"/></a>';
  * @return string
  */
 function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
-                         $li_attr = '', $separator = ' <li><i class="icon-angle-right"></i></li>'
+                         $li_attr = '', $separator = ' <li><i class="icon-angle-right"> &gt;&gt; </i></li>'
     , $init = '首页')
 {
 
@@ -532,7 +532,6 @@ function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
     if ($type == 'cats') {
         $Cat = D('Cats', 'Logic');
         $cat = $Cat->getFather($info);
-        $cat_father = array();
         $res .= extra_father($cat, $separator);
     } elseif ($type == 'tags') {
         $Tag = D('Tags', 'Logic');
@@ -657,4 +656,19 @@ function get_previous_post($post_id, $post_cat)
     if (!$post) return null;
     $res = ' <a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . '</a>';
     return $res;
+}
+
+
+function check_access($access = "")
+{
+
+    $path = explode('/', strtoupper($access));
+
+    $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
+
+     if ($accessList[$path[0]][$path[1]][$path[2]] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+        return true;
+    } else {
+        return false;
+    }
 }

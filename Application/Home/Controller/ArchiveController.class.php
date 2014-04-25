@@ -70,6 +70,11 @@ class ArchiveController extends HomeBaseController
         $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
         if (I('get.uid') != '') $map['user_id'] = I('get.uid');
 
+
+        $title_prefix = (I('get.year', '') ? I('get.year', '') . '年' : '') .
+            (I('get.month', '') ? I('get.month', '') . '月' : '') . (I('get.day', '') ? I('get.day', '') . '日' : '');
+
+
         $PostsList = new PostsLogic();
 
         $count = $PostsList->countAll('single', $map); // 查询满足要求的总记录数
@@ -81,7 +86,7 @@ class ArchiveController extends HomeBaseController
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
             $res = $PostsList->getList($limit, 'single', 'post_id desc', true, $map);
         }
-        $this->assign('title', '所有文章');
+        $this->assign('title', $title_prefix . '所有文章');
         $this->assign('res404', $res404); // 赋值数据集
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
@@ -99,6 +104,10 @@ class ArchiveController extends HomeBaseController
     {
         $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
 
+        $title_prefix = (I('get.year', '') ? I('get.year', '') . '年' : '') .
+            (I('get.month', '') ? I('get.month', '') . '月' : '') . (I('get.day', '') ? I('get.day', '') . '日' : '');
+
+
         $PostsList = new PostsLogic();
 
         $count = $PostsList->countAll('page', $map); // 查询满足要求的总记录数
@@ -110,7 +119,7 @@ class ArchiveController extends HomeBaseController
 
             $res = $PostsList->getList($limit, 'page', 'post_id desc', true, $map);
         }
-        $this->assign('title', '所有页面');
+        $this->assign('title', $title_prefix . '所有页面');
         $this->assign('res404', $res404); // 赋值数据集
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
@@ -127,6 +136,10 @@ class ArchiveController extends HomeBaseController
      */
     public function _empty($method, $args)
     {
+
+        $title_prefix = (I('get.year', '') ? I('get.year', '') . '年' : '') .
+            (I('get.month', '') ? I('get.month', '') . '月' : '') . (I('get.day', '') ? I('get.day', '') . '日' : '');
+
 
         //TODO 通用类型
 
@@ -148,7 +161,7 @@ class ArchiveController extends HomeBaseController
             $limit = $Page->firstRow . ',' . $Page->listRows;
             $res = $PostsList->getList($limit, $post_type, 'post_id desc', true, $map);
         }
-        $this->assign('title', '所有' . $post_type);
+        $this->assign('title', $title_prefix . '所有' . $post_type);
         $this->assign('res404', $res404); // 赋值数据集
         $this->assign('postslist', $res); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
