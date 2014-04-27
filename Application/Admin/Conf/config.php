@@ -37,6 +37,7 @@ $menu_arr = array(
             'Posts/category'   => '分类管理',
             'Posts/tag'        => '标签管理',
             'Posts/add'        => '添加文章',
+            'Posts/reverify'   => '未通过',
             'Posts/unverified' => '待审核',
             'Posts/recycle'    => '回收站'
         ),
@@ -71,9 +72,9 @@ $menu_arr = array(
 
 
         'Media'  => array(
-            'Media/file' => '文件管理',
-             'Media/backupFile' => '文件备份',
-             'Media/restoreFile' => '文件恢复',
+            'Media/file'        => '文件管理',
+            'Media/backupFile'  => '文件备份',
+            'Media/restoreFile' => '文件恢复',
         ),
 
         'Access' => array(
