@@ -3,11 +3,18 @@ namespace Think\Template\TagLib;
 
 use Think\Template\TagLib;
 
+/**
+ * Class Green
+ * @package Think\Template\TagLib
+ */
 class Green extends TagLib
 {
 
 
     // 标签定义
+    /**
+     * @var array
+     */
     protected $tags = array(
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
         'catlist'       => array(
@@ -19,7 +26,7 @@ class Green extends TagLib
             'alias' => 'tli'
         ),
         'recentlist'    => array(
-            'attr'  => 'num,type,order,relation,li_attr,ul_attr',
+            'attr'  => 'num,type,order,relation,length,li_attr,ul_attr',
             'alias' => 'rli'
         ),
         'friendlist'    => array(
@@ -112,6 +119,12 @@ class Green extends TagLib
         return;
     }
 
+    /**
+     * @param $tag
+     * @param $content
+     * @usage <friendlist link_tag="标签" num="数量" order="排序"  length="字长度" li_attr='li属性' ul_attr="ul属性"></friendlist>
+     * @return string
+     */
     public function _friendlist($tag, $content)
     {
 
@@ -120,13 +133,14 @@ class Green extends TagLib
         $order = isset ($tag ['order']) ? $tag ['order'] : 'link_sort desc ,link_id asc';
         $li_attr = isset ($tag ['li_attr']) ? $tag ['li_attr'] : '';
         $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
+        $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
 
         $link_list = D('Links', 'Logic')->getList($num, $link_tag, $order);
 
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($link_list as $value) {
             $parseStr .= '<li ' . $li_attr . '><a href="' . $value['link_url'] . '" title="' .
-                $value['link_name'] . '"> ' . $value['link_name'] . ' </a></li>';
+                $value['link_name'] . '"> ' . mb_substr($value['link_name'], 0, $length, 'UTF-8') . ' </a></li>';
         }
         $parseStr .= '</ul>';
 
@@ -137,14 +151,15 @@ class Green extends TagLib
     }
 
 
+    /**
+     * @param $tag
+     * @param $content
+     * @usage <recentlist type="文章类型" num="数量"  order="排序" relation="是否关联"  length="字长度" li_attr='li属性' ul_attr="ul属性"></recentlist>
+     * @return string
+     */
     public function _recentlist($tag, $content)
     {
-        /**
-         * 'recentlist' => array(
-        'attr'  => 'num,type,order,relation,li_attr,ul_attr',
-        'alias' => 'rli'
-        ),
-         */
+
         $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 5;
         $post_type = isset ($tag ['type']) ? $tag ['type'] : 'single';
         $order = isset ($tag ['order']) ? $tag ['order'] : 'post_date desc';
@@ -154,11 +169,8 @@ class Green extends TagLib
         $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
 
         $post_list = D('Posts', 'Logic')->getList($num, $post_type, $order, $relation);
-        /**
-         * <a href="{$vo.post_id|getSingleURLByID}"
-        title=" {$vo.post_title}"><i class="icon-circle-arrow-right"></i>
-        {$vo.post_title|mb_substr=0,20,"UTF-8"}</a>
-         */
+
+
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($post_list as $value) {
             $parseStr .= '<li ' . $li_attr . '>
@@ -176,6 +188,13 @@ class Green extends TagLib
     }
 
 
+    /**
+     * @param $tag
+     * @param $content
+     * @usage <control access="Admin/Posts/NOVERIFY">需要权限而显示的内容</control>
+     * access="Group/Controller/action"
+     * @return bool
+     */
     public function _accesscontrol($tag, $content)
     {
 
