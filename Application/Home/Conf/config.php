@@ -45,9 +45,12 @@ $config_router = array(
 
         'Tag/:info'                           => 'Tag/detail', //普通规则路由
 
-        'Cat/:father1/:father2/:info'         => 'Cat/detail', //普通规则路由
-        'Cat/:father/:info'                   => 'Cat/detail', //普通规则路由
-        'Cat/:info'                           => 'Cat/detail', //普通规则路由jius
+
+        'Cat/:father1^channel/:father2/:info' => 'Cat/detail', //普通规则路由
+        'Cat/:father^channel/:info'           => 'Cat/detail', //普通规则路由
+        'Cat/:info^channel'                   => 'Cat/detail', //普通规则路由jius
+
+
     ),
 
     /**

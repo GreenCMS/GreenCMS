@@ -89,7 +89,7 @@
 
 
                         <div class="control-group">
-                            <label class="control-label">是否开启Feed订阅功能</label>
+                            <label class="control-label">开启Feed订阅功能</label>
                             <div class="controls">
 
                                 <label class="radio">
@@ -121,8 +121,57 @@
                                     </switch>
                                     否
                                 </label>
+
+
                             </div>
                         </div>
+
+
+
+
+
+                        <div class="control-group">
+                            <label class="control-label">开启auto_channel功能</label>
+                            <div class="controls">
+
+                                <label class="radio">
+
+                                    <switch name="auto_channel">
+                                        <case value="1"><input type="radio" name="auto_channel"
+                                                               checked="checked" value="1"/></case>
+                                        <case value="0"><input type="radio" name="auto_channel" value="1"/></case>
+
+                                        <default/>
+                                        <input type="radio" name="auto_channel"
+                                               checked="checked" value="1"/>
+                                    </switch>
+                                    是
+
+
+                                </label>
+
+
+                                <label class="radio">
+                                    <switch name="auto_channel">
+                                        <case value="1"><input type="radio" name="auto_channel" value="0"/></case>
+                                        <case value="0"><input type="radio" name="auto_channel" checked="checked"
+                                                               value="0"/></case>
+
+                                        <default/>
+                                        <input type="radio" name="auto_channel" checked=
+                                                value="0"/>
+                                    </switch>
+                                    否
+                                       &nbsp;&nbsp;&nbsp; 需要主题支持
+
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+
 
 
 

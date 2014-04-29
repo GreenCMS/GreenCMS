@@ -42,7 +42,7 @@ class MediaController extends AdminBaseController
      */
     public function fileConnect()
     {
-        $roots = array('Upload/', 'Public/', 'Application/');
+        $roots = array('Upload/', 'Public/', 'Application/');//
         $opts = $this->__array($roots);
 
         define('GreenCMS', 'GreenCMS');
