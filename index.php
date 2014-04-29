@@ -14,7 +14,7 @@ ob_start();
  */
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //error_reporting(0);
-@set_time_limit(240);
+@set_time_limit(120);
 //@ini_set("memory_limit",'-1');
 
 //date_default_timezone_set (PRC);

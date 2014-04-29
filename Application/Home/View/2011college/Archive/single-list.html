@@ -17,28 +17,37 @@
 <body>
 {:W('Common/mainMenu')}
 
-<div class="content">
+<div class="content content-grey">
+	<div class="content-container">
 
-    <div class="title" style="text-align:center;margin-top:20px;font-size:30px">
-        {$post['post_title']}
+        <div class="left-nav">
+            <h3> 没有子分类 </h3>
+
+        </div>
+	<div class="content-thin content-with-left-nav">
+    <div class="title">
+        当前位置：
+
+        {$breadcrumbs}
+
+
+
     </div>
 
 
-    <div class="article">
+    <div class="article article-list">
 
 
         <div class="three_fourth column">
 
             <!-- -->
             <if condition="$res404 eq 0 ">
-
                 <div class="post">
                     <div class="post-content medium clearfix">
                         没有相关文章
                         <div class="ten columns omega"></div>
                     </div>
-                </div>
-
+				</div>
 
             </if>
 
@@ -78,6 +87,8 @@
 
                 </div>
                 <!-- Post End --> </volist>
+
+        </div>
             <!-- Navigation -->
             <div class="blog-navi nomargin">
 
@@ -85,10 +96,10 @@
                 </ul>
             </div>
 
-        </div>
-
+</div>
     </div>
-
+    
+	</div>
 </div>
     <include file="Public:foot"/>
 </body>
