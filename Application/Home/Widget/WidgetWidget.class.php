@@ -87,4 +87,62 @@ class WidgetWidget extends Controller
     }
 
 
+    /**
+     * 父类与子类分类列表
+     * @usage {:W('Widget/cat_sidebar',array("cat_id"=>$cat_id))}
+     */
+    public function cat_sidebar($cat_id = 0, $default_title)
+    {
+
+        if ($cat_id == null) {
+            $this->assign('cat_sidebar_title', $default_title); // 赋值数据集
+
+            $CatList = new CatsLogic();
+
+            $Cat = new \Common\Util\Category ('Cats', array('cat_id', 'cat_father', 'cat_name', 'cat_name'));
+
+            $children['cat_children'] = $Cat->getList();
+            foreach ($children['cat_children'] as $key => $value) {
+                $children['cat_children'][$key]['cat_children'] = $children['cat_children'][$key];
+            }
+            $this->assign('children2', $children);
+
+
+        } else {
+
+            $Cat = new CatsLogic();
+            $children = $Cat->getChildren($cat_id);
+
+            if (empty($children['cat_children'])) {
+                //无子类处理
+                if ($children['cat_father'] == 0) {
+                    //无父类
+                    $this->assign('cat_sidebar_title', $children["cat_name"]); // 赋值数据集
+
+                } else {
+                    //有父类
+
+                    $children2 = $Cat->getChildren($children['cat_father']);
+                    $this->assign('cat_sidebar_title', $children2["cat_name"]); // 赋值数据集
+
+                    $this->assign('children2', $children2);
+
+                }
+
+
+            } else {
+                //有子类处理
+                $this->assign('cat_sidebar_title', $children["cat_name"]); // 赋值数据集
+                $this->assign('children2', $children);
+
+
+            }
+        }
+
+        $this->assign('cat_id', $cat_id); // 赋值数据集
+        $this->display('Widget:cat_sidebar');
+
+    }
+
+
 }

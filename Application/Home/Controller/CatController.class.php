@@ -37,14 +37,15 @@ class CatController extends HomeBaseController
         $Cat = new CatsLogic();
         $Posts = new PostsLogic();
         $cat = $Cat->detail($info);
-        $children = ($Cat->getChildren($cat['cat_id']));
+//        $children = ($Cat->getChildren($cat['cat_id']));
+        $this->assign('cat_id', $cat['cat_id']); // 赋值数据集
 
-
-        if (get_opinion("auto_channel", false, false) && $children['cat_children']) {
-            $this->channel($info);
-            Hook::listen('app_end');
-            die();
-        }
+//
+//        if (get_opinion("auto_channel", false, false) && $children['cat_children']) {
+//            $this->channel($info);
+//            Hook::listen('app_end');
+//            die();
+//        }
 
         $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了"); //优雅的404
 
@@ -61,6 +62,8 @@ class CatController extends HomeBaseController
             $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
 
         }
+
+
         $this->assign('title', $cat['cat_name']); // 赋值数据集
         $this->assign('res404', $res404);
         $this->assign('postslist', $res); // 赋值数据集

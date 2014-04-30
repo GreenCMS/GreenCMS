@@ -18,54 +18,51 @@
 {:W('Common/mainMenu')}
 
 <div class="content content-grey">
-	<div class="content-container">
+    <div class="content-container">
 
-        <div class="left-nav">
-            <h3> 没有子分类 </h3>
+        {:W('Widget/cat_sidebar',array("cat_id"=>$cat_id,"default_title"=>$title))}
+        <div class="content-thin content-with-left-nav">
+            <div class="title">
+                当前位置：
 
-        </div>
-	<div class="content-thin content-with-left-nav">
-    <div class="title">
-        当前位置：
-
-        {$breadcrumbs}
+                {$breadcrumbs}
 
 
-
-    </div>
-
-
-    <div class="article article-list">
+            </div>
 
 
-        <div class="three_fourth column">
-
-            <!-- -->
-            <if condition="$res404 eq 0 ">
-                <div class="post">
-                    <div class="post-content medium clearfix">
-                        没有相关文章
-                        <div class="ten columns omega"></div>
-                    </div>
-				</div>
-
-            </if>
+            <div class="article article-list">
 
 
-            <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
-                <div class="post">
+                <div class="three_fourth column">
 
-                    <div class="post-content medium clearfix">
+                    <!-- -->
+                    <if condition="$res404 eq 0 ">
+                        <div class="post">
+                            <div class="post-content medium clearfix">
+                                没有相关文章
+                                <div class="ten columns omega"></div>
+                            </div>
+                        </div>
 
-                        <div class="eleven columns omega">
-                            <!-- Title -->
-                            <h2>
-                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
-                                    {$post.post_top|is_top}{$post.post_title}</a>                                                                          <a style="float:right">   {$post['post_date']}</a>                                        
-                            </h2>
+                    </if>
 
-                            <!-- Meta -->
-                            <div class="meta clearfix"><!--
+
+                    <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
+                        <div class="post">
+
+                            <div class="post-content medium clearfix">
+
+                                <div class="eleven columns omega">
+                                    <!-- Title -->
+                                    <h2>
+                                        <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                                            {$post.post_top|is_top}{$post.post_title}</a> <a style="float:right">
+                                        {$post['post_date']}</a>
+                                    </h2>
+
+                                    <!-- Meta -->
+                                    <div class="meta clearfix"><!--
 								<span><img src="__PUBLIC__/Vena/images/icons/calendar.png"
                                            alt="date"/>  {$post['post_date']}</span>  -->                                     <!--<span><img
                                     src="__PUBLIC__/Vena/images/icons/user.png" alt="author"/> 作者 : <a
@@ -74,33 +71,33 @@
                                            alt="cat"/> 分类 : <volist name="post.post_cat" id="cat"><a
                                         href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
                                 </volist></span>  </span>  -->
-                               
+
+                                    </div>
+                                    <!-- Content
+                                    <p>{$post.post_content|strip_tags|mb_substr=0,200,"UTF-8"}</p>
+         -->
+                                    <!-- Read More
+                                    <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" class="btn continue">阅读全文>></a>
+         -->
+                                </div>
                             </div>
-                            <!-- Content
-                            <p>{$post.post_content|strip_tags|mb_substr=0,200,"UTF-8"}</p>
- -->
-                            <!-- Read More
-                            <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" class="btn continue">阅读全文>></a>
- -->
+
                         </div>
-                    </div>
+                        <!-- Post End --> </volist>
 
                 </div>
-                <!-- Post End --> </volist>
+                <!-- Navigation -->
+                <div class="blog-navi nomargin">
 
-        </div>
-            <!-- Navigation -->
-            <div class="blog-navi nomargin">
+                    <ul>{$pager}
+                    </ul>
+                </div>
 
-                <ul>{$pager}
-                </ul>
             </div>
+        </div>
 
-</div>
     </div>
-    
-	</div>
 </div>
-    <include file="Public:foot"/>
+<include file="Public:foot"/>
 </body>
 </html>
