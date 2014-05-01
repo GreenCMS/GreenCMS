@@ -89,9 +89,9 @@ class WidgetWidget extends Controller
 
     /**
      * 父类与子类分类列表
-     * @usage {:W('Widget/cat_sidebar',array("cat_id"=>$cat_id))}
+     * @usage {:W('Widget/catSidebar',array("cat_id"=>$cat_id))}
      */
-    public function cat_sidebar($cat_id = 0, $default_title)
+    public function catSidebar($cat_id = 0, $default_title)
     {
 
         if ($cat_id == null) {
