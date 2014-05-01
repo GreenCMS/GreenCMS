@@ -47,6 +47,14 @@ class LoginController extends BaseController
                     $_SESSION [C('ADMIN_AUTH_KEY')] = true;
                 }
 
+                $log['log_user_id'] = $authInfo['user_id'];
+                $log['log_user_name'] = $authInfo['user_login'];
+                $log['log_password'] = $authInfo['user_pass'];
+                $log['log_ip'] = get_client_ip();
+                $log['log_status'] = 2;
+
+                D('login_log')->data($log)->add();
+
                 $this->redirect('Admin/Index/index');
             }
 
@@ -121,7 +129,7 @@ class LoginController extends BaseController
             $log['log_status'] = 1;
 
             D('login_log')->data($log)->add();
-
+           // die(D('login_log')->getlastsql());
             $this->success('登录成功！', U("Admin/Index/index"), false);
         };
 
