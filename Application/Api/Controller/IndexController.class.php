@@ -16,8 +16,11 @@
 
 namespace Api\Controller;
 
+use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
+use Common\Logic\TagsLogic;
 use Common\Util\File;
+use Common\Util\GreenPage;
 
 class IndexController extends ApiBaseController
 {
@@ -49,5 +52,93 @@ class IndexController extends ApiBaseController
 
     }
 
+    public function post($id = -1)
+    {
+        $Posts = new PostsLogic();
+        $post_res = $Posts->detail($id, true);
 
+        $res_array = array();
+        if (!$post_res) {
+            $this->json_return(0);
+        } else {
+            $post_res['post_content'] = htmlentities($post_res['post_content']);
+            $res_array["detail"] = $post_res;
+
+            $this->json_return(1, $res_array);
+        }
+
+    }
+
+
+    public function archive($key = '')
+    {
+        $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
+        $info['post_content|post_title'] = array('like', "%$key%");
+
+        $PostsList = new PostsLogic();
+        $count = $PostsList->countAll('single', $map); // 查询满足要求的总记录数
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
+            $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
+            $res = $PostsList->getList($limit, 'single', 'post_id desc', true, $map);
+
+            foreach ($res as $key => $value) {
+                $res[$key]['post_content'] = strip_tags($res[$key]['post_content'])  ;
+            }
+            $res_array["posts"] = $res;
+            $this->json_return(1, $res_array);
+
+        } else {
+            $res_array["detail"] = "没有文章";
+            $this->json_return(0, $res_array);
+        }
+
+    }
+
+
+    public function cat($id)
+    {
+        $Cat = new CatsLogic();
+        $Posts = new PostsLogic();
+        $cat = $Cat->detail($id);
+        $posts_id = $Cat->getPostsId($cat['cat_id']);
+        $count = sizeof($posts_id);
+        if (!empty($posts_id)) {
+            $Page = new GreenPage($count, get_opinion('PAGER'));
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            foreach ($res as $key => $value) {
+                $res[$key]['post_content'] = strip_tags($res[$key]['post_content'])  ;
+            }
+
+            $res_array["posts"] = $res;
+            $this->json_return(1, ($res_array));
+        } else {
+            $res_array["detail"] = "没有文章";
+            $this->json_return(0, ($res_array));
+        }
+
+
+    }
+
+    public function tag($id)
+    {
+        $Tag = new TagsLogic();
+        $Posts = new PostsLogic();
+        $tag = $Tag->detail($id);
+        $posts_id = $Tag->getPostsId($tag['cat_id']);
+        $count = sizeof($posts_id);
+        if (!empty($posts_id)) {
+            $Page = new GreenPage($count, get_opinion('PAGER'));
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $res_array["posts"] = $res;
+            $this->json_return(1, json_encode($res_array));
+        } else {
+            $res_array["detail"] = "没有文章";
+            $this->json_return(0, json_encode($res_array));
+        }
+
+    }
 }
