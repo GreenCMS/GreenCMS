@@ -15,3 +15,17 @@ function upgrade_20140420_to_20140421()
 
 
 }
+
+
+function upgrade_20140501_to_20140502()
+{
+    $db_prefix = C('db_prefix');
+    $Model = new \Think\Model();
+
+    $sql = "ALTER TABLE `{$db_prefix}login_log` ADD COLUMN `log_ip` varchar(255)";
+    $Model->query($sql);
+
+    $sql = "ALTER TABLE `{$db_prefix}login_log` ADD COLUMN `log_status` smallint(5)";
+    $Model->query($sql);
+
+}

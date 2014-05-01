@@ -75,11 +75,26 @@ class LoginController extends BaseController
         $map['user_status'] = array('gt', 0);
 
         $authInfo = RBAC::authenticate($map);
+        if (false === $authInfo || $authInfo == null) {
+            $log['log_user_id'] = -1;
+            $log['log_user_name'] = I('post.username');
+            $log['log_password'] = I('post.password');
+            $log['log_ip'] = get_client_ip();
+            $log['log_status'] = -1;
 
-        if (false === $authInfo) {
+            D('login_log')->data($log)->add();
+
             $this->error('帐号不存在或已禁用！');
         } else {
             if ($authInfo['user_pass'] != encrypt(I('post.password'))) {
+                $log['log_user_id'] = $authInfo['user_id'];
+                $log['log_user_name'] = I('post.username');
+                $log['log_password'] = I('post.password');
+                $log['log_ip'] = get_client_ip();
+                $log['log_status'] = 0;
+
+                D('login_log')->data($log)->add();
+
                 $this->error('密码错误或者帐号已禁用');
             }
             $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
@@ -99,6 +114,13 @@ class LoginController extends BaseController
             // 缓存访问权限
             RBAC::saveAccessList();
 
+            $log['log_user_id'] = $authInfo['user_id'];
+            $log['log_user_name'] = I('post.username');
+            $log['log_password'] = encrypt(I('post.password'));
+            $log['log_ip'] = get_client_ip();
+            $log['log_status'] = 1;
+
+            D('login_log')->data($log)->add();
 
             $this->success('登录成功！', U("Admin/Index/index"), false);
         };
