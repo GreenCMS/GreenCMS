@@ -26,15 +26,25 @@ class IndexController extends ApiBaseController
     {
         $PostsList = new PostsLogic();
 
-        $res = $PostsList->getList(20, 'single', 'post_id desc', true);
-        foreach ($res as $key => $value) {
+        $posts_res = $PostsList->getList(10, 'single', 'post_id desc', true);
+//
+//        dump($posts_res);
+        $res_array["posts"] = array();
+        foreach ($posts_res as $post) {
+            $temp = array();
+            $temp["post_id"] = $post["post_id"];
+            $temp["post_title"] = $post["post_title"];
+            $temp["post_date"] = $post["post_date"];
 
-            $res[$key] ["post_content"] = mb_substr(strip_tags(str_replace( "&nbsp;","",$res[$key]["post_content"])), 0, 200, 'utf-8');
-            $res[$key]['url'] = U('Api/Post/single', array('id' => $value['post_id']), false, true);
+
+            $temp["post_content"] = mb_substr(strip_tags(str_replace("&nbsp;", "", $post["post_content"])), 0, 200, 'utf-8');
+            $temp['url'] = U('Api/Post/single', array('id' => $post['post_id']), false, true);
+
+            array_push($res_array["posts"], $temp);
         }
 
 //        dump($res);
-        die(json_encode($res));
+        die(json_encode($res_array));
 
 
     }
