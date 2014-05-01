@@ -38,7 +38,7 @@ class SystemController extends AdminBaseController
 
 
         $this->assign('auto_channel', get_opinion('auto_channel'));
-
+        $this->assign('api_open', get_opinion('api_open'));
         $this->assign('feed_open', get_opinion('feed_open'));
         $this->display();
     }

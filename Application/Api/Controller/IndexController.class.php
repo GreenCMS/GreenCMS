@@ -25,6 +25,17 @@ use Common\Util\GreenPage;
 class IndexController extends ApiBaseController
 {
 
+    function __construct()
+    {
+        if (get_opinion('api_open', false, 1) == 0) {
+            $this->json_return(0, "API功能关闭");
+        }
+
+
+        parent::__construct();
+    }
+
+
     public function latest()
     {
         $PostsList = new PostsLogic();
@@ -84,7 +95,7 @@ class IndexController extends ApiBaseController
             $res = $PostsList->getList($limit, 'single', 'post_id desc', true, $map);
 
             foreach ($res as $key => $value) {
-                $res[$key]['post_content'] = strip_tags($res[$key]['post_content'])  ;
+                $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
             }
             $res_array["posts"] = $res;
             $this->json_return(1, $res_array);
@@ -109,7 +120,7 @@ class IndexController extends ApiBaseController
             $limit = $Page->firstRow . ',' . $Page->listRows;
             $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
             foreach ($res as $key => $value) {
-                $res[$key]['post_content'] = strip_tags($res[$key]['post_content'])  ;
+                $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
             }
 
             $res_array["posts"] = $res;
