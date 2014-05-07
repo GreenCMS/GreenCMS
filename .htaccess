@@ -41,12 +41,6 @@ SetOutputFilter DEFLATE
 
 
 #模板保护
-<Files *.html>
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-#模板保护
 <Files *.sql>
     Order Allow,Deny
     Deny from all

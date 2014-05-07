@@ -40,8 +40,15 @@ class IndexController extends ApiBaseController
     {
         $PostsList = new PostsLogic();
 
-        $posts_res = $PostsList->getList(10, 'single', 'post_id desc', true);
-//
+        $count = $PostsList->countAll('single'); // 查询满足要求的总记录数
+
+
+        $Page = new GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
+        $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
+        $posts_res = $PostsList->getList($limit, 'single', 'post_id desc', true);
+
+
+        //
 //        dump($posts_res);
         $res_array["posts"] = array();
         foreach ($posts_res as $post) {
@@ -52,7 +59,7 @@ class IndexController extends ApiBaseController
 
 
             $temp["post_content"] = mb_substr(strip_tags(str_replace("&nbsp;", "", $post["post_content"])), 0, 200, 'utf-8');
-            $temp['url'] = U('Api/Post/single', array('id' => $post['post_id']), false, true);
+            $temp['url'] = U('Api/Index/post', array('id' => $post['post_id']), false, true);
 
             array_push($res_array["posts"], $temp);
         }
@@ -72,7 +79,9 @@ class IndexController extends ApiBaseController
         if (!$post_res) {
             $this->json_return(0);
         } else {
-            $post_res['post_content'] = htmlentities($post_res['post_content']);
+            $post_res['post_content'] = strip_tags($post_res['post_content']);
+            $post_res['url'] = U('Api/Index/post', array('id' => $post_res['post_id']), false, true);
+
             $res_array["detail"] = $post_res;
 
             $this->json_return(1, $res_array);
@@ -96,6 +105,8 @@ class IndexController extends ApiBaseController
 
             foreach ($res as $key => $value) {
                 $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
+                $res[$key]['url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+
             }
             $res_array["posts"] = $res;
             $this->json_return(1, $res_array);
@@ -121,6 +132,8 @@ class IndexController extends ApiBaseController
             $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
             foreach ($res as $key => $value) {
                 $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
+                $res[$key]['url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+
             }
 
             $res_array["posts"] = $res;
@@ -144,6 +157,14 @@ class IndexController extends ApiBaseController
             $Page = new GreenPage($count, get_opinion('PAGER'));
             $limit = $Page->firstRow . ',' . $Page->listRows;
             $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+
+            foreach ($res as $key => $value) {
+                $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
+                $res[$key]['url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+
+            }
+
+
             $res_array["posts"] = $res;
             $this->json_return(1, json_encode($res_array));
         } else {

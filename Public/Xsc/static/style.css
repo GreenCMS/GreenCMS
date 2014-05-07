@@ -37,6 +37,7 @@
 
 }
 
+
 .menu>li>ul>li>a {
     display: block;
     /*padding: 0 14px 0 25px;*/
@@ -52,6 +53,8 @@
     color: #fff;
 
 }
+
+
 
 .menu li:first-child a {
     border-left: none;
@@ -103,9 +106,9 @@
 }
 
 .menu li:hover > ul li:hover{
-    background-color: #134177;
+     background-color: #134177;
 
-}
+ }
 
 .menu ul li a {
     width: 100px;
