@@ -109,11 +109,15 @@ class IndexController extends ApiBaseController
 
             }
             $res_array["posts"] = $res;
-            $this->json_return(1, $res_array);
+//            $this->json_return(1, $res_array);
+            die(json_encode($res_array));
 
         } else {
-            $res_array["detail"] = "没有文章";
-            $this->json_return(0, $res_array);
+            $res_array["posts"] = "没有文章";
+//            $this->json_return(0, $res_array);
+            die(json_encode($res_array));
+
+
         }
 
     }
