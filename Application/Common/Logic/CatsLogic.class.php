@@ -30,7 +30,7 @@ class CatsLogic extends RelationModel
     {
         $map = array();
         $map['cat_id|cat_slug'] = urlencode($id);
-        return D('Cats')->where($map)->relation($relation)->find();
+        return D('Cats')->cache(true)->where($map)->relation($relation)->find();
     }
 
     /**
@@ -94,7 +94,7 @@ class CatsLogic extends RelationModel
     public function getChild($id = 0)
     {
         if ($id) {
-            $info = D('Cats')->where(array("cat_father" => $id))->select();
+            $info = D('Cats')->cache(true)->where(array("cat_father" => $id))->select();
             if ($info != null) return $info;
         }
         return false;

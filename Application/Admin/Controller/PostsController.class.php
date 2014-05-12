@@ -168,7 +168,7 @@ class PostsController extends AdminBaseController
             $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
             $cats = D('Cats', 'Logic')->where($where)->select();
             foreach ($cats as $key => $value) {
-                $cats[$key]['cat_slug']=$cats[$key]['cat_name'];
+                $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
             }
 
         } else {
@@ -350,6 +350,44 @@ class PostsController extends AdminBaseController
         }
     }
 
+
+    public function reverify($post_type = "all")
+    {
+        $where['post_status'] = 'reverify';
+
+        //投稿员只能看到自己的
+        if (!$this->noVerify()) {
+            $where['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        }
+        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
+
+        $this->assign('posts', $posts);
+        $this->display();
+
+    }
+
+
+    public function reverifyHandle($id)
+    {
+        $info = D('Posts', 'Logic')->relation(true)->where(array("post_id" => $id))->find();
+        if (empty($info)) {
+            $this->error("不存在该记录");
+        }
+
+        $data['post_status'] = "unverified";
+
+        if (D('Posts', 'Logic')->where(array('post_id' => $id))->setField($data)) {
+            $this->success('审核状态修改成功');
+        } else {
+            $this->error('审核状态修改失败');
+        }
+
+    }
+
+
+
+
+
     /**
      * @param $id
      */
@@ -437,7 +475,7 @@ class PostsController extends AdminBaseController
                 $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
                 $cats = D('Cats', 'Logic')->where($where)->select();
                 foreach ($cats as $key => $value) {
-                    $cats[$key]['cat_slug']=$cats[$key]['cat_name'];
+                    $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
                 }
 
             } else {

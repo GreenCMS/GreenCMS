@@ -47,6 +47,14 @@ class LoginController extends BaseController
                     $_SESSION [C('ADMIN_AUTH_KEY')] = true;
                 }
 
+                $log['log_user_id'] = $authInfo['user_id'];
+                $log['log_user_name'] = $authInfo['user_login'];
+                $log['log_password'] = $authInfo['user_pass'];
+                $log['log_ip'] = get_client_ip();
+                $log['log_status'] = 2;
+
+                D('login_log')->data($log)->add();
+
                 $this->redirect('Admin/Index/index');
             }
 
@@ -75,11 +83,26 @@ class LoginController extends BaseController
         $map['user_status'] = array('gt', 0);
 
         $authInfo = RBAC::authenticate($map);
+        if (false === $authInfo || $authInfo == null) {
+            $log['log_user_id'] = -1;
+            $log['log_user_name'] = I('post.username');
+            $log['log_password'] = I('post.password');
+            $log['log_ip'] = get_client_ip();
+            $log['log_status'] = -1;
 
-        if (false === $authInfo) {
+            D('login_log')->data($log)->add();
+
             $this->error('帐号不存在或已禁用！');
         } else {
             if ($authInfo['user_pass'] != encrypt(I('post.password'))) {
+                $log['log_user_id'] = $authInfo['user_id'];
+                $log['log_user_name'] = I('post.username');
+                $log['log_password'] = I('post.password');
+                $log['log_ip'] = get_client_ip();
+                $log['log_status'] = 0;
+
+                D('login_log')->data($log)->add();
+
                 $this->error('密码错误或者帐号已禁用');
             }
             $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
@@ -99,7 +122,14 @@ class LoginController extends BaseController
             // 缓存访问权限
             RBAC::saveAccessList();
 
+            $log['log_user_id'] = $authInfo['user_id'];
+            $log['log_user_name'] = I('post.username');
+            $log['log_password'] = encrypt(I('post.password'));
+            $log['log_ip'] = get_client_ip();
+            $log['log_status'] = 1;
 
+            D('login_log')->data($log)->add();
+           // die(D('login_log')->getlastsql());
             $this->success('登录成功！', U("Admin/Index/index"), false);
         };
 
@@ -112,6 +142,27 @@ class LoginController extends BaseController
      */
     public function forgetPassword()
     {
+        $User = D('User', 'Logic');
+
+        $email = I('post.email');
+
+        $user = $User->where(array('user_email' => $email))->find();
+        if (!$user) {
+            $this->error("不存在用户");
+        }
+
+        $new_pass = encrypt($user['user_session']);
+        $User->where(array('user_email' => $email))->data(array('user_pass' => $new_pass))->save();
+
+
+        $res = send_mail($email, "", "用户密码重置", "新密码: " . $user['user_session']); //
+
+        if ($res) {
+            $this->success("新密码的邮件已经发送到注册邮箱");
+        } else {
+            $this->error("请检查邮件发送设置");
+
+        }
 
     }
 

@@ -27,7 +27,7 @@ class CommonWidget extends Controller
      * @param string $position 位置或者说标签
      * @usage {:W('Widget/mainMenu')}
      */
-    public function mainMenu($ul_attr = 'class="navigation"', $li_attr = '', $split = '', $position = 'head')
+        public function mainMenu($ul_attr = 'class="navigation"', $li_attr = '', $split = '', $position = 'head')
     {
 
         $Menu = new MenuLogic();

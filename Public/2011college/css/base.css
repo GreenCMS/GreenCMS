@@ -49,3 +49,30 @@ body {
     color: gray;
     font-size: 12px;
 }
+
+
+
+.breadcrumbs {
+
+     display: inline;
+  }
+
+.breadcrumbs li {
+    list-style: none;
+
+    display: inline;
+    font-size: 15px;
+}
+
+.breadcrumbs li a {
+    display: inline;
+    color: #000000;
+    font-size: 15px;
+    text-decoration: none;
+
+}
+
+.breadcrumbs li a:visited {
+     color: #000000;
+
+}

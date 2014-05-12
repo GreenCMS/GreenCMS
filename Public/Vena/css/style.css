@@ -3311,3 +3311,8 @@ table.default-table tr:last-child td:last-child {
 }
 
 
+li i .icon-angle-right:before{
+    display: none;
+
+}
+

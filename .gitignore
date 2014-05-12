@@ -1,5 +1,6 @@
 /Upload
-
+/Data/Backup
+/Data/Cache
 /Data/DBbackup
 /Data/Log
 Temp
@@ -9,3 +10,6 @@ Temp
 .quarantine
 
 /db_config.php
+/Public/GreenCMS
+
+/Application/Home/View/GreenCMS

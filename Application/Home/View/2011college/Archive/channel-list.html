@@ -20,7 +20,19 @@
 <div class="content content-grey">
     <div class="content-container">
 
-        {:W('Widget/catSidebar',array("cat_id"=>$cat_id,"default_title"=>$title))}
+        <div class="left-nav">
+            <h3>{$children['cat_name']}</h3>
+            <ul>
+
+                <volist name="children['cat_children']" id="cat_children" empty="没有子分类">
+                    <li>
+                        <a href="{$cat_children['cat_children']['cat_id']|getCatURLByID}" title="{$cat_children['cat_children']['cat_name']}"
+                           target="_blank">{$cat_children['cat_children']['cat_name']}</a>
+                    </li>
+                </volist>
+
+            </ul>
+        </div>
         <div class="content-thin content-with-left-nav">
             <div class="title">
                 当前位置：

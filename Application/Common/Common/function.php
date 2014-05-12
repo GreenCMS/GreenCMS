@@ -522,7 +522,7 @@ title="' . $post['post_title'] . '"/></a>';
  * @return string
  */
 function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
-                         $li_attr = '', $separator = ' <li><i class="icon-angle-right"> &gt;&gt; </i></li>'
+                         $li_attr = '', $separator = ' <li> &gt;&gt; </li>'
     , $init = '首页')
 {
 
