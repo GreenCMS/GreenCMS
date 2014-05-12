@@ -11,6 +11,7 @@ namespace Admin\Controller;
 
 
 use Common\Util\Category;
+use Common\Util\GreenPage;
 
 /**
  * Class AccessController
@@ -138,21 +139,21 @@ class AccessController extends AdminBaseController
     {
         $w = htmlspecialchars(trim($_POST ['user_login']));
         $i = D('user')->where(array(
-                                   'user_login' => $w
-                              ))->select();
+            'user_login' => $w
+        ))->select();
         if ($i != '') {
             $this->error('用户名已存在！');
         } else {
             // 组合用户信息并添加
 
             $user = array(
-                'user_login'    => I('post.user_login'),
+                'user_login' => I('post.user_login'),
                 'user_nicename' => I('post.user_nicename'),
-                'user_pass'     => encrypt(I('post.password')),
-                'user_email'    => I('post.user_email'),
-                'user_url'      => I('post.user_url'),
-                'user_intro'    => I('post.user_intro'),
-                'user_status'   => I('post.user_status'),
+                'user_pass' => encrypt(I('post.password')),
+                'user_email' => I('post.user_email'),
+                'user_url' => I('post.user_url'),
+                'user_intro' => I('post.user_intro'),
+                'user_status' => I('post.user_status'),
 
                 // 'logintime'=>time(),
                 // 'loginip'=>get_client_ip(),
@@ -201,8 +202,8 @@ class AccessController extends AdminBaseController
         } else {
 
             $info = D('User')->where(array(
-                                          'user_id' => $aid
-                                     ))->relation(true)->find();
+                'user_id' => $aid
+            ))->relation(true)->find();
 
             if (empty ($info ['user_id'])) {
                 $this->error("不存在该用户ID", U('Admin/Access/index'));
@@ -533,11 +534,11 @@ class AccessController extends AdminBaseController
         }
         $level = $info ['level'] - 1;
         $cat = new Category ('Node', array(
-                                          'id',
-                                          'pid',
-                                          'title',
-                                          'fullname'
-                                     ));
+            'id',
+            'pid',
+            'title',
+            'fullname'
+        ));
         $list = $cat->getList(); // 获取分类结构
         $option = $level == 0 ? '<option value="0" level="-1">根节点</option>' : '<option value="0" disabled="disabled">根节点</option>';
         foreach ($list as $k => $v) {
@@ -549,5 +550,42 @@ class AccessController extends AdminBaseController
         return $info;
     }
 
+
+    public function loginlogclearHandle()
+    {
+
+        if (D('login_log')->delete()) {
+            $this->success("删除成功");
+        } else {
+            $this->error("删除失败");
+
+        }
+
+    }
+
+    public function loginlog()
+    {
+        $page = I('get.page', C('PAGER'));
+
+        $Login_log = D('login_log');
+        $count = $Login_log->count(); // 查询满足要求的总记录数
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $log = $Login_log->limit($limit)->select();
+
+        }
+
+
+        $this->assign('pager_bar', $pager_bar);
+
+        $this->assign('log', $log);
+
+        $this->display();
+
+
+    }
 
 }
