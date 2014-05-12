@@ -17,7 +17,7 @@ function upgrade_20140420_to_20140421()
 }
 
 
-function upgrade_20140501_to_20140502()
+function upgrade_20140501_to_20140512()
 {
     $db_prefix = C('db_prefix');
     $Model = new \Think\Model();
