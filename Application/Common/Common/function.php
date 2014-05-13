@@ -76,7 +76,7 @@ function is_empty($test, $string = '空')
 
 /**
  * 获取设置
- * @param $key key
+ * @param string key
  * @param bool $realtime 是否直接从数据库中，为false时从缓存中取
  * @param string $default 为空时默认值
  * @return mixed|string

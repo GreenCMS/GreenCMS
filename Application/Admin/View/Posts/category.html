@@ -96,9 +96,9 @@
                                         <td style="width:8px;"><input type="checkbox" class="checkboxes" value="1"/>
                                         </td>
                                         <td><a href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}"
-                                                title="{$v.cat_name}">{$v.cat_name}</a></td>
+                                                title="{$v.cat_name}">{$v.cat_name|mb_substr=0,30,"UTF-8"}</a></td>
                                         <td class="hidden-480"><a
-                                                href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">{$v.cat_slug}</a>
+                                                href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">{$v.cat_slug|mb_substr=0,30,"UTF-8"}</a>
                                         </td>
                                         <td>{$v['cat_father']['cat_name']|is_empty} &nbsp;</td>
 

@@ -8,10 +8,12 @@
  */
 
 namespace Home\Controller;
+
 use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
 use Common\Util\GreenPage;
 use Think\Hook;
+
 /**
  * 分类控制器
  * Class CatController

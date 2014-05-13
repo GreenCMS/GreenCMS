@@ -8,6 +8,7 @@
  */
 
 namespace Home\Controller;
+
 use Common\Logic\PostsLogic;
 use Common\Util\File;
 use Common\Util\GreenPage;

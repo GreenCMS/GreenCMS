@@ -399,6 +399,8 @@ CREATE TABLE `{$db_prefix}login_log` (
   `log_password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `log_geo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `log_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `log_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `log_status` smallint(5) DEFAULT NULL,
   PRIMARY KEY (`login_log_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='登录信息记录';
 
