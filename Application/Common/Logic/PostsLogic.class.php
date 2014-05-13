@@ -32,7 +32,7 @@ class PostsLogic extends RelationModel
 
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
 
-        $post_res = D('Posts')->where($info)->relation($relation)->find();
+        $post_res = D('Posts')->cache(APP_Cache)->where($info)->relation($relation)->find();
 
 
         return $post_res;
@@ -76,7 +76,7 @@ class PostsLogic extends RelationModel
         if ($type != 'all') $info['post_type|post_template'] = $type;
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
-        $count = $this->where($info)->count();
+        $count = $this->cache(APP_Cache)->where($info)->count();
         return $count;
     }
 

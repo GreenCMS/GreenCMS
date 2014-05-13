@@ -82,9 +82,9 @@
                                     <th style="width: 8px;"><input type="checkbox"
                                                                    class="group-checkable"
                                                                    data-set="#sample_1 .checkboxes"/></th>
-                                    <th>名称</th>
-                                    <th class="hidden-480">别名</th>
-                                    <th></th>
+                                    <th >名称</th>
+                                    <th  class="hidden-480">别名</th>
+                                    <th    ></th>
                                     <th>查看</th>
                                     <th>操作</th>
 
@@ -96,9 +96,9 @@
                                         <td><input type="checkbox" class="checkboxes" value="1"/></td>
                                         <td class=""><a
                                                 href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}"
-                                                title="{$v.tag_name}">{$v.tag_name}</a></td>
+                                                title="{$v.tag_name}">{$v.tag_name|mb_substr=0,30,"UTF-8"}</a></td>
                                         <td class="hidden-480"><a
-                                                href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}">{$v.tag_slug}</a>
+                                                href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}">{$v.tag_slug|mb_substr=0,30,"UTF-8"}</a>
                                         </td>
                                         <td></td>
                                         <td>

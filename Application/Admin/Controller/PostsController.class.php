@@ -538,7 +538,7 @@ class PostsController extends AdminBaseController
 
 
         $data['cat_name'] = I('post.cat_name');
-        $data['cat_slug'] = I('post.cat_slug');
+        $data['cat_slug'] = urlencode(I('post.cat_slug'));
         $data['cat_father'] = I('post.cat_father');
 
         if ($data['cat_slug'] == '') {
@@ -578,7 +578,7 @@ class PostsController extends AdminBaseController
 
         $Cats = D('Cats');
         $data['cat_name'] = I('post.cat_name');
-        $data['cat_slug'] = I('post.cat_slug');
+        $data['cat_slug'] = urlencode(I('post.cat_slug'));
         $data['cat_father'] = I('post.cat_father');
 
         if ($Cats->where(array('cat_id' => $id))->save($data)) {
@@ -643,14 +643,18 @@ class PostsController extends AdminBaseController
     public function addTagHandle()
     {
         $data['tag_name'] = I('post.tag_name');
-        $data['tag_slug'] = I('post.tag_slug');
+        $data['tag_slug'] = urlencode(I('post.tag_slug'));
 
         if ($data['tag_slug'] == '') {
-            $data['tag_slug'] = $data['tag_name'];
+            $data['tag_slug'] = urlencode( $data['tag_name']) ;
         }
 
         if (D('Tags')->data($data)->add()) {
             $this->success('标签添加成功', U('Admin/Posts/tag'));
+        }else{
+
+            $this->error('标签添加失败，有可能是tag_slug相同');
+
         }
     }
 
@@ -676,7 +680,11 @@ class PostsController extends AdminBaseController
 
         $Tags = D('Tags');
         $data['tag_name'] = I('post.tag_name');
-        $data['tag_slug'] = I('post.tag_slug');
+        $data['tag_slug'] = urlencode(I('post.tag_slug'));
+
+        if ($data['tag_slug'] == '') {
+            $data['tag_slug'] = urlencode( $data['tag_name']) ;
+        }
 
         if ($Tags->where(array('tag_id' => $id))->save($data)) {
 
