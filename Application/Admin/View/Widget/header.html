@@ -34,9 +34,14 @@
                             <span class="arrow"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{:U('Admin/Data/clear')}">缓存清理</a></li>
+                            <control access="Admin/Data/clearAll">
+                                <li><a href="{:U('Admin/Data/clearAll')}">一键缓存清理</a></li>
+                            </control>
 
-                            <li><a href="{:U('Admin/Posts/add')}">文章发布</a></li>
+
+                            <control access="Admin/Posts/add">
+                                <li><a href="{:U('Admin/Posts/add')}">文章发布</a></li>
+                            </control>
 
                             {:hook('Guestbook', 'menu')}
                          </ul>
@@ -49,7 +54,11 @@
                             <span class="arrow"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{:U('Weixin/Index/index')}" target="_blank">进入Weixin模块</a></li>
+                            <control access="Weixin/Index/index">
+                                <li><a href="{:U('Weixin/Index/index')}" target="_blank">进入Weixin模块</a></li>
+                            </control>
+
+
                             <li><a href="{:U('Admin/Index/main')}" target="_blank">进入Home模块</a></li>
                         </ul>
                         <b class="caret-out"></b>

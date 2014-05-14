@@ -8,8 +8,9 @@
  */
 
 namespace Admin\Controller;
-use Common\Util\File;
 
+use Common\Util\File;
+use Common\Event\SystemEvent;
 
 /**
  * Class DataController
@@ -186,7 +187,7 @@ class DataController extends AdminBaseController
                         $imported += $execute;
                         $_SESSION['cacheRestore']['imported'] = $imported;
                         echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>',
-                                               "url"    => U('Admin/Data/restoreData')));
+                            "url" => U('Admin/Data/restoreData')));
                         //, array(randCode() => randCode())
                         exit;
                     }
@@ -557,7 +558,7 @@ class DataController extends AdminBaseController
      */
     public function cache()
     {
-        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON',true));
+        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
         $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
         $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
 
@@ -581,29 +582,29 @@ class DataController extends AdminBaseController
     public function clear()
     {
         $caches = array(
-            "HTMLCache"   => array(
+            "HTMLCache" => array(
                 "name" => "网站HTML缓存文件",
                 "path" => RUNTIME_PATH . "HTML",
                 //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
                 "size" => File::realSize(RUNTIME_PATH . "HTML"),
             ),
-            "HomeCache"   => array(
+            "HomeCache" => array(
                 "name" => "网站缓存文件",
                 "path" => RUNTIME_PATH . "Cache",
                 //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
                 "size" => File::realSize(RUNTIME_PATH . "Cache"),
             ),
-            "HomeData"    => array(
+            "HomeData" => array(
                 "name" => "网站数据库字段缓存文件",
                 "path" => RUNTIME_PATH . "Data",
                 "size" => File::realSize(RUNTIME_PATH . "Data"),
             ),
-            "AdminLog"    => array(
+            "AdminLog" => array(
                 "name" => "网站日志文件",
                 "path" => LOG_PATH,
                 "size" => File::realSize(LOG_PATH),
             ),
-            "AdminTemp"   => array(
+            "AdminTemp" => array(
                 "name" => "网站临时文件",
                 "path" => RUNTIME_PATH . "Temp",
                 "size" => File::realSize(RUNTIME_PATH . "Temp"),
@@ -636,6 +637,14 @@ class DataController extends AdminBaseController
             $this->assign("caches", $caches);
             $this->display();
         }
+    }
+
+
+    public function clearAll()
+    {
+        $SystemEvent = new SystemEvent;
+        $SystemEvent->clearCacheAll();
+        $this->success("清除成功");
     }
 
 
