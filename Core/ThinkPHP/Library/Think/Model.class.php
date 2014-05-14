@@ -1504,8 +1504,14 @@ class Model {
      * @return Model
      */
     public function cache($key=true,$expire=null,$type=''){
-        if(false !== $key)
-            $this->options['cache']  =  array('key'=>$key,'expire'=>$expire,'type'=>$type);
+        if(false !== $key){
+            if($expire==null){
+                $expire=get_opinion("DATA_CACHE_TIME",false);
+            }
+
+             $this->options['cache']  =  array('key'=>$key,'expire'=>$expire,'type'=>$type);
+
+        }
         return $this;
     }
 

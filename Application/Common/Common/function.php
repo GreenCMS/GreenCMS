@@ -97,7 +97,7 @@ function get_opinion($key, $realtime = false, $default = '')
         $res = D('Options')->where(array('option_name' => $key))->find();
 
         if (empty($res)) {
-            return $default;
+             return $default;
         } else {
             S('option_' . $key, $res['option_value']);
             return $res['option_value'];
