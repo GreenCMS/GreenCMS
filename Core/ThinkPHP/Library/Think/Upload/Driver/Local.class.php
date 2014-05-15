@@ -26,6 +26,7 @@ class Local{
     /**
      * 构造函数，用于设置上传根路径
      * @param string $root 根目录
+     * @param null $config
      */
 	public function __construct($root, $config = null){
         $this->rootPath = $root;

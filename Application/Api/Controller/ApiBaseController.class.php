@@ -14,10 +14,12 @@
  * Time: 下午5:59
  */
 namespace Api\Controller;
+
 use Common\Controller\BaseController;
 
 
-class ApiBaseController extends BaseController{
+class ApiBaseController extends BaseController
+{
 
 
 }
