@@ -565,7 +565,7 @@ class AccessController extends AdminBaseController
 
     public function loginlog()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', 20);
 
         $Login_log = D('login_log');
         $count = $Login_log->count(); // 查询满足要求的总记录数
