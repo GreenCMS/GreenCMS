@@ -554,7 +554,7 @@ class AccessController extends AdminBaseController
     public function loginlogclearHandle()
     {
 
-        if (D('login_log')->delete()) {
+        if (D('login_log')->where(1)->delete()) {
             $this->success("删除成功");
         } else {
             $this->error("删除失败");
