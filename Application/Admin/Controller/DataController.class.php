@@ -619,18 +619,21 @@ class DataController extends AdminBaseController
 
         // p($_POST['cache']);die;
         if (IS_POST) {
-            $paths = $_POST ['cache'];
-            foreach ($paths as $path) {
-                if (isset ($caches [$path])) {
-                    $res = File::delAll($caches [$path] ['path'], true);
+
+            if (C('DATA_CACHE_TYPE') == 'File') {
+                $paths = $_POST ['cache'];
+                foreach ($paths as $path) {
+                    if (isset ($caches [$path])) {
+                        $res = File::delAll($caches [$path] ['path'], true);
+                    }
                 }
-                //$Dir->delDirAndFile($caches [$path] ['path']);
+            }else{
+                $SystemEvent = new SystemEvent;
+                $SystemEvent->clearCacheAll();
             }
 
-            /*echo json_encode ( array (
-                    "status" => 1,
-                    "info" => "缓存文件已清除"
-            ) );*/
+
+
             $this->success("清除成功");
         } else {
 

@@ -79,7 +79,7 @@ class SystemEvent
         $Zip = new \ZipArchive();
         $PHPZip = new \Common\Util\PHPZip();
 
-        $file_name = $backup_path .'system_backup-'. date('Ymd').'-'.md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768)) . ".zip";
+        $file_name = $backup_path . 'system_backup-' . date('Ymd') . '-' . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768)) . ".zip";
         $Zip->open($file_name, \ZIPARCHIVE::CREATE);;
 
         foreach ($dir as $value) {
@@ -99,16 +99,26 @@ class SystemEvent
      */
     public function clearCacheAll()
     {
-        $caches = array(
-            RUNTIME_PATH . "HTML",
-            RUNTIME_PATH . "Cache",
-            RUNTIME_PATH . "Data",
-            RUNTIME_PATH . "Temp",
-            RUNTIME_PATH . "~runtime.php",
-        );
-        foreach ($caches as $value) {
-            $this->clearCache($value);
+
+
+        if (C('DATA_CACHE_TYPE') == 'File') {
+
+            $caches = array(
+                RUNTIME_PATH . "HTML",
+                RUNTIME_PATH . "Cache",
+                RUNTIME_PATH . "Data",
+                RUNTIME_PATH . "Temp",
+                RUNTIME_PATH . "~runtime.php",
+            );
+            foreach ($caches as $value) {
+                $this->clearCache($value);
+            }
+        } else {
+            $Cache = new \Think\Cache();
+            $caches = $Cache->connect();
+            $caches->clear();
         }
+
 
         return true;
     }
@@ -223,8 +233,8 @@ class SystemEvent
 
         G('Backup_end');
 
-        $res = array("status"                                       => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) .
-        "个SQL文件。耗时：" . G('Backup_start', 'Backup_end') . "秒", "url" => U('Admin/Data/restore'));
+        $res = array("status" => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) .
+            "个SQL文件。耗时：" . G('Backup_start', 'Backup_end') . "秒", "url" => U('Admin/Data/restore'));
         return $res;
     }
 
