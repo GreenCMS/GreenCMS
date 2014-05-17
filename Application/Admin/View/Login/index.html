@@ -51,10 +51,28 @@
             </div>
         </div>
     </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <div class="input-icon left">
+                <i class="icon-key"></i>
+                <input class="m-wrap" name="vertify" type="text" style="" placeholder="输入下方验证码"/>
+                <span class="help-inline">
+                    <img id="imgVerify" src="{:U('Admin/Login/vertify')}" onclick="fleshVerify();" />
+</span>
+
+            </div>
+
+        </div>
+    </div>
+
     <div class="form-actions">
         <label class="checkbox">
-            <input type="checkbox" name="remember" value="1"/> 记住我
+
+            <input type="checkbox" name="remember" value="1"> 记住我 </input>
         </label>
+
+
         <button id="login-btn" class="btn green pull-right">
             登陆 <i class="m-icon-swapright m-icon-white"></i>
         </button>
@@ -79,7 +97,7 @@
         <div class="controls">
             <div class="input-icon left">
                 <i class="icon-envelope"></i>
-                <input class="m-wrap" type="text" name="email" id="email" placeholder="Email" />
+                <input class="m-wrap" type="text" name="email" id="email" placeholder="Email"/>
             </div>
         </div>
     </div>
@@ -113,6 +131,15 @@
         App.initLogin();
     });
 </script>
+
+<script>
+    function fleshVerify() {
+        //重载验证码
+        document.getElementById('imgVerify').src = '{:U("Admin/Login/vertify")}';
+    }
+    ;
+</script>
+
 
 <!-- END JAVASCRIPTS -->
 </body>

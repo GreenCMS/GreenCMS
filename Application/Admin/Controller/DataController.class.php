@@ -305,9 +305,7 @@ class DataController extends AdminBaseController
             $to = $_SESSION['cacheSendSql']['to'];
             $sum = $_SESSION['cacheSendSql']['count'];
 
-            //$tempstr=$to. "数据库备份" . "网站：<b>" .C('title'). "</b> 数据文件备份";
 
-            // $filesready = explode(',', $files);
 
             $zipOut = "sqlBackup.zip";
             if (File::zip($sqlFiles, $zipOut)) {
@@ -317,33 +315,9 @@ class DataController extends AdminBaseController
             }
 
 
-            //  foreach ($files as $k => $zipFiles) {
-//                 $zipOut = $sum == 1 ? "sqlBackup.zip" : "sqlBackup_" . ($k + 1). ".zip";
-
-            //TODO check here
-            // 	$zipOut = $sum == 1 ? "sqlBackup.zip" : "sqlBackup_{$k}.zip";
-
-
-            //	Log::write('$zipFiles:'.$zipFiles);
-
-            // $MySQLLogic= new \Admin\Logic\MySQLLogic();
-
-            //   if ( $MySQLLogic->zip($zipFiles, $zipOut)) {
-            //  	Log::write('$zipFiles:'.$zipFiles.'//$zipOut:'.$zipOut);
-
-            //TODO is_ok
-            // send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", DB_Backup_PATH .'CUSTOM_20131016_o2Jke_1.sql');//
-            //        send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut);//
-
 
             File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
 
-
-            // echo json_encode(array("status" => 1, "info" => "如果要发送SQL文件卷较大(多)发送时间可能需要几分钟甚至更久，请耐心等待，发送期间请勿刷新本页。SQL打包成{$sum}个zip包，分{$sum}封邮件发出，<font color=\"red\">当前已经发送完第{$k}封邮件</font>", "url" => U('Admin/Data/sendSql', array(randCode() => randCode()))));
-            // unset($_SESSION['cacheSendSql']['files'][$k]);
-            // exit;
-            //    }
-            // }
             $time = time() - $_SESSION['cacheSendSql']['time'];
             unset($_SESSION['cacheSendSql']);
 
@@ -484,10 +458,6 @@ class DataController extends AdminBaseController
     /**
      * cat tag被删除之后完整性不能保证
      */
-    //private
-    /**
-     *
-     */
     function integrity_testing()
     {
 
@@ -499,10 +469,14 @@ class DataController extends AdminBaseController
 
 
     /**
-     *
+     * For Mysql only
      */
     public function repair()
     {
+        if(C('DB_TYPE')!='mysql'&&C('DB_TYPE')!='mysqli'){
+            $this->error('当前数据库类型不被支持');
+        }
+
         $M = M();
         if (IS_POST) {
 

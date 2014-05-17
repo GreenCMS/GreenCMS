@@ -30,6 +30,20 @@ class LoginController extends BaseController
 
     }
 
+    public function vertify()
+    {
+
+        $config = array(
+            'fontSize' => 20,
+             'length' => 4,
+             'useCurve'=>true,
+            'useNoise'=>true,
+        );
+
+
+        $Verify = new \Think\Verify($config);
+        $Verify->entry();
+    }
 
     /**
      *
@@ -67,6 +81,8 @@ class LoginController extends BaseController
      */
     public function index()
     {
+
+
         $this->display();
     }
 
@@ -77,6 +93,13 @@ class LoginController extends BaseController
     {
         // $ipLocation = new IpLocation();
         // $ip_info = $ipLocation->getIpInfo();
+
+        $verify = new \Think\Verify();
+
+        if( !$verify->check(I('post.vertify'))){
+           $this->error("验证码错误");
+        }
+
 
         $map = array();
         $map['user_login'] = I('post.username');
@@ -129,7 +152,7 @@ class LoginController extends BaseController
             $log['log_status'] = 1;
 
             D('login_log')->data($log)->add();
-           // die(D('login_log')->getlastsql());
+            // die(D('login_log')->getlastsql());
             $this->success('登录成功！', U("Admin/Index/index"), false);
         };
 
