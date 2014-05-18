@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <form  id="newrole" method="post">
+                                <div class="form-group">
+                                    <label class="control-label">角色组名称：</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="name" id="name"
+                                               value="{$info.name}"/>
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">状态：</label>
+
+                                    <div class="controls">
+                                        <select name="status" class="large form-control" tabindex="1">
+                                            <if condition="$info.status eq 1">
+                                                <option value="1" selected>启用</option>
+                                                <option value="0">禁用</option>
+                                                <else/>
+                                                <option value="1">启用</option>
+                                                <option value="0" selected>禁用</option>
+                                            </if>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">父级组ID：</label>
+
+                                    <div class="controls">
+                                        <select name="pid" class="large form-control" tabindex="1">
+                                            <option value="-1">无</option>
+                                            {$info.pidOption}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- div class="form-group">
+                                         <label class="control-label">显示排序：</label>
+                                         <div class="controls">
+                                             <input type="text" placeholder="" class="form-control large" name="sort" id="sort" value="{$info.sort}" />
+                                             <span class="help-inline"></span>
+                                         </div>
+                                 </div>
+        -->
+                                <div class="form-group">
+                                    <label class="control-label">描 述：</label>
+
+                                    <div class="controls">
+                                        <textarea name="remark" class="large form-control" rows="3">{$info.remark}</textarea>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="id" value="{$info.id}"/>
+
+                                <div class="form-group success"
+                                     style="font-size:16px;color: red;text-align: left; display:none;">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn blue submit" id="submit"><i class="icon-ok"></i>
+                                        <switch name="action_name">
+                                            <case value="editRole">修改</case>
+                                            <case value="addRole">添加</case>
+                                            <default/>
+                                            添加
+                                        </switch>
+                                    </button>
+                                </div>
+                                <switch name="action_name">
+                                    <case value="editRole"><span id="action" style="display:none;">editRole</span></case>
+                                    <case value="addRole"><span id="action" style="display:none;">addRole</span></case>
+                                    <default/>
+                                    <span id="action" style="display:none;">addRole</span>
+                                </switch>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+<script type="text/javascript" src="__PUBLIC__/share/js/jquery.form.js"></script>
+
+<script>
+    jQuery(document).ready(function () {
+
+      
+
+        var url = '{:U("Admin/Access/$handle")}';
+
+        $(".submit").click(function () {
+            $(".submit").text("添加中，请稍候……");
+            var formObj = $("#newrole");
+            var div = $(".success");
+            formObj.ajaxSubmit({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 1) {
+                        div.fadeIn().html(data.info);
+                        div.fadeOut(3000);
+                        $("#submit").text("添加");
+                        location.href = data.url;
+                    }
+                    else {
+                        div.fadeIn().html(data.info);
+                        div.fadeOut(3000);
+                        $("#submit").text("添加");
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body></html>
