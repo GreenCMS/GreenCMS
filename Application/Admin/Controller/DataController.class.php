@@ -8,8 +8,9 @@
  */
 
 namespace Admin\Controller;
-use Common\Util\File;
 
+use Common\Util\File;
+use Common\Event\SystemEvent;
 
 /**
  * Class DataController
@@ -186,7 +187,7 @@ class DataController extends AdminBaseController
                         $imported += $execute;
                         $_SESSION['cacheRestore']['imported'] = $imported;
                         echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>',
-                                               "url"    => U('Admin/Data/restoreData')));
+                            "url" => U('Admin/Data/restoreData')));
                         //, array(randCode() => randCode())
                         exit;
                     }
@@ -304,9 +305,7 @@ class DataController extends AdminBaseController
             $to = $_SESSION['cacheSendSql']['to'];
             $sum = $_SESSION['cacheSendSql']['count'];
 
-            //$tempstr=$to. "数据库备份" . "网站：<b>" .C('title'). "</b> 数据文件备份";
 
-            // $filesready = explode(',', $files);
 
             $zipOut = "sqlBackup.zip";
             if (File::zip($sqlFiles, $zipOut)) {
@@ -316,33 +315,9 @@ class DataController extends AdminBaseController
             }
 
 
-            //  foreach ($files as $k => $zipFiles) {
-//                 $zipOut = $sum == 1 ? "sqlBackup.zip" : "sqlBackup_" . ($k + 1). ".zip";
-
-            //TODO check here
-            // 	$zipOut = $sum == 1 ? "sqlBackup.zip" : "sqlBackup_{$k}.zip";
-
-
-            //	Log::write('$zipFiles:'.$zipFiles);
-
-            // $MySQLLogic= new \Admin\Logic\MySQLLogic();
-
-            //   if ( $MySQLLogic->zip($zipFiles, $zipOut)) {
-            //  	Log::write('$zipFiles:'.$zipFiles.'//$zipOut:'.$zipOut);
-
-            //TODO is_ok
-            // send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", DB_Backup_PATH .'CUSTOM_20131016_o2Jke_1.sql');//
-            //        send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut);//
-
 
             File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
 
-
-            // echo json_encode(array("status" => 1, "info" => "如果要发送SQL文件卷较大(多)发送时间可能需要几分钟甚至更久，请耐心等待，发送期间请勿刷新本页。SQL打包成{$sum}个zip包，分{$sum}封邮件发出，<font color=\"red\">当前已经发送完第{$k}封邮件</font>", "url" => U('Admin/Data/sendSql', array(randCode() => randCode()))));
-            // unset($_SESSION['cacheSendSql']['files'][$k]);
-            // exit;
-            //    }
-            // }
             $time = time() - $_SESSION['cacheSendSql']['time'];
             unset($_SESSION['cacheSendSql']);
 
@@ -483,10 +458,6 @@ class DataController extends AdminBaseController
     /**
      * cat tag被删除之后完整性不能保证
      */
-    //private
-    /**
-     *
-     */
     function integrity_testing()
     {
 
@@ -498,10 +469,14 @@ class DataController extends AdminBaseController
 
 
     /**
-     *
+     * For Mysql only
      */
     public function repair()
     {
+        if(C('DB_TYPE')!='mysql'&&C('DB_TYPE')!='mysqli'){
+            $this->error('当前数据库类型不被支持');
+        }
+
         $M = M();
         if (IS_POST) {
 
@@ -557,7 +532,7 @@ class DataController extends AdminBaseController
      */
     public function cache()
     {
-        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON',true));
+        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
         $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
         $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
 
@@ -581,29 +556,29 @@ class DataController extends AdminBaseController
     public function clear()
     {
         $caches = array(
-            "HTMLCache"   => array(
+            "HTMLCache" => array(
                 "name" => "网站HTML缓存文件",
                 "path" => RUNTIME_PATH . "HTML",
                 //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
                 "size" => File::realSize(RUNTIME_PATH . "HTML"),
             ),
-            "HomeCache"   => array(
+            "HomeCache" => array(
                 "name" => "网站缓存文件",
                 "path" => RUNTIME_PATH . "Cache",
                 //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
                 "size" => File::realSize(RUNTIME_PATH . "Cache"),
             ),
-            "HomeData"    => array(
+            "HomeData" => array(
                 "name" => "网站数据库字段缓存文件",
                 "path" => RUNTIME_PATH . "Data",
                 "size" => File::realSize(RUNTIME_PATH . "Data"),
             ),
-            "AdminLog"    => array(
+            "AdminLog" => array(
                 "name" => "网站日志文件",
                 "path" => LOG_PATH,
                 "size" => File::realSize(LOG_PATH),
             ),
-            "AdminTemp"   => array(
+            "AdminTemp" => array(
                 "name" => "网站临时文件",
                 "path" => RUNTIME_PATH . "Temp",
                 "size" => File::realSize(RUNTIME_PATH . "Temp"),
@@ -618,24 +593,35 @@ class DataController extends AdminBaseController
 
         // p($_POST['cache']);die;
         if (IS_POST) {
-            $paths = $_POST ['cache'];
-            foreach ($paths as $path) {
-                if (isset ($caches [$path])) {
-                    $res = File::delAll($caches [$path] ['path'], true);
+
+            if (C('DATA_CACHE_TYPE') == 'File') {
+                $paths = $_POST ['cache'];
+                foreach ($paths as $path) {
+                    if (isset ($caches [$path])) {
+                        $res = File::delAll($caches [$path] ['path'], true);
+                    }
                 }
-                //$Dir->delDirAndFile($caches [$path] ['path']);
+            }else{
+                $SystemEvent = new SystemEvent;
+                $SystemEvent->clearCacheAll();
             }
 
-            /*echo json_encode ( array (
-                    "status" => 1,
-                    "info" => "缓存文件已清除"
-            ) );*/
+
+
             $this->success("清除成功");
         } else {
 
             $this->assign("caches", $caches);
             $this->display();
         }
+    }
+
+
+    public function clearAll()
+    {
+        $SystemEvent = new SystemEvent;
+        $SystemEvent->clearCacheAll();
+        $this->success("清除成功");
     }
 
 

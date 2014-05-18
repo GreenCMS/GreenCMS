@@ -30,7 +30,14 @@ class InitHookBehavior extends Behavior
     public function run(&$content)
     {
 
-        if ((C('DB_TYPE') == 'GreenCMS_DB_TYPE')) { //真不知道说什么好。。。
+        /**
+         *  //真不知道说什么好。。。
+         *      这里      原因是tp 不能把tag放在项目配置中，只能放在common中，而common模块先于install 初始化
+         *     so。。。。。
+         *
+         */
+
+        if ((C('DB_TYPE') == 'GreenCMS_DB_TYPE')) {
 
         } else {
             if (isset($_GET['m']) && strtolower($_GET['m']) == 'install') return;

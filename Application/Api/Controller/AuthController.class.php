@@ -21,7 +21,7 @@ class AuthController extends ApiBaseCOntroller
 {
 
 //    public function login()
-    private  function login()//暂不开放
+    private function login() //暂不开放
     {
 
         $map = array();

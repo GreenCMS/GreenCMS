@@ -54,10 +54,11 @@ class AccessEvent
         $MediaController = array_diff(get_class_methods(new \Admin\Controller\MediaController()), $AdminBaseController);
         $UeditorController = array_diff(get_class_methods(new \Admin\Controller\UeditorController()), $AdminBaseController);
         $ToolsController = array_diff(get_class_methods(new \Admin\Controller\ToolsController()), $AdminBaseController);
+        $AddonsController = array_diff(get_class_methods(new \Admin\Controller\AddonsController()), $AdminBaseController);
 
 
         $Controllers = array('IndexController', 'AccessController', 'CustomController', 'DataController'
-        , 'SystemController', 'MediaController', 'UeditorController', 'PostsController', 'ToolsController');
+        , 'SystemController', 'MediaController', 'UeditorController', 'PostsController', 'ToolsController','AddonsController');
 
         foreach ($Controllers as $value) {
             $data = array();

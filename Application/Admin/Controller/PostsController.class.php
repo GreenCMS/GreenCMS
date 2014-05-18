@@ -42,11 +42,13 @@ class PostsController extends AdminBaseController
         if ($cat != '') {
             $post_ids = D('Cats', 'Logic')->getPostsId($cat);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
-            $cat = '关于分类' . $cat . ' 的';
+            $cat_detail=D('Cats', 'Logic')->detail($cat);
+            $cat = '关于分类 ' . $cat_detail['cat_name'] . ' 的';
         } else if ($tag != '') {
             $post_ids = D('Tags', 'Logic')->getPostsId($tag);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
-            $tag = '关于标签' . $tag . ' 的';
+            $tag_detail=D('Tags', 'Logic')->detail($tag);
+            $tag = '关于标签' . $tag_detail['tag_name']  . ' 的';
         } else if ($keyword != '') {
             $key = '关于' . $keyword . ' 的';
 

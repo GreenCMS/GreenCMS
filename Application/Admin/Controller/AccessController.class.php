@@ -554,7 +554,7 @@ class AccessController extends AdminBaseController
     public function loginlogclearHandle()
     {
 
-        if (D('login_log')->delete()) {
+        if (D('login_log')->where(1)->delete()) {
             $this->success("删除成功");
         } else {
             $this->error("删除失败");
@@ -565,7 +565,7 @@ class AccessController extends AdminBaseController
 
     public function loginlog()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', 20);
 
         $Login_log = D('login_log');
         $count = $Login_log->count(); // 查询满足要求的总记录数

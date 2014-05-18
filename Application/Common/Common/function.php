@@ -61,7 +61,7 @@ function is_top($i, $string = '【固顶】')
 
 /**
  * 判断是否为空
- * @param $test判断是否为空
+ * @param $test
  * @param string $string 为空时显示的文字
  */
 function is_empty($test, $string = '空')
@@ -192,12 +192,13 @@ function exist_kv($key)
 
 /**
  * 数组降维
+ * to del
  */
-function array2str($res)
-{
-    $str = join(",", $res);
-    return $str;
-}
+//function array2str($res)
+//{
+//    $str = join(",", $res);
+//    return $str;
+//}
 
 
 /**
@@ -246,11 +247,11 @@ function array_multi2single($array)
 
 
 /**
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  * 功能：检测一个字符串是否是邮件地址格式
-+----------------------------------------------------------
- * @param string $value    待检测字符串
-+----------------------------------------------------------
+ * +----------------------------------------------------------
+ * @param string $value 待检测字符串
+ * +----------------------------------------------------------
  *
  * @return boolean
 +----------------------------------------------------------
@@ -262,14 +263,14 @@ function is_email($value)
 
 
 /**
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  * 功能：剔除危险的字符信息
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  * @param string $val
 +----------------------------------------------------------
  *
  * @return string 返回处理后的字符串
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  */
 function remove_xss($val)
 {
@@ -327,7 +328,7 @@ function remove_xss($val)
 
 /**
  * 处理插件钩子
- * @param string $hook   钩子名称
+ * @param string $hook 钩子名称
  * @param mixed $params 传入参数
  * @return void
  */
@@ -386,9 +387,9 @@ function addons_url($url, $param = array())
 
     /* 基础参数 */
     $params = array(
-        '_addons'     => $addons,
+        '_addons' => $addons,
         '_controller' => $controller,
-        '_action'     => $action,
+        '_action' => $action,
     );
     $params = array_merge($params, $param); //添加额外参数
 
@@ -430,7 +431,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
 
 /**
  * 字符串转换为数组，主要用于把分隔符调整到第二个参数
- * @param  string $str  要分割的字符串
+ * @param  string $str 要分割的字符串
  * @param  string $glue 分割符
  * @return array
  */
@@ -441,7 +442,7 @@ function str2arr($str, $glue = ',')
 
 /**
  * 数组转换为字符串，主要用于把分隔符调整到第二个参数
- * @param  array $arr  要连接的数组
+ * @param  array $arr 要连接的数组
  * @param  string $glue 分割符
  * @return string
  */
@@ -666,7 +667,7 @@ function check_access($access = "")
 
     $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
 
-     if ($accessList[$path[0]][$path[1]][$path[2]] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+    if ($accessList[$path[0]][$path[1]][$path[2]] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
         return true;
     } else {
         return false;
