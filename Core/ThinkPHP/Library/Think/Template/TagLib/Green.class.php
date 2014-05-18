@@ -44,7 +44,7 @@ class Green extends TagLib
 //            'alias' => 'opli'
 //        ),
 
-        'green'         => array()
+        'dump'         => array()
 
 
     );
@@ -55,9 +55,9 @@ class Green extends TagLib
      * @usage  <green>原生php代码</green>
      * @return string
      */
-    public function _green($tag, $content)
+    public function _dump($tag, $content)
     {
-        $parseStr = '<?php ' . $content . ' ?>';
+        $parseStr = '<?php dump(' . $content . ') ?>';
         return $parseStr;
     }
 

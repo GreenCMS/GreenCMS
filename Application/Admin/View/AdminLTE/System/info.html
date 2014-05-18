@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <table class="table table-bordered table-hover" class="tab">
+
+                                <thead>
+                                <tr>
+
+                                    <th class="hidden-480">名称</th>
+                                    <th class="hidden-480">值</th>
+                                    <th class="hidden-480">名称</th>
+                                    <th class="hidden-480">值</th>
+                                </tr>
+                                </thead>
+
+                                <volist name="server_info" id="vo" key="k">
+                                    <php> if($k%2==1) echo "
+                                        <tr>";
+                                    </php>
+                                    <td width="120" align="right">{$key}：</td>
+                                    <td>{$vo}</td>
+                                    <php> if($k%2==0) echo "</tr>";</php>
+                                </volist>
+                                <php>if(count($caches)%2==1) echo '
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    </tr>';
+                                </php>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

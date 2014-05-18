@@ -158,7 +158,18 @@ class LoginController extends BaseController
 
 
     }
+    public function register()
+    {
 
+
+        $this->display();
+
+    }
+
+    public function registerHandle(){
+
+        $this->error("不开放注册");
+    }
 
     /**
      *

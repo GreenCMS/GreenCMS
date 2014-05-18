@@ -588,4 +588,15 @@ class AccessController extends AdminBaseController
 
     }
 
+
+    public function profile($uid){
+
+         $user = D('User', 'Logic')->cache(true)->detail($uid);
+         $this->assign('user', $user);
+        $this->assign('action','用户档案');
+
+        $this->display();
+
+
+    }
 }
