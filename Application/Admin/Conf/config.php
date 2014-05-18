@@ -137,8 +137,8 @@ $config_admin = array(
     'RBAC_NODE_TABLE' => GreenCMS_DB_PREFIX . 'node',
 
 
-//    'DEFAULT_THEME' => "AdminLTE",
-    'DEFAULT_THEME' => "Metronic",
+  'DEFAULT_THEME' => "AdminLTE",
+    //     'DEFAULT_THEME' => "Metronic",
 );
 
 

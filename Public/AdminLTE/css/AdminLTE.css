@@ -1,6 +1,6 @@
-@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic);
+/*@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic);*/
 
-@import url(//fonts.googleapis.com/css?family=Kaushan+Script);
+/*@import url(//fonts.googleapis.com/css?family=Kaushan+Script);*/
 /*! 
  *   AdminLTE v1.2
  *   Author: AlmsaeedStudio.com
@@ -14,7 +14,7 @@
 html,
 body {
   overflow-x: hidden!important;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Microsoft Yahei', sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
   background: #f9f9f9;
@@ -128,7 +128,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Microsoft Yahei', sans-serif;
 }
 /* Page Header */
 .page-header {
@@ -401,7 +401,7 @@ body > .header .logo {
   text-align: center;
   padding: 0 10px;
   width: 220px;
-  font-family: 'Kaushan Script', cursive;
+  font-family: 'Microsoft Yahei', cursive;
   font-weight: 500;
   height: 50px;
   display: block;

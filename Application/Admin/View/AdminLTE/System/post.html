@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <form action="{:U('Admin/System/saveHandle')}" name="change_System"
+                                  method="post">
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label">Feed显示数量</label>
+
+                                    <div class="controls">
+                                        <input type="number" placeholder="" class="form-control large" name="feed_num"
+                                               value="{:get_opinion('feed_num')}"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">每页显示文章数</label>
+
+                                    <div class="controls">
+                                        <input type="number" placeholder="" class="form-control large" name="PAGER"
+                                               value="{:get_opinion('PAGER')}"/>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label">开启Feed订阅功能</label>
+                                    <div class="controls">
+
+                                        <label class="radio">
+
+                                            <switch name="feed_open">
+                                                <case value="1"><input type="radio" name="feed_open"
+                                                                       checked="checked" value="1"/></case>
+                                                <case value="0"><input type="radio" name="feed_open" value="1"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="feed_open"
+                                                       checked="checked" value="1"/>
+                                            </switch>
+                                            是
+
+
+                                        </label>
+
+
+                                        <label class="radio">
+                                            <switch name="feed_open">
+                                                <case value="1"><input type="radio" name="feed_open" value="0"/></case>
+                                                <case value="0"><input type="radio" name="feed_open" checked="checked"
+                                                                       value="0"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="feed_open" checked=
+                                                        value="0"/>
+                                            </switch>
+                                            否
+                                        </label>
+
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label">开启Mobile API</label>
+                                    <div class="controls">
+
+                                        <label class="radio">
+
+                                            <switch name="api_open">
+                                                <case value="1"><input type="radio" name="api_open"
+                                                                       checked="checked" value="1"/></case>
+                                                <case value="0"><input type="radio" name="api_open" value="1"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="api_open"
+                                                       checked="checked" value="1"/>
+                                            </switch>
+                                            是
+
+
+                                        </label>
+
+
+                                        <label class="radio">
+                                            <switch name="api_open">
+                                                <case value="1"><input type="radio" name="api_open" value="0"/></case>
+                                                <case value="0"><input type="radio" name="api_open" checked="checked"
+                                                                       value="0"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="api_open" checked=
+                                                        value="0"/>
+                                            </switch>
+                                            否
+                                        </label>
+
+
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label">开启auto_channel功能</label>
+                                    <div class="controls">
+
+                                        <label class="radio">
+
+                                            <switch name="auto_channel">
+                                                <case value="1"><input type="radio" name="auto_channel"
+                                                                       checked="checked" value="1"/></case>
+                                                <case value="0"><input type="radio" name="auto_channel" value="1"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="auto_channel"
+                                                       checked="checked" value="1"/>
+                                            </switch>
+                                            是
+
+
+                                        </label>
+
+
+                                        <label class="radio">
+                                            <switch name="auto_channel">
+                                                <case value="1"><input type="radio" name="auto_channel" value="0"/></case>
+                                                <case value="0"><input type="radio" name="auto_channel" checked="checked"
+                                                                       value="0"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="auto_channel" checked=
+                                                        value="0"/>
+                                            </switch>
+                                            否
+                                            &nbsp;&nbsp;&nbsp; 需要主题支持
+
+                                        </label>
+
+
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
+                                </div>
+
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

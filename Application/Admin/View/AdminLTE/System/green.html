@@ -35,8 +35,7 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-6">
-
+                <div class="col-md-8">
                     <div class="box box-warning">
                         <div class="box-header">
                             <h3 class="box-title">{$action}</h3>
@@ -45,54 +44,39 @@
                         <div class="box-body">
 
 
-                            <form role="form" action="{:U('Admin/Index/changePassHandle')}"  method="post" >
-
-
+                            <form action="{:U('Admin/System/saveHandle')}" name="change_System" role="form"
+                                  method="post">
                                 <div class="form-group">
-                                    <label class="control-label">原密码</label>
+                                    <label class="control-label">系统build</label>
 
                                     <div class="controls">
-                                        <input type="password" placeholder="" class="form-control large" name="opassword"
-                                               id="opassword"/>
-                                        <span class="help-inline"></span>
+                                        <input type="text" placeholder="" class="form-control large" name="software_build"
+                                               value="{:get_opinion('software_build')}"/>
+                                        <span class="help-inline">请勿修改,会影响自动升级</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">系统版本</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="software_version"
+                                               value="{:get_opinion('software_version')}"/>
+                                        <span class="help-inline">请勿修改</span>
                                     </div>
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label class="control-label">新密码</label>
 
-                                    <div class="controls">
-                                        <input type="password" placeholder="" class="form-control large" name="password"
-                                               id="password"/>
-                                        <span class="help-inline"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">确认新密码</label>
-
-                                    <div class="controls">
-                                        <input type="password" placeholder="" class="form-control large" name="rpassword"
-                                               id="rpassword"/>
-                                        <span class="help-inline"></span>
-                                    </div>
-                                </div>
                                 <div class="form-actions">
-
-                                    <button type="submit" class="btn btn-primary">修改</button>
-
-
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
                                 </div>
                             </form>
 
 
                         </div>
-                        <!-- /.box-body -->
                     </div>
-
-
                 </div>
-
             </div>
 
 

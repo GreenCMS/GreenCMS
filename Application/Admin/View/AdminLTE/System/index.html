@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <form role="form" action="{:U('Admin/System/saveHandle')}" name="change_System"
+                                  method="post">
+                                <div class="form-group">
+                                    <label class="control-label">网站地址</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="site_url"
+                                               value="{:get_opinion('site_url')}"/>
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">网站标题</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="title"
+                                               value="{:get_opinion('title')}"/>
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">网站关键词</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="keywords"
+                                               value="{:get_opinion('keywords')}"/>
+                                        <span class="help-inline">多个关键词用英文逗号,分隔</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">网站描述信息</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="description"
+                                               value="{:get_opinion('description')}"/>
+                                        <span class="help-inline">一般是一句话描述你的网站</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">网站底部信息</label>
+
+                                    <div class="controls">
+
+                                        <textarea class="form-control large"   name="foot"
+
+                                                  rows="6">{:get_opinion('foot')}</textarea>
+                                        <span class="help-inline">版权信息、统计代码</span>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">关于我们</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large"
+                                               name="widget_about_us"
+                                               value="{:get_opinion('widget_about_us')}"/>
+                                        <span class="help-inline">首页右侧</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>
