@@ -29,7 +29,7 @@ class TagsLogic extends RelationModel
     {
         $map = array();
         $map['tag_id|tag_slug'] = urlencode($id);
-        return D('Tags')->cache(APP_Cache)->where($map)->relation($relation)->find();
+        return D('Tags')->where($map)->relation($relation)->find();
     }
 
     /**

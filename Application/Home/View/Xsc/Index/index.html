@@ -27,11 +27,11 @@
 <div id="content" class="clearfix">
 
 <div id="slide" class="news-slide w2 ml20 fl">
-    <a href="#" ><img
+    <a href="#"><img
             src="__PUBLIC__/Xsc/pictures/article/140303143837_9664.png" alt="" width="725" height="357"/></a>
-    <a href="#" ><img
+    <a href="#"><img
             src="__PUBLIC__/Xsc/pictures/article/140303141132_9683.png" alt="" width="725" height="357"/></a>
-    <a href="#" ><img
+    <a href="#"><img
             src="__PUBLIC__/Xsc/pictures/article/140303084637_8360.jpg" alt="" width="725" height="357"/></a>
 </div>
 <div class="right_box">
@@ -70,7 +70,7 @@
 
                 <div class="left_half">
                     <div class="header">
-                        <a href="{:getCatURLByID(8)}" >更多+</a>
+                        <a href="{:getCatURLByID(8)}">更多+</a>
 
                         <div class="tip">公告通知</div>
                     </div>
@@ -97,7 +97,7 @@
 
                 <div class="left_half">
                     <div class="header">
-                        <a href="{:getCatURLByID(10)}" >更多+</a>
+                        <a href="{:getCatURLByID(10)}">更多+</a>
 
                         <div class="tip">学院风采</div>
                     </div>
@@ -125,22 +125,25 @@
 
                     <div class="tip">链接</div>
                 </div>
-                <div id="c3_right_2" class="body">
+                <div id="c3_right_2" class="body" style="padding-top: 10px;">
 
-                    <a href=""
-                       >
-                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/zelb.png" width="264" height="60" border="0"></a>
-
-
-                    <a href=""
-                       >
-                        <img src="__PUBLIC__/Xsc/pictures/tgdl.png" width="264" height="60" border="0"></a>
+                    <a href="{:U('Zel/Index/index')}">
+                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/zelb.png" width="145"
+                             height="55" border="0"></a>
 
 
-                    <a href=""
-                       >
-                        <img src="__PUBLIC__/Xsc/pictures/hyb.png" width="264" height="60" border="0"></a>
+                    <a href="{:U('Admin/Index/index')}">
+                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/tgdl.png" width="145" height="55"
+                             border="0"></a>
 
+
+                    <a href="{:getSingleURLByID(9,'page')}">
+                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/hyb.png" width="145" height="55"
+                             border="0"></a>
+
+                    <a href="">
+                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/hyb.png" width="145" height="55"
+                             border="0"></a>
 
                 </div>
             </div>
@@ -154,7 +157,7 @@
             <div class="left">
                 <div class="left_half">
                     <div class="header">
-                        <a href="{:getCatURLByID(11)}" > 更多+</a>
+                        <a href="{:getCatURLByID(11)}"> 更多+</a>
 
                         <div class="tip">理论前沿</div>
                     </div>
@@ -177,7 +180,7 @@
                 </div>
                 <div class="left_half">
                     <div class="header">
-                        <a href="{:getCatURLByID(12)}" >更多+</a>
+                        <a href="{:getCatURLByID(12)}">更多+</a>
 
                         <div class="tip">先进典型</div>
                     </div>
@@ -203,7 +206,7 @@
 
             <div id="c4_right">
                 <div id="c4_right_1">
-                    <a href="#" >
+                    <a href="#">
                         更多+</a>
 
                     <div class="tip">外部链接</div>
@@ -216,19 +219,19 @@
 
                         <ul>
                             <li><a href="#"
-                                   >
+                                    >
                                 投稿登陆</a></li>
 
                             <li><a href="#"
-                                   >
+                                    >
                                 奥蓝系统管理版</a></li>
 
                             <li><a href="#"
-                                   >
+                                    >
                                 奥蓝系统学生版</a></li>
 
                             <li><a href="#"
-                                   >
+                                    >
                                 下载专区</a></li>
 
 
@@ -237,107 +240,27 @@
                     </div>
 
                     <div style="text-align: center">
-                        <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)" size="1" name="mlink">
+                        <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                                size="1"
+                                name="mlink">
                             <option>---|校内链接|---</option>
 
-                            <option value="http://pharm.njtech.edu.cn/">药学院</option>
 
-                            <option value="http://life-phar.njtech.edu.cn/">生物与制药工程学院</option>
+                            <optionfriendlist cat="校内链接" ></optionfriendlist>
 
-                            <option value="http://jgzz.njtech.edu.cn">校部机关党委</option>
 
-                            <option value="http://www.njtech.edu.cn">南京工业大学</option>
-
-                            <option value="http://nrcb.njtech.edu.cn/">国家生化中心</option>
-
-                            <option value="http://www.njtech.edu.cn/xb/home.htm">学报编辑部</option>
-
-                            <option value="http://jjc.njtech.edu.cn/">基建处</option>
-
-                            <option value="http://auditing.njtech.edu.cn/">审计处</option>
-
-                            <option value="http://db.njtech.edu.cn/">党委办公室</option>
-
-                            <option value="http://kjc.njtech.edu.cn/web/index.aspx">科技处</option>
-
-                            <option value="http://bwc.njtech.edu.cn/">保卫处</option>
-
-                            <option value="http://hqc.njtech.edu.cn/">后勤管理处</option>
-
-                            <option value="http://hqjt.njtech.edu.cn/">后勤服务集团</option>
-
-                            <option value="http://cqt.njtech.edu.cn/">常青藤</option>
-
-                            <option value="http://ltx.njtech.edu.cn/">离退休工作处</option>
-
-                            <option value="http://dag.njtech.edu.cn/">档案馆</option>
-
-                            <option value="http://lib.njtech.edu.cn/">图书馆</option>
-
-                            <option value="http://network.njtech.edu.cn/">信息中心</option>
-
-                            <option value="http://tzb.njtech.edu.cn/">党委统战部</option>
-
-                            <option value="http://cqt.njtech.edu.cn/jw/">校纪委</option>
-
-                            <option value="http://cwc.njtech.edu.cn/">计划财务处</option>
-
-                            <option value="http://ico.njtech.edu.cn/">国际合作处</option>
-
-                            <option value="http://gh.njtech.edu.cn/">校工会</option>
-
-                            <option value="http://tw.njtech.edu.cn/">校团委</option>
-
-                            <option value="http://xsc.njtech.edu.cn/xsc2/index.asp">学生处</option>
-
-                            <option value="http://zzb.njtech.edu.cn/">党委组织部</option>
-
-                            <option value="http://xcb.njtech.edu.cn/">党委宣传部</option>
-
-                            <option value="http://wzc.njtech.edu.cn/">资产与实验室管理处</option>
-
-                            <option value="http://ghc.njtech.edu.cn/">规划发展处</option>
-
-                            <option value="http://xb.njtech.edu.cn/">校长办公室</option>
-
-                            <option value="http://jwc.njtech.edu.cn/index.asp">教务处</option>
-
-                            <option value="http://rsc.njtech.edu.cn/">人事处</option>
-
-                            <option value="http://www.njtech.edu.cn">学校主页</option>
-
-                            <option value="http://gra.njtech.edu.cn/">研究生部</option>
-
-                            <option value="http://www.njtech.edu.cn/jgy/index.htm">经济管理学院</option>
-
-                            <option value="http://cce.njtech.edu.cn/">土木工程学院</option>
-
-                            <option value="http://art.njtech.edu.cn/3/main.htm">艺术设计学院</option>
-
-                            <option value="http://zdh.njtech.edu.cn/">自动化学院</option>
-
-                            <option value="http://hgy.njtech.edu.cn">化学化工学院</option>
 
                         </select>
 
-                         <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)" size="1" name="mlink2">
+                        <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                                size="1"
+                                name="mlink2">
                             <option>---|校外链接|---</option>
 
-                            <option value="http://www.moe.edu.cn">国家教育部门户网站</option>
 
-                            <option value="http://www.chinaedu.edu.cn">中国教育信息网</option>
+                            <optionfriendlist cat="校外链接" ></optionfriendlist>
 
-                            <option value="http://www.eol.cn">中国教育在线</option>
 
-                            <option value="http://www.chsi.com.cn">中国高等教育学生信息网</option>
-
-                            <option value="http://www.ec.js.edu.cn">江苏教育厅网站</option>
-
-                            <option value="http://xgc.nju.edu.cn">南京大学学生工作处</option>
-
-                            <option value="http://xsc.seu.edu.cn">东南大学学生工作处</option>
-
-                            <option value="http://3434.njnu.edu.cn">南京师范大学学生工作处</option>
 
                         </select>
 

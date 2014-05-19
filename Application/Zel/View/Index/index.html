@@ -1,0 +1,325 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>{:get_opinion('title')} </title>
+    <meta name="description" content="{:get_opinion('keywords')}"/>
+
+    <include file="Public:head"/>
+
+
+</head>
+<body>
+{:W('Common/mainMenu')}
+
+<php>
+    $xgxw = D('Cats', 'Logic')->getPostsByCat(7, 8);
+    $xwdt = D('Cats', 'Logic')->getPostsByCat(27, 8);
+
+    $xyfc = D('Cats', 'Logic')->getPostsByCat(10, 6);
+    $llqy = D('Cats', 'Logic')->getPostsByCat(11, 6);
+    $xjdx = D('Cats', 'Logic')->getPostsByCat(12, 6);
+
+    $slider = D('Tags', 'Logic')->getPostsByTag(3, 3);
+
+
+</php>
+
+
+<table width="924" height="690" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+
+
+{:W('Widget/siderbar1')}
+
+
+<td valign="top" bgcolor="#F8E4E4"><br>
+<table width="670" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td width="30" align="right"><img src="__PUBLIC__/Xsc/zel/image/zou_t_l.jpg" width="30" height="56"></td>
+        <td width="620" background="__PUBLIC__/Xsc/zel/image/zou_t_c.jpg"><span class="STYLE1">新闻动态</span></td>
+        <td><img src="__PUBLIC__/Xsc/zel/image/zou_t_r.jpg" width="30" height="56"></td>
+    </tr>
+</table>
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td width="660" height="21" background="__PUBLIC__/Xsc/zel/image/zoutitle_top.gif">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="200" align="center" valign="top" background="__PUBLIC__/Xsc/zel/image/zoutitle_line.gif">
+            <table width="95%" border="0" align="center" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td width="29%" align="center" valign="top">
+                        <script type=text/javascript>
+                            var focus_width = 260
+                            var focus_height = 207
+                            var text_height = 20
+                            var swf_height = focus_height + text_height
+
+                            var pics = 'myEditor/uploadfile/20121023123706518.jpg|myEditor/uploadfile/20120307105532486.jpg|myEditor/uploadfile/20111214142913957.jpg|myEditor/uploadfile/20110608135140418.jpg|myEditor/uploadfile/20110516110026900.jpg'
+                            var links = 'view_1.asp?id=3595|view_1.asp?id=2954|view_1.asp?id=2889|view_1.asp?id=2261|view_1.asp?id=1995'
+                            var texts = '自动化学院举办周恩来班创建交流座谈会|我校周恩来班参加纪念总理诞辰114周年活动|我校举办创建“周恩来班”2010级中期检查暨2011级启动仪式|我校举办“周恩来班”创建推进暨经验交流会|我校2011年“五&#8226;四”表彰大会暨工大青年庆祝建党九'
+
+                            document.write('<object ID="focus_flash" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cabversion=6,0,0,0" width="' + focus_width + '" height="' + swf_height + '">');
+                            document.write('<param name="allowScriptAccess" value="sameDomain"><param name="movie" value="pixviewer.swf"><param name="quality" value="high"><param name="bgcolor" value="E7E7E7">');
+                            document.write('<param name="menu" value="false"><param name=wmode value="transparent">');
+                            document.write('<param name="FlashVars" value="pics=' + pics + '&links=' + links + '&texts=' + texts + '&borderwidth=' + focus_width + '&borderheight=' + focus_height + '&textheight=' + text_height + '">');
+                            document.write('<embed ID="focus_flash" src="pixviewer.swf" wmode="transparent" FlashVars="pics=' + pics + '&links=' + links + '&texts=' + texts + '&borderwidth=' + focus_width + '&borderheight=' + focus_height + '&textheight=' + text_height + '" menu="false" bgcolor="E7E7E7" quality="high" width="' + focus_width + '" height="' + focus_height + '" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"/>');
+                            document.write('</object>');
+                        </script>
+                    </td>
+                    <td width="71%" align="center" valign="top">
+                        <table width="100%" border="0" cellpadding="1" cellspacing="1">
+
+
+                            <volist name="xwdt" id="v">
+                                <tr>
+                                    <td width="100%" height="22">
+                                        ·<a href="{:U('Zel/Post/single',array('info' => $v['post_id']))}"
+                                            target="_blank" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
+                                        <font color=#666666>[{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}]</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="1" background="__PUBLIC__/Xsc/zel/image/diandian.gif"></td>
+                                </tr>
+
+
+                            </volist>
+
+
+                        </table>
+                        <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="67">&nbsp;</td>
+                                <td align="right">
+                                    <a href="{:U('Zel/Cat/detail', array('info' => 27))}" target="_blank"><img
+                                            src="__PUBLIC__/Xsc/zel/image/more2.gif" hspace="3" vspace="3"
+                                            border="0"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="21" background="__PUBLIC__/Xsc/zel/image/zoutitle_bottom.gif">&nbsp;</td>
+    </tr>
+</table>
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td width="660" height="18" background="__PUBLIC__/Xsc/zel/image/zoutitle_top.gif">&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" background="__PUBLIC__/Xsc/zel/image/zoutitle_line.gif">
+            <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td height="220" align="center" valign="top">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="304" height="46" background="__PUBLIC__/Xsc/zel/image/zouenlai_t.jpg">
+                                    <table width="206" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td width="32">&nbsp;</td>
+                                            <td width="174" class="STYLE1">活动开展</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="98%" border="0" cellpadding="1" cellspacing="1">
+
+
+                            <volist name="xgxw" id="v">
+                                <tr>
+                                    <td width="100%" height="22">
+                                        ·<a href="{:U('Zel/Post/single',array('info' => $v['post_id']))}"
+                                            target="_blank" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,17,"UTF-8"}</a>
+                                        <font color=#666666>[{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}]</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="1" background="__PUBLIC__/Xsc/zel/image/diandian.gif"></td>
+                                </tr>
+
+
+                            </volist>
+
+                        </table>
+                        <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="67">&nbsp;</td>
+                                <td align="right">
+                                    <a href="{:U('Zel/Cat/detail', array('info' => 8))}" target="_blank"><img
+                                            src="__PUBLIC__/Xsc/zel/image/more2.gif" hspace="3" vspace="3"
+                                            border="0"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td height="220" align="center" valign="top">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="304" height="46" background="__PUBLIC__/Xsc/zel/image/zouenlai_t.jpg">
+                                    <table width="206" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td width="32">&nbsp;</td>
+                                            <td width="174" class="STYLE1">风采展示</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="98%" border="0" cellpadding="1" cellspacing="1">
+
+
+                            <volist name="xgxw" id="v">
+                                <tr>
+                                    <td width="100%" height="22">
+                                        ·<a href="{:U('Zel/Post/single',array('info' => $v['post_id']))}"
+                                            target="_blank" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,17,"UTF-8"}</a>
+                                        <font color=#666666>[{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}]</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="1" background="__PUBLIC__/Xsc/zel/image/diandian.gif"></td>
+                                </tr>
+
+
+                            </volist>
+
+                        </table>
+
+                        <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="67">&nbsp;</td>
+                                <td align="right">
+                                    <a href="{:U('Zel/Cat/detail', array('info' => 8))}" target="_blank"><img
+                                            src="__PUBLIC__/Xsc/zel/image/more2.gif" hspace="3" vspace="3"
+                                            border="0"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="21" background="__PUBLIC__/Xsc/zel/image/zoutitle_bottom.gif">&nbsp;</td>
+    </tr>
+</table>
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td width="660" height="18" background="__PUBLIC__/Xsc/zel/image/zoutitle_top.gif">&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" background="__PUBLIC__/Xsc/zel/image/zoutitle_line.gif">
+            <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td height="220" align="center" valign="top">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="304" height="46" background="__PUBLIC__/Xsc/zel/image/zouenlai_t.jpg">
+                                    <table width="206" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td width="32">&nbsp;</td>
+                                            <td width="174" class="STYLE1">理论园地</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="98%" border="0" cellpadding="1" cellspacing="1">
+
+
+                            <volist name="xgxw" id="v">
+                                <tr>
+                                    <td width="100%" height="22">
+                                        ·<a href="{:U('Zel/Post/single',array('info' => $v['post_id']))}"
+                                            target="_blank" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,17,"UTF-8"}</a>
+                                        <font color=#666666>[{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}]</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="1" background="__PUBLIC__/Xsc/zel/image/diandian.gif"></td>
+                                </tr>
+
+
+                            </volist>
+
+                        </table>
+                        <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="67">&nbsp;</td>
+                                <td align="right">
+                                    <a href="{:U('Zel/Cat/detail', array('info' => 8))}" target="_blank"><img
+                                            src="__PUBLIC__/Xsc/zel/image/more2.gif" hspace="3" vspace="3"
+                                            border="0"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td height="220" align="center" valign="top">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="304" height="46" background="__PUBLIC__/Xsc/zel/image/zouenlai_t.jpg">
+                                    <table width="206" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td width="32">&nbsp;</td>
+                                            <td width="174" class="STYLE1">资料下载</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="98%" border="0" cellpadding="1" cellspacing="1">
+
+
+                            <volist name="xgxw" id="v">
+                                <tr>
+                                    <td width="100%" height="22">
+                                        ·<a href="{:U('Zel/Post/single',array('info' => $v['post_id']))}"
+                                            target="_blank" title="{$v['post_title']}">{$v['post_title']|strip_tags|mb_substr=0,17,"UTF-8"}</a>
+                                        <font color=#666666>[{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}]</font>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="1" background="__PUBLIC__/Xsc/zel/image/diandian.gif"></td>
+                                </tr>
+
+
+                            </volist>
+
+                        </table>
+                        <table width="98%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td width="67">&nbsp;</td>
+                                <td align="right">
+                                    <a href="{:U('Zel/Cat/detail', array('info' => 8))}" target="_blank"><img
+                                            src="__PUBLIC__/Xsc/zel/image/more2.gif" hspace="3" vspace="3"
+                                            border="0"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="21" background="__PUBLIC__/Xsc/zel/image/zoutitle_bottom.gif">&nbsp;</td>
+    </tr>
+</table>
+</td>
+</tr>
+</table>
+
+
+<include file="Public:footer"/>
+
+
+</body>
+</html>

@@ -66,7 +66,7 @@ function is_top($i, $string = '【固顶】')
  */
 function is_empty($test, $string = '空')
 {
-    if ($test == '') {
+     if ($test == ''|$test==null ||empty($test)) {
         echo $string;
     } else {
         echo $test;
