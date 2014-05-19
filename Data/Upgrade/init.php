@@ -31,10 +31,10 @@ function upgrade_20140501_to_20140512()
 }
 
 
-function upgrade_20140517_to_20140520()
+function upgrade_20140517_to_20140519()
 {
 
     //删除旧版Admin
-
+//下次再做
 
 }
