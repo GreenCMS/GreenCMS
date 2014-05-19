@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <div class="portlet-body">
+                                <div class="clearfix">
+                                    <div class="btn-group">
+                                        <a href="{:U('Admin/Custom/create')}">
+                                            <button type="submit" class="btn green" name="postAdd" value='1'>
+                                                <i class="icon-plus"></i> 创建插件
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="{:U('Admin/Custom/hooks')}">
+                                            <button type="submit" class="btn red" name="hooks" value='1'>
+                                                <i class="icon-plus"></i> 钩子管理
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered table-hover" class="tab">
+                                <tr>
+                                    <th class="hidden-480">名称</th>
+                                    <th class="hidden-480">标识</th>
+                                    <th class="hidden-480">描述</th>
+                                    <th class="hidden-480">状态</th>
+                                    <th class="hidden-480">作者</th>
+                                    <th class="hidden-480">版本</th>
+                                    <th class="hidden-480">操作</th>
+                                </tr>
+                                <volist name="list" id="vo">
+                                    <tr>
+                                        <td class="hidden-480">{$vo.title}</td>
+                                        <td class="hidden-480">{$vo.name}</td>
+                                        <td class="col-md-4">{$vo.description}</td>
+                                        <td class="hidden-480"> {$vo.status|int_to_status}</td>
+                                        <td class="hidden-480">{$vo.author}</td>
+                                        <td class="hidden-480">{$vo.version}</td>
+                                        <td class="hidden-480">
+                                            <a href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>|
+                                            <eq name="vo.status" value="1">
+                                                <a href='javascript:;' onclick="off({$vo.id})">禁用</a>|
+                                                <else/>
+                                                <a href='javascript:;' onclick="on({$vo.id})">启用</a>|
+                                            </eq>
+                                            <eq name="vo.status" value="99">
+                                                <a href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
+                                                <else/>
+                                                <a href="{:U('Admin/Custom/uninstall',array('id'=>$vo['id']) )}">卸载</a>
+                                            </eq>
+                                        </td>
+                                    </tr>
+                                </volist>
+                            </table>
+                            <div>
+                                <ul  class="pagination"> {$page}</ul>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

@@ -33,7 +33,114 @@
 
         <!-- Main content -->
         <section class="content">
-            empty
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">系统通知</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <div class="well">
+                                <h4>系统发布</h4>
+                                GreenCMS_v2.1.0519已发布
+                            </div>
+                            <div class="well well-large">
+                                <h4>QQ讨论</h4>
+                                群号：123085170
+
+                                <h4>服务支持</h4>
+                                Email：zts1993@gmail.com
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">用户信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <img src="__PUBLIC__/baracktocat.jpg" alt=""/>
+
+                            <h1>{$user.user_name}</h1>
+
+                            <p>{$user.user_intro}</p>
+
+                            <p><a href="{$user_url}" target="_blank">{$user.user_url}</a>
+                            </p>
+
+                            <p> {$user.user_nicename} </p>
+
+                            <p> {$user.user_email} </p>
+
+                            <p>{$user.user_registered} </p>
+
+                            <!--end span8-->
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">其他信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            {:hook('AdminIndex', 'Widget')}
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">关于我们</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <div class="well">
+                                <h4>GreenStudio团队</h4>
+                                <a href="http://green.njut.asia">绿荫工作室主页</a>
+                                <h4>核心开发人员</h4>
+                                <a href="http://weibo.com/zts1993">OCTOCAT_Z</a>&nbsp;&nbsp;&nbsp;
+                                <a href="http://weibo.com/541019086love">看什么看没看过程序猿啊</a>
+
+                            </div>
+                            <div class="well">
+                                <h4>联系方式</h4>
+                                邮箱：<a href="mailto:admin@njut.asia">admin@njut.asia</a>
+                            </div>
+                            <div class="well">
+                                <h4>Github</h4>
+                                Github：<a href="https://github.com/GreenCMS/greencms">https://github.com/zts1993/greencms</a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
         </section>
         <!-- /.content -->

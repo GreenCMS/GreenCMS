@@ -110,7 +110,7 @@ class GuestbookAddon extends Addon
             echo "
                     <li><a href='" .
                 addons_url('Guestbook://Guestbook/manage') .
-                "'>留言板</a></li>
+                "'><h4>留言板</h4></a></li>
             ";
         }
     }

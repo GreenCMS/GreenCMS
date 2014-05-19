@@ -44,44 +44,50 @@
                         <div class="box-body">
 
 
-                            <form action="{:U('Admin/System/saveHandle')}" name="change_System" role="form"
+                            <form action="{:U('Admin/Posts/editCategoryHandle', array('id' => $cat['cat_id']))}"
                                   method="post">
                                 <div class="form-group">
-                                    <label class="control-label">系统build</label>
+                                    <label class="control-label">名称</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="software_build"
-                                               value="{:get_opinion('software_build')}"/>
-                                        <span class="help-inline">请勿修改,会影响自动升级</span>
+                                        <input type="text" placeholder="名称" class="form-control large" name="cat_name"
+                                               value="{$cat.cat_name}"/>
+                                        <span class="help-inline">这将是它在站点上显示的名字。</span>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
-                                    <label class="control-label">系统版本</label>
+                                    <label class="control-label">别名</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="software_version"
-                                               value="{:get_opinion('software_version')}"/>
-                                        <span class="help-inline">请勿修改</span>
+                                        <input type="text" placeholder="别名" class="form-control large" name="cat_slug"
+                                               value="{$cat.cat_slug}"/>
+                                        <span class="help-inline">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span>
                                     </div>
                                 </div>
-
-
                                 <div class="form-group">
-                                    <label class="control-label">后台主题</label>
+                                    <label class="control-label">父级</label>
 
                                     <div class="controls">
-                                        <select class="form-control large"   tabindex="1" name="DEFAULT_ADMIN_THEME" id="DEFAULT_ADMIN_THEME">
-                                            {$DEFAULT_ADMIN_THEME}
 
+                                        <select class="small form-control" tabindex="1" name="cat_father">
+                                            <option value="0">无</option>
+                                            <foreach name="cats" item="v">
+                                                <option value="{$v.cat_id}"
+
+                                                <php>
+                                                    if($v['cat_id']==$cat['cat_father'])
+                                                    echo 'selected="selected"';
+
+                                                </php>
+
+
+                                                >{$v.cat_name}</option>
+                                            </foreach>
                                         </select>
-                                        <span class="help-inline">AdminLTE bug较多，仅支持ie9以上</span>
                                     </div>
                                 </div>
-
-
                                 <div class="form-actions">
-                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> 修改</button>
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i> {$action}</button>
                                 </div>
                             </form>
 

@@ -136,8 +136,9 @@ $config_admin = array(
     'RBAC_ACCESS_TABLE' => GreenCMS_DB_PREFIX . 'access',
     'RBAC_NODE_TABLE' => GreenCMS_DB_PREFIX . 'node',
 
+    'DEFAULT_THEME' => get_opinion("DEFAULT_ADMIN_THEME", true, "Metronic"),
 
-  'DEFAULT_THEME' => "AdminLTE",
+    // 'DEFAULT_THEME' => "AdminLTE",
     //     'DEFAULT_THEME' => "Metronic",
 );
 
