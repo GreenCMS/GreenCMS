@@ -1,16 +1,36 @@
-
 <!-- Bootstrap -->
 <script src="__PUBLIC__/AdminLTE/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="__PUBLIC__/AdminLTE/js/AdminLTE/app.js" type="text/javascript"></script>
 
-<script LANGUAGE=javascript>
-    function  a_confirm() {
+<!-- iCheck -->
+<script src="__PUBLIC__/AdminLTE/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+
+<script>
+    function a_confirm() {
         var msg = "您真的确定要这样做么吗？\n\n请确认！";
-        if (confirm(msg)==true){
+//        alert(msg);
+
+        if (confirm(msg) == true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
+
 </script>
+
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#check-all').on('ifChecked', function (event) {
+            $('input').iCheck('check');
+        });
+        $('#check-all').on('ifUnchecked', function (event) {
+            $('input').iCheck('uncheck');
+        });
+    });
+</script>
+

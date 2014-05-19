@@ -70,7 +70,7 @@
 
                             <div class="controls">
                                 <input type="text" id="post_title" placeholder=""
-                                       class="m-wrap large" name="post_title"
+                                       class="form-control large" name="post_title"
                                        value="{$info.post_title}"/> <span class="help-inline"></span>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
 
                             <div class="controls">
 
-                            <textarea class="span12 ckeditor m-wrap" id="post_content"
+                            <textarea class="span12 ckeditor" id="post_content"
                                       name="post_content"
                                      >{$info.post_content}</textarea>
 
@@ -93,7 +93,7 @@
 
                             <div class="controls">
                                 <div class="btn-group">
-                                    <a class="btn red" href="#" data-toggle="dropdown">
+                                    <a class="btn btn-danger" href="#" data-toggle="dropdown">
                                         选择分类 <i class="icon-angle-down"></i>
                                     </a>
 
@@ -115,7 +115,7 @@
                                 </div>
 
                                 <div class="btn-group">
-                                    <a class="btn" href="#" data-toggle="dropdown">
+                                    <a class="btn btn-primary" href="#" data-toggle="dropdown">
                                         选择标签 <i class="icon-angle-down"></i>
                                     </a>
 
@@ -201,7 +201,7 @@
                             <div class="controls">
 
 
-                                <select class="small m-wrap" tabindex="1" name="post_template" id="post_template">
+                                <select class="small form-control" tabindex="1" name="post_template" id="post_template">
 
                                     {$tpl_type}
 
@@ -264,7 +264,7 @@
                         <div class="form-actions">
 							<span style="font-size: 18px; color: red; font-weight: bold;"
                                   id="success"></span>
-                            <button type="button" class="btn blue submit">
+                            <button type="button" class="btn btn-info submit">
                                 <i class="icon-ok"></i> 发布
                             </button>
                         </div>

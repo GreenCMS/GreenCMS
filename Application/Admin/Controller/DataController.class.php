@@ -79,6 +79,8 @@ class DataController extends AdminBaseController
      */
     public function backupHandle()
     {
+
+        die(dump($_POST['table']));
         if (!IS_POST) $this->error("访问出错啦");
         $type = "手动自动备份";
         $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));

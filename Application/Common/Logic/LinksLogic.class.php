@@ -48,7 +48,7 @@ class LinksLogic extends Model
         if($tag!=1){
             $tag=array('link_tag'=>$tag);
         }
-        $link_list = $this->cache(APP_Cache)->where($tag)->order($order)->limit($limit)->select();
+        $link_list = $this->where($tag)->order($order)->limit($limit)->select();
         return $link_list;
     }
 

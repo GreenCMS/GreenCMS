@@ -56,6 +56,7 @@ class WordpressEvent
             $post_tag_temp = array();
 
             $row = (simplexml_load_string($value->asXML()));
+             // PHP5.5 error
             $row->encoded[0] = (simplexml_load_string($row->encoded[0]->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
 
             if ($row->post_type == 'post') {

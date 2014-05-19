@@ -44,10 +44,10 @@
                         <div class="box-body">
 
 
-                            <div class="clearfix">
+                            <div class="col-md-3 margin">
                                 <div class="btn-group">
                                     <a href="{:U('Admin/Posts/addTag')}">
-                                        <button id="sample_editable_1_new" class="btn green">
+                                        <button id="sample_editable_1_new" class="btn btn-success">
                                             添加新标签<i class="icon-plus"></i>
                                         </button>
                                     </a>
@@ -59,7 +59,7 @@
                                 <tr>
                                     <th style="width: 8px;"><input type="checkbox"
                                                                    class="group-checkable"
-                                                                   data-set="#sample_1 .checkboxes"/></th>
+                                                                   id="check-all"    data-set="#sample_1 .checkboxes"/></th>
                                     <th>名称</th>
                                     <th class="hidden-480">别名</th>
                                     <th></th>
@@ -80,13 +80,13 @@
                                         </td>
                                         <td></td>
                                         <td>
-                                            <a class="btn mini green"
+                                            <a class="btn btn-success"
                                                href="{:U('Admin/Posts/index', array('tag' => $v['tag_id']))}">查看所有文章</a>
                                         </td>
                                         <td>
-                                            <a class="btn mini"
+                                            <a class="btn btn-primary"
                                                href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}">编辑</a>
-                                            <a onclick="javascript:return a_confirm()" class="btn mini red"
+                                            <a onclick="javascript:return a_confirm()" class="btn btn-danger"
                                                href="{:U('Admin/Posts/delTag', array('id' => $v['tag_id']))}">删除</a>
                                         </td>
 

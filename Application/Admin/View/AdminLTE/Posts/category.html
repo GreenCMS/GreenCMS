@@ -44,10 +44,10 @@
                         <div class="box-body">
 
 
-                            <div class="clearfix">
+                            <div class="col-md-3 margin">
                                 <div class="btn-group">
                                     <a href="{:U('Admin/Posts/addCategory')}">
-                                        <button id="sample_editable_1_new" class="btn green">
+                                        <button id="sample_editable_1_new" class="btn btn-success">
                                             <i class="icon-plus"></i>添加新分类
                                         </button>
                                     </a>
@@ -59,7 +59,7 @@
                                 <tr>
                                     <th style="width:8px;"><input type="checkbox"
                                                                   class="group-checkable"
-                                                                  data-set="#sample_1 .checkboxes"/></th>
+                                                                  id="check-all"         data-set="#sample_1 .checkboxes"/></th>
                                     <th>名称</th>
                                     <th align="left" class="tree">结构</th>
                                     <th>父类</th>
@@ -81,13 +81,13 @@
                                         <td>{$v['cat_father']['cat_name']|is_empty} &nbsp;</td>
 
                                         <td>
-                                            <a class="btn mini green"
+                                            <a class="btn btn-success"
                                                href="{:U('Admin/Posts/index', array('cat' => $v['cat_id']))}">查看分类文章</a>
                                         </td>
                                         <td>
-                                            <a class="btn mini"
+                                            <a class="btn btn-primary"
                                                href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">编辑</a>
-                                            <a onclick="javascript:return a_confirm()" class="btn mini red"
+                                            <a onclick="javascript:return a_confirm()" class="btn btn-danger"
                                                href="{:U('Admin/Posts/delCategory', array('id' => $v['cat_id']))}">删除</a>
 
                                         </td>

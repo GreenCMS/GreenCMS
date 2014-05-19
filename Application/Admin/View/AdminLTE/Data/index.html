@@ -63,7 +63,8 @@
                                     <tbody id="cache_table">
                                     <volist name="list" id="tab">
                                         <tr align="center">
-                                            <td><input type="checkbox" class='groupclass' name="table[]" value="{$tab.Name}"/>
+                                            <td><input type="checkbox" class='groupclass' name="table[]"
+                                                       value="{$tab.Name}"/>
                                             </td>
                                             <td align="left">{$tab.Name}</td>
                                             <td>{$tab.Comment}</td>
@@ -87,19 +88,13 @@
                                     </tfoot>
                                 </table>
                                 <div class="row inline" style="text-align: center">
-                                    <button type="submit" class="btn green">
-                                        <i class="m-icon-swapright m-icon-white"></i>开始备份
-                                    </button>
+                                    <button type="submit" class="btn btn-success"> 开始备份</button>
 
-                                    <button type="button" class="btn" id="checkall">全选</button>
+                                    <button type="button" class="btn btn-primary" id="checkall"> 全选</button>
 
-                                    <button type="button" class="btn red" id="check_cancel">取消</button>
+                                    <button type="button" class="btn btn-danger" id="check_cancel"> 取消</button>
 
-
-                                    <!--<div class="span2">-->
-                                    <!--<button type="button" class="btn blue" id="check_reverse">反选</button>-->
-                                    <!--</div>-->
-                                </div>
+                                 </div>
 
 
                             </form>
@@ -127,18 +122,24 @@
 
         $("#checkall").click(function () { //":checked"匹配所有的复选框
             $("#cache_table :checkbox").attr("checked", true); //"#div1 :checked"之间必须有空格checked是设置选中状态。如果为true则是选中fo否则false为不选中
-            $("div").addClass("checked");
+            $(".icheckbox_minimal").addClass("checked");
+
+
         });
         $("#check_cancel").click(function () {
             $("#cache_table :checkbox").attr("checked", false);
-            $("div").removeClass("checked");
+            $(".icheckbox_minimal").removeClass("checked");
+//            $("div").removeClass("checked");
+
+
         });
 //        //理解用迭代原理each（function(){}）
         $("#check_reverse").click(function () {
             $("#cache_table :checkbox").each(function () {
 
+
                 $(this).attr("checked", !$(this).attr("checked"));
-                $(this).parentsUntil('div').attr("checked", !$(this).attr("checked"));
+                $(this).parent('div').removeClass("checked", !$(this).attr("checked"));
 
                 //!$(this).attr("checked")判断复选框的状态：如果选中则取反
             });

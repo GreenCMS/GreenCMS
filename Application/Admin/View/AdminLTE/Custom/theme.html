@@ -47,7 +47,7 @@
                             <div class="clearfix">
                                 <div class="btn-group">
                                     <a href="{:U('Admin/Custom/themeAdd')}">
-                                        <button type="submit" class="btn green" name="menuAdd" value='1'>
+                                        <button type="submit" class="btn btn-success" name="menuAdd" value='1'>
                                             <i class="icon-plus"></i> 添加主题
                                         </button>
                                     </a>
@@ -88,10 +88,10 @@
 
                                         <td>
 
-                                            <a class="btn purple" href="{$vo.action_url2}">{$vo.action_name2}</a>
+                                            <a class="btn btn-warning" href="{$vo.action_url2}">{$vo.action_name2}</a>
 
-                                            <!--<a class="btn blue" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
-                                            <a class="btn red" href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
+                                            <!--<a class="btn btn-info" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
+                                            <a class="btn btn-danger" href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
                                         </td>
 
 

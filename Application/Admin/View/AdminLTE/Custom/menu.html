@@ -45,16 +45,15 @@
 
 
 
-                            <div class="clearfix">
+                            <div class="margin">
                                 <div class="btn-group">
                                     <a href="{:U('Admin/Custom/menuAdd')}">
-                                        <button type="submit" class="btn green" name="menuAdd" value='1'>
+                                        <button type="submit" class="btn btn-success" name="menuAdd" value='1'>
                                             <i class="icon-plus"></i> 添加菜单
                                         </button>
                                     </a>
                                 </div>
                             </div>
-                            <br/>
 
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
 
@@ -84,13 +83,13 @@
                                         <td>{$vo.menu_construct}</td>
                                         <td align="left">{$vo.menu_sort}</td>
                                         <td>
-                                            <!--<a href="javascript:void(0);" class="btn mini" val="{$vo.status}">增加权重</a>-->
+                                            <!--<a href="javascript:void(0);" class="btn btn-primary" val="{$vo.status}">增加权重</a>-->
 
-                                            <!--<a href="javascript:void(0);" class="btn mini" val="{$vo.status}">减少权重</a>-->
+                                            <!--<a href="javascript:void(0);" class="btn btn-primary" val="{$vo.status}">减少权重</a>-->
 
 
-                                            <a class="btn mini purple" href="{:U('Admin/Custom/menuEdit',array('id'=>$vo['menu_id']))}">编辑</a>
-                                            <a  onclick="javascript:return a_confirm()" class="btn mini red" href="{:U('Admin/Custom/menuDel',array('id'=>$vo['menu_id']))}">删除</a>
+                                            <a class="btn btn-warning" href="{:U('Admin/Custom/menuEdit',array('id'=>$vo['menu_id']))}">编辑</a>
+                                            <a  onclick="javascript:return a_confirm()" class="btn btn-danger" href="{:U('Admin/Custom/menuDel',array('id'=>$vo['menu_id']))}">删除</a>
 
                                         </td>
                                         <td>

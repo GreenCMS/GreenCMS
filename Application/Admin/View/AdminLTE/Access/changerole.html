@@ -35,7 +35,7 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="box box-warning">
                         <div class="box-header">
                             <h3 class="box-title">{$action}</h3>
@@ -79,20 +79,17 @@
                                 </table>
                                 <input type="hidden" name="id" value="{$info.id}"/>
 
-                                <div class="span12" id="success"
+                                <div class="col-md-8" id="success"
                                      style="font-size:16px;color: red;text-align: left; display:none;"></div>
 
-                                <div class="commonBtnArea">
+                                <div class="col-md-10 margin">
                                     <div class="form-actions">
-                                        <div class="span2">
-                                            <button class="btn blue submit">提交</button>
-                                        </div>
+                                        <div class="col-md-6 margin">
+                                            <button class="btn btn-info submit">提交</button>
 
-                                        <div class="span2">
                                             <button class="btn white reset" onclick="return false;">重置</button>
-                                        </div>
-                                        <div class="span2">
-                                            <button type="button" class="btn red empty" id="check_cancel"
+
+                                            <button type="button" class="btn btn-danger empty" id="check_cancel"
                                                     onclick="return false;">清空
                                             </button>
                                         </div>
