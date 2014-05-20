@@ -1,10 +1,10 @@
 <!-- 留言板前台 -->
 
-<link href="__PUBLIC__/admin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
-      type="text/css"/>
-<link href="__PUBLIC__/admin/assets/css/style-metro.css" rel="stylesheet" type="text/css"/>
-<link href="__PUBLIC__/admin/assets/css/style.css" rel="stylesheet" type="text/css"/>
-<link href="__PUBLIC__/admin/assets/css/pages/blog.css" rel="stylesheet" type="text/css"/>
+<!--<link href="__PUBLIC__/admin/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"-->
+<!--type="text/css"/>-->
+<!--<link href="__PUBLIC__/admin/assets/css/style-metro.css" rel="stylesheet" type="text/css"/>-->
+<!--<link href="__PUBLIC__/admin/assets/css/style.css" rel="stylesheet" type="text/css"/>-->
+<!--<link href="__PUBLIC__/admin/assets/css/pages/blog.css" rel="stylesheet" type="text/css"/>-->
 
 <style type="text/css">
 
@@ -14,66 +14,70 @@
 
     .form-horizontal .control-label {
         float: left;
-        width: 160px;
-        padding-top: 5px;
+        width: 250px;
+        padding-top: 3px;
         text-align: right;
+
+        font-size: 20px;
     }
 
     .form-horizontal .controls {
-        margin-left: 180px;
+        margin-left: 260px;
     }
 
-    textarea.m-wrap, input[type="text"].m-wrap, input[type="password"].m-wrap, input[type="datetime"].m-wrap, input[type="datetime-local"].m-wrap, input[type="date"].m-wrap, input[type="month"].m-wrap, input[type="time"].m-wrap, input[type="week"].m-wrap, input[type="number"].m-wrap, input[type="email"].m-wrap, input[type="url"].m-wrap, input[type="search"].m-wrap, input[type="tel"].m-wrap, input[type="color"].m-wrap {
-        -webkit-appearance: none !important;
-        color: #333333;
-        outline: 0;
-        height: 20px;
+    .m-wrap {
+
+        width: 450px !important;
+
         padding: 6px 6px !important;
         line-height: 20px;
-        font-size: 14px;
         font-weight: normal;
         vertical-align: top;
-        background-color: #ffffff;
-        background-image: none !important;
-        filter: none !important;
-        -webkit-box-shadow: none !important;
-        -moz-box-shadow: none !important;
-        box-shadow: none !important;
-        -webkit-border-radius: 0px;
-        -moz-border-radius: 0px;
-        border-radius: 0px;
-        background: transparent;
-    }
 
-    .m-wrap.large {
-        width: 320px !important;
-    }
-
-    input.m-wrap {
-        border: 1px solid #e5e5e5;
-    }
-
-    textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
         background-color: #fff;
-        border: 1px solid #ccc;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -webkit-transition: border linear .2s, box-shadow linear .2s;
-        -moz-transition: border linear .2s, box-shadow linear .2s;
-        -o-transition: border linear .2s, box-shadow linear .2s;
-        transition: border linear .2s, box-shadow linear .2s;
+        background-image: none;
+
     }
+
+    .form-actions {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-actions button {
+        font-weight: 500;
+        font-size: 20px;
+        padding: 5px 10px;
+        border: 1px solid transparent;
+        color: #ffffff;
+    }
+
+    .green {
+
+        background-color: #54c254;
+    }
+
+    .red {
+
+        background-color: #a00;
+    }
+
+    .blue {
+
+        background-color: #4f86bc;
+    }
+
+    /* textarea,*/
 
     #reply_list .pagination ul li .current {
         color: #a00;
     }
 
-    #reply_list .pagination ul>li>a:hover, .pagination ul>li>a:focus, .pagination ul>.active>a, .pagination ul>.active>span {
+    #reply_list .pagination ul > li > a:hover, .pagination ul > li > a:focus, .pagination ul > .active > a, .pagination ul > .active > span {
         background-color: #f5f5f5;
     }
 
-    #reply_list  .pagination ul>li>a, .pagination ul>li>span {
+    #reply_list .pagination ul > li > a, .pagination ul > li > span {
         float: left;
         padding: 4px 12px;
         line-height: 20px;
@@ -83,7 +87,7 @@
         border-left-width: 0;
     }
 
-    #reply_list  .pagination ul>li:first-child>a, .pagination ul>li:first-child>span {
+    #reply_list .pagination ul > li:first-child > a, .pagination ul > li:first-child > span {
         border-left-width: 1px;
         -webkit-border-bottom-left-radius: 4px;
         border-bottom-left-radius: 4px;
@@ -93,11 +97,11 @@
         -moz-border-radius-topleft: 4px;
     }
 
-    #reply_list  .pagination ul>li {
+    #reply_list .pagination ul > li {
         display: inline;
     }
 
-    #reply_list  .pagination ul>li>a, .pagination ul>li>span {
+    #reply_list .pagination ul > li > a, .pagination ul > li > span {
         float: left;
         padding: 4px 12px;
         line-height: 20px;
@@ -136,7 +140,7 @@
         color: #6F7275;
         margin: 15px 0px 0px 30px;
         border-left: 5px solid #4dfc2c;
-        font-size: 17.5px;
+        font-size: 17px;
         background-color: rgb(236, 255, 248);
     }
 
@@ -155,7 +159,8 @@
         <label class="control-label">姓名</label>
 
         <div class="controls">
-            <input name="name" type="text" placeholder="" class="m-wrap medium name"/>
+            <input name="name" style="border: 1px solid #bababa;" type="text" placeholder=""
+                   class="m-wrap medium name"/>
             <span class="help-inline" style="color:red; display:none;">请输入姓名</span>
         </div>
     </div>
@@ -163,7 +168,8 @@
         <label class="control-label">Email</label>
 
         <div class="controls">
-            <input name="email" type="text" placeholder="" class="m-wrap medium email"/>
+            <input name="email" style="border: 1px solid #bababa;" type="text" placeholder=""
+                   class="m-wrap medium email"/>
             <span class="help-inline" style="color:red; display:none;">请输入邮箱</span>
         </div>
     </div>
@@ -171,7 +177,7 @@
         <label class="control-label">电话</label>
 
         <div class="controls">
-            <input name="tel" type="text" placeholder="" class="m-wrap medium tel"/>
+            <input name="tel" type="text" style="border: 1px solid #bababa;" placeholder="" class="m-wrap medium tel"/>
             <span class="help-inline"></span>
         </div>
     </div>
@@ -179,7 +185,8 @@
         <label class="control-label">咨询主题</label>
 
         <div class="controls">
-            <input name="title" type="text" placeholder="" class="m-wrap medium title"/>
+            <input name="title" type="text" style="border: 1px solid #bababa;" placeholder=""
+                   class="m-wrap medium title"/>
             <span class="help-inline" style="color:red; display:none;">请输入标题</span>
         </div>
     </div>
@@ -187,15 +194,16 @@
         <label class="control-label">咨询内容</label>
 
         <div class="controls">
-            <textarea name="content" class="large m-wrap content" style="height: 150px" rows="3"></textarea>
+            <textarea name="content" style="border: 1px solid #bababa;" class="large m-wrap content"
+                      style="height: 60px" rows="5"></textarea>
             <span class="help-inline" style="color:red; display:none;">请输入内容</span>
         </div>
     </div>
     <input type="hidden" name="post_id" value="{$post_id}"/>
 
     <div class="form-actions">
-        <button type="button" class="btn submit">提交</button>
-        <button type="reset" class="btn">重写</button>
+        <button type="button" class="btn submit green">提交</button>
+        <button type="reset" class="btn red">重写</button>
     </div>
 </form>
 <div class="media" id="reply_list">

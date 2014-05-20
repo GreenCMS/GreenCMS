@@ -1,6 +1,7 @@
 <?php
 
 namespace Addons\Guestbook;
+
 use Common\Controller\Addon;
 use Common\Util\GreenPage;
 
@@ -8,24 +9,31 @@ use Common\Util\GreenPage;
  * 留言本插件
  * @author xjh1994
  */
-
 class GuestbookAddon extends Addon
 {
 
+
+    public function __construct()
+    {
+
+        parent::__construct();
+
+    }
+
     public $info = array(
-        'name'        => 'Guestbook',
-        'title'       => '留言本',
+        'name' => 'Guestbook',
+        'title' => '留言本',
         'description' => '提供用户留言功能',
-        'status'      => 1,
-        'author'      => 'xjh1994',
-        'version'     => '0.1'
+        'status' => 1,
+        'author' => 'xjh1994',
+        'version' => '0.1'
     );
 
     public $admin_list = array(
-        'model'   => 'guestbook', //要查的表
-        'fields'  => '*', //要查的字段
-        'map'     => '', //查询条件, 如果需要可以再插件类的构造方法里动态重置这个属性
-        'order'   => 'date desc', //排序,
+        'model' => 'guestbook', //要查的表
+        'fields' => '*', //要查的字段
+        'map' => '', //查询条件, 如果需要可以再插件类的构造方法里动态重置这个属性
+        'order' => 'date desc', //排序,
         'listKey' => array( //这里定义的是除了id序号外的表格里字段显示的表头名
 
         ),
@@ -50,10 +58,10 @@ class GuestbookAddon extends Addon
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
                 ";
         M()->query($sql);
-         $Hooks= D('Hooks');
+        $Hooks = D('Hooks');
         $Guestbook = $Hooks->where(array('name' => 'Guestbook'))->find();
         if (!$Guestbook) {
-            $data=array('name'=>'Guestbook','description'=>'Guestbook','type'=>1);
+            $data = array('name' => 'Guestbook', 'description' => 'Guestbook', 'type' => 1);
             $Hooks->data($data)->add();
 
 
