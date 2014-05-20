@@ -26,7 +26,7 @@ a {
     cursor: pointer;
 }
 
-a i{
+a i {
     font-size: 12pt;
     width: 1em;
     font-weight: bold;
@@ -78,7 +78,7 @@ img {
     float: none;
 }
 
-*html #headerlist li ul li {
+* html #headerlist li ul li {
     display: inline;
 }
 
@@ -146,7 +146,7 @@ img {
     padding-left: 0px;
 }
 
-*html .second-menu {
+* html .second-menu {
     right: -1px;
 }
 
@@ -238,11 +238,11 @@ img {
     line-height: 26px;
 }
 
-.center_middle .left .left_half .body ul li  a {
+.center_middle .left .left_half .body ul li a {
     color: #676767;
 }
 
-.center_middle .left .left_half .body ul li  a:hover {
+.center_middle .left .left_half .body ul li a:hover {
     color: #0a5ab3;
 }
 
@@ -280,7 +280,7 @@ img {
     margin-top: 20px;
 }
 
-.cright  .body {
+.cright .body {
     margin-left: 20px;
     float: left;
     width: 300px;
@@ -336,29 +336,38 @@ img {
 }
 
 #c4_right_2 ul {
-    margin: 8px 0px;
+    margin: 0 auto;
     width: 290px;
     _margin: 8px 5px;
 }
 
 #c4_right_2 ul li {
-    width: 90px;
-    height: 30px;
-    /*background: url(../images/1/xuekebg1.jpg) no-repeat;*/
-    margin: 7px 0px;
-    float: left;
-    line-height: 30px;
+
     text-align: center;
+
+    /*background-color: #1967ae;*/
+
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 2px solid #1967ae;
+    -webkit-box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.09);
+    -moz-box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.09);
+    box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.09);
 }
 
 #c4_right_2 ul li a {
-    color: #3a3a3a;
+    font-size: 18px;
+    color: #1967ae;
     text-decoration: none;
 }
 
 #c4_right_2 ul li a:hover {
-    color: #0878c3;
-    text-decoration: underline;
+    /*color: #d3d1c0;*/
+    text-decoration: none;
 }
 
 .headerwrap {
@@ -651,7 +660,6 @@ img {
 
 }
 
-
 .news-slide {
     width: 724px;
     height: 357px;
@@ -742,7 +750,7 @@ img {
 }
 
 .right_box .body ul li {
-     line-height: 32px;
+    line-height: 32px;
 }
 
 .right_box .body ul li a {
