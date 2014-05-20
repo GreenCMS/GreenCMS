@@ -1,190 +1,146 @@
 <!DOCTYPE html>
-<!--[if IE 8]>
-<html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]>
-<html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!-->
-<html lang="en"> <!--<![endif]-->
-<!-- BEGIN HEAD -->
+<html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8">
     <title>安装程序 -- GreenCMS</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="GreenCMS" name="description"/>
-    <meta content="GreenCMS" name="keywords"/>
+
     <include file="Public:head"/>
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-
 </head>
-<!-- END HEAD -->
-<!-- BEGIN BODY -->
-<body class="page-header-fixed">
-<!-- BEGIN HEADER -->
-<div class="header navbar navbar-inverse navbar-fixed-top">
-    <!-- BEGIN TOP NAVIGATION BAR -->
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <!-- BEGIN LOGO -->
-            <a class="brand" href="{:U('Home/Index/index')}">
-                <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
-            </a>
-            <!-- END LOGO -->
-            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-            <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-                <img src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
-            </a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
+<body class="skin-blue">
 
-            <!-- END TOP NAVIGATION MENU -->
-        </div>
-    </div>
-    <!-- END TOP NAVIGATION BAR -->
-</div>
-<!-- END HEADER -->
-<!-- BEGIN CONTAINER -->
-<div class="page-container row-fluid">
-    <!-- BEGIN SIDEBAR -->
-    <div class="page-sidebar nav-collapse collapse">
-        <!-- BEGIN SIDEBAR MENU -->
-        <ul class="page-sidebar-menu">
-            <li>
-                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-                <!-- <div class="sidebar-toggler hidden-phone"></div> -->
-                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-            </li>
-            <li class="start active">
-                <a href="javascript:;">
-                    <i class="icon-home"></i><span class="title">安装程序</span>
-                    <span class="arrow "></span>
-                </a>
-                <ul class="sub-menu">
-                    <li class="active"><a>使用协议书</a></li>
-                    <li class=""><a>环境测试</a></li>
-                    <li class=""><a>网站设置</a></li>
-                    <li class=""><a>安装</a></li>
-                    <li class=""><a>安装完成</a></li>
-                </ul>
-            </li>
-        </ul>
-        <!-- END SIDEBAR MENU -->
-    </div>
-    <!-- END SIDEBAR -->
-    <!-- BEGIN PAGE -->
-    <div class="page-content">
-        <!-- BEGIN PAGE CONTAINER-->
-        <div class="container-fluid">
-            <!-- BEGIN PAGE HEADER-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-                    <h3 class="page-title">
-                        安装程序
-                        <small>&nbsp;&nbsp;GreenCMS</small>
-                    </h3>
-                    <ul class="breadcrumb">
-                        <li>
-                            <a href="">安装程序</a>
-                            <i class="icon-angle-right"></i>
-                        </li>
-                        <li>
-                            <a href="">使用协议书</a>
-                        </li>
-                    </ul>
-                    <!-- END PAGE TITLE & BREADCRUMB-->
-                </div>
-            </div>
-            <div class="row-fluid">
-                <div class="copyright">
-                    <div class="copy_title">
-                        <h3>阅读许可协议</h3>
-                    </div>
-                    <div class="agreement">
-                        <p>您正在安装的是GreenCMS(UTF-8编码) {$version} Release build {$build}</p>
+<include file="Widget:header"/>
 
-                        <p>版权所有 &copy;2013，<a href="http://green.njut.asia">GreenStudio</a> 保留所有权利。 </p>
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <include file="Widget:sideMenu"/>
 
-                        <p>
-                            感谢您选择绿荫内容管理系统（以下简称GreenCMS），GreenCMS是南京工业大学绿荫工作室开发的一款美观实用的CMS网站内容管理系统，基于THINKPHP框架的技术开发，全部源码开放。GreenCMS
-                            的官方网址是： <a href="http://green.njut.asia" target="_blank">green.njut.asia</a></p>
 
-                        <p>使用者：无论个人或组织、盈利与否、用途如何（包括以学习和研究为目的），均需仔细阅读本许可协议，在理解、同意、并遵守本许可协议的全部条件和条款后，方可开始使用GreenCMS
-                            系列软件产品。：</p><br/>
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
 
-                        <p><strong>
-                            一、本授权协议适用于 GreenCMS  {$version}  版本，GreenCMS官方拥有对本授权协议的最终解释权。
-                        </strong></p><br/>
 
-                        <p><strong>二、协议许可的权利 </strong>
 
-                        <p>
+        <!-- Main content -->
+        <section class="content">
 
-                        <p>1、您可以在完全遵守本最终用户授权协议的基础上，将本软件应用于非商业用途，而不必支付软件版权授权费用。 </p>
-
-                        <p>2、您可以在协议规定的约束和限制范围内修改 GreenCMS 源代码或界面风格以适应您的网站要求。 </p>
-
-                        <p>3、您拥有使用本软件构建的网站全部内容所有权，并独立承担与这些内容的相关法律义务。 </p>
-                        <br/>
-
-                        <p><strong>三、协议规定的约束和限制 </strong></p>
-
-                        <p>
-                            GreenCMS是基于THINKPHP框架开发的系统，遵循apache 2.0协议 ，允许客户基于本系统继续二次开发，但是系统的核心源码，请保留相关版权注释。
-                        </p>
-                        <br/>
-
-                        <p><strong>四、免责声明</strong></p>
-
-                        <p>
-
-                        <p>1、用户出于自愿而使用本软件，您必须了解使用本软件的风险，且同意自己承担使用本软件的风险。</p>
-
-                        <p>2、用户利用本软件构建的网站的任何信息内容以及导致的任何版权纠纷和法律争议及后果与绿荫工作室无关，绿荫工作室对此不承担任何责任。</p>
-
-                        <p>
-                            3、在适用法律允许的最大范围内，绿荫工作室在任何情况下不就因使用或不能使用本软件所发生的特殊的、意外的、非直接或间接的损失承担赔偿责任（包括但不限于，资料损失，资料执行不精确，或应由您或第三人承担的损失，或本程序无法与其他程序运作等）。即使用户已事先被绿荫工作室告知该损害发生的可能性。</p>
-                        </p>
-                        <br/><br/>
-
-                        <p><b>协议发布时间：</b> 2013年11月11日</p>
-
-                        <p><b>版本最新更新：</b> 2014年02月07日 By <a href="http://green.njut.asia">GreenStudio</a></p><br/>
-
-                        <div class="control-group">
-                            <div class="controls">
-                                <input type="checkbox" value="" name="readpact" id="readpact" checked="checked"/>&nbsp;&nbsp;&nbsp;&nbsp;我已经阅读并同意此协议
-                            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">安装</h3>
                         </div>
-                        <div class="form-actions">
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                                    <h3 class="page-title">
+                                        安装程序
+                                        <small>&nbsp;&nbsp;GreenCMS</small>
+                                    </h3>
+                                    <ul class="breadcrumb">
+                                        <li>
+                                            <a href="">安装程序</a>
+                                            <i class="icon-angle-right"></i>
+                                        </li>
+                                        <li>
+                                            <a href="">使用协议书</a>
+                                        </li>
+                                    </ul>
+                                    <!-- END PAGE TITLE & BREADCRUMB-->
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="copyright">
+                                    <div class="copy_title">
+                                        <h3>阅读许可协议</h3>
+                                    </div>
+                                    <div class="agreement">
+                                        <p>您正在安装的是GreenCMS(UTF-8编码) {$version} Release build {$build}</p>
+
+                                        <p>版权所有 &copy;2013，<a href="http://green.njut.asia">GreenStudio</a> 保留所有权利。 </p>
+
+                                        <p>
+                                            感谢您选择绿荫内容管理系统（以下简称GreenCMS），GreenCMS是南京工业大学绿荫工作室开发的一款美观实用的CMS网站内容管理系统，基于THINKPHP框架的技术开发，全部源码开放。GreenCMS
+                                            的官方网址是： <a href="http://green.njut.asia" target="_blank">green.njut.asia</a></p>
+
+                                        <p>使用者：无论个人或组织、盈利与否、用途如何（包括以学习和研究为目的），均需仔细阅读本许可协议，在理解、同意、并遵守本许可协议的全部条件和条款后，方可开始使用GreenCMS
+                                            系列软件产品。：</p><br/>
+
+                                        <p><strong>
+                                            一、本授权协议适用于 GreenCMS  {$version}  版本，GreenCMS官方拥有对本授权协议的最终解释权。
+                                        </strong></p><br/>
+
+                                        <p><strong>二、协议许可的权利 </strong>
+
+                                        <p>
+
+                                        <p>1、您可以在完全遵守本最终用户授权协议的基础上，将本软件应用于非商业用途，而不必支付软件版权授权费用。 </p>
+
+                                        <p>2、您可以在协议规定的约束和限制范围内修改 GreenCMS 源代码或界面风格以适应您的网站要求。 </p>
+
+                                        <p>3、您拥有使用本软件构建的网站全部内容所有权，并独立承担与这些内容的相关法律义务。 </p>
+                                        <br/>
+
+                                        <p><strong>三、协议规定的约束和限制 </strong></p>
+
+                                        <p>
+                                            GreenCMS是基于THINKPHP框架开发的系统，遵循apache 2.0协议 ，允许客户基于本系统继续二次开发，但是系统的核心源码，请保留相关版权注释。
+                                        </p>
+                                        <br/>
+
+                                        <p><strong>四、免责声明</strong></p>
+
+                                        <p>
+
+                                        <p>1、用户出于自愿而使用本软件，您必须了解使用本软件的风险，且同意自己承担使用本软件的风险。</p>
+
+                                        <p>2、用户利用本软件构建的网站的任何信息内容以及导致的任何版权纠纷和法律争议及后果与绿荫工作室无关，绿荫工作室对此不承担任何责任。</p>
+
+                                        <p>
+                                            3、在适用法律允许的最大范围内，绿荫工作室在任何情况下不就因使用或不能使用本软件所发生的特殊的、意外的、非直接或间接的损失承担赔偿责任（包括但不限于，资料损失，资料执行不精确，或应由您或第三人承担的损失，或本程序无法与其他程序运作等）。即使用户已事先被绿荫工作室告知该损害发生的可能性。</p>
+                                        </p>
+                                        <br/><br/>
+
+                                        <p><b>协议发布时间：</b> 2013年11月11日</p>
+
+                                        <p><b>版本最新更新：</b> 2014年02月07日 By <a href="http://green.njut.asia">GreenStudio</a></p><br/>
+
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <input type="checkbox" value="" name="readpact" id="readpact" checked="checked"/>&nbsp;&nbsp;&nbsp;&nbsp;我已经阅读并同意此协议
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
 								<span style="font-size: 18px; color: red; font-weight: bold;"
                                       id="success"></span>
-                            <button type="button" class="btn blue submit" id='do_next'>
-                                <i class="icon-ok"></i> 继续
-                            </button>
+                                            <button type="button" class="btn blue submit" id='do_next'>
+                                                <i class="icon-ok"></i> 继续
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- END PAGE CONTAINER-->
-    </div>
-    <!-- END PAGE -->
-</div>
-<!-- END CONTAINER -->
-<!-- BEGIN FOOTER -->
-<div class="footer">
-    <div class="footer-inner">
-        &copy; 2014. Powered By GreenCMS
-    </div>
-    <div class="footer-tools">
-            <span class="go-top">
-            <i class="icon-angle-up"></i>
-            </span>
-    </div>
-</div>
-<!-- END FOOTER -->
-<include file="Public:foot"/>
 
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
 <script>
     jQuery(document).ready(function () {
         $('#do_next').click(function () {
@@ -200,5 +156,4 @@
     });
 </script>
 </body>
-<!-- END BODY -->
 </html>
