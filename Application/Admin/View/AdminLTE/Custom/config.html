@@ -250,6 +250,36 @@
 <!-- ./wrapper -->
 
 <include file="Public:foot"/>
+<script>
+    function ajax(id) {
+        $.post("{:U('Admin/Custom/pluginStatus')}", {id: id},
+                function (data) {
+                    if (data == '1') {
+                        window.location.reload(true);
+                    }
+                    else {
+                        $.dialog.alert(data);
+                    }
+                });
+    }
 
+    function jconfirm(str, url) {
+        $.dialog.confirm(str, function () {
+            window.location.href = url;
+        });
+    }
+
+    function showTab() {
+        $(".tab-nav li").click(function(){
+            var self = $(this), target = self.data("tab");
+            self.addClass("current").siblings(".current").removeClass("current");
+            window.location.hash = "#" + target.substr(3);
+            $(".tab-pane.in").removeClass("in");
+            $("." + target).addClass("in");
+        }).filter("[data-tab=tab" + window.location.hash.substr(1) + "]").click();
+    }
+
+    showTab();
+</script>
 </body>
 </html>
