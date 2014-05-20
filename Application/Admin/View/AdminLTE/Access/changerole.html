@@ -87,6 +87,9 @@
                                         <div class="col-md-6 margin">
                                             <button class="btn btn-info submit">提交</button>
 
+                                            <button class="btn zwhite reset" onclick="return false;">重置</button>
+
+
                                             <button class="btn white reset" onclick="return false;">重置</button>
 
                                             <button type="button" class="btn btn-danger empty" id="check_cancel"
@@ -115,6 +118,7 @@
 <include file="Public:foot"/>
 <script>
     jQuery(document).ready(function () {
+        $('input').iCheck('destroy');
 
         $("#check_cancel").click(function () {
             $("#cache_table :checkbox").attr("checked", false);

@@ -177,10 +177,11 @@ class CustomController extends AdminBaseController
                 if ($theme_temp['name'] == get_kv('home_theme', true)) {
                     $theme_temp['status_name'] = '正在使用';
                     $theme_temp['status_url'] = '#';
-                    $theme_temp['using_color'] = 'green';
+                    $theme_temp['using_color'] = ' bg-green';
                     $theme_temp['action_name2'] = '使用中';
                     $theme_temp['action_url2'] = '#';
                 } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
+                    $theme_temp['using_color'] = ' bg-olive';
 
                     $theme_temp['status_name'] = '立即使用';
                     $theme_temp['status_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));

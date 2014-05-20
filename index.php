@@ -11,8 +11,8 @@
 /**
  * 下面的内容自己决定
  */
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-//error_reporting(0);
+//error_reporting(E_ERROR | E_WARNING | E_PARSE);
+error_reporting(0);
 @set_time_limit(120);
 //@ini_set("memory_limit",'-1');
 

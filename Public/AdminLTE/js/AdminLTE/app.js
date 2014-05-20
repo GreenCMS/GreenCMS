@@ -39,7 +39,7 @@ $(function() {
     });
 
     //Activate tooltips
-    $("[data-toggle='tooltip']").tooltip();
+   // $("[data-toggle='tooltip']").tooltip();
 
     /*     
      * Add collapse and remove events to boxes
@@ -129,10 +129,7 @@ $(function() {
      * iCheck plugin in.
      * You can find the documentation at http://fronteed.com/iCheck/
      */
-    $("input[type='checkbox'], input[type='radio']").iCheck({
-        checkboxClass: 'icheckbox_minimal',
-        radioClass: 'iradio_minimal'
-    });
+
 
 });
 function fix_sidebar() {

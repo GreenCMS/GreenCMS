@@ -74,12 +74,12 @@
 
 
                                             分类:
-                                            <volist name="v['post_cat']" id="v_pcs" empty="无分类">
+                                            <volist name="v['post_cat']" id="v_pcs" empty="无分类"  offset="0"  length='5'>
                                                 <a class="btn btn-default btn-sm" href="{:U('Admin/Posts/category', array('id' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
                                             </volist>
 
                                             标签:
-                                            <volist name="v['post_tag']" id="v_pts" empty="无标签">
+                                            <volist name="v['post_tag']" id="v_pts" empty="无标签"  offset="0"  length='5' >
                                                 <a class="btn btn-default btn-sm" href="{:U('Admin/Posts/tag', array('id' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
 
                                             </volist>

@@ -78,7 +78,7 @@
                                         <div class="col-md-3 margin">
                                             <label>搜索:
 
-                                                <input type="text" name="keyword" class="m-wrap medium"
+                                                <input type="text" name="keyword" class=" large"
                                                        placeholder="输入关键字,回车搜索" value="{:I('get.keyword')}"></label>
                                             <input type="hidden" name="post_type" value="{$post_type}">
                                         </div>
@@ -93,7 +93,7 @@
                                                                            data-set="#post_table .checkboxes"/></th>
                                             <th class="col-md-3">标题</th>
                                             <th class="col-md-1">作者</th>
-                                            <th>分类 与 标签</th>
+                                            <th>分类 与 标签 (最多显示5个)</th>
                                             <th class="col-md-2">发布日期</th>
                                             <th class="col-md-3">操作</th>
 
@@ -112,12 +112,14 @@
                                                 </td>
                                                 <td>
                                                     分类:
-                                                    <volist name="v['post_cat']" id="v_pcs" empty="无分类">
+                                                    <volist name="v['post_cat']" id="v_pcs" offset="0" length="5"
+                                                            empty="无分类">
                                                         <a class="btn btn-default btn-sm"
                                                            href="{:U('Admin/Posts/index', array('cat' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
                                                     </volist>
                                                     标签:
-                                                    <volist name="v['post_tag']" id="v_pts" empty="无标签">
+                                                    <volist name="v['post_tag']" id="v_pts" offset="0" length="5"
+                                                            empty="无标签">
                                                         <a class="btn btn-default btn-sm"
                                                            href="{:U('Admin/Posts/index', array('tag' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
                                                     </volist>
@@ -126,15 +128,15 @@
                                                 <td>
                                                     <a class="btn btn-sm btn-primary"
                                                        href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}">编辑</a>
-                                                    &nbsp;&nbsp;&nbsp;
+                                                    &nbsp; &nbsp;
 
                                                     <a class="btn btn-sm btn-info"
                                                        href="{:U('Home/Post/'.$v['post_type'], array('info' => $v['post_id']))}"
                                                        target="_blank">查看</a>
-                                                    &nbsp;&nbsp;&nbsp;
-                                                    <a class="btn btn-sm btn-warning"
+                                                    &nbsp; &nbsp;
+                                                     <a class="btn btn-sm btn-warning"
                                                        href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v['post_id'],'post_status' => 'unverified'))}">审核</a>
-                                                    &nbsp;&nbsp;&nbsp;
+                                                    &nbsp; &nbsp;
                                                     <a class="btn btn-sm btn-danger"
                                                        href="{:U('Admin/Posts/preDel', array('id' => $v['post_id']))}">删除</a>
                                                 </td>
