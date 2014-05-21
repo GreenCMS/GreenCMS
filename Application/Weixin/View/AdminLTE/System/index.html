@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <form action="{:U('Weixin/System/indexHandle')}" name="change_System"
+
+                                  method="post">
+
+
+                                <div class="form-group">
+                                    <label class="control-label">微信Token</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="weixin_token"
+                                               value="{:get_opinion('weixin_token')}"/>
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">网站标题</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="title"
+                                               value="{:get_opinion('title')}"/>
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">订阅消息</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large"
+                                               name="Weixin_reply_subscribe"
+                                               value="{:get_opinion('Weixin_reply_subscribe')}"/>
+                                        <span class="help-inline">当用户第一次关注时返回的内容</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">微信App_ID</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="Weixin_appid"
+                                               value="{:get_opinion('Weixin_appid')}"/>
+                                        <span class="help-inline">公共平台后台查询</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">微信App_secret</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="Weixin_secret"
+                                               value="{:get_opinion('Weixin_secret')}"/>
+                                        <span class="help-inline">公共平台后台查询</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">菜单</label>
+
+
+                                    <div class="controls">
+                                        <textarea style="height: 300px;" class="large form-control" rows="3"
+                                                  name="Weixin_menu">
+                                            {:C('Weixin_menu')}</textarea>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn bg-blue"><i class="icon-ok"></i> 修改</button>
+                                </div>
+                            </form>
+                            <!-- END EXAMPLE TABLE PORTLET-->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

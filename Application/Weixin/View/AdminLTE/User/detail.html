@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="GreenCMS"/>
+    <meta name="keywords" content="GreenCMS"/>
+    <include file="Public:head"/>
+
+    <title>{$action} | {:get_opinion('title')}</title>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed">
+<!-- BEGIN HEADER -->
+<div class="header navbar navbar-inverse navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    {:W('Common/header')}
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container row-fluid">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar nav-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        {:W('Common/sideBar')}
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN PAGE -->
+    <div class="page-content">
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="container-fluid">
+            <!-- BEGIN PAGE HEADER-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                    <h3 class="page-title">
+                        {$action}
+                        <small>&nbsp;&nbsp;{$Think.config.title}</small>
+                    </h3>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{$module_url}">{$module}</a>
+                            <i class="icon-angle-right"></i>
+                        </li>
+                        <li><a href="{$action_url}">{$action}</a></li>
+                    </ul>
+                    <!-- END PAGE TITLE & BREADCRUMB-->
+                </div>
+            </div>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row-fluid profile">
+                <div class="span12">
+                    <!--BEGIN TABS-->
+                    <div class="tabbable tabbable-custom tabbable-full-width">
+                        <div class="tab-content">
+                            <div class="tab-pane row-fluid active" id="tab_1_1">
+                                <ul class="unstyled profile-nav span3">
+                                    <li><img src="{$user_detail['headimgurl']}" alt=""/></li>
+                                </ul>
+                                <div class="span9">
+                                    <div class="row-fluid">
+                                        <!--<div class="alert alert-success">-->
+                                        <!--<button class="close" data-dismiss="alert"></button>-->
+                                        <!--<strong>欢迎回来!</strong>-->
+                                        <!--</div>-->
+                                        <div class="span8 profile-info">
+                                            <h1>{$user_detail.nickname}</h1>
+
+                                            <p>位置：{$user_detail.country}-{$user_detail.province}-{$user_detail.city}</p>
+
+                                            <ul class="unstyled">
+                                                <li><i class="icon-comment"></i>消息数量：{$user_detail.log|sizeof}</li>
+                                                <li><i class="icon-user"></i>性别：{$user_detail.sex}</li>
+                                                <li><i class="icon-calendar"></i>关注时间：{:date ('Y-m-d
+                                                    H:i',$user_detail['subscribe_time']) }
+                                                </li>
+                                                <li><i class="icon-tag"></i>语言：{$user_detail.language}</li>
+
+                                            </ul>
+
+
+                                        </div>
+
+                                        <!--end span8-->
+                                    </div>
+                                    <!--end row-fluid-->
+
+                                </div>
+                                <div class="span9">
+                                    <br/>
+                                    <a class="btn blue" href="{:U('Weixin/User/chat',array('openid'=>$user_detail['openid']))}">发送消息</a>
+                                </div>
+
+                                <!--end span9-->
+                            </div>
+
+                            <!--end tab-pane-->
+                        </div>
+                    </div>
+                    <!--END TABS-->
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+        <!-- END PAGE CONTAINER-->
+    </div>
+    <!-- END PAGE -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+{:W('Common/footer')}
+<!-- END FOOTER -->
+<include file="Public:foot"/>
+<script>
+    jQuery(document).ready(function () {
+        App.init();
+    });
+</script>
+</body>
+<!-- END BODY -->
+</html>
