@@ -16,61 +16,7 @@
             <span class="icon-bar"></span>
         </a>
 
-        <ul class="nav navbar-nav">
-            <li class="dropdown messages-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    模块切换
-                 </a>
-                <ul class="dropdown-menu">
-                     <li>
-
-                        <!-- inner menu: contains the actual data -->
-                        <ul class="menu" >
-                            <control access="Weixin/Index/index">
-                                <li><a href="{:U('Weixin/Index/index')}" target="_blank"><h4>进入Weixin模块</h4></a></li>
-                            </control>
-
-
-                            <li><a href="{:U('Admin/Index/main')}" target="_blank"><h4>进入Home模块</h4></a></li>
-                            <!-- end message -->
-
-                        </ul>
-                    </li>
-                 </ul>
-            </li>
-
-
-            <li class="dropdown messages-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    快速访问
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-
-                        <!-- inner menu: contains the actual data -->
-                        <ul class="menu" >
-                            <control access="Admin/Data/clearAll">
-                                <li><a href="{:U('Admin/Data/clearAll')}"> <h4>一键缓存清理 </h4></a></li>
-                            </control>
-
-
-                            <control access="Admin/Posts/add">
-                                <li><a href="{:U('Admin/Posts/add')}"><h4>文章发布</h4></a></li>
-                            </control>
-
-                            {:hook('Guestbook', 'menu')}
-                            <!-- end message -->
-
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-
-
-
-        </ul>
-
-        <div class="navbar-right">
+         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">

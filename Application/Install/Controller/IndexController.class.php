@@ -229,7 +229,7 @@ class IndexController extends \Think\Controller
 
         $Access = new \Install\Event\AccessEvent();
         $Access->initAdmin();
-        $Access->initWeixin();
+       // $Access->initWeixin();
 
 
         File::delAll(RUNTIME_PATH);
