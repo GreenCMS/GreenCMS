@@ -35,9 +35,9 @@ class LoginController extends BaseController
 
         $config = array(
             'fontSize' => 20,
-             'length' => 4,
-             'useCurve'=>true,
-            'useNoise'=>true,
+            'length' => 4,
+            'useCurve' => true,
+            'useNoise' => true,
         );
 
 
@@ -96,8 +96,8 @@ class LoginController extends BaseController
 
         $verify = new \Think\Verify();
 
-        if( !$verify->check(I('post.vertify'))){
-           $this->error("验证码错误");
+        if (!$verify->check(I('post.vertify'))) {
+            $this->error("验证码错误");
         }
 
 
@@ -159,33 +159,114 @@ class LoginController extends BaseController
 
     }
 
+    public function register()
+    {
+
+
+        $this->display();
+
+    }
+
+    public function registerHandle()
+    {
+
+
+        $w = htmlspecialchars(trim($_POST ['username']));
+        $i = D('user')->where(array(
+            'user_login' => $w
+        ))->select();
+        if ($i != '') {
+            $this->error('用户名已存在！');
+        } else {
+            // 组合用户信息并添加
+
+            $user = array(
+                'user_login' => I('post.username'),
+                'user_nicename' => I('post.nickname'),
+                'user_pass' => encrypt(I('post.password')),
+                'user_email' => I('post.email'),
+
+                'user_status' => 1,
+
+                // 'logintime'=>time(),
+                // 'loginip'=>get_client_ip(),
+                // 'lock'=>$_POST['lock']
+            );
+            // 添加用户与角色关系
+
+            $user ['user_level'] = 5;
+
+            $User = D('User');
+            $Role_users = D('Role_users');
+            if ($new_id = $User->add($user)) {
+
+                $role = array(
+                    'role_id' =>5,
+                    'user_id' => $new_id
+                );
+                if ($Role_users->add($role)) {
+                    $this->success('注册成功！', U('Admin/Access/index'));
+                } else {
+                    $this->error('注册成功，添加用户权限失败！', U('Admin/Access/index'));
+                }
+            } else {
+                $this->error('注册用户失败！', U('Admin/Access/index'));
+            }
+
+        }
+       //$this->error("不开放注册");
+
+
+    }
+
 
     /**
      *
      */
-    public function forgetPassword()
+    public function forgetpassword()
     {
-        $User = D('User', 'Logic');
 
-        $email = I('post.email');
 
-        $user = $User->where(array('user_email' => $email))->find();
-        if (!$user) {
-            $this->error("不存在用户");
+        $this->display();
+
+
+    }
+
+    /**
+     *
+     */
+    public function forgetpasswordHandle()
+    {
+        $verify = new \Think\Verify();
+
+        if (!$verify->check(I('post.vertify'))) {
+            $this->error("验证码错误");
         }
 
-        $new_pass = encrypt($user['user_session']);
-        $User->where(array('user_email' => $email))->data(array('user_pass' => $new_pass))->save();
+        if (IS_POST) {
+            $User = D('User', 'Logic');
+
+            $email = I('post.email');
+
+            $user = $User->where(array('user_email' => $email))->find();
+            if (!$user) {
+                $this->error("不存在用户");
+            }
+
+            $new_pass = encrypt($user['user_session']);
+            $User->where(array('user_email' => $email))->data(array('user_pass' => $new_pass))->save();
 
 
-        $res = send_mail($email, "", "用户密码重置", "新密码: " . $user['user_session']); //
+            $res = send_mail($email, "", "用户密码重置", "新密码: " . $user['user_session']); //
 
-        if ($res) {
-            $this->success("新密码的邮件已经发送到注册邮箱");
-        } else {
-            $this->error("请检查邮件发送设置");
+            if ($res) {
+                $this->success("新密码的邮件已经发送到注册邮箱");
+            } else {
+                $this->error("请检查邮件发送设置");
 
+            }
         }
+
 
     }
 

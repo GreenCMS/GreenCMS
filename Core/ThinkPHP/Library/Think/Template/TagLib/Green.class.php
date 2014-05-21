@@ -17,34 +17,34 @@ class Green extends TagLib
      */
     protected $tags = array(
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'catlist'       => array(
-            'attr'  => 'cat_id,num,start,length,li_attr,ul_attr',
+        'catlist' => array(
+            'attr' => 'cat_id,num,start,length,li_attr,ul_attr',
             'alias' => 'cli'
         ),
-        'taglist'       => array(
-            'attr'  => 'tag_id,num,start,length,li_attr,ul_attr',
+        'taglist' => array(
+            'attr' => 'tag_id,num,start,length,li_attr,ul_attr',
             'alias' => 'tli'
         ),
-        'recentlist'    => array(
-            'attr'  => 'num,type,order,relation,length,li_attr,ul_attr',
+        'recentlist' => array(
+            'attr' => 'num,type,order,relation,length,li_attr,ul_attr',
             'alias' => 'rli'
         ),
-        'friendlist'    => array(
-            'attr'  => 'length,order,num,link_tag,li_attr,ul_attr',
+        'friendlist' => array(
+            'attr' => 'length,order,num,link_tag,li_attr,ul_attr',
             'alias' => 'fli'
         ),
         'accesscontrol' => array(
-            'attr'  => 'access',
+            'attr' => 'access',
             'alias' => 'control'
         ),
 
 
-//        'optionlist' => array(
-//            'attr'  => 'value,selected',
-//            'alias' => 'opli'
-//        ),
+        'optionfriendlist' => array(
+            'attr' => 'cat,num',
+            'alias' => 'opfli'
+        ),
 
-        'green'         => array()
+        'dump' => array()
 
 
     );
@@ -55,9 +55,9 @@ class Green extends TagLib
      * @usage  <green>原生php代码</green>
      * @return string
      */
-    public function _green($tag, $content)
+    public function _dump($tag, $content)
     {
-        $parseStr = '<?php ' . $content . ' ?>';
+        $parseStr = '<?php dump(' . $content . ') ?>';
         return $parseStr;
     }
 
@@ -208,6 +208,33 @@ class Green extends TagLib
 
     }
 
+
+    /**
+     * @param $tag
+     * @param $content
+     * @usage
+     * @return string
+     */
+    public function _optionfriendlist($tag, $content)
+    {
+
+        $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 0;
+        $link_tag = isset ($tag ['cat']) ? $tag ['cat'] : 'Home';
+
+
+        $link_list = D('Links', 'Logic')->getList($num, $link_tag);
+
+        $parseStr = '';
+        foreach ($link_list as $value) {
+            $parseStr .= '<option value="' . $value['link_url'] . '"  >' . $value['link_name'] . ' </option>';
+        }
+        $parseStr .= '</ul>';
+
+        if (!empty ($parseStr)) {
+            return $parseStr;
+        }
+
+    }
 
 }
 	

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <form action="{:U('Admin/Data/cacheHandle')}" name="change_System" 
+                                  method="post">
+
+                                <div class="form-group">
+                                    <label class="control-label">数据库查询缓存有效期</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large"
+                                               name="DATA_CACHE_TIME"   value="{:get_opinion('DATA_CACHE_TIME', true, 60)}"  />
+
+                                        <span class="help-inline">单位:秒</span>
+
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label">全局静态缓存有效期</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large"
+                                               name="HTML_CACHE_TIME"   value="{:get_opinion('HTML_CACHE_TIME', true, 600)}"  />
+
+                                        <span class="help-inline">单位:秒</span>
+
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label">静态缓存缓存</label>
+
+                                    <div class="controls">
+
+                                        <label class="radio">
+
+                                            <switch name="HTML_CACHE_ON">
+                                                <case value="1"><input type="radio" name="HTML_CACHE_ON"
+                                                                       checked="checked" value="1"/></case>
+                                                <case value="0"><input type="radio" name="HTML_CACHE_ON" value="1"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="HTML_CACHE_ON" checked="checked" value="1"/>
+                                            </switch>
+                                            是
+                                        </label>
+
+
+                                        <label class="radio">
+
+                                            <switch name="HTML_CACHE_ON">
+                                                <case value="1"><input type="radio" name="HTML_CACHE_ON" value="0"/></case>
+                                                <case value="0"><input type="radio" name="HTML_CACHE_ON" checked="checked"
+                                                                       value="0"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="HTML_CACHE_ON" value="0"/>
+                                            </switch>
+                                            否
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">数据库字段缓存</label>
+
+                                    <div class="controls">
+
+                                        <label class="radio">
+
+                                            <switch name="DB_FIELDS_CACHE">
+                                                <case value="1"><input type="radio" name="DB_FIELDS_CACHE"
+                                                                       checked="checked" value="1"/></case>
+                                                <case value="0"><input type="radio" name="DB_FIELDS_CACHE" value="1"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="HTML_CACHE_ON" checked="checked" value="1"/>
+                                            </switch>
+                                            是
+                                        </label>
+
+
+                                        <label class="radio">
+
+                                            <switch name="DB_FIELDS_CACHE">
+                                                <case value="1"><input type="radio" name="DB_FIELDS_CACHE" value="0"/></case>
+                                                <case value="0"><input type="radio" name="DB_FIELDS_CACHE" checked="checked"
+                                                                       value="0"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="DB_FIELDS_CACHE" value="0"/>
+                                            </switch>
+                                            否
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">SQL解析缓存</label>
+
+                                    <div class="controls">
+
+                                        <label class="radio">
+
+                                            <switch name="DB_SQL_BUILD_CACHE">
+                                                <case value="1"><input type="radio" name="DB_SQL_BUILD_CACHE"
+                                                                       checked="checked" value="1"/></case>
+                                                <case value="0"><input type="radio" name="DB_SQL_BUILD_CACHE" value="1"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="DB_SQL_BUILD_CACHE" checked="checked" value="1"/>
+                                            </switch>
+                                            是
+                                        </label>
+
+
+                                        <label class="radio">
+
+                                            <switch name="DB_SQL_BUILD_CACHE">
+                                                <case value="1"><input type="radio" name="DB_SQL_BUILD_CACHE" value="0"/></case>
+                                                <case value="0"><input type="radio" name="DB_SQL_BUILD_CACHE" checked="checked"
+                                                                       value="0"/></case>
+
+                                                <default/>
+                                                <input type="radio" name="DB_SQL_BUILD_CACHE" value="0"/>
+                                            </switch>
+                                            否
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
+                                </div>
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

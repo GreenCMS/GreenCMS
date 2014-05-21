@@ -1,6 +1,7 @@
 <?php
 
 namespace Addons\Guestbook\Controller;
+
 use Home\Controller\AddonsController;
 use Common\Util\GreenPage;
 
@@ -9,11 +10,11 @@ class GuestbookController extends AddonsController
     /**
      * 添加留言
      */
-    public function add() {
-        if(!I('name') || !I('email') || !I('title') || !I('content')) {
+    public function add()
+    {
+        if (!I('name') || !I('email') || !I('title') || !I('content')) {
             $this->error('表单未填写完整！');
-        }
-        else {
+        } else {
 
             $post_id = I('post_id');
             $post_type = 'page';
@@ -26,19 +27,19 @@ class GuestbookController extends AddonsController
                 'date' => date("Y-m-d H:m:s", time()),
                 'ip' => get_client_ip(),
                 'status' => 1,
-                );
+            );
             $result = M('guestbook')->add($data);
 
-            if($result) {
-                $this->success('留言成功', U('Home/Post/'.$post_type, array('info' => $post_id)));
-            }
-            else {
+            if ($result) {
+                $this->success('留言成功', U('Home/Post/' . $post_type, array('info' => $post_id)));
+            } else {
                 $this->error('留言失败');
             }
         }
     }
 
-    public function manage() {
+    public function manage()
+    {
 
         $order = 'date DESC';
 
@@ -50,7 +51,7 @@ class GuestbookController extends AddonsController
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-        }                
+        }
 
         $message = M('guestbook')->where($where)->order($order)->limit($limit)->select();
 
@@ -62,10 +63,11 @@ class GuestbookController extends AddonsController
         $this->display(T('Addons://Guestbook@Guestbook/manage'));
     }
 
-    public function delAll() {
+    public function delAll()
+    {
         $message = I('message');
         // dump($message);die;
-        
+
         $mod = M('guestbook');
 
         foreach ($message as $key => $value) {
@@ -79,17 +81,17 @@ class GuestbookController extends AddonsController
      * 回复留言
      * @return [type] [description]
      */
-    public function reply() {
+    public function reply()
+    {
 
-        if(I('reply')) {
+        if (I('reply')) {
             $data = array(
                 'id' => I('id', 'intval'),
                 'reply' => I('reply', 'htmlspecialchars')
-                );
-            if(M('guestbook')->save($data)) {
+            );
+            if (M('guestbook')->save($data)) {
                 $this->success('回复成功', addons_url('Guestbook://Guestbook/manage'));
-            }
-            else {
+            } else {
                 $this->error('回复失败');
             }
         }
@@ -99,13 +101,13 @@ class GuestbookController extends AddonsController
      * 删除留言
      * @return [type] [description]
      */
-    public function del() {
+    public function del()
+    {
         $where['id'] = I('id', 'intval');
         $result = M('guestbook')->where($where)->delete();
-        if($result) {
+        if ($result) {
             $this->success('删除成功', addons_url('Guestbook://Guestbook/manage'));
-        }
-        else {
+        } else {
             $this->error('删除失败');
         }
     }
@@ -114,17 +116,17 @@ class GuestbookController extends AddonsController
      * 审核留言
      * @return [type] [description]
      */
-    public function approve() {
+    public function approve()
+    {
         $id = I('id', 'intval');
 
         $data['status'] = 1;
 
         $result = M('guestbook')->where(array('id' => $id))->save($data);
 
-        if($result) {
+        if ($result) {
             $this->success('审核成功', addons_url('Guestbook://Guestbook/manage'));
-        }
-        else {
+        } else {
             $this->error('审核失败');
         }
     }

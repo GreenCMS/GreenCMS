@@ -80,13 +80,13 @@ class SystemController extends AdminBaseController
     {
         //普通模式0, PATHINFO模式1, REWRITE模式2, 兼容模式3
         $url_mode = array(0 => '普通模式', 1 => 'PATHINFO模式', 2 => 'REWRITE模式', 3 => '兼容模式');
-        $home_post_model = array('native'                   => '原生模式',
-                                 'year/month/day/post_id'   => '年/月/日/post_id',
-                                 'year/month/day/post_name' => '年/月/日/post_name',
-                                 'year/month/post_id'       => '年/月/post_id',
-                                 'year/month/post_name'     => '年/月/post_name',
-                                 'year/post_id'             => '年/post_id',
-                                 'year/post_name'           => '年/post_name');
+        $home_post_model = array('native' => '原生模式',
+            'year/month/day/post_id' => '年/月/日/post_id',
+            'year/month/day/post_name' => '年/月/日/post_name',
+            'year/month/post_id' => '年/月/post_id',
+            'year/month/post_name' => '年/月/post_name',
+            'year/post_id' => '年/post_id',
+            'year/post_name' => '年/post_name');
 
         $home_tag_model = array('native' => '原生模式', 'slug' => 'slug短语');
         $home_cat_model = array('native' => '原生模式', 'slug' => 'slug短语');
@@ -434,23 +434,23 @@ class SystemController extends AdminBaseController
             $gd = "不支持";
         }
         $info = array(
-            '操作系统'                 => PHP_OS,
-            '主机名IP端口'              => $_SERVER ['SERVER_NAME'] . ' (' . $_SERVER ['SERVER_ADDR'] . ':' . $_SERVER ['SERVER_PORT'] . ')',
-            '运行环境'                 => $_SERVER ["SERVER_SOFTWARE"],
-            'PHP运行方式'              => php_sapi_name(),
-            '程序目录'                 => WEB_ROOT,
-            'MYSQL版本'              => function_exists("mysql_close") ? mysql_get_client_info() : '不支持',
-            'GD库版本'                => $gd,
+            '操作系统' => PHP_OS,
+            '主机名IP端口' => $_SERVER ['SERVER_NAME'] . ' (' . $_SERVER ['SERVER_ADDR'] . ':' . $_SERVER ['SERVER_PORT'] . ')',
+            '运行环境' => $_SERVER ["SERVER_SOFTWARE"],
+            'PHP运行方式' => php_sapi_name(),
+            '程序目录' => WEB_ROOT,
+            'MYSQL版本' => function_exists("mysql_close") ? mysql_get_client_info() : '不支持',
+            'GD库版本' => $gd,
             // 'MYSQL版本' => mysql_get_server_info(),
-            '上传附件限制'               => ini_get('upload_max_filesize'),
-            '执行时间限制'               => ini_get('max_execution_time') . "秒",
-            '内存使用状况'               => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
-            '硬盘使用状况'               => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
-            '服务器时间'                => date("Y年n月j日 H:i:s"),
-            '北京时间'                 => gmdate("Y年n月j日 H:i:s", time() + 8 * 3600),
+            '上传附件限制' => ini_get('upload_max_filesize'),
+            '执行时间限制' => ini_get('max_execution_time') . "秒",
+            '内存使用状况' => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
+            '硬盘使用状况' => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
+            '服务器时间' => date("Y年n月j日 H:i:s"),
+            '北京时间' => gmdate("Y年n月j日 H:i:s", time() + 8 * 3600),
 
-            'register_globals'     => get_cfg_var("register_globals") == "1" ? '√' : '×',
-            'magic_quotes_gpc'     => (1 === get_magic_quotes_gpc()) ? '√' : '×',
+            'register_globals' => get_cfg_var("register_globals") == "1" ? '√' : '×',
+            'magic_quotes_gpc' => (1 === get_magic_quotes_gpc()) ? '√' : '×',
             'magic_quotes_runtime' => (1 === get_magic_quotes_runtime()) ? '√' : '×',
         );
         $this->assign('server_info', $info);
@@ -463,6 +463,10 @@ class SystemController extends AdminBaseController
      */
     public function green()
     {
+        $DEFAULT_ADMIN_THEME = array('AdminLTE' => 'AdminLTE', 'Metronic' => 'Metronic');
+
+        $this->assign('DEFAULT_ADMIN_THEME', gen_opinion_list($DEFAULT_ADMIN_THEME, get_opinion('DEFAULT_ADMIN_THEME', true, "Metronic")));
+
 
         $this->display();
 

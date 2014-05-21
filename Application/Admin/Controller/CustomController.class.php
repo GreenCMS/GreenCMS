@@ -131,8 +131,13 @@ class CustomController extends AdminBaseController
         $data = $_POST;
         $Menu = D('Menu');
         $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
-        if ($result) $this->success('编辑成功', 'Admin/Custom/menu');
+        if ($result){
+            $this->success('编辑成功', 'Admin/Custom/menu');
+        }
+        else {
+            $this->error('编辑失败');
 
+        }
     }
 
 
@@ -169,13 +174,14 @@ class CustomController extends AdminBaseController
                 $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
 
                 $theme_temp = (array)$theme;
-                if ($theme_temp['name'] == get_kv('home_theme',true)) {
+                if ($theme_temp['name'] == get_kv('home_theme', true)) {
                     $theme_temp['status_name'] = '正在使用';
                     $theme_temp['status_url'] = '#';
-                    $theme_temp['using_color'] = 'green';
+                    $theme_temp['using_color'] = ' bg-green';
                     $theme_temp['action_name2'] = '使用中';
                     $theme_temp['action_url2'] = '#';
                 } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
+                    $theme_temp['using_color'] = ' bg-olive';
 
                     $theme_temp['status_name'] = '立即使用';
                     $theme_temp['status_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));
@@ -515,7 +521,7 @@ str;
         $this->assign('title', $addon->info['title']);
 
         if ($addon->custom_adminlist)
-          $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
+            $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
 
 
         $this->assign($param);
@@ -633,7 +639,7 @@ str;
         $addons = new $class;
         $info = $addons->info;
         if (!$info || !$addons->checkInfo()) //检测信息的正确性
-        $this->error('插件信息缺失');
+            $this->error('插件信息缺失');
         session('addons_install_error', null);
         $install_flag = $addons->install();
         if (!$install_flag) {
@@ -709,7 +715,7 @@ str;
         // 记录当前列表页的cookie
         Cookie('__forward__', $_SERVER['REQUEST_URI']);
         // dump($list);die;
-        
+
         $count = count($list);
         $page = I('get.page', C('PAGER'));
         $p = new GreenPage ($count, $page);
@@ -825,8 +831,8 @@ str;
 
 
                 $config = array(
-                    "savePath"   => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
-                    "maxSize"    => 300000, // 单位KB
+                    "savePath" => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
+                    "maxSize" => 300000, // 单位KB
                     "allowFiles" => array(".jpg", ".png")
                 );
 
@@ -874,8 +880,8 @@ str;
             if ($_FILES['img']['size'] != 0) {
 
                 $config = array(
-                    "savePath"   => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
-                    "maxSize"    => 300000, // 单位KB
+                    "savePath" => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
+                    "maxSize" => 300000, // 单位KB
                     "allowFiles" => array(".jpg", ".png")
                 );
 

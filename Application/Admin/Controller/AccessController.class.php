@@ -212,7 +212,7 @@ class AccessController extends AdminBaseController
                 $this->error("超级管理员信息不允许操作超级管理员信息或者不存在该用户", U("Admin/Access/index"));
             }
 
-            $this->assign("info", $this->getRoleListOption($info));
+             $this->assign("info", $this->getRoleListOption($info));
 
             $this->action = '编辑用户';
             $this->action_name = "editUser";
@@ -504,7 +504,7 @@ class AccessController extends AdminBaseController
             foreach ($list as $v) {
 
                 $disabled = $v ['id'] == 1 ? ' disabled="disabled"' : "";
-                $selected = $v ['id'] == $info ['name'] ['role_id'] ? ' selected="selected"' : "";
+                $selected = $v ['id'] == $info ['user_role'] ['role_id'] ? ' selected="selected"' : "";
                 $info ['roleOption'] .= '<option value="' . $v ['id'] . '"' . $selected . $disabled . '>' . $v ['name'] . '</option>';
             }
         } else {
@@ -588,4 +588,15 @@ class AccessController extends AdminBaseController
 
     }
 
+
+    public function profile($uid){
+
+         $user = D('User', 'Logic')->cache(true)->detail($uid);
+         $this->assign('user', $user);
+        $this->assign('action','用户档案');
+
+        $this->display();
+
+
+    }
 }

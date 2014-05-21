@@ -29,3 +29,12 @@ function upgrade_20140501_to_20140512()
     $Model->query($sql);
 
 }
+
+
+function upgrade_20140517_to_20140519()
+{
+
+    //删除旧版Admin
+//下次再做
+
+}

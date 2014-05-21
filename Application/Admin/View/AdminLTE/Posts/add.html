@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+    <script type="text/javascript">
+        window.UEDITOR_HOME_URL = "__ROOT__/Extend/Ueditor/";
+
+        var URL_upload = "{:U('Admin/Ueditor/imageUp')}";
+        var URL_fileUp = "{:U('Admin/Ueditor/fileUp')}";
+        var URL_scrawlUp = "{:U('Admin/Ueditor/scrawlUp')}";
+        var URL_getRemoteImage = "{:U('Admin/Ueditor/getRemoteImage')}";
+        var URL_imageManager = "{:U('Admin/Ueditor/imageManager')}";
+        var URL_imageUp = "{:U('Admin/Ueditor/imageUp')}";
+        var URL_getMovie = "{:U('Admin/Ueditor/getMovie')}";
+        var URL_home = "__ROOT__"+ "/" ;
+
+
+    </script>
+    <load href="__ROOT__/Extend/Ueditor/ueditor.config.js"/>
+    <load href="__ROOT__/Extend/Ueditor/ueditor.all.js"/>
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+
+
+                        <form action="{$handle}" id="add_post"
+                              name="add_post" class="form-horizontal">
+
+
+                        <div class="form-group">
+                            <label class="control-label">标题</label>
+
+                            <div class="controls">
+                                <input type="text" id="post_title" placeholder=""
+                                       class="form-control large" name="post_title"
+                                       value="{$info.post_title}"/> <span class="help-inline"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">内容</label>
+
+                            <div class="controls">
+
+                            <textarea class="span12 ckeditor" id="post_content"
+                                      name="post_content"
+                                     >{$info.post_content}</textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label class="control-label">分类标签</label>
+
+                            <div class="controls">
+                                <div class="btn-group">
+                                    <a class="btn btn-danger" href="#" data-toggle="dropdown">
+                                        选择分类 <i class="icon-angle-down"></i>
+                                    </a>
+
+                                    <div class="dropdown-menu hold-on-click dropdown-checkboxes">
+                                        <foreach name="cats" item="vCats">
+                                            <div><label><input
+                                                    type="checkbox" value="{$vCats.cat_id}" name="cats[]"
+                                                <foreach name="info['post_cat']" item="pcs">
+                                                    <if condition="$vCats['cat_id'] eq $pcs['cat_id']">
+                                                        checked="checked"
+                                                        <else/>
+                                                    </if>
+                                                </foreach>
+                                                /> {$vCats.cat_slug}
+                                            </label>
+                                            </div>
+                                        </foreach>
+                                    </div>
+                                </div>
+
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="#" data-toggle="dropdown">
+                                        选择标签 <i class="icon-angle-down"></i>
+                                    </a>
+
+                                    <div class="dropdown-menu hold-on-click dropdown-checkboxes">
+
+                                        <foreach name="tags" item="vTags" key="k"><input
+                                                type="checkbox" value="{$vTags.tag_id}" name="tags[]"
+                                            <foreach name="info['post_tag']" item="pts">
+                                                <if condition="$vTags['tag_id'] eq $pts['tag_id']">
+                                                    checked="checked"
+                                                    <else/>
+                                                </if>
+                                            </foreach>
+                                            /> {$vTags.tag_name}&nbsp;&nbsp;
+
+                                            <php>
+                                                if($k%5==0){
+                                                echo '<br />';
+                                                }
+
+                                            </php>
+
+                                        </foreach>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="form-group">
+                            <label class="control-label">文章类型</label>
+
+                            <div class="controls">
+
+                                <label class="radio">
+                                    <div class="radio">
+
+
+                                        <if condition="$info.post_type eq single ">
+									<span class="checked"><input type="radio"
+                                                                 name="post_type" value="single" checked=""></span>
+                                            <elseif condition="$info.post_type eq page "/>
+									<span class=""><input type="radio"
+                                                          name="post_type" value="single"></span>
+                                            <else/>
+									<span class="checked"><input type="radio"
+                                                                 name="post_type" value="single" checked=""></span>
+
+                                        </if>
+
+                                    </div>
+                                    文章
+                                </label>
+
+                                <label class="radio">
+                                    <div class="radio">
+
+
+                                        <if condition="$info.post_type eq page ">
+										<span class="checked"><input type="radio"
+                                                                     name="post_type" value="page" checked=""></span>
+                                            <else/>
+										<span class=""><input type="radio"
+                                                              name="post_type" value="page"></span>
+                                        </if>
+
+
+                                    </div>
+                                    页面
+                                </label>
+
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">文章模板</label>
+
+                            <div class="controls">
+
+
+                                <select class="small form-control" tabindex="1" name="post_template" id="post_template">
+
+                                    {$tpl_type}
+
+                                </select>
+                                <span class="help-inline"></span>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="control-label">置顶</label>
+
+                            <div class="controls">
+
+                                <label class="radio">
+                                    <div class="radio">
+
+
+                                        <if condition="$info.post_top eq 1 ">
+									<span class="checked"><input type="radio"
+                                                                 name="post_top" value="1" checked=""></span>
+                                            <else/>
+									<span class=""><input type="radio"
+                                                          name="post_top" value="1"></span>
+
+                                        </if>
+
+                                    </div>
+                                    是
+                                </label>
+
+                                <label class="radio">
+                                    <div class="radio">
+
+
+                                        <if condition="$info.post_top eq 0 ">
+										<span class="checked"><input type="radio"
+                                                                     name="post_top" value="0" checked=""></span>
+                                            <else/>
+										<span class=""><input type="radio"
+                                                              name="post_top" value="0"></span>
+                                        </if>
+
+
+                                    </div>
+                                    否
+                                </label>
+
+
+                            </div>
+                        </div>
+
+
+                        <input type="hidden" name="post_id" value="{$post_id}"/>
+
+                        <div class="form-actions">
+							<span style="font-size: 18px; color: red; font-weight: bold;"
+                                  id="success"></span>
+                            <button type="button" class="btn btn-info submit">
+                                <i class="icon-ok"></i> 发布
+                            </button>
+                        </div>
+
+                        <switch name="action_name">
+                            <case value="posts">
+                                <span id="action" style="display: none;">posts</span></case>
+                            <case
+                                    value="add">
+                                <span id="action" style="display: none;">addHandle</span></case>
+                            <default/>
+                            <span id="action" style="display: none;">addHandle</span></switch>
+                        </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+<script type="text/javascript" src="__PUBLIC__/share/js/functions.js"></script>
+<script type="text/javascript" src="__PUBLIC__/share/js/jquery.form.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        var editor;
+        //具体参数配置在  editor_config.js  中
+        var options = {
+            initialFrameWidth: 800, //初化宽度
+            initialFrameHeight: 400, //初化高度
+            focus: false, //初始化时，是否让编辑器获得焦点true或false
+            maximumWords: 99999, //允许的最大字符数 'fullscreen',
+            toolbars: [
+                [ 'fullscreen', 'source', '|', 'undo', 'redo',
+                    '|', 'bold', 'italic', 'underline', 'fontborder',
+                    'strikethrough', 'superscript', 'subscript',
+                    'removeformat', 'formatmatch', 'autotypeset',
+                    'blockquote', 'pasteplain', '|', 'forecolor',
+                    'backcolor', 'insertorderedlist',
+                    'insertunorderedlist', 'selectall', 'cleardoc', '|',
+                    'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+                    'customstyle', 'paragraph', 'fontfamily', 'fontsize',
+                    '|', 'directionalityltr', 'directionalityrtl',
+                    'indent', '|', 'justifyleft', 'justifycenter',
+                    'justifyright', 'justifyjustify', '|', 'touppercase',
+                    'tolowercase', '|', 'link', 'unlink', 'anchor', '|',
+                    'imagenone', 'imageleft', 'imageright', 'imagecenter',
+                    '|', 'insertimage', 'emotion', 'scrawl', 'insertvideo',
+                    'music', 'attachment', 'map', 'gmap', 'insertframe',
+                    'insertcode', 'webapp', 'pagebreak', 'template',
+                    'background', '|', 'horizontal', 'date', 'time',
+                    'spechars', 'wordimage', '|',
+                    'inserttable', 'deletetable',
+                    'insertparagraphbeforetable', 'insertrow', 'deleterow',
+                    'insertcol', 'deletecol', 'mergecells', 'mergeright',
+                    'mergedown', 'splittocells', 'splittorows',
+                    'splittocols', '|', 'print', 'preview', 'searchreplace' ]
+            ],
+
+        };
+        editor = new UE.ui.Editor(options);
+        editor.render("post_content");
+        /*editor.ready(function(){
+         editor.setContent('{$v.content}');
+         });*/
+
+        $(".submit").click(
+                function () {
+
+                    if (editor.hasContents()) {
+                        editor.sync();
+                    }
+
+                    var div = $("#success");
+
+                    if ($("post_title").val() == ''
+                            || $("#post_content").val() == '') {
+                        div.fadeIn().html("标题或内容不能为空");
+                        div.fadeOut(3000);
+                        return false;
+                    }
+                    var action = $("#action").html();
+                    var url = '__URL__/' + action;
+                    var formObj = $("#add_post");
+                    formObj.ajaxSubmit({
+                        url: url,
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == 1) {
+                                $(".submit").hide();
+                                div.fadeIn().html(data.info);
+                                div.fadeOut(3000);
+
+                            } else {
+                                div.fadeIn().html(data.info);
+                                div.fadeOut(5000);
+                            }
+                            if (data.url && data.url != '') {
+                                setTimeout(function () {
+                                    top.window.location.href = data.url;
+                                }, 1000);
+                            }
+                            if (data.url == '') {
+                                setTimeout(function () {
+                                    top.window.location.reload();
+                                }, 1000);
+                            }
+                        }
+                    });
+                });
+    });
+</script>
+</body>
+</html>

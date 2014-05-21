@@ -83,7 +83,8 @@
                                     <thead>
                                     <tr>
                                         <th style="width: 8px;">
-                                            <input type="checkbox" class="group-checkable" data-set="#post_table .checkboxes" />
+                                            <input type="checkbox" class="group-checkable"
+                                                   data-set="#post_table .checkboxes"/>
                                         </th>
                                         <th style="width:100px;">姓名</th>
                                         <th style="width:200px;">标题</th>
@@ -95,7 +96,8 @@
                                     <tbody>
                                     <foreach name="message" item="v">
                                         <tr class="odd gradeX">
-                                            <td><input type="checkbox" class="checkboxes" value="{$v['id']}" name="message[]"/>
+                                            <td><input type="checkbox" class="checkboxes" value="{$v['id']}"
+                                                       name="message[]"/>
                                             </td>
                                             <td><a href="#">{$v.name}</a></td>
                                             <td>{$v.title}</td>
@@ -105,13 +107,16 @@
                                             <td>{:getTimestamp($v['date'],'Y-m-d H:i') }</td>
                                             <td>
                                                 <notpresent name="v.reply">
-                                                    <a class="btn mini green" href="javascript:;" onclick="ajax_reply({$v.id})">回复</a>
+                                                    <a class="btn mini green" href="javascript:;"
+                                                       onclick="ajax_reply({$v.id})">回复</a>
                                                     &nbsp;&nbsp;&nbsp;
                                                 </notpresent>
-                                                <a class="btn mini red del_btn_{$v.id}" href="javascript:;" onclick="ajax_del({$v.id})">删除</a>
+                                                <a class="btn mini red del_btn_{$v.id}" href="javascript:;"
+                                                   onclick="ajax_del({$v.id})">删除</a>
                                                 &nbsp;&nbsp;&nbsp;
                                                 <eq name="v.status" value="0">
-                                                    <a href="javascript:;" onclick="ajax_approve({$v.id})"><span class="label label-inverse approve_{$v.id}">待审核</span></a>
+                                                    <a href="javascript:;" onclick="ajax_approve({$v.id})"><span
+                                                            class="label label-inverse approve_{$v.id}">待审核</span></a>
                                                 </eq>
                                             </td>
                                         </tr>
@@ -122,12 +127,17 @@
                                             <td>
                                                 <div class="control-group">
                                                     <label class="control-label"></label>
+
                                                     <div class="controls">
-                                                        <textarea name="reply" class="large m-wrap reply_content_{$v.id}" rows="3" ></textarea>
+                                                        <textarea name="reply"
+                                                                  class="large m-wrap reply_content_{$v.id}"
+                                                                  rows="3"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-actions">
-                                                    <button type="button" class="btn blue reply_btn"><i class="icon-ok"></i> 回复</button>
+                                                    <button type="button" class="btn blue reply_btn"><i
+                                                            class="icon-ok"></i> 回复
+                                                    </button>
                                                     <button type="reset" class="btn">重置</button>
                                                 </div>
                                             </td>
@@ -137,14 +147,14 @@
                                     </foreach>
                                     </tbody>
                                 </table>
-                                
+
                             </div>
                         </form>
                         <div class="pagination">
                             <ul>{$pager}</ul>
                         </div>
                     </div>
-                    <!-- END EXAMPLE TABLE PORTLET-->    
+                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
             </div>
             <!-- END PAGE CONTENT-->
@@ -170,23 +180,23 @@
         $(".reply").fadeOut();
         $(".reply_" + id).fadeIn();
 
-        $(".reply_btn").click(function() {
+        $(".reply_btn").click(function () {
             var url = "{:addons_url('Guestbook://Guestbook/reply')}";
             $(".reply_btn").text("正在回复...");
 
             var reply = $(".reply_content_" + id).val();
             // alert(reply);
             $.post(url, {id: id, reply: reply},
-                function (data) {
-                    if (data.status == 1) {                        
+                    function (data) {
+                        if (data.status == 1) {
+                            window.location.reload(true);
+                        }
+                        else {
+                            // alert(data);
+                        }
                         window.location.reload(true);
-                     }
-                     else {
-                        // alert(data);
-                     }
-                    window.location.reload(true);
-                });
-        }); 
+                    });
+        });
     }
 
     function ajax_del(id) {
@@ -194,33 +204,33 @@
         $(".del_btn_" + id).text("正在删除...");
 
         $.post(url, {id: id},
-            function (data) {
-                if (data.status == 1) {                    
+                function (data) {
+                    if (data.status == 1) {
+                        window.location.reload(true);
+                    }
+                    else {
+                        // alert(data);
+                    }
                     window.location.reload(true);
-                 }
-                 else {
-                    // alert(data);
-                 }
-                window.location.reload(true);
-            });
+                });
     }
 
     function ajax_approve(id) {
         var url = "{:addons_url('Guestbook://Guestbook/approve')}";
         $(".approve_" + id).text("正在审核...");
         $.post(url, {id: id},
-            function (data) {
-                if (data.status == 1) {                    
+                function (data) {
+                    if (data.status == 1) {
+                        window.location.reload(true);
+                    }
+                    else {
+                        // alert(data);
+                    }
                     window.location.reload(true);
-                 }
-                 else {
-                    // alert(data);
-                 }
-                window.location.reload(true);
-            });
+                });
     }
 
-    $(".delAll").click(function() {
+    $(".delAll").click(function () {
         $("#messageForm").submit();
     });
 </script>
