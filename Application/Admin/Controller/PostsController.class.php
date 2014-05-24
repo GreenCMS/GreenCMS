@@ -487,7 +487,7 @@ class PostsController extends AdminBaseController
             }
 
             $this->assign("cats", $cats);
-            $this->assign("cats", $cats);
+            $this->assign("tags", $tags);
 
             $this->assign("info", $post);
             $this->assign("handle", U('Admin/Posts/posts'));
