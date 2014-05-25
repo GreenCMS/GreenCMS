@@ -42,14 +42,9 @@ class IndexController extends AdminBaseController
         if ($cheack_res) {
             $message = '<li><!-- start message -->
                                     <a href="' . U("Admin/System/update") . '">
-                                        <div class="pull-left">
-                                            <img src="' . get_opinion("site_url") . '/public/baracktocat.jpg" class="img-circle" alt="User Image"/>
-                                        </div>
-                                        <h4>
-                                            系统升级
-                                            <small><i class="fa fa-clock-o"></i> 刚刚</small>
-                                        </h4>
-                                        <p>发现新的可升级版本</p>
+
+<i class="fa fa-laptop"></i>
+                                         发现新的可升级版本
                                     </a>
              </li>';
 

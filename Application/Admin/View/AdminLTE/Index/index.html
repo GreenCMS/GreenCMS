@@ -193,13 +193,13 @@
         $.get(url, function (data) {
             if (data != 'none') {
                 //发现新版本
-                $('#message_box').append(data);
+                $('#warning_box').append(data);
                 $('#sys_up').show();
 
-                var n=$("#message_box_num").html();
+                var n=$("#warning_box_num").html();
                 var num=parseInt(n)+1;
-                $('#message_box_num').html(num);
-                $('#message_box_num2').html(num);
+                $('#warning_box_num').html(num);
+                $('#warning_box_num2').html(num);
 
 
             } else {
