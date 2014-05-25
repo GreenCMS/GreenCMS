@@ -9,15 +9,15 @@
 
 
 /**
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  * 功能：系统邮件发送函数
-+----------------------------------------------------------
- * @param string $to    接收邮件者邮箱
- * @param string $name  接收邮件者名称
+ * +----------------------------------------------------------
+ * @param string $to 接收邮件者邮箱
+ * @param string $name 接收邮件者名称
  * @param string $subject 邮件主题
- * @param string $body    邮件内容
+ * @param string $body 邮件内容
  * @param string $attachment 附件列表
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  * @param string $config
  *
  * @return boolean
@@ -28,12 +28,12 @@ function send_mail($to, $name, $subject = '', $body = '', $attachment = null, $c
     // $config = is_array($config) ? $config : C('SYSTEM_EMAIL');
     //从数据库读取smtp配置
     $config = array(
-        'smtp_host'  => C('smtp_host'),
-        'smtp_port'  => C('smtp_port'),
-        'smtp_user'  => C('smtp_user'),
-        'smtp_pass'  => C('smtp_pass'),
+        'smtp_host' => C('smtp_host'),
+        'smtp_port' => C('smtp_port'),
+        'smtp_user' => C('smtp_user'),
+        'smtp_pass' => C('smtp_pass'),
         'from_email' => C('from_email'),
-        'from_name'  => C('title')
+        'from_name' => C('title')
     );
 
     // Log::write(array_to_str($config));
@@ -106,7 +106,6 @@ function int_to_status($i)
 }
 
 
-
 /**
  * @param $i
  * @return mixed
@@ -119,7 +118,6 @@ function int_to_login_type($i)
 }
 
 
-
 /**
  * @param $string
  * @return mixed
@@ -130,4 +128,16 @@ function get_real_string($string)
     $map = array('single' => '文章', 'page' => '页面');
 
     return $map[$string];
+}
+
+
+function array_column_5($array, $col_value, $col_key)
+{
+
+    $res = array();
+    foreach ($array as $item) {
+        $res[$item[$col_key]] = $item[$col_value];
+
+    }
+    return $res;
 }

@@ -932,7 +932,7 @@ str;
             $this->assign('imgurl', __ROOT__ . '/Public/share/img/no+image.gif');
 
             $link_groups = D('Link_group', 'Logic')->select();
-            $link_group_select = array_column($link_groups, 'link_group_name', 'link_group_id');
+            $link_group_select = array_column_5($link_groups, 'link_group_name', 'link_group_id');
             $this->assign('link_group', gen_opinion_list($link_group_select));
 
 
@@ -990,7 +990,7 @@ str;
             $link = D('Links', 'Logic')->detail($id);
 
             $link_groups = D('Link_group', 'Logic')->select();
-            $link_group_select = array_column($link_groups, 'link_group_name', 'link_group_id');
+            $link_group_select = array_column_5($link_groups, 'link_group_name', 'link_group_id');
             $this->assign('link_group', gen_opinion_list($link_group_select,$link['link_group_id']));
 
 
