@@ -38,3 +38,24 @@ function upgrade_20140517_to_20140519()
 //下次再做
 
 }
+
+
+function upgrade_20140520_to_20140525()
+{
+    $db_prefix = C('db_prefix');
+
+    $Model = new \Think\Model();
+
+    $sql = "DROP TABLE IF EXISTS `{$db_prefix}link_group`";
+    $Model->query($sql);
+
+    $sql = "CREATE TABLE `{$db_prefix}link_group` (
+`link_group_id`  bigint(20) NOT NULL AUTO_INCREMENT ,
+  `link_group_name`  varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
+  PRIMARY KEY (`link_group_id`)
+)  ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci COMMENT='链接分类表';";
+    $Model->query($sql);
+
+    $sql = "ALTER TABLE `{$db_prefix}links` ADD COLUMN `link_group_id` bigint(20)";
+    $Model->query($sql);
+}

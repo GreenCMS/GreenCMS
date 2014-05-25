@@ -65,7 +65,8 @@ $menu_arr = array(
             'Custom/plugin' => '插件管理',
             'Custom/theme' => '主题管理',
             'Custom/menu' => '菜单管理',
-            'Custom/links' => '链接管理',
+//            'Custom/links' => '链接管理',
+            'Custom/linkgroup' => '链接管理',
             //      'Custom/slider'  => '轮播管理',
 
         ),
