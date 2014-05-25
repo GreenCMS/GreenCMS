@@ -486,8 +486,7 @@ img {
     width: 28px;
     position: absolute;
     height: 28px;
-    background: url(../images/1/indexbg.png) no-repeat;
-    background-position: 4px -43px;
+    background: url(../images/1/indexbg.png) no-repeat 4px -43px;
     top: 0px;
     right: 0px;
     border: none;
@@ -497,8 +496,7 @@ img {
     padding-right: 10px;
     line-height: 30px;
     color: #fff;
-    background: url(../images/1/indexbg.png) no-repeat;
-    background-position: 53px -103px;
+    background: url(../images/1/indexbg.png) no-repeat 53px -103px;
     float: left;
     display: inline;
     margin-left: 12px;
@@ -655,8 +653,7 @@ img {
     left: 0px;
     z-index: 2;
     width: 100%;
-    background: #f9f3e0 url(../images/1/banner.png) no-repeat;
-    background-position: center top;
+    background: #f9f3e0 url(../images/1/banner.png) no-repeat center top;
 
 }
 
@@ -709,7 +706,10 @@ img {
 }
 
 .right_box .header {
-    background-color: #2957a2;
+
+    background: url(../pictures/title.png) 0 repeat-x;
+
+    /*background-color: #2957a2;*/
     height: 40px;
     font-size: 20px;
     color: #FFFFFF;

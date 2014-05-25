@@ -38,20 +38,12 @@ class IndexController extends AdminBaseController
         $UpdateEvent = new \Common\Event\UpdateEvent();
         $cheack_res = $UpdateEvent->check();
 
-
         if ($cheack_res) {
-            $message = '<li><!-- start message -->
-                                    <a href="' . U("Admin/System/update") . '">
-
-<i class="fa fa-laptop"></i>
-                                         发现新的可升级版本
-                                    </a>
-             </li>';
-
+            $message =
+                '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 发现新的可升级版本</a></li>';
         } else {
             $message = 'none';
         }
-
 
         die($message);
     }

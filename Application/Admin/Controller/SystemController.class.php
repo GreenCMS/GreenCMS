@@ -473,5 +473,9 @@ class SystemController extends AdminBaseController
 
     }
 
+    public function phpinfo()
+    {
+        $this->show(phpinfo());
+    }
 
 }

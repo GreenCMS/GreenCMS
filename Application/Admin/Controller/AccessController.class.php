@@ -118,6 +118,20 @@ class AccessController extends AdminBaseController
     }
 
 
+    public function rebuildAccess()
+    {
+        D('Node')->where('1')->delete(); //清空
+        D('Access')->where('1')->delete(); //清空
+
+        $Access = new \Install\Event\AccessEvent();
+        $Access->initAdmin();
+        $Access->initWeixin();
+
+
+        $this->success("重建完成，请重新分配权限");
+
+    }
+
     // 添加用户
     /**
      *
@@ -212,7 +226,7 @@ class AccessController extends AdminBaseController
                 $this->error("超级管理员信息不允许操作超级管理员信息或者不存在该用户", U("Admin/Access/index"));
             }
 
-             $this->assign("info", $this->getRoleListOption($info));
+            $this->assign("info", $this->getRoleListOption($info));
 
             $this->action = '编辑用户';
             $this->action_name = "editUser";
@@ -589,11 +603,12 @@ class AccessController extends AdminBaseController
     }
 
 
-    public function profile($uid){
+    public function profile($uid)
+    {
 
-         $user = D('User', 'Logic')->cache(true)->detail($uid);
-         $this->assign('user', $user);
-        $this->assign('action','用户档案');
+        $user = D('User', 'Logic')->cache(true)->detail($uid);
+        $this->assign('user', $user);
+        $this->assign('action', '用户档案');
 
         $this->display();
 

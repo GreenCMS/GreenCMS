@@ -34,6 +34,7 @@ class PostsController extends AdminBaseController
         $page = I('get.page', C('PAGER'));
         $info = array('post_status' => $post_status);
         $info['post_content|post_title'] = array('like', "%$keyword%");
+
         //投稿员只能看到自己的
         if (!$this->noVerify()) {
             $info['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
@@ -42,13 +43,13 @@ class PostsController extends AdminBaseController
         if ($cat != '') {
             $post_ids = D('Cats', 'Logic')->getPostsId($cat);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
-            $cat_detail=D('Cats', 'Logic')->detail($cat);
+            $cat_detail = D('Cats', 'Logic')->detail($cat);
             $cat = '关于分类 ' . $cat_detail['cat_name'] . ' 的';
         } else if ($tag != '') {
             $post_ids = D('Tags', 'Logic')->getPostsId($tag);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
-            $tag_detail=D('Tags', 'Logic')->detail($tag);
-            $tag = '关于标签' . $tag_detail['tag_name']  . ' 的';
+            $tag_detail = D('Tags', 'Logic')->detail($tag);
+            $tag = '关于标签' . $tag_detail['tag_name'] . ' 的';
         } else if ($keyword != '') {
             $key = '关于' . $keyword . ' 的';
 
@@ -78,7 +79,6 @@ class PostsController extends AdminBaseController
     public function indexHandle()
     {
         if (I('post.keyword') != '') {
-
             $this->redirect('Admin/Posts/' . I('post.post_type', 'single'), array('keyword' => I('post.keyword')));
         }
 
@@ -131,34 +131,11 @@ class PostsController extends AdminBaseController
     public function add()
     {
 
-        $tpl_static_path = WEB_ROOT . 'Public/' . get_kv('home_theme') . '/';
-        if (file_exists($tpl_static_path . 'theme.xml')) {
-            $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
-            $tpl_type = (object_to_array($theme->post));
-            $tpl_type_list = array();
-            foreach ($tpl_type as $key => $value) {
-                $tpl_type_list[$value['tpl']] = $value['name'];
-            }
-        } else {
-            $tpl_type_list = array(
-                "single" => "文章",
-                "page"   => "页面"
-            );
-        }
-
-        $this->assign('tpl_type', gen_opinion_list($tpl_type_list));
+        $PostEvent = new \Admin\Event\PostsEvent();
 
 
-        $post = json_decode(gzuncompress(cookie('post_add')), true);
-
-        foreach ($post['post_tag'] as $key => $value) {
-            unset($post['post_tag'][$key]);
-            $post['post_tag'][$key]['tag_id'] = $value;
-        }
-        foreach ($post['post_cat'] as $key => $value) {
-            unset($post['post_cat'][$key]);
-            $post['post_cat'][$key]['cat_id'] = $value;
-        }
+        $tpl_type_list = $PostEvent->get_tpl_type_list();
+        $post = $PostEvent->restore_from_cookie();
 
 
         //投稿员只能看到自己的
@@ -179,6 +156,7 @@ class PostsController extends AdminBaseController
             $tags = D('Tags', 'Logic')->select();
         }
 
+        $this->assign('tpl_type', gen_opinion_list($tpl_type_list));
 
         $this->assign("info", $post);
         $this->assign("tags", $tags);
@@ -253,7 +231,8 @@ class PostsController extends AdminBaseController
             }
 
         } else {
-            cookie('post_add', gzcompress(json_encode($data)), 3600000); //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
+            cookie('post_add', gzcompress(json_encode($data)), 3600000);
+            //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
             $this->json_return(0, "发布失败");
         }
 
@@ -352,6 +331,18 @@ class PostsController extends AdminBaseController
         }
     }
 
+    public function emptyRecycleHandle()
+    {
+        $where['post_status'] = 'preDel';
+
+        if (D('Posts', 'Logic')->where($where)->relatioin(true)->delete()) {
+            $this->success('清空回收站成功');
+        } else {
+            $this->error('清空回收站失败');
+        }
+
+    }
+
 
     public function reverify($post_type = "all")
     {
@@ -387,9 +378,6 @@ class PostsController extends AdminBaseController
     }
 
 
-
-
-
     /**
      * @param $id
      */
@@ -399,7 +387,7 @@ class PostsController extends AdminBaseController
         $this->action = '编辑文章';
         $this->action_name = 'posts';
         $this->post_id = $post_id = $_GET['id'] ? (int)$_GET['id'] : false;
-        $M = M("Posts");
+        $Posts = M("Posts");
         if (IS_POST) {
             $data = $_POST;
 
@@ -410,13 +398,13 @@ class PostsController extends AdminBaseController
 
             if (!empty($_POST['cats'])) {
                 foreach ($_POST['cats'] as $cat_id) {
-                    M("post_cat")->add(array("cat_id" => $cat_id, "post_id" => $data['post_id']));
+                    M("Post_cat")->add(array("cat_id" => $cat_id, "post_id" => $data['post_id']));
                 };
             }
 
             if (!empty($_POST['tags'])) {
                 foreach ($_POST['tags'] as $tag_id) {
-                    M("post_tag")->add(array("tag_id" => $tag_id, "post_id" => $data['post_id']));
+                    M("Post_tag")->add(array("tag_id" => $tag_id, "post_id" => $data['post_id']));
                 }
             }
 
@@ -430,7 +418,7 @@ class PostsController extends AdminBaseController
             }
 
 
-            if ($M->save($data)) {
+            if ($Posts->save($data)) {
                 $this->json_return(1, "已经更新", $url);
             } else {
                 $this->json_return(0, "更新失败", $url);
@@ -450,20 +438,8 @@ class PostsController extends AdminBaseController
                 $this->error("不存在该记录");
             }
 
-            $tpl_static_path = WEB_ROOT . 'Public/' . get_kv('home_theme') . '/';
-            if (file_exists($tpl_static_path . 'theme.xml')) {
-                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
-                $tpl_type = (object_to_array($theme->post));
-                $tpl_type_list = array();
-                foreach ($tpl_type as $key => $value) {
-                    $tpl_type_list[$value['tpl']] = $value['name'];
-                }
-            } else {
-                $tpl_type_list = array(
-                    "single" => "文章",
-                    "page"   => "页面"
-                );
-            }
+            $PostEvent = new \Admin\Event\PostsEvent();
+            $tpl_type_list = $PostEvent->get_tpl_type_list();
 
             $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
 
@@ -471,7 +447,7 @@ class PostsController extends AdminBaseController
             //投稿员只能看到自己的
             if (!$this->noVerify()) {
                 $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
-                $user = D('User', 'Logic')->cache(true)->detail($user_id);
+                $user = D('User', 'Logic')->detail($user_id);
                 $role_id = $user["user_role"] ["role_id"];
                 $role = D('Role')->where(array('id' => $role_id))->find();
                 $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
@@ -490,7 +466,7 @@ class PostsController extends AdminBaseController
             $this->assign("tags", $tags);
 
             $this->assign("info", $post);
-            $this->assign("handle", U('Admin/Posts/posts'));
+            $this->assign("handle", U('Admin/Posts/posts', array('id' => $id), true, false));
 
             $this->assign("publish", "更新");
             $this->display('add');
@@ -648,12 +624,12 @@ class PostsController extends AdminBaseController
         $data['tag_slug'] = urlencode(I('post.tag_slug'));
 
         if ($data['tag_slug'] == '') {
-            $data['tag_slug'] = urlencode( $data['tag_name']) ;
+            $data['tag_slug'] = urlencode($data['tag_name']);
         }
 
         if (D('Tags')->data($data)->add()) {
             $this->success('标签添加成功', U('Admin/Posts/tag'));
-        }else{
+        } else {
 
             $this->error('标签添加失败，有可能是tag_slug相同');
 
@@ -685,7 +661,7 @@ class PostsController extends AdminBaseController
         $data['tag_slug'] = urlencode(I('post.tag_slug'));
 
         if ($data['tag_slug'] == '') {
-            $data['tag_slug'] = urlencode( $data['tag_name']) ;
+            $data['tag_slug'] = urlencode($data['tag_name']);
         }
 
         if ($Tags->where(array('tag_id' => $id))->save($data)) {
