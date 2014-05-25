@@ -30,7 +30,7 @@ class Green extends TagLib
             'alias' => 'rli'
         ),
         'friendlist' => array(
-            'attr' => 'length,order,num,link_tag,li_attr,ul_attr',
+            'attr' => 'length,order,num,link_tag,link_group_id,li_attr,ul_attr',
             'alias' => 'fli'
         ),
         'accesscontrol' => array(
@@ -40,7 +40,7 @@ class Green extends TagLib
 
 
         'optionfriendlist' => array(
-            'attr' => 'cat,num',
+            'attr' => 'cat,num,link_group_id,order',
             'alias' => 'opfli'
         ),
 
@@ -129,13 +129,26 @@ class Green extends TagLib
     {
 
         $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 5;
-        $link_tag = isset ($tag ['link_tag']) ? $tag ['link_tag'] : 'Home';
+        $link_tag = isset ($tag ['link_tag']) ? $tag ['link_tag'] : '';
+        $link_group_id = isset ($tag ['link_group_id']) ? $tag ['link_group_id'] : '';
         $order = isset ($tag ['order']) ? $tag ['order'] : 'link_sort desc ,link_id asc';
         $li_attr = isset ($tag ['li_attr']) ? $tag ['li_attr'] : '';
         $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
         $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
 
-        $link_list = D('Links', 'Logic')->getList($num, $link_tag, $order);
+
+        if($link_tag!=''){
+
+            $condition['link_tag']=$link_tag;
+        }else if($link_group_id!=''){
+            $condition['link_group_id']=$link_group_id;
+        }else{
+
+        }
+
+        $link_list = D('Links', 'Logic')->where($condition)->order($order)->limit($num)->select();
+
+
 
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($link_list as $value) {
@@ -219,10 +232,25 @@ class Green extends TagLib
     {
 
         $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 0;
-        $link_tag = isset ($tag ['cat']) ? $tag ['cat'] : 'Home';
+        $link_tag = isset ($tag ['cat']) ? $tag ['cat'] : '';
+        $order = isset ($tag ['order']) ? $tag ['order'] : 'link_sort desc ,link_id asc';
+        $link_group_id = isset ($tag ['link_group_id']) ? $tag ['link_group_id'] : '';
 
 
-        $link_list = D('Links', 'Logic')->getList($num, $link_tag);
+
+        if($link_tag!=''){
+            $condition['link_tag']=$link_tag;
+        }else if($link_group_id!=''){
+            $condition['link_group_id']=$link_group_id;
+        }else{
+            $condition=array();
+        }
+
+        $link_list = D('Links', 'Logic')->where($condition)->order($order)->limit($num)->select();
+
+
+
+
 
         $parseStr = '';
         foreach ($link_list as $value) {
