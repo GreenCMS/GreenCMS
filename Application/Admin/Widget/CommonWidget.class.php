@@ -48,11 +48,16 @@ class CommonWidget extends Controller
     {
         C('admin_sub_menu', array_change_key_case(C('admin_sub_menu')));
         C('admin_big_menu', array_change_key_case(C('admin_big_menu')));
+        C('admin_big_menu_icon', array_change_key_case(C('admin_big_menu_icon')));
 
         $accessList = RBAC::getAccessList($_SESSION [C('USER_AUTH_KEY')]);
         $cache_access = array_change_key_case($accessList [strtoupper(MODULE_NAME)]);
 
         $cache = C('admin_big_menu');
+
+        $icon = C('admin_big_menu_icon');
+
+
         if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache as $cache_key => $cache_each) {
                 if (!array_key_exists($cache_key, $cache_access)) {
@@ -91,7 +96,8 @@ class CommonWidget extends Controller
         $i = 1;
         $menu = "";
         foreach ($cache as $url => $name) {
-             if ($i == 1) {
+            if ($i == 1) {
+                //first one
 
                 $css = $url == strtolower(CONTROLLER_NAME) || !$cache [strtolower(CONTROLLER_NAME)] ? "active treeview" : "treeview";
                 $menu .= '
@@ -115,30 +121,36 @@ class CommonWidget extends Controller
                 }
 
                 $menu .= '</ul></li>';
-            } else if ($i == $count) {
+            }
+            //              else if ($i == $count) {
+//                 //last one
+//
+//                 $class='fa fa-barcode';
+//                $css = $url == strtolower(CONTROLLER_NAME) ? "treeview active" : "treeview";
+//                $menu .= '<li class="' . $css . '"><a href="#">
+//                    <i class="'.$class.'"></i>
+//                    <span>' . $name . '</span>
+//                   <i class="fa fa-angle-left pull-right"></i>
+//
+//                    </a><ul class="treeview-menu">';
+//
+//                $cache = C('admin_sub_menu');
+//                foreach ($cache as $big_url => $big_name) {
+//                    if ($big_url == $url)
+//                        foreach ($big_name as $sub_url => $sub_name) {
+//                            $sub_true_url = explode('/', $sub_url);
+//                            $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
+//                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
+//                        }
+//                }
+//                $menu .= '</ul></li>';
+//            }
+            else {
 
+                $class = 'fa ' . $icon[$url];
                 $css = $url == strtolower(CONTROLLER_NAME) ? "treeview active" : "treeview";
                 $menu .= '<li class="' . $css . '"><a href="#">
-                    <i class="fa fa-th"></i>
-                    <span>' . $name . '</span>
-                   <i class="fa fa-angle-left pull-right"></i>
-
-                    </a><ul class="treeview-menu">';
-
-                $cache = C('admin_sub_menu');
-                foreach ($cache as $big_url => $big_name) {
-                    if ($big_url == $url)
-                        foreach ($big_name as $sub_url => $sub_name) {
-                            $sub_true_url = explode('/', $sub_url);
-                            $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
-                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
-                        }
-                }
-                $menu .= '</ul></li>';
-            } else {
-                $css = $url == strtolower(CONTROLLER_NAME) ? "treeview active" : "treeview";
-                $menu .= '<li class="' . $css . '"><a href="#">
-                    <i class="fa fa-th"></i>
+                    <i class="' . $class . '"></i>
                     <span>' . $name . '</span>
                   <i class="fa fa-angle-left pull-right"></i>
 

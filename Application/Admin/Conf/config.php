@@ -10,6 +10,18 @@
 
 $menu_arr = array(
 
+    'admin_big_menu_icon' => array(
+         'Posts' => 'fa-book',
+        'Data' => 'fa-bar-chart-o',
+         'Media' => 'fa-camera',
+        'Custom' => 'fa-desktop',
+        'Comments'=>'fa-comment',
+        'Access' => 'fa-lock',
+        'Tools' => 'fa-gavel',
+        'System' => 'fa-gear',
+    ),
+
+
     'admin_big_menu' => array(
         'Index' => '首页',
         'Posts' => '文章页面',
