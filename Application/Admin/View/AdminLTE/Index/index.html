@@ -46,7 +46,20 @@
 
                             <div class="well">
                                 <h4>系统发布</h4>
-                                GreenCMS_v2.1.0519已发布
+
+                                <p> 当前版本: GreenCMS {:get_opinion('software_version')} &nbsp; 发布时间:
+                                    {:get_opinion('software_build')} &nbsp;
+
+
+                                <div style="display: none" id="sys_up">
+
+                                    <a href="{:U('Admin/System/update')}">发现新版本，立即更新</a>
+
+                                </div>
+
+                                </p>
+
+
                             </div>
                             <div class="well well-large">
                                 <h4>QQ讨论</h4>
@@ -55,10 +68,6 @@
                                 <h4>服务支持</h4>
                                 Email：zts1993@gmail.com
 
-                            </div>
-                            <div class="well">
-                                <h4>Github</h4>
-                                Github：<a href="https://github.com/GreenCMS/greencms">https://github.com/zts1993/greencms</a>
                             </div>
 
 
@@ -76,10 +85,11 @@
 
                             <div class="row">
 
-                                <div class="col-md-5 wel">
+
+                                <div class="col-md-4 wel">
 
 
-                                <img style="width: 100%" src="__PUBLIC__/baracktocat.jpg" alt=""/>
+                                    <img style="width: 100%" src="__PUBLIC__/baracktocat.jpg" alt=""/>
 
                                 </div>
 
@@ -152,9 +162,14 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
+                            <div class="well">
+                                <h4>Github</h4>
+                                Github：<a href="https://github.com/GreenCMS/greencms">https://github.com/zts1993/greencms</a>
+                            </div>
+                            <div class="well">
 
-                            {:hook('AdminIndex', 'Widget')}
-
+                                {:hook('AdminIndex', 'Widget')}
+                            </div>
 
                         </div>
                     </div>
@@ -170,5 +185,39 @@
 
 <include file="Public:foot"/>
 
+<script>
+    $(document).ready(function () {
+
+        var url = '{:U("Admin/Index/checkVersion")}';
+
+        $.get(url, function (data) {
+            if (data != 'none') {
+                //发现新版本
+                $('#message_box').append(data);
+                $('#sys_up').show();
+
+                var n=$("#message_box_num").html();
+                var num=parseInt(n)+1;
+                $('#message_box_num').html(num);
+                $('#message_box_num2').html(num);
+
+
+            } else {
+                $('#sys_up').show();
+                $('#sys_up').html("当前为最新版本");
+            }
+        });
+
+
+        var url = '{:U("Admin/Index/ajaxCron")}';
+
+        $.get(url, function (data) {
+
+        });
+
+    });
+
+
+</script>
 </body>
 </html>

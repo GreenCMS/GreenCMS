@@ -33,6 +33,42 @@ class IndexController extends AdminBaseController
     }
 
 
+    public function checkVersion()
+    {
+        $UpdateEvent = new \Common\Event\UpdateEvent();
+        $cheack_res = $UpdateEvent->check();
+
+
+        if ($cheack_res) {
+            $message = '<li><!-- start message -->
+                                    <a href="' . U("Admin/System/update") . '">
+                                        <div class="pull-left">
+                                            <img src="' . get_opinion("site_url") . '/public/baracktocat.jpg" class="img-circle" alt="User Image"/>
+                                        </div>
+                                        <h4>
+                                            系统升级
+                                            <small><i class="fa fa-clock-o"></i> 刚刚</small>
+                                        </h4>
+                                        <p>发现新的可升级版本</p>
+                                    </a>
+             </li>';
+
+        } else {
+            $message = 'none';
+        }
+
+
+        die($message);
+    }
+
+
+    public function ajaxCron()
+    {
+        die('ok');
+
+    }
+
+
     /**
      *
      */
@@ -51,10 +87,10 @@ class IndexController extends AdminBaseController
             $this->error('两次密码不同');
         }
 
-         $User = D('User', 'Logic');
+        $User = D('User', 'Logic');
 
         $user = $User->detail((int)$_SESSION [C('USER_AUTH_KEY')]);
-        if ($user['user_pass']!=encrypt(I('post.opassword'))) {
+        if ($user['user_pass'] != encrypt(I('post.opassword'))) {
             $this->error("原用户密码不正确");
         }
 
