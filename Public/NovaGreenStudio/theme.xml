@@ -1,0 +1,27 @@
+<theme>
+    <name>NovaGreenStudio</name>
+    <version>2</version>
+    <build>20140527</build>
+    <description>Nova Theme For GreenStudio</description>
+    <author>ZTS</author>
+    <preview>/NovaGreenStudio/preview.jpg</preview>
+    <preview_big>/NovaGreenStudio/preview_big.jpg</preview_big>
+    <copyright>GreenStudio 2014</copyright>
+    <tpl_view>Application/Home/View/NovaGreenStudio</tpl_view>
+    <tpl_static>Public/NovaGreenStudio</tpl_static>
+    <introduction>GreenStudio 2015主题</introduction>
+    <post>
+        <single>
+            <name>文章</name>
+            <tpl>single</tpl>
+        </single>
+        <page>
+            <name>无侧栏</name>
+            <tpl>page</tpl>
+        </page>
+        <guestbook>
+            <name>留言板</name>
+            <tpl>guestbook</tpl>
+        </guestbook>
+    </post>
+</theme>

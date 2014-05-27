@@ -1,0 +1,13 @@
+<!-- Tags -->
+<div class="widget">
+    <h3>标签</h3>
+    <ul class="tag-cloud unstyled">
+        <volist name="tagClouds" id="vo">
+            <li><a class="btn btn-mini btn-primary" href="{$vo.tag_id|getTagURLByID}">
+                {$vo.tag_name}
+            </a></li> &nbsp;
+        </volist>
+
+    </ul>
+</div>
+

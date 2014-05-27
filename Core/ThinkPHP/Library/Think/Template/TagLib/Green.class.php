@@ -188,7 +188,7 @@ class Green extends TagLib
         foreach ($post_list as $value) {
             $parseStr .= '<li ' . $li_attr . '>
             <a href="' . getSingleURLByID($value['post_id']) . '" title="' .
-                $value['post_title'] . '"> <i class="icon-circle-arrow-right"></i>
+                $value['post_title'] . '">
                 ' . mb_substr($value['post_title'], 0, $length, "UTF-8") . ' </a></li>';
         }
         $parseStr .= '</ul>';

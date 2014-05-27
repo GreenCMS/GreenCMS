@@ -1,94 +1,87 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]>
-<html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]>
-<html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]>
-<html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
 <head>
-
-    <!-- Basic Page Needs -->
-    <meta charset="utf-8"/>
-    <title>加入我们 |{:get_opinion('title')} </title>
-    <meta name="description" content="{:get_opinion('description')}"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>加入我们 | {:get_opinion('title')}</title>
+    <meta name="description" content="{:get_opinion('description')}">
     <meta name="keywords" content="{:get_opinion('keywords')}"/>
+    <meta name="author" content="greenstudio"/>
 
-    <meta name="author" content="Green Studio  2014"/>
+    <meta name="viewport" content="width=device-width">
 
     <include file="Public:head"/>
+    <style>
 
+
+        #contactform label {
+            display: inline;
+            font-size: 25px;
+
+        }
+
+        #contactform input {
+            min-height: 30px;
+            display: inline;
+
+        }
+
+
+
+
+
+    </style>
 </head>
 
 <body>
-
-{:W('Common/mainMenu')}
-
-
-<!-- Services / Srart
-================================================== -->
-<div class="page-title">
-
-    <div class="container">
-
-        <div class="twelve columns">
-            <h1>加入我们！</h1>
-        </div>
-
-        <nav class="four columns">
-            <ul class="breadcrumbs">
-                <li><a href="{:U('/')}">首页</a></li>
-                <li><i class="icon-angle-right"></i></li>
-                <li>加入我们</li>
-            </ul>
-        </nav>
-
-    </div>
-</div>
+{:W('Widget/menuHead')}
 
 
-<!-- About / Srart
-================================================== -->
 <section>
     <div style=" width:550px; text-align:center; margin:0 auto;">
         <div>
             <form id="contactform" class="rounded" method="POST" action="#">
-                <h2 style=" color:#333;	text-shadow: 2px 2px 2px #ccc; display: block; font-weight: bold;">加入我们！</h2>
-                </br>
+                <h2>加入我们！</h2>
 
                 <div class="field">
                     <label for="name">姓名:</label>
                     <input type="text"
-                           style=" width:300px; background-color: #FFF;  border: 1px solid #b9bdc1; "
+                           style=" width:300px; background-color: #FFF; margin-left:50px; border: 1px solid #b9bdc1; "
                            class="input" name="name" id="name"/>
                 </div>
                 </br>
                 <div class="field">
                     <label for="class">学号:</label>
                     <input type="text"
-                           style=" width:300px; background-color: #FFF;  border: 1px solid #b9bdc1;"
+                           style=" width:300px; background-color: #FFF; margin-left:50px; border: 1px solid #b9bdc1;"
                            class="input" name="class" id="class"/>
                 </div>
                 </br>
                 <div class="field">
                     <label for="tel">电话:</label>
                     <input type="text"
-                           style=" width:300px; background-color: #FFF;  border: 1px solid #b9bdc1;"
+                           style=" width:300px; background-color: #FFF; margin-left:50px; border: 1px solid #b9bdc1;"
                            class="input" name="tel" id="tel"/>
                 </div>
                 </br>
                 <div class="field">
                     <label for="email">邮箱:</label>
                     <input type="text"
-                           style=" width:300px; background-color: #FFF;  border: 1px solid #b9bdc1;"
+                           style=" width:300px; background-color: #FFF; margin-left:50px; border: 1px solid #b9bdc1;"
                            class="input" name="email" id="email"/>
                 </div>
                 </br>
-                <div class="field" style="text-align:left;">
+                <div class="field" >
                     <label for="direction">方向:</label>
 
-                    <div style="margin-left:130px;">
+                    <div  >
 
                         <input type="radio" name="direction" value="ui"/> UI设计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(HTML
                         CSS JS PHOTOSHOP)
@@ -106,7 +99,7 @@
 
                 <div class="field">
                     <label for="message">自我介绍:</label>
-                    <textarea class="input textarea" style="margin-left: 119px; width:300px; height:200px; resize:none"
+                    <textarea class="input textarea" style="  width:300px; height:200px; resize:none"
                               name="message" id="message">
                     </textarea>
                 </div>
@@ -118,13 +111,13 @@
     </div>
 </section>
 
-</div>
-<!-- End of container -->
+<!-- /404 error -->
 
+<include file="Public:bottom"/>
 
 <include file="Public:footer"/>
 
-<include file="Public:theme"/>
+<include file="Public:foot"/>
 
 </body>
 </html>
