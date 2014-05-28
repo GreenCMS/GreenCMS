@@ -76,7 +76,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('11', 'software_name', 'GreenCMS v2', 
 INSERT INTO `{$db_prefix}options` VALUES ('12', 'LOG_RECORD', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('13', 'software_build', '20140306', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('14', 'HTML_CACHE_ON', '0', 'false');
-INSERT INTO `{$db_prefix}options` VALUES ('15', 'sqlFileSize', '5000000', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('15', 'sqlFileSize', '500000000', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('16', 'send_mail', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('17', 'smtp_host', 'mail.njut.edu.cn', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('18', 'smtp_port', '25', 'yes');
@@ -112,10 +112,9 @@ INSERT INTO `{$db_prefix}options` VALUES ('45', 'home_post_model', 'native', 'ye
 -- ----------------------------
 -- Records of {$db_prefix}kv
 -- ----------------------------
-INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'Vena');
-INSERT INTO `{$db_prefix}kv` VALUES ('2', 'theme_Vena', 'enabled');
-INSERT INTO `{$db_prefix}kv` VALUES ('3', 'theme_2011college', 'enabled');
-INSERT INTO `{$db_prefix}kv` VALUES ('4', 'theme_Twentytwelve', 'enabled');
+INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'NovaGreenStudio');
+INSERT INTO `{$db_prefix}kv` VALUES ('2', 'theme_NovaGreenStudio', 'enabled');
+INSERT INTO `{$db_prefix}kv` VALUES ('3', 'theme_Twentytwelve', 'enabled');
 
 -- ----------------------------
 -- Records of {$db_prefix}posts

@@ -23,5 +23,9 @@
             <name>留言板</name>
             <tpl>guestbook</tpl>
         </guestbook>
+        <joinus>
+            <name>加入我们</name>
+            <tpl>joinus</tpl>
+        </joinus>
     </post>
 </theme>

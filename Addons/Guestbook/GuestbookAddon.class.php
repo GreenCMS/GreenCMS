@@ -66,6 +66,14 @@ class GuestbookAddon extends Addon
 
 
         }
+
+        $adminMenu = $Hooks->where(array('name' => 'adminMenu'))->find();
+        if (!$adminMenu) {
+            $data = array('name' => 'adminMenu', 'description' => 'adminMenu', 'type' => 1);
+            $Hooks->data($data)->add();
+        }
+
+
         return true;
     }
 
@@ -121,6 +129,17 @@ class GuestbookAddon extends Addon
                 "'><h4>留言板</h4></a></li>
             ";
         }
+    }
+
+
+
+
+    public function adminMenu($param)
+    {
+
+        echo "<li><a href='" . addons_url('Guestbook://Guestbook/manage') . "'><h4>留言板</h4></a></li>
+            ";
+
     }
 
 }

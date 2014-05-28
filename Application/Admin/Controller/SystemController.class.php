@@ -17,7 +17,7 @@ use Common\Util\File;
  */
 class SystemController extends AdminBaseController
 {
-    //TODO Upgrade
+
     //TODO Email mail()
 
     /**

@@ -58,6 +58,8 @@
                             <li><a href="{:U('Admin/Posts/add')}"><h4>文章发布</h4></a></li>
                         </control>
 
+                        {:hook('adminMenu', 'menu')}
+
                         {:hook('Guestbook', 'menu')}
                         <!-- end message -->
 
