@@ -36,8 +36,6 @@ function send_mail($to, $name, $subject = '', $body = '', $attachment = null, $c
         'from_name' => C('title')
     );
 
-    // Log::write(array_to_str($config));
-
     include Extend_PATH . 'PHPMailer/phpmailer.class.php'; //从PHPMailer目录导phpmailer.class.php类文件
     $mail = new PHPMailer(); //PHPMailer对象
     $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码

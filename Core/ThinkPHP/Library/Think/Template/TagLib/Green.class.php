@@ -37,6 +37,10 @@ class Green extends TagLib
             'attr' => 'access',
             'alias' => 'control'
         ),
+        'opinioncontrol' => array(
+            'attr' => 'realtime,opinion_name,default,judge',
+            'alias' => 'opctl'
+        ),
 
 
         'optionfriendlist' => array(
@@ -137,17 +141,16 @@ class Green extends TagLib
         $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
 
 
-        if($link_tag!=''){
+        if ($link_tag != '') {
 
-            $condition['link_tag']=$link_tag;
-        }else if($link_group_id!=''){
-            $condition['link_group_id']=$link_group_id;
-        }else{
+            $condition['link_tag'] = $link_tag;
+        } else if ($link_group_id != '') {
+            $condition['link_group_id'] = $link_group_id;
+        } else {
 
         }
 
         $link_list = D('Links', 'Logic')->where($condition)->order($order)->limit($num)->select();
-
 
 
         $parseStr = '<ul ' . $ul_attr . '>';
@@ -225,6 +228,36 @@ class Green extends TagLib
     /**
      * @param $tag
      * @param $content
+     * @return bool
+     * 'opinioncontrol' => array(
+     * 'attr' => 'realtime,opinion_name,default,judge',
+     * 'alias' => 'opctl'
+     * ),
+
+     */
+    public function _opinioncontrol($tag, $content)
+    {
+        $opinion_name = isset ($tag ['opinion_name']) ? $tag ['opinion_name'] : "";
+
+        $realtime = isset ($tag ['realtime']) ? $tag ['realtime'] : false;
+        $judge = isset ($tag ['judge']) ? $tag ['judge'] : true;
+
+        $default = isset ($tag ['default']) ? $tag ['default'] : "";
+
+
+        if (get_opinion($opinion_name, $realtime, $default) == $judge) {
+            return $content;
+        } else {
+            return false;
+        }
+
+
+    }
+
+
+    /**
+     * @param $tag
+     * @param $content
      * @usage
      * @return string
      */
@@ -237,19 +270,15 @@ class Green extends TagLib
         $link_group_id = isset ($tag ['link_group_id']) ? $tag ['link_group_id'] : '';
 
 
-
-        if($link_tag!=''){
-            $condition['link_tag']=$link_tag;
-        }else if($link_group_id!=''){
-            $condition['link_group_id']=$link_group_id;
-        }else{
-            $condition=array();
+        if ($link_tag != '') {
+            $condition['link_tag'] = $link_tag;
+        } else if ($link_group_id != '') {
+            $condition['link_group_id'] = $link_group_id;
+        } else {
+            $condition = array();
         }
 
         $link_list = D('Links', 'Logic')->where($condition)->order($order)->limit($num)->select();
-
-
-
 
 
         $parseStr = '';

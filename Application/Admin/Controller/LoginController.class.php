@@ -94,12 +94,13 @@ class LoginController extends BaseController
         // $ipLocation = new IpLocation();
         // $ip_info = $ipLocation->getIpInfo();
 
-        $verify = new \Think\Verify();
+        if (get_opinion('vertify_code', true, true)) {
+            $verify = new \Think\Verify();
 
-        if (!$verify->check(I('post.vertify'))) {
-            $this->error("验证码错误");
+            if (!$verify->check(I('post.vertify'))) {
+                $this->error("验证码错误");
+            }
         }
-
 
         $map = array();
         $map['user_login'] = I('post.username');
