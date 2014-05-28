@@ -311,7 +311,8 @@ header.navbar .nav > li > a {
 }
 
 .dropdown-menu > li {
-    margin-top: 5px;
+
+    margin : 5px;
 }
 
 .dropdown-menu > li > a {
@@ -347,7 +348,9 @@ header.navbar .nav > li.login > a {
 }
 
 header .dropdown-menu {
-    margin-top: 20px
+    margin-top: 20px;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 header .dropdown-menu:before {

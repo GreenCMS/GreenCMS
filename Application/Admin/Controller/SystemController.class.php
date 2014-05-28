@@ -25,7 +25,8 @@ class SystemController extends AdminBaseController
      */
     public function index()
     {
-
+        $role_list = array_column_5(D('Role')->select(), 'name', 'id');
+        $this->assign('new_user_role', gen_opinion_list($role_list, get_opinion('new_user_role', true, 5)));
         $this->assign('users_can_register', get_opinion('users_can_register'));
         $this->display();
     }

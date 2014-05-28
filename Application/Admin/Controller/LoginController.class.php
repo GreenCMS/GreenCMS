@@ -170,6 +170,7 @@ class LoginController extends BaseController
     public function registerHandle()
     {
 
+        $new_user_role = get_opinion('new_user_role', true, 5);
 
         $w = htmlspecialchars(trim($_POST ['username']));
         $i = D('user')->where(array(
@@ -194,14 +195,14 @@ class LoginController extends BaseController
             );
             // 添加用户与角色关系
 
-            $user ['user_level'] = 5;
+            $user ['user_level'] = $new_user_role;
 
             $User = D('User');
             $Role_users = D('Role_users');
             if ($new_id = $User->add($user)) {
 
                 $role = array(
-                    'role_id' =>5,
+                    'role_id' => $new_user_role,
                     'user_id' => $new_id
                 );
                 if ($Role_users->add($role)) {
@@ -214,7 +215,7 @@ class LoginController extends BaseController
             }
 
         }
-       //$this->error("不开放注册");
+        //$this->error("不开放注册");
 
 
     }
