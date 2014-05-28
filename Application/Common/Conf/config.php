@@ -39,8 +39,9 @@ return array(
 
     // 'LOAD_EXT_CONFIG'      => '', // 加载扩展配置文件 config_alias,config_db,config_system
 
-//    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install','Api','Zel'), //配置你原来的分组列表
-    'MODULE_DENY_LIST'     => array('Common'),
     'DEFAULT_MODULE'       => 'Home',
+
+    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install','Api','Zel'), //配置你原来的分组列表
+    'MODULE_DENY_LIST'     => array('Common'),
 
 );

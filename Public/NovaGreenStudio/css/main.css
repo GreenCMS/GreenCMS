@@ -32,10 +32,20 @@
 }
 
 body {
-    padding-top: 80px;
     font-size: 12px;
     color: #34495e;
     background: #f5f5f5
+}
+
+.navbar-inner {
+
+    border: none;
+    /* -webkit-border-radius:  0px; */
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    /* -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065); */
+    -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.065);
+    box-shadow: 0 1px 0px rgba(0, 0, 0, 0.065);
 }
 
 body h1, body h2, body h3, body h4, body .created {
@@ -942,3 +952,38 @@ ul.faq li > div h3 {
     margin-top: 10px;
 
 }
+
+@media (max-width: 767px) {
+    body {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+    body > section{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+     .nav-collapse.collapse{
+         margin: auto 0;
+        width: 100%;
+        text-align: center;
+    }
+
+
+    header.navbar .nav > li > a:hover{
+
+        background: rgba(39, 51, 83, 0.75);
+    }
+
+
+    .title{
+
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+
+
+
