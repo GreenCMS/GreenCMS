@@ -707,19 +707,21 @@ str;
     {
         $this->meta_title = '钩子列表';
         $map = $fields = array();
-        $order = "id DESC";
-        $list = D("Hooks")->field($fields)->order($order)->select();
-        // dump($list);die;
-        // int_to_string($list, array('type' => "C('HOOKS_TYPE')"));
-        // 记录当前列表页的cookie
+
+
         Cookie('__forward__', $_SERVER['REQUEST_URI']);
-        // dump($list);die;
 
-        $count = count($list);
-        $page = I('get.page', C('PAGER'));
-        $p = new GreenPage ($count, $page);
-        $this->assign('page', $p->show());
+        $count = D("Hooks")->count();
+        if ($count != 0) {
+            $page = I('get.page', C('PAGER'));
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $list =D("Hooks")->limit($limit)->field($fields)->select();
+        }
 
+
+        $this->assign('page',$pager_bar);
         $this->assign('list', $list);
         $this->assign('action', '钩子管理');
         $this->display();
