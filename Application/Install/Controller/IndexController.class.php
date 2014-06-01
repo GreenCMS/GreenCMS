@@ -224,19 +224,21 @@ class IndexController extends \Think\Controller
      */
     public function step5()
     {
-
-        //A('Install/Test')->init($key = 'zts');
-
-        $Access = new \Install\Event\AccessEvent();
-        $Access->initAdmin();
-       // $Access->initWeixin();
-
-
         File::delAll(RUNTIME_PATH);
         File::delAll(LOG_PATH);
         File::delAll(WEB_CACHE_PATH);
         File::delAll(WEB_ROOT . 'Data/Cache');
         File::delAll(WEB_ROOT . 'Data/Temp');
+
+
+        //A('Install/Test')->init($key = 'zts');
+
+        $Access = new \Install\Event\AccessEvent();
+        $Access->initAdmin();
+        $Access->initWeixin();
+
+
+
        // File::delAll(WEB_ROOT . 'Data/Install');
 
         if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {

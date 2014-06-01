@@ -257,7 +257,7 @@
     $('.ajax_create').click(function(){
         var target,query,form;
         var target_form = $(this).attr('target-form');
-        var check_url = '{:U('Admin/Custom/checkForm')}';
+        var check_url = '{:U("Admin/Custom/checkForm")}';
         $.ajax({
             type: "POST",
             url: check_url,

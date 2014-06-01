@@ -42,7 +42,7 @@ class MediaController extends AdminBaseController
      */
     public function fileConnect()
     {
-        $roots = array('Upload/', 'Application/' , 'Public/','' ); //
+        $roots = array('Upload/', 'Application/', 'Public/', ''); //
         $opts = $this->__array($roots);
 
         define('GreenCMS', 'GreenCMS');
@@ -63,9 +63,9 @@ class MediaController extends AdminBaseController
 
         foreach ($paths as $path) {
             $single_root = array(
-                'driver'        => 'LocalFileSystem', // driver for accessing file system (REQUIRED)
-                'path'          =>  './'.$path, // path to files (REQUIRED)// WEB_ROOT .
-                'URL'           => __ROOT__ . '/' . $path, // 上传文件目录的URL
+                'driver' => 'LocalFileSystem', // driver for accessing file system (REQUIRED)
+                'path' => './' . $path, // path to files (REQUIRED)// WEB_ROOT .
+                'URL' => __ROOT__ . '/' . $path, // 上传文件目录的URL
                 'accessControl' => 'access' // disable and hide dot starting files (OPTIONAL)
             );
 
@@ -120,7 +120,7 @@ class MediaController extends AdminBaseController
 
         File::getFiles(System_Backup_PATH, $file_list, '#\.zip$#i');
 
-        $files_list =array();
+        $files_list = array();
         foreach ($file_list as $key => $value) {
             $files_list_temp = array();
             $files_list_temp['id'] = base64_encode($value);
@@ -155,11 +155,10 @@ class MediaController extends AdminBaseController
     {
 
 
-
         $file_name = base64_decode($id);
         $System = new \Common\Event\SystemEvent();
 
-        
+
         $zip = new \ZipArchive; //新建一个ZipArchive的对象
         if ($zip->open($file_name) === true) {
             $zip->extractTo(WEB_ROOT);
@@ -174,7 +173,30 @@ class MediaController extends AdminBaseController
         $this->success('还原成功');
 
 
-
     }
+
+
+    public function downFile()
+    {
+
+        if (empty($_GET['id'])) {
+            $this->error("下载地址不存在");
+        }
+
+        $filename = base64_decode($_GET['id']);
+
+
+        $filePath = $filename;
+
+          if (!file_exists($filePath)) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($filePath);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($filePath));
+        readfile($filePath);
+    }
+
 
 }

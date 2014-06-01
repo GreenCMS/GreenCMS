@@ -10,6 +10,18 @@
 
 $menu_arr = array(
 
+    'admin_big_menu_icon' => array(
+         'Posts' => 'fa-book',
+        'Data' => 'fa-bar-chart-o',
+         'Media' => 'fa-camera',
+        'Custom' => 'fa-desktop',
+        'Comments'=>'fa-comment',
+        'Access' => 'fa-lock',
+        'Tools' => 'fa-gavel',
+        'System' => 'fa-gear',
+    ),
+
+
     'admin_big_menu' => array(
         'Index' => '首页',
         'Posts' => '文章页面',
@@ -65,7 +77,8 @@ $menu_arr = array(
             'Custom/plugin' => '插件管理',
             'Custom/theme' => '主题管理',
             'Custom/menu' => '菜单管理',
-            'Custom/links' => '链接管理',
+//            'Custom/links' => '链接管理',
+            'Custom/linkgroup' => '链接管理',
             //      'Custom/slider'  => '轮播管理',
 
         ),

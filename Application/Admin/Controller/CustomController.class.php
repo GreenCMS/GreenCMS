@@ -131,10 +131,9 @@ class CustomController extends AdminBaseController
         $data = $_POST;
         $Menu = D('Menu');
         $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
-        if ($result){
+        if ($result) {
             $this->success('编辑成功', 'Admin/Custom/menu');
-        }
-        else {
+        } else {
             $this->error('编辑失败');
 
         }
@@ -708,19 +707,21 @@ str;
     {
         $this->meta_title = '钩子列表';
         $map = $fields = array();
-        $order = "id DESC";
-        $list = D("Hooks")->field($fields)->order($order)->select();
-        // dump($list);die;
-        // int_to_string($list, array('type' => "C('HOOKS_TYPE')"));
-        // 记录当前列表页的cookie
+
+
         Cookie('__forward__', $_SERVER['REQUEST_URI']);
-        // dump($list);die;
 
-        $count = count($list);
-        $page = I('get.page', C('PAGER'));
-        $p = new GreenPage ($count, $page);
-        $this->assign('page', $p->show());
+        $count = D("Hooks")->count();
+        if ($count != 0) {
+            $page = I('get.page', C('PAGER'));
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $list =D("Hooks")->limit($limit)->field($fields)->select();
+        }
 
+
+        $this->assign('page',$pager_bar);
         $this->assign('list', $list);
         $this->assign('action', '钩子管理');
         $this->display();
@@ -807,17 +808,87 @@ str;
     }
 
 
+    public function linkgroup()
+    {
+
+        $link_group_list = D('Link_group', 'Logic')->select();
+
+        $this->assign('link_group_list', $link_group_list);
+        $this->display();
+    }
+
+    public function addlinkgroup()
+    {
+        $this->assign('action', '添加链接分组');
+        $this->assign('buttom', '添加');
+
+        $this->assign('form_url', U('Admin/Custom/addlinkgroupHandle'));
+        $this->display();
+    }
+
+    public function addlinkgroupHandle()
+    {
+        $data['link_group_name'] = I('post.link_group_name');
+        if (D('Link_group', 'Logic')->data($data)->add()) {
+            $this->success('链接分组添加成功', U('Admin/Custom/linkgroup'));
+        } else {
+            $this->error('链接分组添加失败', U('Admin/Custom/linkgroup'));
+        }
+    }
+
+    public function dellinkgroupHandle($id)
+    {
+
+        if (D('Link_group', 'Logic')->delete($id)) {
+            $this->success('链接删除成功');
+        } else {
+            $this->error('链接删除失败');
+        }
+    }
+
+    public function editlinkgroup($id)
+    {
+        $this->assign('form_url', U('Admin/Custom/editlinkgroupHandle', array('id' => $id)));
+
+        $link_group = D('Link_group', 'Logic')->where(array('link_group_id' => $id))->find();
+        $this->assign('link_group', $link_group);
+
+
+        $this->assign('action', '编辑链接分组');
+        $this->assign('buttom', '辑加');
+
+        $this->display('addlinkgroup');
+    }
+
+    public function editlinkgroupHandle($id)
+    {
+        $data['link_group_name'] = I('post.link_group_name');
+
+
+        if (D('Link_group', 'Logic')->where(array('link_group_id' => $id))->data($data)->save()) {
+            $this->success('链接分组编辑成功', U('Admin/Custom/linkgroup'));
+        } else {
+            $this->error('链接分组编辑失败', U('Admin/Custom/linkgroup'));
+        }
+
+    }
+
     /**
      * 链接管理
      */
-
-
-    public function links()
+    public function links($id = 0)
     {
-        $this->linklist = D('Links', 'Logic')->getList(1000);
+
+        $link_group = D('Link_group', 'Logic')->find($id);
+        $this->assign('action', '链接管理:'.$link_group['link_group_name'] );
+
+        $linklist = D('Links', 'Logic')->getList(1000, $id);
+        $this->assign('linklist', $linklist);
 
         $this->display();
     }
+
+
 
     /**
      *
@@ -855,16 +926,22 @@ str;
             }
 
             if (D('Links', 'Logic')->addLink($data)) {
-                $this->success('链接添加成功', U('Admin/Custom/links'));
+                $this->success('链接添加成功', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
             } else {
-                $this->error('链接添加失败', U('Admin/Custom/links'));
+                $this->error('链接添加失败', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
             }
         } else {
             $this->assign('imgurl', __ROOT__ . '/Public/share/img/no+image.gif');
 
-            $this->form_url = U('Admin/Custom/addlink');
-            $this->action = '添加链接';
-            $this->buttom = '添加';
+            $link_groups = D('Link_group', 'Logic')->select();
+            $link_group_select = array_column_5($link_groups, 'link_group_name', 'link_group_id');
+            $this->assign('link_group', gen_opinion_list($link_group_select));
+
+
+            $this->assign('form_url', U('Admin/Custom/addlink'));
+            $this->assign('action', '添加链接');
+            $this->assign('buttom', '添加');
+
             $this->display('addlink');
         }
     }
@@ -905,14 +982,19 @@ str;
 
             if (D('Links', 'Logic')->where(array('link_id' => $id))->save($data)
             ) {
-                $this->success('链接编辑成功', U('Admin/Custom/links'));
+                $this->success('链接编辑成功', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
             } else {
-                $this->error('链接编辑失败', U('Admin/Custom/links'));
+                $this->error('链接编辑失败', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
             }
         } else {
 
             $this->form_url = U('Admin/Custom/editlink', array('id' => $id));
             $link = D('Links', 'Logic')->detail($id);
+
+            $link_groups = D('Link_group', 'Logic')->select();
+            $link_group_select = array_column_5($link_groups, 'link_group_name', 'link_group_id');
+            $this->assign('link_group', gen_opinion_list($link_group_select,$link['link_group_id']));
+
 
             $this->assign('imgurl', $link['link_img']);
             $this->assign('link', $link);

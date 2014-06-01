@@ -94,12 +94,13 @@ class LoginController extends BaseController
         // $ipLocation = new IpLocation();
         // $ip_info = $ipLocation->getIpInfo();
 
-        $verify = new \Think\Verify();
+        if (get_opinion('vertify_code', true, true)) {
+            $verify = new \Think\Verify();
 
-        if (!$verify->check(I('post.vertify'))) {
-            $this->error("验证码错误");
+            if (!$verify->check(I('post.vertify'))) {
+                $this->error("验证码错误");
+            }
         }
-
 
         $map = array();
         $map['user_login'] = I('post.username');
@@ -136,10 +137,10 @@ class LoginController extends BaseController
             //记住我
             if (I('post.remember') == 1) {
                 if ($authInfo['user_session'] != '') {
-                    cookie('user_session', $authInfo['user_session'], 360000);
+                    cookie('user_session', $authInfo['user_session'], 3600000);
                 } else if ($authInfo['user_session'] == '') {
                     $user_session = D('User', 'Logic')->genHash($authInfo);
-                    cookie('user_session', $user_session, 360000);
+                    cookie('user_session', $user_session, 3600000);
                 }
             }
             // 缓存访问权限
@@ -170,6 +171,7 @@ class LoginController extends BaseController
     public function registerHandle()
     {
 
+        $new_user_role = get_opinion('new_user_role', true, 5);
 
         $w = htmlspecialchars(trim($_POST ['username']));
         $i = D('user')->where(array(
@@ -194,14 +196,14 @@ class LoginController extends BaseController
             );
             // 添加用户与角色关系
 
-            $user ['user_level'] = 5;
+            $user ['user_level'] = $new_user_role;
 
             $User = D('User');
             $Role_users = D('Role_users');
             if ($new_id = $User->add($user)) {
 
                 $role = array(
-                    'role_id' =>5,
+                    'role_id' => $new_user_role,
                     'user_id' => $new_id
                 );
                 if ($Role_users->add($role)) {
@@ -214,7 +216,7 @@ class LoginController extends BaseController
             }
 
         }
-       //$this->error("不开放注册");
+        //$this->error("不开放注册");
 
 
     }

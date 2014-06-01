@@ -1,0 +1,16 @@
+<div class="widget">
+    <h3>分类</h3>
+
+    <div>
+        <div class="row-fluid">
+
+            <ul class="unstyled">
+                <volist name="list" id="vo">
+                    <li><h4><a href="{$vo.cat_id|getCatURLByID}"> {$vo.cat_slug} </a></h4></li>
+                </volist>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<!-- End Category Widget -->

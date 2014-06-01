@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-black">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <form action="{$form_action}" name="change_System"
+                                  method="post">
+
+                                <div class="form-group">
+                                    <label class="control-label">事件类型</label>
+
+                                    <div class="controls">
+
+
+                                        <select class="small form-control" tabindex="1" name="action_type" id="action_type">
+                                            <option value="text"
+                                            <php>
+                                                if($item['action_type']=='text')
+                                                echo 'selected="selected"';
+                                            </php>
+                                            >文字</option>
+                                            <option value="click"
+                                            <php>
+                                                if($item['action_type']=='click')
+                                                echo 'selected="selected"';
+                                            </php>
+                                            >菜单点击</option>
+                                        </select>
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group" id='key'>
+                                    <label class="control-label">按键</label>
+
+                                    <div class="controls">
+
+                                        <select class="small form-control" tabindex="1" name="action_name_key">
+                                            {$buttom_option}
+                                        </select>
+
+                                        <span class="help-inline">仅在选择菜单条件下有效</span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id='keyword'>
+                                    <label class="control-label">关键字</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="action_name"
+                                               class="form-control large" name="action_name_keyword"
+                                               value="{$item.action_name}">
+                                        <span class="help-inline">仅在选择关键字条件下有效</span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">回复类型</label>
+
+                                    <div class="controls">
+                                        <select class="small form-control" tabindex="1" name="reply_type">
+
+                                            <option value="news"
+                                            <php>
+                                                if($item['reply_type']=='news')
+                                                echo 'selected="selected"';
+                                            </php>
+                                            >图文</option>
+                                            <option value="image"
+                                            <php>
+                                                if($item['reply_type']=='image')
+                                                echo 'selected="selected"';
+                                            </php>
+                                            >图片</option>
+                                            <option value="text"
+                                            <php>
+                                                if($item['reply_type']=='text')
+                                                echo 'selected="selected"';
+                                            </php>
+                                            >文字</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">预设定消息的ID</label>
+
+                                    <div class="controls">
+                                        <input type="number" placeholder="reply_id" class="form-control large" name="reply_id"
+                                               value="{$item.reply_id}">
+                                        <span class="help-inline">预设定消息的ID <a href="{:U('Weixin/Reply/index')}"
+                                                                              target="_blank">点击这里查看ID</a> </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i>{$action_name}
+                                    </button>
+                                </div>
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+<script>
+    jQuery(document).ready(function () {
+
+        var action_type = $('#action_type option:selected').val();
+        if (action_type == 'text') {
+            $('#key').fadeOut();
+            $('#keyword').fadeIn();
+
+        } else if (action_type == 'click') {
+            $('#key').fadeIn();
+            $('#keyword').fadeOut();
+
+        }
+
+        $('#action_type').change(function () {
+            var action_type = $('#action_type option:selected').val();
+
+            if (action_type == 'text') {
+                $('#key').fadeOut();
+                $('#keyword').fadeIn();
+
+            } else if (action_type == 'click') {
+                $('#key').fadeIn();
+                $('#keyword').fadeOut();
+
+            }
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>
+

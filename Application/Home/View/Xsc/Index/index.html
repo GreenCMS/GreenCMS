@@ -18,7 +18,7 @@
     $llqy = D('Cats', 'Logic')->getPostsByCat(11, 6);
     $xjdx = D('Cats', 'Logic')->getPostsByCat(12, 6);
 
-    $slider = D('Tags', 'Logic')->getPostsByTag(3, 3);
+    $slider = D('Tags', 'Logic')->getPostsByTag(3, 6);
 
 
 </php>
@@ -26,14 +26,19 @@
 {:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
 <div id="content" class="clearfix">
 
+ <style>
+    .news-slide a img {
+        width: 725px;
+        height: 357px;
+    }
+
+</style>
 <div id="slide" class="news-slide w2 ml20 fl">
-    <a href="#"><img
-            src="__PUBLIC__/Xsc/pictures/article/140303143837_9664.png" alt="" width="725" height="357"/></a>
-    <a href="#"><img
-            src="__PUBLIC__/Xsc/pictures/article/140303141132_9683.png" alt="" width="725" height="357"/></a>
-    <a href="#"><img
-            src="__PUBLIC__/Xsc/pictures/article/140303084637_8360.jpg" alt="" width="725" height="357"/></a>
+    <volist name="slider" id="v">
+        {:get_post_thumbnail($v)}
+    </volist>
 </div>
+
 <div class="right_box">
     <div class="header"><a href="{:getCatURLByID(7)}"
                            class="more">更多</a><span>学工新闻</span></div>
@@ -240,7 +245,7 @@
                             <option>---|校内链接|---</option>
 
 
-                            <optionfriendlist cat="校内链接"></optionfriendlist>
+                            <optionfriendlist link_group_id="1"></optionfriendlist>
 
 
                         </select>
@@ -251,7 +256,7 @@
                             <option>---|校外链接|---</option>
 
 
-                            <optionfriendlist cat="校外链接"></optionfriendlist>
+                            <optionfriendlist link_group_id="3"></optionfriendlist>
 
 
                         </select>
@@ -269,8 +274,10 @@
 </table>
 
 
-<include file="Public:footer"/>
 
 </div>
+
+<include file="Public:footer"/>
+
 </body>
 </html>

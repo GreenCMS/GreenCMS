@@ -9,6 +9,8 @@
 
 namespace Home\Widget;
 
+use Home\Logic\MenuLogic;
+
 use Common\Logic\CatsLogic;
 use Common\Logic\TagsLogic;
 use Think\Controller;
@@ -20,6 +22,24 @@ use Think\Controller;
  */
 class WidgetWidget extends Controller
 {
+
+    public function archive()
+    {
+
+    }
+
+    public function recentPost()
+    {
+
+
+        $post_list = D('Posts', 'Logic')->getList(3, 'single', 'post_date desc', false);
+
+
+        $this->assign('list', $post_list);
+
+        $this->display('Widget:recentPost');
+
+    }
 
     /**
      * 搜索框
@@ -141,6 +161,19 @@ class WidgetWidget extends Controller
 
         $this->assign('cat_id', $cat_id); // 赋值数据集
         $this->display('Widget:cat_sidebar');
+
+    }
+
+
+    public function menuHead($position = 'head', $ul_attr, $li_attr, $ul_attr2, $li_attr2, $split)
+    {
+
+        $Menu = new MenuLogic();
+        $menu = $Menu->getMenu($position);
+
+        $this->assign('home_menu', $menu);
+        $this->display('Widget:menuHead');
+
 
     }
 

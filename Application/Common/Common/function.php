@@ -527,7 +527,7 @@ function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
     , $init = '首页')
 {
 
-    $res = '<ul class="breadcrumbs">
+    $res = '
             <li><a href="' . U("/") . '">' . $init . '</a></li>
            ';
     if ($type == 'cats') {
@@ -547,7 +547,7 @@ function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
         $res .= $separator . ' <li>' . $type . '</li>';
     }
 
-    $res .= '</ul>';
+    $res .= '';
     return $res;
 }
 

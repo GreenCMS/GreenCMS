@@ -62,7 +62,7 @@
                                                                    data-set="#sample_1 .checkboxes"/></th>
                                     <th>标题</th>
                                     <th>排序</th>
-                                    <th>标签</th>
+                                    <th>分组</th>
 
                                     <th>描述</th>
                                     <th>操作</th>
@@ -80,7 +80,7 @@
                                             {$v.link_sort}
                                         </td>
                                         <td>
-                                            {$v.link_tag|is_empty}
+                                            {$v['link_group']['link_group_name']|is_empty}
                                         </td>
                                         <td>{$v.link_description}</td>
                                         <td>

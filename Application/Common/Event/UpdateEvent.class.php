@@ -23,9 +23,16 @@ class UpdateEvent {
      */
     public function check(){
 
-        $software_build=get_opinion('software_build');
-        $software_version=get_opinion('software_version');
 
+        $software_build = get_opinion('software_build', true);
+        $url = Server_API . 'api/update/' . $software_build . '/';
+        $json = json_decode(file_get_contents($url), true);
+
+         if($json['lastest_version']>$json['user_version']){
+            return $json;
+        }else{
+            return false;
+        }
 
     }
 }

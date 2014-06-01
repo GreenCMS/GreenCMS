@@ -10,6 +10,11 @@ use Think\Controller;
 class AddonsController extends Controller
 {
 
+    function __construct()
+    {
+        parent::__construct();
+    }
+
     protected $addons = null;
 
     /**
@@ -25,7 +30,10 @@ class AddonsController extends Controller
         }
 
         if (!empty($_addons) && !empty($_controller) && !empty($_action)) {
+
+
             $Addons = A("Addons://{$_addons}/{$_controller}")->$_action();
+
         } else {
             $this->error('没有指定插件名称，控制器或操作！');
         }

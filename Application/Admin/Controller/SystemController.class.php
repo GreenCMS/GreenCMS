@@ -17,7 +17,7 @@ use Common\Util\File;
  */
 class SystemController extends AdminBaseController
 {
-    //TODO Upgrade
+
     //TODO Email mail()
 
     /**
@@ -25,7 +25,8 @@ class SystemController extends AdminBaseController
      */
     public function index()
     {
-
+        $role_list = array_column_5(D('Role')->select(), 'name', 'id');
+        $this->assign('new_user_role', gen_opinion_list($role_list, get_opinion('new_user_role', true, 5)));
         $this->assign('users_can_register', get_opinion('users_can_register'));
         $this->display();
     }
@@ -116,6 +117,8 @@ class SystemController extends AdminBaseController
      */
     public function safe()
     {
+
+        $this->assign('vertify_code', get_opinion('vertify_code', true));
         $this->assign('db_fieldtype_check', C('db_fieldtype_check'));
         $this->assign('LOG_RECORD', C('LOG_RECORD'));
         $this->assign('SHOW_CHROME_TRACE', C('SHOW_CHROME_TRACE'));
@@ -473,5 +476,9 @@ class SystemController extends AdminBaseController
 
     }
 
+    public function phpinfo()
+    {
+        $this->show(phpinfo());
+    }
 
 }

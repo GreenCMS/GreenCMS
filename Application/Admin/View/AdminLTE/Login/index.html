@@ -2,20 +2,20 @@
 <html class="bg-black">
 <head>
     <meta charset="UTF-8">
-    <title>GreenCMS 管理面板 | {:get_opinion('title')}  </title>
+    <title>GreenCMS 管理面板 | {:get_opinion('title')} </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
-    <link href="__PUBLIC__/AdminLTE/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/AdminLTE/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
-    <link href="__PUBLIC__/AdminLTE/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/AdminLTE/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
-    <link href="__PUBLIC__/AdminLTE/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link href="__PUBLIC__/AdminLTE/css/AdminLTE.css" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="__PUBLIC__/share/js/html5.js"></script>
+    <script src="__PUBLIC__/share/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body class="bg-black">
@@ -25,23 +25,28 @@
     <form action="{:U('Admin/Login/login')}" method="POST">
         <div class="body bg-gray">
             <div class="form-group">
-                   <input type="text" name="username" class="form-control" placeholder="用户名"/>
+                <input type="text" name="username" class="form-control" placeholder="用户名"/>
             </div>
             <div class="form-group">
                 <input type="password" name="password" class="form-control" placeholder="密码"/>
             </div>
+            <opinioncontrol realtime="true" opinion_name="vertify_code" default="true">
 
             <div class="form-group">
                 <input type="text" name="vertify" class="form-control" placeholder="输入下方验证码"/>
 
             </div>
-            <div class="form-group">
 
-            <img id="imgVerify" src="{:U('Admin/Login/vertify')}" onclick="fleshVerify();" />
-            </div>
+
+                <div class="form-group">
+
+                    <img id="imgVerify" src="{:U('Admin/Login/vertify')}" onclick="fleshVerify();"/>
+                </div>
+
+            </opinioncontrol>
 
             <div class="form-group">
-                <input type="checkbox" name="remember" value="1" /> 记住我
+                <input type="checkbox" name="remember" value="1"/> 记住我
             </div>
         </div>
         <div class="footer">
@@ -67,7 +72,6 @@
         </div>
 
 
-
     </div>
 </div>
 
@@ -86,6 +90,11 @@
     ;
 </script>
 
+
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F48659a4ab85f1bcebb11d3dd3ecb6760' type='text/javascript'%3E%3C/script%3E"));
+</script>
 
 </body>
 </html>

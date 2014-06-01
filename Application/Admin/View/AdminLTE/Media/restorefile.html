@@ -63,7 +63,10 @@
                                         <tr id="{$backup.name}" align="center"><!--|del_sql=###-->
                                             <td><input type="checkbox" name="backupFiles" value="{$backup.id}"/>
                                             </td>
-                                            <td style="width: 25%">{$backup.name}</td>
+                                            <td style="width: 25%">
+                                              <a href="{:U('Admin/Media/downFile',array('id'=>$backup['id']))}">{$backup.name}</a>
+
+                                                </td>
                                             <td>{$backup.create_time}</td>
                                             <td>{$backup.size}</td>
                                             <td>
