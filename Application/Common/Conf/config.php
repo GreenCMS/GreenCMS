@@ -37,11 +37,11 @@ return array(
 
     'TAGLIB_BUILD_IN'      => 'Green,Cx',
 
-    // 'LOAD_EXT_CONFIG'      => '', // 加载扩展配置文件 config_alias,config_db,config_system
+     'LOAD_EXT_CONFIG'      => 'config_Oauth', // 加载扩展配置文件 config_alias,config_db,config_system
 
     'DEFAULT_MODULE'       => 'Home',
 
-    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install','Api','Zel'), //配置你原来的分组列表
+    'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install','Api','Zel','Oauth'), //配置你原来的分组列表
     'MODULE_DENY_LIST'     => array('Common'),
 
 );
