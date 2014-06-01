@@ -9,6 +9,9 @@
 
 namespace Common\Event;
 
+use Common\Util\File;
+use SimpleXMLElement;
+
 
 /**
  * Wordpress导入工具 Beta
@@ -26,7 +29,7 @@ class WordpressEvent
     /**
      * @param null $file
      */
-    function __construct($file=null)
+    function __construct($file = null)
     {
         $this->file = $file;
     }
@@ -41,29 +44,54 @@ class WordpressEvent
         if (!file_exists($filename)) exit();
 
 
-        $wordpress = simplexml_load_file($filename);
+        $file_content = File::readFile($filename);
+        $wordpress_xml = new \SimpleXMLElement($file_content);
 
-        $namespaces = $wordpress->getNamespaces(true);
-        $wordpress_channel = $wordpress->channel;
+        // $wordpress_xml = simplexml_load_file($filename);
+
+        $namespaces = $wordpress_xml->getNamespaces(true);
+        $wordpress_channel = $wordpress_xml->channel;
         foreach ($namespaces as $key => $value) {
             $wordpress_channel->registerXPathNamespace($key, $value);
         }
 
-        $items = $wordpress_channel->xpath('item');
-        foreach ($items as $key => $value) {
 
+        $items = $wordpress_channel->xpath('item');
+
+
+        foreach ($items as $key => $value) {
             $post_cat_temp = array();
             $post_tag_temp = array();
 
-            $row = (simplexml_load_string($value->asXML()));
-             // PHP5.5 error
-            $row->encoded[0] = (simplexml_load_string($row->encoded[0]->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
 
-            if ($row->post_type == 'post') {
+            $value_wp = $value->children('wp', true);
 
-                $temp = $row->xpath('category');
-                $tag_cat = object_to_array($temp);
+            $value_wp = object_to_array($value_wp);
 
+            if ($value_wp["post_type"] == 'post') {
+                $post_content = $value->children('content', true);
+                $post_content = (simplexml_load_string($post_content->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
+
+
+                $value = object_to_array($value);
+             //   dump($value);
+             //   dump($value_wp);
+
+
+                $post_temp = array();
+                $post_temp['user_id'] = 1;
+                $post_temp['post_content'] = $post_content->__toString();
+                $post_temp['post_id'] = (int)$value_wp['post_id'];
+                $post_temp['post_title'] = $value['title'];
+                $post_temp['post_status'] = 'publish';
+                $post_temp['post_date'] =  $value_wp['post_date'];
+                $post_temp['post_modified'] =  $value_wp['post_date'];
+                $post_temp['post_type'] = 'single';
+                $post_temp['post_name'] = $value_wp['post_name'];
+
+
+
+                $tag_cat = $value['category'];
                 foreach ($tag_cat as $key => $value) {
                     if ($value["@attributes"]["domain"] == 'category') {
                         $nicename = D('Cats', 'Logic')->detail($value["@attributes"]["nicename"]);
@@ -78,25 +106,6 @@ class WordpressEvent
                     }
 
                 }
-//                dump($tag_cat);
-            }
-
-
-            $item = object_to_array($row);
-            if ($item['post_type'] == 'post') {
-
-                //dump($item);
-
-
-                $post_temp = array();
-                $post_temp['user_id'] = 1;
-                $post_temp['post_content'] = $item['encoded'][0];
-                $post_temp['post_id'] = (int)$item['post_id'];
-                $post_temp['post_title'] = $item['title'];
-                $post_temp['post_status'] = 'publish';
-                $post_temp['post_type'] = 'single';
-                $post_temp['post_name'] = $item['post_name'];
-
 
                 $post_id = D('Posts', 'Logic')->data($post_temp)->add();
                 echo '插入ID为' . $post_id . "的文章";
@@ -116,6 +125,7 @@ class WordpressEvent
 
                 }
 
+
             }
 
 
@@ -131,26 +141,27 @@ class WordpressEvent
     {
         if (!file_exists($filename)) exit();
 
+        $file_content = File::readFile($filename);
 
-        $wordpress = simplexml_load_file($filename);
-        $namespaces = $wordpress->getNamespaces(true);
-        $wordpress_channel = $wordpress->channel;
-        foreach ($namespaces as $key => $value) {
-            $wordpress_channel->registerXPathNamespace($key, $value);
-        }
+        $wordpress_xml = new \SimpleXMLElement($file_content);
+        $wordpress_channel = $wordpress_xml->channel->children('wp', true);
 
-        $category = $wordpress_channel->xpath('wp:tag');
-        foreach ($category as $key => $value) {
-            $row = (simplexml_load_string($value->asXML()));
-            $row->tag_name = (simplexml_load_string($row->tag_name->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
-            $item = object_to_array($row);
-            $tag_temp = array();
-            $tag_temp['tag_id'] = $item['term_id'];
-            $tag_temp['tag_slug'] = $item['tag_slug'];
-            $tag_temp['tag_name'] = $item['tag_name'];
-            D('Tags', 'Logic')->data($tag_temp)->add();
+        foreach ($wordpress_channel as $key => $value) {
 
-            dump($tag_temp);
+            if ($value->tag_slug != '') {
+                $value->tag_name = (simplexml_load_string($value->tag_name->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
+
+                $item = object_to_array($value);
+                $tag_temp = array();
+                $tag_temp['tag_id'] = $item['term_id'];
+                $tag_temp['tag_slug'] = $item['tag_slug'];
+                $tag_temp['tag_name'] = $item['tag_name'];
+               // dump($tag_temp);
+                D('Tags', 'Logic')->data($tag_temp)->add();
+
+            }
+
+
         }
 
 
@@ -164,25 +175,30 @@ class WordpressEvent
     {
         if (!file_exists($filename)) exit();
 
-        $wordpress = simplexml_load_file($filename);
-        $namespaces = $wordpress->getNamespaces(true);
-        $wordpress_channel = $wordpress->channel;
-        foreach ($namespaces as $key => $value) {
-            $wordpress_channel->registerXPathNamespace($key, $value);
-        }
+        $file_content = File::readFile($filename);
 
-        $category = $wordpress_channel->xpath('wp:category');
-        foreach ($category as $key => $value) {
-            $row = (simplexml_load_string($value->asXML()));
-            $row->cat_name = (simplexml_load_string($row->cat_name->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
-            $item = object_to_array($row);
-            $cat_temp = array();
-            $cat_temp['cat_id'] = $item['term_id'];
-            $cat_temp['cat_slug'] = $item['category_nicename'];
-            $cat_temp['cat_name'] = $item['cat_name'];
-            $cat_father = D('Cats', 'Logic')->detail($item['category_parent']);
-            $cat_temp['cat_father'] = (int)$cat_father['cat_id'];
-            D('Cats', 'Logic')->data($cat_temp)->add();
+        $wordpress_xml = new \SimpleXMLElement($file_content);
+        $wordpress_channel = $wordpress_xml->channel->children('wp', true);
+
+
+        foreach ($wordpress_channel as $key => $value) {
+
+            if ($value->category_nicename != '') {
+                $value->cat_name = (simplexml_load_string($value->cat_name->asXML(), 'SimpleXMLElement', LIBXML_NOCDATA));
+                $item = object_to_array($value);
+
+                $cat_temp = array();
+                $cat_temp['cat_id'] = $item['term_id'];
+                $cat_temp['cat_slug'] = $item['category_nicename'];
+                $cat_temp['cat_name'] = $item['cat_name'];
+                $cat_father = D('Cats', 'Logic')->detail($item['category_parent']);
+                $cat_temp['cat_father'] = (int)$cat_father['cat_id'];
+
+                D('Cats', 'Logic')->data($cat_temp)->add();
+
+            }
+
+
         }
     }
 
