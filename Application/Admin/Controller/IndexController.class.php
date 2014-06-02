@@ -92,4 +92,25 @@ class IndexController extends AdminBaseController
     }
 
 
+    public function profile()
+    {
+
+        $uid= ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $user = D('User', 'Logic')->detail($uid);
+        $this->assign('user', $user);
+        $this->assign('action', '用户档案');
+
+        $this->display();
+
+
+    }
+
+
+
+    public function sns(){
+        $this->display();
+
+    }
+
+
 }

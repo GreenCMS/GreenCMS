@@ -10,6 +10,8 @@ namespace Oauth\Controller;
 
 use \Extend\ThinkSDK\ThinkOauth;
 use \Oauth\Event\TypeEvent;
+use \Oauth\Logic\User_snsLogic;
+use Org\Util\Rbac;
 
 class SnsController extends OauthBaseController
 {
@@ -18,11 +20,7 @@ class SnsController extends OauthBaseController
     public function __construct()
     {
         parent::__construct();
-
-
         include_once(Extend_PATH . 'ThinkSDk/ThinkOauth.class.php');
-
-
     }
 
     // 登录地址
@@ -64,12 +62,13 @@ class SnsController extends OauthBaseController
             $TypeEvent = new TypeEvent;
             $user_info = $TypeEvent->$type ($token);
 
-            echo("<h1>恭喜！使用 {$type} 用户登录成功</h1><br>");
-            echo("授权信息为：<br>");
-            dump($token);
-            echo("当前登录用户信息为：<br>");
-            dump($user_info);
+//            echo("<h1>恭喜！使用 {$type} 用户登录成功</h1><br>");
+//            echo("授权信息为：<br>");
+//            dump($token);
+//            echo("当前登录用户信息为：<br>");
+//            dump($user_info);
 
+            $user_id = (int)$_SESSION [C('USER_AUTH_KEY')];
 
             if ($user_info ['type'] == 'SINA') {
 
@@ -77,37 +76,61 @@ class SnsController extends OauthBaseController
                  * 发布微博
                  */
 
-                $url = "https://api.weibo.com/2/statuses/update.json";
-                $content['status'] = "By GreenCMS v2.1.0601~~~~";
-                $content['access_token'] = $token['access_token'];
-                $query = http_build_query($content, '', '&');
+//                $url = "https://api.weibo.com/2/statuses/update.json";
+//                $content['status'] = "test to connect";
+//                $content['access_token'] = $token['access_token'];
+//                $query = http_build_query($content, '', '&');
+//
+//                $res = simple_post($url, $query);
+//                dump($res);
+                $data = $token;
+                $data ['user_id'] = $user_id;
+                $data ['type'] = $user_info ['type'];
+                //增加过期时间，便于提醒
+                $data ['expires_time'] = date('Y-m-d H:i:s', time() + (int)$token['expires_in']);
 
-                $res = simple_post($url, $query);
-                dump($res);
+                $User_sns = new User_snsLogic();
+
+                if ($user_id != null) {
+                    //用户已登陆
+                    $open_user_info = $User_sns->detailByUID($user_id, $type);
+
+                    if (!empty($open_user_info)) {
+                        //已绑定
+                        //TODO 重新绑定
+                        $this->success('已绑定' . $type);
+                    } else {
+                        //未绑定
+                        $res = $User_sns->data($data)->add();
+                        if ($res) {
+                            $this->success($type . "绑定成功", U('Admin/Index/sns'));
+
+                        } else {
+                            $this->error($type . "绑定失败");
+                        }
+
+                    }
 
 
-//                $data = $token;
-//                $data ['user_id'] = Session::get('user_id');
-//                $data ['type'] = $user_info ['type'];
-//
-//                $Useropen = D('Useropen');
-//                $check = $Useropen->detailByOpenid($token ['openid']);
-//
-//                if (empty ($check) && Session::get("user_id") != "") {
-//                    $res = $Useropen->addUseropen($data);
-//
-//                    $this->redirect('Member/login', null, 5, $res ['info']);
-//
-//                } else {
-//                    $User = D('User');
-//                    $user = $User->detail($check ['user_id']);
-//                    if (empty ($check)) {
-//
-//                        $this->error('登录失败,尚未绑定。请登录之后绑定帐号', U('Admin/Index/index'));
-//                    } else {
-//                        $this->redirect('Home/index');
-//                    }
-//                }
+                } else {
+                    //未登陆
+                    $open_user_info = $User_sns->detailByOID($token ['openid'], $type);
+                    if (!empty($open_user_info)) {
+                        //已绑定
+                        //TODO 开始登陆
+                        $map = array();
+                        $map['user_id'] = $open_user_info['User']['user_id'];
+                        $map['user_login'] = $open_user_info['User']['user_login'];
+                        $LoginEvent = new \Admin\Event\LoginEvent();
+                        $LoginEvent->auth($map);
+
+
+                    } else {
+                        //未绑定
+                        $this->error('登录失败,尚未绑定。请登录之后绑定帐号', U('Admin/Index/index'));
+                    }
+
+                }
 
             } else {
 

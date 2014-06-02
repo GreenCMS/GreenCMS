@@ -11,11 +11,11 @@
 $menu_arr = array(
 
     'admin_big_menu_icon' => array(
-         'Posts' => 'fa-book',
+        'Posts' => 'fa-book',
         'Data' => 'fa-bar-chart-o',
-         'Media' => 'fa-camera',
+        'Media' => 'fa-camera',
         'Custom' => 'fa-desktop',
-        'Comments'=>'fa-comment',
+        'Comments' => 'fa-comment',
         'Access' => 'fa-lock',
         'Tools' => 'fa-gavel',
         'System' => 'fa-gear',
@@ -23,23 +23,23 @@ $menu_arr = array(
 
 
     'admin_big_menu' => array(
-        'Index' => '首页',
+        'Index' => '仪表盘',
         'Posts' => '文章页面',
         'Data' => '数据缓存',
         //  'Comments'=>'留言评论',
         'Media' => '文件附件',
         'Custom' => '定制中心',
-        'Access' => '用户权限',
+        'Access' => '用户管理',
         'Tools' => '小工具',
         'System' => '系统设置',
     ),
 
     'admin_sub_menu' => array(
         'Index' => array(
-            'Index/index' => '仪表盘',
+            'Index/index' => '基本信息',
+            'Index/profile' => '用户信息',
+            'Index/sns' => '社交账号绑定',
             'Index/changePass' => '修改密码',
-            'Posts/add' => '添加文章',
-            'Index/main' => '返回首页'
         ),
 
         'Posts' => array(
@@ -98,6 +98,7 @@ $menu_arr = array(
             'Access/addUser' => '添加用户',
             'Access/addNode' => '添加节点',
             'Access/addRole' => '添加角色',
+
             'Access/loginlog' => '登陆记录',
 
         ),
@@ -118,6 +119,7 @@ $menu_arr = array(
             'System/safe' => '安全选项',
             'System/email' => '邮箱配置',
 //            'System/kvset'  => '其他设置',
+            'System/sns' => '社交登录设置',
             'System/green' => '系统设置',
             'System/update' => '系统升级',
             'System/info' => '系统信息',
@@ -149,9 +151,9 @@ $config_admin = array(
     'RBAC_ACCESS_TABLE' => GreenCMS_DB_PREFIX . 'access',
     'RBAC_NODE_TABLE' => GreenCMS_DB_PREFIX . 'node',
 
-     //'DEFAULT_THEME' => get_opinion("DEFAULT_ADMIN_THEME", true, "AdminLTE"),
+    //'DEFAULT_THEME' => get_opinion("DEFAULT_ADMIN_THEME", true, "AdminLTE"),
 
-     'DEFAULT_THEME' => "AdminLTE",
+    'DEFAULT_THEME' => "AdminLTE",
     //     'DEFAULT_THEME' => "Metronic",
 );
 

@@ -110,7 +110,7 @@ function int_to_status($i)
  */
 function int_to_login_type($i)
 {
-    $map = array('status' => array(1 => '登录成功', -1 => '帐号不存在或已禁用', 2 => 'cookie自动登录', 0 => '密码错误或者帐号已禁用'));
+    $map = array('status' => array(1 => '登录成功', -1 => '帐号不存在或已禁用', 2 => 'cookie自动登录', 3 => 'Oauth第三方登陆', 0 => '密码错误或者帐号已禁用'));
 
     return $map['status'][$i];
 }
