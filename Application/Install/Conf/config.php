@@ -8,7 +8,7 @@
  */
 return array(
 
-    'URL_MODEL' => 0,
+    'URL_MODEL' => 3,
 
 
 );
