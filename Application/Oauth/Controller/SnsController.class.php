@@ -20,7 +20,7 @@ class SnsController extends OauthBaseController
     public function __construct()
     {
         parent::__construct();
-        include_once(Extend_PATH . 'ThinkSDk/ThinkOauth.class.php');
+        include_once(Extend_PATH . 'ThinkSDK/ThinkOauth.class.php');
     }
 
     // 登录地址
@@ -121,9 +121,11 @@ class SnsController extends OauthBaseController
                         $map = array();
                         $map['user_id'] = $open_user_info['User']['user_id'];
                         $map['user_login'] = $open_user_info['User']['user_login'];
-                        $LoginEvent = new \Admin\Event\LoginEvent();
-                        $LoginEvent->auth($map);
 
+                        $UserEvent=new \Common\Event\UserEvent();
+                        $UserEvent->auth($map);
+                        $loginRes = $UserEvent->auth($map);
+                        $this->json2Response($loginRes);
 
                     } else {
                         //未绑定

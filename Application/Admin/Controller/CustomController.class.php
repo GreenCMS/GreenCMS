@@ -542,7 +542,7 @@ str;
         $id = I('id');
         M('Addons')->where(array('id' => $id))->setField('status', 1);
         S('hooks', null);
-        $this->json_return(1, "启用成功", U('Admin/Custom/plugin'));
+        $this->jsonReturn(1, "启用成功", U('Admin/Custom/plugin'));
 
     }
 
@@ -554,7 +554,7 @@ str;
         $id = I('id');
         M('Addons')->where(array('id' => $id))->setField('status', 0);
         S('hooks', null);
-        $this->json_return(1, "禁用成功", U('Admin/Custom/plugin'));
+        $this->jsonReturn(1, "禁用成功", U('Admin/Custom/plugin'));
     }
 
     /**
@@ -928,7 +928,7 @@ str;
             if (D('Links', 'Logic')->addLink($data)) {
                 $this->success('链接添加成功', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
             } else {
-                $this->error('链接添加失败', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
+                $this->error('链接添加失败');
             }
         } else {
             $this->assign('imgurl', __ROOT__ . '/Public/share/img/no+image.gif');

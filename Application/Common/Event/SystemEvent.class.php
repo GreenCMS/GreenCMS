@@ -10,7 +10,7 @@
 namespace Common\Event;
 
 use Common\Util\File;
-
+use Common\Logic;
 /**
  * 系统事件 包括数据缓存文件 备份清理操作
  * Class SystemEvent
@@ -22,7 +22,7 @@ class SystemEvent
     /**
      * 文章关联完整性检查
      */
-    public function post_integrity()
+    public function postIntegrity()
     {
         $post_ids = D('Posts')->field('post_id')->select();
 

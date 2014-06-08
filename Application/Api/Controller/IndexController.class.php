@@ -28,7 +28,7 @@ class IndexController extends ApiBaseController
     function __construct()
     {
         if (get_opinion('api_open', false, 1) == 0) {
-            $this->json_return(0, "API功能关闭");
+            $this->jsonReturn(0, "API功能关闭");
         }
 
 
@@ -77,14 +77,14 @@ class IndexController extends ApiBaseController
 
         $res_array = array();
         if (!$post_res) {
-            $this->json_return(0);
+            $this->jsonReturn(0);
         } else {
             $post_res['post_content'] = strip_tags($post_res['post_content']);
             $post_res['url'] = U('Api/Index/post', array('id' => $post_res['post_id']), false, true);
 
             $res_array["detail"] = $post_res;
 
-            $this->json_return(1, $res_array);
+            $this->jsonReturn(1, $res_array);
         }
 
     }
@@ -141,10 +141,10 @@ class IndexController extends ApiBaseController
             }
 
             $res_array["posts"] = $res;
-            $this->json_return(1, ($res_array));
+            $this->jsonReturn(1, ($res_array));
         } else {
             $res_array["detail"] = "没有文章";
-            $this->json_return(0, ($res_array));
+            $this->jsonReturn(0, ($res_array));
         }
 
 
@@ -170,10 +170,10 @@ class IndexController extends ApiBaseController
 
 
             $res_array["posts"] = $res;
-            $this->json_return(1, json_encode($res_array));
+            $this->jsonReturn(1, json_encode($res_array));
         } else {
             $res_array["detail"] = "没有文章";
-            $this->json_return(0, json_encode($res_array));
+            $this->jsonReturn(0, json_encode($res_array));
         }
 
     }

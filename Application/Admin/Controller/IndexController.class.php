@@ -74,21 +74,13 @@ class IndexController extends AdminBaseController
             $this->error('两次密码不同');
         }
 
-        $User = D('User', 'Logic');
+        $uid=(int)$_SESSION [C('USER_AUTH_KEY')];
 
-        $user = $User->detail((int)$_SESSION [C('USER_AUTH_KEY')]);
-        if ($user['user_pass'] != encrypt(I('post.opassword'))) {
-            $this->error("原用户密码不正确");
-        }
+        $UserEvent=new \Common\Event\UserEvent();
+        $changePasswordRes=$UserEvent->changePassword($uid,I('post.opassword'),I('post.password'));
 
-        $User->user_id = (int)$_SESSION [C('USER_AUTH_KEY')];
-        $User->user_pass = encrypt($_POST['password']);
+        $this->json2Response($changePasswordRes);
 
-        if ($User->save()) {
-            $this->success('密码修改成功', U("Admin/Login/logout"), false);
-        } else {
-            $this->error('密码修改失败');
-        }
     }
 
 

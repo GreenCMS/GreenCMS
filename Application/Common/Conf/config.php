@@ -20,7 +20,7 @@ return array(
     'USER_AUTH_KEY'       => 'authId', // 用户认证SESSION标记
 
     'AUTH_CODE'            => "ZTS", //安装完毕之后不要改变，否则所有密码都会出错
-    'ADMIN'                => 'admin',
+    'ADMIN'                => 'admin',//如果管理员不是admin 需要修改此项
     'TOKEN_ON'             => false, //TOKEN_ON
 
     'DATA_CACHE_TYPE'      => 'File', // 数据缓存类型,支持:File||Memcache|Xcache

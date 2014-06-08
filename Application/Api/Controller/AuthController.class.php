@@ -31,10 +31,10 @@ class AuthController extends ApiBaseCOntroller
         $authInfo = RBAC::authenticate($map);
 
         if (false === $authInfo) {
-            $this->json_return(0, '帐号不存在或已禁用！');
+            $this->jsonReturn(0, '帐号不存在或已禁用！');
         } else {
             if ($authInfo['user_pass'] != encrypt(I('post.password'))) {
-                $this->json_return(0, '密码错误或者帐号已禁用');
+                $this->jsonReturn(0, '密码错误或者帐号已禁用');
             }
             $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
             if ($authInfo['user_login'] == get_opinion('Admin')) {
@@ -51,7 +51,7 @@ class AuthController extends ApiBaseCOntroller
                 $user_session = D('User', 'Logic')->genHash($authInfo);
             }
 
-            $this->json_return(1, '登录成功！', $user_session);
+            $this->jsonReturn(1, '登录成功！', $user_session);
         };
 
     }

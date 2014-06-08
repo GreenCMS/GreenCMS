@@ -50,30 +50,63 @@ class LoginController extends BaseController
      */
     public function _before_index()
     {
-        $user_session = cookie('user_session');
-        if (!empty($user_session)) {
-            $authInfo = D('User', 'Logic')->where(array('user_session' => $user_session))->find();
+//        $user_session = cookie('user_session');
+        $map['user_session'] = cookie('user_session');
 
-            if (!empty($authInfo)) {
-                $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
+        $UserEvent = new \Common\Event\UserEvent();
+        $loginRes = $UserEvent->auth($map);
+        $loginResArray = json_decode($loginRes, true);
 
-                if ($authInfo ['user_login'] == get_opinion('ADMIN')) {
-                    $_SESSION [C('ADMIN_AUTH_KEY')] = true;
-                }
+        if ($loginResArray['status'] == 1) {
+            $authInfo = D('User', 'Logic')->where($map)->find();
+            $log['log_user_id'] = $authInfo['user_id'];
+            $log['log_user_name'] = $authInfo['user_login'];
+            $log['log_password'] = $authInfo['user_pass'];
+            $log['log_ip'] = get_client_ip();
+            $log['log_status'] = 2;
 
-                $log['log_user_id'] = $authInfo['user_id'];
-                $log['log_user_name'] = $authInfo['user_login'];
-                $log['log_password'] = $authInfo['user_pass'];
-                $log['log_ip'] = get_client_ip();
-                $log['log_status'] = 2;
+            D('login_log')->data($log)->add();
 
-                D('login_log')->data($log)->add();
-
+            /**
+             * 自动恢复原状态
+             */
+            $httpReferer = $_SERVER['HTTP_REFERER'];
+            $parsedHttpReferer = parse_url($httpReferer);
+            $httpQuery = $parsedHttpReferer['query'];
+            parse_str($httpQuery, $parsedHttpQuery);
+            dump($parsedHttpQuery);
+            if ($parsedHttpQuery['c'] != 'login' && $parsedHttpQuery['c'] != 'index' && $parsedHttpQuery['c'] != '' && $parsedHttpQuery['a'] != '') {
+                $this->redirect('Admin/' . $parsedHttpQuery['c'] . '/' . $parsedHttpQuery['a'] . '');
+            } else {
                 $this->redirect('Admin/Index/index');
             }
 
-
         }
+//        else {
+//
+//            session_unset();
+//            session_destroy();
+//
+//            $this->error("请重新登陆", U("Admin/Login/index"));
+//        }
+//
+//        if (!empty($user_session)) {
+//            $authInfo = D('User', 'Logic')->where(array('user_session' => $user_session))->find();
+//
+//            if (!empty($authInfo)) {
+//                $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
+//
+//                if ($authInfo ['user_login'] == get_opinion('ADMIN')) {
+//                    $_SESSION [C('ADMIN_AUTH_KEY')] = true;
+//                }
+//
+
+//
+//                $this->redirect('Admin/Index/index');
+//            }
+//
+//
+//        }
     }
 
     /**
@@ -106,8 +139,9 @@ class LoginController extends BaseController
         $map['user_status'] = array('gt', 0);
         $map['user_pass'] = encrypt(I('post.password'));
 
-        $LoginEvent=new \Admin\Event\LoginEvent();
-        $LoginEvent->auth($map);
+        $UserEvent = new \Common\Event\UserEvent();
+        $loginRes = $UserEvent->auth($map);
+        $this->json2Response($loginRes);
 
     }
 
@@ -122,52 +156,19 @@ class LoginController extends BaseController
 
     public function registerHandle()
     {
-
-        $new_user_role = get_opinion('new_user_role', true, 5);
-
-        $w = htmlspecialchars(trim($_POST ['username']));
-        $i = D('user')->where(array(
-            'user_login' => $w
-        ))->select();
-        if ($i != '') {
-            $this->error('用户名已存在！');
-        } else {
-            // 组合用户信息并添加
-
-            $user = array(
-                'user_login' => I('post.username'),
-                'user_nicename' => I('post.nickname'),
-                'user_pass' => encrypt(I('post.password')),
-                'user_email' => I('post.email'),
-
-                'user_status' => 1,
-
-                // 'logintime'=>time(),
-                // 'loginip'=>get_client_ip(),
-                // 'lock'=>$_POST['lock']
-            );
-            // 添加用户与角色关系
-
-            $user ['user_level'] = $new_user_role;
-
-            $User = D('User');
-            $Role_users = D('Role_users');
-            if ($new_id = $User->add($user)) {
-
-                $role = array(
-                    'role_id' => $new_user_role,
-                    'user_id' => $new_id
-                );
-                if ($Role_users->add($role)) {
-                    $this->success('注册成功！', U('Admin/Access/index'));
-                } else {
-                    $this->error('注册成功，添加用户权限失败！', U('Admin/Access/index'));
-                }
-            } else {
-                $this->error('注册用户失败！', U('Admin/Access/index'));
-            }
-
+        $username = htmlspecialchars(trim($_POST ['username']));
+        $nickname = I('post.nickname');
+        $password = I('post.password');
+        $email = I('post.email');
+        if (!($username && $nickname && $password && $email)) {
+            $this->error("字段不能为空");
         }
+
+        $UserEvent = new \Common\Event\UserEvent();
+        $registerRes = $UserEvent->register($username, $nickname, $password, $email);
+        $this->json2Response($registerRes);
+
+
         //$this->error("不开放注册");
 
 
@@ -179,11 +180,7 @@ class LoginController extends BaseController
      */
     public function forgetpassword()
     {
-
-
         $this->display();
-
-
     }
 
     /**
@@ -198,27 +195,13 @@ class LoginController extends BaseController
         }
 
         if (IS_POST) {
-            $User = D('User', 'Logic');
 
             $email = I('post.email');
 
-            $user = $User->where(array('user_email' => $email))->find();
-            if (!$user) {
-                $this->error("不存在用户");
-            }
+            $UserEvent = new \Common\Event\UserEvent();
+            $forgetPasswordRes = $UserEvent->forgetPassword($email);
+            $this->json2Response($forgetPasswordRes);
 
-            $new_pass = encrypt($user['user_session']);
-            $User->where(array('user_email' => $email))->data(array('user_pass' => $new_pass))->save();
-
-
-            $res = send_mail($email, "", "用户密码重置", "新密码: " . $user['user_session']); //
-
-            if ($res) {
-                $this->success("新密码的邮件已经发送到注册邮箱");
-            } else {
-                $this->error("请检查邮件发送设置");
-
-            }
         }
 
 
@@ -229,15 +212,9 @@ class LoginController extends BaseController
      */
     public function logout()
     {
-        $User = D('User', 'Logic');
-        $authInfo = $User->detail(session(C('ADMIN_AUTH_KEY')));
+        $UserEvent = new \Common\Event\UserEvent();
+        $logoutRes = $UserEvent->logout();
+        $this->json2Response($logoutRes);
 
-        $greencms_hash = $User->genHash($authInfo);
-        cookie('user_session', null);
-
-        session_unset();
-        session_destroy();
-
-        $this->success('退出成功！', U('Admin/Login/index'), false);
     }
 }
