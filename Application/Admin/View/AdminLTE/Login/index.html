@@ -32,10 +32,10 @@
             </div>
             <opinioncontrol realtime="true" opinion_name="vertify_code" default="true">
 
-            <div class="form-group">
-                <input type="text" name="vertify" class="form-control" placeholder="输入下方验证码"/>
+                <div class="form-group">
+                    <input type="text" name="vertify" class="form-control" placeholder="输入下方验证码"/>
 
-            </div>
+                </div>
 
 
                 <div class="form-group">
@@ -62,7 +62,12 @@
         <!--<span>Sign in using social networks</span>-->
         <!--<br/>-->
         <!--<button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>-->
-        <!--<button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button>-->
+        <div class="margin text-center" >
+
+            <a href="{:U('Oauth/Sns/login',array('type'=>'sina'))}"><img
+                    src="__PUBLIC__/share/img/icon/weibo/weibo_login_24.png"/></a>
+        </div>
+
         <!--<button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>-->
 
         <div class="copyright">

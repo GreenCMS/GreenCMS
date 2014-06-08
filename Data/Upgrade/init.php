@@ -59,3 +59,29 @@ function upgrade_20140520_to_20140525()
     $sql = "ALTER TABLE `{$db_prefix}links` ADD COLUMN `link_group_id` bigint(20)";
     $Model->query($sql);
 }
+
+function upgrade_20140527_to_20140602()
+{
+    $db_prefix = C('db_prefix');
+
+    $Model = new \Think\Model();
+
+    $sql = "DROP TABLE IF EXISTS `{$db_prefix}user_sns`";
+    $Model->query($sql);
+
+    $sql = "CREATE TABLE `{$db_prefix}user_sns` (
+  `us_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT '0',
+  `access_token` varchar(50) DEFAULT NULL,
+  `refresh_token` varchar(50) DEFAULT NULL,
+  `remind_in` varchar(50) DEFAULT NULL,
+  `expires_in` varchar(50) DEFAULT NULL,
+  `openid` varchar(50) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `expires_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`us_id`),
+  KEY `useropen` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;";
+    $Model->query($sql);
+
+}

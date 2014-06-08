@@ -476,6 +476,13 @@ class SystemController extends AdminBaseController
 
     }
 
+
+    public function sns()
+    {
+        $this->display();
+
+    }
+
     public function phpinfo()
     {
         $this->show(phpinfo());
