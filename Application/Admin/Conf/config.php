@@ -114,13 +114,15 @@ $menu_arr = array(
 
         'System' => array(
             'System/index' => '站点设置',
+            'System/user' => '用户设置',
+
             'System/post' => '文章设置',
             'System/url' => '链接设置',
             'System/safe' => '安全选项',
             'System/email' => '邮箱配置',
 //            'System/kvset'  => '其他设置',
             'System/sns' => '社交登录设置',
-            'System/green' => '系统设置',
+            'System/green' => '强制设置',
             'System/update' => '系统升级',
             'System/info' => '系统信息',
 

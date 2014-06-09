@@ -74,39 +74,17 @@ class LoginController extends BaseController
             $parsedHttpReferer = parse_url($httpReferer);
             $httpQuery = $parsedHttpReferer['query'];
             parse_str($httpQuery, $parsedHttpQuery);
-            dump($parsedHttpQuery);
-            if ($parsedHttpQuery['c'] != 'login' && $parsedHttpQuery['c'] != 'index' && $parsedHttpQuery['c'] != '' && $parsedHttpQuery['a'] != '') {
+
+
+            if ($parsedHttpQuery['m'] == 'admin' && $parsedHttpQuery['c'] != 'login' && $parsedHttpQuery['c'] != 'index' && $parsedHttpQuery['c'] != '' && $parsedHttpQuery['a'] != '') {
                 $this->redirect('Admin/' . $parsedHttpQuery['c'] . '/' . $parsedHttpQuery['a'] . '');
             } else {
                 $this->redirect('Admin/Index/index');
             }
 
         }
-//        else {
-//
-//            session_unset();
-//            session_destroy();
-//
-//            $this->error("请重新登陆", U("Admin/Login/index"));
-//        }
-//
-//        if (!empty($user_session)) {
-//            $authInfo = D('User', 'Logic')->where(array('user_session' => $user_session))->find();
-//
-//            if (!empty($authInfo)) {
-//                $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
-//
-//                if ($authInfo ['user_login'] == get_opinion('ADMIN')) {
-//                    $_SESSION [C('ADMIN_AUTH_KEY')] = true;
-//                }
-//
 
-//
-//                $this->redirect('Admin/Index/index');
-//            }
-//
-//
-//        }
+
     }
 
     /**
@@ -148,28 +126,36 @@ class LoginController extends BaseController
 
     public function register()
     {
-
-
-        $this->display();
-
+        $user_can_regist = get_opinion('user_can_regist', true, 1);
+        if ($user_can_regist) {
+            $this->display();
+        } else {
+            $this->error("不开放注册");
+        }
     }
 
     public function registerHandle()
     {
-        $username = htmlspecialchars(trim($_POST ['username']));
-        $nickname = I('post.nickname');
-        $password = I('post.password');
-        $email = I('post.email');
-        if (!($username && $nickname && $password && $email)) {
-            $this->error("字段不能为空");
+
+        $user_can_regist = get_opinion('user_can_regist', true, 1);
+        if ($user_can_regist) {
+            $username = I('post.username');
+            $nickname = I('post.nickname');
+            $password = I('post.password');
+            $email = I('post.email');
+            if (!($username && $nickname && $password && $email)) {
+                $this->error("字段不能为空");
+            }
+
+            $UserEvent = new \Common\Event\UserEvent();
+            $registerRes = $UserEvent->register($username, $nickname, $password, $email);
+            $this->json2Response($registerRes);
+
+
+        } else {
+            $this->error("不开放注册");
+
         }
-
-        $UserEvent = new \Common\Event\UserEvent();
-        $registerRes = $UserEvent->register($username, $nickname, $password, $email);
-        $this->json2Response($registerRes);
-
-
-        //$this->error("不开放注册");
 
 
     }

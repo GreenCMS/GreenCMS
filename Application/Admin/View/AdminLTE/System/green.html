@@ -32,16 +32,17 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="color: #FF0000">
 
             <div class="row">
                 <div class="col-md-10">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
+                            <h3 class="box-title"  style="color: #FF0000">{$action}-如果你不了解这里的用处,请勿随意更改</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
+
 
 
                             <form action="{:U('Admin/System/saveHandle')}" name="change_System" role="form"
@@ -52,7 +53,7 @@
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large" name="software_build"
                                                value="{:get_opinion('software_build')}"/>
-                                        <span class="help-inline">请勿修改,会影响自动升级</span>
+                                        <span class="help-inline">请勿随意修改,会影响自动升级</span>
                                     </div>
                                 </div>
 

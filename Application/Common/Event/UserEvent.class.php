@@ -21,6 +21,11 @@ use Org\Util\Rbac;
 class UserEvent extends BaseController
 {
 
+    /**
+     * 用户忘记密码找回
+     * @param $email
+     * @return string
+     */
     public function forgetPassword($email)
     {
 
@@ -48,6 +53,13 @@ class UserEvent extends BaseController
         }
     }
 
+    /**
+     * 改变用户密码
+     * @param $uid
+     * @param $oldPassword
+     * @param $newPassword
+     * @return string
+     */
     public function changePassword($uid, $oldPassword, $newPassword)
     {
 
@@ -70,6 +82,11 @@ class UserEvent extends BaseController
     }
 
 
+    /**
+     * 认证用户，传入where查询 $map['user表字段']
+     * @param $map
+     * @return string
+     */
     public function auth($map)
     {
         $authInfo = RBAC::authenticate($map);
@@ -110,7 +127,7 @@ class UserEvent extends BaseController
             $log['log_status'] = 1;
 
             D('login_log')->data($log)->add();
-            // die(D('login_log')->getlastsql());
+
             return $this->jsonResult(1, "登录成功", U("Admin/Index/index"));
 
         };
@@ -118,6 +135,10 @@ class UserEvent extends BaseController
     }
 
 
+    /**
+     * 退出
+     * @return string
+     */
     public function logout()
     {
 
@@ -135,6 +156,14 @@ class UserEvent extends BaseController
     }
 
 
+    /**
+     * 注册用户
+     * @param $username
+     * @param $nickname
+     * @param $password
+     * @param $email
+     * @return string
+     */
     public function register($username, $nickname, $password, $email)
     {
 

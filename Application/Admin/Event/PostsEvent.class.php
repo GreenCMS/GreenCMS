@@ -9,9 +9,16 @@
 namespace Admin\Event;
 
 
+/**
+ * Class PostsEvent
+ * @package Admin\Event
+ */
 class PostsEvent
 {
 
+    /**
+     * @return array
+     */
     public function get_tpl_type_list()
     {
 
@@ -35,6 +42,9 @@ class PostsEvent
     }
 
 
+    /**
+     * @return mixed
+     */
     function restore_from_cookie()
     {
 
