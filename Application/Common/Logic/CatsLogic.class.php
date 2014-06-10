@@ -109,6 +109,7 @@ class CatsLogic extends RelationModel
      */
     public function getPostsId($info, $post_status = 'publish')
     {
+        //todo 性能优化~！
         $cat_info ['cat_id'] = $info;
         $cat = D('Post_cat')->field('post_id')->where($cat_info)->select();
 
