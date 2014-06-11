@@ -606,7 +606,6 @@ CREATE TABLE `{$db_prefix}access` (
 DROP TABLE IF EXISTS `{$db_prefix}link_group`;
 CREATE TABLE `{$db_prefix}link_group` (
   `link_group_id`  bigint(20) NOT NULL AUTO_INCREMENT ,
-  `link_id`  bigint(20) NULL DEFAULT NULL ,
   `link_group_name`  varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
   PRIMARY KEY (`link_group_id`)
 )  ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci COMMENT='链接分类表';
