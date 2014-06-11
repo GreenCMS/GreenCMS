@@ -9,7 +9,9 @@
 
 namespace Admin\Controller;
 
+use Common\Event\WordpressEvent;
 use Common\Util\File;
+use Think\Upload;
 
 /**
  * Class ToolsController
@@ -40,39 +42,35 @@ class ToolsController extends AdminBaseController
     public function wordpressHandle()
     {
 
+        $config = array(
+            "savePath" => 'Data/',
+            "maxSize" => 10000000, // 单位B
+            "exts" => array('xml'),
+            "subName" => array('date', 'Y/m-d'),
+        );
+        $upload = new Upload($config);
+        $info = $upload->upload();
 
-        if ($_FILES['file']['size'] != 0) {
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
 
-            $config = array(
-                "savePath" => (WEB_CACHE_PATH),
-                "maxSize" => 100000, // 单位KB
-                "allowFiles" => array(".xml")
-            );
+            $file_path_full = Upload_PATH . $info['file']['savepath'] . $info['file']['savename'];
 
-            $upload = new \Common\Util\Uploader ("file", $config);
-            $info = $upload->getFileInfo();
+            if (File::file_exists($file_path_full)) {
+                $Wordpress = new WordpressEvent();
 
+                $Wordpress->catImport($file_path_full);
+                $Wordpress->tagImport($file_path_full);
+                $Wordpress->postImport($file_path_full);
 
-            if ($info['state'] != 'SUCCESS') {
-                $this->error($info['state']);
-            }
-
-            if (File::file_exists($info['url'])) {
-
-
-                $Wordpress = new \Common\Event\WordpressEvent();
-                $Wordpress->catImport($info['url']);
-                $Wordpress->tagImport($info['url']);
-                $Wordpress->postImport($info['url']);
-
-                File::delFile($info['url']);
+                File::delFile($file_path_full);
                 $this->success('导入完成');
             }
 
-
-        } else {
-            $this->error('文件不能为空或者超出了服务器限制');
         }
+
+
     }
 
 }
