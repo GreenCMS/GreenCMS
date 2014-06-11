@@ -109,7 +109,7 @@ class LoginController extends BaseController
             $verify = new \Think\Verify();
 
             if (!$verify->check(I('post.vertify'))) {
-                $this->error("验证码错误");
+                $this->error("验证码错误",U('Admin/Login/index'));
             }
         }
         $map = array();
@@ -177,7 +177,7 @@ class LoginController extends BaseController
         $verify = new \Think\Verify();
 
         if (!$verify->check(I('post.vertify'))) {
-            $this->error("验证码错误");
+            $this->error("验证码错误",U('Admin/Login/forgetpassword'));
         }
 
         if (IS_POST) {

@@ -33,7 +33,7 @@
             <opinioncontrol realtime="true" opinion_name="vertify_code" default="true">
 
                 <div class="form-group">
-                    <input type="text" name="vertify" class="form-control" placeholder="输入下方验证码"/>
+                    <input  type="text" name="vertify" class="form-control" placeholder="输入下方验证码"/>
 
                 </div>
 
@@ -62,7 +62,7 @@
         <!--<span>Sign in using social networks</span>-->
         <!--<br/>-->
         <!--<button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>-->
-        <div class="margin text-center" >
+        <div class="margin text-center">
 
             <a href="{:U('Oauth/Sns/login',array('type'=>'sina'))}"><img
                     src="__PUBLIC__/share/img/icon/weibo/weibo_login_24.png"/></a>
@@ -94,7 +94,13 @@
     }
     ;
 </script>
+<script>
+    jQuery(document).ready(function () {
 
+        fleshVerify();
+
+    });
+</script>
 
 <script type="text/javascript">
     var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
