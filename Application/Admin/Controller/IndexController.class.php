@@ -8,6 +8,7 @@
  */
 
 namespace Admin\Controller;
+
 use Think\Storage;
 
 /**
@@ -75,10 +76,10 @@ class IndexController extends AdminBaseController
             $this->error('两次密码不同');
         }
 
-        $uid=(int)$_SESSION [C('USER_AUTH_KEY')];
+        $uid = (int)$_SESSION [C('USER_AUTH_KEY')];
 
-        $UserEvent=new \Common\Event\UserEvent();
-        $changePasswordRes=$UserEvent->changePassword($uid,I('post.opassword'),I('post.password'));
+        $UserEvent = new \Common\Event\UserEvent();
+        $changePasswordRes = $UserEvent->changePassword($uid, I('post.opassword'), I('post.password'));
 
         $this->json2Response($changePasswordRes);
 
@@ -88,7 +89,7 @@ class IndexController extends AdminBaseController
     public function profile()
     {
 
-        $uid= ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $uid = ( int )$_SESSION [C('USER_AUTH_KEY')];
         $user = D('User', 'Logic')->detail($uid);
         $this->assign('user', $user);
         $this->assign('action', '用户档案');
@@ -99,27 +100,30 @@ class IndexController extends AdminBaseController
     }
 
 
-
-    public function sns(){
+    public function sns()
+    {
         $this->display();
 
     }
 
 
-    public function updateComplete(){
+    public function updateComplete()
+    {
+        $this->assign('action', '升级完成');
+        $this->assign('action_name', 'updateComplete');
 
-        $Storage=new Storage();
+
+        $Storage = new Storage();
         $Storage::connect();
 
-        if($Storage::has("UpdateLOG")){
-            $update_content=$Storage::read('UpdateLOG');
-            $this->assign('update_content',$update_content);
+        if ($Storage::has("UpdateLOG")) {
+            $update_content = $Storage::read('UpdateLOG');
+            $this->assign('update_content', $update_content);
         }
 
         $this->display("update");
 
     }
-
 
 
 }

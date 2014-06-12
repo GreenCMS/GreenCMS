@@ -219,7 +219,7 @@ class SystemController extends AdminBaseController
                 }
             }
 
-            $this->success('升级成功' . $target_version_info['build_to']);
+            $this->success('升级成功' . $target_version_info['build_to'],U('Admin/Index/updateComplete'));
 
         } else {
 
