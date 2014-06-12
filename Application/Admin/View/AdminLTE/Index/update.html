@@ -35,24 +35,16 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="box box-warning">
                         <div class="box-header">
                             <h3 class="box-title">{$action}</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <div class="well">
-                                    UID: {$user.user_id} <br />
-                                    用户名: {$user.user_nicename} <br />
-                                    Email: {$user.user_email} <br />
-                                    主页: {$user.user_url} <br />
-                                    注册时间: {$user.user_registered} <br />
-                                    自我介绍: {$user.user_intro} <br />
-                                    用户角色: {$user['role_info'][0]["name"]} <br />
 
-                            </div>
 
+                            {$update_content}
 
 
                         </div>

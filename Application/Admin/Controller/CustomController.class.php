@@ -910,7 +910,7 @@ str;
                 $upload = new Upload($config);
                 $info = $upload->upload();
 
-                if (!$info) { // 上传错误提示错误信息
+                 if (!$info) { // 上传错误提示错误信息
                     $this->error($upload->getError());
                 } else { // 上传成功 获取上传文件信息
 

@@ -11,6 +11,7 @@ namespace Admin\Controller;
 
 use Common\Util\File;
 use Common\Util\Uploader;
+use Think\Upload;
 
 /**
  * Class UeditorController
@@ -68,28 +69,41 @@ class UeditorController extends AdminBaseController
     {
         header("Content-Type: text/html; charset=utf-8");
 
-        //上传配置
         $config = array(
-            "savePath"   => Upload_PATH . 'file/' . date('Y') . '/' . date('m') . '/', //TODO 保存路径
-            "allowFiles" => array(".rar", ".doc", ".docx", ".zip", ".pdf", ".txt", ".ppt", ".pptx", ".xls", "xlsx"), //文件允许格式
-            "maxSize"    => 100000 //文件大小限制，单位KB
+            "savePath" => 'File/',
+            "maxSize" => 10000000, // 单位B
+            "exts" => array("rar", "doc", "docx", "zip", "pdf", "txt", "ppt", "pptx", "xls", "xlsx"),
+            "subName" => array('date', 'Y/m-d'),
         );
 
-        //生成上传实例对象并完成上传
-        $up = new Uploader("upfile", $config);
+        $upload = new Upload($config);
+        $info = $upload->upload();
 
+        if ($info) {
+            $state = "SUCCESS";
+        } else {
+            $state = "ERROR" . $upload->getError();
+        }
         /**
          * 得到上传文件所对应的各个参数,数组结构
-         * array(
-         *     "originalName" => "",   //原始文件名
-         *     "name" => "",           //新文件名
-         *     "url" => "",            //返回的地址
-         *     "size" => "",           //文件大小
-         *     "type" => "" ,          //文件类型
-         *     "state" => ""           //上传状态，上传成功时必须返回"SUCCESS"
-         * )
+         * array(1) {
+         * ["upfile"] => array(9) {  //表单中字段名称
+         * ["name"] => string(8) "head.jpg"  //源文件名称
+         * ["type"] => string(10) "image/jpeg" //mine type
+         * ["size"] => int(35578)  //文件大小
+         * ["key"] => string(3) "img" //
+         * ["ext"] => string(3) "jpg" //后缀
+         * ["md5"] => string(32) "70f514f29b318f4cd6d8a4089a989f3c"
+         * ["sha1"] => string(40) "d9c0a401b64a394ff71085205036b8a5d0e4a74d"
+         * ["savename"] => string(17) "539992b8670f3.jpg" //保存名称
+         * ["savepath"] => string(17) "Links/2014/06-12/" //保存路径
+         * }
+         * }
          */
-        $info = $up->getFileInfo();
+
+
+        $file_path_full = Upload_PATH . $info['upfile']['savepath'] . $info['upfile']['savename'];
+
 
         /**
          * 向浏览器返回数据json数据
@@ -100,52 +114,51 @@ class UeditorController extends AdminBaseController
          *   'state'    :'SUCCESS'       //上传状态，成功时返回SUCCESS,其他任何值将原样返回至图片上传框中
          * }
          */
-        echo '{"url":"' . $info["url"] . '","fileType":"' . $info["type"] . '","original":"' . $info["originalName"] . '","state":"' . $info["state"] . '"}';
+        echo '{"url":"' . $file_path_full . '","fileType":".' . $info['upfile']['ext'] . '","original":"' . $info['upfile']['name'] . '","state":"' . $state . '"}';
     }
 
     /**
      *
      */
-    public function scrawlUp()
-    {
-        header("Content-Type:text/html;charset=utf-8");
-
-        //上传配置
-        $config = array(
-            "savePath"   => Upload_PATH . 'scraw/' . date('Y') . '/' . date('m') . '/', //存储文件夹
-            "maxSize"    => 10000, //允许的文件最大尺寸，单位KB
-            "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp") //允许的文件格式
-        );
-        //临时文件目录
-        $tmpPath = Upload_PATH . "tmp/";
-
-        //获取当前上传的类型
-        $action = htmlspecialchars($_GET["action"]);
-        if ($action == "tmpImg") { // 背景上传
-            //背景保存在临时目录中
-            $config["savePath"] = $tmpPath;
-            $up = new Uploader("upfile", $config);
-            $info = $up->getFileInfo();
-            /**
-             * 返回数据，调用父页面的ue_callback回调
-             */
-            echo "<script>parent.ue_callback('" . $info["url"] . "','" . $info["state"] . "')</script>";
-        } else {
-            //涂鸦上传，上传方式采用了base64编码模式，所以第三个参数设置为true
-            $up = new Uploader("content", $config, true);
-            //上传成功后删除临时目录
-            if (file_exists($tmpPath)) {
-                File::delDir($tmpPath);
-                // delDir($tmpPath);
-            }
-            $info = $up->getFileInfo();
-            echo "{'url':'" . $info["url"] . "',state:'" . $info["state"] . "'}";
-        }
-
-    }
+//    public function scrawlUp()
+//    {
+//        header("Content-Type:text/html;charset=utf-8");
+//
+//        //上传配置
+//        $config = array(
+//            "savePath" => Upload_PATH . 'scraw/' . date('Y') . '/' . date('m') . '/', //存储文件夹
+//            "maxSize" => 10000, //允许的文件最大尺寸，单位KB
+//            "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp") //允许的文件格式
+//        );
+//        //临时文件目录
+//        $tmpPath = Upload_PATH . "tmp/";
+//
+//        //获取当前上传的类型
+//        $action = htmlspecialchars($_GET["action"]);
+//        if ($action == "tmpImg") { // 背景上传
+//            //背景保存在临时目录中
+//            $config["savePath"] = $tmpPath;
+//            $up = new Uploader("upfile", $config);
+//            $info = $up->getFileInfo();
+//            /**
+//             * 返回数据，调用父页面的ue_callback回调
+//             */
+//            echo "<script>parent.ue_callback('" . $info["url"] . "','" . $info["state"] . "')</script>";
+//        } else {
+//            //涂鸦上传，上传方式采用了base64编码模式，所以第三个参数设置为true
+//            $up = new Uploader("content", $config, true);
+//            //上传成功后删除临时目录
+//            if (file_exists($tmpPath)) {
+//                File::delDir($tmpPath);
+//            }
+//            $info = $up->getFileInfo();
+//            echo "{'url':'" . $info["url"] . "',state:'" . $info["state"] . "'}";
+//        }
+//
+//    }
 
     /**
-     *
+     * 获取远程图片。暂时不能移植SAE
      */
     public function getRemoteImage()
     {
@@ -153,9 +166,9 @@ class UeditorController extends AdminBaseController
 
         //远程抓取图片配置
         $config = array(
-            "savePath"   => Upload_PATH . 'remote/' . date('Y') . '/' . date('m') . '/', //保存路径
+            "savePath" => Upload_PATH . 'remote/' . date('Y') . '/' . date('m') . '/', //保存路径
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp"), //文件允许格式
-            "maxSize"    => 30000 //文件大小限制，单位KB
+            "maxSize" => 30000 //文件大小限制，单位KB
         );
         $uri = htmlspecialchars($_POST['upfile']);
         $uri = str_replace("&amp;", "&", $uri);
@@ -200,9 +213,9 @@ class UeditorController extends AdminBaseController
             ob_start();
             $context = stream_context_create(
                 array(
-                     'http' => array(
-                         'follow_location' => false // don't follow redirects
-                     )
+                    'http' => array(
+                        'follow_location' => false // don't follow redirects
+                    )
                 )
             );
             //请确保php.ini中的fopen wrappers已经激活
@@ -305,7 +318,7 @@ class UeditorController extends AdminBaseController
                     foreach ($ret as $file) {
                         if (preg_match("/\.(gif|jpeg|jpg|png|bmp)$/i", $file))
 
-                        echo  $st->getUrl('upload', $file). "ue_separate_ue";
+                            echo $st->getUrl('upload', $file) . "ue_separate_ue";
                         $num++;
                     }
                 }
@@ -329,36 +342,43 @@ class UeditorController extends AdminBaseController
         $title = htmlspecialchars($_POST ['pictitle'], ENT_QUOTES);
         $path = htmlspecialchars($_POST ['dir'], ENT_QUOTES);
 
-        // 上传配置
         $config = array(
-            "savePath"   => ($path == "1" ? Upload_PATH . 'img/' . date('Y') . '/' . date('m') . '/' : "upload1/"),
-            "maxSize"    => 3000, // 单位KB
-            "allowFiles" => array(
-                ".gif",
-                ".png",
-                ".jpg",
-                ".jpeg",
-                ".bmp"
-            )
+            "savePath" => 'Img/',
+            "maxSize" => 10000000, // 单位B
+            "exts" => array("gif", "png", "jpg", "jpeg", "bmp"),
+            "subName" => array('date', 'Y/m-d'),
         );
 
+        $upload = new Upload($config);
+        $info = $upload->upload();
 
-        //	Log::write(array_to_str($config));
-        // 生成上传实例对象并完成上传
-        $up = new Uploader ("upfile", $config);
+        if ($info) {
+            $state = "SUCCESS";
+        } else {
+            $state = "ERROR" . $upload->getError();
+        }
+
 
         /**
          * 得到上传文件所对应的各个参数,数组结构
-         * array(
-         * "originalName" => "", //原始文件名
-         * "name" => "", //新文件名
-         * "url" => "", //返回的地址
-         * "size" => "", //文件大小
-         * "type" => "" , //文件类型
-         * "state" => "" //上传状态，上传成功时必须返回"SUCCESS"
-         * )
+         * array(1) {
+         * ["upfile"] => array(9) {  //表单中字段名称
+         * ["name"] => string(8) "head.jpg"  //源文件名称
+         * ["type"] => string(10) "image/jpeg" //mine type
+         * ["size"] => int(35578)  //文件大小
+         * ["key"] => string(3) "img" //
+         * ["ext"] => string(3) "jpg" //后缀
+         * ["md5"] => string(32) "70f514f29b318f4cd6d8a4089a989f3c"
+         * ["sha1"] => string(40) "d9c0a401b64a394ff71085205036b8a5d0e4a74d"
+         * ["savename"] => string(17) "539992b8670f3.jpg" //保存名称
+         * ["savepath"] => string(17) "Links/2014/06-12/" //保存路径
+         * }
+         * }
          */
-        $info = $up->getFileInfo();
+
+
+        $file_path_full = Upload_PATH . $info['upfile']['savepath'] . $info['upfile']['savename'];
+
 
         /**
          * 向浏览器返回数据json数据
@@ -369,6 +389,8 @@ class UeditorController extends AdminBaseController
          * 'state' :'SUCCESS' //上传状态，成功时返回SUCCESS,其他任何值将原样返回至图片上传框中
          * }
          */
-        echo "{'url':'" . $info ["url"] . "','title':'" . $title . "','original':'" . $info ["originalName"] . "','state':'" . $info ["state"] . "'}";
+        echo "{'url':'" . $file_path_full . "','title':'" . $title . "','original':'" . $info['upfile']['name'] . "','state':'" . $state . "'}";
+
+
     }
 }

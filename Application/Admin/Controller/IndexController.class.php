@@ -8,6 +8,7 @@
  */
 
 namespace Admin\Controller;
+use Think\Storage;
 
 /**
  * Class IndexController
@@ -103,6 +104,22 @@ class IndexController extends AdminBaseController
         $this->display();
 
     }
+
+
+    public function updateComplete(){
+
+        $Storage=new Storage();
+        $Storage::connect();
+
+        if($Storage::has("UpdateLOG")){
+            $update_content=$Storage::read('UpdateLOG');
+            $this->assign('update_content',$update_content);
+        }
+
+        $this->display("update");
+
+    }
+
 
 
 }

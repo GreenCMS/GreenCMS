@@ -286,6 +286,16 @@
 <script type="text/javascript" src="__PUBLIC__/share/js/jquery.form.js"></script>
 
 <script type="text/javascript">
+
+    function leave_confirm() {
+        if (true) {
+            return "确认离开将不会保存当前数据。";
+        }
+    }
+
+    $(window).bind('beforeunload', leave_confirm);
+
+
     $(function () {
 
         var editor;
@@ -310,8 +320,8 @@
                     'justifyright', 'justifyjustify', '|', 'touppercase',
                     'tolowercase', '|', 'link', 'unlink', 'anchor', '|',
                     'imagenone', 'imageleft', 'imageright', 'imagecenter',
-                    '|', 'insertimage', 'emotion', 'scrawl', 'insertvideo',
-                    'music', 'attachment', 'map', 'gmap', 'insertframe',
+                    '|', 'insertimage', 'emotion', 'insertvideo',
+                    'attachment', 'map', 'gmap', 'insertframe',
                     'insertcode', 'webapp', 'pagebreak', 'template',
                     'background', '|', 'horizontal', 'date', 'time',
                     'spechars', 'wordimage', '|',
@@ -352,6 +362,8 @@
                         type: "POST",
                         dataType: "json",
                         success: function (data) {
+                            $(window).unbind('beforeunload', leave_confirm);
+
                             if (data.status == 1) {
                                 $(".submit").hide();
                                 div.fadeIn().html(data.info);
@@ -371,10 +383,13 @@
                                     top.window.location.reload();
                                 }, 1000);
                             }
+
                         }
                     });
                 });
     });
+
+
 </script>
 </body>
 </html>

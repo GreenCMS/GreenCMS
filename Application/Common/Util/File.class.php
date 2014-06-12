@@ -9,6 +9,8 @@
 
 namespace Common\Util;
 
+use Think\Storage;
+
 
 /**
  * Class File
@@ -18,15 +20,22 @@ class File
 {
 
     /**
+     * 运行于 Sae 和 LAMP
      * @param $filename
      * @return bool
      */
     public static function file_exists($filename)
     {
-        return file_exists($filename);
+        $Storage = new Storage();
+        $Storage::connect();
+
+        return $Storage::has($filename);
+
+        //  return file_exists($filename);
     }
 
     /**
+     * 运行于 Sae 和 LAMP
      * @param $bytes
      * @return string
      */
@@ -44,14 +53,9 @@ class File
     static public function readFile($filename)
     {
         $content = '';
-        if (function_exists('file_get_contents')) {
-            @$content = file_get_contents($filename);
-        } else {
-            if (@$fp = fopen($filename, 'r')) {
-                @$content = fread($fp, filesize($filename));
-                @fclose($fp);
-            }
-        }
+        $Storage = new Storage();
+        $Storage::connect();
+        @$content = $Storage::read($filename);
         return $content;
     }
 
@@ -76,16 +80,15 @@ class File
 
 
     /**
-     * @param $file
+     * @param $filename
      * @return bool
      */
-    public static function delFile($file)
+    public static function delFile($filename)
     {
-        if (file_exists($file)) {
-            return unlink($file);
-        } else {
-            return false;
-        }
+
+        $Storage = new Storage();
+        $Storage::connect();
+        return $Storage::unlink($filename);
     }
 
 

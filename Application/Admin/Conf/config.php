@@ -46,12 +46,16 @@ $menu_arr = array(
 
             'Posts/index' => '所有文章',
             'Posts/page' => '页面列表',
+
             'Posts/category' => '分类管理',
             'Posts/tag' => '标签管理',
             'Posts/add' => '添加文章',
             'Posts/reverify' => '未通过',
             'Posts/unverified' => '待审核',
-            'Posts/recycle' => '回收站'
+            'Posts/recycle' => '回收站',
+
+//todo            'Posts/stats' => '信息统计',
+
         ),
 
 
