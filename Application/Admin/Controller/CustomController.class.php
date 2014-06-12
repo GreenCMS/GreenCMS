@@ -14,6 +14,8 @@ use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
 
+use Think\Upload;
+
 /**
  * Class CustomController
  * @package Admin\Controller
@@ -542,7 +544,7 @@ str;
         $id = I('id');
         M('Addons')->where(array('id' => $id))->setField('status', 1);
         S('hooks', null);
-        $this->json_return(1, "启用成功", U('Admin/Custom/plugin'));
+        $this->jsonReturn(1, "启用成功", U('Admin/Custom/plugin'));
 
     }
 
@@ -554,7 +556,7 @@ str;
         $id = I('id');
         M('Addons')->where(array('id' => $id))->setField('status', 0);
         S('hooks', null);
-        $this->json_return(1, "禁用成功", U('Admin/Custom/plugin'));
+        $this->jsonReturn(1, "禁用成功", U('Admin/Custom/plugin'));
     }
 
     /**
@@ -717,11 +719,11 @@ str;
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $list =D("Hooks")->limit($limit)->field($fields)->select();
+            $list = D("Hooks")->limit($limit)->field($fields)->select();
         }
 
 
-        $this->assign('page',$pager_bar);
+        $this->assign('page', $pager_bar);
         $this->assign('list', $list);
         $this->assign('action', '钩子管理');
         $this->display();
@@ -880,14 +882,13 @@ str;
     {
 
         $link_group = D('Link_group', 'Logic')->find($id);
-        $this->assign('action', '链接管理:'.$link_group['link_group_name'] );
+        $this->assign('action', '链接管理:' . $link_group['link_group_name']);
 
         $linklist = D('Links', 'Logic')->getList(1000, $id);
         $this->assign('linklist', $linklist);
 
         $this->display();
     }
-
 
 
     /**
@@ -900,35 +901,38 @@ str;
             $data = I('post.');
             if ($_FILES['img']['size'] != 0) {
 
-
                 $config = array(
-                    "savePath" => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
-                    "maxSize" => 300000, // 单位KB
-                    "allowFiles" => array(".jpg", ".png")
+                    "savePath" => 'Links/',
+                    "maxSize" => 1000000, // 单位B
+                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "subName" => array('date', 'Y/m-d'),
                 );
+                $upload = new Upload($config);
+                $info = $upload->upload();
 
-                $upload = new \Common\Util\Uploader ("img", $config);
+                if (!$info) { // 上传错误提示错误信息
+                    $this->error($upload->getError());
+                } else { // 上传成功 获取上传文件信息
 
-                $info = $upload->getFileInfo();
+                    $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
 
-                $image = new \Think\Image();
-                $image->open(WEB_ROOT . $info['url']);
-                $image->thumb(200, 150)->save(WEB_ROOT . $info['url']);
-
-                $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
-
-                if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
-                    $this->error('上传失败' . $info['state']);
-                } else {
+                    $image = new \Think\Image();
+                    $image->open($file_path_full);
+                    $image->thumb(200, 150)->save($file_path_full);
+                    $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
-                }
+
+                };
+
             }
 
+
+
             if (D('Links', 'Logic')->addLink($data)) {
-                $this->success('链接添加成功', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
+                $this->success('链接添加成功', U('Admin/Custom/links', array('id' => $data['link_group_id'])));
             } else {
-                $this->error('链接添加失败', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
+                $this->error('链接添加失败');
             }
         } else {
             $this->assign('imgurl', __ROOT__ . '/Public/share/img/no+image.gif');
@@ -957,34 +961,37 @@ str;
             if ($_FILES['img']['size'] != 0) {
 
                 $config = array(
-                    "savePath" => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
-                    "maxSize" => 300000, // 单位KB
-                    "allowFiles" => array(".jpg", ".png")
+                    "savePath" => 'Links/',
+                    "maxSize" => 1000000, // 单位B
+                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "subName" => array('date', 'Y/m-d'),
                 );
+                $upload = new Upload($config);
+                $info = $upload->upload();
 
-                $upload = new \Common\Util\Uploader ("img", $config);
+                if (!$info) { // 上传错误提示错误信息
+                    $this->error($upload->getError());
+                } else { // 上传成功 获取上传文件信息
 
-                $info = $upload->getFileInfo();
+                    $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
 
-                $image = new \Think\Image();
-                $image->open(WEB_ROOT . $info['url']);
-                $image->thumb(200, 150)->save(WEB_ROOT . $info['url']);
-
-                $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
-
-                if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
-                    $this->error('上传失败' . $info['state']);
-                } else {
+                    $image = new \Think\Image();
+                    $image->open($file_path_full);
+                    $image->thumb(200, 150)->save($file_path_full);
+                    $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
-                }
+
+                };
+
             }
+
 
             if (D('Links', 'Logic')->where(array('link_id' => $id))->save($data)
             ) {
-                $this->success('链接编辑成功', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
+                $this->success('链接编辑成功', U('Admin/Custom/links', array('id' => $data['link_group_id'])));
             } else {
-                $this->error('链接编辑失败', U('Admin/Custom/links',array('id'=>$data['link_group_id'])));
+                $this->error('链接编辑失败', U('Admin/Custom/links', array('id' => $data['link_group_id'])));
             }
         } else {
 
@@ -993,7 +1000,7 @@ str;
 
             $link_groups = D('Link_group', 'Logic')->select();
             $link_group_select = array_column_5($link_groups, 'link_group_name', 'link_group_id');
-            $this->assign('link_group', gen_opinion_list($link_group_select,$link['link_group_id']));
+            $this->assign('link_group', gen_opinion_list($link_group_select, $link['link_group_id']));
 
 
             $this->assign('imgurl', $link['link_img']);

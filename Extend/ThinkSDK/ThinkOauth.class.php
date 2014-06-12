@@ -95,7 +95,7 @@ abstract class ThinkOauth
     /**
      * 构造方法，配置应用信息
      * @param array $token
-     * @throws Exception
+     * @throws \Think\Exception
      */
     public function __construct($token = null)
     {
@@ -109,7 +109,7 @@ abstract class ThinkOauth
         //获取应用配置
         $config = C("THINK_SDK_{$this->Type}");
         if (empty($config['APP_KEY']) || empty($config['APP_SECRET'])) {
-            throw new \Exception('请配置您申请的APP_KEY和APP_SECRET');
+            throw new \Think\Exception('请配置您申请的APP_KEY和APP_SECRET');
         } else {
             $this->AppKey = $config['APP_KEY'];
             $this->AppSecret = $config['APP_SECRET'];
@@ -127,7 +127,7 @@ abstract class ThinkOauth
     public static function getInstance($type, $token = null)
     {
         $name = ucfirst(strtolower($type)) . 'SDK';
-        require_once Extend_PATH . "ThinkSDk/sdk/{$name}.class.php";
+        require_once Extend_PATH . "ThinkSDK/sdk/{$name}.class.php";
 
         $name = '\Extend\ThinkSDK\\' . $name;
 

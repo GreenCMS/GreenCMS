@@ -53,6 +53,7 @@ BUG提交可以直接发ISSUE
     /Core/ThinkPHHP/Library/Think/Model/RelationModel.class.php （两处）// since thinkphp 3.2
     /Core/ThinkPHHP/Library/Think/Hook.class.php (一处) // since thinkphp 3.2.1
     /Core/ThinkPHHP/Library/Think/Template/TagLib/Cx.class.php (一处) // since thinkphp 3.2.1
+    /Core/ThinkPHHP/Library/Think/Upload.class.php (一处)// since thinkphp 3.2
 
 如果你需要升级ThinkPHP框架请注意上面文件区别
 

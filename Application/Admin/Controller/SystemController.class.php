@@ -9,6 +9,8 @@
 
 namespace Admin\Controller;
 
+use Common\Event\SystemEvent;
+use Common\Event\UpdateEvent;
 use Common\Util\File;
 
 /**
@@ -25,10 +27,18 @@ class SystemController extends AdminBaseController
      */
     public function index()
     {
-        $role_list = array_column_5(D('Role')->select(), 'name', 'id');
-        $this->assign('new_user_role', gen_opinion_list($role_list, get_opinion('new_user_role', true, 5)));
-        $this->assign('users_can_register', get_opinion('users_can_register'));
         $this->display();
+    }
+
+
+    public function user()
+    {
+        $role_list = array_column_5(D('Role')->select(), 'name', 'id');
+        $this->assign('user_can_regist', get_opinion('user_can_regist', true, 1));
+        $this->assign('new_user_role', gen_opinion_list($role_list, get_opinion('new_user_role', true, 5)));
+
+        $this->display();
+
     }
 
     /**
@@ -132,7 +142,7 @@ class SystemController extends AdminBaseController
      */
     public function checkupdate()
     {
-        $Update = new \Common\Event\UpdateEvent();
+        $Update = new UpdateEvent();
         $Update->check();
 
 
@@ -181,7 +191,7 @@ class SystemController extends AdminBaseController
             File::writeFile($file_downloaded, $file);
 
             //todo 系统备份
-            $System = new \Common\Event\SystemEvent();
+            $System = new SystemEvent();
             //$System->backupFile();
 
             $zip = new \ZipArchive; //新建一个ZipArchive的对象
@@ -218,210 +228,6 @@ class SystemController extends AdminBaseController
         }
 
 
-    }
-
-//
-//    public function updateHandle()
-//    {
-//        header("ContentType:text/html;charset:utf8");
-//
-//
-//        if (!$_GET ['backupall'] && !$_GET ['backupall']) {
-//            $this->error('未选择任何备份目标');
-//        }
-//
-//        $date = date('YmdHis');
-//        $logcontent = 'GreenCMS在线更新日志###';
-//        $logcontent .= '更新时间:' . date('Y-m-d H:i:s') . '###';
-//        $logcontent .= '系统原始版本:' . C('SOFT_VERSION') . '###';
-//
-//        $backup_file = isset ($_GET ['backupall']) ? $_GET ['backupall'] : 0;
-//        $backupsql = isset ($_GET ['backupsql']) ? $_GET ['backupsql'] : 0;
-//        $logcontent .= '正在执行系统版本检测...###';
-//        G('run1');
-//
-//        $msg = File::readFile('http://greencms.xjh1994.com/update.php?version=' . substr(C('SOFT_VERSION'), -8));
-//        // $msg = 1;
-//        $msg = $msg != 0 && $msg != 1 ? 2 : $msg;
-//        if ($msg == 0)
-//            //  $this->error('当前系统已经是最新版!');
-//
-//        $nowversion = File::readFile('http://greencms.xjh1994.com/update.php?fullversion=1');
-//        // $nowversion = '2.0 Alpha build 20131122';
-//
-//        if ($msg == 2)
-//            //  $this->error('更新检测失败!');
-//
-//        $updateurl = File::readFile('http://greencms.xjh1994.com/update.php?updateurl=1');
-//
-//        $logcontent .= '系统更新版本:' . $nowversion . '###';
-//        $logcontent .= '系统版本检测完毕,区间耗时:' . G('run1', 'end1') . 's' . '###';
-//
-//        // 清理缓存
-//        $logcontent .= '清理系统缓存...###';
-//        G('run2');
-//        $this->clear();
-//        $logcontent .= '清理系统缓存完毕!,区间耗时:' . G('run2', 'end2') . 's' . ' ###';
-//
-//        import('@.ORG.PclZip');
-//
-//        File::makeDir(System_Backup_PATH);
-//        File::makeDir(System_Backup_PATH . $date);
-//        if ($backup_file == 1) {
-//            // 备份整站
-//            $logcontent .= '开始备份整站内容...###';
-//            G('run3');
-//            $backup_all_file = System_Backup_PATH . $date . '/backupall.zip';
-//            /*
-//            $zip = new PclZip ($backupallurl);
-//            $zip->create('App,Data/Backup,Data/DBbackup,Data/Log,install,index.php,admin.php');
-//            */
-//            $zip = new \ZipArchive;
-//            $res = $zip->open($backup_all_file, \ZipArchive::CREATE);
-//            $zip->addFile(__ROOT__ . 'index.php');
-//            $zip->close();
-//
-//            $logcontent .= '成功完成整站数据备份,备份文件路径:<a href=\'' . $backup_all_file . '\'>' . $backup_all_file . '</a>, 区间耗时:' . G('run3', 'end3') . 's' . ' ###';
-//        }
-//
-//        if ($backupsql == 1) {
-//            // 备份数据库
-//            $logcontent .= '准备执行数据库备份...###';
-//            G('run4');
-//            $backupsqlurl = $this->backupsql($date);
-//            $logcontent .= '成功完成系统数据库备份,备份文件路径:' . $backupsqlurl . ', 区间耗时:' . G('run4', 'end4') . 's' . ' ###';
-//        }
-//
-//        // 获取更新包
-//        $logcontent .= '开始获取远程更新包...###';
-//        G('run5');
-//        $path = './Data/Backup/' . $date;
-//        $updatedzipurl = $path . '/update.zip';
-//        //File::write_file($updatedzipurl, fopen_url($updateurl));
-//        $logcontent .= '获取远程更新包成功,更新包路径:<a href=\'' . __ROOT__ . ltrim($updatedzipurl, '.') . '\'>' . $updatedzipurl . '</a>' . '区间耗时:' . G('run5', 'end5') . 's' . '###';
-//
-//        // 解压缩更新包
-//        $logcontent .= '更新包解压缩...###';
-//        G('run6');
-//        $zip = new PclZip ($updatedzipurl);
-//        $zip->extract(PCLZIP_OPT_PATH, './');
-//        $logcontent .= '更新包解压缩成功...' . '区间耗时:' . G('run6', 'end6') . 's' . '###';
-//
-//        // 更新数据库
-//        $updatesqlurl = './update.sql';
-//        if (is_file($updatesqlurl)) {
-//            $logcontent .= '更新数据库开始...###';
-//            G('run7');
-//            if (file_exists($updatesqlurl)) {
-//                $rs = new Model ();
-//                $sql = File::read_file($updatesqlurl);
-//                $sql = str_replace("\r\n", "\n", $sql);
-//                foreach (explode(";\n", trim($sql)) as $query) {
-//                    $rs->query(trim($query));
-//                }
-//            }
-//            unlink($updatesqlurl);
-//            $logcontent .= '更新数据库完毕...' . '区间耗时:' . G('run7', 'end7') . 's' . '###';
-//        }
-//
-//        // 系统版本号更新
-//        G('run8');
-//        $config = File::read_file(CONF_PATH . '/config_system.php');
-//        $config = str_replace(C('SOFT_VERSION'), $nowversion, $config);
-//        File::write_file(CONF_PATH . '/config_system.php', $config);
-//        $logcontent .= '更新系统版本号,记录更新日志,日志文件路径:<a href=\'' . __ROOT__ . '/Data/Log/' . $date . '/log.txt\'>./Data/Log/' . $date . '/log.txt</a>,';
-//        $logcontent .= '区间耗时:' . G('run8', 'end8') . 's';
-//
-//        // 记录更新日志
-//        File::mk_dir(LOG_PATH);
-//        File::mk_dir(LOG_PATH . $date);
-//        File::write_file(LOG_PATH . $date . '/log.txt', $logcontent);
-//
-//        // 跳转到更新展示页面
-//        $this->success('更新完毕!', U('Admin/System/over', array("date" => $date)));
-//    }
-
-//    public function over()
-//    {
-//        $date = isset ($_GET ['date']) ? $_GET ['date'] : 0;
-//        $dir = SystemBackDir . $date;
-//        if (!is_dir($dir))
-//            $this->error('未检测到更新内容!');
-//
-//        $content = File::read_file(LOG_PATH . $date . '/log.txt');
-//        $this->assign('log', explode('###', $content));
-//        $this->action = '更新结果';
-//        $this->clear();
-//        $this->display();
-//    }
-
-    /**
-     * @param $date
-     * @return string
-     */
-    public function backupsql($date)
-    {
-        // 数据备份
-        $rs = new Model ();
-        $list = $rs->query("SHOW TABLES FROM " . "`" . C('DB_NAME') . "`");
-        $filesize = 2048;
-        $file = __ROOT__ . '/Data/DBbackup/';
-        $random = mt_rand(1000, 9999);
-        $sql = '';
-        $p = 1;
-        $url = '';
-        foreach ($list as $k => $v) {
-            $table = current($v);
-            // 仅备份当前系统的数据库表
-            $prefix = C('DB_PREFIX');
-            if (substr($table, 0, strlen($prefix)) == $prefix) {
-                $rs = D(str_replace(C('DB_PREFIX'), '', $table));
-                $array = $rs->select();
-                $sql .= "TRUNCATE TABLE `$table`;\n";
-                foreach ($array as $value) {
-                    $sql .= $this->insertsql($table, $value);
-                    if (strlen($sql) >= $filesize * 1000) {
-                        $filename = $file . $date . '_' . date('Ymd') . '_' . $random . '_' . $p . '.sql';
-                        $url .= "<a href='{$filename}'>" . $filename . '</a>,';
-                        File::write_file($filename, $sql);
-                        $p++;
-                        $sql = '';
-                    }
-                }
-            }
-        }
-        if (!empty ($sql)) {
-            $filename = $file . $date . '_' . date('Ymd') . '_' . $random . '_' . $p . '.sql';
-            $url .= "<a href='{$filename}'>" . $filename . '</a>,';
-            File::write_file($filename, $sql);
-        }
-        return $url;
-    }
-
-    // 生成SQL备份语句
-    /**
-     * @param $table
-     * @param $row
-     * @return string
-     */
-    public function insertsql($table, $row)
-    {
-        $sql = "INSERT INTO `{$table}` VALUES (";
-        $values = array();
-        foreach ($row as $value) {
-            $values [] = "'" . mysql_real_escape_string($value) . "'";
-        }
-        $sql .= implode(', ', $values) . ");\n";
-        return $sql;
-    }
-
-    // ajax 设置cookie,下次不再自动提醒更新
-    /**
-     *
-     */
-    public function applycookie()
-    {
-        cookie('updatenotice', 1);
     }
 
 

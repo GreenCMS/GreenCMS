@@ -25,7 +25,6 @@ class MediaController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-        $this->isSae();
 
     }
 

@@ -434,6 +434,7 @@ CREATE TABLE `{$db_prefix}links` (
   `link_description` varchar(255) DEFAULT '',
   `link_visible` tinyint(20) DEFAULT '1',
   `link_img` varchar(255) DEFAULT NULL,
+  `link_group_id` bigint(20) DEFAULT '0',
   PRIMARY KEY (`link_id`),
   KEY `link_visible` (`link_visible`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='友情链接';
@@ -605,8 +606,23 @@ CREATE TABLE `{$db_prefix}access` (
 DROP TABLE IF EXISTS `{$db_prefix}link_group`;
 CREATE TABLE `{$db_prefix}link_group` (
   `link_group_id`  bigint(20) NOT NULL AUTO_INCREMENT ,
-  `link_id`  bigint(20) NULL DEFAULT NULL ,
   `link_group_name`  varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
   PRIMARY KEY (`link_group_id`)
 )  ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci COMMENT='链接分类表';
 
+
+
+DROP TABLE IF EXISTS `{$db_prefix}user_sns`;
+CREATE TABLE `{$db_prefix}user_sns` (
+  `us_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT '0',
+  `access_token` varchar(50) DEFAULT NULL,
+  `refresh_token` varchar(50) DEFAULT NULL,
+  `remind_in` varchar(50) DEFAULT NULL,
+  `expires_in` varchar(50) DEFAULT NULL,
+  `openid` varchar(50) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `expires_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`us_id`),
+  KEY `useropen` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;

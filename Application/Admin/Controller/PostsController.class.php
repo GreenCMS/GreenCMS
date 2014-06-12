@@ -223,9 +223,9 @@ class PostsController extends AdminBaseController
             cookie('post_add', null);
 
             if ($data['post_type'] == 'single') {
-                $this->json_return(1, "发布成功", U('Admin/Posts/index'));
+                $this->jsonReturn(1, "发布成功", U('Admin/Posts/index'));
             } elseif ($data['post_type'] == 'page') {
-                $this->json_return(1, "发布成功", U('Admin/Posts/page'));
+                $this->jsonReturn(1, "发布成功", U('Admin/Posts/page'));
             } else {
                 //TODO hook here to process the unknown post type
             }
@@ -233,7 +233,7 @@ class PostsController extends AdminBaseController
         } else {
             cookie('post_add', gzcompress(json_encode($data)), 3600000);
             //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
-            $this->json_return(0, "发布失败");
+            $this->jsonReturn(0, "发布失败");
         }
 
 
@@ -419,9 +419,9 @@ class PostsController extends AdminBaseController
 
 
             if ($Posts->save($data)) {
-                $this->json_return(1, "已经更新", $url);
+                $this->jsonReturn(1, "已经更新", $url);
             } else {
-                $this->json_return(0, "更新失败", $url);
+                $this->jsonReturn(0, "更新失败", $url);
             }
         } else {
 

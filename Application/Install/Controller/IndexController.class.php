@@ -26,12 +26,16 @@ class IndexController extends \Think\Controller
     public function __construct()
     {
         parent::__construct();
-
+        if (defined('SAE_TMP_PATH')) {
+            $this->error("SAE平台不需要安装程序");
+        }
         $lockFile = WEB_ROOT . 'Data/Install/install.lock';
 
         if (File::file_exists($lockFile)) {
             $this->error(" 你已经安装过GreenCMS，如果想重新安装，请先删除站点Data/install目录下的 install.lock 文件，然后再安装。");
         }
+
+
     }
 
 
@@ -242,6 +246,7 @@ class IndexController extends \Think\Controller
        // File::delAll(WEB_ROOT . 'Data/Install');
 
         if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {
+            C('URL_MODEL',3);
             $this->success('GreenCMS安装成功,5秒钟返回首页', U('Home/Index/index'), 5);
         }
 

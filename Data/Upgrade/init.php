@@ -81,7 +81,7 @@ function upgrade_20140527_to_20140602()
   `expires_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`us_id`),
   KEY `useropen` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;";
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;";
     $Model->query($sql);
 
 }

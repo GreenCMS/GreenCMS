@@ -403,9 +403,9 @@ class AccessController extends AdminBaseController
         $datas ['sort'] = ( int )I("post.sort");
         header('Content-Type:application/json; charset=utf-8');
         if ($M->save($datas)) {
-            $this->json_return(1, "处理成功");
+            $this->jsonReturn(1, "处理成功");
         } else {
-            $this->json_return(0, "处理失败");
+            $this->jsonReturn(0, "处理失败");
         }
     }
 
