@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Common\Event\UpdateEvent;
 use Common\Logic\PostsLogic;
 use Common\Util\Category;
 use Common\Util\File;
@@ -215,8 +216,54 @@ class CustomController extends AdminBaseController
      */
     public function themeAdd()
     {
+
+        $this->assign('action', '主题添加');
+        $this->assign('action_name', 'themeAdd');
+
         $this->display();
     }
+
+    public function themeAddLocal()
+    {
+        File::mkDir(WEB_CACHE_PATH);
+
+
+        $config = array(
+            'rootPath' => WEB_CACHE_PATH,
+            "savePath" => '',
+            "maxSize" => 100000000, // 单位B
+            "exts" => array('zip'),
+            "subName" => array(),
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
+
+            $file_path_full = $config['rootPath'] . $info['file']['savepath'] . $info['file']['savename'];
+
+            if (File::file_exists($file_path_full)) {
+
+                $Update = new UpdateEvent();
+                $applyRes = $Update->applyPatch($file_path_full);
+                $applyInfo = json_decode($applyRes, true);
+
+                if($applyInfo['status']){
+                    $this->success($applyInfo['info'],U('Admin/Custom/theme'));
+                }else{
+                    $this->error($applyInfo['info']);
+                }
+
+            }else{
+                $this->error('文件不存在');
+
+            }
+        }
+    }
+
+
 
     //todo 需要检查是否真的成功
     /**
@@ -910,7 +957,7 @@ str;
                 $upload = new Upload($config);
                 $info = $upload->upload();
 
-                 if (!$info) { // 上传错误提示错误信息
+                if (!$info) { // 上传错误提示错误信息
                     $this->error($upload->getError());
                 } else { // 上传成功 获取上传文件信息
 
@@ -926,7 +973,6 @@ str;
                 };
 
             }
-
 
 
             if (D('Links', 'Logic')->addLink($data)) {

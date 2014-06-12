@@ -85,7 +85,6 @@ class File
      */
     public static function delFile($filename)
     {
-
         $Storage = new Storage();
         $Storage::connect();
         return $Storage::unlink($filename);

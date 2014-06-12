@@ -1,3 +1,8 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
 version v2.1.0612 build 20140612
+删除无用的，和带有GNU LGPL的协议的类库
+验证码错误返回自动刷新
+升级完成显示日志
+离开文章发布页面提示
+安装脚本更新

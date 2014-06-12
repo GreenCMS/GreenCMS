@@ -196,7 +196,7 @@ class SystemController extends AdminBaseController
 
             $zip = new \ZipArchive; //新建一个ZipArchive的对象
             if ($zip->open($file_downloaded) === true) {
-                $zip->extractTo(WEB_ROOT); //假设解压缩到在当前路径下images文件夹内
+                $zip->extractTo(WEB_ROOT); //假设解压缩到在当前路径下/文件夹内
                 $zip->close(); //关闭处理的zip文件
                 File::delFile($file_downloaded);
                 $System->clearCacheAll();
