@@ -214,7 +214,23 @@ class Upload
             /* 保存文件 并记录保存成功的文件 */
             if ($this->uploader->save($file, $this->replace)) {
                 unset($file['error'], $file['tmp_name']);
+
+
+                if (!defined('SAE_TMP_PATH')) {
+                    // 非SAE环境中
+                    $file['fullpath'] = $this->config['rootPath'] . $file['savepath'] . $file['savename'];
+                    $file['urlpath'] = __ROOT__ . '/' . Upload_PATH . $file['savepath'] . $file['savename'];
+
+                } else {
+                    // SAE环境中
+                    $file['fullpath'] = $file['savepath'] . $file['savename'];
+                    $file['urlpath'] = "http://" . $_SERVER['HTTP_APPNAME'] . '-' . C('SaeStorage') . '.stor.sinaapp.com/' . $file['savepath'] . $file['savename'];
+
+                }
+
                 $info[$key] = $file;
+
+
             } else {
                 $this->error = $this->uploader->getError();
             }

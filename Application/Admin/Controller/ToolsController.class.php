@@ -55,7 +55,7 @@ class ToolsController extends AdminBaseController
             $this->error($upload->getError());
         } else { // 上传成功 获取上传文件信息
 
-            $file_path_full = Upload_PATH . $info['file']['savepath'] . $info['file']['savename'];
+            $file_path_full = $info['file']['fullpath'];
 
             if (File::file_exists($file_path_full)) {
                 $Wordpress = new WordpressEvent();

@@ -102,7 +102,7 @@ class UeditorController extends AdminBaseController
          */
 
 
-        $file_path_full = Upload_PATH . $info['upfile']['savepath'] . $info['upfile']['savename'];
+        $file_path_full =  $info['upfile']['urlpath'];
 
 
         /**
@@ -377,7 +377,7 @@ class UeditorController extends AdminBaseController
          */
 
 
-        $file_path_full = Upload_PATH . $info['upfile']['savepath'] . $info['upfile']['savename'];
+        $file_path_full =  $info['upfile']['urlpath'];
 
 
         /**

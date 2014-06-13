@@ -12,7 +12,8 @@ return array(
     'DB_PREFIX' => 'green_',
 
 
-    'SaeStorage' => 'upload'
+    'SaeStorage' => 'upload',
+    'FILE_UPLOAD_TYPE' => 'Sae'
 
 
 

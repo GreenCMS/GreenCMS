@@ -242,21 +242,22 @@ class CustomController extends AdminBaseController
             $this->error($upload->getError());
         } else { // 上传成功 获取上传文件信息
 
-            $file_path_full = $config['rootPath'] . $info['file']['savepath'] . $info['file']['savename'];
+            $file_path_full = $info['file']['fullpath'];
 
+            //dump($info);die($file_path_full);
             if (File::file_exists($file_path_full)) {
 
                 $Update = new UpdateEvent();
                 $applyRes = $Update->applyPatch($file_path_full);
                 $applyInfo = json_decode($applyRes, true);
 
-                if($applyInfo['status']){
-                    $this->success($applyInfo['info'],U('Admin/Custom/theme'));
-                }else{
+                if ($applyInfo['status']) {
+                    $this->success($applyInfo['info'], U('Admin/Custom/theme'));
+                } else {
                     $this->error($applyInfo['info']);
                 }
 
-            }else{
+            } else {
                 $this->error('文件不存在');
 
             }
@@ -961,19 +962,22 @@ str;
                     $this->error($upload->getError());
                 } else { // 上传成功 获取上传文件信息
 
-                    $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
+
+                    $file_path_full = $info['img']['fullpath'];
 
                     $image = new \Think\Image();
                     $image->open($file_path_full);
                     $image->thumb(200, 150)->save($file_path_full);
-                    $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
+
+                    $img_url = $info['img']['urlpath'];
+
+                  //  $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
 
                 };
 
             }
-
 
             if (D('Links', 'Logic')->addLink($data)) {
                 $this->success('链接添加成功', U('Admin/Custom/links', array('id' => $data['link_group_id'])));
@@ -1019,12 +1023,14 @@ str;
                     $this->error($upload->getError());
                 } else { // 上传成功 获取上传文件信息
 
-                    $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
+                    $file_path_full = $info['img']['fullpath'];
 
                     $image = new \Think\Image();
                     $image->open($file_path_full);
                     $image->thumb(200, 150)->save($file_path_full);
-                    $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
+                    $img_url = $info['img']['urlpath'];
+
+                    // $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
 
