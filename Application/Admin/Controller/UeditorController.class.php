@@ -281,9 +281,8 @@ class UeditorController extends AdminBaseController
         //需要遍历的目录列表，最好使用缩略图地址，否则当网速慢时可能会造成严重的延时
         $paths = array(Upload_PATH, 'upload1/');
 
-        $action = htmlspecialchars($_POST["action"]);
-        $action = htmlspecialchars($_REQUEST["action"]);
-
+        //  $action = htmlspecialchars($_POST["action"]);
+       $action = htmlspecialchars($_REQUEST["action"]);
 
         if ($action == "get") {
             if (!defined('SAE_TMP_PATH')) {
@@ -302,7 +301,7 @@ class UeditorController extends AdminBaseController
                 rsort($files, SORT_STRING);
                 $str = "";
                 foreach ($files as $file) {
-                    $str .= $file . "ue_separate_ue";
+                    $str .= __ROOT__.'/'.$file . "ue_separate_ue";
                 }
                 echo $str;
             } else {

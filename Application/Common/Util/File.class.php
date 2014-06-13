@@ -204,10 +204,15 @@ class File
     {
         if (!is_dir($path))
             return null;
+
+
         $handle = opendir($path);
         while (false !== ($file = readdir($handle))) {
             if ($file != '.' && $file != '..') {
-                $path2 = $path . $file; //'/' .
+                $path2 = $path .'/' . $file; //'/' .
+
+             //   dump($path2);
+
                 if (is_dir($path2)) {
                     self::getFiles($path2, $files);
                 } else {
