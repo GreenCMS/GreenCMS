@@ -11,6 +11,7 @@ namespace Admin\Controller;
 
 use Common\Util\File;
 use Common\Util\Uploader;
+use Think\Log;
 use Think\Upload;
 
 /**
@@ -102,7 +103,7 @@ class UeditorController extends AdminBaseController
          */
 
 
-        $file_path_full =  $info['upfile']['urlpath'];
+        $file_path_full = $info['upfile']['urlpath'];
 
 
         /**
@@ -170,7 +171,7 @@ class UeditorController extends AdminBaseController
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp"), //文件允许格式
             "maxSize" => 30000 //文件大小限制，单位KB
         );
-        $uri = htmlspecialchars($_POST['upfile']);
+        $uri = htmlspecialchars($_REQUEST['upfile']);
         $uri = str_replace("&amp;", "&", $uri);
         $this->getRemoteImage2($uri, $config);
 
@@ -191,21 +192,25 @@ class UeditorController extends AdminBaseController
         foreach ($imgUrls as $imgUrl) {
             //http开头验证
             if (strpos($imgUrl, "http") !== 0) {
-                array_push($tmpNames, "error");
+                array_push($tmpNames, "https error");
                 continue;
             }
-            //获取请求头
-            $heads = get_headers($imgUrl);
-            //死链检测
-            if (!(stristr($heads[0], "200") && stristr($heads[0], "OK"))) {
-                array_push($tmpNames, "error");
-                continue;
+
+            if(!defined('SAE_TMP_PATH')){
+                //获取请求头
+                $heads = get_headers($imgUrl);
+                //死链检测
+                if (!(stristr($heads[0], "200") && stristr($heads[0], "OK"))) {
+                    array_push($tmpNames, "get_headers error");
+                    continue;
+                }
             }
+
 
             //格式验证(扩展名验证和Content-Type验证)
             $fileType = strtolower(strrchr($imgUrl, '.'));
             if (!in_array($fileType, $config['allowFiles']) || stristr($heads['Content-Type'], "image")) {
-                array_push($tmpNames, "error");
+                array_push($tmpNames, "Content-Type error");
                 continue;
             }
 
@@ -227,23 +232,45 @@ class UeditorController extends AdminBaseController
             $uriSize = strlen($img); //得到图片大小
             $allowSize = 1024 * $config['maxSize'];
             if ($uriSize > $allowSize) {
-                array_push($tmpNames, "error");
+                array_push($tmpNames, "maxSize error");
                 continue;
             }
-            //创建保存位置
-            $savePath = $config['savePath'];
-            if (!file_exists($savePath)) {
-                mkdir($savePath, 0777, true);
-            }
-            //写入文件
-            $tmpName = $savePath . rand(1, 10000) . time() . strrchr($imgUrl, '.');
-            try {
-                File::writeFile($tmpName, $img, "a");
 
-                array_push($tmpNames, $tmpName);
-            } catch (Exception $e) {
-                array_push($tmpNames, "error");
+            $savePath = $config['savePath'];
+            Log::write('$savePath:' . $savePath);
+
+            if (!defined('SAE_TMP_PATH')) {
+
+                //非SAE
+                //创建保存位置
+                if (!file_exists($savePath)) {
+                    mkdir($savePath, 0777, true);
+                }
+                //写入文件
+                $tmpName = $savePath . rand(1, 10000) . time() . strrchr($imgUrl, '.');
+                try {
+                    File::writeFile($tmpName, $img, "a");
+
+                    array_push($tmpNames, __ROOT__ . '/' . $tmpName);
+                } catch (Exception $e) {
+                    array_push($tmpNames, "error");
+                }
+            } else {
+                //SAE
+
+                $Storage = new \SaeStorage();
+                $domain = C('SaeStorage');
+                $destFileName = 'remote/' . date('Y') . '/' . date('m') . '/'  . rand(1, 10000) . time() . strrchr($imgUrl, '.');
+                $result = $Storage->write($domain, $destFileName, $img, -1);
+                Log::write('$destFileName:' . $destFileName);
+                if ($result) {
+                    array_push($tmpNames, $result);
+                } else {
+                    array_push($tmpNames, "not supported");
+                }
+
             }
+
         }
         /**
          * 返回数据格式
@@ -282,7 +309,7 @@ class UeditorController extends AdminBaseController
         $paths = array(Upload_PATH, 'upload1/');
 
         //  $action = htmlspecialchars($_POST["action"]);
-       $action = htmlspecialchars($_REQUEST["action"]);
+        $action = htmlspecialchars($_REQUEST["action"]);
 
         if ($action == "get") {
             if (!defined('SAE_TMP_PATH')) {
@@ -301,7 +328,7 @@ class UeditorController extends AdminBaseController
                 rsort($files, SORT_STRING);
                 $str = "";
                 foreach ($files as $file) {
-                    $str .= __ROOT__.'/'.$file . "ue_separate_ue";
+                    $str .= __ROOT__ . '/' . $file . "ue_separate_ue";
                 }
                 echo $str;
             } else {
@@ -376,7 +403,7 @@ class UeditorController extends AdminBaseController
          */
 
 
-        $file_path_full =  $info['upfile']['urlpath'];
+        $file_path_full = $info['upfile']['urlpath'];
 
 
         /**
