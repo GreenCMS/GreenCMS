@@ -8,7 +8,7 @@
  */
 
 include APP_PATH . 'Common/Common/common_router.php';
-include APP_PATH . 'Common/Common/function_green.php';
+include APP_PATH . 'Common/Common/function_url.php';
 
 /**
  * 获取当前时间戳 使用TIME_FIX常量修正

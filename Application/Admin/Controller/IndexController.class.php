@@ -9,6 +9,8 @@
 
 namespace Admin\Controller;
 
+use Common\Event\UpdateEvent;
+use Common\Event\UserEvent;
 use Think\Storage;
 
 /**
@@ -31,13 +33,13 @@ class IndexController extends AdminBaseController
      */
     public function main()
     {
-        $this->redirect(getURL('Index/index'));
+        $this->redirect(get_url('Index/index'));
     }
 
 
     public function checkVersion()
     {
-        $UpdateEvent = new \Common\Event\UpdateEvent();
+        $UpdateEvent = new UpdateEvent();
         $cheack_res = $UpdateEvent->check();
 
         if ($cheack_res) {
@@ -76,9 +78,9 @@ class IndexController extends AdminBaseController
             $this->error('两次密码不同');
         }
 
-        $uid = (int)$_SESSION [C('USER_AUTH_KEY')];
+        $uid = get_current_user_id();
 
-        $UserEvent = new \Common\Event\UserEvent();
+        $UserEvent = new UserEvent();
         $changePasswordRes = $UserEvent->changePassword($uid, I('post.opassword'), I('post.password'));
 
         $this->json2Response($changePasswordRes);
@@ -89,7 +91,7 @@ class IndexController extends AdminBaseController
     public function profile()
     {
 
-        $uid = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $uid = get_current_user_id();
         $user = D('User', 'Logic')->detail($uid);
         $this->assign('user', $user);
         $this->assign('action', '用户档案');
