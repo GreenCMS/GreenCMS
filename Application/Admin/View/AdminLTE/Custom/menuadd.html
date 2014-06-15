@@ -44,8 +44,7 @@
                         <div class="box-body">
 
 
-
-                            <form  method="post" action="{$form_url}">
+                            <form method="post" action="{$form_url}">
                                 <div class="form-group">
                                     <label class="control-label">名称：</label>
 
@@ -59,17 +58,24 @@
                                     <label class="control-label">函数名：</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="menu_function"  />
-                                        <span class="help-inline">getCatURLByID,getTagURLByID,getSingleURLByID,direct,U</span>
+
+                                        <select name="menu_function" id="menu_function" class="large form-control"
+                                                tabindex="1">
+                                            {$url_function}
+                                        </select>
+
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">打开方式：</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="menu_action"
-                                                />
-                                        <span class="help-inline"> _self,_blank</span>
+
+
+                                        <select name="menu_action" class="large form-control" tabindex="1">
+                                            {$url_open}
+                                        </select>
+
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -81,7 +87,6 @@
                                             <option value="0">无</option>
                                             <foreach name="menu" item="list">
                                                 <option value="{$list.menu_id}">{$list.menu_construct}</option>
-
                                             </foreach>
 
                                         </select>
@@ -91,18 +96,34 @@
                                     <label class="control-label">显示排序：</label>
 
                                     <div class="controls">
-                                        <input class="form-control large" name="menu_sort" type="number" size="40" value="99"/>
-                                        <span class="help-inline"> 100为基准</span>
 
+                                        <select name="menu_sort" class="large form-control" tabindex="1">
+                                            <option value="0">无</option>
+                                            <foreach name="menu" item="list">
+                                                <option value="{$list.menu_sort}">{$list.menu_construct}</option>
+                                            </foreach>
+
+                                        </select>
+
+                                        <span class="help-inline"> 位置在选中项目之后</span>
                                     </div>
+
+
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">链接参数：</label>
 
                                     <div class="controls">
-                                        <input class="form-control large" name="menu_url" type="text" size="40"/>
+                                        <input class="form-control large" name="menu_url" id="menu_url" type="text" size="40"/>
+
+                                        <select class="large form-control" id="menu_url_select" tabindex="1"
+                                                style="display: none">
+
+                                        </select>
 
                                     </div>
+
+
                                 </div>
                                 <!--<input type="hidden" name="id" value="{$info.id}"/>-->
 
@@ -110,7 +131,8 @@
                                      style="font-size:16px;color: red;text-align: left; display:none;">
                                 </div>
                                 <div class="form-actions">
-                                    <button type="submit" class="btn btn-info submit" id="submit"><i class="icon-ok"></i>
+                                    <button type="submit" class="btn btn-info submit" id="submit"><i
+                                            class="icon-ok"></i>
                                         添加
                                     </button>
                                 </div>
@@ -130,7 +152,56 @@
 </div>
 <!-- ./wrapper -->
 
+
+<div id="op" style="display:none">
+    <div id="post_list">{$post_list}</div>
+    <div id="cat_list">{$cat_list}</div>
+    <div id="tag_list">{$tag_list}</div>
+</div>
 <include file="Public:foot"/>
+
+
+<script>
+    jQuery(document).ready(function () {
+
+
+        $('#menu_function').change(function () {
+
+            var menu_function = $('#menu_function option:selected').val();
+            var menu_url_select = $('#menu_url_select');
+
+            if (menu_function == 'get_post_url') {
+                $('#menu_url_select').show();
+                var post_list  =$('#post_list').html();
+                menu_url_select.html(post_list);
+            } else if (menu_function == 'get_cat_url') {
+                $('#menu_url_select').show();
+                var cat_list  =$('#cat_list').html();
+                menu_url_select.html(cat_list);
+            } else if (menu_function == 'get_tag_url') {
+                $('#menu_url_select').show();
+                var tag_list  =$('#tag_list').html();
+                menu_url_select.html(tag_list);
+            }else{
+                $('#menu_url_select').hide();
+            }
+
+        });
+
+
+
+        $('#menu_url_select').change(function () {
+            $('#menu_url').val($('#menu_url_select').val());
+        });
+
+
+
+
+    });
+
+
+</script>
+
 
 </body>
 </html>

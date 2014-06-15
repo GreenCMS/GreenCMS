@@ -11,7 +11,9 @@ namespace Admin\Controller;
 
 use Common\Event\SystemEvent;
 use Common\Event\UpdateEvent;
+use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
+use Common\Logic\TagsLogic;
 use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
@@ -43,6 +45,7 @@ class CustomController extends AdminBaseController
 
         $menu_list = $Menu->getList(); // 获取分类结构
 
+
         $this->assign('menu', $menu_list);
 
         $this->display();
@@ -73,6 +76,18 @@ class CustomController extends AdminBaseController
      */
     public function menuAdd()
     {
+        $CatsLogic = new CatsLogic();
+        $TagsLogic = new TagsLogic();
+        $PostsLogic = new PostsLogic();
+
+        $cat_list = $CatsLogic->category();
+        $tag_list = $TagsLogic->field('tag_id,tag_name')->select();
+        $post_list = $PostsLogic->field('post_id,post_title')->select();
+
+        $cat_list = array_column_5($cat_list, 'cat_slug', 'cat_id');
+        $tag_list = array_column_5($tag_list, 'tag_name', 'tag_id');
+        $post_list = array_column_5($post_list, 'post_title', 'post_id');
+
 
         $action = '添加菜单';
         $action_url = U('Admin/Custom/menuAdd');
@@ -80,6 +95,18 @@ class CustomController extends AdminBaseController
 
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
         $menu_list = $Menu->getList(); // 获取分类结构
+
+
+        $url_function = C('url_function');
+        $this->assign('url_function', gen_opinion_list($url_function));
+
+        $url_open = C('url_open');
+        $this->assign('url_open', gen_opinion_list($url_open));
+
+
+        $this->assign('cat_list', gen_opinion_list($cat_list));
+        $this->assign('tag_list', gen_opinion_list($tag_list));
+        $this->assign('post_list', gen_opinion_list($post_list));
 
 
         $this->assign('menu', $menu_list);
@@ -96,10 +123,19 @@ class CustomController extends AdminBaseController
      */
     public function menuAddHandle()
     {
-        $data = $_POST;
+        $post_data = I('post.');
+
+        $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
+
         $Menu = D('Menu');
-        $result = $Menu->data($data)->add();
-        if ($result) $this->success('添加成功', 'Admin/Custom/menu');
+        $res = $Menu->where($map)->setInc('menu_sort');
+
+        $result = $Menu->data($post_data)->add();
+        if ($result) {
+            $this->success('添加成功', U('Admin/Custom/menu'));
+        } else {
+            $this->error('添加失败');
+        }
     }
 
     /**
@@ -133,10 +169,14 @@ class CustomController extends AdminBaseController
     public function menuEditHandle($id)
     {
         $data = $_POST;
+
+        if ($data['menu_pid'] == $data['menu_id']) {
+            $this->error('父类不能是自己');
+        }
         $Menu = D('Menu');
         $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
         if ($result) {
-            $this->success('编辑成功', 'Admin/Custom/menu');
+            $this->success('编辑成功', U('Admin/Custom/menu'));
         } else {
             $this->error('编辑失败');
 

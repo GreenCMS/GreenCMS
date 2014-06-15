@@ -32,13 +32,13 @@ class CatController extends HomeBaseController
 
     /**
      * 查询指定分类的详细信息
-     * @param $info detail 查询的 id 或者slug
+     * @param int $info detail 查询的 id 或者slug
      */
     public function detail($info)
     {
-        $Cat = new CatsLogic();
-        $Posts = new PostsLogic();
-        $cat = $Cat->detail($info);
+        $CatsLogic = new CatsLogic();
+        $PostsLogic = new PostsLogic();
+        $cat = $CatsLogic->detail($info);
 //        $children = ($Cat->getChildren($cat['cat_id']));
         $this->assign('cat_id', $cat['cat_id']); // 赋值数据集
 
@@ -51,7 +51,7 @@ class CatController extends HomeBaseController
 
         $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了"); //优雅的404
 
-        $posts_id = $Cat->getPostsId($cat['cat_id']);
+        $posts_id = $CatsLogic->getPostsId($cat['cat_id']);
         $count = sizeof($posts_id);
         ($count == 0) ? $res404 = 0 : $res404 = 1;
 
@@ -61,7 +61,7 @@ class CatController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $posts_list = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
 
         }
 

@@ -21,7 +21,7 @@ class CatsLogic extends RelationModel
 
     /**
      * 获取分类详细
-     * @param $id 分类id
+     * @param int $id 分类id
      * @param bool $relation 是否关联
      *
      * @return mixed 找到之后返回数组

@@ -36,14 +36,14 @@ class TagController extends HomeBaseController
      */
     public function detail($info)
     {
-        $Tag = new TagsLogic();
-        $Posts = new PostsLogic();
+        $TagsLogic = new TagsLogic();
+        $PostsLogic = new PostsLogic();
 
-        $tag = $Tag->detail($info);
+        $tag = $TagsLogic->detail($info);
 
         $this->if404($tag, "非常抱歉，没有这个标签，可能它已经躲起来了");
 
-        $posts_id = $Tag->getPostsId($tag['tag_id']);
+        $posts_id = $TagsLogic->getPostsId($tag['tag_id']);
         $count = sizeof($posts_id);
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
@@ -52,7 +52,7 @@ class TagController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $posts_list = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
         }
 
         $this->assign('title', $tag['tag_name']); // 赋值数据集

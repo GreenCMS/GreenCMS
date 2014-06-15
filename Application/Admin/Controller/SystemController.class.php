@@ -90,23 +90,16 @@ class SystemController extends AdminBaseController
     public function url()
     {
         //普通模式0, PATHINFO模式1, REWRITE模式2, 兼容模式3
-        $url_mode = array(0 => '普通模式', 1 => 'PATHINFO模式', 2 => 'REWRITE模式', 3 => '兼容模式');
-        $home_post_model = array('native' => '原生模式',
-            'year/month/day/post_id' => '年/月/日/post_id',
-            'year/month/day/post_name' => '年/月/日/post_name',
-            'year/month/post_id' => '年/月/post_id',
-            'year/month/post_name' => '年/月/post_name',
-            'year/post_id' => '年/post_id',
-            'year/post_name' => '年/post_name');
-
-        $home_tag_model = array('native' => '原生模式', 'slug' => 'slug短语');
-        $home_cat_model = array('native' => '原生模式', 'slug' => 'slug短语');
+        $url_model = C('url_model');
+        $home_post_model = C('post_model');
+        $home_tag_model = C('tag_model');
+        $home_cat_model = C('cat_model');
 
         $this->assign('home_post_model', gen_opinion_list($home_post_model, get_opinion('home_post_model', true)));
         $this->assign('home_tag_model', gen_opinion_list($home_tag_model, get_opinion('home_tag_model', true)));
         $this->assign('home_cat_model', gen_opinion_list($home_cat_model, get_opinion('home_cat_model', true)));
 
-        $this->assign('url_mode', gen_opinion_list($url_mode, (int)get_opinion('home_url_model', true)));
+        $this->assign('url_mode', gen_opinion_list($url_model, (int)get_opinion('home_url_model', true)));
 
         $this->display();
     }
@@ -243,15 +236,14 @@ class SystemController extends AdminBaseController
             $gd = "不支持";
         }
 
-        $able=get_loaded_extensions();
-        $extensions_list="";
-        foreach ($able as $key=>$value) {
-            if ($key!=0 && $key%13==0) {
-                $extensions_list=$extensions_list.'<br />';
+        $able = get_loaded_extensions();
+        $extensions_list = "";
+        foreach ($able as $key => $value) {
+            if ($key != 0 && $key % 13 == 0) {
+                $extensions_list = $extensions_list . '<br />';
             }
-            $extensions_list=$extensions_list. "$value&nbsp;&nbsp;";
+            $extensions_list = $extensions_list . "$value&nbsp;&nbsp;";
         }
-
 
 
         $info = array(
@@ -261,14 +253,14 @@ class SystemController extends AdminBaseController
             '服务器语言' => getenv("HTTP_ACCEPT_LANGUAGE"),
             'PHP运行方式' => php_sapi_name(),
             '管理员邮箱' => $_SERVER['SERVER_ADMIN'],
-             '程序目录' => WEB_ROOT,
+            '程序目录' => WEB_ROOT,
             'MYSQL版本' => function_exists("mysql_close") ? mysql_get_client_info() : '不支持',
             'GD库版本' => $gd,
             '上传附件限制' => ini_get('upload_max_filesize'),
             'POST方法提交限制' => ini_get('post_max_size'),
             '脚本占用最大内存' => ini_get('memory_limit'),
             '执行时间限制' => ini_get('max_execution_time') . "秒",
-            '浮点型数据显示的有效位数' => ini_get('precision') ,
+            '浮点型数据显示的有效位数' => ini_get('precision'),
             '内存使用状况' => round((@disk_free_space(".") / (1024 * 1024)), 5) . 'M/',
             '已用/总磁盘' => round((@disk_free_space(".") / (1024 * 1024 * 1024)), 3) . 'G/' . round(@disk_total_space(".") / (1024 * 1024 * 1024), 3) . 'G',
             '服务器时间' => date("Y年n月j日 H:i:s 秒"),
