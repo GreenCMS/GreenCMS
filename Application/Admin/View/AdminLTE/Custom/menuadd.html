@@ -45,17 +45,9 @@
 
 
                             <form method="post" action="{$form_url}">
-                                <div class="form-group">
-                                    <label class="control-label">名称：</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="menu_name"
-                                                />
-                                        <span class="help-inline">显示名称</span>
-                                    </div>
-                                </div>
                                 <div class="form-group">
-                                    <label class="control-label">函数名：</label>
+                                    <label class="control-label">链接模式：</label>
 
                                     <div class="controls">
 
@@ -125,6 +117,18 @@
 
 
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">显示名称：</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" id="menu_name" class="form-control large" name="menu_name"
+                                                />
+                                        <span class="help-inline">显示名称</span>
+                                    </div>
+                                </div>
+
+
                                 <!--<input type="hidden" name="id" value="{$info.id}"/>-->
 
                                 <div class="form-group success"
@@ -192,6 +196,10 @@
 
         $('#menu_url_select').change(function () {
             $('#menu_url').val($('#menu_url_select').val());
+
+            $('#menu_name').val($('#menu_url_select option:selected').text());
+
+
         });
 
 
