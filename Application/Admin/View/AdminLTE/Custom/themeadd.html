@@ -35,23 +35,77 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
+                            <h3 class="box-title">本地上传</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
 
 
-                            尚未完工
+
+                            <form role="form"  action="{:U('Admin/Custom/themeAddLocal')}" name="change_System"
+
+                                  method="post"
+                                  enctype="multipart/form-data">
+
+
+                                <div class="form-group">
+                                    <label class="control-label">上传主题文件
+                                    </label>
+
+                                    <div class="controls">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+
+                                            <input type="file" class="default" name="file"/>
+
+                                        </div>
+
+                                        <span>注意! 可能会覆盖已有主题文件</span>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <button  onclick="javascript:return a_confirm()" type="submit" class="btn btn-info"><i class="icon-ok"></i>提交</button>
+                                </div>
+
+
+                            </form>
+
+
+
 
 
                         </div>
                     </div>
                 </div>
+
+
+
             </div>
 
+
+            <!--<div class="row">-->
+
+                <!--<div class="col-md-6">-->
+                    <!--<div class="box box-warning">-->
+                        <!--<div class="box-header">-->
+                            <!--<h3 class="box-title">在线商城</h3>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; /.box-header &ndash;&gt;-->
+                        <!--<div class="box-body">-->
+
+
+                            <!--尚未完工-->
+
+
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
         </section>
         <!-- /.content -->

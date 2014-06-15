@@ -271,8 +271,7 @@ function getChannelURLByID($ID)
 {
     $home_cat_model = get_opinion('home_cat_model');
 
-    $Tags = D('Cats', 'Logic');
-    $URL = getURL('Cat/channel', array("info" => $ID));
+     $URL = getURL('Cat/channel', array("info" => $ID));
 
 
     return $URL;

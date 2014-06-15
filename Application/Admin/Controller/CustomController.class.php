@@ -9,6 +9,8 @@
 
 namespace Admin\Controller;
 
+use Common\Event\SystemEvent;
+use Common\Event\UpdateEvent;
 use Common\Logic\PostsLogic;
 use Common\Util\Category;
 use Common\Util\File;
@@ -215,14 +217,61 @@ class CustomController extends AdminBaseController
      */
     public function themeAdd()
     {
+
+        $this->assign('action', '主题添加');
+        $this->assign('action_name', 'themeAdd');
+
         $this->display();
     }
+
+    public function themeAddLocal()
+    {
+        File::mkDir(WEB_CACHE_PATH);
+
+
+        $config = array(
+            'rootPath' => WEB_CACHE_PATH,
+            "savePath" => '',
+            "maxSize" => 100000000, // 单位B
+            "exts" => array('zip'),
+            "subName" => array(),
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
+
+            $file_path_full = $info['file']['fullpath'];
+
+            //dump($info);die($file_path_full);
+            if (File::file_exists($file_path_full)) {
+
+                $Update = new UpdateEvent();
+                $applyRes = $Update->applyPatch($file_path_full);
+                $applyInfo = json_decode($applyRes, true);
+
+                if ($applyInfo['status']) {
+                    $this->success($applyInfo['info'], U('Admin/Custom/theme'));
+                } else {
+                    $this->error($applyInfo['info']);
+                }
+
+            } else {
+                $this->error('文件不存在');
+
+            }
+        }
+    }
+
+
 
     //todo 需要检查是否真的成功
     /**
      * @param string $theme_name
      */
-    public function themeDisableHandle($theme_name = 'Vena')
+    public function themeDisableHandle($theme_name = 'NovaGreenStudio')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
         set_kv('theme_' . $theme_name, 'disabled');
@@ -232,7 +281,7 @@ class CustomController extends AdminBaseController
     /**
      * @param string $theme_name
      */
-    public function themeEnableHandle($theme_name = 'Vena')
+    public function themeEnableHandle($theme_name = 'NovaGreenStudio')
     {
 
         set_kv('theme_' . $theme_name, 'enabled');
@@ -243,7 +292,7 @@ class CustomController extends AdminBaseController
     /**
      * @param string $theme_name
      */
-    public function themeChangeHandle($theme_name = 'Vena')
+    public function themeChangeHandle($theme_name = 'NovaGreenStudio')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
 
@@ -254,7 +303,7 @@ class CustomController extends AdminBaseController
 
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
-            $cache_control = new \Common\Event\SystemEvent();
+            $cache_control = new SystemEvent();
             $cache_control->clearCacheAll();
             $this->success('切换成功');
         } else {
@@ -914,20 +963,22 @@ str;
                     $this->error($upload->getError());
                 } else { // 上传成功 获取上传文件信息
 
-                    $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
+
+                    $file_path_full = $info['img']['fullpath'];
 
                     $image = new \Think\Image();
                     $image->open($file_path_full);
                     $image->thumb(200, 150)->save($file_path_full);
-                    $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
+
+                    $img_url = $info['img']['urlpath'];
+
+                    //  $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
 
                 };
 
             }
-
-
 
             if (D('Links', 'Logic')->addLink($data)) {
                 $this->success('链接添加成功', U('Admin/Custom/links', array('id' => $data['link_group_id'])));
@@ -973,12 +1024,14 @@ str;
                     $this->error($upload->getError());
                 } else { // 上传成功 获取上传文件信息
 
-                    $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
+                    $file_path_full = $info['img']['fullpath'];
 
                     $image = new \Think\Image();
                     $image->open($file_path_full);
                     $image->thumb(200, 150)->save($file_path_full);
-                    $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
+                    $img_url = $info['img']['urlpath'];
+
+                    // $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
 

@@ -9,6 +9,7 @@
 
 namespace Common\Event;
 
+use Common\Controller\BaseController;
 use Common\Util\File;
 
 /**
@@ -16,23 +17,45 @@ use Common\Util\File;
  * Class UpdateEvent
  * @package Common\Event
  */
-class UpdateEvent {
+class UpdateEvent extends BaseController
+{
 
     /**
      *
      */
-    public function check(){
+    public function check()
+    {
 
 
         $software_build = get_opinion('software_build', true);
         $url = Server_API . 'api/update/' . $software_build . '/';
         $json = json_decode(file_get_contents($url), true);
 
-         if($json['lastest_version']>$json['user_version']){
+        if ($json['lastest_version'] > $json['user_version']) {
             return $json;
-        }else{
+        } else {
             return false;
         }
+
+    }
+
+    public function applyPatch($filename)
+    {
+        $System = new SystemEvent();
+
+        $zip = new \ZipArchive; //新建一个ZipArchive的对象
+        if ($zip->open($filename) === true) {
+            $zip->extractTo(WEB_ROOT); //假设解压缩到在当前路径下/文件夹内
+            $zip->close(); //关闭处理的zip文件
+            File::delFile($filename);
+            $System->clearCacheAll();
+            return $this->jsonResult(1, "安装成功");
+
+        } else {
+            return $this->jsonResult(0, "文件损坏");
+        }
+
+
 
     }
 }

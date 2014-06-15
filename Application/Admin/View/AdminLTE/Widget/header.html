@@ -16,28 +16,42 @@
         <span class="icon-bar"></span>
     </a>
 
+
     <ul class="nav navbar-nav">
-        <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                模块切换
+        <li class="dropdown messages-menu" >
+            <a href="{:U('Admin/Index/main')}" class="dropdown-toggle" target="_blank">Home模块
             </a>
-            <ul class="dropdown-menu">
-                <li>
-
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                        <control access="Weixin/Index/index">
-                            <li><a href="{:U('Weixin/Index/index')}" target="_blank"><h4>进入Weixin模块</h4></a></li>
-                        </control>
-
-
-                        <li><a href="{:U('Admin/Index/main')}" target="_blank"><h4>进入Home模块</h4></a></li>
-                        <!-- end message -->
-
-                    </ul>
-                </li>
-            </ul>
         </li>
+
+        <control access="Weixin/Index/index">
+            <li><a href="{:U('Weixin/Index/index')}" target="_blank">Weixin模块</a></li>
+        </control>
+
+        <control access="Admin/Data/clearAll">
+            <li><a href="{:U('Admin/Data/clearAll')}">一键缓存清理</a></li>
+        </control>
+
+        <!--<li class="dropdown messages-menu">-->
+            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                <!--模块切换-->
+            <!--</a>-->
+            <!--<ul class="dropdown-menu">-->
+                <!--<li>-->
+
+                    <!--&lt;!&ndash; inner menu: contains the actual data &ndash;&gt;-->
+                    <!--<ul class="menu">-->
+                        <!--<control access="Weixin/Index/index">-->
+                            <!--<li><a href="{:U('Weixin/Index/index')}" target="_blank"><h4>进入Weixin模块</h4></a></li>-->
+                        <!--</control>-->
+
+
+                        <!--<li><a href="{:U('Admin/Index/main')}" target="_blank"><h4>进入Home模块</h4></a></li>-->
+                        <!--&lt;!&ndash; end message &ndash;&gt;-->
+
+                    <!--</ul>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</li>-->
 
 
         <li class="dropdown messages-menu">
@@ -49,9 +63,6 @@
 
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
-                        <control access="Admin/Data/clearAll">
-                            <li><a href="{:U('Admin/Data/clearAll')}"><h4>一键缓存清理 </h4></a></li>
-                        </control>
 
 
                         <control access="Admin/Posts/add">

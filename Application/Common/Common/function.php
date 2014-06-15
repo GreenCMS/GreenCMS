@@ -8,6 +8,7 @@
  */
 
 include APP_PATH . 'Common/Common/common_router.php';
+include APP_PATH . 'Common/Common/function_url.php';
 
 /**
  * 获取当前时间戳 使用TIME_FIX常量修正
@@ -66,7 +67,7 @@ function is_top($i, $string = '【固顶】')
  */
 function is_empty($test, $string = '空')
 {
-     if ($test == ''|$test==null ||empty($test)) {
+    if ($test == '' | $test == null || empty($test)) {
         echo $string;
     } else {
         echo $test;
@@ -633,6 +634,11 @@ function friend_date($time)
 }
 
 
+/**
+ * @param $post_id
+ * @param $post_cat
+ * @return null|string
+ */
 function get_next_post($post_id, $post_cat)
 {
 
@@ -648,6 +654,11 @@ function get_next_post($post_id, $post_cat)
     return $res;
 }
 
+/**
+ * @param $post_id
+ * @param $post_cat
+ * @return null|string
+ */
 function get_previous_post($post_id, $post_cat)
 {
     $where ["cat_id"] = $post_cat [0]["cat_id"];
@@ -660,6 +671,10 @@ function get_previous_post($post_id, $post_cat)
 }
 
 
+/**
+ * @param string $access
+ * @return bool
+ */
 function check_access($access = "")
 {
 
@@ -675,8 +690,11 @@ function check_access($access = "")
 }
 
 
-
-
+/**
+ * @param $url
+ * @param $data
+ * @return mixed|string
+ */
 function simple_post($url, $data)
 {
 
@@ -700,4 +718,15 @@ function simple_post($url, $data)
     return $tmpInfo;
 
 
+}
+
+
+/**
+ * 获取当前登录用户的ID
+ * @return int
+ */
+function get_current_user_id()
+{
+
+    return ( int )$_SESSION [C('USER_AUTH_KEY')];
 }

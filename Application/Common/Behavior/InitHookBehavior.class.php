@@ -65,11 +65,8 @@ class InitHookBehavior extends Behavior
             } else {
                 Hook::import($data, false);
             }
-//           Hook::add('test', "Test");
-//        dump(Hook::get());
-//        die;
-//        dump(S('hooks'));
-//        die;
+
+
         }
 
     }

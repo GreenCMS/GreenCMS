@@ -1,20 +1,20 @@
 <?php
 if (APP_DEBUG) {
-    $DEFAULT_THEME = I('get.theme', get_kv('home_theme', true, 'Vena'));
+    $DEFAULT_THEME = I('get.theme', get_kv('home_theme', true, 'NovaGreenStudio'));
 } else {
-    $DEFAULT_THEME = get_kv('home_theme', true, 'Vena');
+    $DEFAULT_THEME = get_kv('home_theme', true, 'NovaGreenStudio');
 }
 
 $config = array(
     //静态缓存
     'HTML_CACHE_ON' => get_opinion('HTML_CACHE_ON', false, false), //生产环境设置为开启
-    'HTML_CACHE_TIME' => get_opinion('HTML_CACHE_TIME', false, 600),
+    'HTML_CACHE_TIME' => get_opinion('HTML_CACHE_TIME', false, 60),
     'HTML_CACHE_RULES' => array(
         '*' => array('{$_SERVER.REQUEST_URI|md5}'), //全局静态缓存，第二个参数为时间单位秒
     ),
 
 
-    'DATA_CACHE_TIME' => get_opinion("DATA_CACHE_TIME", false, 60),
+    'DATA_CACHE_TIME' => get_opinion("DATA_CACHE_TIME", false, 10),
 
     //'DB_SQL_BUILD_LENGTH' =>  get_opinion("DB_SQL_BUILD_LENGTH", false, 20),// SQL缓存的队列长度
 
@@ -61,6 +61,7 @@ $config_router = array(
      * 注意！顺序不能乱 只有不符合第一个条件才回去匹配第二个
      */
     /**
+     * 文章链接模式
      * @var
      * native,
      * post_id,
@@ -76,6 +77,7 @@ $config_router = array(
 
 
     /**
+     * 标签链接模式
      * @var
      * native
      * ID
@@ -86,6 +88,7 @@ $config_router = array(
 
 
     /**
+     * 分类链接模式
      * @var
      * native
      * ID

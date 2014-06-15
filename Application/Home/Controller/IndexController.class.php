@@ -31,9 +31,6 @@ class IndexController extends HomeBaseController
      */
     public function index()
     {
-
-        Hook::listen('home_index');
-
         $this->display('index');
     }
 
@@ -55,9 +52,6 @@ class IndexController extends HomeBaseController
      */
     function test()
     {
-
-
-        dump(check_access("admin/posts/post"));
 
     }
 

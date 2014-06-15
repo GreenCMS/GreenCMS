@@ -9,8 +9,8 @@
 
 namespace Admin\Controller;
 
+use Admin\Event\PostsEvent;
 use Common\Logic\PostsLogic;
-use Common\Util\File;
 use Common\Util\GreenPage;
 use Org\Util\Rbac;
 
@@ -29,17 +29,20 @@ class PostsController extends AdminBaseController
      */
     public function index($post_type = 'single', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
     {
+        //获取get参数
         $cat = I('get.cat');
         $tag = I('get.tag');
         $page = I('get.page', C('PAGER'));
-        $info = array('post_status' => $post_status);
-        $info['post_content|post_title'] = array('like', "%$keyword%");
+        $where = array('post_status' => $post_status);
+        $where['post_content|post_title'] = array('like', "%$keyword%");
+        $post_ids = array();
 
         //投稿员只能看到自己的
         if (!$this->noVerify()) {
-            $info['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
+            $where['user_id'] = get_current_user_id();
         }
 
+        //处理详细信息 搜索，指定TAG CAT文章
         if ($cat != '') {
             $post_ids = D('Cats', 'Logic')->getPostsId($cat);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
@@ -56,19 +59,19 @@ class PostsController extends AdminBaseController
         }
 
 
-        $PostsList = new PostsLogic();
-        $count = $PostsList->countAll($post_type, $info, $post_ids); // 查询满足要求的总记录数
+        $PostsLogic = new PostsLogic();
+        $count = $PostsLogic->countAll($post_type, $where, $post_ids); // 查询满足要求的总记录数
 
         if ($count != 0) {
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $posts = $PostsList->getList($limit, $post_type, $order, true, $info, $post_ids);
+            $posts_list = $PostsLogic->getList($limit, $post_type, $order, true, $where, $post_ids);
         }
 
         $this->assign('post_type', $post_type);
         $this->assign('action', $key . $cat . $tag . get_real_string($post_type) . '列表');
-        $this->assign('posts', $posts);
+        $this->assign('posts', $posts_list);
         $this->assign('pager', $pager_bar);
         $this->display('index_no_js');
     }
@@ -78,6 +81,8 @@ class PostsController extends AdminBaseController
      */
     public function indexHandle()
     {
+        $PostsLogic = new PostsLogic();
+
         if (I('post.keyword') != '') {
             $this->redirect('Admin/Posts/' . I('post.post_type', 'single'), array('keyword' => I('post.keyword')));
         }
@@ -87,18 +92,20 @@ class PostsController extends AdminBaseController
             $post_ids = I('post.posts');
             is_string($post_ids) == true ? $num = 0 : $num = count($post_ids);
 
+            $res_info = '';
             foreach ($post_ids as $post_id) {
-                $res = D('Posts', 'Logic')->preDel($post_id);
-                if ($res == false) $res_info = '文章ID：' . $post_id . '删除到回收站失败';
+                $res = $PostsLogic->preDel($post_id);
+                if ($res == false) $res_info = $res_info . ' 文章ID：' . $post_id . '删除到回收站失败';
             }
             $this->success($num . '篇文章批量删除到回收站成功' . $res_info);
         }
         if (I('post.verifyAll') == 1) {
             $post_ids = I('post.posts');
             is_string($post_ids) == true ? $num = 0 : $num = count($post_ids);
+            $res_info = '';
             foreach ($post_ids as $post_id) {
-                $res = D('Posts', 'Logic')->verify($post_id);
-                if ($res == false) $res_info = '文章ID：' . $post_id . '移至待审核列表失败';
+                $res = $PostsLogic->verify($post_id);
+                if ($res == false) $res_info = $res_info . '文章ID：' . $post_id . '移至待审核列表失败';
             }
             $this->success($num . '篇文章批量移至待审核列表' . $res_info);
         }
@@ -131,7 +138,7 @@ class PostsController extends AdminBaseController
     public function add()
     {
 
-        $PostEvent = new \Admin\Event\PostsEvent();
+        $PostEvent = new PostsEvent();
 
 
         $tpl_type_list = $PostEvent->get_tpl_type_list();
@@ -140,8 +147,9 @@ class PostsController extends AdminBaseController
 
         //投稿员只能看到自己的
         if (!$this->noVerify()) {
-            $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
-            $user = D('User', 'Logic')->cache(true)->detail($user_id);
+            //TODO 使用原生SQL提高效率
+            $user_id = get_current_user_id();
+            $user = D('User', 'Logic')->detail($user_id);
             $role_id = $user["user_role"] ["role_id"];
             $role = D('Role')->where(array('id' => $role_id))->find();
             $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
@@ -169,12 +177,24 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * TODO 自动保存
+     *
+     */
+    public function autoSave()
+    {
+
+        $data = $this->dataHandle();
+        cookie('post_add', gzcompress(json_encode($data)), 3600000);
+    }
+
+    /**
      * @return bool 如果不用审核返回true，需要返回false
      */
     public function noVerify()
     {
-        $accessList = RBAC::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
-        if ($accessList['ADMIN']['POSTS']['NOVERIFY'] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+        $user_id = get_current_user_id();
+        $access_list = RBAC::getAccessList($user_id);
+        if ($access_list['ADMIN']['POSTS']['NOVERIFY'] != '' || ($user_id == 1)) {
             return true;
         } else {
             return false;
@@ -209,29 +229,29 @@ class PostsController extends AdminBaseController
      */
     public function addHandle()
     {
-        $data = $this->dataHandle();
+        $post_data = $this->dataHandle();
 
         if (($this->noverify() == false) || (I('post.post_status') == 'unverified')) {
-            $data['post_status'] = 'unverified';
+            $post_data['post_status'] = 'unverified';
         } else {
-            $data['post_status'] = 'publish';
+            $post_data['post_status'] = 'publish';
         }
 
 
-        if ($post_id = D('Posts')->relation(true)->add($data)) { //, 'Logic'
+        if ($post_id = D('Posts')->relation(true)->add($post_data)) { //, 'Logic'
 
             cookie('post_add', null);
 
-            if ($data['post_type'] == 'single') {
+            if ($post_data['post_type'] == 'single') {
                 $this->jsonReturn(1, "发布成功", U('Admin/Posts/index'));
-            } elseif ($data['post_type'] == 'page') {
+            } elseif ($post_data['post_type'] == 'page') {
                 $this->jsonReturn(1, "发布成功", U('Admin/Posts/page'));
             } else {
                 //TODO hook here to process the unknown post type
             }
 
         } else {
-            cookie('post_add', gzcompress(json_encode($data)), 3600000);
+            cookie('post_add', gzcompress(json_encode($post_data)), 3600000);
             //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
             $this->jsonReturn(0, "发布失败");
         }
@@ -273,7 +293,7 @@ class PostsController extends AdminBaseController
 
         //投稿员只能看到自己的
         if (!$this->noVerify()) {
-            $where['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
+            $where['user_id'] = get_current_user_id();
         }
         $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
 
@@ -288,14 +308,14 @@ class PostsController extends AdminBaseController
     public function unverifiedHandle($id, $post_status = 'publish')
     {
 
-        $info = D('Posts', 'Logic')->relation(true)->where(array("post_id" => $id))->find();
-        if (empty($info)) {
+        $post_detail = D('Posts', 'Logic')->relation(true)->where(array("post_id" => $id))->find();
+        if (empty($post_detail)) {
             $this->error("不存在该记录");
         }
 
-        $data['post_status'] = $post_status;
+        $post_data['post_status'] = $post_status;
 
-        if (D('Posts', 'Logic')->where(array('post_id' => $id))->setField($data)) {
+        if (D('Posts', 'Logic')->where(array('post_id' => $id))->setField($post_data)) {
             $this->success('审核状态修改成功');
         } else {
             $this->error('审核状态修改失败');
@@ -310,9 +330,9 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'preDel';
 
-        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_id desc', true, $where);
+        $posts_list = D('Posts', 'Logic')->getList(0, $post_type, 'post_id desc', true, $where);
 
-        $this->assign('posts', $posts);
+        $this->assign('posts', $posts_list);
 
         $this->display();
     }
@@ -324,13 +344,16 @@ class PostsController extends AdminBaseController
     {
 
         $data['post_status'] = 'publish';
-        if (M('Posts')->where(array('post_id' => $id))->setField($data)) {
+        if (D('Posts')->where(array('post_id' => $id))->setField($data)) {
             $this->success('恢复成功');
         } else {
             $this->error('恢复失败');
         }
     }
 
+    /**
+     *
+     */
     public function emptyRecycleHandle()
     {
         $where['post_status'] = 'preDel';
@@ -344,13 +367,16 @@ class PostsController extends AdminBaseController
     }
 
 
+    /**
+     * @param string $post_type
+     */
     public function reverify($post_type = "all")
     {
         $where['post_status'] = 'reverify';
 
         //投稿员只能看到自己的
         if (!$this->noVerify()) {
-            $where['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
+            $where['user_id'] = get_current_user_id();
         }
         $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
 
@@ -360,16 +386,19 @@ class PostsController extends AdminBaseController
     }
 
 
+    /**
+     * @param $id
+     */
     public function reverifyHandle($id)
     {
-        $info = D('Posts', 'Logic')->relation(true)->where(array("post_id" => $id))->find();
-        if (empty($info)) {
+        $post_detail = D('Posts', 'Logic')->relation(true)->where(array("post_id" => $id))->find();
+        if (empty($post_detail)) {
             $this->error("不存在该记录");
         }
 
-        $data['post_status'] = "unverified";
+        $post_data['post_status'] = "unverified";
 
-        if (D('Posts', 'Logic')->where(array('post_id' => $id))->setField($data)) {
+        if (D('Posts', 'Logic')->where(array('post_id' => $id))->setField($post_data)) {
             $this->success('审核状态修改成功');
         } else {
             $this->error('审核状态修改失败');
@@ -387,30 +416,30 @@ class PostsController extends AdminBaseController
         $this->action = '编辑文章';
         $this->action_name = 'posts';
         $this->post_id = $post_id = $_GET['id'] ? (int)$_GET['id'] : false;
-        $Posts = M("Posts");
+        $Posts = new PostsLogic();
         if (IS_POST) {
-            $data = $_POST;
+            $post_data = $_POST;
 
-            $data['post_modified'] = date("Y-m-d H:m:s", time());
-            $data['post_type'] = $_POST['post_type'] ? $_POST['post_type'] : 'single';
-            M("post_cat")->where(array("post_id" => $data['post_id']))->delete();
-            M("post_tag")->where(array("post_id" => $data['post_id']))->delete();
+            $post_data['post_modified'] = date("Y-m-d H:m:s", time());
+            $post_data['post_type'] = $_POST['post_type'] ? $_POST['post_type'] : 'single';
+            M("post_cat")->where(array("post_id" => $post_data['post_id']))->delete();
+            M("post_tag")->where(array("post_id" => $post_data['post_id']))->delete();
 
             if (!empty($_POST['cats'])) {
                 foreach ($_POST['cats'] as $cat_id) {
-                    M("Post_cat")->add(array("cat_id" => $cat_id, "post_id" => $data['post_id']));
+                    M("Post_cat")->add(array("cat_id" => $cat_id, "post_id" => $post_data['post_id']));
                 };
             }
 
             if (!empty($_POST['tags'])) {
                 foreach ($_POST['tags'] as $tag_id) {
-                    M("Post_tag")->add(array("tag_id" => $tag_id, "post_id" => $data['post_id']));
+                    M("Post_tag")->add(array("tag_id" => $tag_id, "post_id" => $post_data['post_id']));
                 }
             }
 
-            if ($data['post_type'] == 'single') {
+            if ($post_data['post_type'] == 'single') {
                 $url = U('Admin/Posts/index');
-            } elseif ($data['post_type'] == 'page') {
+            } elseif ($post_data['post_type'] == 'page') {
                 $url = U('Admin/Posts/page');
             } else {
                 $url = U('Admin/Posts/index');
@@ -418,7 +447,7 @@ class PostsController extends AdminBaseController
             }
 
 
-            if ($Posts->save($data)) {
+            if ($Posts->save($post_data)) {
                 $this->jsonReturn(1, "已经更新", $url);
             } else {
                 $this->jsonReturn(0, "更新失败", $url);
@@ -427,7 +456,7 @@ class PostsController extends AdminBaseController
 
             //投稿员只能看到自己的
             if (!$this->noVerify()) {
-                $where['user_id'] = ( int )$_SESSION [C('USER_AUTH_KEY')];
+                $where['user_id'] = get_current_user_id();
             }
 
 
@@ -438,7 +467,7 @@ class PostsController extends AdminBaseController
                 $this->error("不存在该记录");
             }
 
-            $PostEvent = new \Admin\Event\PostsEvent();
+            $PostEvent = new PostsEvent();
             $tpl_type_list = $PostEvent->get_tpl_type_list();
 
             $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
@@ -480,17 +509,14 @@ class PostsController extends AdminBaseController
      */
     public function category()
     {
+        $cat_list = D("Cats", "Logic")->relation(true)->category();
 
-        $category = D("Cats", "Logic")->relation(true)->category();
-
-
-        foreach ($category as $key => $value) {
-            $category[$key]["cat_father"] = D('Cats', 'Logic')->detail($value["cat_father"]);
+        foreach ($cat_list as $key => $value) {
+            $cat_list[$key]["cat_father"] = D('Cats', 'Logic')->detail($value["cat_father"]);
         }
 
 
-        $this->assign('category', $category);
-
+        $this->assign('category', $cat_list);
         $this->display();
     }
 
@@ -501,10 +527,9 @@ class PostsController extends AdminBaseController
     {
         $action = '添加';
         $this->assign('action', $action);
-        $cats = D('Cats', 'Logic')->category();
+        $cat_list = D('Cats', 'Logic')->category();
 
-
-        $this->assign('cats', $cats);
+        $this->assign('cats', $cat_list);
         $this->display('addcategory');
     }
 
@@ -544,7 +569,6 @@ class PostsController extends AdminBaseController
         $this->assign('cat', $cat);
         $this->assign('cats', $cats);
 
-
         $this->display('editcategory');
     }
 
@@ -555,15 +579,13 @@ class PostsController extends AdminBaseController
     {
 
         $Cats = D('Cats');
-        $data['cat_name'] = I('post.cat_name');
-        $data['cat_slug'] = urlencode(I('post.cat_slug'));
-        $data['cat_father'] = I('post.cat_father');
+        $cat_data['cat_name'] = I('post.cat_name');
+        $cat_data['cat_slug'] = urlencode(I('post.cat_slug'));
+        $cat_data['cat_father'] = I('post.cat_father');
 
-        if ($Cats->where(array('cat_id' => $id))->save($data)) {
-
+        if ($Cats->where(array('cat_id' => $id))->save($cat_data)) {
             $this->success('分类编辑成功', U('Admin/Posts/category'));
         } else {
-            Log::write($Cats->getLastSql());
             $this->error('分类编辑失败', U('Admin/Posts/category'));
         }
     }
@@ -620,14 +642,14 @@ class PostsController extends AdminBaseController
      */
     public function addTagHandle()
     {
-        $data['tag_name'] = I('post.tag_name');
-        $data['tag_slug'] = urlencode(I('post.tag_slug'));
+        $tag_data['tag_name'] = I('post.tag_name');
+        $tag_data['tag_slug'] = urlencode(I('post.tag_slug'));
 
-        if ($data['tag_slug'] == '') {
-            $data['tag_slug'] = urlencode($data['tag_name']);
+        if ($tag_data['tag_slug'] == '') {
+            $tag_data['tag_slug'] = urlencode($tag_data['tag_name']);
         }
 
-        if (D('Tags')->data($data)->add()) {
+        if (D('Tags')->data($tag_data)->add()) {
             $this->success('标签添加成功', U('Admin/Posts/tag'));
         } else {
 
@@ -657,14 +679,14 @@ class PostsController extends AdminBaseController
     {
 
         $Tags = D('Tags');
-        $data['tag_name'] = I('post.tag_name');
-        $data['tag_slug'] = urlencode(I('post.tag_slug'));
+        $tag_data['tag_name'] = I('post.tag_name');
+        $tag_data['tag_slug'] = urlencode(I('post.tag_slug'));
 
-        if ($data['tag_slug'] == '') {
-            $data['tag_slug'] = urlencode($data['tag_name']);
+        if ($tag_data['tag_slug'] == '') {
+            $tag_data['tag_slug'] = urlencode($tag_data['tag_name']);
         }
 
-        if ($Tags->where(array('tag_id' => $id))->save($data)) {
+        if ($Tags->where(array('tag_id' => $id))->save($tag_data)) {
 
             $this->success('分类编辑成功', U('Admin/Posts/tag'));
         } else {

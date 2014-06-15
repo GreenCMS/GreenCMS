@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 
+use Common\Event\AccessEvent;
 use Common\Util\Category;
 use Common\Util\GreenPage;
 
@@ -123,7 +124,7 @@ class AccessController extends AdminBaseController
         D('Node')->where('1')->delete(); //清空
         D('Access')->where('1')->delete(); //清空
 
-        $Access = new \Install\Event\AccessEvent();
+        $Access = new AccessEvent();
         $Access->initAdmin();
         $Access->initWeixin();
 

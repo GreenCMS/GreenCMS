@@ -37,11 +37,11 @@ class ArchiveController extends HomeBaseController
      */
     public function search($keyword = '')
     {
-        $info['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
-        $info['post_content|post_title'] = array('like', "%$keyword%");
+        $where['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
+        $where['post_content|post_title'] = array('like', "%$keyword%");
 
         $PostsList = new PostsLogic();
-        $count = $PostsList->countAll('all', $info); // 查询满足要求的总记录数
+        $count = $PostsList->countAll('all', $where); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
@@ -49,11 +49,11 @@ class ArchiveController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
 
-            $res = $PostsList->getList($limit, 'all', 'post_id desc', true, $info);
+            $posts_list = $PostsList->getList($limit, 'all', 'post_id desc', true, $where);
         }
         $this->assign('title', '关于"' . $keyword . '"文章搜索结果');
         $this->assign('res404', $res404);
-        $this->assign('postslist', $res);
+        $this->assign('postslist', $posts_list);
         $this->assign('pager', $pager_bar);
 
 
@@ -68,8 +68,8 @@ class ArchiveController extends HomeBaseController
      */
     public function single()
     {
-        $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
-        if (I('get.uid') != '') $map['user_id'] = I('get.uid');
+        $where['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
+        if (I('get.uid') != '') $where['user_id'] = I('get.uid');
 
 
         $title_prefix = (I('get.year', '') ? I('get.year', '') . '年' : '') .
@@ -78,18 +78,18 @@ class ArchiveController extends HomeBaseController
 
         $PostsList = new PostsLogic();
 
-        $count = $PostsList->countAll('single', $map); // 查询满足要求的总记录数
+        $count = $PostsList->countAll('single', $where); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
-            $res = $PostsList->getList($limit, 'single', 'post_id desc', true, $map);
+            $posts_list = $PostsList->getList($limit, 'single', 'post_id desc', true, $where);
         }
         $this->assign('title', $title_prefix . '所有文章');
         $this->assign('res404', $res404); // 赋值数据集
-        $this->assign('postslist', $res); // 赋值数据集
+        $this->assign('postslist', $posts_list); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
         $this->assign('breadcrumbs', get_breadcrumbs('所有文章'));
 
@@ -103,7 +103,7 @@ class ArchiveController extends HomeBaseController
      */
     public function page()
     {
-        $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
+        $where['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
 
         $title_prefix = (I('get.year', '') ? I('get.year', '') . '年' : '') .
             (I('get.month', '') ? I('get.month', '') . '月' : '') . (I('get.day', '') ? I('get.day', '') . '日' : '');
@@ -111,18 +111,18 @@ class ArchiveController extends HomeBaseController
 
         $PostsList = new PostsLogic();
 
-        $count = $PostsList->countAll('page', $map); // 查询满足要求的总记录数
+        $count = $PostsList->countAll('page', $where); // 查询满足要求的总记录数
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
 
-            $res = $PostsList->getList($limit, 'page', 'post_id desc', true, $map);
+            $posts_list = $PostsList->getList($limit, 'page', 'post_id desc', true, $where);
         }
         $this->assign('title', $title_prefix . '所有页面');
         $this->assign('res404', $res404); // 赋值数据集
-        $this->assign('postslist', $res); // 赋值数据集
+        $this->assign('postslist', $posts_list); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
         $this->assign('breadcrumbs', get_breadcrumbs('所有页面'));
 
@@ -160,11 +160,11 @@ class ArchiveController extends HomeBaseController
             $Page = new GreenPage($count, C('PAGER'));
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $res = $PostsList->getList($limit, $post_type, 'post_id desc', true, $map);
+            $posts_list = $PostsList->getList($limit, $post_type, 'post_id desc', true, $map);
         }
         $this->assign('title', $title_prefix . '所有' . $post_type);
         $this->assign('res404', $res404); // 赋值数据集
-        $this->assign('postslist', $res); // 赋值数据集
+        $this->assign('postslist', $posts_list); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
 
 
