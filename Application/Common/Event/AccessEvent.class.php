@@ -7,7 +7,7 @@
  * Time: 上午9:45
  */
 
-namespace Install\Event;
+namespace Common\Event;
 
 
 /**

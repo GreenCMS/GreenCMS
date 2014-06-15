@@ -8,6 +8,7 @@
 
 namespace Oauth\Controller;
 
+use Common\Event\UserEvent;
 use \Extend\ThinkSDK\ThinkOauth;
 use \Oauth\Event\TypeEvent;
 use \Oauth\Logic\User_snsLogic;
@@ -47,8 +48,8 @@ class SnsController extends OauthBaseController
         $extend = null;
         if ($type == 'tencent') {
             $extend = array(
-                'openid' => $this->_get('openid'),
-                'openkey' => $this->_get('openkey')
+                'openid' =>I('get.openid'),
+                'openkey' => I('get.openkey')
             );
         }
 
@@ -122,7 +123,7 @@ class SnsController extends OauthBaseController
                         $map['user_id'] = $open_user_info['User']['user_id'];
                         $map['user_login'] = $open_user_info['User']['user_login'];
 
-                        $UserEvent=new \Common\Event\UserEvent();
+                        $UserEvent=new UserEvent();
                         $UserEvent->auth($map);
                         $loginRes = $UserEvent->auth($map);
                         $this->json2Response($loginRes);

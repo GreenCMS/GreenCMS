@@ -10,9 +10,8 @@
 namespace Install\Controller;
 
 use Common\Util\File;
-use Think\Controller;
-use Think\Hook;
-use Think\Think;
+use Common\Event\AccessEvent;
+
 
 /**
  * Class IndexController
@@ -237,7 +236,7 @@ class IndexController extends \Think\Controller
 
         //A('Install/Test')->init($key = 'zts');
 
-        $Access = new \Install\Event\AccessEvent();
+        $Access = new AccessEvent();
         $Access->initAdmin();
         $Access->initWeixin();
 

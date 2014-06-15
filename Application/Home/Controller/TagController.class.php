@@ -52,12 +52,12 @@ class TagController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
         }
 
         $this->assign('title', $tag['tag_name']); // 赋值数据集
         $this->assign('res404', $res404);
-        $this->assign('postslist', $res); // 赋值数据集
+        $this->assign('postslist', $posts_list); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
         $this->assign('breadcrumbs', get_breadcrumbs('tags', $tag['tag_id']));
 

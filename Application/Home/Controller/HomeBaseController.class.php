@@ -61,7 +61,7 @@ abstract class HomeBaseController extends BaseController
         if (File::file_exists(T('Home@Index/404'))) {
             $this->display('Index/404');
         } else {
-            $this->error('缺少对应的模版而不能显示',U('Home/Index/index'));
+            $this->show($message);
         }
 
         Hook::listen('app_end');

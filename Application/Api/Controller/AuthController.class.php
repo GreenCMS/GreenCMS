@@ -17,6 +17,8 @@
 namespace Api\Controller;
 
 
+use Common\Util\Rbac;
+
 class AuthController extends ApiBaseCOntroller
 {
 
