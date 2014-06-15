@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Common\Event\SystemEvent;
 use Common\Event\UpdateEvent;
 use Common\Logic\PostsLogic;
 use Common\Util\Category;
@@ -270,7 +271,7 @@ class CustomController extends AdminBaseController
     /**
      * @param string $theme_name
      */
-    public function themeDisableHandle($theme_name = 'Vena')
+    public function themeDisableHandle($theme_name = 'NovaGreenStudio')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
         set_kv('theme_' . $theme_name, 'disabled');
@@ -280,7 +281,7 @@ class CustomController extends AdminBaseController
     /**
      * @param string $theme_name
      */
-    public function themeEnableHandle($theme_name = 'Vena')
+    public function themeEnableHandle($theme_name = 'NovaGreenStudio')
     {
 
         set_kv('theme_' . $theme_name, 'enabled');
@@ -291,7 +292,7 @@ class CustomController extends AdminBaseController
     /**
      * @param string $theme_name
      */
-    public function themeChangeHandle($theme_name = 'Vena')
+    public function themeChangeHandle($theme_name = 'NovaGreenStudio')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
 
@@ -302,7 +303,7 @@ class CustomController extends AdminBaseController
 
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
-            $cache_control = new \Common\Event\SystemEvent();
+            $cache_control = new SystemEvent();
             $cache_control->clearCacheAll();
             $this->success('切换成功');
         } else {
@@ -340,7 +341,7 @@ class CustomController extends AdminBaseController
         $count = count($list);
 
 
-        $p = new GreenPage ($count, $page);
+        //  $p = new GreenPage ($count, $page);
         //这里得到是已安装的  =_=+++++
 
 
@@ -971,7 +972,7 @@ str;
 
                     $img_url = $info['img']['urlpath'];
 
-                  //  $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
+                    //  $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
 

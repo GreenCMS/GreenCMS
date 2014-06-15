@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Common\Event\SystemEvent;
 use Common\Util\File;
 use Think\Think;
 
@@ -103,7 +104,7 @@ class MediaController extends AdminBaseController
     public function backupFileHandle()
     {
 
-        $System = new \Common\Event\SystemEvent();
+        $System = new SystemEvent();
         $res = $System->backupFile(I('post.file'));
 
         if ($res['status'] == 1)
@@ -155,7 +156,7 @@ class MediaController extends AdminBaseController
 
 
         $file_name = base64_decode($id);
-        $System = new \Common\Event\SystemEvent();
+        $System = new SystemEvent();
 
 
         $zip = new \ZipArchive; //新建一个ZipArchive的对象

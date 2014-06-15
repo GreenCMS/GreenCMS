@@ -11,6 +11,8 @@ namespace Common\Event;
 
 use Common\Util\File;
 use Common\Logic;
+use Think\Cache;
+
 /**
  * 系统事件 包括数据缓存文件 备份清理操作
  * Class SystemEvent
@@ -114,7 +116,7 @@ class SystemEvent
                 $this->clearCache($value);
             }
         } else {
-            $Cache = new \Think\Cache();
+            $Cache = new Cache();
             $caches = $Cache->connect();
             $caches->clear();
         }

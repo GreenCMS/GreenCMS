@@ -159,7 +159,7 @@ class UeditorController extends AdminBaseController
 //    }
 
     /**
-     * 获取远程图片。暂时不能移植SAE
+     * 获取远程图片
      */
     public function getRemoteImage()
     {
