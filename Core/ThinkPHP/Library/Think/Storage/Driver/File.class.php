@@ -13,9 +13,17 @@ namespace Think\Storage\Driver;
 use Think\Storage;
 
 // 本地文件写入存储类
+/**
+ * Class File
+ * Patched By GreenStudio
+ * @package Think\Storage\Driver
+ */
 class File extends Storage
 {
 
+    /**
+     * @var array
+     */
     private $contents = array();
 
     /**
@@ -30,6 +38,7 @@ class File extends Storage
      * 文件内容读取
      * @access public
      * @param string $filename 文件名
+     * @param string $type
      * @return string
      */
     public function read($filename, $type = '')
@@ -42,6 +51,7 @@ class File extends Storage
      * @access public
      * @param string $filename 文件名
      * @param string $content 文件内容
+     * @param string $type
      * @return boolean
      */
     public function put($filename, $content, $type = '')
@@ -62,6 +72,7 @@ class File extends Storage
      * @access public
      * @param string $filename 文件名
      * @param string $content 追加的文件内容
+     * @param string $type
      * @return boolean
      */
     public function append($filename, $content, $type = '')
@@ -90,6 +101,7 @@ class File extends Storage
      * 文件是否存在
      * @access public
      * @param string $filename 文件名
+     * @param string $type
      * @return boolean
      */
     public function has($filename, $type = '')
@@ -108,6 +120,7 @@ class File extends Storage
      * 文件删除
      * @access public
      * @param string $filename 文件名
+     * @param string $type
      * @return boolean
      */
     public function unlink($filename, $type = '')
@@ -121,6 +134,7 @@ class File extends Storage
      * @access public
      * @param string $filename 文件名
      * @param string $name 信息名 mtime或者content
+     * @param string $type
      * @return boolean
      */
     public function get($filename, $name, $type = '')

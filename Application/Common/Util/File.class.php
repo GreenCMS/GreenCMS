@@ -28,10 +28,7 @@ class File
     {
         $Storage = new Storage();
         $Storage::connect();
-
         return $Storage::has($filename);
-
-        //  return file_exists($filename);
     }
 
     /**
