@@ -358,7 +358,9 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'preDel';
 
-        if (D('Posts', 'Logic')->where($where)->relatioin(true)->delete()) {
+        $PostsLogic = new PostsLogic();
+
+        if ($PostsLogic->where($where)->relation(true)->delete()) {
             $this->success('清空回收站成功');
         } else {
             $this->error('清空回收站失败');
