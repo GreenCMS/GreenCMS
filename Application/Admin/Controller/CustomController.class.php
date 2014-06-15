@@ -341,7 +341,7 @@ class CustomController extends AdminBaseController
         $count = count($list);
 
 
-        //  $p = new GreenPage ($count, $page);
+        $p = new GreenPage ($count, $page);
         //这里得到是已安装的  =_=+++++
 
 
