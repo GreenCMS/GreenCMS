@@ -59,10 +59,11 @@
                                 <tr>
                                     <th style="width: 8px;"><input type="checkbox"
                                                                    class="group-checkable"
-                                                                   id="check-all"    data-set="#sample_1 .checkboxes"/></th>
+                                                                   id="check-all" data-set="#sample_1 .checkboxes"/>
+                                    </th>
                                     <th>名称</th>
                                     <th class="hidden-480">别名</th>
-                                    <th></th>
+                                    <th>文章数量</th>
                                     <th>查看</th>
                                     <th>操作</th>
 
@@ -78,7 +79,11 @@
                                         <td class="hidden-480"><a
                                                 href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}">{$v.tag_slug|mb_substr=0,30,"UTF-8"}</a>
                                         </td>
-                                        <td></td>
+                                        <td>
+                                            <a href="{:U('Admin/Posts/index', array('tag' => $v['tag_id']))}">
+                                                {$v['post_count']} 篇文章</a>
+
+                                        </td>
                                         <td>
                                             <a class="btn btn-success"
                                                href="{:U('Admin/Posts/index', array('tag' => $v['tag_id']))}">查看所有文章</a>
@@ -95,6 +100,12 @@
                                 </foreach>
                                 </tbody>
                             </table>
+
+                            <div>
+                                <ul class="pagination"> {$pager}</ul>
+                            </div>
+
+
                         </div>
 
 

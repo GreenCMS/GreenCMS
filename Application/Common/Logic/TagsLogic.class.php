@@ -84,15 +84,24 @@ class TagsLogic extends RelationModel
      * 获取列表
      * @param int $limit
      * @param bool $relation
-     *
+     * @param $order
      * @return mixed
      */
-    public function getList($limit = 20, $relation = true)
+    public function getList($limit = 20, $relation = true,$order)
     {
         return D('Tags')->limit($limit)->relation($relation)->select();
     }
 
 
+
+    public function selectWithPostsCount($limit=0,$order=''){
+
+        return D('Tags')->limit($limit)->field('*,count( '.GreenCMS_DB_PREFIX.'tags.tag_id) as post_count')
+                ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'post_tag ON ' . GreenCMS_DB_PREFIX .
+                    'tags.tag_id = ' . GreenCMS_DB_PREFIX . 'post_tag.tag_id')
+                ->group(GreenCMS_DB_PREFIX . 'tags.tag_id')->select();
+
+    }
 
 
 
