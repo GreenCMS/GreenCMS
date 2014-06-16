@@ -36,7 +36,12 @@ class PostsModel extends RelationModel
 
             'relation_foreign_key' => 'tag_id',
 
-            'relation_table'       => 'post_tag'
+            'relation_table'       => 'post_tag',
+
+            'mapping_order' => 'tag_id',
+
+            'mapping_limit' => 0,
+
         ),
 
         'Cat'  => array(
@@ -51,7 +56,13 @@ class PostsModel extends RelationModel
 
             'relation_foreign_key' => 'cat_id',
 
-            'relation_table'       => 'post_cat'
+            'relation_table'       => 'post_cat',
+
+
+            'mapping_order' => 'cat_id',
+
+            'mapping_limit' => 0,
+
         ),
 
         'User' => array(
@@ -64,7 +75,12 @@ class PostsModel extends RelationModel
 
             'mapping_name' => 'post_user',
 
-            'parent_key'   => 'user_id'
+            'parent_key'   => 'user_id',
+
+            'mapping_order' => 'user_id',
+
+            'mapping_limit' => 0,
+
         )
     );
 

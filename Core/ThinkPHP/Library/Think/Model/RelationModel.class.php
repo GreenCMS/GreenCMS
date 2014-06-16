@@ -212,7 +212,7 @@ class RelationModel extends Model
                             $prefix = $this->tablePrefix;
                             $mappingCondition = " {$mappingFk}='{$pk}'";
                             $mappingOrder = $val['mapping_order'];
-                            $mappingLimit = $val['mapping_limit'];
+                            $mappingLimit =  $val['mapping_limit'];
                             $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id';
                             if (isset($val['relation_table'])) {
                                 $mappingRelationTable = preg_replace_callback("/__([A-Z_-]+)__/sU", function ($match) use ($prefix) {

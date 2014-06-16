@@ -139,7 +139,7 @@ class Green extends TagLib
         $li_attr = isset ($tag ['li_attr']) ? $tag ['li_attr'] : '';
         $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
         $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
-
+        $condition=array();
 
         if ($link_tag != '') {
 
