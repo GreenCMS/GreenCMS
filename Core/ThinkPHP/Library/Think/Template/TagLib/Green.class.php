@@ -150,7 +150,7 @@ class Green extends TagLib
 
         }
 
-        $link_list = D('Links', 'Logic')->where($condition)->order($order)->limit($num)->select();
+        $link_list = D('Links', 'Logic')->cache(true,2)->where($condition)->order($order)->limit($num)->select();
 
 
         $parseStr = '<ul ' . $ul_attr . '>';
@@ -184,7 +184,7 @@ class Green extends TagLib
         $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
         $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
 
-        $post_list = D('Posts', 'Logic')->getList($num, $post_type, $order, $relation);
+         $post_list = D('Posts', 'Logic')->cache(true,2)->getList($num, $post_type, $order, $relation);
 
 
         $parseStr = '<ul ' . $ul_attr . '>';
@@ -278,7 +278,7 @@ class Green extends TagLib
             $condition = array();
         }
 
-        $link_list = D('Links', 'Logic')->where($condition)->order($order)->limit($num)->select();
+        $link_list = D('Links', 'Logic')->cache(true,2)->where($condition)->order($order)->limit($num)->select();
 
 
         $parseStr = '';

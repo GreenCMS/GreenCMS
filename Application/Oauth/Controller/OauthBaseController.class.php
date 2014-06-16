@@ -9,6 +9,10 @@
 namespace Oauth\Controller;
 use Common\Controller;
 
+/**
+ * Class OauthBaseController
+ * @package Oauth\Controller
+ */
 class OauthBaseController extends Controller\BaseController{
 
 
