@@ -23,7 +23,7 @@ class CatsLogic extends RelationModel
      * 获取分类详细
      * @param int $id 分类id
      * @param bool $relation 是否关联
-     *
+
      * @return mixed 找到之后返回数组
      */
     public function detail($id, $relation = true)
@@ -64,8 +64,8 @@ class CatsLogic extends RelationModel
     /**
      * 分类所有子类
      * @param int $id 分类id
-     *
      * @param bool $relation
+     *
      * @return mixed  找到所有子节点
      */
     public function getChildren($id = 0, $relation = false)
@@ -94,7 +94,7 @@ class CatsLogic extends RelationModel
     public function getChild($id = 0)
     {
         if ($id) {
-            $info = D('Cats')->cache(true)->where(array("cat_father" => $id))->select();
+            $info = D('Cats')->cache(true,2)->where(array("cat_father" => $id))->select();
             if ($info != null) return $info;
         }
         return false;
@@ -105,6 +105,7 @@ class CatsLogic extends RelationModel
      * 使用原生SQL
      * @param $info 分类info
      * @param string $post_status
+     *
      * @return mixed 找到的话返回post_id数组集合
      */
     public function getPostsId($info, $post_status = 'publish')

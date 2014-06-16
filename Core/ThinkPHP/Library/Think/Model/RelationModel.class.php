@@ -9,10 +9,19 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 namespace Think\Model;
+
 use Think\Model;
 
 /**
  * ThinkPHP关联模型扩展
+ */
+
+/**
+ * Class RelationModel
+ * Patched by GreenStudio
+ * ->cache(true,2) 加入缓存提高性能
+ *
+ * @package Think\Model
  */
 class RelationModel extends Model
 {
@@ -47,6 +56,7 @@ class RelationModel extends Model
     /**
      * 得到关联的数据表名
      * @access public
+     * @param $relation
      * @return string
      */
     public function getRelationTableName($relation)
@@ -112,8 +122,8 @@ class RelationModel extends Model
     /**
      * 获取返回数据集的关联记录
      * @access protected
-     * @param array $resultSet  返回数据
-     * @param string|array $name  关联名称
+     * @param array $resultSet 返回数据
+     * @param string|array $name 关联名称
      * @return array
      */
     protected function getRelations(&$resultSet, $name = '')
@@ -129,8 +139,8 @@ class RelationModel extends Model
     /**
      * 获取返回数据的关联记录
      * @access protected
-     * @param mixed $result  返回数据
-     * @param string|array $name  关联名称
+     * @param mixed $result 返回数据
+     * @param string|array $name 关联名称
      * @param boolean $return 是否返回关联数据本身
      * @return array
      */
@@ -157,7 +167,7 @@ class RelationModel extends Model
                         case self::HAS_ONE:
                             $pk = $result[$mappingKey];
                             $mappingCondition .= " AND {$mappingFk}='{$pk}'";
-                            $relationData = $model->where($mappingCondition)->field($mappingFields)->find();
+                            $relationData = $model->cache(true, 2)->where($mappingCondition)->field($mappingFields)->find();
                             if (!empty($val['relation_deep'])) {
                                 $model->getRelation($relationData, $val['relation_deep']);
                             }
@@ -176,10 +186,12 @@ class RelationModel extends Model
 
                             $fk = $result[$mappingFk];
                             $mappingCondition .= " AND {$mapping_foreign_key}='{$fk}'";
-                            $relationData = $model->where($mappingCondition)->field($mappingFields)->find();
+                            $relationData = $model->cache(true, 2)->where($mappingCondition)->field($mappingFields)->find();
+
                             if (!empty($val['relation_deep'])) {
                                 $model->getRelation($relationData, $val['relation_deep']);
                             }
+
                             break;
                         case self::HAS_MANY:
                             $pk = $result[$mappingKey];
@@ -187,7 +199,7 @@ class RelationModel extends Model
                             $mappingOrder = !empty($val['mapping_order']) ? $val['mapping_order'] : '';
                             $mappingLimit = !empty($val['mapping_limit']) ? $val['mapping_limit'] : '';
                             // 延时获取关联记录
-                            $relationData = $model->where($mappingCondition)->field($mappingFields)->order($mappingOrder)->limit($mappingLimit)->select();
+                            $relationData = $model->cache(true, 2)->where($mappingCondition)->field($mappingFields)->order($mappingOrder)->limit($mappingLimit)->select();
                             if (!empty($val['relation_deep'])) {
                                 foreach ($relationData as $key => $data) {
                                     $model->getRelation($data, $val['relation_deep']);
@@ -198,7 +210,7 @@ class RelationModel extends Model
                         case self::MANY_TO_MANY:
                             $pk = $result[$mappingKey];
                             $prefix = $this->tablePrefix;
-                             $mappingCondition = " {$mappingFk}='{$pk}'";
+                            $mappingCondition = " {$mappingFk}='{$pk}'";
                             $mappingOrder = $val['mapping_order'];
                             $mappingLimit = $val['mapping_limit'];
                             $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id';
@@ -209,7 +221,7 @@ class RelationModel extends Model
                             } else {
                                 $mappingRelationTable = $this->getRelationTableName($model);
                             }
-                            $mappingRelationTable=$prefix.$mappingRelationTable;
+                            $mappingRelationTable = $prefix . $mappingRelationTable;
                             $sql = "SELECT b.{$mappingFields} FROM {$mappingRelationTable} AS a, " . $model->getTableName() . " AS b WHERE a.{$mappingRelationFk} = b.{$model->getPk()} AND a.{$mappingCondition}";
                             if (!empty($val['condition'])) {
                                 $sql .= ' AND ' . $val['condition'];
@@ -220,14 +232,21 @@ class RelationModel extends Model
                             if (!empty($mappingLimit)) {
                                 $sql .= ' LIMIT ' . $mappingLimit;
                             }
-                            $relationData = $this->query($sql);
+                            //缓存
+                            if (S($sql)) {
+                                $relationData = S($sql);
+                            } else {
+                                $relationData = $this->query($sql);
+                                S($sql, $relationData, 3);
+                            }
+
                             if (!empty($val['relation_deep'])) {
                                 foreach ($relationData as $key => $data) {
                                     $model->getRelation($data, $val['relation_deep']);
                                     $relationData[$key] = $data;
                                 }
                             }
-                             break;
+                            break;
                     }
                     if (!$return) {
                         if (isset($val['as_fields']) && in_array($mappingType, array(self::HAS_ONE, self::BELONGS_TO))) {
@@ -258,8 +277,8 @@ class RelationModel extends Model
     /**
      * 操作关联数据
      * @access protected
-     * @param string $opType  操作方式 ADD SAVE DEL
-     * @param mixed $data  数据对象
+     * @param string $opType 操作方式 ADD SAVE DEL
+     * @param mixed $data 数据对象
      * @param string $name 关联名称
      * @return mixed
      */
@@ -356,7 +375,7 @@ class RelationModel extends Model
                                 } else {
                                     $mappingRelationTable = $this->getRelationTableName($model);
                                 }
-                                $mappingRelationTable=$prefix.$mappingRelationTable;
+                                $mappingRelationTable = $prefix . $mappingRelationTable;
 
                                 if (is_array($mappingData)) {
 
@@ -383,10 +402,10 @@ class RelationModel extends Model
                                             $result = $model->execute($sql);
                                             if (false !== $result)
                                                 // 提交事务
-                                            $this->commit();
+                                                $this->commit();
                                             else
                                                 // 事务回滚
-                                            $this->rollback();
+                                                $this->rollback();
                                         }
                                         break;
                                     case 'DEL': // 根据外键删除中间表关联数据
