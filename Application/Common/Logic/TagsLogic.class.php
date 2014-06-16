@@ -8,6 +8,7 @@
  */
 
 namespace Common\Logic;
+
 use Think\Model\RelationModel;
 
 /**
@@ -58,7 +59,6 @@ class TagsLogic extends RelationModel
     }
 
 
-
     /**
      * 获取指定tag的post id
      * @param $tag_id
@@ -87,23 +87,21 @@ class TagsLogic extends RelationModel
      * @param $order
      * @return mixed
      */
-    public function getList($limit = 20, $relation = true,$order)
+    public function getList($limit = 20, $relation = true, $order)
     {
         return D('Tags')->limit($limit)->relation($relation)->select();
     }
 
 
+    public function selectWithPostsCount($limit = 0, $relation = false,$where=array(), $order = '')
+    {
 
-    public function selectWithPostsCount($limit=0,$order=''){
-
-        return D('Tags')->limit($limit)->field('*,count( '.GreenCMS_DB_PREFIX.'tags.tag_id) as post_count')
-                ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'post_tag ON ' . GreenCMS_DB_PREFIX .
-                    'tags.tag_id = ' . GreenCMS_DB_PREFIX . 'post_tag.tag_id')
-                ->group(GreenCMS_DB_PREFIX . 'tags.tag_id')->select();
+        return D('Tags')->where($where)->limit($limit)->field('*,count( ' . GreenCMS_DB_PREFIX . 'tags.tag_id) as post_count')
+            ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'post_tag ON ' . GreenCMS_DB_PREFIX .
+                'tags.tag_id = ' . GreenCMS_DB_PREFIX . 'post_tag.tag_id')
+            ->group(GreenCMS_DB_PREFIX . 'tags.tag_id')->relation($relation)->select();
 
     }
-
-
 
 
 }
