@@ -52,6 +52,8 @@ class CatController extends HomeBaseController
         $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了"); //优雅的404
 
         $posts_id = $CatsLogic->getPostsId($cat['cat_id']);
+
+
         $count = sizeof($posts_id);
         ($count == 0) ? $res404 = 0 : $res404 = 1;
 

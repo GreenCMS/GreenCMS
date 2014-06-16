@@ -102,25 +102,28 @@ class CatsLogic extends RelationModel
 
     /**
      * 获取指定分类的post id
+     * 使用原生SQL
      * @param $info 分类info
-     *
      * @param string $post_status
      * @return mixed 找到的话返回post_id数组集合
      */
     public function getPostsId($info, $post_status = 'publish')
     {
-        //todo 性能优化~！
+
         $cat_info ['cat_id'] = $info;
-        $cat = D('Post_cat')->field('post_id')->where($cat_info)->select();
-
         $ids = array();
-        foreach ($cat as $key => $value) {
-            $posts = D('Posts')->field('post_status')->where(array('post_id' => $cat[$key]['post_id']))->cache(true)->find();
 
-            if ($posts['post_status'] == $post_status) {
-                $ids[] = $cat[$key]['post_id'];
-            }
+        $res = D('Post_cat')
+            ->table(GreenCMS_DB_PREFIX .'post_cat as pc,'.GreenCMS_DB_PREFIX .'posts as ps' )
+            ->field('ps.post_id')
+            ->where("cat_id ='%s' and pc.post_id=ps.post_id and ps.post_status ='%s'", $cat_info ['cat_id'],$post_status )
+            ->select();
+
+        foreach ($res as $key => $value) {
+            $ids[] = $res[$key]['post_id'];
+
         }
+
 
         return $ids;
     }
