@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <form method="post" action="{$form_url}">
+
+                                <div class="form-group">
+                                    <label class="control-label">链接模式：</label>
+
+                                    <div class="controls">
+
+                                        <select name="menu_function" id="menu_function" class="large form-control"
+                                                tabindex="1">
+                                            {$url_function}
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">打开方式：</label>
+
+                                    <div class="controls">
+
+
+                                        <select name="menu_action" class="large form-control" tabindex="1">
+                                            {$url_open}
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">父级节点：</label>
+
+                                    <div class="controls">
+
+                                        <select name="menu_pid" class="large form-control" tabindex="1">
+                                            <option value="0">无</option>
+                                            <foreach name="menu" item="list">
+                                                <option value="{$list.menu_id}">{$list.menu_construct}</option>
+                                            </foreach>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">显示排序：</label>
+
+                                    <div class="controls">
+
+                                        <select name="menu_sort" class="large form-control" tabindex="1">
+                                            <option value="0">无</option>
+                                            <foreach name="menu" item="list">
+                                                <option value="{$list.menu_sort}">{$list.menu_construct}</option>
+                                            </foreach>
+
+                                        </select>
+
+                                        <span class="help-inline"> 位置在选中项目之后</span>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">链接参数：</label>
+
+                                    <div class="controls">
+                                        <input class="form-control large" name="menu_url" id="menu_url" type="text" size="40"/>
+
+                                        <select class="large form-control" id="menu_url_select" tabindex="1"
+                                                style="display: none">
+
+                                        </select>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">显示名称：</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" id="menu_name" class="form-control large" name="menu_name"
+                                                />
+                                        <span class="help-inline">显示名称</span>
+                                    </div>
+                                </div>
+
+
+                                <!--<input type="hidden" name="id" value="{$info.id}"/>-->
+
+                                <div class="form-group success"
+                                     style="font-size:16px;color: red;text-align: left; display:none;">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-info submit" id="submit"><i
+                                            class="icon-ok"></i>
+                                        添加
+                                    </button>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+
+<div id="op" style="display:none">
+    <div id="post_list">{$post_list}</div>
+    <div id="cat_list">{$cat_list}</div>
+    <div id="tag_list">{$tag_list}</div>
+</div>
+<include file="Public:foot"/>
+
+
+<script>
+    jQuery(document).ready(function () {
+
+
+        $('#menu_function').change(function () {
+
+            var menu_function = $('#menu_function option:selected').val();
+            var menu_url_select = $('#menu_url_select');
+
+            if (menu_function == 'get_post_url') {
+                $('#menu_url_select').show();
+                var post_list  =$('#post_list').html();
+                menu_url_select.html(post_list);
+            } else if (menu_function == 'get_cat_url') {
+                $('#menu_url_select').show();
+                var cat_list  =$('#cat_list').html();
+                menu_url_select.html(cat_list);
+            } else if (menu_function == 'get_tag_url') {
+                $('#menu_url_select').show();
+                var tag_list  =$('#tag_list').html();
+                menu_url_select.html(tag_list);
+            }else{
+                $('#menu_url_select').hide();
+            }
+
+        });
+
+
+
+        $('#menu_url_select').change(function () {
+            $('#menu_url').val($('#menu_url_select').val());
+
+            $('#menu_name').val($('#menu_url_select option:selected').text());
+
+
+        });
+
+
+
+
+    });
+
+
+</script>
+
+
+</body>
+</html>

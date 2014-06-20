@@ -12,6 +12,7 @@ use Common\Util\Category;
 use Think\Model\RelationModel;
 
 /**
+ * 分类逻辑定义
  * Class CatsLogic
  * @package Home\Logic
  */
@@ -19,9 +20,10 @@ class CatsLogic extends RelationModel
 {
 
     /**
-     * @param $id 分类id
+     * 获取分类详细
+     * @param int $id 分类id
      * @param bool $relation 是否关联
-     *
+
      * @return mixed 找到之后返回数组
      */
     public function detail($id, $relation = true)
@@ -32,6 +34,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 获取分类列表
      * @param int $limit limit
      * @param bool $relation 是否关联
      *
@@ -43,6 +46,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 获取分类所有父类
      * @param int $id  分类id
      *
      * @param bool $relation
@@ -58,9 +62,10 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 分类所有子类
      * @param int $id 分类id
-     *
      * @param bool $relation
+     *
      * @return mixed  找到所有子节点
      */
     public function getChildren($id = 0, $relation = false)
@@ -81,6 +86,7 @@ class CatsLogic extends RelationModel
     }
 
     /**
+     * 得到子节点
      * @param int $id 分类id
      *
      * @return mixed 返回子节点
@@ -88,36 +94,43 @@ class CatsLogic extends RelationModel
     public function getChild($id = 0)
     {
         if ($id) {
-            $info = D('Cats')->where(array("cat_father" => $id))->select();
+            $info = D('Cats')->cache(true,2)->where(array("cat_father" => $id))->select();
             if ($info != null) return $info;
         }
         return false;
     }
 
     /**
+     * 获取指定分类的post id
+     * 使用原生SQL
      * @param $info 分类info
-     *
      * @param string $post_status
+     *
      * @return mixed 找到的话返回post_id数组集合
      */
     public function getPostsId($info, $post_status = 'publish')
     {
+
         $cat_info ['cat_id'] = $info;
-        $cat = D('Post_cat')->field('post_id')->where($cat_info)->select();
-
         $ids = array();
-        foreach ($cat as $key => $value) {
-            $posts = D('Posts')->field('post_status')->where(array('post_id' => $cat[$key]['post_id']))->cache(true)->find();
 
-            if ($posts['post_status'] == $post_status) {
-                $ids[] = $cat[$key]['post_id'];
-            }
+        $res = D('Post_cat')
+            ->table(GreenCMS_DB_PREFIX .'post_cat as pc,'.GreenCMS_DB_PREFIX .'posts as ps' )
+            ->field('ps.post_id')
+            ->where("cat_id ='%s' and pc.post_id=ps.post_id and ps.post_status ='%s'", $cat_info ['cat_id'],$post_status )
+            ->select();
+
+        foreach ($res as $key => $value) {
+            $ids[] = $res[$key]['post_id'];
+
         }
+
 
         return $ids;
     }
 
     /**
+     * 获取分类的文章
      * @param $cat_id 分类id
      * @param int $num 数量
      *
@@ -157,7 +170,7 @@ class CatsLogic extends RelationModel
 
 
     /**
-     *
+     * 获取结构化分类
      * @return array
      */
     public function category()

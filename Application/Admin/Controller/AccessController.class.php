@@ -10,7 +10,11 @@
 namespace Admin\Controller;
 
 
+use Admin\Logic\AccessLogic;
+use Common\Event\AccessEvent;
+use Common\Logic\UserLogic;
 use Common\Util\Category;
+use Common\Util\GreenPage;
 
 /**
  * Class AccessController
@@ -25,7 +29,7 @@ class AccessController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-     }
+    }
 
     // 用户列表
     /**
@@ -33,9 +37,23 @@ class AccessController extends AdminBaseController
      */
     public function index()
     {
-        $list = D('Access', 'Logic')->adminList();
+        $page = I('get.page', C('PAGER'));
+
+        $UserLogic = new UserLogic();
+
+        $where = array("user_level" => array('neq', 5));
+        $count = $UserLogic->where($where)->count();
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $list = D('Access', 'Logic')->adminList($limit);
+        }
 
         $this->assign('listname', '管理组用户');
+
+        $this->assign('pager', $pager_bar);
         $this->assign('list', $list);
         $this->display('userlist');
     }
@@ -46,8 +64,21 @@ class AccessController extends AdminBaseController
      */
     public function guest()
     {
-        $list = D('Access', 'Logic')->guestList();
+        $page = I('get.page', C('PAGER'));
 
+        $UserLogic = new UserLogic();
+
+        $where = array("user_level" => array('eq', 5));
+        $count = $UserLogic->where($where)->count();
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $list = D('Access', 'Logic')->guestList($limit);
+        }
+
+        $this->assign('pager', $pager_bar);
         $this->assign('listname', '游客用户');
         $this->assign('list', $list);
 
@@ -117,6 +148,20 @@ class AccessController extends AdminBaseController
     }
 
 
+    public function rebuildAccess()
+    {
+        D('Node')->where('1')->delete(); //清空
+        D('Access')->where('1')->delete(); //清空
+
+        $Access = new AccessEvent();
+        $Access->initAdmin();
+        $Access->initWeixin();
+
+
+        $this->success("重建完成，请重新分配权限");
+
+    }
+
     // 添加用户
     /**
      *
@@ -138,21 +183,21 @@ class AccessController extends AdminBaseController
     {
         $w = htmlspecialchars(trim($_POST ['user_login']));
         $i = D('user')->where(array(
-                                   'user_login' => $w
-                              ))->select();
+            'user_login' => $w
+        ))->select();
         if ($i != '') {
             $this->error('用户名已存在！');
         } else {
             // 组合用户信息并添加
 
             $user = array(
-                'user_login'    => I('post.user_login'),
+                'user_login' => I('post.user_login'),
                 'user_nicename' => I('post.user_nicename'),
-                'user_pass'     => encrypt(I('post.password')),
-                'user_email'    => I('post.user_email'),
-                'user_url'      => I('post.user_url'),
-                'user_intro'    => I('post.user_intro'),
-                'user_status'   => I('post.user_status'),
+                'user_pass' => encrypt(I('post.password')),
+                'user_email' => I('post.user_email'),
+                'user_url' => I('post.user_url'),
+                'user_intro' => I('post.user_intro'),
+                'user_status' => I('post.user_status'),
 
                 // 'logintime'=>time(),
                 // 'loginip'=>get_client_ip(),
@@ -201,8 +246,8 @@ class AccessController extends AdminBaseController
         } else {
 
             $info = D('User')->where(array(
-                                          'user_id' => $aid
-                                     ))->relation(true)->find();
+                'user_id' => $aid
+            ))->relation(true)->find();
 
             if (empty ($info ['user_id'])) {
                 $this->error("不存在该用户ID", U('Admin/Access/index'));
@@ -330,6 +375,37 @@ class AccessController extends AdminBaseController
     }
 
     /**
+     * 投稿员指定分类
+     */
+    public function setrolecat($id)
+    {
+        if (IS_POST) {
+
+            $data["cataccess"] = json_encode(I('post.cats'));
+
+            $res = D('Role')->where(array('id' => $id))->data($data)->save();
+            if ($res) {
+                $this->success("保存成功");
+            } else {
+                $this->error("保存失败");
+            }
+
+        } else {
+            $role = D('Role')->where(array('id' => $id))->find();
+
+            $this->user_cats = json_decode($role['cataccess']);
+
+            $this->action = '指定分类';
+            $this->action_name = "setrolecat";
+            $this->assign("handle", "setrolecat?id=" . $id);
+            $this->cats = D('Cats', 'Logic')->category();
+            $this->display();
+        }
+
+    }
+
+
+    /**
      *
      */
     public function opNodeStatus()
@@ -357,9 +433,9 @@ class AccessController extends AdminBaseController
         $datas ['sort'] = ( int )I("post.sort");
         header('Content-Type:application/json; charset=utf-8');
         if ($M->save($datas)) {
-            $this->json_return(1, "处理成功");
+            $this->jsonReturn(1, "处理成功");
         } else {
-            $this->json_return(0, "处理失败");
+            $this->jsonReturn(0, "处理失败");
         }
     }
 
@@ -472,7 +548,7 @@ class AccessController extends AdminBaseController
             foreach ($list as $v) {
 
                 $disabled = $v ['id'] == 1 ? ' disabled="disabled"' : "";
-                $selected = $v ['id'] == $info ['name'] ['role_id'] ? ' selected="selected"' : "";
+                $selected = $v ['id'] == $info ['user_role'] ['role_id'] ? ' selected="selected"' : "";
                 $info ['roleOption'] .= '<option value="' . $v ['id'] . '"' . $selected . $disabled . '>' . $v ['name'] . '</option>';
             }
         } else {
@@ -502,11 +578,11 @@ class AccessController extends AdminBaseController
         }
         $level = $info ['level'] - 1;
         $cat = new Category ('Node', array(
-                                          'id',
-                                          'pid',
-                                          'title',
-                                          'fullname'
-                                     ));
+            'id',
+            'pid',
+            'title',
+            'fullname'
+        ));
         $list = $cat->getList(); // 获取分类结构
         $option = $level == 0 ? '<option value="0" level="-1">根节点</option>' : '<option value="0" disabled="disabled">根节点</option>';
         foreach ($list as $k => $v) {
@@ -519,4 +595,53 @@ class AccessController extends AdminBaseController
     }
 
 
+    public function loginlogclearHandle()
+    {
+
+        if (D('login_log')->where(1)->delete()) {
+            $this->success("删除成功");
+        } else {
+            $this->error("删除失败");
+
+        }
+
+    }
+
+    public function loginlog()
+    {
+        $page = I('get.page', 20);
+
+        $Login_log = D('login_log');
+        $count = $Login_log->count(); // 查询满足要求的总记录数
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $log = $Login_log->limit($limit)->select();
+
+        }
+
+
+        $this->assign('pager_bar', $pager_bar);
+
+        $this->assign('log', $log);
+
+        $this->display();
+
+
+    }
+
+
+    public function profile($uid)
+    {
+
+        $user = D('User', 'Logic')->cache(true)->detail($uid);
+        $this->assign('user', $user);
+        $this->assign('action', '用户档案');
+
+        $this->display();
+
+
+    }
 }

@@ -8,9 +8,11 @@
  */
 
 namespace Common\Logic;
+
 use Think\Model\RelationModel;
 
 /**
+ * 文章逻辑定义
  * Class PostsLogic
  * @package Home\Logic
  */
@@ -22,18 +24,18 @@ class PostsLogic extends RelationModel
      * @param bool $relation 是否关联其他信息
      * @param array $info_with 强制传入的判断条件
      *
+     * @param bool $cache
+     * @internal param bool $cache
      * @return mixed 如果找到返回数组
      */
-    public function detail($id, $relation = true, $info_with = array())
+    public function detail($id, $relation = true, $info_with = array(), $cache = false)
     {
         $info = $info_with;
-        $info['post_id|post_name'] = urlencode($id) ;
+        $info['post_id|post_name'] = urlencode($id);
 
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
 
-        $post_res = D('Posts')->where($info)->relation($relation)->find();
-
-
+        $post_res = D('Posts')->cache($cache, 10)->where($info)->relation($relation)->find();
         return $post_res;
     }
 
@@ -51,7 +53,8 @@ class PostsLogic extends RelationModel
                             $relation = true, $info_with = array(), $ids = array())
     {
         $info = $info_with;
-        if ($type != 'all') $info['post_type|post_template'] = $type;
+        if ($type != 'all') $info['post_type'] = $type;
+        //  if ($type != 'all') $info['post_type|post_template'] = $type;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
@@ -75,7 +78,7 @@ class PostsLogic extends RelationModel
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
         $count = $this->where($info)->count();
-         return $count;
+        return $count;
     }
 
     /**

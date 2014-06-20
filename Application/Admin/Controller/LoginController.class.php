@@ -11,7 +11,6 @@ namespace Admin\Controller;
 
 use Common\Controller\BaseController;
 use Org\Util\Rbac;
-use Think\Controller;
 
 /**
  * Class LoginController
@@ -31,28 +30,61 @@ class LoginController extends BaseController
 
     }
 
+    public function vertify()
+    {
+
+        $config = array(
+            'fontSize' => 20,
+            'length' => 4,
+            'useCurve' => true,
+            'useNoise' => true,
+        );
+
+
+        $Verify = new \Think\Verify($config);
+        $Verify->entry();
+    }
 
     /**
      *
      */
     public function _before_index()
     {
-        $user_session = cookie('user_session');
-        if (!empty($user_session)) {
-            $authInfo = D('User', 'Logic')->where(array('user_session' => $user_session))->find();
+//        $user_session = cookie('user_session');
+        $map['user_session'] = cookie('user_session');
 
-            if (!empty($authInfo)) {
-                $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
+        $UserEvent = new \Common\Event\UserEvent();
+        $loginRes = $UserEvent->auth($map);
+        $loginResArray = json_decode($loginRes, true);
 
-                if ($authInfo ['user_login'] == get_opinion('ADMIN')) {
-                    $_SESSION [C('ADMIN_AUTH_KEY')] = true;
-                }
+        if ($loginResArray['status'] == 1) {
+            $authInfo = D('User', 'Logic')->where($map)->find();
+            $log['log_user_id'] = $authInfo['user_id'];
+            $log['log_user_name'] = $authInfo['user_login'];
+            $log['log_password'] = $authInfo['user_pass'];
+            $log['log_ip'] = get_client_ip();
+            $log['log_status'] = 2;
 
+            D('login_log')->data($log)->add();
+
+            /**
+             * 自动恢复原状态
+             */
+            $httpReferer = $_SERVER['HTTP_REFERER'];
+            $parsedHttpReferer = parse_url($httpReferer);
+            $httpQuery = $parsedHttpReferer['query'];
+            parse_str($httpQuery, $parsedHttpQuery);
+
+
+            if ($parsedHttpQuery['m'] == 'admin' && $parsedHttpQuery['c'] != 'login' && $parsedHttpQuery['c'] != 'index' && $parsedHttpQuery['c'] != '' && $parsedHttpQuery['a'] != '') {
+                $this->redirect('Admin/' . $parsedHttpQuery['c'] . '/' . $parsedHttpQuery['a'] . '');
+            } else {
                 $this->redirect('Admin/Index/index');
             }
 
-
         }
+
+
     }
 
     /**
@@ -60,6 +92,8 @@ class LoginController extends BaseController
      */
     public function index()
     {
+
+
         $this->display();
     }
 
@@ -71,38 +105,57 @@ class LoginController extends BaseController
         // $ipLocation = new IpLocation();
         // $ip_info = $ipLocation->getIpInfo();
 
+        if (get_opinion('vertify_code', true, true)) {
+            $verify = new \Think\Verify();
+
+            if (!$verify->check(I('post.vertify'))) {
+                $this->error("验证码错误",U('Admin/Login/index'));
+            }
+        }
         $map = array();
-        $map['user_login'] = $_POST['username'];
+        $map['user_login'] = I('post.username');
         $map['user_status'] = array('gt', 0);
+        $map['user_pass'] = encrypt(I('post.password'));
 
-        $authInfo = RBAC::authenticate($map);
+        $UserEvent = new \Common\Event\UserEvent();
+        $loginRes = $UserEvent->auth($map);
+        $this->json2Response($loginRes);
 
-        if (false === $authInfo) {
-            $this->error('帐号不存在或已禁用！');
+    }
+
+
+    public function register()
+    {
+        $user_can_regist = get_opinion('user_can_regist', true, 1);
+        if ($user_can_regist) {
+            $this->display();
         } else {
-            if ($authInfo['user_pass'] != encrypt($_POST['password'])) {
-                $this->error('密码错误或者帐号已禁用');
-            }
-            $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
-            if ($authInfo['user_login'] == get_opinion('Admin')) {
-                $_SESSION[C('ADMIN_AUTH_KEY')] = true;
+            $this->error("不开放注册");
+        }
+    }
+
+    public function registerHandle()
+    {
+
+        $user_can_regist = get_opinion('user_can_regist', true, 1);
+        if ($user_can_regist) {
+            $username = I('post.username');
+            $nickname = I('post.nickname');
+            $password = I('post.password');
+            $email = I('post.email');
+            if (!($username && $nickname && $password && $email)) {
+                $this->error("字段不能为空");
             }
 
-            //记住我
-            if (I('post.remember') == 1) {
-                if ($authInfo['user_session'] != '') {
-                    cookie('user_session', $authInfo['user_session'], 360000);
-                } else if ($authInfo['user_session'] == '') {
-                    $user_session = D('User', 'Logic')->genHash($authInfo);
-                    cookie('user_session', $user_session, 360000);
-                }
-            }
-            // 缓存访问权限
-            RBAC::saveAccessList();
+            $UserEvent = new \Common\Event\UserEvent();
+            $registerRes = $UserEvent->register($username, $nickname, $password, $email);
+            $this->json2Response($registerRes);
 
 
-            $this->success('登录成功！', U("Admin/Index/index"), false);
-        };
+        } else {
+            $this->error("不开放注册");
+
+        }
 
 
     }
@@ -111,8 +164,32 @@ class LoginController extends BaseController
     /**
      *
      */
-    public function forgetPassword()
+    public function forgetpassword()
     {
+        $this->display();
+    }
+
+    /**
+     *
+     */
+    public function forgetpasswordHandle()
+    {
+        $verify = new \Think\Verify();
+
+        if (!$verify->check(I('post.vertify'))) {
+            $this->error("验证码错误",U('Admin/Login/forgetpassword'));
+        }
+
+        if (IS_POST) {
+
+            $email = I('post.email');
+
+            $UserEvent = new \Common\Event\UserEvent();
+            $forgetPasswordRes = $UserEvent->forgetPassword($email);
+            $this->json2Response($forgetPasswordRes);
+
+        }
+
 
     }
 
@@ -121,15 +198,9 @@ class LoginController extends BaseController
      */
     public function logout()
     {
-        $User = D('User', 'Logic');
-        $authInfo = $User->detail(session(C('ADMIN_AUTH_KEY')));
+        $UserEvent = new \Common\Event\UserEvent();
+        $logoutRes = $UserEvent->logout();
+        $this->json2Response($logoutRes);
 
-        $greencms_hash = $User->genHash($authInfo);
-        cookie('user_session', null);
-
-        session_unset();
-        session_destroy();
-
-        $this->success('退出成功！', U('Admin/Login/index'), false);
     }
 }

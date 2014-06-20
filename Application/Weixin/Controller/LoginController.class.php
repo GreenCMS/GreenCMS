@@ -53,6 +53,15 @@ class LoginController extends BaseController{
         // $ipLocation = new IpLocation();
         // $ip_info = $ipLocation->getIpInfo();
 
+
+
+        $verify = new \Think\Verify();
+
+        if (!$verify->check(I('post.vertify'))) {
+            $this->error("验证码错误");
+        }
+
+
         $map = array();
         $map['user_login'] = $_POST['username'];
         $map['user_status'] = array('gt', 0);

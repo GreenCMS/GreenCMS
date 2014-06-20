@@ -13,6 +13,7 @@ namespace Home\Controller;
 use Home\Model\FormModel;
 
 /**
+ * 绿荫网专用申请控制器
  * Class FormController
  * @package Home\Controller
  */
@@ -20,7 +21,7 @@ class FormController extends HomeBaseController
 {
 
     /**
-     *
+     *  请无视
      */
     public function apply()
     {

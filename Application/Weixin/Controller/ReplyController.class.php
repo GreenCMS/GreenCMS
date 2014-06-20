@@ -10,6 +10,8 @@
 namespace Weixin\Controller;
 
 
+use Think\Upload;
+
 class ReplyController extends WeixinBaseController
 {
 
@@ -85,38 +87,42 @@ class ReplyController extends WeixinBaseController
     {
 
         $config = array(
-            "savePath"   => (Upload_PATH . 'Weixin/' . date('Y') . '/' . date('m') . '/'),
-            "maxSize"    => 30000, // 单位KB
-            "allowFiles" => array(".jpg")
+            "savePath" => 'Weixin/',
+            "maxSize" => 1000000, // 单位B
+            "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+            "subName" => array('date', 'Y/m-d'),
         );
+        $upload = new Upload($config);
+        $info = $upload->upload();
 
-        $upload = new \Common\Util\Uploader ("img", $config);
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
 
-        $info = $upload->getFileInfo();
-        $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
+         //   $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
+            $file_path_full = $info['img']['fullpath'];
 
-        if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
-            $this->error('上传失败' . $info['state']);
-        } else {
-
-        }
-
-        $image = new \Think\Image();
-        $image->open(WEB_ROOT . $info['url']);
-        $image->thumb(150, 150)->save(WEB_ROOT . $info['url']);
-        $ACCESS_TOKEN = $this->getAccess();
-
-        $post_data = array(
-            "media" => '@' . WEB_ROOT . $info['url']
-        );
-
-        $URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=$ACCESS_TOKEN&type=image";
-        $res = json_decode(simple_post($URL, $post_data), true);
+            if (!defined('SAE_TMP_PATH')) {
+                // 非SAE环境中
+                $image = new \Think\Image();
+                $image->open($file_path_full);
+                $image->thumb(150, 150)->save($file_path_full);
+                $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
+            } else {
+                // SAE环境中
+                $img_url = $file_path_full;
+            }
 
 
-        if ($res['errcode'] != '') {
-            $this->error('上传失败' . $res['errmsg']);
-        } else {
+
+            $ACCESS_TOKEN = $this->getAccess();
+
+            $post_data = array(
+                "media" => '@' . $file_path_full
+            );
+
+            $URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=$ACCESS_TOKEN&type=image";
+            $res = json_decode(simple_post($URL, $post_data), true);
 
             $data['type'] = $res['type'];
             $data['mediaId'] = $res['media_id'];
@@ -126,9 +132,9 @@ class ReplyController extends WeixinBaseController
             if ($res) {
                 $this->success('上传成功！', U('Weixin/Reply/index'));
             }
+        };
 
-//
-        }
+
 
 
     }
@@ -168,21 +174,28 @@ class ReplyController extends WeixinBaseController
         $data['type'] = "news";
         if ($_FILES['img']['size'] != 0) {
             $config = array(
-                "savePath"   => (Upload_PATH . 'Weixin/' . date('Y') . '/' . date('m') . '/'),
-                "maxSize"    => 300000, // 单位KB
-                "allowFiles" => array(".jpg", ".png")
+                "savePath" => 'Weixin/',
+                "maxSize" => 1000000, // 单位B
+                "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                "subName" => array('date', 'Y/m-d'),
             );
+            $upload = new Upload($config);
+            $info = $upload->upload();
 
-            $upload = new \Common\Util\Uploader ("img", $config);
+            if (!$info) { // 上传错误提示错误信息
+                $this->error($upload->getError());
+            } else { // 上传成功 获取上传文件信息
 
-            $info = $upload->getFileInfo();
-            $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
+                $file_path_full =  $info['img']['fullpath'];
 
-            if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
-                $this->error('上传失败' . $info['state']);
-            } else {
+
+                $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
+                unset($data['img']);
                 $data['picurl'] = $img_url;
-            }
+
+            };
+
+
         }
 
 
@@ -200,24 +213,29 @@ class ReplyController extends WeixinBaseController
     {
         $data = I('post.');
         $data['type'] = "news";
-//        if(!empty($_FILES['img'])){
+
         $config = array(
-            "savePath"   => (Upload_PATH . 'Weixin/' . date('Y') . '/' . date('m') . '/'),
-            "maxSize"    => 300000, // 单位KB
-            "allowFiles" => array(".jpg", ".png")
+            "savePath" => 'Weixin/',
+            "maxSize" => 1000000, // 单位B
+            "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+            "subName" => array('date', 'Y/m-d'),
         );
+        $upload = new Upload($config);
+        $info = $upload->upload();
 
-        $upload = new \Common\Util\Uploader ("img", $config);
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
 
-        $info = $upload->getFileInfo();
-        $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
+            $file_path_full =  $info['img']['fullpath'];
 
-        if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
-            $this->error('上传失败' . $info['state']);
-        } else {
+
+            $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
+            unset($data['img']);
             $data['picurl'] = $img_url;
-        }
-//        }
+
+        };
+
 
         $res = D('Weixinre')->data($data)->add();
 

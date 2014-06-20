@@ -44,9 +44,24 @@ class AdminBaseController extends BaseController
             // 登录检查
             RBAC::checkLogin();
             // 提示错误信息 无权限
-            $this->error(L('_VALID_ACCESS_'));
 
-            // TODO 如何防止循环无权限
+            $httpReferer = $_SERVER['HTTP_REFERER'];
+            $parsedHttpReferer = parse_url($httpReferer);
+            $httpQuery = $parsedHttpReferer['query'];
+            parse_str($httpQuery, $parsedHttpQuery);
+
+
+            if ($parsedHttpQuery['a'] == 'login' && $parsedHttpQuery['c'] == 'login') {
+                $UserEvent = new \Common\Event\UserEvent();
+                $logoutRes = $UserEvent->logout();
+                $this->error(L('_VALID_ACCESS_'));
+
+            } else {
+                $this->error(L('_VALID_ACCESS_'));
+
+            }
+
+
         }
 
     }
@@ -96,7 +111,7 @@ class AdminBaseController extends BaseController
     protected function _currentUser()
     {
         $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
-        $user = D('User', 'Logic')->detail($user_id);
+        $user = D('User', 'Logic')->cache(true)->detail($user_id);
         $this->assign('user', $user);
     }
 
@@ -131,8 +146,8 @@ class AdminBaseController extends BaseController
             $data ['option_value'] = $value;
 
             $find = $options->where(array(
-                                         'option_name' => $name
-                                    ))->select();
+                'option_name' => $name
+            ))->select();
             if (!$find) {
                 $options->data($data)->add();
             } else {

@@ -7,9 +7,11 @@
  * Time: 下午1:40
  */
 namespace Home\Controller;
+use Common\Util\File;
 use Think\Hook;
 
 /**
+ * 首页控制器
  * Class IndexController
  * @package Home\Controller
  */
@@ -17,7 +19,7 @@ class IndexController extends HomeBaseController
 {
 
     /**
-     *
+     * 构造函数
      */
     function __construct()
     {
@@ -25,17 +27,19 @@ class IndexController extends HomeBaseController
     }
 
     /**
-     * 首页
+     * 显示首页
      */
     public function index()
     {
-
-        Hook::listen('home_index');
-
         $this->display('index');
     }
 
 
+    /**
+     * 显示首页为空时
+     * @param $method
+     * @param $args
+     */
     public function _empty($method, $args)
     {
         Hook::listen('home_index_empty');
@@ -43,13 +47,12 @@ class IndexController extends HomeBaseController
 
     }
 
-//    function wordpressImport()
-//    {
-//        $Wordpress = new \Common\Event\WordpressEvent();
-//        $Wordpress->catImport(WEB_CACHE_PATH . '/wordpress.xml');
-//        $Wordpress->tagImport(WEB_CACHE_PATH . '/wordpress.xml');
-//        $Wordpress->postImport(WEB_CACHE_PATH . '/wordpress.xml');
-//
-//    }
+    /**
+     * 测试使用
+     */
+    function test()
+    {
+
+    }
 
 }

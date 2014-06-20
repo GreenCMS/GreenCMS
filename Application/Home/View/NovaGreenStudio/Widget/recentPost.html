@@ -1,0 +1,26 @@
+<div class="widget widget-popular">
+    <h3>最近文章</h3>
+
+    <div class="widget-blog-items">
+
+
+        <volist name="list" id="post" empty="没有相关文章..">
+
+            <div class="widget-blog-item media">
+                <div class="pull-left">
+                    <div class="date">
+                        <span class="month">{$post.post_date|getTimeStamp='month'}月</span>
+                        <span class="day">{$post.post_date|getTimeStamp='day'}日</span>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                        <h5>{$post.post_top|is_top}{$post.post_title}</h5></a>
+                </div>
+            </div>
+
+        </volist>
+
+    </div>
+</div>
+<!-- End Popular Posts -->

@@ -8,9 +8,11 @@
  */
 
 namespace Common\Model;
+
 use Think\Model\RelationModel;
 
 /**
+ * 标签模型定义
  * Class TagsModel
  * @package Home\Model
  */
@@ -25,13 +27,20 @@ class TagsModel extends RelationModel
 
             'mapping_type' => self::HAS_MANY,
 
-            'class_name'   => 'Post_tag',
+            'class_name' => 'Post_tag',
 
             'mapping_name' => 'in_post',
 
-            'foreign_key'  => 'tag_id',
+            'foreign_key' => 'tag_id',
 
-            'parent_key'   => 'tag_id'),
+            'parent_key' => 'tag_id',
+
+            'mapping_order' => 'tag_id',
+
+            'mapping_limit' => 0,
+
+
+        ),
 
     );
 

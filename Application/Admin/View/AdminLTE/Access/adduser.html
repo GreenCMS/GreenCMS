@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                                <switch name="action_name">
+
+                                    <case value="editUser">
+
+                                        <form action="{:U('Admin/Access/editUser')}"
+                                              class="form-horizontal" id="newuser" method="post">
+                                    </case>
+                                    <default/>
+
+                                    <form action="{:U('Admin/Access/addUserHandle')}"
+                                          class="form-horizontal" id="newuser" method="post">
+                                </switch>
+
+                                <input type="text" style="display:none" name="user_id0" value="{$info.user_id}"/>
+
+                                <div class="form-group">
+                                    <label class="control-label">登录名</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="登录名" class="form-control large"
+                                               name="user_login" value="{$info.user_login}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">密码</label>
+
+                                    <div class="controls">
+
+                                        <switch name="action_name">
+
+                                            <case value="editUser">
+                                                <input type="password" placeholder="******"
+                                                       class="form-control large" name="password"/>
+
+                                            </case>
+                                            <default/>
+                                            <input type="password" placeholder="******"
+                                                   class="form-control large" name="password" id="password"/>
+
+                                        </switch>
+
+									<span
+                                            class="help-inline"></span>
+                                    </div>
+                                </div>
+
+                                <switch name="action_name">
+
+                                    <case value="addUser">
+                                        <div class="form-group">
+                                            <label class="control-label">确认密码</label>
+
+                                            <div class="controls">
+                                                <input type="password" placeholder="******"
+                                                       class="form-control large" name="rpassword" id="rpassword"/> <span
+                                                    class="help-inline"></span>
+                                            </div>
+                                        </div>
+                                    </case>
+                                    <default/>
+                                </switch>
+                                <div class="form-group">
+                                    <label class="control-label">昵称</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="昵称" class="form-control large"
+                                               name="user_nicename" value="{$info.user_nicename}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">显示名称</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="显示名称" class="form-control large"
+                                               name="display_name" value="{$info.user_nicename}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">邮箱</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="邮箱" class="form-control large"
+                                               name="user_email" value="{$info.user_email}"/>
+                                        <!--<span class="help-inline">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">主页</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="主页" class="form-control large"
+                                               name="user_url" value="{$info.user_url}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">简介</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="简介" class="form-control large"
+                                               name="user_intro" value="{$info.user_intro}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">状态：</label>
+
+                                    <div class="controls">
+                                        <select name="user_status" class="large form-control" tabindex="1">
+                                            <if condition="$info.user_status eq 1">
+                                                <option value="1" selected>启用</option>
+                                                <option value="0">禁用</option>
+                                                <else/>
+                                                <option value="1">启用</option>
+                                                <option value="0" selected>禁用</option>
+                                            </if>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">所属用户组</label>
+
+                                    <div class="controls">
+                                        <select name="role_id" class="large form-control" tabindex="1">
+                                            {$info.roleOption}
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <a href="javascript:;" class="btn btn-info" id="button"><i
+                                            class="icon-ok"></i>
+                                        <switch name="action_name">
+                                            <case value="editUser">修改</case>
+                                            <case value="addUser">添加</case>
+                                            <default/>
+                                            添加
+                                        </switch>
+
+
+                                    </a>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+<script>
+
+
+    $("#button").click(
+            function () {
+                if ($("#password").val() == ''
+                        || $("input[name='user_login']").val() == ''
+                        || $("input[name='user_email']").val() == ''
+                        || $("select[name='role_id']").val() == '') {
+                    alert("信息不完整！");
+                } else if ($("#password").val() != $("#rpassword").val()) {
+                    alert("两次密码输入不一致！");
+                } else {
+                    $("#newuser").submit();
+                }
+            });
+</script>
+</body>
+</html>

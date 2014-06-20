@@ -10,8 +10,11 @@
 namespace Common\Event;
 
 use Common\Util\File;
+use Common\Logic;
+use Think\Cache;
 
 /**
+ * 系统事件 包括数据缓存文件 备份清理操作
  * Class SystemEvent
  * @package Common\Event
  */
@@ -19,9 +22,9 @@ class SystemEvent
 {
 
     /**
-     *
+     * 文章关联完整性检查
      */
-    public function post_integrity()
+    public function postIntegrity()
     {
         $post_ids = D('Posts')->field('post_id')->select();
 
@@ -61,6 +64,7 @@ class SystemEvent
 
 
     /**
+     * 备份文件夹
      * @param string $dir
      * @param string $backup_path
      * @return array
@@ -77,7 +81,7 @@ class SystemEvent
         $Zip = new \ZipArchive();
         $PHPZip = new \Common\Util\PHPZip();
 
-        $file_name = $backup_path .'system_backup-'. date('Ymd').'-'.md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768)) . ".zip";
+        $file_name = $backup_path . 'system_backup-' . date('Ymd') . '-' . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768)) . ".zip";
         $Zip->open($file_name, \ZIPARCHIVE::CREATE);;
 
         foreach ($dir as $value) {
@@ -92,25 +96,37 @@ class SystemEvent
     }
 
     /**
+     * 清空所有缓存
      * @return bool
      */
     public function clearCacheAll()
     {
-        $caches = array(
-            RUNTIME_PATH . "HTML",
-            RUNTIME_PATH . "Cache",
-            RUNTIME_PATH . "Data",
-            RUNTIME_PATH . "Temp",
-            RUNTIME_PATH . "~runtime.php",
-        );
-        foreach ($caches as $value) {
-            $this->clearCache($value);
+
+
+        if (C('DATA_CACHE_TYPE') == 'File') {
+
+            $caches = array(
+                RUNTIME_PATH . "HTML",
+                RUNTIME_PATH . "Cache",
+                RUNTIME_PATH . "Data",
+                RUNTIME_PATH . "Temp",
+                RUNTIME_PATH . "~runtime.php",
+            );
+            foreach ($caches as $value) {
+                $this->clearCache($value);
+            }
+        } else {
+            $Cache = new Cache();
+            $caches = $Cache->connect();
+            $caches->clear();
         }
+
 
         return true;
     }
 
     /**
+     * 清空日志
      * @return bool
      */
     public function clearLog()
@@ -119,6 +135,7 @@ class SystemEvent
     }
 
     /**
+     * 清空缓存
      * @param $cache_path
      * @return bool
      */
@@ -128,6 +145,7 @@ class SystemEvent
     }
 
     /**
+     * 备份数据库
      * @param string $type
      * @param array $tables
      * @param string $path
@@ -217,12 +235,13 @@ class SystemEvent
 
         G('Backup_end');
 
-        $res = array("status"                                       => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) .
-        "个SQL文件。耗时：" . G('Backup_start', 'Backup_end') . "秒", "url" => U('Admin/Data/restore'));
+        $res = array("status" => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) .
+            "个SQL文件。耗时：" . G('Backup_start', 'Backup_end') . "秒", "url" => U('Admin/Data/restore'));
         return $res;
     }
 
     /**
+     * 备份所有数据看
      * @return array
      */
     public function backupDBAll()

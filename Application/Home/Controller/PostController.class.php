@@ -12,6 +12,7 @@ use Common\Logic\PostsLogic;
 use Common\Util\File;
 
 /**
+ * 文章控制器
  * Class PostController
  * @package Home\Controller
  */
@@ -19,29 +20,25 @@ class PostController extends HomeBaseController
 {
 
     /**
-     * @function 文章单页
-     *
-     * @param $info
+     * 文章单页显示 支持年月日限定
+     * @param $info 指定单页的信息
      */
     public function single($info = -1)
     {
 
+        $where['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
+        $where['post_type'] = 'single';
 
-        $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
-        $map['post_type'] = 'single';
         $Posts = new PostsLogic();
+        $post_detail = $Posts->detail($info, true, $where);
 
-        $post_res = $Posts->detail($info, true, $map);
+        $Posts->viewInc($post_detail['post_id']); //浏览计数
+        $this->if404($post_detail, "非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
 
-        $Posts->viewInc($post_res['post_id']);
+        $this->assign('post', $post_detail); // 赋值数据集
 
-        $this->if404($post_res, "非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
-//        if (empty($post_res)) $this->error404("非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
-
-        $this->assign('post', $post_res); // 赋值数据集
-
-        if (File::file_exists(T('Home@Post/' . $post_res['post_template']))) {
-            $this->display($post_res['post_template']);
+        if (File::file_exists(T('Home@Post/' . $post_detail['post_template']))) {
+            $this->display($post_detail['post_template']);
         } else {
             $this->display('single');
         }
@@ -50,32 +47,33 @@ class PostController extends HomeBaseController
     }
 
     /**
-     * @function 页面单页
-     *
+     * 页面单页显示 支持年月日限定
      * @param $info
      */
     public function page($info = -1)
     {
-        $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
-        $map['post_type'] = 'page';
+        $where['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
+        $where['post_type'] = 'page';
 
         $Posts = new PostsLogic();
-        $post_res = $Posts->detail($info, true, $map);
-        $this->if404($post_res, "非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.");
+        $post_detail = $Posts->detail($info, true, $where);
+        $this->if404($post_detail, "非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.");
 
-        $Posts->viewInc($post_res['post_id']);
+        $Posts->viewInc($post_detail['post_id']);
 
-        $this->assign('post', $post_res); // 赋值数据集
-         if (File::file_exists(T('Home@Post/' . $post_res['post_template']))) {
+        $this->assign('post', $post_detail); // 赋值数据集
+        if (File::file_exists(T('Home@Post/' . $post_detail['post_template']))) {
 
-            $this->display($post_res['post_template']);
+            $this->display($post_detail['post_template']);
         } else {
             $this->display('page');
         }
     }
 
     /**
-     * @function 未知类型单页
+     * 未知类型单页显示 支持年月日限定
+     * @param $method 魔术方法名称 即文章类型
+     * @param $args
      */
     public function _empty($method, $args)
     {
@@ -85,14 +83,14 @@ class PostController extends HomeBaseController
 
         $info = I('get.info');
 
-        $post_res = $Posts->detail($info, true);
-        $Posts->viewInc($post_res['post_id']);
+        $post_detail = $Posts->detail($info, true);
+        $Posts->viewInc($post_detail['post_id']);
 
-        $this->assign('post', $post_res); // 赋值数据集
+        $this->assign('post', $post_detail); // 赋值数据集
 
-        if (File::file_exists(T('Home@Post/' . $post_res['post_template']))) {
+        if (File::file_exists(T('Home@Post/' . $post_detail['post_template']))) {
 
-            $this->display($post_res['post_template']);
+            $this->display($post_detail['post_template']);
         } else {
 
             //TODO   这里怎么处理却决于你自己了。

@@ -1,4 +1,4 @@
-GreenCMS 2014 基于ThinkPHP的CMS系统
+GreenCMS v2 基于ThikPHP的CMS系统
 全新一代内容管理系统 By GreenStudio
 
 版权申明：
@@ -15,10 +15,10 @@ GreenCMS交流群:
     群号: 123085170
 
 官方网站:
-    http://www.greencms.net
+    http://www.greencms.net/
 
 官方论坛:
-    http://bbs.greencms.net
+    http://bbs.greencms.net/
 
 GreenStudio微博:
     http://weibo.com/u/3228716083
@@ -27,9 +27,12 @@ Contributors:
     xjh1994
     zts1993
 
+
+
+
 如果有疑问欢迎大家反馈
 BUG提交可以直接发ISSUE
-                                              2014/3/9
+                                              2014/4/12
 
 
 
@@ -44,19 +47,93 @@ BUG提交可以直接发ISSUE
 
 
 关于与ThinkPHP的不同：
-虽然GreenCMS是基于ThinkPHP开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，
-但是由于编者自生水平不足或者ThinkPHP自身不合理，所以部分文件可能需要替换
+虽然 GreenCMS是基于ThinkPHP 3.2.1 开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，
+但是由于ThinkPHP自身不合理，所以部分文件可能需要替换
   目前已知的需要Patch的文件有
     /Core/ThinkPHHP/Library/Think/Model/RelationModel.class.php （两处）// since thinkphp 3.2
     /Core/ThinkPHHP/Library/Think/Hook.class.php (一处) // since thinkphp 3.2.1
     /Core/ThinkPHHP/Library/Think/Template/TagLib/Cx.class.php (一处) // since thinkphp 3.2.1
+    /Core/ThinkPHHP/Library/Think/Upload.class.php (一处)// since thinkphp 3.2
+
+如果你需要升级ThinkPHP框架请注意上面文件区别
 
 NginX用户须知:
     使用NginX的用户可能需要配置rewrite
     更多信息参考ThinkPHP3.2.1手册
 
 
-缓存选项:
-    APP_CACHE选项控制的缓存主要有(不建议关闭):
+index.php 选项:
+    APP_CACHE : 选项控制的缓存主要有(不建议关闭):
         kv_array
         customConfig
+
+    APP_DEBUG : 系统调试设置
+        项目正式部署后请设置为 false
+
+
+安全风险 :
+    已知安全风险包括:
+    Data/xxxBackup类文件夹外部可以访问,部署应放在www目录之外的位置
+    模板可能会被下载,apache通过.htaccess控制
+
+安装建议 :
+    完成后删除Data/Install文件夹
+    在Application/Common/Conf/conig.php中删除不需要的模块信息
+
+目录结构
+
+/
+|--Addons 插件文件夹 (与OneThink高度兼容)
+    |--  各个插件目录
+|--Application 应用目录
+    |-- Admin    管理员模块
+    |-- Home     主模块
+    |-- Api      手机客户端API模块
+    |-- Common   通用基础模块
+    |-- Install  安装程序模块
+    |-- Weixin   微信公共平台API模块
+|-- Core ThinkPHP 3.2.1 完整版 (有删减)
+|-- Data 运行文件
+    |-- Backup    全站备份
+    |-- Cache   升级等工作的缓存
+    |-- DBbackup  数据库备份
+    |-- Install   安装文件
+    |-- Log   hinkPHP框架Log
+    |-- Upgrade 升级文件
+    |-- Temp ThinkPHP框架Temp目录
+|-- Extend 外部扩展文件夹
+    |-- GreenFinder Elfinder文件管理器
+    |-- PHPMailer 邮件发送类
+    |-- Ueditor 编辑器
+|-- Public 公共文件夹
+    |-- 各个主题文件夹
+|-- Upload 上传文件夹
+    |-- 不同类型的附件
+
+//==
+README
+.htaccess
+.gitignore
+robots.txt
+LICENSE.txt
+
+
+//跳转文件
+admin.php
+weixin.php
+install.php
+
+//配置文件
+const_config.php
+version_config.php
+db_config.php
+
+//入口文件
+index.php
+
+
+
+SAE须知
+目前SAE平台不能使用的功能
+    文章自动获取远程图片
+    部分文件上传

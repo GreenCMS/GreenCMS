@@ -45,11 +45,19 @@ INSERT INTO `{$db_prefix}hooks` VALUES ('14', 'topicComment', '评论提交方�
 INSERT INTO `{$db_prefix}hooks` VALUES ('16', 'app_begin', '应用开始', '2', '1384481614', '');
 
 
+
+
+-- ----------------------------
+-- Records of {$db_prefix}link_group
+-- ----------------------------
+INSERT INTO `{$db_prefix}link_group` VALUES ('0', 'Home');
+
+
 -- ----------------------------
 -- Records of {$db_prefix}links
 -- ----------------------------
-INSERT INTO `{$db_prefix}links` VALUES (null, '123', 'http://www.greencms.net/', 'GreenCMS', 'Home', 'GreenCMS首页', '1', '');
-INSERT INTO `{$db_prefix}links` VALUES (null, '124', 'http://www.zts1993.com/', 'Z的博客', 'Home', 'Z的博客', '1', '');
+INSERT INTO `{$db_prefix}links` VALUES (null, '123', 'http://www.greencms.net/', 'GreenCMS', 'Home', 'GreenCMS首页', '1', '','0');
+INSERT INTO `{$db_prefix}links` VALUES (null, '124', 'http://www.zts1993.com/', 'Z的博客', 'Home', 'Z的博客', '1', '','0');
 
 -- ----------------------------
 -- Records of {$db_prefix}menu
@@ -76,7 +84,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('11', 'software_name', 'GreenCMS v2', 
 INSERT INTO `{$db_prefix}options` VALUES ('12', 'LOG_RECORD', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('13', 'software_build', '20140306', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('14', 'HTML_CACHE_ON', '0', 'false');
-INSERT INTO `{$db_prefix}options` VALUES ('15', 'sqlFileSize', '5000000', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('15', 'sqlFileSize', '500000000', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('16', 'send_mail', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('17', 'smtp_host', 'mail.njut.edu.cn', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('18', 'smtp_port', '25', 'yes');
@@ -107,15 +115,16 @@ INSERT INTO `{$db_prefix}options` VALUES ('42', 'home_url_model', '0', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('43', 'home_cat_model', 'native', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('44', 'home_tag_model', 'native', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('45', 'home_post_model', 'native', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('46', 'DATA_CACHE_TIME', '5', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('47', 'HTML_CACHE_TIME', '10', 'yes');
 
 
 -- ----------------------------
 -- Records of {$db_prefix}kv
 -- ----------------------------
-INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'Twentytwelve');
-INSERT INTO `{$db_prefix}kv` VALUES ('2', 'theme_Vena', 'enabled');
-INSERT INTO `{$db_prefix}kv` VALUES ('3', 'theme_2011college', 'enabled');
-INSERT INTO `{$db_prefix}kv` VALUES ('4', 'theme_Twentytwelve', 'enabled');
+INSERT INTO `{$db_prefix}kv` VALUES ('1', 'home_theme', 'NovaGreenStudio');
+INSERT INTO `{$db_prefix}kv` VALUES ('2', 'theme_NovaGreenStudio', 'enabled');
+INSERT INTO `{$db_prefix}kv` VALUES ('3', 'theme_Twentytwelve', 'enabled');
 
 -- ----------------------------
 -- Records of {$db_prefix}posts

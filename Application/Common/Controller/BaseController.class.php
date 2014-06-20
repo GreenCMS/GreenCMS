@@ -11,6 +11,7 @@ use Think\Hook;
 use Think\Controller;
 
 /**
+ * GreenCMS基类控制器
  * Class BaseController
  * @package Common\Controller
  */
@@ -23,11 +24,11 @@ abstract class BaseController extends Controller
     {
         parent::__construct();
 
-        //$this->getKvs();
 
-    }
+     }
 
     /**
+     * 获取kv
      * @return array|mixed
      */
     function getKvs()
@@ -75,19 +76,9 @@ abstract class BaseController extends Controller
 
     }
 
-    /**
-     * check_verify
-     */
-    function check_verify()
-    {
-        if (!APP_DEBUG) {
-            if ($_SESSION['verify'] != md5(I('post.verify')))
-                $this->error('验证码错误！');
-        }
-    }
 
     /**
-     *
+     * 判断是否为Sae平台
      */
     function isSae()
     {
@@ -97,12 +88,34 @@ abstract class BaseController extends Controller
     }
 
     /**
+     * 简化tp json返回
      * @param int $status
      * @param string $info
      * @param string $url
      */
-    function json_return($status = 1, $info = '', $url = '')
+    function jsonReturn($status = 1, $info = '', $url = '')
     {
         die(json_encode(array("status" => $status, "info" => $info, "url" => $url)));
     }
-}
+
+    function jsonResult($status = 1, $info = '', $url = '')
+    {
+        return json_encode(array("status" => $status, "info" => $info, "url" => $url));
+    }
+
+    function json2Response($json){
+        $changePasswordResArray=json_decode($json,true);
+
+        if ($changePasswordResArray['status']==1) {
+            if( $changePasswordResArray['url']!=''){
+                $this->success($changePasswordResArray['info'], $changePasswordResArray['url'], false);
+            }else{
+                $this->success($changePasswordResArray['info']);
+
+            }
+        } else {
+            $this->error($changePasswordResArray['info']);
+        }
+    }
+
+ }

@@ -42,21 +42,24 @@ class AddonsModel extends Model
     /**
      * 获取插件列表
      * @param string $addon_dir
+     * @param int $limit
      * @return array|bool
      */
-    public function getList($addon_dir = '')
+    public function getList($addon_dir = '',$limit=0)
     {
         if (!$addon_dir) $addon_dir = Addon_PATH;
         $dirs = array_map('basename', glob($addon_dir . '*', GLOB_ONLYDIR));
+
         if ($dirs === false || !File::file_exists($addon_dir)) {
             $this->error = '插件目录不可读或者不存在';
             return false;
         }
+
+
         $addons = array();
         $where['name'] = array('in', $dirs);
-        $list = $this->where($where)->field(true)->select();
-
-        foreach ($list as $addon) {
+        $list = $this->where($where)->field(true)->limit($limit)->select();
+         foreach ($list as $addon) {
             $addon['uninstall'] = 0;
             $addons[$addon['name']] = $addon;
         }

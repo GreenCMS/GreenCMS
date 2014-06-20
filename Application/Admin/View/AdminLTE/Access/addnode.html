@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <form id="newnode" method="post">
+                                <div class="form-group">
+                                    <label class="control-label">名称：</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="name"
+                                               value="{$info.name}"/>
+                                        <span class="help-inline">英文，为MODEL_NAME的时候首字母大写</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">显示名：</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="title"
+                                               value="{$info.title}"/>
+                                        <span class="help-inline">中英文均可</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">状态：</label>
+
+                                    <div class="controls">
+                                        <select class="large form-control" tabindex="1" name="status">
+                                            <if condition="$info.status eq 1">
+                                                <option value="1" selected>启用</option>
+                                                <option value="0">禁用</option>
+                                                <else/>
+                                                <option value="1">启用</option>
+                                                <option value="0" selected>禁用</option>
+                                            </if>
+                                        </select>
+                                        <span class="help-inline">如果禁用那么只有超级管理员才可以访问，其他用户都无权访问</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">类型：</label>
+
+                                    <div class="controls">
+                                        <select name="level" class="large form-control" tabindex="1">
+                                            {$info.levelOption}
+                                        </select>
+                                        <span class="help-inline">项目（GROUP_NAME;  模块(MODEL_NAME); 操作（ACTION_NAME）</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">父级节点：</label>
+
+                                    <div class="controls">
+                                        <select name="pid" class="large form-control" tabindex="1">
+                                            {$info.pidOption}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">显示排序：</label>
+
+                                    <div class="controls">
+                                        <input class="form-control large" name="sort" type="text" size="40" value="{$info.sort}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">描 述：</label>
+
+                                    <div class="controls">
+                                        <textarea class="large form-control" name="remark"
+                                                  style="width: 400px;">{$info.remark}</textarea>
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="id" value="{$info.id}"/>
+
+                                <div class="form-group success"
+                                     style="font-size:16px;color: red;text-align: left; display:none;">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-info submit" id="submit"><i class="icon-ok"></i>
+                                        <switch name="action_name">
+                                            <case value="editNode">修改</case>
+                                            <case value="addNode">添加</case>
+                                            <default/>
+                                            添加
+                                        </switch>
+                                    </button>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+<script type="text/javascript" src="__PUBLIC__/share/js/jquery.form.js"></script>
+
+<script>
+    jQuery(document).ready(function () {
+
+
+        var url = '{:U("Admin/Access/$handle")}';
+        $("select[name='level']").change(function () {
+            var level = $(this).val();
+            $("select[name='pid']>option").attr("disabled", "disabled");
+            if (level == 1) {
+                $("select[name='pid']>option[value='0']").removeAttr("disabled").attr("selected", "selected");
+            } else if (level == 2) {
+                $("select[name='pid']>option[level='1']").removeAttr("disabled");
+            } else {
+                $("select[name='pid']>option[level='2']").removeAttr("disabled");
+            }
+        });
+
+        $(".submit").click(function () {
+            $(".submit").text("添加中，请稍候……");
+            var formObj = $("#newnode");
+            var div = $(".success");
+            formObj.ajaxSubmit({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 1) {
+                        div.fadeIn().html(data.info);
+                        div.fadeOut(3000);
+                        $("#submit").text("添加");
+                        location.href = data.url;
+                    }
+                    else {
+                        div.fadeIn().html(data.info);
+                        div.fadeOut(3000);
+                        $("#submit").text("添加");
+                    }
+                }
+            });
+        });
+
+
+    });
+</script>
+</body>
+</html>

@@ -8,9 +8,11 @@
  */
 
 namespace Common\Logic;
+
 use Think\Model\RelationModel;
 
 /**
+ * 标签逻辑定义
  * Class TagsLogic
  * @package Home\Logic
  */
@@ -19,8 +21,9 @@ class TagsLogic extends RelationModel
 
 
     /**
-     * @param $id
-     * @param bool $relation
+     * 获取指定标签信息
+     * @param $id id或者slug
+     * @param bool $relation 是否关联
      * @return mixed
      */
     public function detail($id, $relation = true)
@@ -31,6 +34,7 @@ class TagsLogic extends RelationModel
     }
 
     /**
+     *
      * @param $info 输入tag_id|tag_slug
      *
      * @param string $post_status
@@ -38,25 +42,27 @@ class TagsLogic extends RelationModel
      */
     public function getPostsId($info, $post_status = 'publish')
     {
+
         $tag_info ['tag_id'] = $info;
-        $tag = D('Post_tag')->field('post_id')->where($tag_info)->select();
         $ids = array();
 
-        foreach ($tag as $key => $value) {
+        $res = D('Post_tag')
+            ->table(GreenCMS_DB_PREFIX .'post_tag as pt,'.GreenCMS_DB_PREFIX .'posts as ps' )
+            ->field('ps.post_id')
+            ->where("tag_id ='%s' and pt.post_id=ps.post_id and ps.post_status ='%s'", $tag_info ['tag_id'],$post_status )
+           ->select();
 
-            $posts = D('Posts')->field('post_status')->where(array('post_id' => $tag[$key]['post_id']))->cache(true)->find();
+        foreach ($res as $key => $value) {
+            $ids[] = $res[$key]['post_id'];
 
-
-            if ($posts['post_status'] == $post_status) {
-                $ids[] = $tag[$key]['post_id'];
-            }
         }
+
         return $ids;
     }
 
 
-
     /**
+     * 获取指定tag的post id
      * @param $tag_id
      * @param int $num 数量
      *
@@ -77,19 +83,27 @@ class TagsLogic extends RelationModel
     }
 
     /**
+     * 获取列表
      * @param int $limit
      * @param bool $relation
-     *
+     * @param $order
      * @return mixed
      */
-    public function getList($limit = 20, $relation = true)
+    public function getList($limit = 20, $relation = true, $order)
     {
         return D('Tags')->limit($limit)->relation($relation)->select();
     }
 
 
+    public function selectWithPostsCount($limit = 0, $relation = false, $where = array(), $order = '')
+    {
 
+        return D('Tags')->where($where)->limit($limit)->field('*,count( ' . GreenCMS_DB_PREFIX . 'post_tag.post_id) as post_count')
+            ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'post_tag ON ' . GreenCMS_DB_PREFIX .
+                'tags.tag_id = ' . GreenCMS_DB_PREFIX . 'post_tag.tag_id')
+            ->group(GreenCMS_DB_PREFIX . 'tags.tag_id')->relation($relation)->select();
 
+    }
 
 
 }

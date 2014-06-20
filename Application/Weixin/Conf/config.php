@@ -99,6 +99,7 @@ $setting = array(
 
     'Weixin_log'        => true,
 
+    'DEFAULT_THEME' => "AdminLTE",
 
 );
 

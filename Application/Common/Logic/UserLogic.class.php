@@ -11,6 +11,7 @@ namespace Common\Logic;
 use Think\Model\RelationModel;
 
 /**
+ * 用户逻辑定义
  * Class UserLogic
  * @package Home\Logic
  */
@@ -18,6 +19,7 @@ class UserLogic extends RelationModel
 {
 
     /**
+     * 获取指定用户信息
      * @param $uid 用户UID
      * @param bool $relation 是否关联查询
      *
@@ -30,7 +32,8 @@ class UserLogic extends RelationModel
     }
 
     /**
-     * @param bool $limit limit
+     * 获取list
+     * @param bool $limit sql limit
      * @param bool $relation 是否关联
      *
      * @return mixed 找到返回数组
@@ -42,6 +45,7 @@ class UserLogic extends RelationModel
 
 
     /**
+     * 生成新的Hash
      * @param $authInfo
      * @return string
      */
@@ -54,6 +58,15 @@ class UserLogic extends RelationModel
         $User->where($condition)->setField('user_session', $session_code);
 
         return $session_code;
+    }
+
+    public function selectWithPostsCount($limit = 0, $relation = false,$where=array(),$order = '')
+    {
+        return D('User')->where($where)->limit($limit)->field(GreenCMS_DB_PREFIX .'user.*,count( ' . GreenCMS_DB_PREFIX . 'posts.post_id) as post_count')
+            ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'posts ON ' . GreenCMS_DB_PREFIX .
+                'posts.user_id = ' . GreenCMS_DB_PREFIX . 'user.user_id')
+            ->group(GreenCMS_DB_PREFIX . 'user.user_id')->relation($relation)->select();
+
     }
 
 }

@@ -12,6 +12,7 @@ use Common\Model;
 use Think\Model\RelationModel;
 
 /**
+ * 分类模型定义
  * Class CatsModel
  * @package Home\Model
  */
@@ -32,7 +33,11 @@ class CatsModel extends RelationModel
 
             'foreign_key'  => 'cat_id',
 
-            'parent_key'   => 'cat_id'
+            'parent_key'   => 'cat_id',
+
+            'mapping_order' => 'cat_id',
+
+            'mapping_limit' => 0,
         ),
 
 

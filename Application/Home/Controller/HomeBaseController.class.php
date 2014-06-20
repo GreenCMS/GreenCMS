@@ -12,6 +12,7 @@ use Common\Controller\BaseController;
 use Think\Hook;
 use Common\Util\File;
 /**
+ * Home模块基础类控制器
  * Class HomeBaseController
  * @package Home\Controller
  */
@@ -19,7 +20,7 @@ abstract class HomeBaseController extends BaseController
 {
 
     /**
-     * 构造
+     * Home模块基础类控制器构造
      */
     function __construct()
     {
@@ -31,6 +32,7 @@ abstract class HomeBaseController extends BaseController
 
 
     /**
+     * 判断变量是否为空为空输出404页
      * @function 是否为空
      *
      * @param $info
@@ -45,7 +47,8 @@ abstract class HomeBaseController extends BaseController
 
 
     /**
-     * @function 404 ERROR
+     * 显示404页
+     * @function 404 ERROR 需要显示错误的信息
      *
      * @param string $message
      */
@@ -58,7 +61,7 @@ abstract class HomeBaseController extends BaseController
         if (File::file_exists(T('Home@Index/404'))) {
             $this->display('Index/404');
         } else {
-            $this->error('缺少对应的模版而不能显示',U('Home/Index/index'));
+            $this->show($message);
         }
 
         Hook::listen('app_end');

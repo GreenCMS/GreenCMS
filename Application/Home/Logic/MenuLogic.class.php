@@ -13,6 +13,7 @@ namespace Home\Logic;
 use Think\Model;
 
 /**
+ * Menu逻辑组件
  * Class MenuLogic
  * @package Home\Logic
  */
@@ -21,6 +22,7 @@ class MenuLogic extends Model
 
 
     /**
+     * 得到菜单
      * @param string $menu_position
      * @return array
      */
@@ -28,34 +30,34 @@ class MenuLogic extends Model
     {
         $home_menu = D('Menu')->where(array('menu_position' => $menu_position))->select();
         $home_menu_res = array();
-        foreach ($home_menu as $key => $value) {
+        foreach ($home_menu as $menu_item_key => $menu_item_value) {
 
-            $home_menu[$key]['menu_abs_url'] = getRealURL($value);
+            $home_menu[$menu_item_key]['menu_abs_url'] = get_url_by_menu($menu_item_value);
 
-            if ($home_menu[$key]['menu_pid'] == 0) {
-                $home_menu_res[$home_menu[$key]['menu_id']] = $home_menu[$key];
+            if ($menu_item_value['menu_pid'] == 0) {
+                $home_menu_res[$menu_item_value['menu_id']] =  $home_menu[$menu_item_key];
+            }
+
+        }
+        //二级菜单
+        foreach ($home_menu as $menu_item_key => $menu_item_value) {
+            if (empty($home_menu_res[$menu_item_value['menu_pid']]['menu_children'])&&!empty($home_menu_res[$menu_item_value['menu_pid']])) {
+                $home_menu_res[$home_menu[$menu_item_key]['menu_pid']]['menu_children'] = array();
+            }
+            if ($home_menu[$menu_item_key]['menu_pid'] != 0) {
+                array_push($home_menu_res[$home_menu[$menu_item_key]['menu_pid']]['menu_children'], $home_menu[$menu_item_key]);
             }
         }
-
-        foreach ($home_menu as $key => $value) {
-            if (empty($home_menu_res[$home_menu[$key]['menu_pid']]['menu_children'])) {
-                $home_menu_res[$home_menu[$key]['menu_pid']]['menu_children'] = array();
-            }
-            if ($home_menu[$key]['menu_pid'] != 0) {
-                array_push($home_menu_res[$home_menu[$key]['menu_pid']]['menu_children'], $home_menu[$key]);
-            }
-        }
-
-
-        return array_sort($home_menu_res, 'menu_sort');
+          return array_sort($home_menu_res, 'menu_sort');
     }
 
     /**
-     * @param string $menu_position
-     * @param string $ul_attr
-     * @param string $li_attr
-     * @param string $split
-     * @return string
+     * 获取菜单 <ul> 返回的内容</ul>
+     * @param string $menu_position 位置或者说标签
+     * @param string $ul_attr ul属性可以是class id
+     * @param string $li_attr li属性可以是class id
+     * @param string $split 分割符  例如 ->首页  $split 栏目
+     * @return string <ul> 返回的内容</ul>
      */
     public function genMenu($menu_position = 'head', $ul_attr = 'class="navigation"', $li_attr = '', $split = '')
     {

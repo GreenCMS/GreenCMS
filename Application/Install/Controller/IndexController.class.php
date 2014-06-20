@@ -10,9 +10,8 @@
 namespace Install\Controller;
 
 use Common\Util\File;
-use Think\Controller;
-use Think\Hook;
-use Think\Think;
+use Common\Event\AccessEvent;
+
 
 /**
  * Class IndexController
@@ -26,12 +25,16 @@ class IndexController extends \Think\Controller
     public function __construct()
     {
         parent::__construct();
-
+        if (defined('SAE_TMP_PATH')) {
+            $this->error("SAE平台不需要安装程序");
+        }
         $lockFile = WEB_ROOT . 'Data/Install/install.lock';
 
         if (File::file_exists($lockFile)) {
             $this->error(" 你已经安装过GreenCMS，如果想重新安装，请先删除站点Data/install目录下的 install.lock 文件，然后再安装。");
         }
+
+
     }
 
 
@@ -224,23 +227,26 @@ class IndexController extends \Think\Controller
      */
     public function step5()
     {
-
-        //A('Install/Test')->init($key = 'zts');
-
-        $Access = new \Install\Event\AccessEvent();
-        $Access->initAdmin();
-        $Access->initWeixin();
-
-
         File::delAll(RUNTIME_PATH);
         File::delAll(LOG_PATH);
         File::delAll(WEB_CACHE_PATH);
         File::delAll(WEB_ROOT . 'Data/Cache');
         File::delAll(WEB_ROOT . 'Data/Temp');
+
+
+        //A('Install/Test')->init($key = 'zts');
+
+        $Access = new AccessEvent();
+        $Access->initAdmin();
+        $Access->initWeixin();
+
+
+
        // File::delAll(WEB_ROOT . 'Data/Install');
 
         if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {
-            $this->success('安装成功,5秒钟返回首页', 'Home/Index/index', 5);
+            C('URL_MODEL',3);
+            $this->success('GreenCMS安装成功,5秒钟返回首页', U('Home/Index/index'), 5);
         }
 
     }

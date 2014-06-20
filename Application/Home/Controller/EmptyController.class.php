@@ -17,11 +17,19 @@
 namespace Home\Controller;
 
 
+/**
+ * 空控制器当访问出错时调用
+ * Class EmptyController
+ * @package Home\Controller
+ */
 class EmptyController extends HomeBaseController
 {
+    /**
+     * 空控制器实现
+     *  @param null
+     */
     public function _empty()
     {
-
         $this->error404();
 
     }
