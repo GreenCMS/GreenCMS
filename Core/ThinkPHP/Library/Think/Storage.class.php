@@ -26,7 +26,16 @@ class Storage {
      * @param array $options  配置数组
      * @return void
      */
-    static public function connect($type='File',$options=array()) {
+
+    /**
+     * GreenCMS Patch By
+     * @author Timothy Zhang
+     * @origin connect($type='File',$options=array()
+     * @now connect($type=STORAGE_TYPE,$options=array()
+     * @reason 在SAE环境下有点问题
+     */
+
+    static public function connect($type=STORAGE_TYPE,$options=array()) {
         $class  =   'Think\\Storage\\Driver\\'.ucwords($type);
         self::$handler = new $class($options);
     }

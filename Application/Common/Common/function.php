@@ -8,6 +8,7 @@
  */
 
 include APP_PATH . 'Common/Common/common_router.php';
+include APP_PATH . 'Common/Common/function_url.php';
 
 /**
  * 获取当前时间戳 使用TIME_FIX常量修正
@@ -61,12 +62,12 @@ function is_top($i, $string = '【固顶】')
 
 /**
  * 判断是否为空
- * @param $test判断是否为空
+ * @param $test
  * @param string $string 为空时显示的文字
  */
 function is_empty($test, $string = '空')
 {
-    if ($test == '') {
+    if ($test == '' | $test == null || empty($test)) {
         echo $string;
     } else {
         echo $test;
@@ -76,7 +77,7 @@ function is_empty($test, $string = '空')
 
 /**
  * 获取设置
- * @param $key key
+ * @param string key
  * @param bool $realtime 是否直接从数据库中，为false时从缓存中取
  * @param string $default 为空时默认值
  * @return mixed|string
@@ -192,12 +193,13 @@ function exist_kv($key)
 
 /**
  * 数组降维
+ * to del
  */
-function array2str($res)
-{
-    $str = join(",", $res);
-    return $str;
-}
+//function array2str($res)
+//{
+//    $str = join(",", $res);
+//    return $str;
+//}
 
 
 /**
@@ -246,11 +248,11 @@ function array_multi2single($array)
 
 
 /**
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  * 功能：检测一个字符串是否是邮件地址格式
-+----------------------------------------------------------
- * @param string $value    待检测字符串
-+----------------------------------------------------------
+ * +----------------------------------------------------------
+ * @param string $value 待检测字符串
+ * +----------------------------------------------------------
  *
  * @return boolean
 +----------------------------------------------------------
@@ -262,14 +264,14 @@ function is_email($value)
 
 
 /**
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  * 功能：剔除危险的字符信息
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  * @param string $val
 +----------------------------------------------------------
  *
  * @return string 返回处理后的字符串
-+----------------------------------------------------------
+ * +----------------------------------------------------------
  */
 function remove_xss($val)
 {
@@ -327,7 +329,7 @@ function remove_xss($val)
 
 /**
  * 处理插件钩子
- * @param string $hook   钩子名称
+ * @param string $hook 钩子名称
  * @param mixed $params 传入参数
  * @return void
  */
@@ -386,9 +388,9 @@ function addons_url($url, $param = array())
 
     /* 基础参数 */
     $params = array(
-        '_addons'     => $addons,
+        '_addons' => $addons,
         '_controller' => $controller,
-        '_action'     => $action,
+        '_action' => $action,
     );
     $params = array_merge($params, $param); //添加额外参数
 
@@ -430,7 +432,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
 
 /**
  * 字符串转换为数组，主要用于把分隔符调整到第二个参数
- * @param  string $str  要分割的字符串
+ * @param  string $str 要分割的字符串
  * @param  string $glue 分割符
  * @return array
  */
@@ -441,7 +443,7 @@ function str2arr($str, $glue = ',')
 
 /**
  * 数组转换为字符串，主要用于把分隔符调整到第二个参数
- * @param  array $arr  要连接的数组
+ * @param  array $arr 要连接的数组
  * @param  string $glue 分割符
  * @return string
  */
@@ -522,11 +524,11 @@ title="' . $post['post_title'] . '"/></a>';
  * @return string
  */
 function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
-                         $li_attr = '', $separator = ' <li><i class="icon-angle-right"> &gt;&gt; </i></li>'
+                         $li_attr = '', $separator = ' <li> &gt;&gt; </li>'
     , $init = '首页')
 {
 
-    $res = '<ul class="breadcrumbs">
+    $res = '
             <li><a href="' . U("/") . '">' . $init . '</a></li>
            ';
     if ($type == 'cats') {
@@ -546,7 +548,7 @@ function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
         $res .= $separator . ' <li>' . $type . '</li>';
     }
 
-    $res .= '</ul>';
+    $res .= '';
     return $res;
 }
 
@@ -632,6 +634,11 @@ function friend_date($time)
 }
 
 
+/**
+ * @param $post_id
+ * @param $post_cat
+ * @return null|string
+ */
 function get_next_post($post_id, $post_cat)
 {
 
@@ -647,6 +654,11 @@ function get_next_post($post_id, $post_cat)
     return $res;
 }
 
+/**
+ * @param $post_id
+ * @param $post_cat
+ * @return null|string
+ */
 function get_previous_post($post_id, $post_cat)
 {
     $where ["cat_id"] = $post_cat [0]["cat_id"];
@@ -659,6 +671,10 @@ function get_previous_post($post_id, $post_cat)
 }
 
 
+/**
+ * @param string $access
+ * @return bool
+ */
 function check_access($access = "")
 {
 
@@ -666,9 +682,51 @@ function check_access($access = "")
 
     $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
 
-     if ($accessList[$path[0]][$path[1]][$path[2]] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+    if ($accessList[$path[0]][$path[1]][$path[2]] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
         return true;
     } else {
         return false;
     }
+}
+
+
+/**
+ * @param $url
+ * @param $data
+ * @return mixed|string
+ */
+function simple_post($url, $data)
+{
+
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $tmpInfo = curl_exec($ch);
+    if (curl_errno($ch)) {
+        return curl_error($ch);
+    }
+
+    curl_close($ch);
+    return $tmpInfo;
+
+
+}
+
+
+/**
+ * 获取当前登录用户的ID
+ * @return int
+ */
+function get_current_user_id()
+{
+
+    return ( int )$_SESSION [C('USER_AUTH_KEY')];
 }

@@ -8,14 +8,15 @@
  */
 
 namespace Common\Logic;
-use Think\Model;
+
+use Think\Model\RelationModel;
 
 /**
  * 链接逻辑定义
  * Class LinksLogic
  * @package Home\Logic
  */
-class LinksLogic extends Model
+class LinksLogic extends RelationModel
 {
 
     /**
@@ -38,17 +39,22 @@ class LinksLogic extends Model
     /**
      * 获取list
      * @param int $limit 限制
-     * @param int $tag 标签
+     * @param int $link_group_id
      * @param string $order 顺序
      *
+     * @internal param int $tag 标签
      * @return mixed 如果找到返回数组
      */
-    public function getList($limit = 10, $tag = 1, $order = 'link_sort desc ,link_id asc')
+    public function getList($limit = 10, $link_group_id = 0, $order = 'link_sort desc ,link_id asc')
     {
-        if($tag!=1){
-            $tag=array('link_tag'=>$tag);
+        $condition['link_group_id'] = $link_group_id;
+
+        //兼容旧版本
+        if ($link_group_id == 0) {
+            $condition = "link_group_id is null or link_group_id=0";
         }
-        $link_list = $this->where($tag)->order($order)->limit($limit)->select();
+        $link_list = D('Links')->where($condition)->order($order)->limit($limit)->relation(true)->select();
+
         return $link_list;
     }
 

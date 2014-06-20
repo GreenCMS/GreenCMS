@@ -9,6 +9,8 @@
 
 namespace Home\Widget;
 
+use Home\Logic\MenuLogic;
+
 use Common\Logic\CatsLogic;
 use Common\Logic\TagsLogic;
 use Think\Controller;
@@ -20,6 +22,24 @@ use Think\Controller;
  */
 class WidgetWidget extends Controller
 {
+
+    public function archive()
+    {
+
+    }
+
+    public function recentPost()
+    {
+
+
+        $post_list = D('Posts', 'Logic')->getList(3, 'single', 'post_date desc', false);
+
+
+        $this->assign('list', $post_list);
+
+        $this->display('Widget:recentPost');
+
+    }
 
     /**
      * 搜索框
@@ -83,6 +103,78 @@ class WidgetWidget extends Controller
     public function links()
     {
         $this->display('Widget:links');
+
+    }
+
+
+    /**
+     * 父类与子类分类列表
+     * @usage {:W('Widget/catSidebar',array("cat_id"=>$cat_id))}
+     */
+    public function catSidebar($cat_id = 0, $default_title)
+    {
+
+        if ($cat_id == null) {
+            $this->assign('cat_sidebar_title', $default_title); // 赋值数据集
+
+            $CatList = new CatsLogic();
+
+            $Cat = new \Common\Util\Category ('Cats', array('cat_id', 'cat_father', 'cat_name', 'cat_name'));
+
+            $children['cat_children'] = $Cat->getList();
+            foreach ($children['cat_children'] as $key => $value) {
+                $children['cat_children'][$key]['cat_children'] = $children['cat_children'][$key];
+            }
+            $this->assign('children2', $children);
+
+
+        } else {
+
+            $Cat = new CatsLogic();
+            $children = $Cat->getChildren($cat_id);
+
+            if (empty($children['cat_children'])) {
+                //无子类处理
+                if ($children['cat_father'] == 0) {
+                    //无父类
+                    $this->assign('cat_sidebar_title', $children["cat_name"]); // 赋值数据集
+
+                } else {
+                    //有父类
+
+                    $children2 = $Cat->getChildren($children['cat_father']);
+                    $this->assign('cat_sidebar_title', $children2["cat_name"]); // 赋值数据集
+
+                    $this->assign('children2', $children2);
+
+                }
+
+
+            } else {
+                //有子类处理
+                $this->assign('cat_sidebar_title', $children["cat_name"]); // 赋值数据集
+                $this->assign('children2', $children);
+
+
+            }
+        }
+
+        $this->assign('cat_id', $cat_id); // 赋值数据集
+        $this->display('Widget:cat_sidebar');
+
+    }
+
+
+    public function menuHead($position = 'head') //, $ul_attr='', $li_attr, $ul_attr2, $li_attr2, $split
+    {
+
+        $Menu = new MenuLogic();
+        $menu = $Menu->getMenu($position);
+
+
+        $this->assign('home_menu', ($menu));
+        $this->display('Widget:menuHead');
+
 
     }
 

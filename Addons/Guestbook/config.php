@@ -11,7 +11,7 @@ return array(
     ),*/
     'records' => array(
         'title' => '每页记录数',
-        'type'=>'text',
+        'type' => 'text',
         'value' => '5',
     ),
 );

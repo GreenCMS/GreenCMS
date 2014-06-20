@@ -9,10 +9,16 @@
 
 namespace Admin\Controller;
 
+use Common\Event\SystemEvent;
+use Common\Event\UpdateEvent;
+use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
+use Common\Logic\TagsLogic;
 use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
+
+use Think\Upload;
 
 /**
  * Class CustomController
@@ -38,6 +44,7 @@ class CustomController extends AdminBaseController
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
 
         $menu_list = $Menu->getList(); // 获取分类结构
+
 
         $this->assign('menu', $menu_list);
 
@@ -69,6 +76,18 @@ class CustomController extends AdminBaseController
      */
     public function menuAdd()
     {
+        $CatsLogic = new CatsLogic();
+        $TagsLogic = new TagsLogic();
+        $PostsLogic = new PostsLogic();
+
+        $cat_list = $CatsLogic->category();
+        $tag_list = $TagsLogic->field('tag_id,tag_name')->select();
+        $post_list = $PostsLogic->field('post_id,post_title')->select();
+
+        $cat_list = array_column_5($cat_list, 'cat_slug', 'cat_id');
+        $tag_list = array_column_5($tag_list, 'tag_name', 'tag_id');
+        $post_list = array_column_5($post_list, 'post_title', 'post_id');
+
 
         $action = '添加菜单';
         $action_url = U('Admin/Custom/menuAdd');
@@ -76,6 +95,18 @@ class CustomController extends AdminBaseController
 
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
         $menu_list = $Menu->getList(); // 获取分类结构
+
+
+        $url_function = C('url_function');
+        $this->assign('url_function', gen_opinion_list($url_function));
+
+        $url_open = C('url_open');
+        $this->assign('url_open', gen_opinion_list($url_open));
+
+
+        $this->assign('cat_list', gen_opinion_list($cat_list));
+        $this->assign('tag_list', gen_opinion_list($tag_list));
+        $this->assign('post_list', gen_opinion_list($post_list));
 
 
         $this->assign('menu', $menu_list);
@@ -92,10 +123,19 @@ class CustomController extends AdminBaseController
      */
     public function menuAddHandle()
     {
-        $data = $_POST;
+        $post_data = I('post.');
+
+        $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
+
         $Menu = D('Menu');
-        $result = $Menu->data($data)->add();
-        if ($result) $this->success('添加成功', 'Admin/Custom/menu');
+        $res = $Menu->where($map)->setInc('menu_sort');
+
+        $result = $Menu->data($post_data)->add();
+        if ($result) {
+            $this->success('添加成功', U('Admin/Custom/menu'));
+        } else {
+            $this->error('添加失败');
+        }
     }
 
     /**
@@ -129,10 +169,18 @@ class CustomController extends AdminBaseController
     public function menuEditHandle($id)
     {
         $data = $_POST;
+
+        if ($data['menu_pid'] == $data['menu_id']) {
+            $this->error('父类不能是自己');
+        }
         $Menu = D('Menu');
         $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
-        if ($result) $this->success('编辑成功', 'Admin/Custom/menu');
+        if ($result) {
+            $this->success('编辑成功', U('Admin/Custom/menu'));
+        } else {
+            $this->error('编辑失败');
 
+        }
     }
 
 
@@ -169,13 +217,14 @@ class CustomController extends AdminBaseController
                 $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
 
                 $theme_temp = (array)$theme;
-                if ($theme_temp['name'] == get_kv('home_theme',true)) {
+                if ($theme_temp['name'] == get_kv('home_theme', true)) {
                     $theme_temp['status_name'] = '正在使用';
                     $theme_temp['status_url'] = '#';
-                    $theme_temp['using_color'] = 'green';
+                    $theme_temp['using_color'] = ' bg-green';
                     $theme_temp['action_name2'] = '使用中';
                     $theme_temp['action_url2'] = '#';
                 } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
+                    $theme_temp['using_color'] = ' bg-olive';
 
                     $theme_temp['status_name'] = '立即使用';
                     $theme_temp['status_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));
@@ -208,14 +257,61 @@ class CustomController extends AdminBaseController
      */
     public function themeAdd()
     {
+
+        $this->assign('action', '主题添加');
+        $this->assign('action_name', 'themeAdd');
+
         $this->display();
     }
+
+    public function themeAddLocal()
+    {
+        File::mkDir(WEB_CACHE_PATH);
+
+
+        $config = array(
+            'rootPath' => WEB_CACHE_PATH,
+            "savePath" => '',
+            "maxSize" => 100000000, // 单位B
+            "exts" => array('zip'),
+            "subName" => array(),
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
+
+            $file_path_full = $info['file']['fullpath'];
+
+            //dump($info);die($file_path_full);
+            if (File::file_exists($file_path_full)) {
+
+                $Update = new UpdateEvent();
+                $applyRes = $Update->applyPatch($file_path_full);
+                $applyInfo = json_decode($applyRes, true);
+
+                if ($applyInfo['status']) {
+                    $this->success($applyInfo['info'], U('Admin/Custom/theme'));
+                } else {
+                    $this->error($applyInfo['info']);
+                }
+
+            } else {
+                $this->error('文件不存在');
+
+            }
+        }
+    }
+
+
 
     //todo 需要检查是否真的成功
     /**
      * @param string $theme_name
      */
-    public function themeDisableHandle($theme_name = 'Vena')
+    public function themeDisableHandle($theme_name = 'NovaGreenStudio')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
         set_kv('theme_' . $theme_name, 'disabled');
@@ -225,7 +321,7 @@ class CustomController extends AdminBaseController
     /**
      * @param string $theme_name
      */
-    public function themeEnableHandle($theme_name = 'Vena')
+    public function themeEnableHandle($theme_name = 'NovaGreenStudio')
     {
 
         set_kv('theme_' . $theme_name, 'enabled');
@@ -236,7 +332,7 @@ class CustomController extends AdminBaseController
     /**
      * @param string $theme_name
      */
-    public function themeChangeHandle($theme_name = 'Vena')
+    public function themeChangeHandle($theme_name = 'NovaGreenStudio')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
 
@@ -247,7 +343,7 @@ class CustomController extends AdminBaseController
 
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
-            $cache_control = new \Common\Event\SystemEvent();
+            $cache_control = new SystemEvent();
             $cache_control->clearCacheAll();
             $this->success('切换成功');
         } else {
@@ -515,7 +611,7 @@ str;
         $this->assign('title', $addon->info['title']);
 
         if ($addon->custom_adminlist)
-          $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
+            $this->assign('custom_adminlist', $this->fetch($addon->Addon_PATH . $addon->custom_adminlist));
 
 
         $this->assign($param);
@@ -537,7 +633,7 @@ str;
         $id = I('id');
         M('Addons')->where(array('id' => $id))->setField('status', 1);
         S('hooks', null);
-        $this->json_return(1, "启用成功", U('Admin/Custom/plugin'));
+        $this->jsonReturn(1, "启用成功", U('Admin/Custom/plugin'));
 
     }
 
@@ -549,7 +645,7 @@ str;
         $id = I('id');
         M('Addons')->where(array('id' => $id))->setField('status', 0);
         S('hooks', null);
-        $this->json_return(1, "禁用成功", U('Admin/Custom/plugin'));
+        $this->jsonReturn(1, "禁用成功", U('Admin/Custom/plugin'));
     }
 
     /**
@@ -633,7 +729,7 @@ str;
         $addons = new $class;
         $info = $addons->info;
         if (!$info || !$addons->checkInfo()) //检测信息的正确性
-        $this->error('插件信息缺失');
+            $this->error('插件信息缺失');
         session('addons_install_error', null);
         $install_flag = $addons->install();
         if (!$install_flag) {
@@ -702,19 +798,21 @@ str;
     {
         $this->meta_title = '钩子列表';
         $map = $fields = array();
-        $order = "id DESC";
-        $list = D("Hooks")->field($fields)->order($order)->select();
-        // dump($list);die;
-        // int_to_string($list, array('type' => "C('HOOKS_TYPE')"));
-        // 记录当前列表页的cookie
-        Cookie('__forward__', $_SERVER['REQUEST_URI']);
-        // dump($list);die;
-        
-        $count = count($list);
-        $page = I('get.page', C('PAGER'));
-        $p = new GreenPage ($count, $page);
-        $this->assign('page', $p->show());
 
+
+        Cookie('__forward__', $_SERVER['REQUEST_URI']);
+
+        $count = D("Hooks")->count();
+        if ($count != 0) {
+            $page = I('get.page', C('PAGER'));
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $list = D("Hooks")->limit($limit)->field($fields)->select();
+        }
+
+
+        $this->assign('page', $pager_bar);
         $this->assign('list', $list);
         $this->assign('action', '钩子管理');
         $this->display();
@@ -801,17 +899,86 @@ str;
     }
 
 
+    public function linkgroup()
+    {
+
+        $link_group_list = D('Link_group', 'Logic')->select();
+
+        $this->assign('link_group_list', $link_group_list);
+        $this->display();
+    }
+
+    public function addlinkgroup()
+    {
+        $this->assign('action', '添加链接分组');
+        $this->assign('buttom', '添加');
+
+        $this->assign('form_url', U('Admin/Custom/addlinkgroupHandle'));
+        $this->display();
+    }
+
+    public function addlinkgroupHandle()
+    {
+        $data['link_group_name'] = I('post.link_group_name');
+        if (D('Link_group', 'Logic')->data($data)->add()) {
+            $this->success('链接分组添加成功', U('Admin/Custom/linkgroup'));
+        } else {
+            $this->error('链接分组添加失败', U('Admin/Custom/linkgroup'));
+        }
+    }
+
+    public function dellinkgroupHandle($id)
+    {
+
+        if (D('Link_group', 'Logic')->delete($id)) {
+            $this->success('链接删除成功');
+        } else {
+            $this->error('链接删除失败');
+        }
+    }
+
+    public function editlinkgroup($id)
+    {
+        $this->assign('form_url', U('Admin/Custom/editlinkgroupHandle', array('id' => $id)));
+
+        $link_group = D('Link_group', 'Logic')->where(array('link_group_id' => $id))->find();
+        $this->assign('link_group', $link_group);
+
+
+        $this->assign('action', '编辑链接分组');
+        $this->assign('buttom', '辑加');
+
+        $this->display('addlinkgroup');
+    }
+
+    public function editlinkgroupHandle($id)
+    {
+        $data['link_group_name'] = I('post.link_group_name');
+
+
+        if (D('Link_group', 'Logic')->where(array('link_group_id' => $id))->data($data)->save()) {
+            $this->success('链接分组编辑成功', U('Admin/Custom/linkgroup'));
+        } else {
+            $this->error('链接分组编辑失败', U('Admin/Custom/linkgroup'));
+        }
+
+    }
+
     /**
      * 链接管理
      */
-
-
-    public function links()
+    public function links($id = 0)
     {
-        $this->linklist = D('Links', 'Logic')->getList(1000);
+
+        $link_group = D('Link_group', 'Logic')->find($id);
+        $this->assign('action', '链接管理:' . $link_group['link_group_name']);
+
+        $linklist = D('Links', 'Logic')->getList(1000, $id);
+        $this->assign('linklist', $linklist);
 
         $this->display();
     }
+
 
     /**
      *
@@ -823,42 +990,53 @@ str;
             $data = I('post.');
             if ($_FILES['img']['size'] != 0) {
 
-
                 $config = array(
-                    "savePath"   => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
-                    "maxSize"    => 300000, // 单位KB
-                    "allowFiles" => array(".jpg", ".png")
+                    "savePath" => 'Links/',
+                    "maxSize" => 1000000, // 单位B
+                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "subName" => array('date', 'Y/m-d'),
                 );
+                $upload = new Upload($config);
+                $info = $upload->upload();
 
-                $upload = new \Common\Util\Uploader ("img", $config);
+                if (!$info) { // 上传错误提示错误信息
+                    $this->error($upload->getError());
+                } else { // 上传成功 获取上传文件信息
 
-                $info = $upload->getFileInfo();
 
-                $image = new \Think\Image();
-                $image->open(WEB_ROOT . $info['url']);
-                $image->thumb(200, 150)->save(WEB_ROOT . $info['url']);
+                    $file_path_full = $info['img']['fullpath'];
 
-                $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
+                    $image = new \Think\Image();
+                    $image->open($file_path_full);
+                    $image->thumb(200, 150)->save($file_path_full);
 
-                if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
-                    $this->error('上传失败' . $info['state']);
-                } else {
+                    $img_url = $info['img']['urlpath'];
+
+                    //  $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
-                }
+
+                };
+
             }
 
             if (D('Links', 'Logic')->addLink($data)) {
-                $this->success('链接添加成功', U('Admin/Custom/links'));
+                $this->success('链接添加成功', U('Admin/Custom/links', array('id' => $data['link_group_id'])));
             } else {
-                $this->error('链接添加失败', U('Admin/Custom/links'));
+                $this->error('链接添加失败');
             }
         } else {
             $this->assign('imgurl', __ROOT__ . '/Public/share/img/no+image.gif');
 
-            $this->form_url = U('Admin/Custom/addlink');
-            $this->action = '添加链接';
-            $this->buttom = '添加';
+            $link_groups = D('Link_group', 'Logic')->select();
+            $link_group_select = array_column_5($link_groups, 'link_group_name', 'link_group_id');
+            $this->assign('link_group', gen_opinion_list($link_group_select));
+
+
+            $this->assign('form_url', U('Admin/Custom/addlink'));
+            $this->assign('action', '添加链接');
+            $this->assign('buttom', '添加');
+
             $this->display('addlink');
         }
     }
@@ -874,39 +1052,49 @@ str;
             if ($_FILES['img']['size'] != 0) {
 
                 $config = array(
-                    "savePath"   => (Upload_PATH . 'Links/' . date('Y') . '/' . date('m') . '/'),
-                    "maxSize"    => 300000, // 单位KB
-                    "allowFiles" => array(".jpg", ".png")
+                    "savePath" => 'Links/',
+                    "maxSize" => 1000000, // 单位B
+                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "subName" => array('date', 'Y/m-d'),
                 );
+                $upload = new Upload($config);
+                $info = $upload->upload();
 
-                $upload = new \Common\Util\Uploader ("img", $config);
+                if (!$info) { // 上传错误提示错误信息
+                    $this->error($upload->getError());
+                } else { // 上传成功 获取上传文件信息
 
-                $info = $upload->getFileInfo();
+                    $file_path_full = $info['img']['fullpath'];
 
-                $image = new \Think\Image();
-                $image->open(WEB_ROOT . $info['url']);
-                $image->thumb(200, 150)->save(WEB_ROOT . $info['url']);
+                    $image = new \Think\Image();
+                    $image->open($file_path_full);
+                    $image->thumb(200, 150)->save($file_path_full);
+                    $img_url = $info['img']['urlpath'];
 
-                $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $info['url'];
-
-                if ($info["state"] != "SUCCESS") { // 上传错误提示错误信息
-                    $this->error('上传失败' . $info['state']);
-                } else {
+                    // $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
                     unset($data['img']);
                     $data['link_img'] = $img_url;
-                }
+
+                };
+
             }
+
 
             if (D('Links', 'Logic')->where(array('link_id' => $id))->save($data)
             ) {
-                $this->success('链接编辑成功', U('Admin/Custom/links'));
+                $this->success('链接编辑成功', U('Admin/Custom/links', array('id' => $data['link_group_id'])));
             } else {
-                $this->error('链接编辑失败', U('Admin/Custom/links'));
+                $this->error('链接编辑失败', U('Admin/Custom/links', array('id' => $data['link_group_id'])));
             }
         } else {
 
             $this->form_url = U('Admin/Custom/editlink', array('id' => $id));
             $link = D('Links', 'Logic')->detail($id);
+
+            $link_groups = D('Link_group', 'Logic')->select();
+            $link_group_select = array_column_5($link_groups, 'link_group_name', 'link_group_id');
+            $this->assign('link_group', gen_opinion_list($link_group_select, $link['link_group_id']));
+
 
             $this->assign('imgurl', $link['link_img']);
             $this->assign('link', $link);

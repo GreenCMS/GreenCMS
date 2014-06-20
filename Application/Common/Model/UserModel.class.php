@@ -35,7 +35,15 @@ class UserModel extends RelationModel
 
             'relation_foreign_key' => 'role_id',
 
-            'relation_table'       => 'role_users'
+            'relation_table'       => 'role_users',
+
+
+            'mapping_order' => 'user_id',
+
+            'mapping_limit' => 0,
+
+
+
         ),
 
         'Role' => array(
@@ -51,6 +59,12 @@ class UserModel extends RelationModel
             'foreign_key'  => 'user_id',
 
             'parent_key'   => 'user_id',
+
+
+            'mapping_order' => 'user_id',
+
+            'mapping_limit' => 0,
+
         )
     );
 

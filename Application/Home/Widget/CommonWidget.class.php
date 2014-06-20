@@ -23,15 +23,17 @@ class CommonWidget extends Controller
      * 导航菜单
      * @param string $ul_attr ul属性可以是class id
      * @param string $li_attr li属性可以是class id
+     * @param string $ul_attr2
+     * @param string $li_attr2
      * @param string $split 分割符  例如 ->首页  $split 栏目
      * @param string $position 位置或者说标签
      * @usage {:W('Widget/mainMenu')}
      */
-    public function mainMenu($ul_attr = 'class="navigation"', $li_attr = '', $split = '', $position = 'head')
+    public function mainMenu($ul_attr = 'class="navigation"', $li_attr = '', $ul_attr2 = '', $li_attr2 = '', $split = '', $position = 'head')
     {
 
         $Menu = new MenuLogic();
-        $home_menu = $Menu->genMenu($position, $ul_attr, $li_attr, $split);
+        $home_menu = $Menu->genMenu($position, $ul_attr, $li_attr, $ul_attr2, $li_attr2, $split);
 
         $this->assign('home_menu', $home_menu);
 

@@ -60,4 +60,13 @@ class UserLogic extends RelationModel
         return $session_code;
     }
 
+    public function selectWithPostsCount($limit = 0, $relation = false,$where=array(),$order = '')
+    {
+        return D('User')->where($where)->limit($limit)->field(GreenCMS_DB_PREFIX .'user.*,count( ' . GreenCMS_DB_PREFIX . 'posts.post_id) as post_count')
+            ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'posts ON ' . GreenCMS_DB_PREFIX .
+                'posts.user_id = ' . GreenCMS_DB_PREFIX . 'user.user_id')
+            ->group(GreenCMS_DB_PREFIX . 'user.user_id')->relation($relation)->select();
+
+    }
+
 }

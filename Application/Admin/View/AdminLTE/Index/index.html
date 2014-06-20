@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">系统通知</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <div class="well">
+                                <h4>系统发布</h4>
+
+                                <p> 当前版本: GreenCMS {:get_opinion('software_version')} &nbsp; 发布时间:
+                                    {:get_opinion('software_build')} &nbsp;
+
+
+                                <div style="display: none" id="sys_up">
+
+                                    <a href="{:U('Admin/System/update')}">发现新版本，立即更新</a>
+
+                                </div>
+
+                                </p>
+
+
+                            </div>
+                            <div class="well well-large">
+                                <h4>QQ讨论</h4>
+                                群号：123085170
+
+                                <h4>服务支持</h4>
+                                Email：zts1993@gmail.com
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">用户信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+                            <div class="row">
+
+
+                                <div class="col-md-4 wel">
+
+
+                                    <img style="width: 100%" src="__PUBLIC__/baracktocat.jpg" alt=""/>
+
+                                </div>
+
+                                <div class="col-md-5 wel">
+
+                                    <h1>{$user.user_name}</h1>
+
+                                    <p>用户介绍: {$user.user_intro}</p>
+
+                                    <p><a href="{$user_url}" target="_blank">{$user.user_url}</a>
+                                    </p>
+
+                                    <p>昵称: {$user.user_nicename} </p>
+
+                                    <p>邮箱: {$user.user_email} </p>
+
+                                    <p>注册时间: {$user.user_registered} </p>
+
+                                    <!--end span8-->
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">关于我们</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <div class="well">
+                                <h4>GreenStudio团队</h4>
+                                <a href="http://green.njut.asia">绿荫工作室主页</a>
+                                <h4>核心开发人员</h4>
+                                <a href="http://weibo.com/zts1993">OCTOCAT_Z</a>&nbsp;&nbsp;&nbsp;
+                                <a href="http://weibo.com/541019086love">看什么看没看过程序猿啊</a>&nbsp;&nbsp;&nbsp;
+                                <h4>特别鸣谢</h4>
+                                <a href="http://weibo.com/zhanghao1989">张昊_BigData</a>&nbsp;&nbsp;&nbsp;
+                                <a href="http://weibo.com/u/2428963323">ayys_php</a>&nbsp;&nbsp;&nbsp;
+                                <a href="http://weibo.com/mixj93">mixj93</a>&nbsp;&nbsp;&nbsp;
+
+
+                            </div>
+                            <div class="well">
+                                <h4>联系方式</h4>
+                                邮箱：<a href="mailto:admin@njut.asia">admin@njut.asia</a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">其他信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+                            <div class="well">
+                                <h4>Github</h4>
+                                Github：<a href="https://github.com/GreenCMS/greencms">https://github.com/zts1993/greencms</a>
+                            </div>
+                            <div class="well">
+
+                                {:hook('AdminIndex', 'Widget')}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+<script>
+    $(document).ready(function () {
+
+        var url = '{:U("Admin/Index/checkVersion")}';
+
+        $.get(url, function (data) {
+            if (data != 'none') {
+                //发现新版本
+                $('#warning_box').append(data);
+                $('#sys_up').show();
+
+                var n=$("#warning_box_num").html();
+                var num=parseInt(n)+1;
+                $('#warning_box_num').html(num);
+                $('#warning_box_num2').html(num);
+
+
+            } else {
+                $('#sys_up').show();
+                $('#sys_up').html("当前为最新版本");
+            }
+        });
+
+
+        var url = '{:U("Admin/Index/ajaxCron")}';
+
+        $.get(url, function (data) {
+
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

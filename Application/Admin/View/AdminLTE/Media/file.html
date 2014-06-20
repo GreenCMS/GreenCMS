@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+
+
+
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+
+                            <!-- Element where elFinder will be created (REQUIRED) -->
+                            <div style=" height: 600px;" id="elfinder"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+<!-- jQuery and jQuery UI (REQUIRED) -->
+<link rel="stylesheet" type="text/css" media="screen"
+      href="__PUBLIC__/share/js/jqueryui/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="__PUBLIC__/share/js/jquery-ui-1.8.18.min.js"></script>
+
+<!-- elFinder CSS (REQUIRED) -->
+<link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/GreenFinder/css/elfinder.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/GreenFinder/css/theme.css">
+
+<!-- elFinder JS (REQUIRED) -->
+<script type="text/javascript" src="__ROOT__/Extend/GreenFinder/js/elfinder.min.js"></script>
+
+<!-- elFinder translation (OPTIONAL) -->
+<script type="text/javascript" src="__ROOT__/Extend/GreenFinder/js/i18n/elfinder.zh_CN.js"></script>
+
+
+<!-- elFinder initialization (REQUIRED) -->
+<script type="text/javascript" charset="utf-8">
+    $().ready(function () {
+        var elf = $('#elfinder').elfinder({
+            url: "{:U('Admin/Media/fileConnect')}",  // 这里设置为File模块的index方法，用U方法构建
+            lang: 'zh_CN'            // language (OPTIONAL)
+        }).elfinder('instance');
+    });
+</script>
+</body>
+</html>

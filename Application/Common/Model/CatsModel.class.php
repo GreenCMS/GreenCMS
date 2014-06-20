@@ -33,7 +33,11 @@ class CatsModel extends RelationModel
 
             'foreign_key'  => 'cat_id',
 
-            'parent_key'   => 'cat_id'
+            'parent_key'   => 'cat_id',
+
+            'mapping_order' => 'cat_id',
+
+            'mapping_limit' => 0,
         ),
 
 

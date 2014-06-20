@@ -12,6 +12,8 @@ namespace Common\Util;
 
 /**
  * Class Uploader
+ * 目前只有Ueditor在使用
+ * 计划在3个月内移除
  * @package Common\Util
  */
 class Uploader

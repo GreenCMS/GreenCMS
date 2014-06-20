@@ -56,6 +56,7 @@ function C($name = null, $value = null, $default = null)
  * 抛出异常处理
  * @param string $msg 异常消息
  * @param integer $code 异常代码 默认为0
+ * @throws Think\Exception
  * @return void
  */
 function E($msg, $code = 0)
@@ -172,8 +173,9 @@ function compile($filename)
 
 /**
  * 获取模版文件 格式 资源://模块@主题/控制器/操作
- * @param string $name 模版资源地址
+ * @param string $template
  * @param string $layer 视图层（目录）名称
+ * @internal param string $name 模版资源地址
  * @return string
  */
 function T($template = '', $layer = '')
@@ -498,7 +500,7 @@ function vendor($class, $baseUrl = '', $ext = '.php')
  * D函数用于实例化模型类 格式 [资源://][模块/]模型
  * @param string $name 资源地址
  * @param string $layer 模型层名称
- * @return Model
+ * @return mixed
  */
 function D($name = '', $layer = '')
 {

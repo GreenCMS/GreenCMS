@@ -1,109 +1,79 @@
 <!DOCTYPE html>
-<!--[if IE 8]>
-<html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]>
-<html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!-->
-<html lang="en"> <!--<![endif]-->
-<!-- BEGIN HEAD -->
+<html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8">
     <title>安装程序 -- GreenCMS</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="'GreenCMS" name="description"/>
-    <meta content="GreenCMS" name="keywords"/>
+
     <include file="Public:head"/>
 
-    <style>.copyright .copy_title {
-        text-align: center;
-    }
-
-    .copyright .agreement {
-        margin: 10px auto auto 40px;
-    }</style>
 </head>
-<!-- END HEAD -->
-<!-- BEGIN BODY -->
-<body class="page-header-fixed">
-<!-- BEGIN HEADER -->
-<div class="header navbar navbar-inverse navbar-fixed-top">
-    <!-- BEGIN TOP NAVIGATION BAR -->
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <!-- BEGIN LOGO -->
-            <a class="brand" href="{:U('Home/Index/index')}">
-                <img src="__PUBLIC__/admin/assets/img/logo.png" alt="logo"/>
-            </a>
-            <!-- END LOGO -->
-            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-            <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-                <img src="__PUBLIC__/admin/assets/img/menu-toggler.png" alt=""/>
-            </a>
-            <!-- END RESPONSIVE MENU TOGGLER -->
+<body class="skin-blue">
 
-            <!-- END TOP NAVIGATION MENU -->
+<include file="Widget:header"/>
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+
+
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="left-side sidebar-offcanvas">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="__PUBLIC__/baracktocat.jpg" class="img-circle" alt="User Image"/>
+            </div>
+            <div class="pull-left info">
+
+            </div>
         </div>
-    </div>
-    <!-- END TOP NAVIGATION BAR -->
-</div>
-<!-- END HEADER -->
-<!-- BEGIN CONTAINER -->
-<div class="page-container row-fluid">
-<!-- BEGIN SIDEBAR -->
-<div class="page-sidebar nav-collapse collapse">
-    <!-- BEGIN SIDEBAR MENU -->
-    <ul class="page-sidebar-menu">
-        <li>
-            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-            <!-- <div class="sidebar-toggler hidden-phone"></div> -->
-            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-        </li>
-        <li class="start active">
-            <a href="javascript:;">
-                <i class="icon-home"></i><span class="title">安装程序</span>
-                <span class="arrow "></span>
-            </a>
-            <ul class="sub-menu">
-                <li class=""><a>使用协议书</a></li>
-                <li class="active"><a>环境测试</a></li>
-                <li class=""><a>网站设置</a></li>
-                <li class=""><a>安装</a></li>
-                <li class=""><a>安装完成</a></li>
-            </ul>
-        </li>
-    </ul>
-    <!-- END SIDEBAR MENU -->
-</div>
-<!-- END SIDEBAR -->
-<!-- BEGIN PAGE -->
-<div class="page-content">
-<!-- BEGIN PAGE CONTAINER-->
-<div class="container-fluid">
-<!-- BEGIN PAGE HEADER-->
-<div class="row-fluid">
-    <div class="span12">
-        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-        <h3 class="page-title">
-            安装程序
-            <small>&nbsp;&nbsp;GreenCMS</small>
-        </h3>
-        <ul class="breadcrumb">
-            <li>
-                <a href="">安装程序</a>
-                <i class="icon-angle-right"></i>
-            </li>
-            <li>
-                <a href="">使用协议书</a>
-                <i class="icon-angle-right"></i>
-            </li>
-            <li>
-                <a href="">环境测试</a>
-            </li>
+        <!-- search form -->
+        <!--<form action="#" method="get" class="sidebar-form">-->
+        <!--<div class="input-group">-->
+        <!--<input type="text" name="q" class="form-control" placeholder="Search..."/>-->
+        <!--<span class="input-group-btn">-->
+        <!--<button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--</form>-->
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+
+
+            <li class=""><a>使用协议书</a></li>
+            <li class="active"><a>环境测试</a></li>
+            <li class=""><a>网站设置</a></li>
+            <li class=""><a>安装</a></li>
+            <li class=""><a>安装完成</a></li>
+
+
         </ul>
-        <!-- END PAGE TITLE & BREADCRUMB-->
-    </div>
+
+
+    </section>
+    <!-- /.sidebar -->
+</aside>
+
+
+<!-- Right side column. Contains the navbar and content of the page -->
+<aside class="right-side">
+<!-- Content Header (Page header) -->
+
+
+<!-- Main content -->
+<section class="content">
+
+<div class="row">
+<div class="col-md-12">
+<div class="box box-warning">
+<div class="box-header">
+    <h3 class="box-title">安装</h3>
 </div>
-<div class="row-fluid profile">
+<!-- /.box-header -->
+<div class="box-body">
+
+
     <div class="span12">
         <!--BEGIN TABS-->
         <div class="tabbable tabbable-custom tabbable-full-width">
@@ -269,17 +239,19 @@
                                                 </tr>
                                                 </tfoot>
                                             </table>
-                                            <div class="form-actions" style="text-align: center">
-                                                <div class="span4">
-                                                    <button type="button" class="btn green btn-next">
-                                                        <i class="m-icon-swapright m-icon-white"></i>继续
-                                                    </button>
-                                                </div>
-                                                <div class="span4">
-                                                    <button type="button" class="btn red btn-back">
+                                            <div class="form-actions row margin">
+                                                <div class="row margin">
+
+                                                    <button type="button" class="btn bg-red" id="step1">
                                                         <i class="m-icon-swapright m-icon-white"></i>
                                                         后退
                                                     </button>
+
+                                                    <button type="button" class="btn btn-info" id="step3">
+                                                        <i class="m-icon-swapright m-icon-white"></i>继续
+                                                    </button>
+
+
                                                 </div>
                                             </div>
                                         </form>
@@ -298,32 +270,31 @@
         <!-- END PAGE CONTAINER-->
     </div>
     <!-- END PAGE -->
-</div>
-</div>
+
 
 </div>
 </div>
-<!-- END CONTAINER -->
-<!-- BEGIN FOOTER -->
-<div class="footer">
-    <div class="footer-inner">
-        &copy; 2014. Powered By GreenCMS
-    </div>
-
 </div>
-<!-- END FOOTER -->
+</div>
+
+
+</section>
+<!-- /.content -->
+</aside>
+<!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
 <include file="Public:foot"/>
-
 <script>
     jQuery(document).ready(function () {
-        $('.btn-next').click(function () {
+        $('#step3').click(function () {
             window.location.href = '{:U("Install/Index/step3")}';
         });
-        $('.btn-back').click(function () {
+        $('#step1').click(function () {
             window.location.href = '{:U("Install/Index/step1")}';
         });
     });
 </script>
 </body>
-<!-- END BODY -->
 </html>

@@ -9,6 +9,10 @@
 
 namespace Admin\Controller;
 
+use Common\Event\UpdateEvent;
+use Common\Event\UserEvent;
+use Think\Storage;
+
 /**
  * Class IndexController
  * @package Admin\Controller
@@ -29,7 +33,30 @@ class IndexController extends AdminBaseController
      */
     public function main()
     {
-        $this->redirect(getURL('Index/index'));
+        $this->redirect('Home/Index/index');
+    }
+
+
+    public function checkVersion()
+    {
+        $UpdateEvent = new UpdateEvent();
+        $cheack_res = $UpdateEvent->check();
+
+        if ($cheack_res) {
+            $message =
+                '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 发现新的可升级版本</a></li>';
+        } else {
+            $message = 'none';
+        }
+
+        die($message);
+    }
+
+
+    public function ajaxCron()
+    {
+        die('ok');
+
     }
 
 
@@ -46,15 +73,58 @@ class IndexController extends AdminBaseController
      */
     public function changepassHandle()
     {
-        $User = D('User', 'Logic');
-        $User->user_id = (int)$_SESSION [C('USER_AUTH_KEY')];
-        $User->user_pass = encrypt($_POST['password']);
 
-        if ($User->save()) {
-            $this->success('密码修改成功', U("Admin/Login/logout"), false);
-        } else {
-            $this->error('密码修改失败');
+        if (I('post.password') != I('post.rpassword')) {
+            $this->error('两次密码不同');
         }
+
+        $uid = get_current_user_id();
+
+        $UserEvent = new UserEvent();
+        $changePasswordRes = $UserEvent->changePassword($uid, I('post.opassword'), I('post.password'));
+
+        $this->json2Response($changePasswordRes);
+
+    }
+
+
+    public function profile()
+    {
+
+        $uid = get_current_user_id();
+        $user = D('User', 'Logic')->detail($uid);
+        $this->assign('user', $user);
+        $this->assign('action', '用户档案');
+
+        $this->display();
+
+
+    }
+
+
+    public function sns()
+    {
+        $this->display();
+
+    }
+
+
+    public function updateComplete()
+    {
+        $this->assign('action', '升级完成');
+        $this->assign('action_name', 'updateComplete');
+
+
+        $Storage = new Storage();
+        $Storage::connect();
+
+        if ($Storage::has("UpdateLOG")) {
+            $update_content = nl2br($Storage::read('UpdateLOG'));
+            $this->assign('update_content', $update_content);
+        }
+
+        $this->display("update");
+
     }
 
 

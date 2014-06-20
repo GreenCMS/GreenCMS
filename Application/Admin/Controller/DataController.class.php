@@ -8,8 +8,9 @@
  */
 
 namespace Admin\Controller;
-use Common\Util\File;
 
+use Common\Util\File;
+use Common\Event\SystemEvent;
 
 /**
  * Class DataController
@@ -24,7 +25,6 @@ class DataController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-        $this->isSae();
 
     }
 
@@ -78,7 +78,8 @@ class DataController extends AdminBaseController
      */
     public function backupHandle()
     {
-        if (!IS_POST) $this->error("访问出错啦");
+
+         if (!IS_POST) $this->error("访问出错啦");
         $type = "手动自动备份";
         $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
         $tables = empty($_POST['table']) ? array() : $_POST['table'];
@@ -186,7 +187,7 @@ class DataController extends AdminBaseController
                         $imported += $execute;
                         $_SESSION['cacheRestore']['imported'] = $imported;
                         echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>',
-                                               "url"    => U('Admin/Data/restoreData')));
+                            "url" => U('Admin/Data/restoreData')));
                         //, array(randCode() => randCode())
                         exit;
                     }
@@ -213,7 +214,7 @@ class DataController extends AdminBaseController
             //  $this->checkToken();
             $sql_files = explode(',', $_POST['sqlFiles']);
             if (empty($sql_files) || count($sql_files) == 0 || $_POST['sqlFiles'] == "") {
-                $this->json_return(0, "请先选择要删除的sql文件");
+                $this->jsonReturn(0, "请先选择要删除的sql文件");
 
             }
 
@@ -222,7 +223,7 @@ class DataController extends AdminBaseController
                 File::delFile(DB_Backup_PATH . $file);
             }
 
-            $this->json_return(1, "已删除：" . implode("、", $files), __URL__);
+            $this->jsonReturn(1, "已删除：" . implode("、", $files), __URL__);
 
         }
     }
@@ -238,7 +239,7 @@ class DataController extends AdminBaseController
         $sql = explode(',', $_POST['sqlFiles']);
 
         if (empty($sql) || count($sql) == 0 || $_POST['sqlFiles'] == "") {
-            $this->json_return(0, "请选择要发送到邮件的sql文件");
+            $this->jsonReturn(0, "请选择要发送到邮件的sql文件");
         }
 
         $files = $sql;
@@ -246,7 +247,7 @@ class DataController extends AdminBaseController
         if (is_email($_POST['to'])) {
             $_SESSION['cacheSendSql']['to'] = $_POST['to'];
         } else {
-            $this->json_return(0, "接受SQL文件的邮件地址格式错误");
+            $this->jsonReturn(0, "接受SQL文件的邮件地址格式错误");
         }
 
         $sqlFiles = array();
@@ -304,9 +305,7 @@ class DataController extends AdminBaseController
             $to = $_SESSION['cacheSendSql']['to'];
             $sum = $_SESSION['cacheSendSql']['count'];
 
-            //$tempstr=$to. "数据库备份" . "网站：<b>" .C('title'). "</b> 数据文件备份";
 
-            // $filesready = explode(',', $files);
 
             $zipOut = "sqlBackup.zip";
             if (File::zip($sqlFiles, $zipOut)) {
@@ -316,40 +315,16 @@ class DataController extends AdminBaseController
             }
 
 
-            //  foreach ($files as $k => $zipFiles) {
-//                 $zipOut = $sum == 1 ? "sqlBackup.zip" : "sqlBackup_" . ($k + 1). ".zip";
-
-            //TODO check here
-            // 	$zipOut = $sum == 1 ? "sqlBackup.zip" : "sqlBackup_{$k}.zip";
-
-
-            //	Log::write('$zipFiles:'.$zipFiles);
-
-            // $MySQLLogic= new \Admin\Logic\MySQLLogic();
-
-            //   if ( $MySQLLogic->zip($zipFiles, $zipOut)) {
-            //  	Log::write('$zipFiles:'.$zipFiles.'//$zipOut:'.$zipOut);
-
-            //TODO is_ok
-            // send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", DB_Backup_PATH .'CUSTOM_20131016_o2Jke_1.sql');//
-            //        send_mail($to, "", "数据库备份" . ($k + 1) . "/{$sum}", "网站：<b>" . $this->site['SITE_INFO']['name'] . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut);//
-
 
             File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
 
-
-            // echo json_encode(array("status" => 1, "info" => "如果要发送SQL文件卷较大(多)发送时间可能需要几分钟甚至更久，请耐心等待，发送期间请勿刷新本页。SQL打包成{$sum}个zip包，分{$sum}封邮件发出，<font color=\"red\">当前已经发送完第{$k}封邮件</font>", "url" => U('Admin/Data/sendSql', array(randCode() => randCode()))));
-            // unset($_SESSION['cacheSendSql']['files'][$k]);
-            // exit;
-            //    }
-            // }
             $time = time() - $_SESSION['cacheSendSql']['time'];
             unset($_SESSION['cacheSendSql']);
 
             if (is_bool($res) && $res == true) {
-                $this->json_return(1, "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒");
+                $this->jsonReturn(1, "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒");
             } else {
-                $this->json_return(1, "$res");
+                $this->jsonReturn(1, "$res");
             }
         }
         $this->display();
@@ -364,7 +339,7 @@ class DataController extends AdminBaseController
             header('Content-Type:application/json; charset=utf-8');
             $sqlFiles = explode(',', $_POST['sqlFiles']);
             if (empty($sqlFiles) || count($sqlFiles) == 0 || $_POST['sqlFiles'] == "")
-                $this->json_return(0, "请选择要打包的sql文件");
+                $this->jsonReturn(0, "请选择要打包的sql文件");
 
             $files = $sqlFiles;
             $toZip = array();
@@ -380,10 +355,10 @@ class DataController extends AdminBaseController
                     }*/
                 } else {
                     //die(json_encode(array("status" => 2, "info" => "打包过程出现错误")));
-                    $this->json_return(2, "打包过程出现错误");
+                    $this->jsonReturn(2, "打包过程出现错误");
                 }
             }
-            $this->json_return(1, "打包的sql文件成功，本次打包" . count($toZip) . "个zip文件", U('Admin/Data/zipList'));
+            $this->jsonReturn(1, "打包的sql文件成功，本次打包" . count($toZip) . "个zip文件", U('Admin/Data/zipList'));
         }
     }
 
@@ -414,7 +389,7 @@ class DataController extends AdminBaseController
 
         $_SESSION['unzip']['time'] = time();
         if (empty($zipFiles) || count($zipFiles) == 0 || $_POST['zipFiles'] == "")
-            $this->json_return(0, "请选择要解压的zip文件");
+            $this->jsonReturn(0, "请选择要解压的zip文件");
 
         $files = $zipFiles;
 //      $_SESSION['unzip']['files'] = $files;
@@ -431,7 +406,7 @@ class DataController extends AdminBaseController
 
         $time = time() - $_SESSION['unzip']['time'];
         unset($_SESSION['unzip']);
-        $this->json_return(1, "已解压完成&nbsp;&nbsp;耗时：$time 秒", U('Admin/Data/restore'));
+        $this->jsonReturn(1, "已解压完成&nbsp;&nbsp;耗时：$time 秒", U('Admin/Data/restore'));
 
     }
 
@@ -443,7 +418,7 @@ class DataController extends AdminBaseController
         if (IS_POST) {
             $zipFiles = explode(',', $_POST['zipFiles']);
             if (empty($zipFiles) || count($zipFiles) == 0 || $_POST['zipFiles'] == "") {
-                $this->json_return(0, "请先选择要删除的zip文件");
+                $this->jsonReturn(0, "请先选择要删除的zip文件");
             }
             $files = $zipFiles;
             foreach ($files as $file) {
@@ -483,10 +458,6 @@ class DataController extends AdminBaseController
     /**
      * cat tag被删除之后完整性不能保证
      */
-    //private
-    /**
-     *
-     */
     function integrity_testing()
     {
 
@@ -498,28 +469,32 @@ class DataController extends AdminBaseController
 
 
     /**
-     *
+     * For Mysql only
      */
     public function repair()
     {
+        if(C('DB_TYPE')!='mysql'&&C('DB_TYPE')!='mysqli'){
+            $this->error('当前数据库类型不被支持');
+        }
+
         $M = M();
         if (IS_POST) {
 
             $System = new \Common\Event\SystemEvent();
-            $System->post_integrity();
+            $System->postIntegrity();
 
             if (empty($_POST['table']) || count($_POST['table']) == 0) {
-                $this->json_return(0, "请选择要处理的表");
+                $this->jsonReturn(0, "请选择要处理的表");
             }
             $table = implode(',', $_POST['table']);
             if ($_POST['act'] == 'repair') {
                 if ($M->query("REPAIR TABLE {$table} "))
-                    $this->json_return(1, "修复表成功", U('Admin/Data/repair'));
+                    $this->jsonReturn(1, "修复表成功", U('Admin/Data/repair'));
             } elseif ($_POST['act'] == 'optimize') {
                 if ($M->query("OPTIMIZE TABLE $table"))
-                    $this->json_return(1, "优化表成功", U('Admin/Data/repair'));
+                    $this->jsonReturn(1, "优化表成功", U('Admin/Data/repair'));
             }
-            $this->json_return(0, "请选择操作");
+            $this->jsonReturn(0, "请选择操作");
         } else {
             $tabs = $M->query('SHOW TABLE STATUS');
             $total_size = array('table' => 0, 'index' => 0, 'data' => 0, 'free' => 0);
@@ -557,7 +532,7 @@ class DataController extends AdminBaseController
      */
     public function cache()
     {
-        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON',true));
+        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
         $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
         $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
 
@@ -581,29 +556,29 @@ class DataController extends AdminBaseController
     public function clear()
     {
         $caches = array(
-            "HTMLCache"   => array(
+            "HTMLCache" => array(
                 "name" => "网站HTML缓存文件",
                 "path" => RUNTIME_PATH . "HTML",
                 //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
                 "size" => File::realSize(RUNTIME_PATH . "HTML"),
             ),
-            "HomeCache"   => array(
+            "HomeCache" => array(
                 "name" => "网站缓存文件",
                 "path" => RUNTIME_PATH . "Cache",
                 //"size" => $Dir->size(RUNTIME_PATH . "Cache"),
                 "size" => File::realSize(RUNTIME_PATH . "Cache"),
             ),
-            "HomeData"    => array(
+            "HomeData" => array(
                 "name" => "网站数据库字段缓存文件",
                 "path" => RUNTIME_PATH . "Data",
                 "size" => File::realSize(RUNTIME_PATH . "Data"),
             ),
-            "AdminLog"    => array(
+            "AdminLog" => array(
                 "name" => "网站日志文件",
                 "path" => LOG_PATH,
                 "size" => File::realSize(LOG_PATH),
             ),
-            "AdminTemp"   => array(
+            "AdminTemp" => array(
                 "name" => "网站临时文件",
                 "path" => RUNTIME_PATH . "Temp",
                 "size" => File::realSize(RUNTIME_PATH . "Temp"),
@@ -618,24 +593,35 @@ class DataController extends AdminBaseController
 
         // p($_POST['cache']);die;
         if (IS_POST) {
-            $paths = $_POST ['cache'];
-            foreach ($paths as $path) {
-                if (isset ($caches [$path])) {
-                    $res = File::delAll($caches [$path] ['path'], true);
+
+            if (C('DATA_CACHE_TYPE') == 'File') {
+                $paths = $_POST ['cache'];
+                foreach ($paths as $path) {
+                    if (isset ($caches [$path])) {
+                        $res = File::delAll($caches [$path] ['path'], true);
+                    }
                 }
-                //$Dir->delDirAndFile($caches [$path] ['path']);
+            }else{
+                $SystemEvent = new SystemEvent;
+                $SystemEvent->clearCacheAll();
             }
 
-            /*echo json_encode ( array (
-                    "status" => 1,
-                    "info" => "缓存文件已清除"
-            ) );*/
+
+
             $this->success("清除成功");
         } else {
 
             $this->assign("caches", $caches);
             $this->display();
         }
+    }
+
+
+    public function clearAll()
+    {
+        $SystemEvent = new SystemEvent;
+        $SystemEvent->clearCacheAll();
+        $this->success("清除成功");
     }
 
 

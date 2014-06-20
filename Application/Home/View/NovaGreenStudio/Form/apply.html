@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>加入我们 | {:get_opinion('title')}</title>
+    <meta name="description" content="{:get_opinion('description')}">
+    <meta name="keywords" content="{:get_opinion('keywords')}"/>
+    <meta name="author" content="greenstudio"/>
+
+    <meta name="viewport" content="width=device-width">
+
+    <include file="Public:head"/>
+    <style>
+
+
+        #contactform label {
+            display: inline;
+            font-size: 25px;
+
+        }
+
+        #contactform input {
+            min-height: 30px;
+            display: inline;
+
+        }
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+{:W('Widget/menuHead')}
+
+
+<section>
+    <div style=" width:550px; text-align:center; margin:0 auto;">
+        <div>
+            <form id="contactform" class="rounded" method="POST" action="#">
+                <h2>加入我们！</h2>
+
+                <div class="field">
+                    <label for="name">姓名:</label>
+                    <input type="text"
+                           style=" width:300px; background-color: #FFF; margin-left:50px; border: 1px solid #b9bdc1; "
+                           class="input" name="name" id="name"/>
+                </div>
+                </br>
+                <div class="field">
+                    <label for="class">学号:</label>
+                    <input type="text"
+                           style=" width:300px; background-color: #FFF; margin-left:50px; border: 1px solid #b9bdc1;"
+                           class="input" name="class" id="class"/>
+                </div>
+                </br>
+                <div class="field">
+                    <label for="tel">电话:</label>
+                    <input type="text"
+                           style=" width:300px; background-color: #FFF; margin-left:50px; border: 1px solid #b9bdc1;"
+                           class="input" name="tel" id="tel"/>
+                </div>
+                </br>
+                <div class="field">
+                    <label for="email">邮箱:</label>
+                    <input type="text"
+                           style=" width:300px; background-color: #FFF; margin-left:50px; border: 1px solid #b9bdc1;"
+                           class="input" name="email" id="email"/>
+                </div>
+                </br>
+                <div class="field" >
+                    <label for="direction">方向:</label>
+
+                    <div  >
+
+                        <input type="radio" name="direction" value="ui"/> UI设计&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(HTML
+                        CSS JS PHOTOSHOP)
+                        <br/>
+                        <input type="radio" name="direction" value="mobile"/> 移动应用开发&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Android
+                        WP)
+                        <br/>
+                        <input type="radio" name="direction" value="web"/> Web开发与云计算&nbsp;&nbsp;(PHP JAVA .NET)
+                        <br/>
+                        <input type="radio" name="direction" value="bigdata"/> 大数据与运维&nbsp;&nbsp;&nbsp;&nbsp;(Linux
+                        Hadoop)
+                    </div>
+                </div>
+                <br/>
+
+                <div class="field">
+                    <label for="message">自我介绍:</label>
+                    <textarea class="input textarea" style="  width:300px; height:200px; resize:none"
+                              name="message" id="message">
+                    </textarea>
+                </div>
+
+
+                <input type="submit" class="button" value="提交"/>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- /404 error -->
+
+<include file="Public:bottom"/>
+
+<include file="Public:footer"/>
+
+<include file="Public:foot"/>
+
+</body>
+</html>

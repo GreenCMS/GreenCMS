@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>404 | {:get_opinion('title')}</title>
+    <meta name="description" content="{:get_opinion('description')}">
+    <meta name="keywords" content="{:get_opinion('keywords')}"/>
+    <meta name="author" content="greenstudio"/>
+
+    <meta name="viewport" content="width=device-width">
+
+    <include file="Public:head"/>
+
+</head>
+
+<body>
+{:W('Widget/menuHead')}
+
+<!-- 404 error -->
+<section id="error" class="container">
+    <h1>404, Page not found</h1>
+
+    <p>{$message}</p>
+    <a class="btn btn-success" href="{:U('/')}">回到首页</a>
+</section>
+<!-- /404 error -->
+
+<include file="Public:bottom"/>
+
+<include file="Public:footer"/>
+
+<include file="Public:foot"/>
+
+</body>
+</html>

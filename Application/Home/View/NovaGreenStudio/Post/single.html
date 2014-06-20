@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> {$post.post_title}|{:get_opinion('title')} </title>
+    <meta name="description" content="{:get_opinion('description')}">
+    <meta name="keywords" content="{:get_opinion('keywords')}"/>
+    <meta name="author" content="greenstudio"/>
+
+    <meta name="viewport" content="width=device-width">
+
+    <include file="Public:head"/>
+    <style>.thumbnail > img {
+        max-width: 50%;
+    }</style>
+</head>
+
+<body>
+{:W('Widget/menuHead')}
+
+
+<section class="title">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span8">
+                <h1>{$post.post_title}</h1>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- / .title -->
+
+<section class="container">
+
+
+
+
+
+    <section id="about-us" class="container main">
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="blog">
+
+
+                    <div class="blog-item well">
+                        <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                            <h2>{$post.post_top|is_top}{$post.post_title}</h2></a>
+
+                        <div class="blog-meta clearfix">
+                            <p class="pull-left">
+                                <i class="icon-user"></i> 作者: <a href="#">{$post.post_user.user_nicename}</a> |
+                                <i class="icon-folder-close"></i> 分类:
+                                <volist name="post.post_cat" id="cat"><a
+                                        href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
+                                </volist>
+                                |
+
+                                <i class="icon-calendar"></i> {$post['post_date']|getTimeURL=$post['post_type']}
+                            </p>
+
+                            <p class="pull-right"><i class="icon-comment pull"></i>
+                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments">{$post.post_comment_count}
+                                    Comments</a></p>
+
+
+                            <control access="Admin/Posts/posts">
+                                <a href="{:U('Admin/Posts/posts',array('id'=>$post['post_id']))}">  | 编辑</a>
+                            </control>
+
+                        </div>
+                        <!--<p> {$post|get_post_thumbnail}</p>-->
+
+                        <p>{$post.post_content}</p>
+
+
+                        <div class="tag">
+                            标签 :
+                            <volist name="post.post_tag" id="tag"><a
+                                    href="{$tag.tag_id|getTagURLByID}">
+                                <span class="label label-success">{$tag.tag_name}</span></a>,
+                            </volist>
+
+                        </div>
+
+
+                        <!-- About Author -->
+                        <article class="post-author">
+
+
+
+                            <h4>
+
+                                <br/>
+                                上一篇:{$post['post_id']|get_previous_post=$post['post_cat']|is_empty=没有了}
+                                <br/>
+
+                                下一篇: {$post['post_id']|get_next_post=$post['post_cat']|is_empty=没有了}
+                            </h4>
+
+                         </article>
+
+                        {:hook('documentDetailAfter', $post)}
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <aside class="span4">
+
+                <!-- /.search -->
+
+
+                {:W('Widget/search')}
+                {:W('Widget/recentPost')}
+                {:W('Widget/tag')}
+                {:W('Widget/categories')}
+                {:W('Widget/aboutUs')}
+
+
+                <!-- End Archive Widget -->
+
+            </aside>
+        </div>
+
+    </section>
+
+
+</section>
+
+
+<include file="Public:bottom"/>
+
+<include file="Public:footer"/>
+
+<include file="Public:foot"/>
+
+</body>
+</html>

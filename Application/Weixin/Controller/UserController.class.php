@@ -106,9 +106,9 @@ class UserController extends WeixinBaseController
         $res = $User->sendMessage(I('get.openid'), I('post.chat_content'));
 
         if ($res['errcode'] == 0) {
-            $this->json_return(1, '发送成功'. $res['errmsg']);
+            $this->jsonReturn(1, '发送成功'. $res['errmsg']);
         } else {
-            $this->json_return(0, '发送失败' . $res['errmsg']);
+            $this->jsonReturn(0, '发送失败' . $res['errmsg']);
         }
 
 

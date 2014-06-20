@@ -9,44 +9,8 @@
 #禁止显示目录列表
 Options -Indexes
 
-<IfModule mod_expires.c>
-ExpiresActive On
-ExpiresByType image/gif A2592000
-ExpiresByType image/jpeg A2592000
-ExpiresByType image/png A2592000
-ExpiresByType application/x-shockwave-flash A2592000
-ExpiresByType text/css A2592000
-ExpiresByType application/x-javascript A2592000
-ExpiresByType application/javascript A2592000
-ExpiresByType text/javascript A2592000
-ExpiresByType text/html A600
-</IfModule>
 
-<IfModule mod_deflate.c>
-<FilesMatch ".(js|css|html|htm)$">
-SetOutputFilter DEFLATE
-</FilesMatch>
-</IfModule>
-
-<ifModule mod_gzip.c>
-  mod_gzip_on Yes
-  mod_gzip_dechunk Yes
-  mod_gzip_item_include file .(html?|txt|css|js|php|pl)$
-  mod_gzip_item_include handler ^cgi-script$
-  mod_gzip_item_include mime ^text/.*
-  mod_gzip_item_include mime ^application/x-javascript.*
-  mod_gzip_item_exclude mime ^image/.*
-  mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
-</ifModule>
-
-
-#模板保护
-<Files *.html>
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-#模板保护
+#模板sql
 <Files *.sql>
     Order Allow,Deny
     Deny from all

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/share/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+
+</head>
+<body class="skin-black">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{$Think.config.title}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <form action="{$form_action}" name="change_System"
+                                  method="post" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <label class="control-label">文件上传</label>
+
+                                    <div class="controls">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                <img src="__PUBLIC__/share/img/no+image.gif" alt=""/>
+                                            </div>
+                                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                            <div >
+													<span class="btn bg-btn-file"><span class="fileupload-new">选择图片</span>
+													<span class="fileupload-exists">改变</span>
+													<input type="file" class="default" name="img"/></span>
+                                                <a href="#" class="btn fileupload-exists"
+                                                   data-dismiss="fileupload">移除</a>
+                                            </div>
+                                        </div>
+                                        <span class="label label-important">注意!</span>
+											<span>
+											由于微信官方限制,图片有效期只有3天,请谨慎使用,且仅支持JPG格式
+											</span>
+                                        <br/>
+                                        <span class="label label-important">注意!</span>
+											<span>
+											实时预览支持最新版Firefox, Chrome, Opera,
+											Safari 和 Internet Explorer 10 以上版本。
+
+											</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn  bg-blue"><i class="icon-ok"></i>{$action_name}
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+<script type="text/javascript" src="__PUBLIC__/share/plugins/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+
+</body>
+</html>
