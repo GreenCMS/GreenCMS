@@ -421,6 +421,8 @@ CREATE TABLE `green_posts` (
   `post_type` varchar(255) NOT NULL DEFAULT 'single',
   `post_img` varchar(255) DEFAULT NULL,
   `post_top` smallint(6) DEFAULT '0',
+  `post_url` varchar(255) ,
+
   PRIMARY KEY (`post_id`),
   KEY `post_name` (`post_name`),
   KEY `type_status_date` (`post_status`,`post_date`,`post_id`),

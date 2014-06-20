@@ -85,3 +85,15 @@ function upgrade_20140527_to_20140602()
     $Model->query($sql);
 
 }
+
+
+
+function upgrade_20140620_to_20140621()
+{
+    $db_prefix = C('db_prefix');
+
+    $Model = new \Think\Model();
+
+    $sql = "ALTER TABLE `{$db_prefix}posts` ADD COLUMN `post_url` varchar(255)";
+    $Model->query($sql);
+}

@@ -26,6 +26,7 @@ return array(
 
     "post_model" => array(
         'native' => '原生模式',
+        'absolute' => '绝对链接',
         'year/month/day/post_id' => '年/月/日/post_id',
         'year/month/day/post_name' => '年/月/日/post_name',
         'year/month/post_id' => '年/月/post_id',
@@ -33,7 +34,7 @@ return array(
         'year/post_id' => '年/post_id',
         'year/post_name' => '年/post_name'),
 
-    "url_model" => array(
+    "url_model0" => array(
         0 => '普通模式',
         1 => 'PATHINFO模式',
         2 => 'REWRITE模式',

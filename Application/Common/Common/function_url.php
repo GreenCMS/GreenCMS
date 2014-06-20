@@ -113,6 +113,11 @@ function get_post_url($post, $group = '')
             $URL = $url_base . '/' . getTimestamp($post ['post_date'], 'year') . '/' . getTimestamp($post ['post_date'], 'month') . '/' . getTimestamp($post ['post_date'], 'day') . '/' . $post['post_id'];
         } else if ($home_post_model === 'year/month/day/post_name') {
             $URL = $url_base . '/' . getTimestamp($post ['post_date'], 'year') . '/' . getTimestamp($post ['post_date'], 'month') . '/' . getTimestamp($post ['post_date'], 'day') . '/' . $post ['post_name'];
+        } elseif ($home_post_model == 'absolute') {
+            $URL = $post['post_url'];
+            if ($URL == '') {
+                $URL = get_url($group . "Post/" . $post['post_type'], array('info' => $post['post_id']));
+            }
         } else {
             $URL = $url_base . '/' . $post['post_id'];
         }
