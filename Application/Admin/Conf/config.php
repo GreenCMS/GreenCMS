@@ -136,6 +136,11 @@ $menu_arr = array(
 );
 
 $config_admin = array(
+
+    'URL_MODEL' => 0,
+
+
+
     /*
      * RBAC认证配置信息
     */

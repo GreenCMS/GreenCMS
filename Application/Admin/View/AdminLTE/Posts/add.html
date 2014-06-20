@@ -91,11 +91,11 @@
 
     <div class="controls">
         <div class="btn-group">
-            <a class="btn btn-danger" href="#" data-toggle="dropdown">
+            <a class="btn btn-danger" href="#" data-toggle="dropdown" style="width: 200px;" >
                 选择分类 <i class="icon-angle-down"></i>
             </a>
 
-            <div class="dropdown-menu hold-on-click dropdown-checkboxes">
+            <div class="dropdown-menu hold-on-click dropdown-checkboxes" style="width: 300px;">
                 <foreach name="cats" item="vCats">
                     <div><label><input
                             type="checkbox" value="{$vCats.cat_id}" name="cats[]"
@@ -113,11 +113,11 @@
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-primary" href="#" data-toggle="dropdown">
+            <a class="btn btn-primary" href="#" data-toggle="dropdown"  style="width: 200px;" >
                 选择标签 <i class="icon-angle-down"></i>
             </a>
 
-            <div class="dropdown-menu hold-on-click dropdown-checkboxes">
+            <div class="dropdown-menu hold-on-click dropdown-checkboxes" style="width: 500px;">
 
                 <foreach name="tags" item="vTags" key="k"><input
                         type="checkbox" value="{$vTags.tag_id}" name="tags[]"

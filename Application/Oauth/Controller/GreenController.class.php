@@ -9,6 +9,11 @@
 namespace Oauth\Controller;
 
 
+/**
+ * 对外提供登陆服务
+ * Class GreenController
+ * @package Oauth\Controller
+ */
 class GreenController extends OauthBaseController{
 
     //TODO provide Oauth2.0 login

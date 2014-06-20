@@ -55,8 +55,8 @@ class Green extends TagLib
 
     /**
      * @param $tag
-     * @param $content PHP代码
-     * @usage  <green>原生php代码</green>
+     * @param string $content 原生php变量
+     * @usage  <dump>原生php变量</dump>
      * @return string
      */
     public function _dump($tag, $content)
@@ -84,7 +84,7 @@ class Green extends TagLib
 
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($post_list as $value) {
-            $parseStr .= '<li ' . $li_attr . '><a href="' . getSingleURLByID($value['post_id'], 'single') . '" title="' . $value['post_name'] . '"> ' . mb_substr($value['post_name'], 0, $length, 'UTF-8') . ' </a></li>';
+            $parseStr .= '<li ' . $li_attr . '><a href="' . getSingleURLByID($value['post_id'], 'single') . '" title="' . $value['post_title'] . '"> ' . mb_substr($value['post_title'], 0, $length, 'UTF-8') . ' </a></li>';
         }
         $parseStr .= '</ul>';
 
@@ -113,7 +113,7 @@ class Green extends TagLib
 
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($post_list as $value) {
-            $parseStr .= '<li ' . $li_attr . '><a href="' . getSingleURLByID($value['post_id'], 'single') . '" title="' . $value['post_name'] . '"> ' . mb_substr($value['post_name'], 0, $length, 'UTF-8') . ' </a></li>';
+            $parseStr .= '<li ' . $li_attr . '><a href="' . getSingleURLByID($value['post_id'], 'single') . '" title="' . $value['post_title'] . '"> ' . mb_substr($value['post_title'], 0, $length, 'UTF-8') . ' </a></li>';
         }
         $parseStr .= '</ul>';
 
@@ -131,7 +131,6 @@ class Green extends TagLib
      */
     public function _friendlist($tag, $content)
     {
-
         $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 5;
         $link_tag = isset ($tag ['link_tag']) ? $tag ['link_tag'] : '';
         $link_group_id = isset ($tag ['link_group_id']) ? $tag ['link_group_id'] : '';
@@ -139,31 +138,24 @@ class Green extends TagLib
         $li_attr = isset ($tag ['li_attr']) ? $tag ['li_attr'] : '';
         $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
         $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
-
-
+        $condition=array();
         if ($link_tag != '') {
 
             $condition['link_tag'] = $link_tag;
         } else if ($link_group_id != '') {
             $condition['link_group_id'] = $link_group_id;
         } else {
-
         }
-
-        $link_list = D('Links', 'Logic')->where($condition)->order($order)->limit($num)->select();
-
-
+        $link_list = D('Links', 'Logic')->cache(true,2)->where($condition)->order($order)->limit($num)->select();
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($link_list as $value) {
             $parseStr .= '<li ' . $li_attr . '><a href="' . $value['link_url'] . '" title="' .
                 $value['link_name'] . '"> ' . mb_substr($value['link_name'], 0, $length, 'UTF-8') . ' </a></li>';
         }
         $parseStr .= '</ul>';
-
         if (!empty ($parseStr)) {
             return $parseStr;
         }
-
     }
 
 
@@ -184,7 +176,7 @@ class Green extends TagLib
         $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
         $length = isset ($tag ['length']) ? ( int )$tag ['length'] : 20;
 
-        $post_list = D('Posts', 'Logic')->getList($num, $post_type, $order, $relation);
+         $post_list = D('Posts', 'Logic')->cache(true,2)->getList($num, $post_type, $order, $relation);
 
 
         $parseStr = '<ul ' . $ul_attr . '>';
@@ -278,7 +270,7 @@ class Green extends TagLib
             $condition = array();
         }
 
-        $link_list = D('Links', 'Logic')->where($condition)->order($order)->limit($num)->select();
+        $link_list = D('Links', 'Logic')->cache(true,2)->where($condition)->order($order)->limit($num)->select();
 
 
         $parseStr = '';

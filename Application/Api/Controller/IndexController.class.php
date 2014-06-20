@@ -22,12 +22,19 @@ use Common\Logic\TagsLogic;
 use Common\Util\File;
 use Common\Util\GreenPage;
 
+/**
+ * Class IndexController
+ * @package Api\Controller
+ */
 class IndexController extends ApiBaseController
 {
 
+    /**
+     * 构造函数
+     */
     function __construct()
     {
-        if (get_opinion('api_open', false, 1) == 0) {
+        if (get_opinion('api_open', true, 1) == 0) {
             $this->jsonReturn(0, "API功能关闭");
         }
 
@@ -36,40 +43,38 @@ class IndexController extends ApiBaseController
     }
 
 
+    /**
+     * 最新文章
+     */
     public function latest()
     {
-        $PostsList = new PostsLogic();
-
-        $count = $PostsList->countAll('single'); // 查询满足要求的总记录数
-
+        $PostsLogic = new PostsLogic();
+        $count = $PostsLogic->countAll('single'); // 查询满足要求的总记录数
 
         $Page = new GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
         $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
-        $posts_res = $PostsList->getList($limit, 'single', 'post_id desc', true);
+        $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true);
 
-
-        //
-//        dump($posts_res);
         $res_array["posts"] = array();
-        foreach ($posts_res as $post) {
-            $temp = array();
-            $temp["post_id"] = $post["post_id"];
-            $temp["post_title"] = $post["post_title"];
-            $temp["post_date"] = $post["post_date"];
+        foreach ($posts_list as $post) {
+            $post_temp = array();
+            $post_temp["post_id"] = $post["post_id"];
+            $post_temp["post_title"] = $post["post_title"];
+            $post_temp["post_date"] = $post["post_date"];
+            $post_temp["post_content"] = mb_substr(strip_tags(str_replace("&nbsp;", "", $post["post_content"])), 0, 200, 'utf-8');
+            $post_temp['url'] = U('Api/Index/post', array('id' => $post['post_id']), false, true);
 
-
-            $temp["post_content"] = mb_substr(strip_tags(str_replace("&nbsp;", "", $post["post_content"])), 0, 200, 'utf-8');
-            $temp['url'] = U('Api/Index/post', array('id' => $post['post_id']), false, true);
-
-            array_push($res_array["posts"], $temp);
+            array_push($res_array["posts"], $post_temp);
         }
 
-//        dump($res);
-        die(json_encode($res_array));
-
+        $this->jsonReturn(1, $res_array);
 
     }
 
+    /**
+     * 文章详细
+     * @param int $id 文章id
+     */
     public function post($id = -1)
     {
         $Posts = new PostsLogic();
@@ -77,19 +82,21 @@ class IndexController extends ApiBaseController
 
         $res_array = array();
         if (!$post_res) {
-            $this->jsonReturn(0);
+            $this->jsonReturn(0, '没有找到文章');
         } else {
             $post_res['post_content'] = strip_tags($post_res['post_content']);
             $post_res['url'] = U('Api/Index/post', array('id' => $post_res['post_id']), false, true);
 
-            $res_array["detail"] = $post_res;
-
-            $this->jsonReturn(1, $res_array);
+            $this->jsonReturn(1, $post_res);
         }
 
     }
 
 
+    /**
+     * 文章归档
+     * @param string $key 搜索需要的关键字
+     */
     public function archive($key = '')
     {
         $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
@@ -109,20 +116,21 @@ class IndexController extends ApiBaseController
 
             }
             $res_array["posts"] = $res;
-//            $this->json_return(1, $res_array);
-            die(json_encode($res_array));
+            $this->jsonReturn(1, $res_array);
 
         } else {
             $res_array["posts"] = "没有文章";
-//            $this->json_return(0, $res_array);
-            die(json_encode($res_array));
-
+            $this->jsonReturn(0, $res_array);
 
         }
 
     }
 
 
+    /**
+     * 分类文章
+     * @param int $id 分类id
+     */
     public function cat($id)
     {
         $Cat = new CatsLogic();
@@ -150,6 +158,10 @@ class IndexController extends ApiBaseController
 
     }
 
+    /**
+     * 标签文章
+     * @param int $id 指定标签的文章
+     */
     public function tag($id)
     {
         $Tag = new TagsLogic();
@@ -167,13 +179,12 @@ class IndexController extends ApiBaseController
                 $res[$key]['url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
 
             }
-
-
             $res_array["posts"] = $res;
-            $this->jsonReturn(1, json_encode($res_array));
+
+            $this->jsonReturn(1, ($res_array));
         } else {
             $res_array["detail"] = "没有文章";
-            $this->jsonReturn(0, json_encode($res_array));
+            $this->jsonReturn(0, ($res_array));
         }
 
     }

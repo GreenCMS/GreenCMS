@@ -80,11 +80,13 @@ function get_url_by_menu($menu_item = array(), $is_home = false)
  */
 function get_post_url($post, $group = '')
 {
+    $home_post_model = get_opinion('home_post_model');
+
+
     if (!is_array($post)) {
-        $post = D('Posts', 'Logic')->cache(true)->detail($post);
+        $post = D('Posts', 'Logic')->detail($post, false, array(), true);
     }
 
-    $home_post_model = get_opinion('home_post_model');
     if ($home_post_model == 'native') {
         $URL = get_url($group . "Post/" . $post['post_type'], array('info' => $post['post_id']));
 
@@ -137,7 +139,15 @@ function get_tag_url($tag, $group = '')
 
 
     if (!is_array($tag)) {
-        $tag = $Tags->cache(true)->detail($tag);
+
+        if ($home_tag_model == 'native') {
+            $tmp['tag_id'] = $tag;
+            $tag = $tmp;
+
+        } else {
+            $tag = $Tags->cache(true)->detail($tag);
+        }
+
 
     }
 
@@ -177,7 +187,13 @@ function get_cat_url($cat, $group = '')
     $Cats = D('Cats', 'Logic');
 
     if (!is_array($cat)) {
-        $cat = $Cats->cache(true)->detail($cat);
+        if ($home_cat_model == 'native') {
+            $tmp['cat_id'] = $cat;
+            $cat = $tmp;
+        } else {
+            $cat = $Cats->cache(true)->detail($cat);
+        }
+
     }
 
     if ($home_cat_model == 'native') {

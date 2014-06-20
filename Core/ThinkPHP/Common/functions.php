@@ -500,7 +500,7 @@ function vendor($class, $baseUrl = '', $ext = '.php')
  * D函数用于实例化模型类 格式 [资源://][模块/]模型
  * @param string $name 资源地址
  * @param string $layer 模型层名称
- * @return Think\Model
+ * @return mixed
  */
 function D($name = '', $layer = '')
 {

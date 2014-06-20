@@ -40,8 +40,8 @@ class ArchiveController extends HomeBaseController
         $where['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
         $where['post_content|post_title'] = array('like', "%$keyword%");
 
-        $PostsList = new PostsLogic();
-        $count = $PostsList->countAll('all', $where); // 查询满足要求的总记录数
+        $PostsLogic = new PostsLogic();
+        $count = $PostsLogic->countAll('all', $where); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
@@ -49,7 +49,7 @@ class ArchiveController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
 
-            $posts_list = $PostsList->getList($limit, 'all', 'post_id desc', true, $where);
+            $posts_list = $PostsLogic->getList($limit, 'all', 'post_id desc', true, $where);
         }
         $this->assign('title', '关于"' . $keyword . '"文章搜索结果');
         $this->assign('res404', $res404);
@@ -76,16 +76,16 @@ class ArchiveController extends HomeBaseController
             (I('get.month', '') ? I('get.month', '') . '月' : '') . (I('get.day', '') ? I('get.day', '') . '日' : '');
 
 
-        $PostsList = new PostsLogic();
+        $PostsLogic = new PostsLogic();
 
-        $count = $PostsList->countAll('single', $where); // 查询满足要求的总记录数
+        $count = $PostsLogic->countAll('single', $where); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
-            $posts_list = $PostsList->getList($limit, 'single', 'post_id desc', true, $where);
+            $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true, $where);
         }
         $this->assign('title', $title_prefix . '所有文章');
         $this->assign('res404', $res404); // 赋值数据集
@@ -109,16 +109,16 @@ class ArchiveController extends HomeBaseController
             (I('get.month', '') ? I('get.month', '') . '月' : '') . (I('get.day', '') ? I('get.day', '') . '日' : '');
 
 
-        $PostsList = new PostsLogic();
+        $PostsLogic = new PostsLogic();
 
-        $count = $PostsList->countAll('page', $where); // 查询满足要求的总记录数
+        $count = $PostsLogic->countAll('page', $where); // 查询满足要求的总记录数
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
 
-            $posts_list = $PostsList->getList($limit, 'page', 'post_id desc', true, $where);
+            $posts_list = $PostsLogic->getList($limit, 'page', 'post_id desc', true, $where);
         }
         $this->assign('title', $title_prefix . '所有页面');
         $this->assign('res404', $res404); // 赋值数据集
@@ -151,16 +151,16 @@ class ArchiveController extends HomeBaseController
         $map['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
         if (I('get.uid') != '') $map['user_id'] = I('get.uid');
 
-        $PostsList = new PostsLogic();
+        $PostsLogic = new PostsLogic();
 
-        $count = $PostsList->countAll($post_type, $map); // 查询满足要求的总记录数
+        $count = $PostsLogic->countAll($post_type, $map); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER'));
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $posts_list = $PostsList->getList($limit, $post_type, 'post_id desc', true, $map);
+            $posts_list = $PostsLogic->getList($limit, $post_type, 'post_id desc', true, $map);
         }
         $this->assign('title', $title_prefix . '所有' . $post_type);
         $this->assign('res404', $res404); // 赋值数据集

@@ -37,6 +37,11 @@ class LinksModel extends RelationModel
             'foreign_key'  => 'link_group_id',
 
             'parent_key'   => 'link_group_id',
+
+            'mapping_order' => 'link_group_id',
+
+            'mapping_limit' => 0,
+
         )
     );
 

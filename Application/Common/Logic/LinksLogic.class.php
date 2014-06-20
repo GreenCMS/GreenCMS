@@ -49,6 +49,7 @@ class LinksLogic extends RelationModel
     {
         $condition['link_group_id'] = $link_group_id;
 
+        //兼容旧版本
         if ($link_group_id == 0) {
             $condition = "link_group_id is null or link_group_id=0";
         }

@@ -14,17 +14,27 @@ use \Oauth\Event\TypeEvent;
 use \Oauth\Logic\User_snsLogic;
 use Org\Util\Rbac;
 
+/**
+ * Class SnsController
+ * @package Oauth\Controller
+ */
 class SnsController extends OauthBaseController
 {
 
 
+    /**
+     *
+     */
     public function __construct()
     {
         parent::__construct();
         include_once(Extend_PATH . 'ThinkSDK/ThinkOauth.class.php');
     }
 
-    // 登录地址
+    /**
+     * 登录地址
+     * @param null $type
+     */
     public function login($type = null)
     {
         empty ($type) && $this->error('参数错误');
@@ -36,7 +46,11 @@ class SnsController extends OauthBaseController
         redirect($sns->getRequestCodeURL());
     }
 
-    // 授权回调地址
+    /**
+     * 授权回调地址
+     * @param null $type
+     * @param null $code
+     */
     public function callback($type = null, $code = null)
     {
         (empty ($type) || empty ($code)) && $this->error('参数错误');
@@ -48,7 +62,7 @@ class SnsController extends OauthBaseController
         $extend = null;
         if ($type == 'tencent') {
             $extend = array(
-                'openid' =>I('get.openid'),
+                'openid' => I('get.openid'),
                 'openkey' => I('get.openkey')
             );
         }
@@ -123,7 +137,7 @@ class SnsController extends OauthBaseController
                         $map['user_id'] = $open_user_info['User']['user_id'];
                         $map['user_login'] = $open_user_info['User']['user_login'];
 
-                        $UserEvent=new UserEvent();
+                        $UserEvent = new UserEvent();
                         $UserEvent->auth($map);
                         $loginRes = $UserEvent->auth($map);
                         $this->json2Response($loginRes);

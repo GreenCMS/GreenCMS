@@ -11,6 +11,7 @@ namespace Admin\Controller;
 
 use Admin\Event\PostsEvent;
 use Common\Logic\PostsLogic;
+use Common\Logic\TagsLogic;
 use Common\Util\GreenPage;
 use Org\Util\Rbac;
 
@@ -358,7 +359,9 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'preDel';
 
-        if (D('Posts', 'Logic')->where($where)->relatioin(true)->delete()) {
+        $PostsLogic = new PostsLogic();
+
+        if ($PostsLogic->where($where)->relation(true)->delete()) {
             $this->success('清空回收站成功');
         } else {
             $this->error('清空回收站失败');
@@ -510,7 +513,6 @@ class PostsController extends AdminBaseController
     public function category()
     {
         $cat_list = D("Cats", "Logic")->relation(true)->category();
-
         foreach ($cat_list as $key => $value) {
             $cat_list[$key]["cat_father"] = D('Cats', 'Logic')->detail($value["cat_father"]);
         }
@@ -621,9 +623,23 @@ class PostsController extends AdminBaseController
      */
     public function tag()
     {
+        $page = I('get.page', C('PAGER'));
 
-        $tags = D('Tags')->select();
+        $TagsLogic = new TagsLogic();
+
+
+        $count = $TagsLogic->count(); // 查询满足要求的总记录数
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $tags =$TagsLogic->selectWithPostsCount($limit);
+        }
+
+
         $this->assign('tags', $tags);
+        $this->assign('pager', $pager_bar);
 
         $this->display();
     }

@@ -10,7 +10,9 @@
 namespace Admin\Controller;
 
 
+use Admin\Logic\AccessLogic;
 use Common\Event\AccessEvent;
+use Common\Logic\UserLogic;
 use Common\Util\Category;
 use Common\Util\GreenPage;
 
@@ -35,9 +37,23 @@ class AccessController extends AdminBaseController
      */
     public function index()
     {
-        $list = D('Access', 'Logic')->adminList();
+        $page = I('get.page', C('PAGER'));
+
+        $UserLogic = new UserLogic();
+
+        $where = array("user_level" => array('neq', 5));
+        $count = $UserLogic->where($where)->count();
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $list = D('Access', 'Logic')->adminList($limit);
+        }
 
         $this->assign('listname', '管理组用户');
+
+        $this->assign('pager', $pager_bar);
         $this->assign('list', $list);
         $this->display('userlist');
     }
@@ -48,8 +64,21 @@ class AccessController extends AdminBaseController
      */
     public function guest()
     {
-        $list = D('Access', 'Logic')->guestList();
+        $page = I('get.page', C('PAGER'));
 
+        $UserLogic = new UserLogic();
+
+        $where = array("user_level" => array('eq', 5));
+        $count = $UserLogic->where($where)->count();
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $list = D('Access', 'Logic')->guestList($limit);
+        }
+
+        $this->assign('pager', $pager_bar);
         $this->assign('listname', '游客用户');
         $this->assign('list', $list);
 

@@ -28,7 +28,7 @@ class Category
      * @var array
      */
 
-    private $rawList = array();
+    public $rawList = array();
     /**
      * 格式化后的分类
      * @var array

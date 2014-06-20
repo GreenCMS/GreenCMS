@@ -165,13 +165,14 @@ class WidgetWidget extends Controller
     }
 
 
-    public function menuHead($position = 'head', $ul_attr, $li_attr, $ul_attr2, $li_attr2, $split)
+    public function menuHead($position = 'head') //, $ul_attr='', $li_attr, $ul_attr2, $li_attr2, $split
     {
 
         $Menu = new MenuLogic();
         $menu = $Menu->getMenu($position);
 
-        $this->assign('home_menu', $menu);
+
+        $this->assign('home_menu', ($menu));
         $this->display('Widget:menuHead');
 
 
