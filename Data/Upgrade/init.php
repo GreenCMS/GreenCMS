@@ -88,7 +88,7 @@ function upgrade_20140527_to_20140602()
 
 
 
-function upgrade_20140620_to_20140621()
+function upgrade_20140620_to_20140622()
 {
     $db_prefix = C('db_prefix');
 
@@ -96,4 +96,22 @@ function upgrade_20140620_to_20140621()
 
     $sql = "ALTER TABLE `{$db_prefix}posts` ADD COLUMN `post_url` varchar(255)";
     $Model->query($sql);
+
+    $sql = "DROP TABLE IF EXISTS `{$db_prefix}log`";
+    $Model->query($sql);
+
+    $sql = "CREATE TABLE `{$db_prefix}log` (
+  `log_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `log_type` int(5) DEFAULT NULL,
+  `log_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `group_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `module_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `action_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `message` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`log_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统日志记录';";
+
+    $Model->query($sql);
+
 }
