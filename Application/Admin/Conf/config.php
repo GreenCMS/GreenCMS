@@ -38,16 +38,12 @@ $menu_arr = array(
 
     'admin_sub_menu' => array(
         'Index' => array(
-            'Index/index' => '首页基本信息',
-            'Index/main' => '返回home',
-            'Index/checkVersion' => '检查版本',
-            'Index/ajaxCron' => 'ajax定时计划触发',
+            'Index/index' => '基本信息',
             'Index/profile' => '用户信息',
             'Index/sns' => '社交账号绑定',
             'Index/changePass' => '修改密码',
-            'Index/changepassHandle' => '修改密码处理',
-            'Index/updateComplete' => '升级完成',
         ),
+
 
         'Posts' => array(
 

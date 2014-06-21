@@ -186,18 +186,22 @@ class AdminBaseController extends BaseController
 
         $this->group_name = $group_level_1[MODULE_NAME] ? $group_level_1[MODULE_NAME] : "Admin";
         $this->module_name = $admin_level_2[CONTROLLER_NAME] ? $admin_level_2[CONTROLLER_NAME] : CONTROLLER_NAME;
-        $this->action_name = $admin_level_3[CONTROLLER_NAME] [CONTROLLER_NAME . '/' . ACTION_NAME] ? $admin_level_3[CONTROLLER_NAME] [CONTROLLER_NAME . '/' . ACTION_NAME] : CONTROLLER_NAME . '/' . ACTION_NAME;
+        $this->action_name = $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] ? $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] : CONTROLLER_NAME . '/' . ACTION_NAME;
 
-          $LogLogic =  D('Log','Logic');
+          $LogLogic =  D('Log');
 
         $log_data['user_id']=get_current_user_id();
+
+
         $log_data['group_name']=$this->group_name;
         $log_data['module_name']=$this->module_name;
         $log_data['action_name']=$this->action_name;
         $log_data['message']='';
         $log_data['log_type']=1;
-
+        $log_data['user_ip']=get_client_ip();
+//        dump($log_data);
         $LogLogic->data($log_data)->add();
+//        dump($LogLogic->getlastsql());
 
         parent::__destruct();
 

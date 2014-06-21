@@ -248,7 +248,7 @@ class Model {
                 }    
             }else{
                 $fields =   $this->fields;
-            }        
+            }
             foreach ($data as $key=>$val){
                 if(!in_array($key,$fields,true)){
                     unset($data[$key]);
@@ -258,7 +258,7 @@ class Model {
                 }
             }
         }
-       
+
         // 安全过滤
         if(!empty($this->options['filter'])) {
             $data = array_map($this->options['filter'],$data);
