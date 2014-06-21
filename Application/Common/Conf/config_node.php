@@ -1,29 +1,22 @@
 <?php
 /**
- * Created by Green Studio.
- * File: config.php
+ * Created by PhpStorm.
  * User: TianShuo
- * Date: 14-1-15
- * Time: 下午11:23
+ * Date: 14-6-21
+ * Time: 下午6:24
  */
 
 
-$menu_arr = array(
+return array(
 
-    'admin_big_menu_icon' => array(
-        'Posts' => 'fa-book',
-        'Data' => 'fa-bar-chart-o',
-        'Media' => 'fa-camera',
-        'Custom' => 'fa-desktop',
-        'Comments' => 'fa-comment',
-        'Access' => 'fa-lock',
-        'Tools' => 'fa-gavel',
-        'System' => 'fa-gear',
-        'Other' => 'fa-tag',
+    'group_level_1' => array(
+        'Admin' => 'CMS管理',
+        'Weixin' => '微信管理',
+
     ),
 
 
-    'admin_big_menu' => array(
+    'admin_level_2' => array(
         'Index' => '仪表盘',
         'Posts' => '文章页面',
         'Data' => '数据缓存',
@@ -36,17 +29,12 @@ $menu_arr = array(
         'Other' => '其他',
     ),
 
-    'admin_sub_menu' => array(
+    'admin_level_3' => array(
         'Index' => array(
-            'Index/index' => '首页基本信息',
-            'Index/main' => '返回home',
-            'Index/checkVersion' => '检查版本',
-            'Index/ajaxCron' => 'ajax定时计划触发',
+            'Index/index' => '基本信息',
             'Index/profile' => '用户信息',
             'Index/sns' => '社交账号绑定',
             'Index/changePass' => '修改密码',
-            'Index/changepassHandle' => '修改密码处理',
-            'Index/updateComplete' => '升级完成',
         ),
 
         'Posts' => array(
@@ -142,43 +130,6 @@ $menu_arr = array(
     ),
 
 
-
-
-
-);
-
-$config_admin = array(
-
-    'URL_MODEL' => 0,
-
-
-
-    /*
-     * RBAC认证配置信息
-    */
-    'USER_AUTH_ON' => true,
-    'USER_AUTH_TYPE' => 2, // 默认认证类型 1 登录认证 2 实时认证
-    'USER_AUTH_KEY' => 'authId', // 用户认证SESSION标记
-    'ADMIN_AUTH_KEY' => 'ADMIN',
-    'USER_AUTH_MODEL' => 'User', // 默认验证数据表模型
-    'AUTH_PWD_ENCODER' => 'md5', // 用户认证密码加密方式encrypt
-    'USER_AUTH_GATEWAY' => '?s=/Admin/Login/index', // 默认认证网关
-    'NOT_AUTH_MODULE' => 'Public', // 默认无需认证模块
-    'REQUIRE_AUTH_MODULE' => '', // 默认需要认证模块
-    'NOT_AUTH_ACTION' => '', // 默认无需认证操作
-    'REQUIRE_AUTH_ACTION' => '', // 默认需要认证操作
-    'GUEST_AUTH_ON' => false, // 是否开启游客授权访问
-    'GUEST_AUTH_ID' => 0, // 游客的用户ID
-    'RBAC_ROLE_TABLE' => GreenCMS_DB_PREFIX . 'role',
-    'RBAC_USER_TABLE' => GreenCMS_DB_PREFIX . 'role_users',
-    'RBAC_ACCESS_TABLE' => GreenCMS_DB_PREFIX . 'access',
-    'RBAC_NODE_TABLE' => GreenCMS_DB_PREFIX . 'node',
-
-    //'DEFAULT_THEME' => get_opinion("DEFAULT_ADMIN_THEME", true, "AdminLTE"),
-
-    'DEFAULT_THEME' => "AdminLTE",
-    //     'DEFAULT_THEME' => "Metronic",
 );
 
 
-return array_merge($config_admin, $menu_arr);

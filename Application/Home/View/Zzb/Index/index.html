@@ -51,7 +51,7 @@
 
 
             <ul>
-                <catlist cat_id="20" num="5" length="18"></catlist>
+                <catlist cat_id="20" num="8" length="18"></catlist>
             </ul>
 
 
@@ -72,7 +72,8 @@
 
 
         <div id="banner">
-            <div id="banner_bg"></div>  <!--标题背景-->
+            <div id="banner_bg"></div>
+            <!--标题背景-->
             <a href="#" id="banner_info"></a> <!--标题-->
             <ul id="list"></ul>
             <div id="banner_list">
@@ -88,15 +89,15 @@
             <ul>
 
 
-                <catlist cat_id="20" num="5" length="18"></catlist>
+                <!--<catlist cat_id="20" num="8" length="18"></catlist>-->
+                <php> $ssdt = D('Cats', 'Logic')->getPostsByCat(20, 6);
 
-                <!--
-                                <volist name="ssdt" id="vo">
-                                <li><a href="{$vo.post_id|getSingleURLByID=single}"
-                                    title="{$vo.post_name}">{$vo.post_name|mb_substr=0,18,"UTF-8"}</a></li>
+                </php>
+                <volist name="ssdt" id="vo">
+                    <li><a href="{$vo|get_post_url}"
+                           title="{$vo.post_title}">{$vo|process_title}</a></li>
 
-                                </volist>
-            -->
+                </volist>
             </ul>
         </div>
 
@@ -203,7 +204,8 @@
         </div>
 
         <div id="banner2">
-            <div id="banner_bg2"></div>  <!--标题背景-->
+            <div id="banner_bg2"></div>
+            <!--标题背景-->
             <a href="#" id="banner_info2"></a> <!--标题-->
             <ul id="list2"></ul>
             <div id="banner_list2">
@@ -471,7 +473,8 @@
     var f1 = new FloatImg(); //创建FloatImg对象，每个浮动图像都要创建一个FloatImg对象
     f1.show("f1", "__PUBLIC__/Zzb/pic/qzlx.jpg", "http://cqt.njutech.edu.cn", 300, 69, 1, 0); //创建完对象，只需要调用show方法显示浮动图像即可
 </script>
-<div onmouseover="f1.stop();" onmouseout="f1.start();" id="floatimg0" style="position: absolute; z-index: 10000; left: 99px; top: 454px; width: 300px; height: 69px; overflow: hidden;">
+<div onmouseover="f1.stop();" onmouseout="f1.start();" id="floatimg0"
+     style="position: absolute; z-index: 10000; left: 99px; top: 454px; width: 300px; height: 69px; overflow: hidden;">
     <!--<a href="http://cqt.njutech.edu.cn" target="_blank"><img border="0" /></a>-->
 </div>
 </body>

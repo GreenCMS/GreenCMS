@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 use Common\Controller\BaseController;
+use Common\Logic\LogLogic;
 use Org\Util\Rbac;
 
 /**
@@ -18,12 +19,20 @@ use Org\Util\Rbac;
  */
 class AdminBaseController extends BaseController
 {
+
+    private $module_name = '';
+    private $action_name = '';
+    private $group_name = '';
+
+
     /**
      *
      */
     public function __construct()
     {
+
         parent::__construct();
+
         $this->_initialize();
 
         $this->_currentPostion();
@@ -98,6 +107,7 @@ class AdminBaseController extends BaseController
             }
         }
 
+        $this->assign('group', '管理');
         $this->assign('module', $module);
         $this->assign('action', $action);
         $this->assign('module_url', $module_url);
@@ -163,6 +173,34 @@ class AdminBaseController extends BaseController
         $uid = ( int )$_SESSION [C('USER_AUTH_KEY')];
         if ($uid == 1) return true;
         else return false;
+    }
+
+
+    public function __destruct()
+    {
+
+        $group_level_1 = C('group_level_1');
+        $admin_level_2 = C('admin_level_2');
+        $admin_level_3 = C('admin_level_3');
+
+
+        $this->group_name = $group_level_1[MODULE_NAME] ? $group_level_1[MODULE_NAME] : "Admin";
+        $this->module_name = $admin_level_2[CONTROLLER_NAME] ? $admin_level_2[CONTROLLER_NAME] : CONTROLLER_NAME;
+        $this->action_name = $admin_level_3[CONTROLLER_NAME] [CONTROLLER_NAME . '/' . ACTION_NAME] ? $admin_level_3[CONTROLLER_NAME] [CONTROLLER_NAME . '/' . ACTION_NAME] : CONTROLLER_NAME . '/' . ACTION_NAME;
+
+          $LogLogic =  D('Log','Logic');
+
+        $log_data['user_id']=get_current_user_id();
+        $log_data['group_name']=$this->group_name;
+        $log_data['module_name']=$this->module_name;
+        $log_data['action_name']=$this->action_name;
+        $log_data['message']='';
+        $log_data['log_type']=1;
+
+        $LogLogic->data($log_data)->add();
+
+        parent::__destruct();
+
     }
 
 }

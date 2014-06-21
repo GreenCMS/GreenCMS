@@ -12,6 +12,7 @@ namespace Admin\Controller;
 
 use Admin\Logic\AccessLogic;
 use Common\Event\AccessEvent;
+use Common\Logic\LogLogic;
 use Common\Logic\UserLogic;
 use Common\Util\Category;
 use Common\Util\GreenPage;
@@ -642,6 +643,19 @@ class AccessController extends AdminBaseController
 
         $this->display();
 
+
+    }
+
+    public function log()
+    {
+
+        $LogLogic = new LogLogic();
+
+        $log_list = $LogLogic->getList();
+
+        $this->assign('log_list', $log_list);
+
+        $this->display();
 
     }
 }

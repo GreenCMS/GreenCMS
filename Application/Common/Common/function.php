@@ -727,7 +727,6 @@ function simple_post($url, $data)
  */
 function get_current_user_id()
 {
-
     return ( int )$_SESSION [C('USER_AUTH_KEY')];
 }
 

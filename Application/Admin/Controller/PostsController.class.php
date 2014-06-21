@@ -16,6 +16,7 @@ use Common\Util\GreenPage;
 use Org\Util\Rbac;
 
 /**
+ * Admin模块,文章控制器
  * Class PostsController
  * @package Admin\Controller
  */

@@ -348,6 +348,7 @@ function array_map_recursive($filter, $data)
  * </code>
  * @param string $key 标识位置
  * @param integer $step 步进值
+ * @param bool $save
  * @return mixed
  */
 function N($key, $step = 0, $save = false)
