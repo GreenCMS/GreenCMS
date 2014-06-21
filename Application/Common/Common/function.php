@@ -730,3 +730,42 @@ function get_current_user_id()
 
     return ( int )$_SESSION [C('USER_AUTH_KEY')];
 }
+
+
+/**
+ * 生成UUID
+ * @return string
+ */
+function gen_uuid(){
+    if (function_exists('com_create_guid')){
+        return com_create_guid();
+    }else{
+        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+        $char_id = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45);// "-"
+        $uuid = chr(123)// "{"
+            .substr($char_id, 0, 8).$hyphen
+            .substr($char_id, 8, 4).$hyphen
+            .substr($char_id,12, 4).$hyphen
+            .substr($char_id,16, 4).$hyphen
+            .substr($char_id,20,12)
+            .chr(125);// "}"
+        return $uuid;
+    }
+}
+
+
+
+function array_column_5($array, $col_value, $col_key)
+{
+
+    $res = array();
+    foreach ($array as $item) {
+        $res[$item[$col_key]] = $item[$col_value];
+
+    }
+    return $res;
+}
+
+
+

@@ -51,5 +51,8 @@ return array(
         'slug' => 'slug短语'
     ),
 
-
+    "post_tpl" =>array(
+        "single" => "文章",
+        "page" => "页面"
+    ),
 );

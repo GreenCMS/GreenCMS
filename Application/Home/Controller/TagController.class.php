@@ -52,7 +52,7 @@ class TagController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
         }
 
         $this->assign('title', $tag['tag_name']); // 赋值数据集

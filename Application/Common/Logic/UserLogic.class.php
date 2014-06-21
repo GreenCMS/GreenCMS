@@ -69,4 +69,19 @@ class UserLogic extends RelationModel
 
     }
 
+
+    //TODO 使用原生SQL提高效率
+    public function getCatAccess($uid){
+        $user =$this->detail($uid);
+        $role_id = $user["user_role"] ["role_id"];
+        $role = D('Role')->where(array('id' => $role_id))->find();
+        $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
+        $cats = D('Cats', 'Logic')->where($where)->select();
+        foreach ($cats as $key => $value) {
+            $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
+        }
+        return $cats;
+
+    }
+
 }

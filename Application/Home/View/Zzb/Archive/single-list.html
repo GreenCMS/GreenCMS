@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0021)http://127.0.0.1/zzb/ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>文章列表-工大党建-南京工业大学党委组织部</title>
+
+    <include file="Public:head"/>
+</head>
+<body>
+
+<!--抬头图片-->
+<div class="head"></div>
+
+
+<!--导航栏-->
+{:W('Widget/menuHead')}
+
+<div class="box">
+    <div class="loca">
+        <strong>当前位置：</strong>
+        <a href="index.html">首页</a> &gt;&gt;
+        <a href="#">>组工通讯图片新闻</a>
+
+
+    </div>
+
+    <div class="title">
+        <h1>{$title}</h1>
+        <hr>
+    </div>
+
+
+    <if condition="$res404 eq 0 ">
+        <h2>
+            没有相关文章
+        </h2>
+    </if>
+
+
+    <div class="listItem">
+        <ul class="listStyle">
+
+            <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
+
+
+                <li><a  class="title" href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                    {$post.post_top|is_top}{$post.post_title}
+                </a></li>
+
+            </volist>
+
+
+        </ul>
+    </div>
+</div>
+
+<include file="Public:footer"/>
+
+</body>
+</html>
