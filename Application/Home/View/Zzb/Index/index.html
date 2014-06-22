@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{:C('title')}</title>
+
+    <include file="Public:head"/>
+
+    <script type="text/javascript" src="__PUBLIC__/Zzb/js/babyzone.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Zzb/js/babyzone2.js"></script>
+    <script type="text/javascript" language="javascript">
+        window.onload = function () {
+            babyzone2.scroll(4, "banner_list2", "list2", "banner_info2");
+            babyzone.scroll(4, "banner_list", "list", "banner_info");
+
+        }
+    </script>
+
+
+</head>
+
+<body>
+
+
+<!--抬头图片-->
+<div class="head"></div>
+
+{:W('Widget/menuHead')}
+
+<!--{:R('Home/home_header',array(),'Widget')}-->
+
+<!--**********************1*************************-->
+
+
+<div class="box1">
+
+    <div class="leftbox1">
+
+        <div class="sidetop">
+            <h2>群众路线活动</h2>
+
+
+            <h3>
+                <a href="#">更多>></a>
+            </h3>
+        </div>
+
+        <div class="list">
+
+
+            <ul>
+                <catlist cat_id="20" num="8" length="18"></catlist>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="midbox1">
+
+        <div class="midtop">
+            <h2>时事动态</h2>
+            <php> $ssdt = D('Cats', 'Logic')->getPostsByCat(20, 6);</php>
+
+            <h3>
+                <a href="#">更多>></a>
+            </h3>
+        </div>
+
+
+        <div id="banner">
+            <div id="banner_bg"></div>
+            <!--标题背景-->
+            <a href="#" id="banner_info"></a> <!--标题-->
+            <ul id="list"></ul>
+            <div id="banner_list">
+                <volist name="ssdt" id="vo">
+                    <a href="{$vo|get_post_url}" target="_blank"><img src="{$vo|get_post_img}" title="{$vo.post_title}"
+                                                                      alt="pic" height="210px"/> </a>
+
+
+                </volist>
+
+
+
+            </div>
+        </div>
+
+
+        <div class="listm">
+            <ul>
+
+
+                <!--<catlist cat_id="20" num="8" length="18"></catlist>-->
+
+                <volist name="ssdt" id="vo">
+                    <li><a href="{$vo|get_post_url}" title="{$vo.post_title}">{$vo|process_title}</a></li>
+
+                </volist>
+            </ul>
+        </div>
+
+    </div>
+
+    <!--***********************************************-->
+
+    <div class="rightbox1">
+
+        <div class="rightbox2">
+            <div class="sidetop">
+                <h2>最新通知</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+
+            <div class="list1">
+                <ul>
+                    <li><a href="#" title="#">关于全国化工高校思想政治教育研究会第…</a></li>
+                    <li><a href="#" title="#">省委教育工委关于我校第三次党代会选举</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="rightbox2">
+            <div class="sidetop">
+                <h2>公示管理入口</h2>
+            </div>
+
+            <div class="list1">
+                <table width="100%" height="94" border="0" cellpadding="0"
+                       cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td style="font-size: .8em;">用户名：</td>
+                        <td><input id="username" name="username" type="text"
+                                   style="width: 100px;" size="20"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: .8em;">密 &nbsp;码：</td>
+                        <td><input id="password" name="password" type="password"
+                                   style="width: 100px;" size="20"></td>
+                    </tr>
+                    <tr align="center">
+                        <td colspan="2"><input type="submit" name="Submit"
+                                               value="登&#160;&#160;录" style="width: 120px;"
+                                ></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--***********************2************************-->
+
+
+<div class="box1">
+
+    <div class="leftbox1">
+        <div class="sidetop">
+            <h2>公示栏</h2>
+
+            <h3>
+                <a href="#">更多>></a>
+            </h3>
+        </div>
+
+        <div>
+
+
+            <catlist cat_id="20" num="3" length="10" ul_class="list"></catlist>
+
+
+            <!--
+    <ul class="list" >
+      <li><a href="#" title="#" >关于全国化工高校思想政治教育研究会第…</a> </li>
+      <li><a href="#" title="#" >省委教育工委关于我校第三次党代会选举</a> </li>
+      <li><a href="#" title="#" >南京工业大学深入开展党的群众路线教育…</a> </li>
+      <li><a href="#" title="#" >南京工业大学深入开展党的群众路线教育…</a> </li>
+    </ul>
+     -->
+        </div>
+
+    </div>
+
+
+    <div class="midbox1">
+
+        <div class="midtop">
+            <h2>组工通讯</h2>
+
+            <h3>
+                <a href="#">更多>></a>
+            </h3>
+        </div>
+
+        <div id="banner2">
+            <div id="banner_bg2"></div>
+            <!--标题背景-->
+            <a href="#" id="banner_info2"></a> <!--标题-->
+            <ul id="list2"></ul>
+            <div id="banner_list2">
+                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/3.jpg" title="pic1" alt="pic" height="210px"/></a>
+                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/2.jpg" title="pic2" alt="pic" height="210px"/></a>
+                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/1.jpg" title="pic3" alt="pic" height="210px"/></a>
+                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/p5.jpg" title="pic4" alt="pic" height="210px"/></a>
+            </div>
+        </div>
+        <div class="listm">
+
+            <catlist cat_id="20" num="3" length="10" ul_class="list"></catlist>
+
+            <!--
+                <ul>
+
+                    <li><a href="#" title="#">学校召开教育实践活动学生代表征求意见座谈会…</a></li>
+                    <li><a href="#" title="#">黄维校长亲切会见盐城市阜宁县代表团一行</a></li>
+                    <li><a href="#" title="#">王德明书记调研环境学院并听取意见</a></li>
+                    <li><a href="#" title="#">我校7个课题获2013年江苏省高等教育教改研究立…</a></li>
+                </ul>
+
+                  -->
+        </div>
+
+    </div>
+
+    <!--***********************************************-->
+
+    <div class="rightbox1">
+
+        <div class="rightbox2">
+            <div class="sidetop">
+                <h2>党校培训</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+
+            <div class="list1">
+                <ul>
+                    <li><a href="#" title="#">关于全国化工高校思想政治教育研究会第…</a></li>
+                    <li><a href="#" title="#">省委教育工委关于我校第三次党代会选举</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="rightbox2">
+            <div class="sidetop">
+                <h2>学员注册</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+
+            <div class="list1">
+                <ul>
+                    <li><a href="#" title="#">关于全国化工高校思想政治教育研究会第…</a></li>
+                    <li><a href="#" title="#">省委教育工委关于我校第三次党代会选举</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--***********************3************************-->
+<div class="box2">
+
+    <div class="leftbox2">
+        <div class="sidetop">
+            <h2>校内链接</h2>
+        </div>
+
+        <div class="list2">
+            <ul>
+                <li><a href="#">南京工业大学</a></li>
+                <li><a href="#">党委办公室</a></li>
+                <li><a href="#">党委宣传部</a></li>
+                <li><a href="#">纪委</a></li>
+                <li><a href="#">工委</a></li>
+            </ul>
+        </div>
+
+        <div class="selector">
+            <select class="unnamed1"
+                    style="FONT-SIZE: 9pt; WIDTH: 124px; BACKGROUND-COLOR:; font-color: white"
+                    onchange="window.open(this.options[this.selectedIndex].value)"
+                    size="1" name="mlink2">
+                <option selected="">:::::校内链接:::::</option>
+                <optionfriendlist link_group_id="1"></optionfriendlist>
+
+            </select>
+        </div>
+    </div>
+
+    <div class="midbox2">
+        <div class="midbox3">
+            <div class="midtop2">
+                <h2>基层党建</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+        </div>
+
+        <div class="midbox4">
+            <div class="midtop2">
+                <h2>党建交流</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="rightbox3">
+        <div class="sidetop">
+            <h2>成绩查询</h2>
+
+            <h3>
+                <a href="#">更多>></a>
+            </h3>
+        </div>
+    </div>
+
+</div>
+
+
+<!--**********************4*************************-->
+
+<div class="box2">
+
+    <div class="leftbox2">
+        <div class="sidetop">
+            <h2>高校链接</h2>
+        </div>
+
+        <div class="list2">
+            <ul>
+                <li><a href="#">清华大学</a></li>
+                <li><a href="#">北京大学</a></li>
+                <li><a href="#">中共国人民大学</a></li>
+                <li><a href="#">上海交通大学</a></li>
+                <li><a href="#">南京大学</a></li>
+            </ul>
+        </div>
+
+        <div class="selector">
+            <select class="unnamed1"
+                    style="FONT-SIZE: 9pt; WIDTH: 124px; BACKGROUND-COLOR:; font-color: white"
+                    onchange="window.open(this.options[this.selectedIndex].value)"
+                    size="1" name="select2">
+                <option selected="">:::::高校链接:::::</option>
+                <optionfriendlist link_group_id="3"></optionfriendlist>
+
+            </select>
+        </div>
+    </div>
+
+    <div class="midbox2">
+        <div class="midbox3">
+            <div class="midtop2">
+                <h2>干部任免</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+        </div>
+
+        <div class="midbox4">
+            <div class="midtop2">
+                <h2>干部论坛</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="rightbox3">
+        <div class="sidetop">
+            <h2>表格下载</h2>
+
+            <h3>
+                <a href="#">更多>></a>
+            </h3>
+        </div>
+    </div>
+
+</div>
+
+<!--**********************5*************************-->
+
+<div class="box2">
+
+    <div class="leftbox2">
+        <div class="piclink">
+            <a href="http://www.bjdj.gov.cn/"><img src="__PUBLIC__/Zzb/pic/bjdj.png"></a>
+        </div>
+        <div class="piclink">
+            <a href="http://www.cpmembers.org.cn/"><img src="__PUBLIC__/Zzb/pic/cpmem.png"></a>
+        </div>
+        <div class="piclink">
+            <a href="http://www.djcs.gov.cn/"><img src="__PUBLIC__/Zzb/pic/djxxg.jpg"></a>
+        </div>
+        <div class="piclink">
+            <a href="http://www.people.com.cn/"><img src="__PUBLIC__/Zzb/pic/people.png"></a>
+        </div>
+        <div class="piclink">
+            <a href="http://www.ccps.gov.cn/"><img src="__PUBLIC__/Zzb/pic/ccps.png"></a>
+        </div>
+    </div>
+
+    <div class="midbox2">
+        <div class="midbox3">
+            <div class="midtop2">
+                <h2>组织建设</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+        </div>
+
+        <div class="midbox4">
+            <div class="midtop2">
+                <h2>先进典型</h2>
+
+                <h3>
+                    <a href="#">更多>></a>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="rightbox3">
+        <div class="sidetop">
+            <h2>校内发文</h2>
+
+            <h3>
+                <a href="#">更多>></a>
+            </h3>
+        </div>
+    </div>
+
+</div>
+<!--**********************6*************************-->
+
+
+<include file="Public:footer"/>
+<!--漂浮的图片-->
+<script type="text/javascript" src="__PUBLIC__/Zzb/js/floatimg.js"></script>
+<script type="text/javascript">
+    var f1 = new FloatImg(); //创建FloatImg对象，每个浮动图像都要创建一个FloatImg对象
+    f1.show("f1", "__PUBLIC__/Zzb/pic/qzlx.jpg", "http://cqt.njutech.edu.cn", 300, 69, 1, 0); //创建完对象，只需要调用show方法显示浮动图像即可
+</script>
+<div onmouseover="f1.stop();" onmouseout="f1.start();" id="floatimg0"
+     style="position: absolute; z-index: 10000; left: 99px; top: 454px; width: 300px; height: 69px; overflow: hidden;">
+    <!--<a href="http://cqt.njutech.edu.cn" target="_blank"><img border="0" /></a>-->
+</div>
+</body>
+</html>

@@ -146,7 +146,7 @@ class CatsLogic extends RelationModel
             }
         }
         if ($cat != null) {
-            $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $cat);
+            $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', true, array(), $cat);
             return $posts;
         } else {
             return false;

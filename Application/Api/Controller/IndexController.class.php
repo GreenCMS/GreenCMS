@@ -53,7 +53,7 @@ class IndexController extends ApiBaseController
 
         $Page = new GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
         $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
-        $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true);
+        $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true);
 
         $res_array["posts"] = array();
         foreach ($posts_list as $post) {
@@ -108,7 +108,7 @@ class IndexController extends ApiBaseController
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
-            $res = $PostsList->getList($limit, 'single', 'post_id desc', true, $map);
+            $res = $PostsList->getList($limit, 'single', 'post_date desc', true, $map);
 
             foreach ($res as $key => $value) {
                 $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
@@ -141,7 +141,7 @@ class IndexController extends ApiBaseController
         if (!empty($posts_id)) {
             $Page = new GreenPage($count, get_opinion('PAGER'));
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $res = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
             foreach ($res as $key => $value) {
                 $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
                 $res[$key]['url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
@@ -172,7 +172,7 @@ class IndexController extends ApiBaseController
         if (!empty($posts_id)) {
             $Page = new GreenPage($count, get_opinion('PAGER'));
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $res = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
 
             foreach ($res as $key => $value) {
                 $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);

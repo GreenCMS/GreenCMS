@@ -20,7 +20,7 @@ use Think\Storage;
 class IndexController extends AdminBaseController
 {
     /**
-     *
+     * 首页基本信息
      */
     public function index()
     {
@@ -29,7 +29,7 @@ class IndexController extends AdminBaseController
 
 
     /**
-     *
+     * 返回home
      */
     public function main()
     {
@@ -37,6 +37,9 @@ class IndexController extends AdminBaseController
     }
 
 
+    /**
+     * 检查版本
+     */
     public function checkVersion()
     {
         $UpdateEvent = new UpdateEvent();
@@ -53,6 +56,9 @@ class IndexController extends AdminBaseController
     }
 
 
+    /**
+     * ajax定时计划触发
+     */
     public function ajaxCron()
     {
         die('ok');
@@ -61,7 +67,7 @@ class IndexController extends AdminBaseController
 
 
     /**
-     *
+     * 修改密码
      */
     public function changePass()
     {
@@ -69,7 +75,7 @@ class IndexController extends AdminBaseController
     }
 
     /**
-     *
+     * 修改密码处理
      */
     public function changepassHandle()
     {
@@ -88,6 +94,9 @@ class IndexController extends AdminBaseController
     }
 
 
+    /**
+     * 用户信息
+     */
     public function profile()
     {
 
@@ -102,6 +111,9 @@ class IndexController extends AdminBaseController
     }
 
 
+    /**
+     * 社交账号绑定
+     */
     public function sns()
     {
         $this->display();
@@ -109,6 +121,9 @@ class IndexController extends AdminBaseController
     }
 
 
+    /**
+     * 升级完成
+     */
     public function updateComplete()
     {
         $this->assign('action', '升级完成');

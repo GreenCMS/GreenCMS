@@ -16,6 +16,7 @@ use Common\Util\GreenPage;
 use Org\Util\Rbac;
 
 /**
+ * Admin模块,文章控制器
  * Class PostsController
  * @package Admin\Controller
  */
@@ -28,8 +29,9 @@ class PostsController extends AdminBaseController
      * @param string $order 顺序
      * @param string $keyword 搜索关键词
      */
-    public function index($post_type = 'single', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
+    public function index($post_type = 'single', $post_status = 'publish', $order = 'post_date desc', $keyword = '')
     {
+
         //获取get参数
         $cat = I('get.cat');
         $tag = I('get.tag');
@@ -120,7 +122,7 @@ class PostsController extends AdminBaseController
     /**
      * 页面列表
      */
-    public function single($post_type = 'single', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
+    public function single($post_type = 'single', $post_status = 'publish', $order = 'post_date desc', $keyword = '')
     {
         $this->index($post_type, $post_status, $order, $keyword);
     }
@@ -128,7 +130,7 @@ class PostsController extends AdminBaseController
     /**
      * 页面列表
      */
-    public function page($post_type = 'page', $post_status = 'publish', $order = 'post_id desc', $keyword = '')
+    public function page($post_type = 'page', $post_status = 'publish', $order = 'post_date desc', $keyword = '')
     {
         $this->index($post_type, $post_status, $order, $keyword);
     }
@@ -138,43 +140,35 @@ class PostsController extends AdminBaseController
      */
     public function add()
     {
+//        dump(gen_uuid());
+
 
         $PostEvent = new PostsEvent();
 
 
-        $tpl_type_list = $PostEvent->get_tpl_type_list();
-        $post = $PostEvent->restore_from_cookie();
+        $tpl_list = $PostEvent->getTplList();
+        $post_restored = $PostEvent->restoreFromCookie();
 
 
         //投稿员只能看到自己的
         if (!$this->noVerify()) {
-            //TODO 使用原生SQL提高效率
             $user_id = get_current_user_id();
-            $user = D('User', 'Logic')->detail($user_id);
-            $role_id = $user["user_role"] ["role_id"];
-            $role = D('Role')->where(array('id' => $role_id))->find();
-            $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
-            $cats = D('Cats', 'Logic')->where($where)->select();
-            foreach ($cats as $key => $value) {
-                $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
-            }
-
+            $cats = D('User', 'Logic')->getCatAccess($user_id);
+            $tags = array();
         } else {
-
             $cats = D('Cats', 'Logic')->category();
             $tags = D('Tags', 'Logic')->select();
         }
 
-        $this->assign('tpl_type', gen_opinion_list($tpl_type_list));
-
-        $this->assign("info", $post);
+        $this->assign("info", $post_restored);
         $this->assign("tags", $tags);
         $this->assign("cats", $cats);
+        $this->assign('tpl_type', gen_opinion_list($tpl_list));
 
         $this->assign("handle", U('Admin/Posts/addHandle'));
         $this->assign("publish", "发布");
 
-        $this->display();
+        $this->display('post_v2');
     }
 
     /**
@@ -189,6 +183,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 无需审核直接发布
      * @return bool 如果不用审核返回true，需要返回false
      */
     public function noVerify()
@@ -212,17 +207,18 @@ class PostsController extends AdminBaseController
         $data['post_title'] = I('post.post_title', '', '');
         $data['post_content'] = I('post.post_content', '', '');
         $data['post_template'] = I('post.post_template', $data['post_type']);
-
         $data['post_name'] = urlencode(I('post.post_name', $data['post_title'], ''));
-        $data['post_modified'] = $data['post_date'] = date("Y-m-d H:m:s", time());
+
+        $data['post_date'] = I('post.post_date')?I('post.post_date'): date("Y-m-d H:m:s", time());
+        $data['post_modified'] = I('post.post_modified')?I('post.post_modified'): date("Y-m-d H:m:s", time());
+
         $data['user_id'] = I('post.post_user') ? I('post.post_user') : $_SESSION [C('USER_AUTH_KEY')];
 
         $data['post_tag'] = I('post.tags', array());
         $data['post_cat'] = I('post.cats', array());
 
         //TODO hook here to modifty the post data
-
-        return $data;
+         return $data;
     }
 
     /**
@@ -331,7 +327,7 @@ class PostsController extends AdminBaseController
     {
         $where['post_status'] = 'preDel';
 
-        $posts_list = D('Posts', 'Logic')->getList(0, $post_type, 'post_id desc', true, $where);
+        $posts_list = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
 
         $this->assign('posts', $posts_list);
 
@@ -471,7 +467,7 @@ class PostsController extends AdminBaseController
             }
 
             $PostEvent = new PostsEvent();
-            $tpl_type_list = $PostEvent->get_tpl_type_list();
+            $tpl_type_list = $PostEvent->getTplList();
 
             $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
 
@@ -501,7 +497,8 @@ class PostsController extends AdminBaseController
             $this->assign("handle", U('Admin/Posts/posts', array('id' => $id), true, false));
 
             $this->assign("publish", "更新");
-            $this->display('add');
+//            $this->display('add');
+            $this->display('post_v2');
 
         }
 
@@ -634,7 +631,7 @@ class PostsController extends AdminBaseController
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $tags =$TagsLogic->selectWithPostsCount($limit);
+            $tags = $TagsLogic->selectWithPostsCount($limit);
         }
 
 
@@ -728,6 +725,6 @@ class PostsController extends AdminBaseController
      */
     public function _empty($method, $args)
     {
-        $this->index($method, I('get.post_status', 'publish'), I('get.order', 'post_id desc'), I('get.keyword', ''));
+        $this->index($method, I('get.post_status', 'publish'), I('get.order', 'post_date desc'), I('get.keyword', ''));
     }
 }

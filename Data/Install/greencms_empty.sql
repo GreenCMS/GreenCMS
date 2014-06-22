@@ -414,9 +414,18 @@ CREATE TABLE `{$db_prefix}login_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `{$db_prefix}log`;
 CREATE TABLE `{$db_prefix}log` (
-  `log_id` int(20) NOT NULL AUTO_INCREMENT,
+  `log_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `log_type` int(5) DEFAULT NULL,
+  `log_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `group_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `module_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `action_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `user_ip` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `message` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统日志记录';
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统日志记录';
+
 
 -- ----------------------------
 -- Records of green_log
@@ -495,22 +504,6 @@ CREATE TABLE `{$db_prefix}form` (
 
 -- ----------------------------
 -- Records of green_form
--- ----------------------------
-
--- ----------------------------
--- Table structure for `{$db_prefix}feedback`
--- ----------------------------
-DROP TABLE IF EXISTS `{$db_prefix}feedback`;
-CREATE TABLE `{$db_prefix}feedback` (
-  `fid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'anonymous',
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'Waiting',
-  PRIMARY KEY (`fid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='反馈信息';
-
--- ----------------------------
--- Records of green_feedback
 -- ----------------------------
 
 -- ----------------------------

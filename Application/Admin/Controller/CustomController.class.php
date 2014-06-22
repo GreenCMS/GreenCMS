@@ -735,24 +735,24 @@ str;
         if (!$install_flag) {
             $this->error('执行插件预安装操作失败' . session('addons_install_error'), U('Admin/Custom/plugin'));
         }
-        $addonsModel = D('Addons');
-        $data = $addonsModel->create($info);
+        $Addons = D('Addons');
+        $data = $Addons->create($info);
         if (is_array($addons->admin_list) && $addons->admin_list !== array()) {
             $data['has_adminlist'] = 1;
         } else {
             $data['has_adminlist'] = 0;
         }
         if (!$data)
-            $this->error($addonsModel->getError());
-        if ($addonsModel->add($data)) {
+            $this->error($Addons->getError());
+        if ($Addons->add($data)) {
             $config = array('config' => json_encode($addons->getConfig()));
-            $addonsModel->where("name='{$addon_name}'")->save($config);
+            $Addons->where("name='{$addon_name}'")->save($config);
             $hooks_update = D('Hooks')->updateHooks($addon_name);
             if ($hooks_update) {
                 S('hooks', null);
                 $this->success('安装成功', U('Admin/Custom/plugin'));
             } else {
-                $addonsModel->where("name='{$addon_name}'")->delete();
+                $Addons->where("name='{$addon_name}'")->delete();
                 $this->error('更新钩子处插件失败,请卸载后尝试重新安装', U('Admin/Custom/plugin'));
             }
 

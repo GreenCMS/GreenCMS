@@ -19,6 +19,7 @@ $menu_arr = array(
         'Access' => 'fa-lock',
         'Tools' => 'fa-gavel',
         'System' => 'fa-gear',
+        'Other' => 'fa-tag',
     ),
 
 
@@ -29,9 +30,10 @@ $menu_arr = array(
         //  'Comments'=>'留言评论',
         'Media' => '文件附件',
         'Custom' => '定制中心',
-        'Access' => '用户管理',
+        'Access' => '用户安全',
         'Tools' => '小工具',
         'System' => '系统设置',
+        'Other' => '其他',
     ),
 
     'admin_sub_menu' => array(
@@ -41,6 +43,7 @@ $menu_arr = array(
             'Index/sns' => '社交账号绑定',
             'Index/changePass' => '修改密码',
         ),
+
 
         'Posts' => array(
 
@@ -104,6 +107,7 @@ $menu_arr = array(
             'Access/addRole' => '添加角色',
 
             'Access/loginlog' => '登陆记录',
+            'Access/log' => '操作记录',
 
         ),
 
@@ -131,7 +135,11 @@ $menu_arr = array(
             'System/info' => '系统信息',
 
         )
-    )
+    ),
+
+
+
+
 
 );
 
