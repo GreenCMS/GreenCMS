@@ -523,7 +523,15 @@ function get_post_img($post)
         $n = count($strResult[1]);
         $random = mt_rand(1, 20);
         if ($n > 0) {
-            return $strResult[1][0];
+
+            if(!strstr($strResult[1][0],"http://")){
+                return get_opinion('site_url') . $strResult[1][0];
+
+            }else{
+                return $strResult[1][0];
+
+            }
+
         } else {
             return get_opinion('site_url') . '/Public/share/img/random/tb' . $random . '.jpg';
          }
