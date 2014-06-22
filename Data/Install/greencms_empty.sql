@@ -507,22 +507,6 @@ CREATE TABLE `{$db_prefix}form` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `{$db_prefix}feedback`
--- ----------------------------
-DROP TABLE IF EXISTS `{$db_prefix}feedback`;
-CREATE TABLE `{$db_prefix}feedback` (
-  `fid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'anonymous',
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'Waiting',
-  PRIMARY KEY (`fid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='反馈信息';
-
--- ----------------------------
--- Records of green_feedback
--- ----------------------------
-
--- ----------------------------
 -- Table structure for `{$db_prefix}comments`
 -- ----------------------------
 DROP TABLE IF EXISTS `{$db_prefix}comments`;

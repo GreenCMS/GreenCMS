@@ -46,14 +46,7 @@ class FormController extends HomeBaseController
             $this->display();
     }
 
-    /**
-     *
-     */
-    public function feedback()
-    {
 
-        $this->show('feedback');
-    }
 
 
 }

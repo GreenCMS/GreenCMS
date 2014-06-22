@@ -64,6 +64,7 @@
 
         <div class="midtop">
             <h2>时事动态</h2>
+            <php> $ssdt = D('Cats', 'Logic')->getPostsByCat(20, 6);</php>
 
             <h3>
                 <a href="#">更多>></a>
@@ -77,10 +78,15 @@
             <a href="#" id="banner_info"></a> <!--标题-->
             <ul id="list"></ul>
             <div id="banner_list">
-                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/1.jpg" title="pic1" alt="pic" height="210px"/></a>
-                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/p5.jpg" title="pic2" alt="pic" height="210px"/></a>
-                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/2.jpg" title="pic3" alt="pic" height="210px"/></a>
-                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/3.jpg" title="pic4" alt="pic" height="210px"/></a>
+                <volist name="ssdt" id="vo">
+                    <a href="{$vo|get_post_url}" target="_blank"><img src="{$vo|get_post_img}" title="{$vo.post_title}"
+                                                                      alt="pic" height="210px"/> </a>
+
+
+                </volist>
+
+
+
             </div>
         </div>
 
@@ -90,12 +96,9 @@
 
 
                 <!--<catlist cat_id="20" num="8" length="18"></catlist>-->
-                <php> $ssdt = D('Cats', 'Logic')->getPostsByCat(20, 6);
 
-                </php>
                 <volist name="ssdt" id="vo">
-                    <li><a href="{$vo|get_post_url}"
-                           title="{$vo.post_title}">{$vo|process_title}</a></li>
+                    <li><a href="{$vo|get_post_url}" title="{$vo.post_title}">{$vo|process_title}</a></li>
 
                 </volist>
             </ul>
@@ -147,7 +150,7 @@
                     <tr align="center">
                         <td colspan="2"><input type="submit" name="Submit"
                                                value="登&#160;&#160;录" style="width: 120px;"
-                                               language="vbscript" onclick="call config() "></td>
+                                ></td>
                     </tr>
                     </tbody>
                 </table>

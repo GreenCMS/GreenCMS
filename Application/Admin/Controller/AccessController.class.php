@@ -649,13 +649,40 @@ class AccessController extends AdminBaseController
     public function log()
     {
 
+        $page = I('get.page', 20);
+        $where = I('get.');
+
+
         $LogLogic = new LogLogic();
 
-        $log_list = $LogLogic->getList();
+        $count = $LogLogic->countAll($where); // 查询满足要求的总记录数
 
+
+        if ($count != 0) {
+
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $log_list = $LogLogic->getList($limit,$where);
+
+        }
+
+
+        $this->assign('pager_bar', $pager_bar);
         $this->assign('log_list', $log_list);
 
         $this->display();
+
+    }
+
+    public function logclearHandle()
+    {
+        if (D('log')->where(1)->delete()) {
+            $this->success("删除成功");
+        } else {
+            $this->error("删除失败");
+
+        }
 
     }
 }

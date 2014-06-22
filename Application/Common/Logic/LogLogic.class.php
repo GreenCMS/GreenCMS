@@ -15,6 +15,11 @@ use Think\Model\RelationModel;
 class LogLogic extends RelationModel
 {
 
+    public function countAll($where){
+        $Log = D('Log');
+
+        return $Log->where($where)->count();
+    }
     public function addLog($group_name='', $module_name='', $action_name='', $message = '', $log_type = 1)
     {
 
@@ -31,11 +36,11 @@ class LogLogic extends RelationModel
         return $insert_res;
     }
 
-    public function getList($relation = true)
+    public function getList($limit=0,$where=array(),$relation = true)
     {
 
         $Log = D('Log');
-        $log_list = $Log->relation($relation)->select();
+        $log_list = $Log->where($where)->limit($limit)->relation($relation)->select();
 
         return $log_list;
     }
