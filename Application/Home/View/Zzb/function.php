@@ -13,19 +13,21 @@ function hello_world()
 
 /**
  * 处理文章标题
+ * // <span class="red"> </span>
  * @param $post
+ * @param int $length
  * @return mixed
  */
-function process_title($post)
+function process_title($post,$length=25)
 {
     $post_title = $post['post_title'];
-
-    //todo prepare for red color
     $post['post_date'] ;
-    time();
+        $post_title = mb_substr($post_title, 0, $length, "UTF-8");
+    if((time()-strtotime($post['post_date']))<3600*24*3){
+        $post_title='<span class="red">[新]&nbsp;'.$post_title.'</span>';
+    }else{
+        $post_title='&nbsp;'.$post_title;
+    }
 
-
-
-    $post_title = mb_substr($post_title, 0, 25, "UTF-8");
     return $post_title;
 }

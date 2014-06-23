@@ -334,22 +334,34 @@ li a{
     padding: 10px;
 }
 
+
 .loca{
     font-size: .75em;
     color: #FFF;
     width:920px;
     height: 30px;
-    margin:10px auto;
+    margin: 10px auto;
     background:#bd0000;
     line-height: 30px;
     padding: 0 10px;
+    float: left;
+}
+
+.loca ul{
+
+}
+
+.loca ul li{
+    float: left;
 }
 
 .title{
     margin: 0 50px;
 }
 
-.loca a{
+.loca ul li a{
+    line-height: 30px;
+    font-size: .75em;
     color: #FFF;
 }
 
@@ -403,4 +415,12 @@ li a{
 
 .box ul.listStyle{
     list-style-type:square;
+}
+
+/*li .red{
+    color: red;
+}*/
+
+.red{
+    color: red;
 }

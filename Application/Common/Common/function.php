@@ -524,20 +524,21 @@ function get_post_img($post)
         $random = mt_rand(1, 20);
         if ($n > 0) {
 
-            if(!strstr($strResult[1][0],"http://")){
+            if (!strstr($strResult[1][0], "http://")) {
                 return get_opinion('site_url') . $strResult[1][0];
 
-            }else{
+            } else {
                 return $strResult[1][0];
 
             }
 
         } else {
             return get_opinion('site_url') . '/Public/share/img/random/tb' . $random . '.jpg';
-         }
+        }
     }
 
 }
+
 /**
  * 面包屑
  * @param $type
@@ -549,28 +550,26 @@ function get_post_img($post)
  * @return string
  */
 function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
-                         $li_attr = '', $separator = ' < li> &gt;&gt; </li > '
+                         $li_attr = '', $separator = ' <li> &gt;&gt; </li> '
     , $init = '首页')
 {
 
-    $res = '
-            < li><a href = "' . U(" / ") . '" > ' . $init . '</a ></li >
-            ';
-     if ($type == 'cats') {
+    $res = '<li><a href = "' . U("/") . '" > ' . $init . '</a></li>';
+    if ($type == 'cats') {
         $Cat = D('Cats', 'Logic');
         $cat = $Cat->getFather($info);
         $res .= extra_father($cat, $separator);
     } elseif ($type == 'tags') {
         $Tag = D('Tags', 'Logic');
         $tag = $Tag->detail($info, false);
-        $res .= $separator . ' < li><a href = "' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . ' </a ></li > ';
+        $res .= $separator . '<li><a href = "' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . ' </a ></li> ';
 
     } elseif ($type == 'single') {
 
     } elseif ($type == 'page') {
 
     } else {
-        $res .= $separator . ' < li>' . $type . ' </li > ';
+        $res .= $separator . '<li>' . $type . '</li>';
     }
 
     $res .= '';
@@ -592,7 +591,7 @@ function extra_father($cat, $separator)
     }
 
 
-    $res .= $separator . ' < li><a href = "' . getCatURLByID($cat['cat_id']) . '">' . $cat['cat_name'] . ' </a ></li > ';
+    $res .= $separator . ' <li><a href = "' . getCatURLByID($cat['cat_id']) . '">' . $cat['cat_name'] . ' </a ></li > ';
     return $res;
 
 }
@@ -760,24 +759,25 @@ function get_current_user_id()
  * 生成UUID
  * @return string
  */
-function gen_uuid(){
-    if (function_exists('com_create_guid')){
+function gen_uuid()
+{
+    if (function_exists('com_create_guid')) {
         return com_create_guid();
-    }else{
-        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+    } else {
+        mt_srand((double)microtime() * 10000); //optional for php 4.2.0 and up.
         $char_id = strtoupper(md5(uniqid(rand(), true)));
-        $hyphen = chr(45);// "-"
-        $uuid = chr(123)// "{"
-            .substr($char_id, 0, 8).$hyphen
-            .substr($char_id, 8, 4).$hyphen
-            .substr($char_id,12, 4).$hyphen
-            .substr($char_id,16, 4).$hyphen
-            .substr($char_id,20,12)
-            .chr(125);// "}"
+        $hyphen = chr(45); // "-"
+        $uuid = chr(123) // "{"
+            . substr($char_id, 0, 8) . $hyphen
+            . substr($char_id, 8, 4) . $hyphen
+            . substr($char_id, 12, 4) . $hyphen
+            . substr($char_id, 16, 4) . $hyphen
+            . substr($char_id, 20, 12)
+            . chr(125);
+        // "}"
         return $uuid;
     }
 }
-
 
 
 function array_column_5($array, $col_value, $col_key)

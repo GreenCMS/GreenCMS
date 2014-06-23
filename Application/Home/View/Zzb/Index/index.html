@@ -98,7 +98,11 @@
                 <!--<catlist cat_id="20" num="8" length="18"></catlist>-->
 
                 <volist name="ssdt" id="vo">
-                    <li><a href="{$vo|get_post_url}" title="{$vo.post_title}">{$vo|process_title}</a></li>
+                    <li>
+                        <a href="{$vo|get_post_url}" title="{$vo.post_title}">
+                           {$vo|process_title}
+                        </a>
+                    </li>
 
                 </volist>
             </ul>
