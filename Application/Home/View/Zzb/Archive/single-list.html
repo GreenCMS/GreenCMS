@@ -48,8 +48,11 @@
 
 
                 <li><a class="title" href="{$post.post_id|getSingleURLByID=$post['post_type']}">
-                    {$post.post_top|is_top}{$post.post_title}
-                </a></li>
+                    {$post.post_top|is_top}{$post|process_title=40}
+                </a>
+                    <span class="time"> {$post.post_date}</span>
+                </li>
+
 
             </volist>
 

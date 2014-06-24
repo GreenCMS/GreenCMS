@@ -410,7 +410,7 @@ li a{
     padding: 10px 10px 0 20px;
     font-size:1em;
     color:#000;
-    display: block;
+    /*display: block;*/
 }
 
 .box ul.listStyle{
@@ -423,4 +423,9 @@ li a{
 
 .red{
     color: red;
+}
+
+.time{
+    color: #777;
+    margin-left: 10px;
 }

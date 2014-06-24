@@ -88,7 +88,7 @@ class IndexController extends ApiBaseController
         } else {
             $post_res['post_content'] = strip_tags($post_res['post_content']);
             $post_res['post_url'] = U('Api/Index/post', array('id' => $post_res['post_id']), false, true);
-            $post_temp["post_img"] = get_post_img($post_res);
+            $post_res["post_img"] = get_post_img($post_res);
 
             $this->jsonReturn(1, $post_res);
         }
