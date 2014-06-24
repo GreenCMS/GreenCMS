@@ -88,7 +88,7 @@ function upgrade_20140527_to_20140602()
 
 
 
-function upgrade_20140620_to_20140622()
+function upgrade_20140620_to_20140625()
 {
     $db_prefix = C('db_prefix');
 
