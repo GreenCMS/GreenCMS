@@ -63,7 +63,7 @@ class CatController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
 
         }
 
@@ -109,7 +109,7 @@ class CatController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $posts_list = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
 
         }
 

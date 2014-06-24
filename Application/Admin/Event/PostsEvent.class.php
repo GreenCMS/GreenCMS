@@ -19,22 +19,16 @@ class PostsEvent
     /**
      * @return array
      */
-    public function get_tpl_type_list()
+    public function getTplList()
     {
 
         $tpl_static_path = WEB_ROOT . 'Public/' . get_kv('home_theme') . '/';
         if (file_exists($tpl_static_path . 'theme.xml')) {
             $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
-            $tpl_type = (object_to_array($theme->post));
-            $tpl_type_list = array();
-            foreach ($tpl_type as $key => $value) {
-                $tpl_type_list[$value['tpl']] = $value['name'];
-            }
+            $tpl_type = object_to_array($theme->post);
+            $tpl_type_list = array_column_5($tpl_type, 'name', 'tpl');
         } else {
-            $tpl_type_list = array(
-                "single" => "文章",
-                "page" => "页面"
-            );
+            $tpl_type_list = C('post_tpl');
         }
 
         return $tpl_type_list;
@@ -45,7 +39,7 @@ class PostsEvent
     /**
      * @return mixed
      */
-    function restore_from_cookie()
+    public function restoreFromCookie()
     {
 
         $post = json_decode(gzuncompress(cookie('post_add')), true);
@@ -61,4 +55,10 @@ class PostsEvent
         return $post;
 
     }
-} 
+
+    public function insertEmpty()
+    {
+
+
+    }
+}

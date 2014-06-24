@@ -128,15 +128,3 @@ function get_real_string($string)
     return $map[$string];
 }
 
-
-function array_column_5($array, $col_value, $col_key)
-{
-
-    $res = array();
-    foreach ($array as $item) {
-        $res[$item[$col_key]] = $item[$col_value];
-
-    }
-    return $res;
-}
-

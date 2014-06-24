@@ -1,5 +1,17 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.2.0620 build 20140620
+性能优化
+用户管理分页
+标签分页并统计文章信息
+全新菜单添加
+file_exists修正
+全新链接获取函数
+sae 兼容性增强
+上传本地主题
+vena主题移除！
+
+
 version v2.1.0612 build 20140612
 删除无用的，和带有GNU LGPL的协议的类库
 验证码错误返回自动刷新

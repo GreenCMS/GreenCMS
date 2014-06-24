@@ -513,6 +513,32 @@ title="' . $post['post_title'] . '"/></a>';
 }
 
 
+function get_post_img($post)
+{
+    if (!empty($post['post_img'])) {
+        return $post['post_img'];
+    } else {
+        $content = $post['post_content'];
+        preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
+        $n = count($strResult[1]);
+        $random = mt_rand(1, 20);
+        if ($n > 0) {
+
+            if (!strstr($strResult[1][0], "http://")) {
+                return get_opinion('site_url') . $strResult[1][0];
+
+            } else {
+                return $strResult[1][0];
+
+            }
+
+        } else {
+            return get_opinion('site_url') . '/Public/share/img/random/tb' . $random . '.jpg';
+        }
+    }
+
+}
+
 /**
  * 面包屑
  * @param $type
@@ -524,13 +550,11 @@ title="' . $post['post_title'] . '"/></a>';
  * @return string
  */
 function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
-                         $li_attr = '', $separator = ' <li> &gt;&gt; </li>'
+                         $li_attr = '', $separator = ' <li> &gt;&gt; </li> '
     , $init = '首页')
 {
 
-    $res = '
-            <li><a href="' . U("/") . '">' . $init . '</a></li>
-           ';
+    $res = '<li><a href = "' . U("/") . '" > ' . $init . '</a></li>';
     if ($type == 'cats') {
         $Cat = D('Cats', 'Logic');
         $cat = $Cat->getFather($info);
@@ -538,14 +562,14 @@ function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
     } elseif ($type == 'tags') {
         $Tag = D('Tags', 'Logic');
         $tag = $Tag->detail($info, false);
-        $res .= $separator . '<li><a href="' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . '</a></li>';
+        $res .= $separator . '<li><a href = "' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . ' </a ></li> ';
 
     } elseif ($type == 'single') {
 
     } elseif ($type == 'page') {
 
     } else {
-        $res .= $separator . ' <li>' . $type . '</li>';
+        $res .= $separator . '<li>' . $type . '</li>';
     }
 
     $res .= '';
@@ -567,7 +591,7 @@ function extra_father($cat, $separator)
     }
 
 
-    $res .= $separator . '<li><a href="' . getCatURLByID($cat['cat_id']) . '">' . $cat['cat_name'] . '</a></li>';
+    $res .= $separator . ' <li><a href = "' . getCatURLByID($cat['cat_id']) . '">' . $cat['cat_name'] . ' </a ></li > ';
     return $res;
 
 }
@@ -650,7 +674,7 @@ function get_next_post($post_id, $post_cat)
 
     if (!$post) return null;
 
-    $res = ' <a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . '</a>';
+    $res = ' < a href = "' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . ' </a > ';
     return $res;
 }
 
@@ -666,7 +690,7 @@ function get_previous_post($post_id, $post_cat)
     $next_post_id = D('Post_cat')->field('post_id')->where($where)->find();
     $post = D('Posts', 'Logic')->detail($next_post_id["post_id"], false);
     if (!$post) return null;
-    $res = ' <a href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . '</a>';
+    $res = ' < a href = "' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . ' </a > ';
     return $res;
 }
 
@@ -678,7 +702,7 @@ function get_previous_post($post_id, $post_cat)
 function check_access($access = "")
 {
 
-    $path = explode('/', strtoupper($access));
+    $path = explode(' / ', strtoupper($access));
 
     $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
 
@@ -704,7 +728,7 @@ function simple_post($url, $data)
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla / 5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -727,6 +751,45 @@ function simple_post($url, $data)
  */
 function get_current_user_id()
 {
-
     return ( int )$_SESSION [C('USER_AUTH_KEY')];
 }
+
+
+/**
+ * 生成UUID
+ * @return string
+ */
+function gen_uuid()
+{
+    if (function_exists('com_create_guid')) {
+        return com_create_guid();
+    } else {
+        mt_srand((double)microtime() * 10000); //optional for php 4.2.0 and up.
+        $char_id = strtoupper(md5(uniqid(rand(), true)));
+        $hyphen = chr(45); // "-"
+        $uuid = chr(123) // "{"
+            . substr($char_id, 0, 8) . $hyphen
+            . substr($char_id, 8, 4) . $hyphen
+            . substr($char_id, 12, 4) . $hyphen
+            . substr($char_id, 16, 4) . $hyphen
+            . substr($char_id, 20, 12)
+            . chr(125);
+        // "}"
+        return $uuid;
+    }
+}
+
+
+function array_column_5($array, $col_value, $col_key)
+{
+
+    $res = array();
+    foreach ($array as $item) {
+        $res[$item[$col_key]] = $item[$col_value];
+
+    }
+    return $res;
+}
+
+
+

@@ -174,7 +174,13 @@ function getSingleURLByID($ID, $type = 'single')
         } else if ($home_post_model === 'year/month/day/post_name') {
             $posts = $Posts->cache(true)->detail($ID);
             $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . getTimestamp($posts ['post_date'], 'day') . '/' . $posts ['post_name'];
-        } else {
+        } elseif ($home_post_model == 'absolute') {
+            $post = $Posts->cache(true)->detail($ID);
+            $URL = $post['post_url'];
+            if ($URL == '') {
+                $URL = get_url("Post/" . $post['post_type'], array('info' => $post['post_id']));
+            }
+        }else {
             $URL = $url_base . '/' . $ID;
         }
         $URL = $URL . $URL_HTML_SUFFIX;

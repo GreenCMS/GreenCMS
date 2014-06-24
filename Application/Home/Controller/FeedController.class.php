@@ -50,7 +50,7 @@ class FeedController extends HomeBaseController
     {
 
         $PostsList = new PostsLogic();
-        $post_list = $PostsList->getList(get_opinion('feed_num'), 'single', 'post_id desc', true);
+        $post_list = $PostsList->getList(get_opinion('feed_num'), 'single', 'post_date desc', true);
         $RSS = new RSS (get_opinion('title'), '', get_opinion('description'), ''); // 站点标题的链接
         foreach ($post_list as $list) {
             $RSS->AddItem(
@@ -73,7 +73,7 @@ class FeedController extends HomeBaseController
     {
 
         $PostsList = new PostsLogic();
-        $post_list = $PostsList->getList(get_opinion('feed_num'), 'page', 'post_id desc', true);
+        $post_list = $PostsList->getList(get_opinion('feed_num'), 'page', 'post_date desc', true);
         $RSS = new RSS (get_opinion('title'), '', get_opinion('description'), ''); // 站点标题的链接
         foreach ($post_list as $list) {
             $RSS->AddItem(

@@ -129,8 +129,8 @@ INSERT INTO `{$db_prefix}kv` VALUES ('3', 'theme_Twentytwelve', 'enabled');
 -- ----------------------------
 -- Records of {$db_prefix}posts
 -- ----------------------------
-INSERT INTO `{$db_prefix}posts` VALUES (null, 1, CURRENT_TIMESTAMP, '你好,世界', '欢迎使用GreenCMS', 'publish', 'open', '', 'helloworld', 'detail', CURRENT_TIMESTAMP, 0, 0, 'single', NULL, 0);
-INSERT INTO `{$db_prefix}posts` VALUES (null, 1, CURRENT_TIMESTAMP, '欢迎使用', '这是一个文章测试页面', 'publish', 'open', '', 'testpage', 'detail', CURRENT_TIMESTAMP, 0, 0, 'page', NULL, 0);
+INSERT INTO `{$db_prefix}posts` VALUES (null, 1, CURRENT_TIMESTAMP, '你好,世界', '欢迎使用GreenCMS', 'publish', 'open', '', 'helloworld', 'detail', CURRENT_TIMESTAMP, 0, 0, 'single', NULL, 0,'');
+INSERT INTO `{$db_prefix}posts` VALUES (null, 1, CURRENT_TIMESTAMP, '欢迎使用', '这是一个文章测试页面', 'publish', 'open', '', 'testpage', 'detail', CURRENT_TIMESTAMP, 0, 0, 'page', NULL, 0,'');
 
 
 -- ----------------------------

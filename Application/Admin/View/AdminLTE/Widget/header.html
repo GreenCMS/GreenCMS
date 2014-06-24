@@ -24,12 +24,14 @@
         </li>
 
         <control access="Weixin/Index/index">
-            <li><a href="{:U('Weixin/Index/index')}" target="_blank">Weixin模块</a></li>
+             <li><a href="{:U('Weixin/Index/index')}" target="_blank">Weixin模块</a></li>
         </control>
 
         <control access="Admin/Data/clearAll">
             <li><a href="{:U('Admin/Data/clearAll')}">一键缓存清理</a></li>
         </control>
+
+
 
         <!--<li class="dropdown messages-menu">-->
             <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
@@ -56,7 +58,7 @@
 
         <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                快速访问
+                快速访问  <i class="fa  fa-caret-square-o-down"></i>
             </a>
             <ul class="dropdown-menu">
                 <li>
@@ -71,7 +73,6 @@
 
                         {:hook('adminMenu', 'menu')}
 
-                        {:hook('Guestbook', 'menu')}
                         <!-- end message -->
 
                     </ul>

@@ -78,7 +78,7 @@ class TagsLogic extends RelationModel
                 unset($tag[sizeof($tag) - 1]);
             }
         }
-        $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_id desc', true, array(), $tag);
+        $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', true, array(), $tag);
         return $posts;
     }
 

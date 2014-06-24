@@ -49,7 +49,7 @@ class PostsLogic extends RelationModel
      *
      * @return mixed 返回文章列表
      */
-    public function getList($limit = 20, $type = 'single', $order = 'post_id desc',
+    public function getList($limit = 20, $type = 'single', $order = 'post_date desc',
                             $relation = true, $info_with = array(), $ids = array())
     {
         $info = $info_with;

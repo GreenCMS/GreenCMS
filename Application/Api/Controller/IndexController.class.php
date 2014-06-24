@@ -53,7 +53,7 @@ class IndexController extends ApiBaseController
 
         $Page = new GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
         $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
-        $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true);
+        $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true);
 
         $res_array["posts"] = array();
         foreach ($posts_list as $post) {
@@ -62,7 +62,9 @@ class IndexController extends ApiBaseController
             $post_temp["post_title"] = $post["post_title"];
             $post_temp["post_date"] = $post["post_date"];
             $post_temp["post_content"] = mb_substr(strip_tags(str_replace("&nbsp;", "", $post["post_content"])), 0, 200, 'utf-8');
-            $post_temp['url'] = U('Api/Index/post', array('id' => $post['post_id']), false, true);
+            $post_temp['post_url'] = U('Api/Index/post', array('id' => $post['post_id']), false, true);
+            $post_temp["post_img"] = get_post_img($post);
+            $post_temp["post_view_count"] = $post["post_view_count"];
 
             array_push($res_array["posts"], $post_temp);
         }
@@ -85,7 +87,8 @@ class IndexController extends ApiBaseController
             $this->jsonReturn(0, '没有找到文章');
         } else {
             $post_res['post_content'] = strip_tags($post_res['post_content']);
-            $post_res['url'] = U('Api/Index/post', array('id' => $post_res['post_id']), false, true);
+            $post_res['post_url'] = U('Api/Index/post', array('id' => $post_res['post_id']), false, true);
+            $post_res["post_img"] = get_post_img($post_res);
 
             $this->jsonReturn(1, $post_res);
         }
@@ -108,11 +111,12 @@ class IndexController extends ApiBaseController
         if ($count != 0) {
             $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
-            $res = $PostsList->getList($limit, 'single', 'post_id desc', true, $map);
+            $res = $PostsList->getList($limit, 'single', 'post_date desc', true, $map);
 
             foreach ($res as $key => $value) {
                 $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
-                $res[$key]['url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+                $res[$key]['post_url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+                $res[$key]["post_img"] = get_post_img($value);
 
             }
             $res_array["posts"] = $res;
@@ -141,10 +145,11 @@ class IndexController extends ApiBaseController
         if (!empty($posts_id)) {
             $Page = new GreenPage($count, get_opinion('PAGER'));
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $res = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
             foreach ($res as $key => $value) {
                 $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
-                $res[$key]['url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+                $res[$key]['post_url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+                $res[$key]["post_img"] = get_post_img($value);
 
             }
 
@@ -172,11 +177,12 @@ class IndexController extends ApiBaseController
         if (!empty($posts_id)) {
             $Page = new GreenPage($count, get_opinion('PAGER'));
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $res = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $res = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
 
             foreach ($res as $key => $value) {
                 $res[$key]['post_content'] = strip_tags($res[$key]['post_content']);
-                $res[$key]['url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+                $res[$key]['post_url'] = U('Api/Index/post', array('id' => $res[$key]['post_id']), false, true);
+                $res[$key]["post_img"] = get_post_img($value);
 
             }
             $res_array["posts"] = $res;

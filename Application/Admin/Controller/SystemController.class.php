@@ -90,7 +90,7 @@ class SystemController extends AdminBaseController
     public function url()
     {
         //普通模式0, PATHINFO模式1, REWRITE模式2, 兼容模式3
-        $url_model = C('url_model');
+        $url_model = C('url_model0');
         $home_post_model = C('post_model');
         $home_tag_model = C('tag_model');
         $home_cat_model = C('cat_model');
