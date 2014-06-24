@@ -160,7 +160,7 @@ class PostsController extends AdminBaseController
             $tags = D('Tags', 'Logic')->select();
         }
 
-        $this->assign("info", $post_restored);
+         $this->assign("info", $post_restored);
         $this->assign("tags", $tags);
         $this->assign("cats", $cats);
         $this->assign('tpl_type', gen_opinion_list($tpl_list));
