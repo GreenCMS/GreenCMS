@@ -151,7 +151,7 @@ abstract class ThinkOauth
         if (!empty($config['CALLBACK']))
             $this->Callback = $config['CALLBACK'];
         else
-            throw new Exception('请配置回调页面地址');
+            throw new \Exception('请配置回调页面地址');
     }
 
     /**
@@ -173,7 +173,7 @@ abstract class ThinkOauth
             if (is_array($_param)) {
                 $params = array_merge($params, $_param);
             } else {
-                throw new Exception('AUTHORIZE配置不正确！');
+                throw new \Exception('AUTHORIZE配置不正确！');
             }
         }
         return $this->GetRequestCodeURL . '?' . http_build_query($params);
@@ -260,7 +260,7 @@ abstract class ThinkOauth
                 $opts[CURLOPT_POSTFIELDS] = $params;
                 break;
             default:
-                throw new Exception('不支持的请求方式！');
+                throw new \Exception('不支持的请求方式！');
         }
 
         /* 初始化并执行curl请求 */
@@ -269,7 +269,7 @@ abstract class ThinkOauth
         $data = curl_exec($ch);
         $error = curl_error($ch);
         curl_close($ch);
-        if ($error) throw new Exception('请求发生错误：' . $error);
+        if ($error) throw new \Exception('请求发生错误：' . $error);
         return $data;
     }
 

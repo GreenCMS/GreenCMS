@@ -53,6 +53,9 @@ class IndexController extends HomeBaseController
     function test()
     {
 
+        include(Upgrade_PATH . 'init.php');
+
+        upgrade_20140620_to_20140625();
     }
 
 }

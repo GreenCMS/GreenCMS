@@ -1,5 +1,13 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.2.0625 build 20140625
+Mobile api 更新
+修复文章图片
+去除无用的数据表
+log 安全日志
+文章发布可选日期
+升级post url 支持绝对链接
+
 version v2.2.0620 build 20140620
 性能优化
 用户管理分页
@@ -13,7 +21,7 @@ vena主题移除！
 
 
 version v2.1.0612 build 20140612
-删除无用的，和带有GNU LGPL的协议的类库
+删除无用的，和带有GNU,LGPL的协议的类库
 验证码错误返回自动刷新
 升级完成显示日志
 离开文章发布页面提示

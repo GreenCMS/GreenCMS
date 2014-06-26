@@ -149,6 +149,9 @@ class SnsController extends OauthBaseController
 
                 }
 
+            }else  if ($user_info ['type'] == 'GREENCMS'){
+
+
             } else {
 
                 $this->error('非法调用');
