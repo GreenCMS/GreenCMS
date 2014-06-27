@@ -100,18 +100,8 @@ function upgrade_20140620_to_20140625()
     $sql = "DROP TABLE IF EXISTS `{$db_prefix}log`";
     $Model->query($sql);
 
-    $sql = "CREATE TABLE `{$db_prefix}log` (
-  `log_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `log_type` int(5) DEFAULT NULL,
-  `log_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `group_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `module_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `action_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL,
-  `user_ip` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `message` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`log_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统日志记录';";
+    $sql = "CREATE TABLE `{$db_prefix}log` ( `log_id` bigint(20) NOT NULL AUTO_INCREMENT,  `log_type` int(5) DEFAULT NULL,  `log_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,  `group_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,  `module_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,  `action_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,  `user_id` bigint(20) DEFAULT NULL,
+  `user_ip` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,  `message` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,  PRIMARY KEY (`log_id`)) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统日志记录';";
 
     $Model->query($sql);
 
