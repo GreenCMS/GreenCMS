@@ -9,7 +9,6 @@ GreenCMS 欢迎学习交流，版权归作者所有，未经作者同意，不�
 
 联系方式:
     Email: admin@njut.asia
-    QQ: 447040330
 
 GreenCMS交流群:
     群号: 123085170

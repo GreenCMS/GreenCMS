@@ -275,20 +275,20 @@ class TypeEvent
     //登录成功，获取Greencms用户信息
     public function greencms($token)
     {
-        dump($token);
+
         $greencms = ThinkOauth::getInstance('greencms', $token);
 
         //todo  time to go
-        $data = $greencms->call('users/show', "uid={$greencms->openid()}");
+        $data = $greencms->call('users', "uid={$greencms->openid()}");
 
         if ($data['error_code'] == 0) {
             $userInfo['type'] = 'GREENCMS';
             $userInfo['name'] = $data['name'];
-            $userInfo['nick'] = $data['screen_name'];
-            $userInfo['head'] = $data['avatar_large'];
+            $userInfo['nick'] = $data['nick'];
+            $userInfo['head'] = $data['head'];
             return $userInfo;
         } else {
-            throw_exception("获取新浪微博用户信息失败：{$data['error']}");
+            throw_exception("获取Greencms用户信息失败：{$data['error']}");
         }
     }
 

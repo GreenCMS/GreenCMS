@@ -2,13 +2,13 @@
 namespace Extend\ThinkSDK;
 use \Think\Exception;
 // +----------------------------------------------------------------------
-// | TOPThink [ WE CAN DO IT JUST THINK ]
+// | GreenO
 // +----------------------------------------------------------------------
-// | Copyright (c) 2010 http://topthink.com All rights reserved.
+// | Copyright (c) 2014 http://www.green.net All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 麦当苗儿 <zuojiazi.cn@gmail.com> <http://www.zjzit.cn>
+// | Author: Timothy Zhang <zts1993@gmail.com> <http://www.zts1993.com>
 // +----------------------------------------------------------------------
 // | GreencmsSDK.class.php 2013-02-25
 // +----------------------------------------------------------------------
@@ -34,20 +34,20 @@ class GreencmsSDK extends ThinkOauth{
 
     /**
      * 组装接口调用参数 并调用接口
-     * @param  string $api 微博API
+     * @param  string $api GreenCMS API
      * @param  string $param 调用API的额外参数
      * @param  string $method HTTP请求方法 默认为GET
      * @param bool $multi
-     * @return json
+     * @return string json
      */
 	public function call($api, $param = '', $method = 'GET', $multi = false){		
-		/* 新浪微博调用公共参数 */
+		/* GreenCMS调用公共参数 */
 		$params = array(
 			'access_token' => $this->Token['access_token'],
 		);
 		
 		$vars = $this->param($params, $param);
-		$data = $this->http($this->url($api, '.json'), $vars, $method, array(), $multi);
+		$data = $this->http($this->url($api), $vars, $method, array(), $multi);
 		return json_decode($data, true);
 	}
 

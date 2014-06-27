@@ -151,7 +151,7 @@ abstract class ThinkOauth
         if (!empty($config['CALLBACK']))
             $this->Callback = $config['CALLBACK'];
         else
-            throw new \Exception('请配置回调页面地址');
+            throw new \Think\Exception('请配置回调页面地址');
     }
 
     /**
