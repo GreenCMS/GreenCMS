@@ -235,7 +235,7 @@ class AccessController extends AdminBaseController
     public function editUser($aid = 1)
     {
         if (IS_POST) {
-            header('Content-Type:application/json; charset=utf-8');
+//            header('Content-Type:application/json; charset=utf-8');
             $res = (D('Access', 'Logic')->editAdmin());
             if ($res ['status'] == 1) {
                 $this->success($res ['info'], U('Admin/Access/index'));

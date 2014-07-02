@@ -46,6 +46,23 @@ class SnsController extends OauthBaseController
         redirect($sns->getRequestCodeURL());
     }
 
+    public function logout($type = null)
+    {
+        empty ($type) && $this->error('参数错误');
+        $User_sns = new User_snsLogic();
+
+        $where['user_id'] = get_current_user_id();
+        $where['type'] = strtoupper($type);
+        if ($User_sns->where($where)->delete()) {
+            $this->success("接触绑定成功");
+        } else {
+            $this->error("尚未绑定");
+        }
+
+
+    }
+
+
     /**
      * 授权回调地址
      * @param null $type
@@ -199,11 +216,10 @@ class SnsController extends OauthBaseController
 
                     } else {
                         //未绑定
-                       $this->error('登录失败,尚未绑定。请登录之后绑定帐号', U('Admin/Index/index'));
+                        $this->error('登录失败,尚未绑定。请登录之后绑定帐号', U('Admin/Index/index'));
                     }
 
                 }
-
 
 
             } else {

@@ -226,10 +226,9 @@ class AccessLogic extends RelationModel
             unset ($_POST ['password']);
         }
 
-        // print_array($_POST);
 
         $user_id = $_POST ['user_id0'];
-        $role_id = ( int )$_POST ['role_id'];
+        $role_id = (int )$_POST ['role_id'];
         // $data['user_id'] = (int) $_POST['user_id0'];
         $data ['user_login'] = $_POST ['user_login'];
 
@@ -240,12 +239,15 @@ class AccessLogic extends RelationModel
         $data ['user_status'] = $_POST ['user_status'];
         $data ['user_intro'] = $_POST ['user_intro'];
 
+
         $roleStatus = M("Role_users")->where("`user_id`=" . $user_id)->save(array(
             'role_id' => $role_id
         ));
 
 
+
         $data ['user_level'] = $_POST ['role_id'];
+
 
 
         if ($User->where(array('user_id' => $user_id))->save($data)) {
