@@ -69,6 +69,23 @@ class AccessLogic extends RelationModel
             'fullname'
         ));
         $temp = $cat->getList(); // 获取分类结构
+
+        foreach ($temp as $key=>$value) {
+
+            if($value['level']=1&&array_key_exists($value['name'],C('group_level_1'))){
+                $group_level_1=C('group_level_1');
+              $temp[$key]["remark"]=$group_level_1[$value['name']];
+            }else if($value['level']=2&&array_key_exists($value['name'],C('admin_level_2'))){
+                $admin_level_2=C('admin_level_2');
+                $temp[$key]["remark"]=$admin_level_2[$value['name']];
+
+            }
+
+        }
+
+
+
+
         $level = array(
             "1" => "项目（GROUP_NAME）",
             "2" => "模块(MODEL_NAME)",

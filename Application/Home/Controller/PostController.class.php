@@ -8,6 +8,7 @@
  */
 
 namespace Home\Controller;
+
 use Common\Logic\PostsLogic;
 use Common\Util\File;
 
@@ -99,7 +100,6 @@ class PostController extends HomeBaseController
         }
 
         // $this->display($post_res['post_type']);
-
 
     }
 

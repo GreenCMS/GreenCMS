@@ -2,6 +2,7 @@ GreenCMS v2 基于ThikPHP的CMS系统
 全新一代内容管理系统 By GreenStudio
 
 版权申明：
+
 GreenCMS 欢迎学习交流，版权归作者所有，未经作者同意，不得删除代码中作者信息
 
 关于商业用途：

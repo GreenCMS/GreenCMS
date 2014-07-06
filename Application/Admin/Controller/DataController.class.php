@@ -83,7 +83,7 @@ class DataController extends AdminBaseController
         $type = "手动自动备份";
         $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
         $tables = empty($_POST['table']) ? array() : $_POST['table'];
-        $System = new \Common\Event\SystemEvent();
+        $System = new SystemEvent();
         //$System->backupFile(); //test ok~
         $res = $System->backupDB($type, $tables, $path);
 

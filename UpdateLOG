@@ -1,12 +1,13 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
-version v2.2.0625 build 20140625
+version v2.2.0706 build 20140706
 Mobile api 更新
 修复文章图片
 去除无用的数据表
 log 安全日志
 文章发布可选日期
 升级post url 支持绝对链接
+
 
 version v2.2.0620 build 20140620
 性能优化

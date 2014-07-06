@@ -8,6 +8,7 @@
  */
 
 namespace Home\Controller;
+
 use Common\Logic\PostsLogic;
 use Common\Util\Rss;
 
@@ -21,7 +22,7 @@ class FeedController extends HomeBaseController
 
     /**
      * 初始化 判断feed功能是否开启
-     *  @param null
+     * @param null
      */
     function __construct()
     {
@@ -34,56 +35,34 @@ class FeedController extends HomeBaseController
 
     /**
      * 默认显示文章feed
-     *  @param null
+     * @param null
      */
     public function index()
     {
-        $this->listSingle();
+        $this->listPost();
     }
 
     /**
      * 文章feed
-     * @param null
-     * 显示数量由 feed_num决定
+     * @param string $type 文章类型
+     * @internal param $null 显示数量由 feed_num决定* 显示数量由 feed_num决定
      */
-    public function listSingle()
+    public function listPost($type = 'single')
     {
 
         $PostsList = new PostsLogic();
-        $post_list = $PostsList->getList(get_opinion('feed_num'), 'single', 'post_date desc', true);
+        $post_list = $PostsList->getList(get_opinion('feed_num'), $type, 'post_date desc', true);
         $RSS = new RSS (get_opinion('title'), '', get_opinion('description'), ''); // 站点标题的链接
         foreach ($post_list as $list) {
-            $RSS->AddItem(
+            $RSS->addItem(
                 $list ['post_title'],
                 //               $list ['post_id'],
-                'http://'.$_SERVER["SERVER_NAME"].getSingleURLByID($list ['post_id']) ,
+                'http://' . $_SERVER["SERVER_NAME"] . get_post_url($list),
                 $list ['post_content'],
                 $list ['post_date']);
         }
 
-        $RSS->Display();
-    }
-
-    /**
-     * 页面feed
-     * @param null
-     * 显示数量由 feed_num决定
-     */
-    public function listsPage()
-    {
-
-        $PostsList = new PostsLogic();
-        $post_list = $PostsList->getList(get_opinion('feed_num'), 'page', 'post_date desc', true);
-        $RSS = new RSS (get_opinion('title'), '', get_opinion('description'), ''); // 站点标题的链接
-        foreach ($post_list as $list) {
-            $RSS->AddItem(
-                $list ['post_title'],
-                'http://' . $_SERVER["SERVER_NAME"] . getPageURLByID($list ['post_id']),
-                $list ['post_content'],
-                $list ['post_date']);
-        }
-
-        $RSS->Display();
+        $RSS->display();
     }
 
 }
