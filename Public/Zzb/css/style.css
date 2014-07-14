@@ -195,11 +195,11 @@ li a{
 /*++++++++++++++++++++++++++++++++*/
 
 .box2{	width:1004px;
-     height:200px;
-     background-color:#FFF;
-     margin:0 auto;
-     padding: 10px;
- }
+    height:200px;
+    background-color:#FFF;
+    margin:0 auto;
+    padding: 10px;
+}
 
 .box3{
     width:1004px;
@@ -410,18 +410,14 @@ li a{
     padding: 10px 10px 0 20px;
     font-size:1em;
     color:#000;
-    /*display: block;*/
 }
 
 .box ul.listStyle{
     list-style-type:square;
 }
 
-/*li .red{
-    color: red;
-}*/
 
-.red{
+li .red a{
     color: red;
 }
 
