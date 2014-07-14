@@ -564,9 +564,12 @@ function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
         $tag = $Tag->detail($info, false);
         $res .= $separator . '<li><a href = "' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . ' </a ></li> ';
 
-    } elseif ($type == 'single') {
+    } elseif ($type == 'post') {
+        $cat=$info['post_cat'][0];
+        $res .= $separator . '<li><a href = "' . get_cat_url($cat['cat_id']) . '">' . $cat['cat_name'] . ' </a ></li> ';
 
-    } elseif ($type == 'page') {
+
+        $res .= $separator . '<li><a href = "' . get_post_url($info) . '">' . $info['post_title'] . ' </a ></li> ';
 
     } else {
         $res .= $separator . '<li>' . $type . '</li>';
