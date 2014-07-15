@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>{:C('title')}</title>
@@ -29,9 +28,6 @@
 
 {:W('Widget/menuHead')}
 
-<!--{:R('Home/home_header',array(),'Widget')}-->
-
-<!--**********************1*************************-->
 
 
 <div class="box1">
@@ -43,7 +39,10 @@
 
 
             <h3>
-                <a href="#">更多>></a>
+
+
+
+                <a href="{:get_cat_url(24)}">更多>></a>
             </h3>
         </div>
 
@@ -51,7 +50,7 @@
 
 
             <ul>
-                <catlist cat_id="20" num="8" length="18"></catlist>
+                <catlist cat_id="24" num="6" length="18"></catlist>
             </ul>
 
 
@@ -64,10 +63,10 @@
 
         <div class="midtop">
             <h2>时事动态</h2>
-            <php> $ssdt = D('Cats', 'Logic')->getPostsByCat(53, 7);</php>
+            <php> $ssdt = D('Cats', 'Logic')->getPostsByCat(15, 7);</php>
 
             <h3>
-                <a href="{:get_cat_url(53)}">更多>></a>
+                <a href="{:get_cat_url(15)}">更多>></a>
             </h3>
         </div>
 
@@ -118,14 +117,15 @@
                 <h2>最新通知</h2>
 
                 <h3>
-                    <a href="#">更多>></a>
+                    <a href="{:get_cat_url(77)}">更多>></a>
                 </h3>
             </div>
 
             <div class="list1">
                 <ul>
-                    <li><a href="#" title="#">关于全国化工高校思想政治教育研究会第…</a></li>
-                    <li><a href="#" title="#">省委教育工委关于我校第三次党代会选举</a></li>
+
+                   <catlist cat_id="77" num="4" length="18"></catlist>
+
                 </ul>
             </div>
 
@@ -182,18 +182,11 @@
 
         <div>
 
+            <ul class="list" >
+            <catlist cat_id="24" num="6" length="18" ul_class="list"></catlist>
 
-            <catlist cat_id="20" num="8" length="10" ul_class="list"></catlist>
+            </ul>
 
-
-            <!--
-    <ul class="list" >
-      <li><a href="#" title="#" >关于全国化工高校思想政治教育研究会第…</a> </li>
-      <li><a href="#" title="#" >省委教育工委关于我校第三次党代会选举</a> </li>
-      <li><a href="#" title="#" >南京工业大学深入开展党的群众路线教育…</a> </li>
-      <li><a href="#" title="#" >南京工业大学深入开展党的群众路线教育…</a> </li>
-    </ul>
-     -->
         </div>
 
     </div>
@@ -260,8 +253,8 @@
 
             <div class="list1">
                 <ul>
-                    <li><a href="#" title="#">关于全国化工高校思想政治教育研究会第…</a></li>
-                    <li><a href="#" title="#">省委教育工委关于我校第三次党代会选举</a></li>
+                    <catlist cat_id="18" num="6" length="18" ul_class="list"></catlist>
+
                 </ul>
             </div>
 
@@ -277,10 +270,7 @@
             </div>
 
             <div class="list1">
-                <ul>
-                    <li><a href="#" title="#">关于全国化工高校思想政治教育研究会第…</a></li>
-                    <li><a href="#" title="#">省委教育工委关于我校第三次党代会选举</a></li>
-                </ul>
+                　	暂无信息可查！请稍后再来！
             </div>
 
         </div>
@@ -300,21 +290,27 @@
 
         <div class="list2">
             <ul>
+
                 <li><a href="#">南京工业大学</a></li>
                 <li><a href="#">党委办公室</a></li>
                 <li><a href="#">党委宣传部</a></li>
                 <li><a href="#">纪委</a></li>
                 <li><a href="#">工委</a></li>
+
+                <!--<friendlist num='4' link_group_id="1" ></friendlist>-->
+
             </ul>
         </div>
 
         <div class="selector">
-            <select class="unnamed1"
-                    style="FONT-SIZE: 9pt; WIDTH: 124px; BACKGROUND-COLOR:; font-color: white"
-                    onchange="window.open(this.options[this.selectedIndex].value)"
-                    size="1" name="mlink2">
-                <option selected="">:::::校内链接:::::</option>
+            <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                    size="1"
+                    name="mlink">
+                <option>---|校内链接|---</option>
+
+
                 <optionfriendlist link_group_id="1"></optionfriendlist>
+
 
             </select>
         </div>
@@ -326,9 +322,19 @@
                 <h2>基层党建</h2>
 
                 <h3>
-                    <a href="#">更多>></a>
+                    <a href="{:get_cat_url(144)}">更多>></a>
                 </h3>
             </div>
+
+            <div>
+
+                <ul class="list" >
+                    <catlist cat_id="144" num="6" length="18" ul_class="list"></catlist>
+
+                </ul>
+
+            </div>
+
         </div>
 
         <div class="midbox4">
@@ -336,9 +342,20 @@
                 <h2>党建交流</h2>
 
                 <h3>
-                    <a href="#">更多>></a>
+                    <a href="{:get_cat_url(8)}">更多>></a>
                 </h3>
             </div>
+
+            <div>
+
+                <ul class="list" >
+                    <catlist cat_id="8" num="6" length="18" ul_class="list"></catlist>
+
+                </ul>
+
+            </div>
+
+
         </div>
     </div>
 
@@ -392,9 +409,24 @@
                 <h2>干部任免</h2>
 
                 <h3>
-                    <a href="#">更多>></a>
+                    <a href="{:get_cat_url(29)}">更多>></a>
                 </h3>
+
+
             </div>
+
+
+            <div>
+
+                <ul class="list" >
+                    <catlist cat_id="29" num="6" length="18" ul_class="list"></catlist>
+
+                </ul>
+
+            </div>
+
+
+
         </div>
 
         <div class="midbox4">
@@ -402,20 +434,44 @@
                 <h2>干部论坛</h2>
 
                 <h3>
-                    <a href="#">更多>></a>
+                    <a href="{:get_cat_url(28)}">更多>></a>
                 </h3>
             </div>
+
+
+
+            <div>
+
+                <ul class="list" >
+                    <catlist cat_id="28" num="6" length="18" ul_class="list"></catlist>
+
+                </ul>
+
+            </div>
+
+
         </div>
     </div>
 
     <div class="rightbox3">
-        <div class="sidetop">
+              <div class="sidetop">
             <h2>表格下载</h2>
 
             <h3>
-                <a href="#">更多>></a>
+                <a href="{:get_cat_url(1)}">更多>></a>
             </h3>
         </div>
+
+        <div>
+
+            <ul class="list" >
+                <catlist cat_id="1" num="4" length="18" ul_class="list"></catlist>
+
+            </ul>
+
+        </div>
+
+
     </div>
 
 </div>
@@ -447,9 +503,19 @@
             <div class="midtop2">
                 <h2>组织建设</h2>
 
+
                 <h3>
-                    <a href="#">更多>></a>
+                    <a href="{:get_cat_url(147)}">更多>></a>
                 </h3>
+            </div>
+
+            <div>
+
+                <ul class="list" >
+                    <catlist cat_id="147" num="6" length="18" ul_class="list"></catlist>
+
+                </ul>
+
             </div>
         </div>
 
@@ -458,9 +524,20 @@
                 <h2>先进典型</h2>
 
                 <h3>
-                    <a href="#">更多>></a>
+                    <a href="{:get_cat_url(148)}">更多>></a>
                 </h3>
             </div>
+
+
+            <div>
+
+                <ul class="list" >
+                    <catlist cat_id="148" num="6" length="18" ul_class="list"></catlist>
+
+                </ul>
+
+            </div>
+
         </div>
     </div>
 
@@ -469,9 +546,20 @@
             <h2>校内发文</h2>
 
             <h3>
-                <a href="#">更多>></a>
+                <a href="{:get_cat_url(64)}">更多>></a>
             </h3>
         </div>
+
+        <div>
+
+            <ul class="list" >
+                <catlist cat_id="64" num="4" length="18" ul_class="list"></catlist>
+
+            </ul>
+
+        </div>
+
+
     </div>
 
 </div>
