@@ -114,6 +114,34 @@
 <!-- ./wrapper -->
 
 <include file="Public:foot"/>
+<script>
+    function on(id) {
+        $.post("{:U('Admin/Custom/enable')}", {id: id},
+                function (data) {
+                    /*if (data.status == 1) {
+                     window.location.reload(true);
+                     }
+                     else {
+                     //$.dialog.alert(data);
+                     alert(data);
+                     }*/
+                    window.location.reload(true);
+                });
+    }
 
+    function off(id) {
+        $.post("{:U('Admin/Custom/disable')}", {id: id},
+                function (data) {
+                    /*if (data.status == 1) {
+                     window.location.reload(true);
+                     }
+                     else {
+                     //$.dialog.alert(data);
+                     alert(data);
+                     }*/
+                    window.location.reload(true);
+                });
+    }
+</script>
 </body>
 </html>

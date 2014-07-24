@@ -2,7 +2,7 @@
 namespace Home\Controller;
 
 use Think\Controller;
-use Zel\Controller\HomeBaseController;
+use Home\Controller\HomeBaseController;
 
 /**
  * 扩展控制器

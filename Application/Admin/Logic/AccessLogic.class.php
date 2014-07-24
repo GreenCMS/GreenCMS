@@ -69,6 +69,23 @@ class AccessLogic extends RelationModel
             'fullname'
         ));
         $temp = $cat->getList(); // 获取分类结构
+
+        foreach ($temp as $key=>$value) {
+
+            if($value['level']=1&&array_key_exists($value['name'],C('group_level_1'))){
+                $group_level_1=C('group_level_1');
+              $temp[$key]["remark"]=$group_level_1[$value['name']];
+            }else if($value['level']=2&&array_key_exists($value['name'],C('admin_level_2'))){
+                $admin_level_2=C('admin_level_2');
+                $temp[$key]["remark"]=$admin_level_2[$value['name']];
+
+            }
+
+        }
+
+
+
+
         $level = array(
             "1" => "项目（GROUP_NAME）",
             "2" => "模块(MODEL_NAME)",
@@ -226,10 +243,9 @@ class AccessLogic extends RelationModel
             unset ($_POST ['password']);
         }
 
-        // print_array($_POST);
 
         $user_id = $_POST ['user_id0'];
-        $role_id = ( int )$_POST ['role_id'];
+        $role_id = (int )$_POST ['role_id'];
         // $data['user_id'] = (int) $_POST['user_id0'];
         $data ['user_login'] = $_POST ['user_login'];
 
@@ -240,12 +256,15 @@ class AccessLogic extends RelationModel
         $data ['user_status'] = $_POST ['user_status'];
         $data ['user_intro'] = $_POST ['user_intro'];
 
+
         $roleStatus = M("Role_users")->where("`user_id`=" . $user_id)->save(array(
             'role_id' => $role_id
         ));
 
 
+
         $data ['user_level'] = $_POST ['role_id'];
+
 
 
         if ($User->where(array('user_id' => $user_id))->save($data)) {

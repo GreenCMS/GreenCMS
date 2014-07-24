@@ -64,10 +64,10 @@
 
         <div class="midtop">
             <h2>时事动态</h2>
-            <php> $ssdt = D('Cats', 'Logic')->getPostsByCat(20, 6);</php>
+            <php> $ssdt = D('Cats', 'Logic')->getPostsByCat(53, 7);</php>
 
             <h3>
-                <a href="#">更多>></a>
+                <a href="{:get_cat_url(53)}">更多>></a>
             </h3>
         </div>
 
@@ -82,8 +82,6 @@
                     <a href="{$vo|get_post_url}" target="_blank"><img src="{$vo|get_post_img}"
                                                                       title="{$vo.post_title}"
                                                                       alt="pic" height="210px"/> </a>
-
-
                 </volist>
 
 
@@ -185,7 +183,7 @@
         <div>
 
 
-            <catlist cat_id="20" num="3" length="10" ul_class="list"></catlist>
+            <catlist cat_id="20" num="8" length="10" ul_class="list"></catlist>
 
 
             <!--
@@ -205,9 +203,10 @@
 
         <div class="midtop">
             <h2>组工通讯</h2>
+            <php> $zgtx = D('Cats', 'Logic')->getPostsByCat(82, 7);</php>
 
             <h3>
-                <a href="#">更多>></a>
+                <a href="{:get_cat_url(82)}">更多>></a>
             </h3>
         </div>
 
@@ -217,26 +216,31 @@
             <a href="#" id="banner_info2"></a> <!--标题-->
             <ul id="list2"></ul>
             <div id="banner_list2">
-                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/3.jpg" title="pic1" alt="pic" height="210px"/></a>
-                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/2.jpg" title="pic2" alt="pic" height="210px"/></a>
-                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/1.jpg" title="pic3" alt="pic" height="210px"/></a>
-                <a href="#" target="_blank"><img src="__PUBLIC__/Zzb/pic/p5.jpg" title="pic4" alt="pic" height="210px"/></a>
+                <volist name="zgtx" id="vo">
+                    <a href="{$vo|get_post_url}" target="_blank"><img src="{$vo|get_post_img}"
+                                                                      title="{$vo.post_title}"
+                                                                      alt="pic" height="210px"/></a>
+                </volist>
+
+
+
             </div>
         </div>
         <div class="listm">
 
-            <catlist cat_id="20" num="3" length="10" ul_class="list"></catlist>
 
-            <!--
                 <ul>
+                    <volist name="zgtx" id="vo">
+                        <li>
+                            <a href="{$vo|get_post_url}" title="{$vo.post_title}">
+                                {$vo|process_title}
+                            </a>
+                        </li>
 
-                    <li><a href="#" title="#">学校召开教育实践活动学生代表征求意见座谈会…</a></li>
-                    <li><a href="#" title="#">黄维校长亲切会见盐城市阜宁县代表团一行</a></li>
-                    <li><a href="#" title="#">王德明书记调研环境学院并听取意见</a></li>
-                    <li><a href="#" title="#">我校7个课题获2013年江苏省高等教育教改研究立…</a></li>
+                    </volist>
+
                 </ul>
 
-                  -->
         </div>
 
     </div>

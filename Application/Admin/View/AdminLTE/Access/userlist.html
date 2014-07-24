@@ -71,8 +71,9 @@
                                         <td>{$vo.role_info.0.remark}</td>
                                         <td>{$vo.post_count}</td>
                                         <td>{$vo.user_registered}</td>
-                                        <td>[ <a href="__URL__/editUser?aid={$vo.user_id}">编辑</a> ][ <a
-                                                href="__URL__/delUser?aid={$vo.user_id}">删除</a> ]
+
+                                        <td>[ <a href="{:U('Admin/Access/editUser',array('aid'=>$vo['user_id']))}">编辑</a> ][ <a
+                                                href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a> ]
                                         </td>
                                     </tr>
                                 </volist>

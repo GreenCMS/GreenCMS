@@ -98,11 +98,16 @@ class TagsLogic extends RelationModel
     public function selectWithPostsCount($limit = 0, $relation = false, $where = array(), $order = '')
     {
 
-        return D('Tags')->where($where)->limit($limit)->field('*,count( ' . GreenCMS_DB_PREFIX . 'post_tag.post_id) as post_count')
+        $res= D('Tags')->where($where)->limit($limit)
+            ->field( GreenCMS_DB_PREFIX . 'tags.tag_id,'.
+                GreenCMS_DB_PREFIX . 'tags.tag_slug,'.
+                GreenCMS_DB_PREFIX . 'tags.tag_name,'.
+            'count( '  . GreenCMS_DB_PREFIX . 'post_tag.post_id) as post_count')
             ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'post_tag ON ' . GreenCMS_DB_PREFIX .
                 'tags.tag_id = ' . GreenCMS_DB_PREFIX . 'post_tag.tag_id')
             ->group(GreenCMS_DB_PREFIX . 'tags.tag_id')->relation($relation)->select();
 
+        return $res;
     }
 
 

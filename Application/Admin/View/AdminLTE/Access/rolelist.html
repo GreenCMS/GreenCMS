@@ -73,9 +73,11 @@
                                             <if condition="$vo.pid eq 0">
                                                 <else/>
                                                 [ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>]
-                                                [ <a href="__URL__/editRole?id={$vo.id}" class="edit">编辑</a> ]
-                                                [ <a href="__URL__/changeRole?id={$vo.id}" class="edit">权限分配</a> ]
-                                                [ <a href="__URL__/setrolecat?id={$vo.id}" class="edit">投稿分类</a> ]
+                                                [ <a href="{:U('Admin/Access/editRole',array('id'=>$vo['id']))}" class="edit">编辑</a> ]
+                                                [ <a href="{:U('Admin/Access/changeRole',array('id'=>$vo['id']))}" class="edit">权限分配</a> ]
+                                                [ <a href="{:U('Admin/Access/setrolecat',array('id'=>$vo['id']))}" class="edit">投稿分类</a> ]
+
+
                                             </if>
                                         </td>
                                     </tr>

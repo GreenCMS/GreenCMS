@@ -8,6 +8,7 @@
  */
 
 namespace Home\Controller;
+
 use Common\Logic\PostsLogic;
 use Common\Util\File;
 
@@ -35,6 +36,7 @@ class PostController extends HomeBaseController
         $Posts->viewInc($post_detail['post_id']); //浏览计数
         $this->if404($post_detail, "非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
 
+        $this->assign('breadcrumbs', get_breadcrumbs('post',$post_detail));
         $this->assign('post', $post_detail); // 赋值数据集
 
         if (File::file_exists(T('Home@Post/' . $post_detail['post_template']))) {
@@ -99,7 +101,6 @@ class PostController extends HomeBaseController
         }
 
         // $this->display($post_res['post_type']);
-
 
     }
 

@@ -40,9 +40,8 @@ abstract class HomeBaseController extends BaseController
      */
     public function if404($info, $message = "")
     {
-        Hook::listen('home_if404');
-
-        if (empty($info)) $this->error404($message);
+        if (empty($info))
+            $this->error404($message);
     }
 
 
@@ -54,8 +53,6 @@ abstract class HomeBaseController extends BaseController
      */
     public function error404($message = "非常抱歉，你需要的页面暂时不存在，可能它已经躲起来了。.")
     {
-        Hook::listen('home_error404');
-
         $this->assign("message", $message);
 
         if (File::file_exists(T('Home@Index/404'))) {

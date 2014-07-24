@@ -46,6 +46,23 @@ class SnsController extends OauthBaseController
         redirect($sns->getRequestCodeURL());
     }
 
+    public function logout($type = null)
+    {
+        empty ($type) && $this->error('参数错误');
+        $User_sns = new User_snsLogic();
+
+        $where['user_id'] = get_current_user_id();
+        $where['type'] = strtoupper($type);
+        if ($User_sns->where($where)->delete()) {
+            $this->success("接触绑定成功");
+        } else {
+            $this->error("尚未绑定");
+        }
+
+
+    }
+
+
     /**
      * 授权回调地址
      * @param null $type
@@ -148,6 +165,62 @@ class SnsController extends OauthBaseController
                     }
 
                 }
+
+            } else if ($user_info ['type'] == 'GREENCMS') {
+
+                $data = $token;
+                $data ['user_id'] = $user_id;
+                $data ['type'] = $user_info ['type'];
+                //增加过期时间，便于提醒
+                $data ['expires_time'] = date('Y-m-d H:i:s', time() + (int)$token['expires_in']);
+                $User_sns = new User_snsLogic();
+
+
+                if ($user_id != null) {
+                    //用户已登陆
+                    $open_user_info = $User_sns->detailByUID($user_id, $type);
+
+                    if (!empty($open_user_info)) {
+                        //已绑定
+                        //TODO 重新绑定
+                        $this->success('已绑定' . $type, U('Admin/Index/sns'));
+                    } else {
+                        //未绑定
+                        $res = $User_sns->data($data)->add();
+                        if ($res) {
+                            $this->success($type . "绑定成功", U('Admin/Index/sns'));
+
+                        } else {
+                            $this->error($type . "绑定失败");
+                        }
+
+                    }
+
+
+                } else {
+
+                    //未登陆
+                    $open_user_info = $User_sns->detailByOID($token ['openid'], $type);
+
+                    if (!empty($open_user_info)) {
+                        //已绑定
+                        //TODO 开始登陆
+                        $map = array();
+                        $map['user_id'] = $open_user_info['User']['user_id'];
+                        $map['user_login'] = $open_user_info['User']['user_login'];
+
+                        $UserEvent = new UserEvent();
+                        $UserEvent->auth($map);
+                        $loginRes = $UserEvent->auth($map);
+                        $this->json2Response($loginRes);
+
+                    } else {
+                        //未绑定
+                        $this->error('登录失败,尚未绑定。请登录之后绑定帐号', U('Admin/Index/index'));
+                    }
+
+                }
+
 
             } else {
 

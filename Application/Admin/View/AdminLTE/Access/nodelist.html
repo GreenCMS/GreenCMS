@@ -86,7 +86,9 @@
                                         <td>{$vo.level}</td>
                                         <td>{$vo.statusTxt}</td>
                                         <td>[ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>
-                                            ] [ <a href="__URL__/editNode?id={$vo.id}" class="edit">编辑</a> ]
+                                            ] [ <a href="{:U('Admin/Access/editNode',array('id'=>$vo['id']))}" class="edit">编辑</a> ]
+
+
                                         </td>
                                     </tr>
                                 </volist>
@@ -155,7 +157,9 @@
                 var editval = $(this).val();
                 $(this).parents("td").html(editval).attr('edit', '0');
                 if (inval != editval) {
-                    $.post("__URL__/opSort", {id: inid, fd: infd, sort: editval});
+                    $.post("{:U('Admin/Access/opSort')}", {id: inid, fd: infd, sort: editval});
+
+
                 }
             })
         });
