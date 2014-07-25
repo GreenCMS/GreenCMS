@@ -87,7 +87,7 @@ class WidgetWidget extends Controller
 
         $TagList = new TagsLogic();
 
-        $tag_res = $TagList->getList(50, false);
+        $tag_res = $TagList->getList(50, false, true);
 
         $this->assign('tagClouds', $tag_res);
 

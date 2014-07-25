@@ -55,4 +55,11 @@ return array(
         "single" => "文章",
         "page" => "页面"
     ),
+
+
+    "cache_type" =>array(
+        "File" => "文件",
+        "Memcache" => "Memcache",
+        "Xcache" => "Xcache"
+    ),
 );

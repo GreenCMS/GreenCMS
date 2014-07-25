@@ -11,6 +11,7 @@ namespace Common\Event;
 
 use Common\Util\File;
 use SimpleXMLElement;
+use Think\Log;
 
 
 /**
@@ -74,8 +75,8 @@ class WordpressEvent
 
 
                 $value = object_to_array($value);
-             //   dump($value);
-             //   dump($value_wp);
+                //   dump($value);
+                //   dump($value_wp);
 
 
                 $post_temp = array();
@@ -84,11 +85,10 @@ class WordpressEvent
                 $post_temp['post_id'] = (int)$value_wp['post_id'];
                 $post_temp['post_title'] = $value['title'];
                 $post_temp['post_status'] = 'publish';
-                $post_temp['post_date'] =  $value_wp['post_date'];
-                $post_temp['post_modified'] =  $value_wp['post_date'];
+                $post_temp['post_date'] = $value_wp['post_date'];
+                $post_temp['post_modified'] = $value_wp['post_date'];
                 $post_temp['post_type'] = 'single';
                 $post_temp['post_name'] = $value_wp['post_name'];
-
 
 
                 $tag_cat = $value['category'];
@@ -102,24 +102,25 @@ class WordpressEvent
                         $tag_id = (int)$nicename['tag_id'];
                         array_push($post_tag_temp, $tag_id);
                     } else {
-                        echo 'No match';
+                         Log::record('No match ');
                     }
 
                 }
 
                 $post_id = D('Posts', 'Logic')->data($post_temp)->add();
-                echo '插入ID为' . $post_id . "的文章";
+
+                Log::record('插入ID为' . $post_id . "的文章");
 
                 foreach ($post_cat_temp as $cat_id) {
 
-                    echo '插入ID为' . $post_id . "的文章关联CAT ID为:" . $cat_id;
+                    Log::record('插入ID为' . $post_id . "的文章关联CAT ID为:" . $cat_id);
 
                     D('Post_cat')->data(array('post_id' => $post_id, 'cat_id' => $cat_id))->add();
 
                 }
 
                 foreach ($post_tag_temp as $tag_id) {
-                    echo '插入ID为' . $post_id . "的文章关联TAG ID为:" . $tag_id;
+                    Log::record('插入ID为' . $post_id . "的文章关联TAG ID为:" . $tag_id);
 
                     D('Post_tag')->data(array('post_id' => $post_id, 'tag_id' => $tag_id))->add();
 
@@ -156,7 +157,7 @@ class WordpressEvent
                 $tag_temp['tag_id'] = $item['term_id'];
                 $tag_temp['tag_slug'] = $item['tag_slug'];
                 $tag_temp['tag_name'] = $item['tag_name'];
-               // dump($tag_temp);
+                // dump($tag_temp);
                 D('Tags', 'Logic')->data($tag_temp)->add();
 
             }

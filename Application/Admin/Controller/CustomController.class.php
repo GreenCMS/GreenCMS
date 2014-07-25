@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 use Common\Event\SystemEvent;
+use Common\Event\ThemeEvent;
 use Common\Event\UpdateEvent;
 use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
@@ -21,6 +22,7 @@ use Common\Util\GreenPage;
 use Think\Upload;
 
 /**
+ * 用户自定义模块
  * Class CustomController
  * @package Admin\Controller
  */
@@ -37,7 +39,7 @@ class CustomController extends AdminBaseController
 
     //TODO menu
     /**
-     *
+     * 首页菜单显示
      */
     public function menu()
     {
@@ -45,13 +47,13 @@ class CustomController extends AdminBaseController
 
         $menu_list = $Menu->getList(); // 获取分类结构
 
-
         $this->assign('menu', $menu_list);
 
         $this->display();
     }
 
     /**
+     * 菜单删除
      * @param $id
      * @param bool $child
      */
@@ -72,7 +74,7 @@ class CustomController extends AdminBaseController
     }
 
     /**
-     *
+     * 添加菜单
      */
     public function menuAdd()
     {
@@ -119,7 +121,7 @@ class CustomController extends AdminBaseController
     }
 
     /**
-     *
+     * 添加菜单处理
      */
     public function menuAddHandle()
     {
@@ -139,6 +141,7 @@ class CustomController extends AdminBaseController
     }
 
     /**
+     * 编辑菜单
      * @param $id
      */
     public function menuEdit($id)
@@ -164,6 +167,7 @@ class CustomController extends AdminBaseController
     }
 
     /**
+     * 菜单编辑处理
      * @param $id
      */
     public function menuEditHandle($id)
@@ -185,6 +189,7 @@ class CustomController extends AdminBaseController
 
 
     /**
+     * 主题状态 //todo to be deleted
      * @param string $theme_name
      * @return mixed|string
      */
@@ -201,7 +206,7 @@ class CustomController extends AdminBaseController
 
 
     /**
-     *
+     * 主题
      */
     public function theme()
     {
@@ -253,7 +258,7 @@ class CustomController extends AdminBaseController
 
 
     /**
-     *
+     * 主题添加
      */
     public function themeAdd()
     {
@@ -264,6 +269,9 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     * 添加本地上传主题
+     */
     public function themeAddLocal()
     {
         File::mkDir(WEB_CACHE_PATH);
@@ -336,11 +344,6 @@ class CustomController extends AdminBaseController
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
 
-        if ($this->themeStatus($theme_name) == 'disabled') {
-            $this->error('请先启用主题');
-        }
-
-
         $res = set_kv('home_theme', $theme_name);
         if ($res) {
             $cache_control = new SystemEvent();
@@ -356,9 +359,7 @@ class CustomController extends AdminBaseController
      */
     public function themeDelHandle($theme_name = '')
     {
-        if ($this->themeStatus($theme_name) == 'enabled') {
-            $this->error('请先禁用主题');
-        }
+
 
         $tpl_view_path = WEB_ROOT . 'Application/Home/View/' . $theme_name . '/';
         $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
@@ -369,19 +370,19 @@ class CustomController extends AdminBaseController
 
 
     /**
-     *
+     * 插件页面
      */
     public function plugin()
     {
-        $page = I('get.page', C('PAGER'));
+        //$page = I('get.page', C('PAGER'));
 
         $Addons = M('Addons');
 
         $list = D('Addons')->getList(); //这里得到是未安装的
-        $count = count($list);
+//        $count = count($list);
 
 
-        $p = new GreenPage ($count, $page);
+        // $p = new GreenPage ($count, $page);
         //这里得到是已安装的  =_=+++++
 
 
@@ -391,9 +392,9 @@ class CustomController extends AdminBaseController
 
     }
 
-    //创建向导首页
+
     /**
-     *
+     * 创建向导首页
      */
     public function create()
     {
@@ -408,8 +409,9 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
-    //预览
+
     /**
+     * 插件预览
      * @param bool $output
      * @return string
      */
@@ -421,8 +423,6 @@ class CustomController extends AdminBaseController
         $custom_config = trim($data['custom_config']);
         if ($data['has_config'] && $custom_config) {
             $custom_config = <<<str
-
-
         public \$custom_config = '{$custom_config}';
 str;
             $extend[] = $custom_config;
@@ -502,7 +502,7 @@ str;
     }
 
     /**
-     *
+     * 检查form
      */
     public function checkForm()
     {
@@ -519,7 +519,7 @@ str;
     }
 
     /**
-     *
+     * 创建插件
      */
     public function build()
     {
@@ -591,6 +591,7 @@ str;
     }
 
     /**
+     *
      * 插件后台显示页面
      * @param string $name 插件名
      */
@@ -796,6 +797,7 @@ str;
      */
     public function hooks()
     {
+
         $this->meta_title = '钩子列表';
         $map = $fields = array();
 
@@ -814,12 +816,11 @@ str;
 
         $this->assign('page', $pager_bar);
         $this->assign('list', $list);
-        $this->assign('action', '钩子管理');
         $this->display();
     }
 
     /**
-     *
+     * 添加钩子
      */
     public function addhook()
     {
@@ -828,8 +829,9 @@ str;
         $this->display('edithook');
     }
 
-    //钩子出编辑挂载插件页面
+
     /**
+     * 钩子出编辑挂载插件页面
      * @param $id
      */
     public function edithook($id)
@@ -840,8 +842,9 @@ str;
         $this->display('edithook');
     }
 
-    //超级管理员删除钩子
+
     /**
+     * 删除钩子
      * @param $id
      */
     public function delhook($id)
@@ -854,7 +857,7 @@ str;
     }
 
     /**
-     *
+     * 更新钩子
      */
     public function updateHook()
     {
@@ -880,6 +883,7 @@ str;
     }
 
     /**
+     * 执行
      * @param null $_addons
      * @param null $_controller
      * @param null $_action
@@ -898,7 +902,9 @@ str;
         }
     }
 
-
+    /**
+     * link 分组
+     */
     public function linkgroup()
     {
 
@@ -908,6 +914,9 @@ str;
         $this->display();
     }
 
+    /**
+     * 添加友情链接分组
+     */
     public function addlinkgroup()
     {
         $this->assign('action', '添加链接分组');
@@ -917,6 +926,9 @@ str;
         $this->display();
     }
 
+    /**
+     * 添加友情链接分组处理
+     */
     public function addlinkgroupHandle()
     {
         $data['link_group_name'] = I('post.link_group_name');
@@ -927,6 +939,10 @@ str;
         }
     }
 
+    /**
+     * 删除链接分组处理
+     * @param $id
+     */
     public function dellinkgroupHandle($id)
     {
 
@@ -937,6 +953,10 @@ str;
         }
     }
 
+    /**
+     * 编辑链接分组
+     * @param $id
+     */
     public function editlinkgroup($id)
     {
         $this->assign('form_url', U('Admin/Custom/editlinkgroupHandle', array('id' => $id)));
@@ -951,6 +971,10 @@ str;
         $this->display('addlinkgroup');
     }
 
+    /**
+     * 编辑链接分组处理
+     * @param $id
+     */
     public function editlinkgroupHandle($id)
     {
         $data['link_group_name'] = I('post.link_group_name');
@@ -981,7 +1005,7 @@ str;
 
 
     /**
-     *
+     * 添加链接
      */
     public function addlink()
     {
@@ -1042,6 +1066,7 @@ str;
     }
 
     /**
+     * 编辑链接
      * @param $id
      */
     public function editlink($id)
@@ -1106,6 +1131,7 @@ str;
     }
 
     /**
+     * 删除链接
      * @param $id
      */
     public function dellink($id)
@@ -1118,6 +1144,7 @@ str;
     }
 
     /**
+     * //todo not used yet
      * 轮播说明
      * post_img->幻灯图片 url
      * post_top->顺序
@@ -1136,7 +1163,8 @@ str;
     }
 
     /**
-     *
+     * //todo not used yet
+     * 添加幻灯
      */
     public function addslider()
     {
@@ -1145,6 +1173,7 @@ str;
     }
 
     /**
+     * //todo not used yet
      * @param $id
      */
     public function delslider($id)
@@ -1155,6 +1184,82 @@ str;
         } else {
             $this->error('永久删除失败');
         }
+
+    }
+
+
+    public function skin()
+    {
+
+
+        $ThemeEvent=new ThemeEvent();
+         $theme_exist=$ThemeEvent->getThemeNameList();
+
+        $theme_not_installed = $ThemeEvent->getThemeNotInstalledNameList();
+        $theme_installed = $ThemeEvent->getThemeInstalledNameList();
+
+
+
+        $theme_list_installed = $ThemeEvent->getThemeInstalledList();
+        foreach($theme_list_installed as $key=>$theme_list_installed_value){
+            if ($theme_list_installed_value['theme_name'] == get_kv('home_theme', true)) {
+                $theme_list_installed[$key]['using_color'] = ' bg-green';
+                $theme_list_installed[$key]['status_name'] = '正在使用';
+                $theme_list_installed[$key]['status_url'] = "#";
+
+            }else{
+                $theme_list_installed[$key]['using_color'] = ' btn-warning';
+                $theme_list_installed[$key]['status_name'] = '准备就绪';
+                $theme_list_installed[$key]['status_url'] = U('Admin/Custom/themeChangeHandle',
+                    array('theme_name' => $theme_list_installed_value['theme_name'] ));
+
+            }
+        }
+        $this->assign('theme_list_installed', $theme_list_installed);
+
+
+        $theme_list = array();
+        foreach ($theme_not_installed as $value) {
+            $tpl_static_path = WEB_ROOT . 'Public/' . $value . '/';
+            $theme_temp = array();
+            if (file_exists($tpl_static_path . 'theme.xml')) {
+                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
+
+                $theme_temp = (array)$theme;
+                if ($theme_temp['name'] == get_kv('home_theme', true)) {
+                    $theme_temp['using_color'] = ' bg-green';
+                    $theme_temp['status_name'] = '正在使用';
+
+                }else{
+                    $theme_temp['using_color'] = ' btn-warning';
+                    $theme_temp['status_name'] = '待安装';
+
+                }
+
+                array_push($theme_list, $theme_temp);
+            }
+
+        }
+        $this->assign('theme_list_not_installed', $theme_list);
+
+
+         $this->display();
+
+
+    }
+
+
+
+    public function themeInstallHandle($theme_name)
+    {
+
+
+
+    }
+    public function themeUninstallHandle($theme_name)
+    {
+
+
 
     }
 

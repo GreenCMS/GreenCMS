@@ -565,7 +565,7 @@ function get_breadcrumbs($type, $info = '', $ul_attr = ' class="breadcrumbs "',
         $res .= $separator . '<li><a href = "' . getTagURLByID($tag['tag_id']) . '">' . $tag['tag_name'] . ' </a ></li> ';
 
     } elseif ($type == 'post') {
-        $cat=$info['post_cat'][0];
+        $cat = $info['post_cat'][0];
         $res .= $separator . '<li><a href = "' . get_cat_url($cat['cat_id']) . '">' . $cat['cat_name'] . ' </a ></li> ';
 
 
@@ -677,7 +677,7 @@ function get_next_post($post_id, $post_cat)
 
     if (!$post) return null;
 
-    $res = ' < a href = "' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . ' </a > ';
+    $res = '<a href = "' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . '</a>';
     return $res;
 }
 
@@ -693,7 +693,7 @@ function get_previous_post($post_id, $post_cat)
     $next_post_id = D('Post_cat')->field('post_id')->where($where)->find();
     $post = D('Posts', 'Logic')->detail($next_post_id["post_id"], false);
     if (!$post) return null;
-    $res = ' < a href = "' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . ' </a > ';
+    $res = '<a href = "' . getSingleURLByID($post['post_id'], $post['post_type']) . '">' . is_top($post['post_top']) . $post['post_title'] . '</a>';
     return $res;
 }
 

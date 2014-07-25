@@ -86,12 +86,13 @@ class TagsLogic extends RelationModel
      * 获取列表
      * @param int $limit
      * @param bool $relation
-     * @param $order
+     * @param bool $cache
+     * @param string $order
      * @return mixed
      */
-    public function getList($limit = 20, $relation = true, $order)
+    public function getList($limit = 20, $relation = true, $cache=false,$order="")
     {
-        return D('Tags')->limit($limit)->relation($relation)->select();
+        return D('Tags')->cache($cache)->limit($limit)->relation($relation)->select();
     }
 
 

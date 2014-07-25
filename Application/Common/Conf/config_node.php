@@ -89,6 +89,7 @@ return array(
             'theme' => '主题管理',
             'menu' => '菜单管理',
 //            'links' => '链接管理',
+            'hooks' => '钩子管理',
             'linkgroup' => '链接管理',
             //      'slider'  => '轮播管理',
 

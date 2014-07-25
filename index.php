@@ -19,8 +19,8 @@ error_reporting(0);
 
 
 /**
- * 系统调试设置true
- * 项目正式部署后请设置为false
+ * 系统调试设置 true
+ * 项目正式部署后请设置为 false
  */
 define('APP_DEBUG', true);
 
