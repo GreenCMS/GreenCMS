@@ -116,7 +116,7 @@
 <include file="Public:foot"/>
 <script>
     function on(id) {
-        $.post("{:U('Admin/Custom/enable')}", {id: id},
+        $.post("{:U('Admin/Custom/pluginEnable')}", {id: id},
                 function (data) {
                     /*if (data.status == 1) {
                      window.location.reload(true);
@@ -130,7 +130,7 @@
     }
 
     function off(id) {
-        $.post("{:U('Admin/Custom/disable')}", {id: id},
+        $.post("{:U('Admin/Custom/pluginDisable')}", {id: id},
                 function (data) {
                     /*if (data.status == 1) {
                      window.location.reload(true);

@@ -21,4 +21,29 @@
         </page>
 
     </post>
+    <config>
+        <kv>
+            <title>
+                <title>显示标题</title>
+                <type>text</type>
+                <value>GreenCMS</value>
+
+            </title>
+
+            <showplace>
+                <title>显示</title>
+                <type>checkbox</type>
+                <options>
+                    <true>显示</true>
+                    <false>不显示</false>
+                </options>
+                <value>true</value>
+
+            </showplace>
+
+
+        </kv>
+
+
+    </config>
 </theme>

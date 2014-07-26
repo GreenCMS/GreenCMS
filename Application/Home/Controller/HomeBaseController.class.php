@@ -8,9 +8,11 @@
  */
 
 namespace Home\Controller;
+
 use Common\Controller\BaseController;
 use Think\Hook;
 use Common\Util\File;
+
 /**
  * Home模块基础类控制器
  * Class HomeBaseController
@@ -27,6 +29,7 @@ abstract class HomeBaseController extends BaseController
         parent::__construct();
 
         $this->customConfig();
+        $this->themeConfig();
 
     }
 
@@ -63,6 +66,33 @@ abstract class HomeBaseController extends BaseController
 
         Hook::listen('app_end');
         die();
+    }
+
+    private function themeConfig()
+    {
+        if (S('theme_config')) {
+            //有缓存
+            $theme_config = S('theme_config');
+            C('theme_config', $theme_config);
+
+        } else {
+
+            $theme = D("Theme")->field('theme_config')->where(array("theme_name" => get_kv('home_theme', true)))->find();
+            $theme = json_decode($theme['theme_config'], true);
+            $theme = $theme['kv'];
+
+            $theme_config = array();
+            foreach ($theme as $key => $value) {
+                $theme_config[$key] = $value['value'];
+            }
+
+            S('theme_config', $theme_config, 100000);
+
+            C('theme_config', $theme_config);
+
+
+        }
+
     }
 
 

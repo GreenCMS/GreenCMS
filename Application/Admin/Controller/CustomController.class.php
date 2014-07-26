@@ -34,7 +34,7 @@ class CustomController extends AdminBaseController
      */
     public function index()
     {
-        $this->display();
+        $this->theme();
     }
 
     //TODO menu
@@ -186,188 +186,6 @@ class CustomController extends AdminBaseController
 
         }
     }
-
-
-    /**
-     * 主题状态 //todo to be deleted
-     * @param string $theme_name
-     * @return mixed|string
-     */
-    private function themeStatus($theme_name = 'Vena')
-    {
-        $res = get_kv('theme_' . $theme_name, true);
-        if ($res == null) {
-            set_kv('theme_' . $theme_name, 'disabled');
-            return 'disabled';
-        }
-
-        return $res;
-    }
-
-
-    /**
-     * 主题
-     */
-    public function theme()
-    {
-        $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
-        $tpl_static = File::scanDir(WEB_ROOT . 'Public');
-        $tpl = array_intersect($tpl_view, $tpl_static);
-
-        $theme_list = array();
-        foreach ($tpl as $value) {
-            $tpl_static_path = WEB_ROOT . 'Public/' . $value . '/';
-            $theme_temp = array();
-            if (file_exists($tpl_static_path . 'theme.xml')) {
-                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
-
-                $theme_temp = (array)$theme;
-                if ($theme_temp['name'] == get_kv('home_theme', true)) {
-                    $theme_temp['status_name'] = '正在使用';
-                    $theme_temp['status_url'] = '#';
-                    $theme_temp['using_color'] = ' bg-green';
-                    $theme_temp['action_name2'] = '使用中';
-                    $theme_temp['action_url2'] = '#';
-                } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
-                    $theme_temp['using_color'] = ' bg-olive';
-
-                    $theme_temp['status_name'] = '立即使用';
-                    $theme_temp['status_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));
-
-                    $theme_temp['action_name2'] = '禁用';
-                    $theme_temp['action_url2'] = U('Admin/Custom/themeDisableHandle', array('theme_name' => $theme_temp['name']));
-
-                } else {
-                    $theme_temp['status_name'] = '禁用中';
-                    $theme_temp['status_url'] = '#';
-
-                    $theme_temp['action_name2'] = '启用';
-                    $theme_temp['action_url2'] = U('Admin/Custom/themeEnableHandle', array('theme_name' => $theme_temp['name']));
-
-                }
-
-
-                array_push($theme_list, $theme_temp);
-            }
-
-        }
-        $this->assign('theme_list', $theme_list);
-
-        $this->display();
-    }
-
-
-    /**
-     * 主题添加
-     */
-    public function themeAdd()
-    {
-
-        $this->assign('action', '主题添加');
-        $this->assign('action_name', 'themeAdd');
-
-        $this->display();
-    }
-
-    /**
-     * 添加本地上传主题
-     */
-    public function themeAddLocal()
-    {
-        File::mkDir(WEB_CACHE_PATH);
-
-
-        $config = array(
-            'rootPath' => WEB_CACHE_PATH,
-            "savePath" => '',
-            "maxSize" => 100000000, // 单位B
-            "exts" => array('zip'),
-            "subName" => array(),
-        );
-
-        $upload = new Upload($config);
-        $info = $upload->upload();
-        if (!$info) { // 上传错误提示错误信息
-            $this->error($upload->getError());
-        } else { // 上传成功 获取上传文件信息
-
-            $file_path_full = $info['file']['fullpath'];
-
-            //dump($info);die($file_path_full);
-            if (File::file_exists($file_path_full)) {
-
-                $Update = new UpdateEvent();
-                $applyRes = $Update->applyPatch($file_path_full);
-                $applyInfo = json_decode($applyRes, true);
-
-                if ($applyInfo['status']) {
-                    $this->success($applyInfo['info'], U('Admin/Custom/theme'));
-                } else {
-                    $this->error($applyInfo['info']);
-                }
-
-            } else {
-                $this->error('文件不存在');
-
-            }
-        }
-    }
-
-
-
-    //todo 需要检查是否真的成功
-    /**
-     * @param string $theme_name
-     */
-    public function themeDisableHandle($theme_name = 'NovaGreenStudio')
-    {
-        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
-        set_kv('theme_' . $theme_name, 'disabled');
-        $this->success('禁用成功');
-    }
-
-    /**
-     * @param string $theme_name
-     */
-    public function themeEnableHandle($theme_name = 'NovaGreenStudio')
-    {
-
-        set_kv('theme_' . $theme_name, 'enabled');
-        $this->success('启用成功');
-    }
-
-
-    /**
-     * @param string $theme_name
-     */
-    public function themeChangeHandle($theme_name = 'NovaGreenStudio')
-    {
-        if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
-
-        $res = set_kv('home_theme', $theme_name);
-        if ($res) {
-            $cache_control = new SystemEvent();
-            $cache_control->clearCacheAll();
-            $this->success('切换成功');
-        } else {
-            $this->error('切换失败');
-        }
-    }
-
-    /**
-     * @param string $theme_name
-     */
-    public function themeDelHandle($theme_name = '')
-    {
-
-
-        $tpl_view_path = WEB_ROOT . 'Application/Home/View/' . $theme_name . '/';
-        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
-        File::delAll($tpl_view_path, true);
-        File::delAll($tpl_static_path, true);
-        $this->success('删除成功');
-    }
-
 
     /**
      * 插件页面
@@ -629,10 +447,10 @@ str;
     /**
      * 启用插件
      */
-    public function enable()
+    public function pluginEnable()
     {
-        $id = I('id');
-        M('Addons')->where(array('id' => $id))->setField('status', 1);
+        $id = I('post.id');
+        D('Addons')->where(array('id' => $id))->setField('status', 1);
         S('hooks', null);
         $this->jsonReturn(1, "启用成功", U('Admin/Custom/plugin'));
 
@@ -641,10 +459,10 @@ str;
     /**
      * 禁用插件
      */
-    public function disable()
+    public function pluginDisable()
     {
-        $id = I('id');
-        M('Addons')->where(array('id' => $id))->setField('status', 0);
+        $id = I('post.id');
+        D('Addons')->where(array('id' => $id))->setField('status', 0);
         S('hooks', null);
         $this->jsonReturn(1, "禁用成功", U('Admin/Custom/plugin'));
     }
@@ -1188,30 +1006,27 @@ str;
     }
 
 
-    public function skin()
+    public function theme()
     {
 
-
-        $ThemeEvent=new ThemeEvent();
-         $theme_exist=$ThemeEvent->getThemeNameList();
-
+        $ThemeEvent = new ThemeEvent();
+        $theme_exist = $ThemeEvent->getThemeNameList();
         $theme_not_installed = $ThemeEvent->getThemeNotInstalledNameList();
         $theme_installed = $ThemeEvent->getThemeInstalledNameList();
 
 
-
         $theme_list_installed = $ThemeEvent->getThemeInstalledList();
-        foreach($theme_list_installed as $key=>$theme_list_installed_value){
+        foreach ($theme_list_installed as $key => $theme_list_installed_value) {
             if ($theme_list_installed_value['theme_name'] == get_kv('home_theme', true)) {
                 $theme_list_installed[$key]['using_color'] = ' bg-green';
                 $theme_list_installed[$key]['status_name'] = '正在使用';
                 $theme_list_installed[$key]['status_url'] = "#";
 
-            }else{
+            } else {
                 $theme_list_installed[$key]['using_color'] = ' btn-warning';
                 $theme_list_installed[$key]['status_name'] = '准备就绪';
                 $theme_list_installed[$key]['status_url'] = U('Admin/Custom/themeChangeHandle',
-                    array('theme_name' => $theme_list_installed_value['theme_name'] ));
+                    array('theme_name' => $theme_list_installed_value['theme_name']));
 
             }
         }
@@ -1230,7 +1045,7 @@ str;
                     $theme_temp['using_color'] = ' bg-green';
                     $theme_temp['status_name'] = '正在使用';
 
-                }else{
+                } else {
                     $theme_temp['using_color'] = ' btn-warning';
                     $theme_temp['status_name'] = '待安装';
 
@@ -1243,24 +1058,272 @@ str;
         $this->assign('theme_list_not_installed', $theme_list);
 
 
-         $this->display();
+        $this->display();
 
 
     }
-
 
 
     public function themeInstallHandle($theme_name)
     {
+        $res = D("Theme")->where(array("theme_name" => $theme_name))->find();
+        if ($res) $this->error("主题已经安装");
 
 
+        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
+        $theme_temp = array();
+
+        $theme_xml_path = $tpl_static_path . 'theme.xml';
+        if (file_exists($theme_xml_path)) {
+
+            $theme_xml = File::readFile($theme_xml_path);
+
+            $theme = simplexml_load_string($theme_xml);
+            $theme_temp["theme_name"] = (string)$theme->name;
+            $theme_temp["theme_description"] = (string)$theme->description;
+            $theme_temp["theme_build"] = (string)$theme->build;
+            $theme_temp["theme_versioin"] = (string)$theme->version;
+            $theme_temp["theme_preview"] = (string)$theme->preview;
+            $theme_temp["theme_copyright"] = (string)$theme->copyright;
+            $theme_temp["theme_xml"] = $theme_xml;
+
+
+            $config = object_to_array($theme->config);
+            $config['post_type'] = object_to_array($theme->post);
+
+
+            $theme_temp["theme_config"] = (string)json_encode($config);
+
+
+            $res = D("Theme")->data($theme_temp)->add();
+            if ($res) {
+                $this->success("主题安装成功");
+            } else {
+                $this->error("主题安装失败");
+
+            }
+
+        } else {
+            $this->error("主题描述文件缺失");
+
+        }
 
     }
+
+
     public function themeUninstallHandle($theme_name)
     {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以删除');
 
+
+        $res = D("Theme")->where(array("theme_name" => $theme_name))->delete();
+
+        if ($res) {
+            $this->success("卸载成功");
+
+        } else {
+            $this->error("卸载失败");
+        }
 
 
     }
+
+
+
+
+    public function themeDetail($theme_name)
+    {
+        $theme = D("Theme")->where(array("theme_name" => $theme_name))->find();
+        if (!$theme) $this->error("主题尚未安装");
+         $config = json_decode($theme['theme_config'], true);
+
+        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
+        $theme_xml_path = $tpl_static_path . 'theme.xml';
+        if (file_exists($theme_xml_path)) {
+            $theme_xml = File::readFile($theme_xml_path);
+            $theme_obj = simplexml_load_string($theme_xml);
+             $theme_temp = object_to_array($theme_obj);
+            $this->assign("theme_xml", $theme_temp);
+        }
+
+
+        $this->assign("config", $config);
+        $this->assign("theme", $theme);
+        $this->assign("action", $theme['theme_name']."主题详细");
+        $this->display("themedetail");
+
+    }
+
+
+
+
+    public function themeConfig($theme_name)
+    {
+        $theme = D("Theme")->where(array("theme_name" => $theme_name))->find();
+        if (!$theme) $this->error("主题尚未安装");
+
+
+        $config = json_decode($theme['theme_config'], true);
+
+        $this->assign("handle", U("Admin/Custom/themeConfigHandle",array('theme_name'=>$theme_name)));
+
+        $this->assign("theme", $theme);
+        $this->assign("config", $config);
+        $this->assign("action", "主题配置");
+        $this->display("themeconfig");
+
+    }
+
+    public function themeConfigHandle($theme_name)
+    {
+        $theme = D("Theme")->where(array("theme_name" => $theme_name))->find();
+        if (!$theme) $this->error("主题尚未安装");
+
+        $config = json_decode($theme['theme_config'], true);
+
+        $new_config=I('post.config');
+        foreach($new_config as $config_key => $config_value){
+            $config['kv'][$config_key]["value"]=$config_value;
+        }
+
+
+        $theme['theme_config']=json_encode($config);
+
+        $res = D("Theme")->where(array("theme_name" => $theme_name))->data($theme)->save();
+
+
+        if($res){
+            $this->success("主题配置保存成功",U("Admin/Custom/theme"));
+        }else{
+            $this->error("主题配置保存失败或者未更改");
+        }
+
+    }
+
+
+
+
+
+
+    /**
+     * 主题添加
+     */
+    public function themeAdd()
+    {
+
+        $this->assign('action', '主题添加');
+        $this->assign('action_name', 'themeAdd');
+
+        $this->display();
+    }
+
+    /**
+     * 添加本地上传主题
+     */
+    public function themeAddLocal()
+    {
+        File::mkDir(WEB_CACHE_PATH);
+
+
+        $config = array(
+            'rootPath' => WEB_CACHE_PATH,
+            "savePath" => '',
+            "maxSize" => 100000000, // 单位B
+            "exts" => array('zip'),
+            "subName" => array(),
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
+
+            $file_path_full = $info['file']['fullpath'];
+
+            //dump($info);die($file_path_full);
+            if (File::file_exists($file_path_full)) {
+
+                $Update = new UpdateEvent();
+                $applyRes = $Update->applyPatch($file_path_full);
+                $applyInfo = json_decode($applyRes, true);
+
+                if ($applyInfo['status']) {
+                    $this->success($applyInfo['info'], U('Admin/Custom/theme'));
+                } else {
+                    $this->error($applyInfo['info']);
+                }
+
+            } else {
+                $this->error('文件不存在');
+
+            }
+        }
+    }
+
+
+
+    //todo 需要检查是否真的成功
+    /**
+     * @param string $theme_name
+     */
+    public function themeDisableHandle($theme_name = 'NovaGreenStudio')
+    {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
+        set_kv('theme_' . $theme_name, 'disabled');
+        $this->success('禁用成功');
+    }
+
+    /**
+     * @param string $theme_name
+     */
+    public function themeEnableHandle($theme_name = 'NovaGreenStudio')
+    {
+
+        set_kv('theme_' . $theme_name, 'enabled');
+
+        S('theme_config',null);
+
+        $this->success('启用成功');
+    }
+
+
+    /**
+     * @param string $theme_name
+     */
+    public function themeChangeHandle($theme_name = 'NovaGreenStudio')
+    {
+        if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
+        S('theme_config',null);
+
+
+        $res = set_kv('home_theme', $theme_name);
+        if ($res) {
+            $cache_control = new SystemEvent();
+            $cache_control->clearCacheAll();
+            $this->success('切换成功');
+        } else {
+            $this->error('切换失败');
+        }
+    }
+
+    /**
+     * @param string $theme_name
+     */
+    public function themeDelHandle($theme_name = '')
+    {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以删除');
+
+
+        $tpl_view_path = WEB_ROOT . 'Application/Home/View/' . $theme_name . '/';
+        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
+        File::delAll($tpl_view_path, true);
+        File::delAll($tpl_static_path, true);
+        $this->success('删除成功');
+    }
+
+
+
+
 
 }

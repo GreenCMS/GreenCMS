@@ -86,7 +86,6 @@ $menu_arr = array(
             'Custom/menu' => '菜单管理',
             'Custom/hooks' => '钩子管理',
             'Custom/linkgroup' => '链接管理',
-            'Custom/skin'  => '皮肤主题',
 
         ),
 
