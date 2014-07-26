@@ -620,3 +620,22 @@ CREATE TABLE `{$db_prefix}user_sns` (
   PRIMARY KEY (`us_id`),
   KEY `useropen` (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+
+
+DROP TABLE IF EXISTS `{$db_prefix}theme`;
+CREATE TABLE `{$db_prefix}theme` (
+  `theme_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `theme_name` varchar(255) DEFAULT NULL,
+  `theme_description` varchar(255) DEFAULT NULL,
+  `theme_build` varchar(255) CHARACTER SET utf8_unicode_ci DEFAULT NULL,
+  `theme_versioin` varchar(255) CHARACTER SET utf8_unicode_ci DEFAULT NULL,
+  `theme_preview` varchar(255) DEFAULT NULL,
+  `theme_copyright` varchar(255) DEFAULT NULL,
+  `theme_xml` text,
+  `theme_config` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`theme_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+
