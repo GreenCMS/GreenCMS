@@ -9,7 +9,6 @@
 
 namespace Home\Widget;
 
-use Common\Logic\PostsLogic;
 use Home\Logic\MenuLogic;
 
 use Common\Logic\CatsLogic;
@@ -32,14 +31,7 @@ class WidgetWidget extends Controller
     public function recentPost()
     {
 
-        $PostsLogic = new PostsLogic();
-
-        $info['post_type'] ='single';
-
-        $post_list = $PostsLogic->cache(true)->field("post_id,post_title,post_date,post_type")
-            ->where($info)->order('post_date desc')
-            ->limit(3)->relation(false)->select();
-
+        $post_list = D('Posts')->cache(true)->order('post_id')->limit(4)->relation(false)->select();
 
         $this->assign('list', $post_list);
 
