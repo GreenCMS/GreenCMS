@@ -706,9 +706,9 @@ function check_access($access = "")
 {
 
     $path = explode('/', strtoupper($access));
-
     $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
-    if ($accessList[$path[0]][$path[1]][$path[2]] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
+
+    if ((( int )$_SESSION [C('USER_AUTH_KEY')] == 1)|| $accessList[$path[0]][$path[1]][$path[2]] != '' ) {
         return true;
     } else {
         return false;

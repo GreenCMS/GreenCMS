@@ -229,18 +229,19 @@ CREATE TABLE `{$db_prefix}posts` (
   `post_comment_status` varchar(20) DEFAULT 'open',
   `post_password` varchar(20) DEFAULT '',
   `post_name` varchar(200) DEFAULT NULL,
-  `post_template` varchar(255) NOT NULL DEFAULT 'single',
+  `post_template` varchar(50) NOT NULL DEFAULT 'single',
   `post_modified` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `post_comment_count` bigint(20) DEFAULT '0',
   `post_view_count` bigint(20) DEFAULT '0',
-  `post_type` varchar(255) NOT NULL DEFAULT 'single',
+  `post_type` varchar(50) NOT NULL DEFAULT 'single',
   `post_img` varchar(255) DEFAULT NULL,
   `post_top` smallint(6) DEFAULT '0',
   `post_url` varchar(255)  DEFAULT NULL,
   PRIMARY KEY (`post_id`),
   KEY `post_name` (`post_name`),
-  KEY `type_status_date` (`post_status`,`post_date`,`post_id`),
-  KEY `post_author` (`user_id`)
+  KEY `post_author` (`user_id`),
+  KEY `archive` (`post_status`,`post_date`,`post_top`,`post_type`,`post_template`) USING BTREE,
+  KEY `recentPost` (`post_type`,`post_status`,`post_top`,`post_date`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='文章列表';
 
 -- ----------------------------
@@ -255,7 +256,9 @@ CREATE TABLE `{$db_prefix}post_tag` (
   `pt_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `tag_id` bigint(20) NOT NULL DEFAULT '0',
   `post_id` bigint(20) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pt_id`)
+  PRIMARY KEY (`pt_id`),
+  KEY `post_id` (`post_id`),
+  KEY `tag_id` (`tag_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章标签';
 
 -- ----------------------------
@@ -288,7 +291,9 @@ CREATE TABLE `{$db_prefix}post_cat` (
   `pc_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `cat_id` bigint(20) NOT NULL DEFAULT '0',
   `post_id` bigint(20) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pc_id`)
+  PRIMARY KEY (`pc_id`),
+  KEY `post_id` (`post_id`),
+  KEY `cat_id` (`cat_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章分类';
 
 -- ----------------------------

@@ -40,13 +40,16 @@ class PostsLogic extends RelationModel
     }
 
     /**
+     * @param int $limit 数量限制 默认20 一般我们会传入(string)limit用于分页
      * @param string $type 文章类型默认是single
      * @param string $order 排序方式默认是id
-     * @param int $limit 数量限制 默认20 一般我们会传入(string)limit用于分页
      * @param bool $relation 是否关联其他信息
-     * @param array $ids 需要限制的id
      * @param array $info_with 强制传入的判断条件
      *
+     * @param array $ids 需要限制的id
+     * @internal param string $field
+     * @internal param string $fields
+     * @internal param string $fileds
      * @return mixed 返回文章列表
      */
     public function getList($limit = 20, $type = 'single', $order = 'post_date desc',
