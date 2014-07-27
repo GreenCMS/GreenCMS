@@ -705,10 +705,9 @@ function get_previous_post($post_id, $post_cat)
 function check_access($access = "")
 {
 
-    $path = explode(' / ', strtoupper($access));
+    $path = explode('/', strtoupper($access));
 
     $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
-
     if ($accessList[$path[0]][$path[1]][$path[2]] != '' || (( int )$_SESSION [C('USER_AUTH_KEY')] == 1)) {
         return true;
     } else {
