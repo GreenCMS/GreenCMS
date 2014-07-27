@@ -61,7 +61,8 @@ class PostsLogic extends RelationModel
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
-        $post_list = D('Posts')->where($info)->order('post_top desc ,' . $order)->limit($limit)->relation($relation)->select();
+        $post_list = D('Posts')->where($info)->order('post_top desc ,' . $order)
+            ->limit($limit)->relation($relation)->select();
         return $post_list;
     }
 
