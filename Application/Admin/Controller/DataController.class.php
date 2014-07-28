@@ -79,7 +79,7 @@ class DataController extends AdminBaseController
     public function backupHandle()
     {
 
-         if (!IS_POST) $this->error("访问出错啦");
+        if (!IS_POST) $this->error("访问出错啦");
         $type = "手动自动备份";
         $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
         $tables = empty($_POST['table']) ? array() : $_POST['table'];
@@ -306,14 +306,12 @@ class DataController extends AdminBaseController
             $sum = $_SESSION['cacheSendSql']['count'];
 
 
-
             $zipOut = "sqlBackup.zip";
             if (File::zip($sqlFiles, $zipOut)) {
                 //TODO send_mail
                 $res = send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
 
             }
-
 
 
             File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
@@ -473,7 +471,7 @@ class DataController extends AdminBaseController
      */
     public function repair()
     {
-        if(C('DB_TYPE')!='mysql'&&C('DB_TYPE')!='mysqli'){
+        if (C('DB_TYPE') != 'mysql' && C('DB_TYPE') != 'mysqli') {
             $this->error('当前数据库类型不被支持');
         }
 
@@ -535,6 +533,8 @@ class DataController extends AdminBaseController
         $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
         $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
         $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
+        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(C("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
+
 
         $this->display();
     }
@@ -601,11 +601,10 @@ class DataController extends AdminBaseController
                         $res = File::delAll($caches [$path] ['path'], true);
                     }
                 }
-            }else{
+            } else {
                 $SystemEvent = new SystemEvent;
                 $SystemEvent->clearCacheAll();
             }
-
 
 
             $this->success("清除成功");

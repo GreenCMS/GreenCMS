@@ -87,7 +87,6 @@ function upgrade_20140527_to_20140602()
 }
 
 
-
 function upgrade_20140620_to_20140706()
 {
     $db_prefix = C('db_prefix');
@@ -117,5 +116,38 @@ function upgrade_20140620_to_20140706()
   PRIMARY KEY (`log_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=497 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统日志记录';";
     $Model->query($sql);
+
+}
+
+
+function upgrade_20140706_to_20140726()
+{
+
+    $db_prefix = C('db_prefix');
+
+    $Model = new \Think\Model();
+    $sql = "DROP TABLE IF EXISTS `{$db_prefix}theme`";
+    $Model->query($sql);
+
+    $Model = new \Think\Model();
+
+
+    $sql = "CREATE TABLE `{$db_prefix}theme` (
+  `theme_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `theme_name` varchar(255) DEFAULT NULL,
+  `theme_description` varchar(255) DEFAULT NULL,
+  `theme_build` varchar(255) CHARACTER SET utf8_unicode_ci DEFAULT NULL,
+  `theme_versioin` varchar(255) CHARACTER SET utf8_unicode_ci DEFAULT NULL,
+  `theme_preview` varchar(255) DEFAULT NULL,
+  `theme_copyright` varchar(255) DEFAULT NULL,
+  `theme_xml` text,
+  `theme_config` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`theme_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+";
+
+    $Model->query($sql);
+
+
 
 }

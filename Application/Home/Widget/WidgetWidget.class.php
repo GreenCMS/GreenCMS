@@ -31,9 +31,7 @@ class WidgetWidget extends Controller
     public function recentPost()
     {
 
-
-        $post_list = D('Posts', 'Logic')->getList(3, 'single', 'post_date desc', false);
-
+        $post_list = D('Posts')->cache(true)->order('post_id')->limit(4)->relation(false)->select();
 
         $this->assign('list', $post_list);
 
@@ -87,7 +85,7 @@ class WidgetWidget extends Controller
 
         $TagList = new TagsLogic();
 
-        $tag_res = $TagList->getList(50, false);
+        $tag_res = $TagList->getList(50, false, true);
 
         $this->assign('tagClouds', $tag_res);
 

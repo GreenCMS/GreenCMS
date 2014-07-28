@@ -64,6 +64,7 @@ class ToolsController extends AdminBaseController
                 $Wordpress->tagImport($file_path_full);
                 $Wordpress->postImport($file_path_full);
 
+
                 File::delFile($file_path_full);
                 $this->success('导入完成');
             }

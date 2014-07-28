@@ -1,5 +1,10 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.2.0726 build 20140726
+新版主题功能完成
+修复Bug
+添加post breadcrumbs
+
 version v2.2.0706 build 20140706
 Mobile api 更新
 修复文章图片

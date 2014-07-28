@@ -40,25 +40,29 @@ class PostsLogic extends RelationModel
     }
 
     /**
+     * @param int $limit 数量限制 默认20 一般我们会传入(string)limit用于分页
      * @param string $type 文章类型默认是single
      * @param string $order 排序方式默认是id
-     * @param int $limit 数量限制 默认20 一般我们会传入(string)limit用于分页
      * @param bool $relation 是否关联其他信息
-     * @param array $ids 需要限制的id
      * @param array $info_with 强制传入的判断条件
      *
+     * @param array $ids 需要限制的id
+     * @internal param string $field
+     * @internal param string $fields
+     * @internal param string $fileds
      * @return mixed 返回文章列表
      */
     public function getList($limit = 20, $type = 'single', $order = 'post_date desc',
                             $relation = true, $info_with = array(), $ids = array())
     {
         $info = $info_with;
-        if ($type != 'all') $info['post_type'] = $type;
-        //  if ($type != 'all') $info['post_type|post_template'] = $type;
+         if ($type != 'all') $info['post_type'] = $type;
+        //if ($type != 'all') $info['post_type|post_template'] = $type;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
-        $post_list = D('Posts')->where($info)->order('post_top desc ,' . $order)->limit($limit)->relation($relation)->select();
+        $post_list = D('Posts')->where($info)->order('post_top desc ,' . $order)
+            ->limit($limit)->relation($relation)->select();
         return $post_list;
     }
 
@@ -74,7 +78,7 @@ class PostsLogic extends RelationModel
 
         $info = $info_with;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
-        if ($type != 'all') $info['post_type|post_template'] = $type;
+        if ($type != 'all') $info['post_type'] = $type;//post_template
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
         $count = $this->where($info)->count();

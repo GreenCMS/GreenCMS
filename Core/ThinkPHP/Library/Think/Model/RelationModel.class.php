@@ -232,12 +232,28 @@ class RelationModel extends Model
                             if (!empty($mappingLimit)) {
                                 $sql .= ' LIMIT ' . $mappingLimit;
                             }
-                            //缓存
-                            if (S($sql)) {
+                            //缓存key
+                            $cache_key=md5($sql);
+
+                            if (S($cache_key)) {
+                                // echo "cache hit $cache_key : $sql <br />";
                                 $relationData = S($sql);
+                                if($relationData=="none"){
+                                    $relationData=array();
+                                }else{
+                                    $relationData= S($cache_key);
+                                }
+
                             } else {
+                               // echo "cache miss $cache_key : $sql <br />";
+
                                 $relationData = $this->query($sql);
-                                S($sql, $relationData, 3);
+
+                                if(empty($relationData)){
+                                    S($cache_key, "none", array('expire'=>get_opinion("DATA_CACHE_TIME")));
+                                }else{
+                                    S($cache_key, $relationData, array('expire'=>get_opinion("DATA_CACHE_TIME")));
+                                }
                             }
 
                             if (!empty($val['relation_deep'])) {
