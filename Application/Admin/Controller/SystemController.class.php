@@ -12,6 +12,7 @@ namespace Admin\Controller;
 use Common\Event\SystemEvent;
 use Common\Event\UpdateEvent;
 use Common\Util\File;
+use Think\Storage;
 
 /**
  * Class SystemController
@@ -180,49 +181,66 @@ class SystemController extends AdminBaseController
     public function updateHandle()
     {
 
+        G("UpdateHandle");
+
         $message="";
 
         $version = I('get.version');
         $now_version = get_opinion('software_build', true);
         $url = Server_API . 'api/update/' . $now_version . '/';
         $json = json_decode(file_get_contents($url), true);
+        G("GetJson");
+
+        $message.="下载Index文件成功,用时 ".G("UpdateHandle","getJson")."秒<br />";
+
         if(empty($json)){
             $message.="连接主升级服务器出错，使用备用服务器<br />";
             // try backup
             $url = Server_API2 . 'api/update/' . $now_version . '/';
             $json = json_decode(file_get_contents($url), true);
+            G("GetJson");
+
             if(empty($json)) $this->error('连接升级服务器出错');
         }
 
         $target_version_info = ($json['file_list'][$version]);
         if (!empty($target_version_info)) {
+
             File::mkDir(WEB_CACHE_PATH);
-            $message.="清空WEB_CACHE_PATH<br />";
+            G("WebCache");
+            $message.="清空WEB_CACHE_PATH,用时 ".G("GetJson","WebCache")."秒<br />";
+
 
             $file_downloaded = WEB_CACHE_PATH . $target_version_info['file_name'];
             $file = file_get_contents($target_version_info['file_url']);
 
             if(File::writeFile($file_downloaded, $file)){
-                $message.="下载升级文件成功<br />";
+                G("DownFile");
+
+                $message.="下载升级文件成功,用时 ".G("WebCache","DownFile")."秒<br />";
             }else{
                 $this->error('下载文件失败');
             }
 
             //calculate md5 of file
+
             $file_md5=md5_file($file_downloaded);
-            $message.="文件MD值: $file_md5 <br />";
+            G("MD5");
+            $message.="文件MD5值: $file_md5 ,用时 ".G("DownFile","MD5")."秒<br />";
 
             //todo 系统备份
             $System = new SystemEvent();
             //$System->backupFile();
-            $message.="系统备份已跳过 <br />";
+            G("BackupFile");
+            $message.="系统备份已跳过 ,用时 ".G("MD5","BackupFile")."秒<br />";
 
             $zip = new \ZipArchive; //新建一个ZipArchive的对象
             if ($zip->open($file_downloaded) === true) {
                 $zip->extractTo(WEB_ROOT); //假设解压缩到在当前路径下/文件夹内
                 $zip->close(); //关闭处理的zip文件
                 File::delFile($file_downloaded);
-                $message.="解压成功 <br />";
+                G("UnzipFile");
+                $message.="解压成功 ,用时 ".G("BackupFile","UnzipFile")."秒<br />";
 
                 $System->clearCacheAll();
                 $message.="清空缓存成功 <br />";
@@ -241,15 +259,18 @@ class SystemController extends AdminBaseController
                 include(Upgrade_PATH . 'init.php');
                 if (function_exists("upgrade_" . $old_build . "_to_" . $new_build)) {
                     $fuction_name = "upgrade_" . $old_build . "_to_" . $new_build;
+                    G("FunctionStart");
+
                     call_user_func($fuction_name);
-                    $message.="处理升级函数 <br />";
+                    G("FunctionEnd");
+
+                    $message.="处理升级函数 ,用时 ".G("FunctionStart","FunctionEnd")."秒 <br />";
 
                 }
             }
 
-            $this->success('升级成功' . $target_version_info['build_to']."<br />".$message,
-                U('Admin/Index/updateComplete'));
 
+            $this->updateComplete('升级成功' . $target_version_info['build_to']."<br />".$message);
         } else {
 
 
@@ -258,6 +279,30 @@ class SystemController extends AdminBaseController
 
 
     }
+
+
+    /**
+     * 升级完成
+     */
+    public function updateComplete($message='')
+    {
+        $this->assign('action', '升级完成');
+        $this->assign('action_name', 'updateComplete');
+        $this->assign('message', $message);
+
+
+        $Storage = new Storage();
+        $Storage::connect();
+
+        if ($Storage::has("UpdateLOG")) {
+            $update_content = nl2br($Storage::read('UpdateLOG'));
+            $this->assign('update_content', $update_content);
+        }
+
+        $this->display("updatecomplete");
+
+    }
+
 
 
     /**
