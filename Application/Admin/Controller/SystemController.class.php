@@ -146,14 +146,24 @@ class SystemController extends AdminBaseController
      */
     public function update()
     {
+        $message="";
 
 
         if (IS_POST) {
             $version = I('post.version');
             $url = Server_API . 'api/update/' . $version . '/';
             $json = json_decode(file_get_contents($url), true);
+            if(empty($json)){
+                $message.="连接主升级服务器出错，使用备用服务器<br />";
+                // try backup
+                $url = Server_API2 . 'api/update/' . $version . '/';
+                $json = json_decode(file_get_contents($url), true);
+                if(empty($json)) $this->error('连接升级服务器出错');
+            }
+
 
             $this->assign('versions', $json);
+            $this->assign('message', $message);
             $this->assign('action', '选择升级版本');
             $this->display('update_s2');
 
@@ -170,29 +180,53 @@ class SystemController extends AdminBaseController
     public function updateHandle()
     {
 
+        $message="";
 
         $version = I('get.version');
         $now_version = get_opinion('software_build', true);
         $url = Server_API . 'api/update/' . $now_version . '/';
         $json = json_decode(file_get_contents($url), true);
+        if(empty($json)){
+            $message.="连接主升级服务器出错，使用备用服务器<br />";
+            // try backup
+            $url = Server_API2 . 'api/update/' . $now_version . '/';
+            $json = json_decode(file_get_contents($url), true);
+            if(empty($json)) $this->error('连接升级服务器出错');
+        }
 
         $target_version_info = ($json['file_list'][$version]);
         if (!empty($target_version_info)) {
             File::mkDir(WEB_CACHE_PATH);
+            $message.="清空WEB_CACHE_PATH<br />";
+
             $file_downloaded = WEB_CACHE_PATH . $target_version_info['file_name'];
             $file = file_get_contents($target_version_info['file_url']);
-            File::writeFile($file_downloaded, $file);
+
+            if(File::writeFile($file_downloaded, $file)){
+                $message.="下载升级文件成功<br />";
+            }else{
+                $this->error('下载文件失败');
+            }
+
+            //calculate md5 of file
+            $file_md5=md5_file($file_downloaded);
+            $message.="文件MD值: $file_md5 <br />";
 
             //todo 系统备份
             $System = new SystemEvent();
             //$System->backupFile();
+            $message.="系统备份已跳过 <br />";
 
             $zip = new \ZipArchive; //新建一个ZipArchive的对象
             if ($zip->open($file_downloaded) === true) {
                 $zip->extractTo(WEB_ROOT); //假设解压缩到在当前路径下/文件夹内
                 $zip->close(); //关闭处理的zip文件
                 File::delFile($file_downloaded);
+                $message.="解压成功 <br />";
+
                 $System->clearCacheAll();
+                $message.="清空缓存成功 <br />";
+
             } else {
                 $this->error('文件损坏');
             }
@@ -208,11 +242,13 @@ class SystemController extends AdminBaseController
                 if (function_exists("upgrade_" . $old_build . "_to_" . $new_build)) {
                     $fuction_name = "upgrade_" . $old_build . "_to_" . $new_build;
                     call_user_func($fuction_name);
+                    $message.="处理升级函数 <br />";
 
                 }
             }
 
-            $this->success('升级成功' . $target_version_info['build_to'], U('Admin/Index/updateComplete'));
+            $this->success('升级成功' . $target_version_info['build_to']."<br />".$message,
+                U('Admin/Index/updateComplete'));
 
         } else {
 
