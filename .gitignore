@@ -26,3 +26,8 @@ Temp
 /Public/Vena
 /Public/Xsc
 /Application/Home/View/Xsc
+
+/Upload/Data
+/Upload/Img
+/Upload/.quarantine
+/Upload/.tmb
