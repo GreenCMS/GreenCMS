@@ -2982,7 +2982,7 @@ abstract class elFinderVolumeDriver {
 
 	/**
 	 * Execute shell command
-	 *
+	 * //todo stream_get_contents get error on windows
 	 * @param  string  $command       command line
 	 * @param  array   $output        stdout strings
 	 * @param  array   $return_var    process exit code
@@ -2991,6 +2991,7 @@ abstract class elFinderVolumeDriver {
 	 * @author Alexey Sukhotin
 	 **/
 	protected function procExec($command , array &$output = null, &$return_var = -1, array &$error_output = null) {
+        return 0;
 
 		$descriptorspec = array(
 			0 => array("pipe", "r"),  // stdin
@@ -3007,8 +3008,13 @@ abstract class elFinderVolumeDriver {
 			$tmpout = '';
 			$tmperr = '';
 
+            //todo bug is here
 			$output = stream_get_contents($pipes[1]);
-			$error_output = stream_get_contents($pipes[2]);
+          $error_output = stream_get_contents($pipes[2]);
+
+
+
+
 
 			fclose($pipes[1]);
 			fclose($pipes[2]);

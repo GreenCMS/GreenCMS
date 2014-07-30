@@ -1,6 +1,3 @@
-Attention:这个只是个示范。目前还不能完全遵守协议
-
-
 GreenCMS遵循Apache2开源协议发布，并提供免费使用。
 版权所有Copyright © 2013-2014 by GreenCMS (http://www.greencms.net)
 All rights reserved。
