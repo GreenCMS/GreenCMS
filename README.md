@@ -1,49 +1,52 @@
 GreenCMS v2 基于ThikPHP的CMS系统
+=========================== 
+
+
+## 全新一代内容管理系统 By GreenStudio  
   
-全新一代内容管理系统 By GreenStudio
-  
-  
+
+# 使用必读  
 版权申明：
   
   
 GreenCMS 欢迎学习交流，版权归作者所有，未经作者同意，不得删除代码中作者信息
   
   
-关于商业用途：
+## 关于商业用途：
   
-需在Footer注明使用GreenCMS
-  
-  
-联系方式:
-  
-    Email: admin@njut.asia
+**需在Footer注明使用GreenCMS**
   
   
-GreenCMS交流群:
+## 联系方式:
   
-    群号: 123085170
-  
-  
-官方网站:
-  
-    http://www.greencms.net/
+Email: admin@njut.asia
   
   
-官方论坛:
+## GreenCMS交流群:
   
-    http://bbs.greencms.net/
-  
-  
-GreenStudio微博:
-  
-    http://weibo.com/u/3228716083
+群号: 123085170
   
   
-Contributors:
+## 官方网站:
   
-    xjh1994
+http://www.greencms.net/
   
-    zts1993
+  
+## 官方论坛:
+  
+http://bbs.greencms.net/
+  
+  
+## GreenStudio微博:
+  
+http://weibo.com/u/3228716083
+  
+  
+## Contributors:
+  
+    *xjh1994*
+  
+    *zts1993*
   
   
   
