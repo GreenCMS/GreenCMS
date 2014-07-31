@@ -121,26 +121,7 @@ class IndexController extends AdminBaseController
     }
 
 
-    /**
-     * 升级完成
-     */
-    public function updateComplete()
-    {
-        $this->assign('action', '升级完成');
-        $this->assign('action_name', 'updateComplete');
 
-
-        $Storage = new Storage();
-        $Storage::connect();
-
-        if ($Storage::has("UpdateLOG")) {
-            $update_content = nl2br($Storage::read('UpdateLOG'));
-            $this->assign('update_content', $update_content);
-        }
-
-        $this->display("update");
-
-    }
 
 
 }
