@@ -1,89 +1,64 @@
-GreenCMS v2 基于ThikPHP的CMS系统
+GreenCMS v2 基于ThikPHP的CMS系统  
 =========================== 
 
 
-## 全新一代内容管理系统 By GreenStudio  
-  
-
 # 使用必读  
 版权申明：
-  
-  
-GreenCMS 欢迎学习交流，版权归作者所有，未经作者同意，不得删除代码中作者信息
-  
-  
+GreenCMS 欢迎学习交流，版权归作者所有，未经作者同意，不得删除代码中作者信息  
+
 ## 关于商业用途：
   
 **需在Footer注明使用GreenCMS**
   
   
-## 联系方式:
-  
+## 联系方式:  
 Email: admin@njut.asia
   
   
-## GreenCMS交流群:
-  
-群号: 123085170
-  
-  
-## 官方网站:
-  
-http://www.greencms.net/
+## GreenCMS交流群:  
+QQ群: 123085170
   
   
-## 官方论坛:
+## 官方网站:  
+[http://www.greencms.net/](http://www.greencms.net/)  
   
-http://bbs.greencms.net/
+## 官方论坛:  
+[http://bbs.greencms.net/](http://bbs.greencms.net/)  
+
   
-  
-## GreenStudio微博:
-  
-http://weibo.com/u/3228716083
-  
-  
-## Contributors:
-  
-    *xjh1994*
-  
-    *zts1993*
+## GreenStudio微博:  
+[http://weibo.com/u/3228716083](http://weibo.com/u/3228716083)
+
   
   
+## Contributors:  
+ - xjh1994  
+ - zts1993  
+
+ - others who give us help and advice  
+
+
   
   
+```php
+    echo "
+    如果有疑问欢迎大家反馈  
+    BUG提交可以直接发ISSUE  
+    ";
+```  
   
-如果有疑问欢迎大家反馈
-  
-BUG提交可以直接发ISSUE
-  
-                                              2014/4/12
-  
-  
-  
-  
-  
-其他信息:
-  
-  
-安装之后需要的操作:
-  
-删除Install模块( /Application/Install)  --重要
-  
-删除Install数据( /Data/Install) --重要
-  
-关闭HTML_CACHE_ON(系统后台设置) --新版已经不需要了
-  
-不要忘记开启rewrite 或者 将/Home/config/config_router.php的url_mode改成0
+##其他信息:  
+####安装之后需要的操作:  
+    删除Install模块( /Application/Install)  --重要  
+    删除Install数据( /Data/Install) --重要  
+    关闭HTML_CACHE_ON(系统后台设置) --新版已经不需要了  
+    不要忘记开启rewrite 或者 将/Home/config/config_router.php的url_mode改成0  
   
   
-  
-关于与ThinkPHP的不同：
-  
-虽然 GreenCMS是基于ThinkPHP 3.2.1 开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，
-  
-但是由于ThinkPHP自身不合理，所以部分文件可能需要替换
-  
-  目前已知的需要Patch的文件有
+####关于与ThinkPHP的不同：  
+虽然 GreenCMS是基于ThinkPHP 3.2.1 开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，  
+但是由于ThinkPHP自身不合理，所以部分文件可能需要替换  
+目前已知的需要Patch的文件有  
   
     /Core/ThinkPHHP/Library/Think/Model/RelationModel.class.php （两处）// since thinkphp 3.2
   
@@ -94,10 +69,10 @@ BUG提交可以直接发ISSUE
     /Core/ThinkPHHP/Library/Think/Upload.class.php (一处)// since thinkphp 3.2
   
   
-如果你需要升级ThinkPHP框架请注意上面文件区别
+__如果你需要升级ThinkPHP框架请注意上面文件区别__
   
   
-NginX用户须知:
+####NginX用户须知:
   
     使用NginX的用户可能需要配置rewrite
   
@@ -105,7 +80,7 @@ NginX用户须知:
   
   
   
-index.php 选项:
+####index.php 选项:
   
     APP_CACHE : 选项控制的缓存主要有(不建议关闭):
   
@@ -120,7 +95,7 @@ index.php 选项:
   
   
   
-安全风险 :
+####安全风险 :
   
     已知安全风险包括:
   
@@ -129,115 +104,124 @@ index.php 选项:
     模板可能会被下载,apache通过.htaccess控制
   
   
-安装建议 :
+####安装建议 :
   
     完成后删除Data/Install文件夹
   
     在Application/Common/Conf/conig.php中删除不需要的模块信息
   
   
-目录结构
+###目录结构
+  
+      
+    /
+    |--Addons 插件文件夹 (与OneThink高度兼容)
+      
+        |--  各个插件目录
+      
+    |--Application 应用目录
+      
+        |-- Admin    管理员模块
+      
+        |-- Home     主模块
+      
+        |-- Api      手机客户端API模块
+      
+        |-- Common   通用基础模块
+      
+        |-- Install  安装程序模块
+      
+        |-- Weixin   微信公共平台API模块
+      
+    |-- Core ThinkPHP 3.2.1 完整版 (有删减)
+      
+    |-- Data 运行文件
+      
+        |-- Backup    全站备份
+      
+        |-- Cache   升级等工作的缓存
+      
+        |-- DBbackup  数据库备份
+      
+        |-- Install   安装文件
+      
+        |-- Log   hinkPHP框架Log
+      
+        |-- Upgrade 升级文件
+      
+        |-- Temp ThinkPHP框架Temp目录
+      
+    |-- Extend 外部扩展文件夹
+      
+        |-- GreenFinder Elfinder文件管理器
+      
+        |-- PHPMailer 邮件发送类
+      
+        |-- Ueditor 编辑器
+      
+    |-- Public 公共文件夹
+      
+        |-- 各个主题文件夹
+      
+    |-- Upload 上传文件夹
+      
+        |-- 不同类型的附件
+      
+      
+    //==
+      
+    README
+      
+    .htaccess
+      
+    .gitignore
+      
+    robots.txt
+      
+    LICENSE.txt
+      
+      
+      
+    //跳转文件
+      
+    admin.php
+      
+    weixin.php
+      
+    install.php
+      
+      
+    //配置文件
+      
+    const_config.php
+      
+    version_config.php
+      
+    db_config.php
+      
+      
+    //入口文件
+      
+    index.php  
+      
   
   
-/
   
-|--Addons 插件文件夹 (与OneThink高度兼容)
+####SAE须知  
   
-    |--  各个插件目录
+目前SAE平台不能使用的功能  
   
-|--Application 应用目录
+    文章自动获取远程图片  
+    部分文件上传  
   
-    |-- Admin    管理员模块
+
+
+
   
-    |-- Home     主模块
-  
-    |-- Api      手机客户端API模块
-  
-    |-- Common   通用基础模块
-  
-    |-- Install  安装程序模块
-  
-    |-- Weixin   微信公共平台API模块
-  
-|-- Core ThinkPHP 3.2.1 完整版 (有删减)
-  
-|-- Data 运行文件
-  
-    |-- Backup    全站备份
-  
-    |-- Cache   升级等工作的缓存
-  
-    |-- DBbackup  数据库备份
-  
-    |-- Install   安装文件
-  
-    |-- Log   hinkPHP框架Log
-  
-    |-- Upgrade 升级文件
-  
-    |-- Temp ThinkPHP框架Temp目录
-  
-|-- Extend 外部扩展文件夹
-  
-    |-- GreenFinder Elfinder文件管理器
-  
-    |-- PHPMailer 邮件发送类
-  
-    |-- Ueditor 编辑器
-  
-|-- Public 公共文件夹
-  
-    |-- 各个主题文件夹
-  
-|-- Upload 上传文件夹
-  
-    |-- 不同类型的附件
-  
-  
-//==
-  
-README
-  
-.htaccess
-  
-.gitignore
-  
-robots.txt
-  
-LICENSE.txt
+2014/7/31
   
   
   
-//跳转文件
-  
-admin.php
-  
-weixin.php
-  
-install.php
-  
-  
-//配置文件
-  
-const_config.php
-  
-version_config.php
-  
-db_config.php
-  
-  
-//入口文件
-  
-index.php
-  
-  
-  
-  
-SAE须知
-  
-目前SAE平台不能使用的功能
-  
-    文章自动获取远程图片
-  
-    部分文件上传
-  
+
+
+![GreenStudio](http://green.njut.asia/Public/share/img/logo-png.png "GreenStudio logo")  
