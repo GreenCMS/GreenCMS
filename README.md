@@ -1,5 +1,5 @@
-GreenCMS v2 基于ThikPHP的CMS系统  
-=========================== 
+GreenCMS - 基于ThikPHP的CMS系统  
+================================ 
 
 
 # 使用必读  
@@ -56,9 +56,9 @@ QQ群: 123085170
   
   
 ####关于与ThinkPHP的不同：  
-虽然 GreenCMS是基于ThinkPHP 3.2.1 开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，  
-但是由于ThinkPHP自身不合理，所以部分文件可能需要替换  
-目前已知的需要Patch的文件有  
+> 虽然 GreenCMS是基于ThinkPHP 3.2.1 开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，  
+> 但是由于ThinkPHP自身不合理，所以部分文件可能需要替换  
+> 目前已知的需要Patch的文件有  
   
     /Core/ThinkPHHP/Library/Think/Model/RelationModel.class.php （两处）// since thinkphp 3.2
   
@@ -72,47 +72,28 @@ QQ群: 123085170
 __如果你需要升级ThinkPHP框架请注意上面文件区别__
   
   
-####NginX用户须知:
+####NginX IIS用户须知:  
+> 使用NginX IIS的用户可能需要配置rewrite或者pathinfo   
+> 更多信息参考ThinkPHP3.2.1手册  
   
-    使用NginX的用户可能需要配置rewrite
-  
-    更多信息参考ThinkPHP3.2.1手册
-  
-  
-  
-####index.php 选项:
-  
-    APP_CACHE : 选项控制的缓存主要有(不建议关闭):
-  
-        kv_array
-  
-        customConfig
-  
-  
-    APP_DEBUG : 系统调试设置
-  
-        项目正式部署后请设置为 false
+####index.php 选项:  
+> APP_CACHE : 控制系统高速缓存(不建议关闭)  
+> APP_DEBUG : 系统调试设置,项目正式部署后请设置为 false   
   
   
   
-####安全风险 :
-  
-    已知安全风险包括:
-  
-    Data/xxxBackup类文件夹外部可以访问,部署应放在www目录之外的位置
-  
-    模板可能会被下载,apache通过.htaccess控制
+####安全风险 :  
+> 已知安全风险包括:
+> - Data/xxxBackup类文件夹外部可以访问,部署应放在www目录之外的位置 
+> - 模板可能会被下载,apache通过.htaccess控制 
   
   
-####安装建议 :
-  
-    完成后删除Data/Install文件夹
-  
-    在Application/Common/Conf/conig.php中删除不需要的模块信息
+####安装建议 :  
+> 完成后删除Data/Install文件夹  
+> 在Application/Common/Conf/conig.php中删除不需要的模块信息  
   
   
-###目录结构
-  
+###目录结构  
       
     /
     |--Addons 插件文件夹 (与OneThink高度兼容)
@@ -207,16 +188,20 @@ __如果你需要升级ThinkPHP框架请注意上面文件区别__
   
   
   
-####SAE须知  
+###云平台须知  
   
-目前SAE平台不能使用的功能  
-  
-    文章自动获取远程图片  
-    部分文件上传  
-  
+####SAE(Sina App Engine)平台不能使用的功能  
+> - 文章自动获取远程图片  
+> - 部分文件上传  
+    
+####ACE(Aliyun Cloud Engine)平台不能使用的功能  
+> - rewrite bug 导致系统不能运行  
 
+####搜狐云景 (Souhu Cloudscape)平台不能使用的功能  
+> - 没有原生Memcache和Storage服务
 
-
+####BAE(Baidu App Engine)平台不能使用的功能  
+> - 未测试
   
 2014/7/31
   
