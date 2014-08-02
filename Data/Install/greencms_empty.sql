@@ -50,11 +50,9 @@ CREATE TABLE `{$db_prefix}weixinsend` (
   `content` varchar(255) DEFAULT NULL,
   `CreateTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`weixin_send_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='微信发送信息记录表';
 
--- ----------------------------
--- Records of green_weixinsend
--- ----------------------------
+
 
 -- ----------------------------
 -- Table structure for `{$db_prefix}weixinre`
@@ -84,16 +82,16 @@ CREATE TABLE `{$db_prefix}weixinre` (
 DROP TABLE IF EXISTS `{$db_prefix}weixinlog`;
 CREATE TABLE `{$db_prefix}weixinlog` (
   `log_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `MsgId` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `FromUserName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ToUserName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `CreateTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Content` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `MsgId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `FromUserName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `ToUserName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `CreateTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `Content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `MsgType` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `Location_X` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `Location_Y` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `Scale` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `Label` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Label` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `PicUrl` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `isread` smallint(5) DEFAULT '0',
   PRIMARY KEY (`log_id`),
@@ -128,9 +126,9 @@ CREATE TABLE `{$db_prefix}weixinaction` (
 DROP TABLE IF EXISTS `{$db_prefix}user_detail`;
 CREATE TABLE `{$db_prefix}user_detail` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_into` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_into` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='用户详细信息';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='用户详细信息';
 
 -- ----------------------------
 -- Records of green_user_detail
@@ -152,11 +150,11 @@ CREATE TABLE `{$db_prefix}user` (
   `user_status` int(11) DEFAULT '1',
   `user_intro` text CHARACTER SET utf8,
   `user_level` smallint(6) NOT NULL DEFAULT '10',
-  `user_session` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_session` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   KEY `user_login_key` (`user_login`),
   KEY `user_nicename` (`user_nicename`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='用户表';
 
 -- ----------------------------
 -- Records of green_user
@@ -259,7 +257,7 @@ CREATE TABLE `{$db_prefix}post_tag` (
   PRIMARY KEY (`pt_id`),
   KEY `post_id` (`post_id`),
   KEY `tag_id` (`tag_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章标签';
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='文章标签';
 
 -- ----------------------------
 -- Records of green_post_tag
@@ -277,7 +275,7 @@ CREATE TABLE `{$db_prefix}post_meta` (
   PRIMARY KEY (`meta_id`),
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章meta';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='文章meta';
 
 -- ----------------------------
 -- Records of green_post_meta
@@ -294,7 +292,7 @@ CREATE TABLE `{$db_prefix}post_cat` (
   PRIMARY KEY (`pc_id`),
   KEY `post_id` (`post_id`),
   KEY `cat_id` (`cat_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章分类';
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='文章分类';
 
 -- ----------------------------
 -- Records of green_post_cat
@@ -388,7 +386,7 @@ CREATE TABLE `{$db_prefix}menu` (
   `menu_position` varchar(255) CHARACTER SET utf8 DEFAULT 'head',
   `menu_url` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`menu_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='菜单栏';
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='菜单栏';
 
 -- ----------------------------
 -- Records of green_menu
@@ -400,15 +398,15 @@ CREATE TABLE `{$db_prefix}menu` (
 DROP TABLE IF EXISTS `{$db_prefix}login_log`;
 CREATE TABLE `{$db_prefix}login_log` (
   `login_log_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `log_user_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `log_user_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `log_password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `log_geo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `log_user_id` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
+  `log_user_name` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
+  `log_password` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
+  `log_geo` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   `log_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `log_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `log_ip` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   `log_status` smallint(5) DEFAULT NULL,
   PRIMARY KEY (`login_log_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='登录信息记录';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='登录信息记录';
 
 -- ----------------------------
 -- Records of green_login_log
@@ -422,14 +420,14 @@ CREATE TABLE `{$db_prefix}log` (
   `log_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `log_type` int(5) DEFAULT NULL,
   `log_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `group_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `module_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `action_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `group_name` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
+  `module_name` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
+  `action_name` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  `user_ip` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `message` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_ip` varchar(50) COLLATE utf8_general_ci DEFAULT NULL,
+  `message` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统日志记录';
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='系统日志记录';
 
 
 -- ----------------------------
@@ -464,10 +462,10 @@ CREATE TABLE `{$db_prefix}links` (
 DROP TABLE IF EXISTS `{$db_prefix}kv`;
 CREATE TABLE `{$db_prefix}kv` (
   `kv_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `kv_key` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `kv_value` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `kv_key` varchar(50) COLLATE utf8_general_ci DEFAULT NULL,
+  `kv_value` varchar(50) COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`kv_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='key-value通用信息存储';
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='key-value通用信息存储';
 
 -- ----------------------------
 -- Records of green_kv
@@ -498,14 +496,14 @@ CREATE TABLE `{$db_prefix}hooks` (
 DROP TABLE IF EXISTS `{$db_prefix}form`;
 CREATE TABLE `{$db_prefix}form` (
   `fa_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `class` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `tel` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `direction` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `message` text COLLATE utf8_unicode_ci,
+  `name` varchar(50) COLLATE utf8_general_ci NOT NULL,
+  `class` varchar(50) COLLATE utf8_general_ci NOT NULL,
+  `tel` varchar(50) COLLATE utf8_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_general_ci NOT NULL,
+  `direction` varchar(50) COLLATE utf8_general_ci NOT NULL,
+  `message` text COLLATE utf8_general_ci,
   PRIMARY KEY (`fa_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='申请表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='申请表';
 
 -- ----------------------------
 -- Records of green_form
@@ -605,9 +603,9 @@ CREATE TABLE `{$db_prefix}access` (
 DROP TABLE IF EXISTS `{$db_prefix}link_group`;
 CREATE TABLE `{$db_prefix}link_group` (
   `link_group_id`  bigint(20) NOT NULL AUTO_INCREMENT ,
-  `link_group_name`  varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL ,
+  `link_group_name`  varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
   PRIMARY KEY (`link_group_id`)
-)  ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_unicode_ci COMMENT='链接分类表';
+)  ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci COMMENT='链接分类表';
 
 
 
@@ -634,13 +632,13 @@ CREATE TABLE `{$db_prefix}theme` (
   `theme_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `theme_name` varchar(255) DEFAULT NULL,
   `theme_description` varchar(255) DEFAULT NULL,
-  `theme_build` varchar(255) CHARACTER SET utf8_unicode_ci DEFAULT NULL,
-  `theme_versioin` varchar(255) CHARACTER SET utf8_unicode_ci DEFAULT NULL,
+  `theme_build` varchar(255) CHARACTER SET utf8_general_ci DEFAULT NULL,
+  `theme_versioin` varchar(255) CHARACTER SET utf8_general_ci DEFAULT NULL,
   `theme_preview` varchar(255) DEFAULT NULL,
   `theme_copyright` varchar(255) DEFAULT NULL,
   `theme_xml` text,
-  `theme_config` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `theme_config` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   PRIMARY KEY (`theme_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='主题信息表';
 
 

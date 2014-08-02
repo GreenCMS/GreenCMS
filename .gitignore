@@ -15,18 +15,11 @@
 /Addons/joinUs
 /Application/Zel
 
-/Application/Home/View/GreenCMS
 /Application/Weixin/View/Metronic
 /Application/Home/View/2011college
-/Application/Admin/View/Metronic
-/Application/Home/View/Vena
 /Application/Home/View/Xsc
-
-/Public/GreenCMS
 /Public/2011college
-/Public/Vena
 /Public/Xsc
-/Public/admin
 
 
 Temp
@@ -34,3 +27,5 @@ Temp
 .tmb
 .quarantine
 
+
+/slt2.sublime-workspace
