@@ -61,6 +61,7 @@ class AdminBaseController extends BaseController
 
 
             if ($parsedHttpQuery['a'] == 'login' && $parsedHttpQuery['c'] == 'login') {
+                //防止循环跳转
                 $UserEvent = new \Common\Event\UserEvent();
                 $logoutRes = $UserEvent->logout();
                 $this->error(L('_VALID_ACCESS_'));

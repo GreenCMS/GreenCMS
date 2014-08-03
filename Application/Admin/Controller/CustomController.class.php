@@ -9,6 +9,7 @@
 
 namespace Admin\Controller;
 
+use Admin\Model\AddonsModel;
 use Common\Event\SystemEvent;
 use Common\Event\ThemeEvent;
 use Common\Event\UpdateEvent;
@@ -38,6 +39,64 @@ class CustomController extends AdminBaseController
     }
 
     //TODO menu
+
+    public function theme()
+    {
+
+        $ThemeEvent = new ThemeEvent();
+        $theme_exist = $ThemeEvent->getThemeNameList();
+        $theme_not_installed = $ThemeEvent->getThemeNotInstalledNameList();
+        $theme_installed = $ThemeEvent->getThemeInstalledNameList();
+
+
+        $theme_list_installed = $ThemeEvent->getThemeInstalledList();
+        foreach ($theme_list_installed as $key => $theme_list_installed_value) {
+            if ($theme_list_installed_value['theme_name'] == get_kv('home_theme', true)) {
+                $theme_list_installed[$key]['using_color'] = ' bg-green';
+                $theme_list_installed[$key]['status_name'] = '正在使用';
+                $theme_list_installed[$key]['status_url'] = "#";
+
+            } else {
+                $theme_list_installed[$key]['using_color'] = ' btn-warning';
+                $theme_list_installed[$key]['status_name'] = '准备就绪';
+                $theme_list_installed[$key]['status_url'] = U('Admin/Custom/themeChangeHandle',
+                    array('theme_name' => $theme_list_installed_value['theme_name']));
+
+            }
+        }
+        $this->assign('theme_list_installed', $theme_list_installed);
+
+
+        $theme_list = array();
+        foreach ($theme_not_installed as $value) {
+            $tpl_static_path = WEB_ROOT . 'Public/' . $value . '/';
+            $theme_temp = array();
+            if (file_exists($tpl_static_path . 'theme.xml')) {
+                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
+
+                $theme_temp = (array)$theme;
+                if ($theme_temp['name'] == get_kv('home_theme', true)) {
+                    $theme_temp['using_color'] = ' bg-green';
+                    $theme_temp['status_name'] = '正在使用';
+
+                } else {
+                    $theme_temp['using_color'] = ' btn-warning';
+                    $theme_temp['status_name'] = '待安装';
+
+                }
+
+                array_push($theme_list, $theme_temp);
+            }
+
+        }
+        $this->assign('theme_list_not_installed', $theme_list);
+
+
+        $this->display();
+
+
+    }
+
     /**
      * 首页菜单显示
      */
@@ -45,11 +104,49 @@ class CustomController extends AdminBaseController
     {
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
 
-        $menu_list = $Menu->getList(); // 获取分类结构
-
+        $menu_list = $Menu->getList(null,0,'menu_sort'); // 获取分类结构
         $this->assign('menu', $menu_list);
 
         $this->display();
+    }
+
+    //todo
+    public function menuInc($id){
+        $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
+        if (!$menu_item) {
+            $this->error('不存在这个菜单项');
+        }
+
+
+
+        $map['menu_sort'] = array('GT', $menu_item['menu_sort']);
+        $menu_item_target = D('Menu')->where($map)->order("menu_sort")->find();
+        duMP($menu_item_target);
+
+
+        $map['menu_sort'] = array('GT', $menu_item_target['menu_sort']);
+
+
+        $Menu = D('Menu');
+        $res = $Menu->where($map)->setInc('menu_sort');
+
+
+        $menu_item['menu_sort']=$menu_item_target['menu_sort']+1;
+
+        $res=D('Menu')->data($menu_item)->save();
+
+
+        dump($res);
+    }
+
+    //todo
+    public function menuDec($id){
+        $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
+        if (!$menu_item) {
+            $this->error('不存在这个菜单项');
+        }
+
+
     }
 
     /**
@@ -146,6 +243,34 @@ class CustomController extends AdminBaseController
      */
     public function menuEdit($id)
     {
+        $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
+        if (!$menu_item) {
+            $this->error('不存在这个菜单项');
+        }
+
+        $this->assign('info', $menu_item);
+
+
+        $CatsLogic = new CatsLogic();
+        $TagsLogic = new TagsLogic();
+        $PostsLogic = new PostsLogic();
+
+        /**
+         *  文章分类标签 start
+         */
+        $cat_list = $CatsLogic->category();
+        $tag_list = $TagsLogic->field('tag_id,tag_name')->select();
+        $post_list = $PostsLogic->field('post_id,post_title')->select();
+        $cat_list = array_column_5($cat_list, 'cat_slug', 'cat_id');
+        $tag_list = array_column_5($tag_list, 'tag_name', 'tag_id');
+        $post_list = array_column_5($post_list, 'post_title', 'post_id');
+        $this->assign('cat_list', gen_opinion_list($cat_list));
+        $this->assign('tag_list', gen_opinion_list($tag_list));
+        $this->assign('post_list', gen_opinion_list($post_list));
+        /**
+         *  文章分类标签 end
+         */
+
         $action = '编辑菜单';
         $action_url = U('Admin/Custom/menuEdit', array('id' => $id));
         $form_url = U('Admin/Custom/menuEditHandle', array('id' => $id));
@@ -153,8 +278,21 @@ class CustomController extends AdminBaseController
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
         $menu_list = $Menu->getList(); // 获取分类结构
 
-        $m = D('Menu')->where(array('menu_id' => $id))->find();
-        $this->assign('info', $m);
+        $url_function = C('url_function');
+        $this->assign('url_function', gen_opinion_list($url_function, $menu_item["menu_function"]));
+
+        $url_open = C('url_open');
+        $this->assign('url_open', gen_opinion_list($url_open, $menu_item["menu_action"]));
+
+        //父级节点
+        $menu_list2 = array_column_5($menu_list, 'menu_construct', 'menu_id');
+        $this->assign('menu_list2', gen_opinion_list($menu_list2, $menu_item['menu_pid']));
+
+        //显示排序
+        $menu_list3 = array_column_5($menu_list, 'menu_construct', 'menu_sort');
+        $this->assign('menu_list3', gen_opinion_list($menu_list3, $menu_item['menu_sort']));
+
+
 
 
         $this->assign('menu', $menu_list);
@@ -172,13 +310,19 @@ class CustomController extends AdminBaseController
      */
     public function menuEditHandle($id)
     {
-        $data = $_POST;
+        $post_data = I('post.');
 
-        if ($data['menu_pid'] == $data['menu_id']) {
+        $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
+
+        $Menu = D('Menu');
+        $res = $Menu->where($map)->setInc('menu_sort');
+
+
+        if ($post_data['menu_pid'] == $post_data['menu_id']) {
             $this->error('父类不能是自己');
         }
         $Menu = D('Menu');
-        $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
+        $result = $Menu->where(array('menu_id' => $id))->data($post_data)->save();
         if ($result) {
             $this->success('编辑成功', U('Admin/Custom/menu'));
         } else {
@@ -194,9 +338,9 @@ class CustomController extends AdminBaseController
     {
         //$page = I('get.page', C('PAGER'));
 
-        $Addons = M('Addons');
+        $Addons = new AddonsModel();
 
-        $list = D('Addons')->getList(); //这里得到是未安装的
+        $list = $Addons->getList(); //这里得到是未安装的
 //        $count = count($list);
 
 
@@ -209,7 +353,6 @@ class CustomController extends AdminBaseController
         $this->display();
 
     }
-
 
     /**
      * 创建向导首页
@@ -227,6 +370,94 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
+    /**
+     * 检查form
+     */
+    public function checkForm()
+    {
+        $data = $_POST;
+        $data['info']['name'] = trim($data['info']['name']);
+        if (!$data['info']['name'])
+            $this->error('插件标识必须');
+        //检测插件名是否合法
+        $addons_dir = Addon_PATH;
+        if (file_exists("{$addons_dir}{$data['info']['name']}")) {
+            $this->error('插件已存在');
+        }
+        $this->success('可以创建');
+    }
+
+    /**
+     * 创建插件
+     */
+    public function build()
+    {
+        $data = $_POST;
+        $data['info']['name'] = trim($data['info']['name']);
+        $addonFile = $this->preview(false);
+        $addons_dir = Addon_PATH;
+        //创建目录结构
+        $files = array();
+        $addon_dir = "$addons_dir{$data['info']['name']}/";
+        $files[] = $addon_dir;
+        $addon_name = "{$data['info']['name']}Addon.class.php";
+        $files[] = "{$addon_dir}{$addon_name}";
+        if ($data['has_config'] == 1) ; //如果有配置文件
+        $files[] = $addon_dir . 'config.php';
+
+        if ($data['has_outurl']) {
+            $files[] = "{$addon_dir}Controller/";
+            $files[] = "{$addon_dir}Controller/{$data['info']['name']}Controller.class.php";
+            $files[] = "{$addon_dir}Model/";
+            $files[] = "{$addon_dir}Model/{$data['info']['name']}Model.class.php";
+        }
+        $custom_config = trim($data['custom_config']);
+        if ($custom_config)
+            $data[] = "{$addon_dir}{$custom_config}";
+
+        $custom_adminlist = trim($data['custom_adminlist']);
+        if ($custom_adminlist)
+            $data[] = "{$addon_dir}{$custom_adminlist}";
+
+        create_dir_or_files($files);
+
+        //写文件
+        file_put_contents("{$addon_dir}{$addon_name}", $addonFile);
+        if ($data['has_outurl']) {
+            $addonController = <<<str
+<?php
+
+namespace Addons\\{$data['info']['name']}\Controller;
+use Home\Controller\AddonsController;
+
+class {$data['info']['name']}Controller extends AddonsController{
+
+        }
+
+str;
+            file_put_contents("{$addon_dir}Controller/{$data['info']['name']}Controller.class.php", $addonController);
+            $addonModel = <<<str
+<?php
+
+namespace Addons\\{$data['info']['name']}\Model;
+use Think\Model;
+
+/**
+ * {$data['info']['name']}模型
+ */
+class {$data['info']['name']}Model extends Model{
+
+    }
+
+str;
+            file_put_contents("{$addon_dir}Model/{$data['info']['name']}Model.class.php", $addonModel);
+        }
+
+        if ($data['has_config'] == 1)
+            file_put_contents("{$addon_dir}config.php", $data['config']);
+
+        $this->success('创建成功', U('Admin/Custom/plugin'));
+    }
 
     /**
      * 插件预览
@@ -317,95 +548,6 @@ str;
             exit($tpl);
         else
             return $tpl;
-    }
-
-    /**
-     * 检查form
-     */
-    public function checkForm()
-    {
-        $data = $_POST;
-        $data['info']['name'] = trim($data['info']['name']);
-        if (!$data['info']['name'])
-            $this->error('插件标识必须');
-        //检测插件名是否合法
-        $addons_dir = Addon_PATH;
-        if (file_exists("{$addons_dir}{$data['info']['name']}")) {
-            $this->error('插件已存在');
-        }
-        $this->success('可以创建');
-    }
-
-    /**
-     * 创建插件
-     */
-    public function build()
-    {
-        $data = $_POST;
-        $data['info']['name'] = trim($data['info']['name']);
-        $addonFile = $this->preview(false);
-        $addons_dir = Addon_PATH;
-        //创建目录结构
-        $files = array();
-        $addon_dir = "$addons_dir{$data['info']['name']}/";
-        $files[] = $addon_dir;
-        $addon_name = "{$data['info']['name']}Addon.class.php";
-        $files[] = "{$addon_dir}{$addon_name}";
-        if ($data['has_config'] == 1) ; //如果有配置文件
-        $files[] = $addon_dir . 'config.php';
-
-        if ($data['has_outurl']) {
-            $files[] = "{$addon_dir}Controller/";
-            $files[] = "{$addon_dir}Controller/{$data['info']['name']}Controller.class.php";
-            $files[] = "{$addon_dir}Model/";
-            $files[] = "{$addon_dir}Model/{$data['info']['name']}Model.class.php";
-        }
-        $custom_config = trim($data['custom_config']);
-        if ($custom_config)
-            $data[] = "{$addon_dir}{$custom_config}";
-
-        $custom_adminlist = trim($data['custom_adminlist']);
-        if ($custom_adminlist)
-            $data[] = "{$addon_dir}{$custom_adminlist}";
-
-        create_dir_or_files($files);
-
-        //写文件
-        file_put_contents("{$addon_dir}{$addon_name}", $addonFile);
-        if ($data['has_outurl']) {
-            $addonController = <<<str
-<?php
-
-namespace Addons\\{$data['info']['name']}\Controller;
-use Home\Controller\AddonsController;
-
-class {$data['info']['name']}Controller extends AddonsController{
-
-        }
-
-str;
-            file_put_contents("{$addon_dir}Controller/{$data['info']['name']}Controller.class.php", $addonController);
-            $addonModel = <<<str
-<?php
-
-namespace Addons\\{$data['info']['name']}\Model;
-use Think\Model;
-
-/**
- * {$data['info']['name']}模型
- */
-class {$data['info']['name']}Model extends Model{
-
-    }
-
-str;
-            file_put_contents("{$addon_dir}Model/{$data['info']['name']}Model.class.php", $addonModel);
-        }
-
-        if ($data['has_config'] == 1)
-            file_put_contents("{$addon_dir}config.php", $data['config']);
-
-        $this->success('创建成功', U('Admin/Custom/plugin'));
     }
 
     /**
@@ -519,7 +661,6 @@ str;
 
         }
     }
-
 
     /**
      * 保存插件设置
@@ -647,7 +788,6 @@ str;
         $this->display('edithook');
     }
 
-
     /**
      * 钩子出编辑挂载插件页面
      * @param $id
@@ -659,7 +799,6 @@ str;
         $this->action = '编辑钩子';
         $this->display('edithook');
     }
-
 
     /**
      * 删除钩子
@@ -820,7 +959,6 @@ str;
 
         $this->display();
     }
-
 
     /**
      * 添加链接
@@ -1005,65 +1143,6 @@ str;
 
     }
 
-
-    public function theme()
-    {
-
-        $ThemeEvent = new ThemeEvent();
-        $theme_exist = $ThemeEvent->getThemeNameList();
-        $theme_not_installed = $ThemeEvent->getThemeNotInstalledNameList();
-        $theme_installed = $ThemeEvent->getThemeInstalledNameList();
-
-
-        $theme_list_installed = $ThemeEvent->getThemeInstalledList();
-        foreach ($theme_list_installed as $key => $theme_list_installed_value) {
-            if ($theme_list_installed_value['theme_name'] == get_kv('home_theme', true)) {
-                $theme_list_installed[$key]['using_color'] = ' bg-green';
-                $theme_list_installed[$key]['status_name'] = '正在使用';
-                $theme_list_installed[$key]['status_url'] = "#";
-
-            } else {
-                $theme_list_installed[$key]['using_color'] = ' btn-warning';
-                $theme_list_installed[$key]['status_name'] = '准备就绪';
-                $theme_list_installed[$key]['status_url'] = U('Admin/Custom/themeChangeHandle',
-                    array('theme_name' => $theme_list_installed_value['theme_name']));
-
-            }
-        }
-        $this->assign('theme_list_installed', $theme_list_installed);
-
-
-        $theme_list = array();
-        foreach ($theme_not_installed as $value) {
-            $tpl_static_path = WEB_ROOT . 'Public/' . $value . '/';
-            $theme_temp = array();
-            if (file_exists($tpl_static_path . 'theme.xml')) {
-                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
-
-                $theme_temp = (array)$theme;
-                if ($theme_temp['name'] == get_kv('home_theme', true)) {
-                    $theme_temp['using_color'] = ' bg-green';
-                    $theme_temp['status_name'] = '正在使用';
-
-                } else {
-                    $theme_temp['using_color'] = ' btn-warning';
-                    $theme_temp['status_name'] = '待安装';
-
-                }
-
-                array_push($theme_list, $theme_temp);
-            }
-
-        }
-        $this->assign('theme_list_not_installed', $theme_list);
-
-
-        $this->display();
-
-
-    }
-
-
     public function themeInstallHandle($theme_name)
     {
         $res = D("Theme")->where(array("theme_name" => $theme_name))->find();
@@ -1129,32 +1208,28 @@ str;
     }
 
 
-
-
     public function themeDetail($theme_name)
     {
         $theme = D("Theme")->where(array("theme_name" => $theme_name))->find();
         if (!$theme) $this->error("主题尚未安装");
-         $config = json_decode($theme['theme_config'], true);
+        $config = json_decode($theme['theme_config'], true);
 
         $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
         $theme_xml_path = $tpl_static_path . 'theme.xml';
         if (file_exists($theme_xml_path)) {
             $theme_xml = File::readFile($theme_xml_path);
             $theme_obj = simplexml_load_string($theme_xml);
-             $theme_temp = object_to_array($theme_obj);
+            $theme_temp = object_to_array($theme_obj);
             $this->assign("theme_xml", $theme_temp);
         }
 
 
         $this->assign("config", $config);
         $this->assign("theme", $theme);
-        $this->assign("action", $theme['theme_name']."主题详细");
+        $this->assign("action", $theme['theme_name'] . "主题详细");
         $this->display("themedetail");
 
     }
-
-
 
 
     public function themeConfig($theme_name)
@@ -1165,7 +1240,7 @@ str;
 
         $config = json_decode($theme['theme_config'], true);
 
-        $this->assign("handle", U("Admin/Custom/themeConfigHandle",array('theme_name'=>$theme_name)));
+        $this->assign("handle", U("Admin/Custom/themeConfigHandle", array('theme_name' => $theme_name)));
 
         $this->assign("theme", $theme);
         $this->assign("config", $config);
@@ -1181,28 +1256,24 @@ str;
 
         $config = json_decode($theme['theme_config'], true);
 
-        $new_config=I('post.config');
-        foreach($new_config as $config_key => $config_value){
-            $config['kv'][$config_key]["value"]=$config_value;
+        $new_config = I('post.config');
+        foreach ($new_config as $config_key => $config_value) {
+            $config['kv'][$config_key]["value"] = $config_value;
         }
 
 
-        $theme['theme_config']=json_encode($config);
+        $theme['theme_config'] = json_encode($config);
 
         $res = D("Theme")->where(array("theme_name" => $theme_name))->data($theme)->save();
 
 
-        if($res){
-            $this->success("主题配置保存成功",U("Admin/Custom/theme"));
-        }else{
+        if ($res) {
+            $this->success("主题配置保存成功", U("Admin/Custom/theme"));
+        } else {
             $this->error("主题配置保存失败或者未更改");
         }
 
     }
-
-
-
-
 
 
     /**
@@ -1282,7 +1353,7 @@ str;
 
         set_kv('theme_' . $theme_name, 'enabled');
 
-        S('theme_config',null);
+        S('theme_config', null);
 
         $this->success('启用成功');
     }
@@ -1294,7 +1365,7 @@ str;
     public function themeChangeHandle($theme_name = 'NovaGreenStudio')
     {
         if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
-        S('theme_config',null);
+        S('theme_config', null);
 
 
         $res = set_kv('home_theme', $theme_name);
@@ -1321,9 +1392,6 @@ str;
         File::delAll($tpl_static_path, true);
         $this->success('删除成功');
     }
-
-
-
 
 
 }

@@ -69,8 +69,8 @@
                                         <td class="hidden-480">{$vo.description}</td>
                                         <td class="hidden-480"><eq name="vo.type" value="1">视图<else />控制器</eq></td>
                                         <td class="hidden-480">
-                                            <a href="{:U('Admin/Custom/edithook', array('id'=>$vo['id']))}">编辑</a>|
-                                            <a href="{:U('Admin/Custom/delhook', array('id'=>$vo['id']))}">删除</a>
+                                            <a class="btn btn-sm btn-warning" href="{:U('Admin/Custom/edithook', array('id'=>$vo['id']))}">编辑</a> &nbsp;
+                                            <a class="btn btn-sm btn-danger" href="{:U('Admin/Custom/delhook', array('id'=>$vo['id']))}">删除</a>
                                         </td>
                                     </tr>
                                 </volist>
