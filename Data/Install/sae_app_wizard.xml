@@ -1,15 +1,28 @@
 ﻿<appwizard>
-	<platform> 
-		<services>
-			<service name="upload"  params="public">Storage</service>
-			<service size="30M">Memcache</service>
-			<service>Mysql</service>
-			<service>KVDB</service>
-		</services>
-	</platform>
-
-	<code> 
-	<!-- 初始化页面地址：即应用安装成功后跳转的地址，可以将应用安装脚本或数据库导入脚本写在该文件中 -->
-	<initScript>index.php</initScript>
-	</code>
+    <introduction>
+        <name></name>
+        <author>GreenStudio</author>
+        <icon></icon>
+        <homepage>http://www.greencms.net</homepage>
+        <description><![CDATA[GreenCMS-Sae-alpha]]></description>
+    </introduction>
+    <platform>
+        <services>
+            <service></service>
+            <service name="upload" params="public">Storage</service>
+            <service size="20M">Memcache</service>
+            <service>Mysql</service>
+            <service>kvdb</service>
+            <service name="test" level="1" type="seq">taskqueue</service>
+        </services>
+        <appconfig>
+            <tpl><![CDATA[
+name: <<appname>>
+version: <<version>>
+]]></tpl>
+        </appconfig>
+    </platform>
+    <code>
+        <initScript>index.php</initScript>
+    </code>
 </appwizard>

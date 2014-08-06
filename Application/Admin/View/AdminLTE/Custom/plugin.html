@@ -43,22 +43,22 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
-                                 <div class="row margin">
-                                    <div class="btn-group">
-                                        <a href="{:U('Admin/Custom/create')}">
-                                            <button type="submit" class="btn btn-success" name="postAdd" value='1'>
-                                                <i class="icon-plus"></i> 创建插件
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a href="{:U('Admin/Custom/hooks')}">
-                                            <button type="submit" class="btn btn-danger" name="hooks" value='1'>
-                                                <i class="icon-plus"></i> 钩子管理
-                                            </button>
-                                        </a>
-                                    </div>
+                            <div class="row margin">
+                                <div class="btn-group">
+                                    <a href="{:U('Admin/Custom/create')}">
+                                        <button type="submit" class="btn btn-success" name="postAdd" value='1'>
+                                            <i class="icon-plus"></i> 创建插件
+                                        </button>
+                                    </a>
                                 </div>
+                                <div class="btn-group">
+                                    <a href="{:U('Admin/Custom/hooks')}">
+                                        <button type="submit" class="btn btn-info" name="hooks" value='1'>
+                                            <i class="icon-plus"></i> 钩子管理
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
 
                             <table class="table table-bordered table-hover" class="tab">
                                 <tr>
@@ -79,23 +79,41 @@
                                         <td class="hidden-480">{$vo.author}</td>
                                         <td class="hidden-480">{$vo.version}</td>
                                         <td class="hidden-480">
-                                            <a href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>|
+
                                             <eq name="vo.status" value="1">
-                                                <a href='javascript:;' onclick="off({$vo.id})">禁用</a>|
+                                                <a class="btn btn-sm btn-warning"   href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}" >配置</a> &nbsp; &nbsp;
                                                 <else/>
-                                                <a href='javascript:;' onclick="on({$vo.id})">启用</a>|
+                                                &nbsp; &nbsp;
                                             </eq>
+
+
+
+
+
+
                                             <eq name="vo.status" value="99">
-                                                <a href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
+                                                <a class="btn btn-sm btn-success"
+                                                href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
                                                 <else/>
-                                                <a href="{:U('Admin/Custom/uninstall',array('id'=>$vo['id']) )}">卸载</a>
+
+                                                <eq name="vo.status" value="1">
+
+                                                    <a class="btn btn-sm bg-purple" href='javascript:;' onclick="off({$vo.id})">禁用</a> &nbsp; &nbsp;
+
+                                                    <else/>
+                                                    <a class="btn btn-sm btn-primary" href='javascript:;' onclick="on({$vo.id})">启用</a> &nbsp; &nbsp;
+                                                </eq>
+
+
+                                                <a class="btn btn-sm btn-danger"
+                                                   href="{:U('Admin/Custom/uninstall',array('id'=>$vo['id']) )}">卸载</a>
                                             </eq>
                                         </td>
                                     </tr>
                                 </volist>
                             </table>
                             <div>
-                                <ul  class="pagination"> {$page}</ul>
+                                <ul class="pagination"> {$page}</ul>
 
                             </div>
 

@@ -85,3 +85,5 @@ define("TIME_FIX", 0);
  */
 define('BUILD_DIR_SECURE', false);
 
+
+define('protect_model', true);
