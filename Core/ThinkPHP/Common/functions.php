@@ -942,7 +942,7 @@ function U($url = '', $vars = '', $suffix = true, $domain = false)
  * 渲染输出Widget
  * @param string $name Widget名称
  * @param array $data 传入的参数
- * @return void
+ * @return mixed
  */
 function W($name, $data = array())
 {

@@ -121,31 +121,29 @@ class CommonWidget extends Controller
                 }
 
                 $menu .= '</ul></li>';
-            }
-            //              else if ($i == $count) {
-//                 //last one
-//
-//                 $class='fa fa-barcode';
-//                $css = $url == strtolower(CONTROLLER_NAME) ? "treeview active" : "treeview";
-//                $menu .= '<li class="' . $css . '"><a href="#">
-//                    <i class="'.$class.'"></i>
-//                    <span>' . $name . '</span>
-//                   <i class="fa fa-angle-left pull-right"></i>
-//
-//                    </a><ul class="treeview-menu">';
-//
-//                $cache = C('admin_sub_menu');
-//                foreach ($cache as $big_url => $big_name) {
-//                    if ($big_url == $url)
-//                        foreach ($big_name as $sub_url => $sub_name) {
-//                            $sub_true_url = explode('/', $sub_url);
-//                            $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
-//                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
-//                        }
-//                }
-//                $menu .= '</ul></li>';
-//            }
-            else {
+            } else if ($i == $count) {
+                //last option  Other hook the adminSideBar
+                $class = 'fa ' . $icon[$url];
+                $css = $url == strtolower(CONTROLLER_NAME) ? "treeview active" : "treeview";
+                $menu .= '<li class="' . $css . '"><a href="#">
+                    <i class="' . $class . '"></i>
+                    <span>' . $name . '</span>
+                  <i class="fa fa-angle-left pull-right"></i>
+
+                    </a><ul class="treeview-menu">';
+                $cache = C('admin_sub_menu');
+                foreach ($cache as $big_url => $big_name) {
+                    if ($big_url == $url)
+                        foreach ($big_name as $sub_url => $sub_name) {
+                            $sub_true_url = explode('/', $sub_url);
+                            $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
+                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
+                        }
+                }
+
+                 //hook('adminSideBar','menu');
+                //$menu .= '</ul></li>';
+            } else {
 
                 $class = 'fa ' . $icon[$url];
                 $css = $url == strtolower(CONTROLLER_NAME) ? "treeview active" : "treeview";
