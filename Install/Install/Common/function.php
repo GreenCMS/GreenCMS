@@ -85,3 +85,44 @@ function insertDB($file, $conn)
 
 
 }
+
+
+/**
+ * GreenCMS用户密码加密
+ * @param $data
+ * @return string
+ */
+function encrypt($data)
+{
+    //return md5($data);
+    return md5(C("AUTH_CODE") . md5($data));
+}
+
+
+
+function get_opinion($key, $realtime = false, $default = '')
+{
+
+    if (!$realtime) {
+        $res = C($key);
+        if ($res != null) {
+            return $res;
+        } else {
+            $res = S('option_' . $key);
+            if ($res) return $res;
+            else return get_opinion($key, true, $default = '');
+        }
+    } else {
+        $res = D('Options')->where(array('option_name' => $key))->find();
+
+        if (empty($res)) {
+            return $default;
+        } else {
+            S('option_' . $key, $res['option_value']);
+            return $res['option_value'];
+        }
+
+
+    }
+
+}
