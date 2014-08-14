@@ -53,7 +53,11 @@
 
                                 <div style="display: none" id="sys_up">
 
-                                    <a href="{:U('Admin/System/update')}">发现新版本，立即更新</a>
+                                <h3>
+                                    <a href="{:U('Admin/System/update')}" style="color: red;">发现新版本，立即更新</a>
+
+
+                                </h3>
 
                                 </div>
 
@@ -186,6 +190,7 @@
 <include file="Public:foot"/>
 
 <script>
+
     $(document).ready(function () {
 
         var url = '{:U("Admin/Index/checkVersion")}';
@@ -193,14 +198,7 @@
         $.get(url, function (data) {
             if (data != 'none') {
                 //发现新版本
-                $('#warning_box').append(data);
                 $('#sys_up').show();
-
-                var n=$("#warning_box_num").html();
-                var num=parseInt(n)+1;
-                $('#warning_box_num').html(num);
-                $('#warning_box_num2').html(num);
-
 
             } else {
                 $('#sys_up').show();
@@ -208,14 +206,10 @@
             }
         });
 
-
-        var url = '{:U("Admin/Index/ajaxCron")}';
-
-        $.get(url, function (data) {
-
-        });
-
     });
+
+
+
 
 
 </script>
