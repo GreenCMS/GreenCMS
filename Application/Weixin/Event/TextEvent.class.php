@@ -19,15 +19,40 @@ use Weixin\Controller\WeixinCoreController;
 class TextEvent extends WeixinCoreController
 {
 
-    /**
-     * @param $keyword
-     * @return string
-     */
-    public function wechat($keyword)
-    {
 
-        $contentStr = '您的留言我们已经收到';
-        return $contentStr;
+    /**
+     * @param string $method
+     * @param array $args
+     * @return array
+     */
+    public function __call($method, $args)
+    {
+        $keyword = $method;
+        $data = $args[0];
+
+
+         if ($keyword == "hi" || $keyword == "hello" || $keyword == "你好" || $keyword == "您好") {
+            $contentStr = "欢迎使用,回复help获得使用帮助"; // .$toUsername
+        } else if (strtolower($keyword) == "help" || $keyword == '帮助') {
+            $contentStr = get_opinion('weixin_help', true, "帮助:");
+        } else if (strtolower($keyword) == "weather" || preg_match('/weather([^<>]+)/', $keyword)) {
+            $keyword = trim(substr($keyword, 7));
+            $contentStr = $this->getWeather($keyword);
+        } else {
+            //$contentStr = $this->wechat($data["Content"]);
+             $CustomTextEvent = new CustomTextEvent();
+             $reply = $CustomTextEvent->$keyword($data);
+             return $reply;
+        }
+
+        $reply = array(
+            $contentStr,
+            'text'
+        );
+
+
+        return $reply;
+
 
     }
 
@@ -35,28 +60,33 @@ class TextEvent extends WeixinCoreController
      * @param $keyword
      * @return mixed
      */
-    public function weather($keyword)
+    public function getWeather($keyword)
     {
         $resultStr = "";
         if ($keyword == "") {
             $keyword = "南京";
-            $resultStr .= "没有指定城市，默认显示南京";
         }
+
         $apihost = "http://api2.sinaapp.com/";
         $apimethod = "search/weather/?";
         $apiparams = array(
-            'appkey'    => "0020120430",
+            'appkey' => "0020120430",
             'appsecert' => "fa6095e113cd28fd",
-            'reqtype'   => "text"
+            'reqtype' => "text"
         );
         $apikeyword = "&keyword=" . urlencode($keyword);
         $apicallurl = $apihost . $apimethod . http_build_query($apiparams) . $apikeyword;
+
         $weatherJson = file_get_contents($apicallurl);
+
+        die($weatherJson);
+
         $weather = json_decode($weatherJson, true);
         $contentStr = $weather ['text'] ['content'];
 
         return $contentStr;
     }
+
 
 
     /**
@@ -77,11 +107,16 @@ class TextEvent extends WeixinCoreController
         $city = mb_substr($city,
             0, $length, 'UTF8');
 
-        $contentStr = $this->weather($city);
+        $contentStr = $this->getWeather($city);
 
         return $contentStr;
 
     }
+
+
+
+
+
 
 
 }

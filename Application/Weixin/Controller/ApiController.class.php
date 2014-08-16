@@ -9,6 +9,8 @@
 
 namespace Weixin\Controller;
 
+use Think\Log;
+use Weixin\Event\TextEvent;
 use Weixin\Util\ThinkWechat;
 
 class ApiController extends WeixinCoreController
@@ -17,7 +19,7 @@ class ApiController extends WeixinCoreController
     public function index()
     {
 
-        \Think\Log::record('收到消息' . date('Ymd H:m:s') . 'Form:' . get_client_ip());
+        Log::record('收到消息' . date('Ymd H:m:s') . 'Form:' . get_client_ip());
 
         $weixin = new ThinkWechat (get_opinion('weixin_token'));
 
@@ -30,33 +32,9 @@ class ApiController extends WeixinCoreController
         /* 响应当前请求 */
         $weixin->response($content, $type);
 
-        \Think\Log::record('发送消息' . date('Ymd H:m:s'));
+        Log::record('发送消息' . date('Ymd H:m:s'));
 
     }
-
-    public function test()
-    {
-        $code = I('get.code');
-        $APPID = C('Weixin_appid');
-        $SECRET = C('Weixin_secret');
-
-        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$APPID&secret=$SECRET&code=$code&grant_type=authorization_code";
-        $res = json_decode(file_get_contents($url), true);
-
-        dump($res);
-
-        $access_token = $res['access_token'];
-        $openid = $res['openid'];
-
-        $url2 = "https://api.weixin.qq.com/sns/userinfo?access_token=$access_token&openid=$openid";
-
-        $res2 = json_decode(file_get_contents($url2), true);
-        dump($res2);
-
-
-        // $this->index();
-    }
-
 
     private function reply($data)
     {
@@ -77,33 +55,18 @@ class ApiController extends WeixinCoreController
          */
         if ('text' == $data ['MsgType']) {
             $keyword = $data ['Content'];
-            $res = "可能有点问题，我知道什么什么。。~~~~";
 
-            if (C('Weixin_log')) {
+            if (get_opinion('Weixin_log')) {
                 $Weixinlog = D('Weixinlog');
                 $Weixinlog->data($data)->add();
             }
 
             $keyword = trim($keyword);
 
-            $Text = new \Weixin\Event\TextEvent();
+            $TextEvent = new TextEvent();
+            $reply = $TextEvent->$keyword($data);
 
-            if ($keyword == "hi" || $keyword == "hello" || $keyword == "你好" || $keyword == "您好") {
-                $contentStr = "欢迎使用,回复help获得使用帮助"; // .$toUsername
-            } else if ($keyword == "help" || $keyword == "HELP") {
-                $contentStr = "欢迎使用会呼吸,使用方法:\r\n";
-                $contentStr .= "weather城市 查询天气\r\n";
-            } else if ($keyword == "weather" || preg_match('/weather([^<>]+)/', $keyword)) {
-                $keyword = trim(substr($keyword, 7));
-                $contentStr = $Text->weather($keyword);
-            } else {
-                $contentStr = $Text->wechat($data);
-            }
 
-            $reply = array(
-                $contentStr,
-                'text'
-            );
 
 
         } elseif ('image' == $data ['MsgType']) {
@@ -116,9 +79,9 @@ class ApiController extends WeixinCoreController
         } elseif ('location' == $data ['MsgType']) {
 
             //http://api.map.baidu.com/geocoder/v2/?ak=96a6bf4739da4e7c5bf6e916ff1ad51c&callback=renderReverse&location=32.106186,118.813850&output=json&pois=1
-            $Text = new \Weixin\Event\TextEvent();
+            $TextEvent = new TextEvent();
 
-            $contentStr = $Text->poi($data);
+            $contentStr = $TextEvent->poi($data);
 
             $reply = array(
                 $contentStr,
@@ -138,50 +101,19 @@ class ApiController extends WeixinCoreController
                 );
             } elseif ('CLICK' == $data ['Event']) {
                 $Buttom = new \Weixin\Event\ButtomEvent();
-
                 $reply = $Buttom->$data ['EventKey']();
-//                $reply = array(
-//                    '你点击的按钮'.$data ['EventKey'],
-//                    'text'
-//                );
+
             }
 
 
         } else {
-            exit ();
+            $reply = array(
+                "error occur",
+                'text'
+            );
         }
         return $reply;
     }
-
-
-    public function menu()
-    {
-
-
-        $Menu = new \Weixin\Event\MenuEvent();
-
-        //   $Menu->restore();
-
-        //from remote
-        $menu_array = json_decode($Menu->get(), true);
-
-        //from db
-        $Weixin_menu_decode = json_decode(trim(C('Weixin_menu')), true);
-        $menu = decodeUnicode(json_encode($Weixin_menu_decode));
-
-        dump($Menu->create($menu));
-    }
-
-    public function access()
-    {
-        $access = $this->getAccess();
-        dump($access);
-    }
-//
-//    public function phpinfo()
-//    {
-//        echo phpinfo();
-//    }
 
 
 }
