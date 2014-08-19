@@ -58,6 +58,16 @@
                                         </button>
                                     </a>
                                 </div>
+
+                                <div class="btn-group">
+                                    <a href="{:U('Admin/Custom/pluginAdd')}">
+                                        <button type="submit" class="btn bg-purple" name="hooks" value='1'>
+                                            <i class="icon-plus"></i> 在线安装新插件
+                                        </button>
+                                    </a>
+                                </div>
+
+
                             </div>
 
                             <table class="table table-bordered table-hover" class="tab">
@@ -81,27 +91,27 @@
                                         <td class="hidden-480">
 
                                             <eq name="vo.status" value="1">
-                                                <a class="btn btn-sm btn-warning"   href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}" >配置</a> &nbsp; &nbsp;
+                                                <a class="btn btn-sm btn-warning"
+                                                   href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>
+                                                &nbsp; &nbsp;
                                                 <else/>
                                                 &nbsp; &nbsp;
                                             </eq>
 
 
-
-
-
-
                                             <eq name="vo.status" value="99">
                                                 <a class="btn btn-sm btn-success"
-                                                href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
+                                                   href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
                                                 <else/>
 
                                                 <eq name="vo.status" value="1">
 
-                                                    <a class="btn btn-sm bg-purple" href='javascript:;' onclick="off({$vo.id})">禁用</a> &nbsp; &nbsp;
+                                                    <a class="btn btn-sm bg-purple" href='javascript:;'
+                                                       onclick="off({$vo.id})">禁用</a> &nbsp; &nbsp;
 
                                                     <else/>
-                                                    <a class="btn btn-sm btn-primary" href='javascript:;' onclick="on({$vo.id})">启用</a> &nbsp; &nbsp;
+                                                    <a class="btn btn-sm btn-primary" href='javascript:;'
+                                                       onclick="on({$vo.id})">启用</a> &nbsp; &nbsp;
                                                 </eq>
 
 
