@@ -1,5 +1,18 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.2.0819 build 20140819
+插件在线安装
+每个页面检查安全事件和升级事件
+微信模块更新
+左侧菜单挂载插件
+merge patch from thinkphp
+更新安装脚本
+update README.md
+建立索引提高效率
+性能优化
+
+
+
 version v2.2.0726 build 20140726
 新版主题功能完成
 修复Bug
