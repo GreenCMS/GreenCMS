@@ -10,6 +10,7 @@
 namespace Weixin\Controller;
 
 
+
 class HomeController extends WeixinBaseController
 {
     public function index()
@@ -24,15 +25,18 @@ class HomeController extends WeixinBaseController
 
     public function changePassHandle()
     {
-        $User = D('User', 'Logic');
-        $User->user_id = (int)$_SESSION [C('USER_AUTH_KEY')];
-        $User->user_pass = encrypt($_POST['password']);
 
-        if ($User->save()) {
-            $this->success('密码修改成功', U("Admin/Login/logout"), false);
-        } else {
-            $this->error('密码修改失败');
+        if (I('post.password') != I('post.rpassword')) {
+            $this->error('两次密码不同');
         }
+
+        $uid = get_current_user_id();
+
+        $UserEvent = new \Common\Event\UserEvent();
+        $changePasswordRes = $UserEvent->changePassword($uid, I('post.opassword'), I('post.password'));
+
+        $this->json2Response($changePasswordRes);
+
     }
 
 }

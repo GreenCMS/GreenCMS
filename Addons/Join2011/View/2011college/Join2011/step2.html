@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]>
+<html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<html>
+<head>
+    <title>{:date('Y')}年2011学院报名 -- {:C('title')}</title>
+    <meta charset="utf-8"/>
+    <include file="Public:head"/>
+
+    <style>
+
+
+        .apply-txt a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 40px;
+            font-family: "微软雅黑";
+            line-height: 100px;
+        }
+
+        .apply-info-bg {
+            width: 360px;
+            height: 52px;
+            position: absolute;
+            z-index: 99;
+            background: #ffffff;
+            opacity: 0.6;
+        }
+
+        .apply-info-txt {
+            position: absolute;
+            z-index: 999;
+            line-height: 52px;
+            font-size: 20px;
+            font-family: "微软雅黑";
+            text-indent: 30px;
+        }
+
+        .news-ct a {
+            color: #4D4D4D;
+            text-decoration: none;
+            font-size: 14px;
+            line-height: 30px;
+        }
+
+        .news-ct a span {
+            float: right;
+        }
+
+        .btn {
+            font-weight: 500;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            border: 1px solid transparent;
+            -webkit-box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.09);
+            -moz-box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.09);
+            box-shadow: inset 0px -1px 0px 0px rgba(0, 0, 0, 0.09);
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.428571429;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
+        .form-control {
+            margin-left: 30px;
+            width: 300px;
+            height: 20px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.428571429;
+            color: #555;
+            vertical-align: middle;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+
+        input, button, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group .controls {
+            margin-left: 20px;
+
+        }
+
+
+        .form-group .control-label {
+            float: left;
+            width: 70px;
+            padding-top: 5px;
+            text-align: right;
+        }
+
+
+
+        .form-group .controls .help-inline {
+            padding-left: 10px;
+            color: #595959;
+        }
+
+        .blue {
+            color: #fff;
+            background-color: #008d4c;
+        }
+
+    </style>
+</head>
+<body>
+{:W('Common/mainMenu')}
+
+<div class="content content-grey">
+    <div class="content-thin">
+        <div class="title" style="text-align:center;padding-top: 20px;font-size:30px;line-height:1.5em;">
+            请确认并填写详细信息
+        </div>
+
+        <br/>
+        <br/>
+
+        <div class="article">
+
+
+            <form class="form-vertical" action="{:addons_url('Join2011://Join2011/step3')}" method="POST">
+
+                <p>考生号{$stu.ksh}</p>
+                <br/>
+
+                <p>姓名{$stu.xm}</p>
+                <br/>
+
+                <p>生源地{$stu.xbmc}</p>
+                <br/>
+
+                <p>身份证号{$stu.xbmc}</p>
+                <br/>
+
+                <p>已录取专业{$stu.xbmc}</p>
+
+                <br/><br/>
+
+                <div class="form-group">
+                    <div class="controls">
+                        <label class="control-label">高考总分</label>
+
+                        <input class="form-control" type="text" placeholder="高考总分" name="score"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="controls">
+
+                        <label class="control-label">选测科目</label>
+                        <input class="form-control" type="text" placeholder="" name="jsscore"/> <span
+                            class="help-inline">选测科目等级（仅江苏考生填写）</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="controls">
+
+                        <label class="control-label">手机号码</label>
+                        <input class="form-control" type="text" placeholder="手机号码" name="phone"/>
+                    </div>
+                </div>
+
+
+                是否申请2011学院&nbsp;&nbsp;&nbsp;
+
+                <input type="radio" checked="checked"
+                       name="if2011" value="是"/>
+                <label
+                        >是</label>
+                <input type="radio"
+                       name="if2011" value="否"/><label
+                    >否</label>
+
+                <div class="form-actions" style="padding:30px 50px 40px 100px">
+
+                    <button type="submit" class="btn blue pull-right">提交</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button type="reset" id="back-btn" class="btn">重置</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+<include file="Public:foot"/>
+
+</body>
+</html>
+
+
+
+
+
+
+

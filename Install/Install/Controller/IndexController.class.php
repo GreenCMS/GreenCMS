@@ -10,7 +10,6 @@
 namespace Install\Controller;
 
 use Common\Util\File;
-use Common\Event\AccessEvent;
 
 
 /**
@@ -28,10 +27,10 @@ class IndexController extends \Think\Controller
         if (defined('SAE_TMP_PATH')) {
             $this->error("SAE平台不需要安装程序");
         }
-        $lockFile = WEB_ROOT . 'Data/Install/install.lock';
+        $lockFile = WEB_ROOT . 'Data/Install.lock';
 
         if (File::file_exists($lockFile)) {
-            $this->error(" 你已经安装过GreenCMS，如果想重新安装，请先删除站点Data/install目录下的 install.lock 文件，然后再安装。");
+            $this->error(" 你已经安装过GreenCMS，如果想重新安装，请先删除站点Data目录下的 install.lock 文件，然后再安装。");
         }
 
 
@@ -131,6 +130,7 @@ class IndexController extends \Think\Controller
         $db_name = $_POST["db_name"];
         $db_prefix = $_POST["db_prefix"];
 
+ 
 
         if ($_POST['admin_password'] != $_POST['admin_password2'] || trim($_POST['admin_password']) == '' || trim($_POST['admin_password2']) == '')
             $this->error("两次输入的密码不一致，请重新设定！，或者密码为空");
@@ -159,10 +159,12 @@ class IndexController extends \Think\Controller
         mysql_query("set names 'utf8'");
 
 
-        $file = WEB_ROOT . 'Data/Install/db_config_sample.php';
+        $file = WEB_ROOT . 'Install/Data/db_config_sample.php';
+
+
 
         if (!File::file_exists($file))
-            $this->error('Data/Install/db_config_sample.php文件不存在,请检查');
+            $this->error('Install/Data/db_config_sample.php文件不存在,请检查');
         $content = File::readFile($file);
 
         $content = str_replace("~dbhost~", $db_host, $content);
@@ -173,12 +175,14 @@ class IndexController extends \Think\Controller
         $content = str_replace("~dbprefix~", $db_prefix, $content);
 
         if (!File::writeFile(WEB_ROOT . 'db_config.php', $content, 'w+')) {
-            $this->error("数据库配置文件写入失败，请您手动根据Data/Install/db_config_sample.php文件在根目录创建文件");
+            $this->error("数据库配置文件写入失败，请您手动根据Install/Data/db_config_sample.php文件在根目录创建文件");
+        }else{
+            
         }
 
         File::makeDir(WEB_ROOT . 'Data/Cache');
 
-        $sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_empty.sql');
+        $sql_empty = File::readFile(WEB_ROOT . 'Install/Data/greencms_empty.sql');
         $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
         $file = WEB_ROOT . 'Data/Cache/greencms_sample.sql';
 
@@ -186,7 +190,7 @@ class IndexController extends \Think\Controller
         insertDB($file, $conn);
         File::delFile($file);
 
-        $sql_empty = File::readFile(WEB_ROOT . 'Data/Install/greencms_init.sql');
+        $sql_empty = File::readFile(WEB_ROOT . 'Install/Data/greencms_init.sql');
         $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
         $file2 = WEB_ROOT . 'Data/Cache/greencms_init_sample.sql';
 
@@ -235,18 +239,19 @@ class IndexController extends \Think\Controller
 
 
         //A('Install/Test')->init($key = 'zts');
+        
+        
+       // $Access = new AccessEvent();
+      //   $Access->initAdmin();
+       //  $Access->initWeixin();
 
-        $Access = new AccessEvent();
-        $Access->initAdmin();
-        $Access->initWeixin();
 
+       $site_url= get_opinion("site_url");
+       // File::delAll(WEB_ROOT . 'Install/Data');
 
-
-       // File::delAll(WEB_ROOT . 'Data/Install');
-
-        if (File::writeFile(WEB_ROOT . 'Data/Install/install.lock', 'installed', 'w+')) {
+        if (File::writeFile(WEB_ROOT . 'Data/Install.lock', 'installed', 'w+')) {
             C('URL_MODEL',3);
-            $this->success('GreenCMS安装成功,5秒钟返回首页', U('Home/Index/index'), 5);
+            $this->success('GreenCMS安装成功,5秒钟返回首页', $site_url , 5);
         }
 
     }

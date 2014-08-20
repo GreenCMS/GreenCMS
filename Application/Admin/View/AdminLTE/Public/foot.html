@@ -22,6 +22,40 @@
 
 
 <script>
+
+
+
+    function refreshWarningNum(selector1){
+        var num=$(selector1).find("li").length;
+        $("#warning_box_num").html(num);
+
+    }
+
+    $(document).ready(function () {
+
+
+        var url = '{:U("Admin/Index/checkTodo")}';
+
+        $.get(url, function (data) {
+
+
+            if (data != 'none') {
+                $('#warning_box').append(data);
+
+                refreshWarningNum('#warning_box');
+
+            } else {
+
+
+            }
+        });
+
+
+
+    });
+
+
+
     $(document).ready(function () {
 
 

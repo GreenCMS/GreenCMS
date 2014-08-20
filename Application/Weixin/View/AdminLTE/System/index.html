@@ -35,7 +35,7 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="box box-warning">
                         <div class="box-header">
                             <h3 class="box-title">{$action}</h3>
@@ -62,11 +62,11 @@
 
 
                                 <div class="form-group">
-                                    <label class="control-label">网站标题</label>
+                                    <label class="control-label">微信号名称</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="title"
-                                               value="{:get_opinion('title')}"/>
+                                        <input type="text" placeholder="" class="form-control large" name="weixin_title"
+                                               value="{:get_opinion('weixin_title')}"/>
                                         <span class="help-inline"></span>
                                     </div>
                                 </div>
@@ -108,8 +108,21 @@
 
                                     <div class="controls">
                                         <textarea style="height: 300px;" class="large form-control" rows="3"
-                                                  name="Weixin_menu">
-                                            {:C('Weixin_menu')}</textarea>
+                                                  name="Weixin_menu">{:C('Weixin_menu')}</textarea>
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <div class="form-group">
+                                    <label class="control-label">帮助信息</label>
+
+
+                                    <div class="controls">
+                                        <textarea style="height: 300px;" class="large form-control" rows="3"
+                                                  name="weixin_help">{:get_opinion('weixin_help')}</textarea>
                                     </div>
 
                                 </div>

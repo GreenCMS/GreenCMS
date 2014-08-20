@@ -354,6 +354,66 @@ class CustomController extends AdminBaseController
 
     }
 
+
+    public function pluginAdd()
+    {
+
+        $this->assign('action', '插件添加');
+        $this->assign('action_name', 'pluginAdd');
+
+
+        $this->display("pluginadd");
+    }
+
+
+    public function pluginAddLocal()
+    {
+
+        File::mkDir(WEB_CACHE_PATH);
+
+
+        $config = array(
+            'rootPath' => WEB_CACHE_PATH,
+            "savePath" => '',
+            "maxSize" => 100000000, // 单位B
+            "exts" => array('zip'),
+            "subName" => array(),
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
+
+            $file_path_full = $info['file']['fullpath'];
+
+            //dump($info);die($file_path_full);
+            if (File::file_exists($file_path_full)) {
+
+                $Update = new UpdateEvent();
+                $applyRes = $Update->applyPatch($file_path_full);
+                $applyInfo = json_decode($applyRes, true);
+
+                if ($applyInfo['status']) {
+                    $this->success($applyInfo['info'], U('Admin/Custom/plugin'));
+                } else {
+                    $this->error($applyInfo['info']);
+                }
+
+            } else {
+                $this->error('文件不存在');
+
+            }
+        }
+
+
+
+
+    }
+
+
+
     /**
      * 创建向导首页
      */

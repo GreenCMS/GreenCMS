@@ -16,6 +16,28 @@ namespace Common\Event;
  */
 class AccessEvent
 {
+
+    public function checkAccess()
+    {
+
+        $access_count = D("Access")->count();
+
+        if ($access_count) return true;
+        return false;
+
+    }
+
+
+    public function checkNode()
+    {
+
+        $node_count = D("Node")->count();
+
+        if ($node_count) return true;
+        return false;
+
+    }
+
     //测试型节点批量添加
     /**
      *
@@ -58,7 +80,7 @@ class AccessEvent
 
 
         $Controllers = array('IndexController', 'AccessController', 'CustomController', 'DataController'
-        , 'SystemController', 'MediaController', 'UeditorController', 'PostsController', 'ToolsController','AddonsController');
+        , 'SystemController', 'MediaController', 'UeditorController', 'PostsController', 'ToolsController', 'AddonsController');
 
         foreach ($Controllers as $value) {
             $data = array();
