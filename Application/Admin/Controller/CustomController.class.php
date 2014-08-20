@@ -104,19 +104,19 @@ class CustomController extends AdminBaseController
     {
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
 
-        $menu_list = $Menu->getList(null,0,'menu_sort'); // 获取分类结构
+        $menu_list = $Menu->getList(null, 0, 'menu_sort'); // 获取分类结构
         $this->assign('menu', $menu_list);
 
         $this->display();
     }
 
     //todo
-    public function menuInc($id){
+    public function menuInc($id)
+    {
         $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
         if (!$menu_item) {
             $this->error('不存在这个菜单项');
         }
-
 
 
         $map['menu_sort'] = array('GT', $menu_item['menu_sort']);
@@ -131,16 +131,17 @@ class CustomController extends AdminBaseController
         $res = $Menu->where($map)->setInc('menu_sort');
 
 
-        $menu_item['menu_sort']=$menu_item_target['menu_sort']+1;
+        $menu_item['menu_sort'] = $menu_item_target['menu_sort'] + 1;
 
-        $res=D('Menu')->data($menu_item)->save();
+        $res = D('Menu')->data($menu_item)->save();
 
 
         dump($res);
     }
 
     //todo
-    public function menuDec($id){
+    public function menuDec($id)
+    {
         $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
         if (!$menu_item) {
             $this->error('不存在这个菜单项');
@@ -293,8 +294,6 @@ class CustomController extends AdminBaseController
         $this->assign('menu_list3', gen_opinion_list($menu_list3, $menu_item['menu_sort']));
 
 
-
-
         $this->assign('menu', $menu_list);
         $this->assign('action', $action);
         $this->assign('action_url', $action_url);
@@ -408,10 +407,21 @@ class CustomController extends AdminBaseController
         }
 
 
-
-
     }
 
+
+    public function pluginDelHandle($plugin_name = '')
+    {
+
+        $plugin_path = Addon_PATH . $plugin_name . '/';
+
+        if (File::delAll($plugin_path, true)) {
+            $this->success('删除成功');
+        } else {
+            $this->error("删除失败");
+        }
+
+    }
 
 
     /**
