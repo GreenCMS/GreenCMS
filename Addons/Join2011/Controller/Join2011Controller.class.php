@@ -17,10 +17,10 @@ class Join2011Controller extends AddonsController
     {
         if (IS_POST) {
 
-            redirect(addons_url('Join2011://Join2011/step2'));
 
 
-            if (empty($_POST['ksh'])) $this->error("请填写考生号", U('Index'));
+
+            if (empty($_POST['ksh'])) $this->error("请填写考生号", addons_url('Join2011://Join2011/index'));
 
             $Stu = D('Stu');
 
@@ -29,15 +29,17 @@ class Join2011Controller extends AddonsController
             if ($Stu->where($contion)->find()) {
 
                 session('ksh', $_POST['ksh']);
-                redirect(U('Index/step2'));
+                redirect(addons_url('Join2011://Join2011/step2'));
 
             } else {
-                $this->error("您不在初选名单", U('Index'));
+                $this->error("您不在初选名单", addons_url('Join2011://Join2011/index'));
             }
 
 
         } else {
 
+
+            $this->assign("ksh", $_SESSION ['ksh']);
 
             $this->display(T('Addons://Join2011@Join2011/index'));
 
@@ -53,7 +55,8 @@ class Join2011Controller extends AddonsController
 
         $Stu = D('Stu');
         $contion['ksh'] = $_SESSION ['ksh'];
-      //  if ($Stu->where($contion)->find()) {
+
+         if ($Stu->where($contion)->find()) {
             $stu = $Stu->where($contion)->find();
 
             $this->assign('stu', $stu);
@@ -65,9 +68,11 @@ class Join2011Controller extends AddonsController
 
 
 
-        // } else {
-       //     $this->error("您不在初选名单", U('Home/Index/index'));
-      //  }
+         } else {
+
+
+         $this->error("您不在初选名单", addons_url('Join2011://Join2011/index'));
+        }
 
 
     }
@@ -76,7 +81,7 @@ class Join2011Controller extends AddonsController
     public function step3()
     {
         if (IS_POST) {
-            if ($_POST['if2011'] != '是') $this->error("您已放弃报名", U('Index'));
+            if ($_POST['if2011'] != '是') $this->error("您已放弃报名", addons_url('Join2011://Join2011/index'));
 
             //print_array($_POST);
 
@@ -88,18 +93,17 @@ class Join2011Controller extends AddonsController
 
             if ($Bmb->data($data)->add()) {
                 session('ksh', '');
-                $this->success('报名成功', U('Index'));
+                $this->success('报名成功',U('Home/Index/index'));
 
             } else {
-                session('ksh', '');
-                $this->error("报名失败，请重新报名", U('Index'));
+                 $this->error("报名失败，请重新报名", addons_url('Join2011://Join2011/index'));
 
             }
 
 
         } else {
 
-            $this->error("您不可以直接访问这个页面", U('Index'));
+            $this->error("您不可以直接访问这个页面", addons_url('Join2011://Join2011/index'));
 
         }
 
