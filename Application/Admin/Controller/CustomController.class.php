@@ -741,7 +741,7 @@ str;
         $config = I('config');
         $flag = M('Addons')->where("id={$id}")->setField('config', json_encode($config));
         if ($flag !== false) {
-            $this->success('保存成功', Cookie('__forward__'));
+            $this->success('保存成功', U("Admin/Custom/plugin"));
         } else {
             $this->error('保存失败');
         }

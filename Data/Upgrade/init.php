@@ -151,3 +151,36 @@ function upgrade_20140706_to_20140726()
 
 
 }
+
+
+
+function upgrade_20140819_to_20140822()
+{
+    $db_prefix = C('db_prefix');
+
+    $Model = new \Think\Model();
+    $sql = "DROP TABLE IF EXISTS `{$db_prefix}plugin`";
+    $Model->query($sql);
+
+    $Model = new \Think\Model();
+
+
+    $sql = "CREATE TABLE `{$db_prefix}plugin` (
+  `plugin_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_status` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `plugin_title` char(20) NOT NULL,
+  `plugin_description` text NOT NULL,
+  `plugin_author` char(20) NOT NULL,
+  `plugin_copyright` char(50) NOT NULL,
+  `plugin_pubdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`plugin_id`),
+  KEY `status` (`plugin_status`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='插件信息表';";
+
+    $Model->query($sql);
+
+
+
+
+
+}
