@@ -44,7 +44,7 @@ class Join2011Addon extends Addon
     //实现的adminSideBar钩子方法
     public function adminSideBar($param)
     {
-        echo '<li><a href="'. addons_url('Join2011://Join2011admin/manage') .'"><i class="fa fa-angle-double-right"></i>加入2011</a></li>';
+        echo '<li><a href="'. get_addon_url("Join2011/Join2011Admin/index",array(),"Admin").'"><i class="fa fa-angle-double-right"></i>加入2011</a></li>';
     }
 
 

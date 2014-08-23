@@ -144,4 +144,27 @@ abstract class BaseController extends Controller {
 
 
 
+
+    protected  function anonymousPlugin($_addons = null, $_controller = null, $_action = null) {
+
+        if ($_action == null) {
+            return false;
+        }
+
+        if (C('URL_CASE_INSENSITIVE')) {
+            $_addons     = ucfirst(parse_name($_addons, 1));
+            $_controller = parse_name($_controller, 1);
+        }
+
+        if (!empty($_addons) && !empty($_controller) && !empty($_action)) {
+
+            $Addons = A("Addons://{$_addons}/{$_controller}")->$_action();
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
 }

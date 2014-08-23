@@ -91,11 +91,14 @@ class Join2011Controller extends AddonsController {
 			$data['phone']   = $_POST['phone'];
 
 			if ($Stu->where(array('ksh' => $_SESSION['ksh']))->find()) {
-
 			} else {
-
 				$this->error("您不在初选名单", addons_url('Join2011://Join2011/index'));
 			}
+
+            if ($Bmb->where(array('ksh' => $_SESSION['ksh']))->find()) {
+                $this->error("您已经报名", addons_url('Join2011://Join2011/index'));
+            }
+
 
 			if ($Bmb->data($data)->add()) {
 				session('ksh', '');
@@ -104,8 +107,7 @@ class Join2011Controller extends AddonsController {
 
 			} else {
 
-				echo $Bmb->getlastsql();
-				die();
+
 				$this->error("报名失败，请重新报名", addons_url('Join2011://Join2011/index'));
 
 			}
