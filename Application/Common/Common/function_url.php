@@ -228,16 +228,25 @@ function get_channel_url($cat, $group = '') {
 }
 
 /**
- * 获取频道链接
- * @param $cat
+ * 获取插件链接
+ * @param $url
+ * @param array $param
  * @param string $group
+ * @internal param $cat
  * @return mixed|string
  */
 function get_addon_url($url, $param = array(), $group = 'Home') {
+
+    $URL_HTML_SUFFIX=  C( 'URL_HTML_SUFFIX');
+    C( 'URL_HTML_SUFFIX','');
 
 	$url_arr = preg_split('/\//', $url);
 
 	$param['action'] = $url_arr[2];
 
-	return U($group.'/'.$url_arr[0].'/'.$url_arr[1], $param);
+    $url=U($group.'/'.$url_arr[0].'/'.$url_arr[1], $param);
+
+    C( 'URL_HTML_SUFFIX',$URL_HTML_SUFFIX);
+
+    return $url;
 }

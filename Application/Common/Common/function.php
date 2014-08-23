@@ -373,6 +373,10 @@ function get_addon_config($name)
  */
 function addons_url($url, $param = array())
 {
+
+   $URL_HTML_SUFFIX= C( 'URL_HTML_SUFFIX');
+    C( 'URL_HTML_SUFFIX','');
+
     $url = parse_url($url);
 
     $case = C('URL_CASE_INSENSITIVE');
@@ -393,6 +397,7 @@ function addons_url($url, $param = array())
         '_action' => $action,
     );
     $params = array_merge($params, $param); //添加额外参数
+
 
     return U('Addons/execute', $params);
 }
