@@ -1,0 +1,925 @@
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../../share/fonts/fontawesome/fontawesome-webfont.eot?v=4.0.3');
+    src: url('../../share/fonts/fontawesome/fontawesome-webfont.eot?#iefix&v=4.0.3') format('embedded-opentype'),
+    url('../../share/fonts/fontawesome/fontawesome-webfont.woff?v=4.0.3') format('woff'),
+    url('../../share/fonts/fontawesome/fontawesome-webfont.ttf?v=4.0.3') format('truetype'),
+    url('../../share/fonts/fontawesome/fontawesome-webfont.svg?v=4.0.3#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#gcsadminbar * {
+
+
+    height: auto;
+    width: auto;
+
+    margin: 0;
+    padding: 0;
+    position: static;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    font: 400 13px/32px "FontAwesome", "Open Sans", sans-serif ;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-transition: none;
+    transition: none;
+    -webkit-font-smoothing: subpixel-antialiased
+}
+
+.rtl #gcsadminbar * {
+    font-family: Tahoma, sans-serif
+}
+
+html:lang(he-il) .rtl #gcsadminbar * {
+    font-family: Arial, sans-serif
+}
+
+#gcsadminbar a.ab-item, #gcsadminbar > #gcs-toolbar span.ab-label, #gcsadminbar > #gcs-toolbar span.noticon {
+    color: #eee
+}
+
+#gcsadminbar #gcs-admin-bar-my-sites a.ab-item, #gcsadminbar #gcs-admin-bar-site-name a.ab-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+#gcsadminbar ul li:after, #gcsadminbar ul li:before {
+    content: normal
+}
+
+#gcsadminbar a, #gcsadminbar a img, #gcsadminbar a img:hover, #gcsadminbar a:hover {
+    outline: 0;
+    border: 0;
+    text-decoration: none;
+    background: 0 0
+}
+
+#gcsadminbar a:active, #gcsadminbar a:focus, #gcsadminbar div, #gcsadminbar input[type=email], #gcsadminbar input[type=number], #gcsadminbar input[type=password], #gcsadminbar input[type=search], #gcsadminbar input[type=text], #gcsadminbar input[type=url], #gcsadminbar select, #gcsadminbar textarea {
+    outline: 0
+}
+
+#gcsadminbar {
+    direction: ltr;
+    color: #ccc;
+    font: 400 13px/32px "FontAwesome", "Open Sans", sans-serif;
+    height: 32px;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-width: 600px;
+    z-index: 99999;
+    background: #222
+}
+
+#gcsadminbar .ab-sub-wrapper, #gcsadminbar ul, #gcsadminbar ul li {
+    background: 0 0;
+    clear: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    text-indent: 0;
+    z-index: 99999
+}
+
+#gcsadminbar ul#gcs-admin-bar-root-default > li {
+    margin-right: 0
+}
+
+#gcsadminbar .quicklinks {
+    border-left: 1px solid transparent
+}
+
+#gcsadminbar .quicklinks ul {
+    text-align: left
+}
+
+#gcsadminbar li {
+    float: left
+}
+
+#gcsadminbar .ab-empty-item {
+    outline: 0
+}
+
+#gcsadminbar .quicklinks .ab-top-secondary > li {
+    float: right
+}
+
+#gcsadminbar .quicklinks .ab-empty-item, #gcsadminbar .quicklinks a, #gcsadminbar .shortlink-input {
+    height: 32px;
+    display: block;
+    padding: 0 10px;
+    margin: 0
+}
+
+#gcsadminbar .quicklinks > ul > li > a {
+    padding: 0 8px 0 7px
+}
+
+#gcsadminbar .menupop .ab-sub-wrapper, #gcsadminbar .shortlink-input {
+    margin: 0;
+    padding: 0;
+    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .2);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .2);
+    background: #333;
+    display: none;
+    position: absolute;
+    float: none
+}
+
+#gcsadminbar.ie7 .menupop .ab-sub-wrapper, #gcsadminbar.ie7 .shortlink-input {
+    top: 32px;
+    left: 0
+}
+
+#gcsadminbar .ab-top-menu > .menupop > .ab-sub-wrapper {
+    min-width: 100%
+}
+
+#gcsadminbar .ab-top-secondary .menupop .ab-sub-wrapper {
+    right: 0;
+    left: auto
+}
+
+#gcsadminbar .ab-submenu {
+    padding: 6px 0
+}
+
+#gcsadminbar .selected .shortlink-input {
+    display: block
+}
+
+#gcsadminbar .quicklinks .menupop ul li {
+    float: none
+}
+
+#gcsadminbar .quicklinks .menupop ul li a strong {
+    font-weight: 700
+}
+
+#gcsadminbar .quicklinks .menupop ul li .ab-item, #gcsadminbar .quicklinks .menupop ul li a strong, #gcsadminbar .quicklinks .menupop.hover ul li .ab-item, #gcsadminbar .shortlink-input, #gcsadminbar.nojs .quicklinks .menupop:hover ul li .ab-item {
+    line-height: 26px;
+    height: 26px;
+    white-space: nowrap;
+    min-width: 140px
+}
+
+#gcsadminbar .shortlink-input {
+    width: 200px
+}
+
+#gcsadminbar li.hover > .ab-sub-wrapper, #gcsadminbar.nojs li:hover > .ab-sub-wrapper {
+    display: block
+}
+
+#gcsadminbar .menupop li.hover > .ab-sub-wrapper, #gcsadminbar .menupop li:hover > .ab-sub-wrapper {
+    margin-left: 100%;
+    margin-top: -32px
+}
+
+#gcsadminbar .ab-top-secondary .menupop li.hover > .ab-sub-wrapper, #gcsadminbar .ab-top-secondary .menupop li:hover > .ab-sub-wrapper {
+    margin-left: 0;
+    left: inherit;
+    right: 100%
+}
+
+#gcsadminbar .ab-top-menu > li.hover > .ab-item, #gcsadminbar .ab-top-menu > li:hover > .ab-item, #gcsadminbar .ab-top-menu > li > .ab-item:focus, #gcsadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus {
+    background: #333;
+    color: #2ea2cc
+}
+
+#gcsadminbar > #gcs-toolbar a:focus span.ab-label, #gcsadminbar > #gcs-toolbar li.hover span.ab-label, #gcsadminbar > #gcs-toolbar li:hover span.ab-label {
+    color: #2ea2cc
+}
+
+#gcsadminbar .ab-icon, #gcsadminbar .ab-item:before, #gcsadminbar > #gcs-toolbar > #gcs-admin-bar-root-default .ab-icon {
+    position: relative;
+    float: left;
+    font: 400 20px/1 "FontAwesome";
+    speak: none;
+    padding: 4px 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: none !important;
+    margin-right: 6px
+}
+
+#gcsadminbar #adminbarsearch:before, #gcsadminbar .ab-icon:before, #gcsadminbar .ab-item:before {
+    color: #999;
+    position: relative;
+    -webkit-transition: all .1s ease-in-out;
+    transition: all .1s ease-in-out
+}
+
+#gcsadminbar .ab-label {
+    display: inline-block;
+    height: 32px
+}
+
+#gcsadminbar .ab-submenu .ab-item, #gcsadminbar .quicklinks .menupop ul li a, #gcsadminbar .quicklinks .menupop ul li a strong, #gcsadminbar .quicklinks .menupop.hover ul li a, #gcsadminbar.nojs .quicklinks .menupop:hover ul li a {
+    color: #eee
+}
+
+#gcsadminbar .quicklinks .menupop ul li a:focus, #gcsadminbar .quicklinks .menupop ul li a:focus strong, #gcsadminbar .quicklinks .menupop ul li a:hover, #gcsadminbar .quicklinks .menupop ul li a:hover strong, #gcsadminbar .quicklinks .menupop.hover ul li a:focus, #gcsadminbar .quicklinks .menupop.hover ul li a:hover, #gcsadminbar li .ab-item:focus:before, #gcsadminbar li a:focus .ab-icon:before, #gcsadminbar li.hover .ab-icon:before, #gcsadminbar li.hover .ab-item:before, #gcsadminbar li:hover #adminbarsearch:before, #gcsadminbar li:hover .ab-icon:before, #gcsadminbar li:hover .ab-item:before, #gcsadminbar.nojs .quicklinks .menupop:hover ul li a:focus, #gcsadminbar.nojs .quicklinks .menupop:hover ul li a:hover {
+    color: #2ea2cc
+}
+
+#gcsadminbar .ab-top-secondary .menupop .menupop > .ab-item:before, #gcsadminbar .menupop .menupop > .ab-item:before {
+    position: absolute;
+    font: 400 17px/1 "FontAwesome";
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+#gcsadminbar .menupop .menupop > .ab-item {
+    display: block;
+    padding-right: 2em
+}
+
+#gcsadminbar .menupop .menupop > .ab-item:before {
+    top: 1px;
+    right: 4px;
+    content: '\f139';
+    color: inherit
+}
+
+#gcsadminbar .ab-top-secondary .menupop .menupop > .ab-item {
+    padding-left: 2em;
+    padding-right: 1em
+}
+
+#gcsadminbar .ab-top-secondary .menupop .menupop > .ab-item:before {
+    top: 5px;
+    left: 3px;
+    content: '\f141'
+}
+
+#gcsadminbar .quicklinks .menupop ul.ab-sub-secondary {
+    display: block;
+    position: relative;
+    right: auto;
+    margin: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+#gcsadminbar .quicklinks .menupop ul.ab-sub-secondary, #gcsadminbar .quicklinks .menupop ul.ab-sub-secondary .ab-submenu {
+    background: #4b4b4b
+}
+
+#gcsadminbar .quicklinks .menupop .ab-sub-secondary > li .ab-item:focus a, #gcsadminbar .quicklinks .menupop .ab-sub-secondary > li > a:hover {
+    color: #2ea2cc
+}
+
+#gcsadminbar .quicklinks a span#ab-updates {
+    background: #eee;
+    color: #333;
+    display: inline;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    -webkit-border-radius: 10px;
+    border-radius: 10px
+}
+
+#gcsadminbar .quicklinks a:hover span#ab-updates {
+    background: #fff;
+    color: #000
+}
+
+#gcsadminbar .ab-top-secondary {
+    float: right
+}
+
+#gcsadminbar ul li:last-child, #gcsadminbar ul li:last-child .ab-item {
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+#gcs-admin-bar-my-account > ul {
+    min-width: 198px
+}
+
+#gcs-admin-bar-my-account > .ab-item:before {
+    content: "\f110";
+    top: 2px;
+    float: right;
+    margin-left: 6px;
+    margin-right: 0
+}
+
+#gcs-admin-bar-my-account.with-avatar > .ab-item:before {
+    display: none;
+    content: none
+}
+
+#gcs-admin-bar-my-account.with-avatar > ul {
+    min-width: 270px
+}
+
+#gcsadminbar #gcs-admin-bar-user-actions > li {
+    margin-left: 16px;
+    margin-right: 16px
+}
+
+#gcsadminbar #gcs-admin-bar-user-actions.ab-submenu {
+    padding: 6px 0 12px
+}
+
+#gcsadminbar #gcs-admin-bar-my-account.with-avatar #gcs-admin-bar-user-actions > li {
+    margin-left: 88px
+}
+
+#gcsadminbar #gcs-admin-bar-user-info {
+    margin-top: 6px;
+    margin-bottom: 15px;
+    height: auto;
+    background: 0 0
+}
+
+#gcs-admin-bar-user-info .avatar {
+    position: absolute;
+    left: -72px;
+    top: 4px;
+    width: 64px;
+    height: 64px
+}
+
+#gcsadminbar #gcs-admin-bar-user-info a {
+    background: 0 0;
+    height: auto
+}
+
+#gcsadminbar #gcs-admin-bar-user-info span {
+    background: 0 0;
+    padding: 0;
+    height: 18px
+}
+
+#gcsadminbar #gcs-admin-bar-user-info .display-name, #gcsadminbar #gcs-admin-bar-user-info .username {
+    display: block
+}
+
+#gcsadminbar #gcs-admin-bar-user-info .username {
+    color: #999;
+    font-size: 11px
+}
+
+#gcsadminbar .quicklinks li#gcs-admin-bar-my-account.with-avatar > a img {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 1px solid #888;
+    background: #eee;
+    line-height: 24px;
+    vertical-align: middle;
+    margin: -4px 0 0 6px;
+    float: none;
+    display: inline
+}
+
+#gcsadminbar #gcs-admin-bar-gcs-logo > .ab-item .ab-icon {
+    width: 15px;
+    height: 20px;
+    margin-right: 0;
+    padding: 6px 0 5px
+}
+
+#gcsadminbar #gcs-admin-bar-gcs-logo > .ab-item {
+    padding: 0 7px
+}
+
+#gcsadminbar #gcs-admin-bar-gcs-logo > .ab-item .ab-icon:before {
+    content: "\f09b";
+    top: 2px
+}
+
+#gcsadminbar .quicklinks li .blavatar {
+    float: left;
+    font: 400 16px/1 "FontAwesome" !important;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #eee
+}
+
+#gcsadminbar .quicklinks li a:hover .blavatar {
+    color: #2ea2cc
+}
+
+#gcsadminbar .quicklinks li .blavatar:before {
+    content: '\f120';
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    margin: 6px 8px 0 -2px
+}
+
+#gcsadminbar #gcs-admin-bar-appearance {
+    margin-top: -12px
+}
+
+#gcsadminbar #gcs-admin-bar-my-sites > .ab-item:before, #gcsadminbar #gcs-admin-bar-site-name > .ab-item:before {
+    content: '\f112';
+    top: 2px
+}
+
+#gcsadminbar #gcs-admin-bar-edit > .ab-item:before {
+    content: '\f464';
+    top: 2px
+}
+
+#gcsadminbar #gcs-admin-bar-site-name > .ab-item:before {
+    content: "\f101"
+}
+
+#gcsadminbar #gcs-admin-bar-comments .ab-icon {
+    margin-right: 6px
+}
+
+#gcsadminbar #gcs-admin-bar-comments .ab-icon:before {
+    content: '\f101';
+    top: 3px
+}
+
+#gcsadminbar #gcs-admin-bar-comments .count-0 {
+    opacity: .5
+}
+
+#gcsadminbar #gcs-admin-bar-new-content .ab-icon:before {
+    content: "\f067";
+    top: 4px
+}
+
+#gcsadminbar #gcs-admin-bar-updates .ab-icon:before {
+    content: '\f463';
+    top: 2px
+}
+
+#gcsadminbar #gcs-admin-bar-search .ab-item {
+    padding: 0;
+    background: 0 0
+}
+
+#gcsadminbar #adminbarsearch {
+    position: relative;
+    height: 32px;
+    padding: 0 2px
+}
+
+#gcsadminbar #adminbarsearch:before {
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    z-index: 20;
+    font: 400 20px/1 "FontAwesome" !important;
+    content: '\f179';
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+#gcsadminbar > #gcs-toolbar > #gcs-admin-bar-top-secondary > #gcs-admin-bar-search #adminbarsearch input.adminbar-input {
+    position: relative;
+    z-index: 30;
+    font: 13px/24px "Open Sans", sans-serif;
+    height: 24px;
+    width: 24px;
+    padding: 0 3px 0 24px;
+    margin: 0;
+    color: #ccc;
+    background-color: rgba(255, 255, 255, 0);
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-duration: 400ms;
+    transition-duration: 400ms;
+    -webkit-transition-property: width, background;
+    transition-property: width, background;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease
+}
+
+#gcsadminbar > #gcs-toolbar > #gcs-admin-bar-top-secondary > #gcs-admin-bar-search #adminbarsearch input.adminbar-input:focus {
+    z-index: 10;
+    color: #000;
+    width: 200px;
+    background-color: rgba(255, 255, 255, .9);
+    cursor: text;
+    border: 0
+}
+
+#gcsadminbar.ie7 > #gcs-toolbar > #gcs-admin-bar-top-secondary > #gcs-admin-bar-search #adminbarsearch input.adminbar-input {
+    margin-top: 3px;
+    width: 120px
+}
+
+#gcsadminbar.ie8 > #gcs-toolbar > #gcs-admin-bar-top-secondary > #gcs-admin-bar-search #adminbarsearch input.adminbar-input {
+    margin-top: 4px;
+    background-color: #464646
+}
+
+#gcsadminbar.ie8 > #gcs-toolbar > #gcs-admin-bar-top-secondary > #gcs-admin-bar-search #adminbarsearch input.adminbar-input:focus {
+    background-color: #fff
+}
+
+#gcsadminbar #adminbarsearch .adminbar-input::-webkit-input-placeholder {
+    color: #999
+}
+
+#gcsadminbar #adminbarsearch .adminbar-input:-moz-placeholder {
+    color: #999
+}
+
+#gcsadminbar #adminbarsearch .adminbar-input::-moz-placeholder {
+    color: #999
+}
+
+#gcsadminbar #adminbarsearch .adminbar-input:-ms-input-placeholder {
+    color: #999
+}
+
+#gcsadminbar #adminbarsearch .adminbar-button, .customize-support .hide-if-customize, .customize-support .gcs-core-ui .hide-if-customize, .customize-support.gcs-core-ui .hide-if-customize, .no-customize-support .hide-if-no-customize, .no-customize-support .gcs-core-ui .hide-if-no-customize, .no-customize-support.gcs-core-ui .hide-if-no-customize {
+    display: none
+}
+
+#gcsadminbar .screen-reader-text, #gcsadminbar .screen-reader-text span {
+    position: absolute;
+    left: -1000em;
+    top: -1000em;
+    height: 1px;
+    width: 1px;
+    overflow: hidden
+}
+
+#gcsadminbar .screen-reader-shortcut {
+    position: absolute;
+    top: -1000em
+}
+
+#gcsadminbar .screen-reader-shortcut:focus {
+    left: 6px;
+    top: 7px;
+    height: auto;
+    width: auto;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 15px 23px 14px;
+    background: #f1f1f1;
+    color: #21759b;
+    z-index: 100000;
+    line-height: normal;
+    text-decoration: none;
+    -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, .6);
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, .6)
+}
+
+* html #gcsadminbar {
+    overflow: hidden;
+    position: absolute
+}
+
+* html #gcsadminbar .quicklinks ul li a {
+    float: left
+}
+
+* html #gcsadminbar .menupop a span {
+    background-image: none
+}
+
+.no-font-face #gcsadminbar ul.ab-top-menu > li > a.ab-item {
+    display: block;
+    width: 45px;
+    text-align: center;
+    overflow: hidden;
+    margin: 0 3px
+}
+
+.no-font-face #gcsadminbar #gcs-admin-bar-edit > .ab-item, .no-font-face #gcsadminbar #gcs-admin-bar-my-sites > .ab-item, .no-font-face #gcsadminbar #gcs-admin-bar-site-name > .ab-item {
+    text-indent: 0
+}
+
+.no-font-face #gcsadminbar #gcs-admin-bar-gcs-logo > .ab-item, .no-font-face #gcsadminbar .ab-icon, .no-font-face #gcsadminbar .ab-icon:before, .no-font-face #gcsadminbar a.ab-item:before {
+    display: none !important
+}
+
+.no-font-face #gcsadminbar ul.ab-top-menu > li > a > span.ab-label {
+    display: inline
+}
+
+.no-font-face #gcsadminbar #gcs-admin-bar-menu-toggle span.ab-icon {
+    display: inline !important
+}
+
+.no-font-face #gcsadminbar #gcs-admin-bar-menu-toggle span.ab-icon:before {
+    content: "Menu";
+    font: 14px/45px sans-serif !important;
+    display: inline-block !important;
+    color: #fff
+}
+
+.no-font-face #gcsadminbar #gcs-admin-bar-site-name a.ab-item {
+    color: #fff
+}
+
+@media screen and (max-width: 782px) {
+    html #gcsadminbar {
+        left: 0 !important;
+        z-index: 500 !important;
+        height: 46px;
+        min-width: 300px
+    }
+
+    #gcsadminbar * {
+        font: 400 14px/32px "Open Sans", sans-serif
+    }
+
+    #gcsadminbar .quicklinks .ab-empty-item, #gcsadminbar .quicklinks > ul > li > a {
+        padding: 0;
+        height: 46px;
+        line-height: 46px;
+        width: auto
+    }
+
+    #gcsadminbar .ab-icon {
+        font: 40px/1 "FontAwesome" !important;
+        margin: 0;
+        width: 52px;
+        height: 46px;
+        text-align: center
+    }
+
+    #gcsadminbar .ab-icon:before {
+        text-align: center
+    }
+
+    #gcsadminbar .ab-submenu {
+        padding: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-my-account a.ab-item, #gcsadminbar #gcs-admin-bar-my-sites a.ab-item, #gcsadminbar #gcs-admin-bar-site-name a.ab-item {
+        text-overflow: clip
+    }
+
+    #gcsadminbar .ab-label {
+        display: none
+    }
+
+    #gcsadminbar .menupop li.hover > .ab-sub-wrapper, #gcsadminbar .menupop li:hover > .ab-sub-wrapper {
+        margin-top: -46px
+    }
+
+    #gcsadminbar .ab-top-menu .menupop .ab-sub-wrapper .menupop > .ab-item {
+        padding-right: 30px
+    }
+
+    #gcsadminbar .menupop .menupop > .ab-item:before {
+        top: 10px;
+        right: 6px
+    }
+
+    #gcsadminbar .ab-top-menu > .menupop > .ab-sub-wrapper .ab-item {
+        font-size: 16px;
+        padding: 6px 15px 12px
+    }
+
+    #gcsadminbar .ab-top-menu > .menupop > .ab-sub-wrapper a:empty {
+        display: none
+    }
+
+    #gcsadminbar #gcs-admin-bar-gcs-logo > .ab-item {
+        padding: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-gcs-logo > .ab-item .ab-icon {
+        padding: 0;
+        width: 52px;
+        height: 46px;
+        text-align: center;
+        vertical-align: top
+    }
+
+    #gcsadminbar #gcs-admin-bar-gcs-logo > .ab-item .ab-icon:before {
+        font: 28px/1 "FontAwesome" !important;
+        top: -3px
+    }
+
+    #gcsadminbar #gcs-admin-bar-edit > .ab-item, #gcsadminbar #gcs-admin-bar-my-account > .ab-item, #gcsadminbar #gcs-admin-bar-my-sites > .ab-item, #gcsadminbar #gcs-admin-bar-site-name > .ab-item {
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 52px;
+        padding: 0;
+        color: #999;
+        position: relative
+    }
+
+    #gcsadminbar .ab-icon, #gcsadminbar .ab-item:before, #gcsadminbar > #gcs-toolbar > #gcs-admin-bar-root-default .ab-icon {
+        padding: 0;
+        margin-right: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-edit > .ab-item:before, #gcsadminbar #gcs-admin-bar-my-account > .ab-item:before, #gcsadminbar #gcs-admin-bar-my-sites > .ab-item:before, #gcsadminbar #gcs-admin-bar-site-name > .ab-item:before {
+        display: block;
+        text-indent: 0;
+        font: 400 32px/1 "FontAwesome";
+        speak: none;
+        top: 7px;
+        width: 52px;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale
+    }
+
+    #gcsadminbar #gcs-admin-bar-appearance {
+        margin-top: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-search, #gcsadminbar .quicklinks li .blavatar:before {
+        display: none
+    }
+
+    #gcsadminbar #gcs-admin-bar-new-content .ab-icon:before {
+        top: 0;
+        line-height: 53px;
+        height: 46px !important;
+        text-align: center;
+        width: 52px;
+        display: block
+    }
+
+    #gcsadminbar #gcs-admin-bar-updates {
+        text-align: center
+    }
+
+    #gcsadminbar #gcs-admin-bar-updates .ab-icon:before {
+        top: 3px
+    }
+
+    #gcsadminbar #gcs-admin-bar-comments .ab-icon {
+        margin: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-comments .ab-icon:before {
+        display: block;
+        font-size: 34px;
+        height: 46px;
+        line-height: 47px;
+        top: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-my-account > a {
+        position: relative;
+        white-space: nowrap;
+        text-indent: 150%;
+        width: 28px;
+        padding: 0 10px;
+        overflow: hidden
+    }
+
+    #gcsadminbar .quicklinks li#gcs-admin-bar-my-account.with-avatar > a img {
+        position: absolute;
+        top: 13px;
+        right: 10px;
+        width: 26px;
+        height: 26px
+    }
+
+    #gcsadminbar #gcs-admin-bar-user-actions.ab-submenu {
+        padding: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-user-actions.ab-submenu img.avatar {
+        display: none
+    }
+
+    #gcsadminbar #gcs-admin-bar-my-account.with-avatar #gcs-admin-bar-user-actions > li {
+        margin: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-user-info .display-name {
+        height: auto;
+        font-size: 16px;
+        line-height: 24px;
+        color: #eee
+    }
+
+    #gcsadminbar #gcs-admin-bar-user-info a {
+        padding-top: 4px
+    }
+
+    #gcsadminbar #gcs-admin-bar-user-info .username {
+        line-height: .8 !important;
+        margin-bottom: -2px
+    }
+
+    #gcs-toolbar > ul > li {
+        display: none
+    }
+
+    #gcsadminbar li#gcs-admin-bar-comments, #gcsadminbar li#gcs-admin-bar-edit, #gcsadminbar li#gcs-admin-bar-menu-toggle, #gcsadminbar li#gcs-admin-bar-my-account, #gcsadminbar li#gcs-admin-bar-my-sites, #gcsadminbar li#gcs-admin-bar-new-content, #gcsadminbar li#gcs-admin-bar-site-name, #gcsadminbar li#gcs-admin-bar-updates, #gcsadminbar li#gcs-admin-bar-gcs-logo {
+        display: block
+    }
+
+    #gcsadminbar li.hover ul li, #gcsadminbar li:hover ul li, #gcsadminbar li:hover ul li:hover ul li {
+        display: list-item
+    }
+
+    #gcsadminbar .ab-top-menu > .menupop > .ab-sub-wrapper {
+        min-width: -webkit-fit-content;
+        min-width: -moz-fit-content;
+        min-width: fit-content
+    }
+
+    #gcsadminbar ul#gcs-admin-bar-root-default > li {
+        margin-right: 0
+    }
+
+    #gcsadminbar #gcs-admin-bar-comments, #gcsadminbar #gcs-admin-bar-edit, #gcsadminbar #gcs-admin-bar-my-account, #gcsadminbar #gcs-admin-bar-my-sites, #gcsadminbar #gcs-admin-bar-new-content, #gcsadminbar #gcs-admin-bar-site-name, #gcsadminbar #gcs-admin-bar-updates, #gcsadminbar #gcs-admin-bar-gcs-logo, #gcsadminbar .ab-top-menu, #gcsadminbar .ab-top-secondary {
+        position: static
+    }
+
+    #gcsadminbar #gcs-admin-bar-my-account {
+        float: right
+    }
+
+    .network-admin #gcsadminbar ul#gcs-admin-bar-top-secondary > li#gcs-admin-bar-my-account {
+        margin-right: 0
+    }
+
+    #gcsadminbar .ab-top-secondary .menupop .menupop > .ab-item:before {
+        top: 10px;
+        left: 0
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #gcsadminbar {
+        position: absolute
+    }
+
+    #gcs-responsive-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 400
+    }
+
+    #gcsadminbar .ab-top-menu > .menupop > .ab-sub-wrapper {
+        position: fixed;
+        width: 100%;
+        left: 0
+    }
+
+    #gcsadminbar .menupop .menupop > .ab-item:before {
+        display: none
+    }
+
+    #gcsadminbar #gcs-admin-bar-gcs-logo.menupop .ab-sub-wrapper {
+        margin-left: 0
+    }
+
+    #gcsadminbar .ab-top-menu > .menupop li > .ab-sub-wrapper {
+        margin: 0;
+        width: 100%;
+        top: auto;
+        left: auto
+    }
+
+    #gcsadminbar .ab-top-menu > .menupop li > .ab-sub-wrapper .ab-item {
+        font-size: 16px;
+        padding: 6px 15px 19px 30px
+    }
+
+    #gcsadminbar li:hover ul li ul li {
+        display: list-item
+    }
+
+    #gcsadminbar li#gcs-admin-bar-updates, #gcsadminbar li#gcs-admin-bar-gcs-logo {
+        display: none
+    }
+
+    #gcsadminbar .ab-top-menu > .menupop li > .ab-sub-wrapper {
+        position: static;
+        -webkit-box-shadow: none;
+        box-shadow: none
+    }
+}

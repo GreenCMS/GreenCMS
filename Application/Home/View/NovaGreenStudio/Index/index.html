@@ -19,9 +19,13 @@
 
     <include file="Public:head"/>
 
+    {:hook('pageHeader', "")}
+
 </head>
 
 <body>
+{:hook('userHeader', "")}
+
 
 {:W('Widget/menuHead')}
 
@@ -388,5 +392,9 @@
     });
 </script>
 <!-- /SL Slider -->
+
+
+{:hook('pageFooter', "")}
+
 </body>
 </html>

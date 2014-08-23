@@ -167,4 +167,15 @@ abstract class BaseController extends Controller {
     }
 
 
+
+    /**
+     *
+     */
+    protected function _currentUser()
+    {
+        $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $user = D('User', 'Logic')->cache(true)->detail($user_id);
+        $this->assign('user', $user);
+    }
+
 }
