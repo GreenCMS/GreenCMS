@@ -18,10 +18,12 @@
     <meta name="viewport" content="width=device-width">
 
     <include file="Public:head"/>
+    {:hook('pageHeader', "")}
 
 </head>
 
 <body>
+{:hook('userHeader', "")}
 {:W('Widget/menuHead')}
 
 <section class="container">
@@ -34,6 +36,7 @@
 <include file="Public:footer"/>
 
 <include file="Public:foot"/>
+{:hook('pageFooter', "")}
 
 </body>
 </html>
