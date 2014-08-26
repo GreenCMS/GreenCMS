@@ -312,7 +312,7 @@ CREATE TABLE `{$db_prefix}plugin` (
   `plugin_pubdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`plugin_id`),
   KEY `status` (`plugin_status`)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='插件信息表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='插件信息表';
 
 -- ----------------------------
 -- Records of green_plugin

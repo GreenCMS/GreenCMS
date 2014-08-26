@@ -87,15 +87,6 @@ namespace Weixin\Controller;
 
     }
 
-     /**
-      *
-      */
-     private function _currentUser()
-    {
-        $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
-        $user = D('User', 'Logic')->detail($user_id);
-        $this->assign('user', $user);
-    }
 
 
      /**

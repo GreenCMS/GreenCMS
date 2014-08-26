@@ -8,6 +8,12 @@ use Think\Controller;
  */
 class AddonsController extends AdminBaseController{
 
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+
     protected $addons = null;
 
     public function execute($_addons = null, $_controller = null, $_action = null){

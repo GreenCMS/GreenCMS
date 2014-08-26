@@ -110,6 +110,24 @@
             transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
         }
 
+
+
+        .form-label {
+            margin-left: 30px;
+            width: 300px;
+            height: 20px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.428571429;
+            color: #555;
+            vertical-align: middle;
+            background-color: #fff;
+            background-image: none;
+
+        }
+
+
+
         input, button, select, textarea {
             font-family: inherit;
             font-size: inherit;
@@ -128,7 +146,7 @@
 
         .form-group .control-label {
             float: left;
-            width: 70px;
+            width: 100px;
             padding-top: 5px;
             text-align: right;
         }
@@ -164,19 +182,47 @@
 
             <form class="form-vertical" action="{:addons_url('Join2011://Join2011/step3')}" method="POST">
 
-                <p>考生号{$stu.ksh}</p>
-                <br/>
 
-                <p>姓名{$stu.xm}</p>
-                <br/>
+                <div class="form-group">
+                    <div class="controls">
+                        <label class="control-label">考生号</label>
 
-                <p>生源地{$stu.xbmc}</p>
-                <br/>
+                        <span class="form-label" >{$stu.ksh}</span>
+                    </div>
+                </div>
 
-                <p>身份证号{$stu.xbmc}</p>
-                <br/>
+                <div class="form-group">
+                    <div class="controls">
+                        <label class="control-label">姓名</label>
 
-                <p>已录取专业{$stu.xbmc}</p>
+                        <span class="form-label" >{$stu.xm}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="controls">
+                        <label class="control-label">生源地</label>
+
+                        <span class="form-label" >{$stu.syd}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="controls">
+                        <label class="control-label">身份证号</label>
+
+                        <span class="form-label" >{$stu.sfzh}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="controls">
+                        <label class="control-label">已录取专业</label>
+
+                        <span class="form-label" >{$stu.zymc}</span>
+                    </div>
+                </div>
+
+
 
                 <br/><br/>
 
@@ -190,16 +236,16 @@
                 <div class="form-group">
                     <div class="controls">
 
-                        <label class="control-label">选测科目</label>
-                        <input class="form-control" type="text" placeholder="" name="jsscore"/> <span
-                            class="help-inline">选测科目等级（仅江苏考生填写）</span>
+                        <label class="control-label">选测科目等级</label>
+                        <input class="form-control" type="text" placeholder="仅江苏考生填写" name="jsscore"  /> <span
+                            class="help-inline">（仅江苏考生填写）</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="controls">
 
                         <label class="control-label">手机号码</label>
-                        <input class="form-control" type="text" placeholder="手机号码" name="phone"/>
+                        <input class="form-control" type="text" placeholder="手机号码" name="phone" value="{$stu.sjhm}"/>
                     </div>
                 </div>
 

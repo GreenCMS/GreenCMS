@@ -1,5 +1,10 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+
+version v2.1.0822 build 20140822
+插件安装修正
+插件在线删除
+
 version v2.2.0819 build 20140819
 插件在线安装
 每个页面检查安全事件和升级事件

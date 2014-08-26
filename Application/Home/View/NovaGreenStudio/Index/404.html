@@ -19,9 +19,12 @@
 
     <include file="Public:head"/>
 
+    {:hook('pageHeader', "")}
+
 </head>
 
 <body>
+{:hook('userHeader', "")}
 {:W('Widget/menuHead')}
 
 <!-- 404 error -->
@@ -38,6 +41,7 @@
 <include file="Public:footer"/>
 
 <include file="Public:foot"/>
+{:hook('pageFooter', "")}
 
 </body>
 </html>

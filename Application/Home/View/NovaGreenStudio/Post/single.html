@@ -21,9 +21,12 @@
     <style>.thumbnail > img {
         max-width: 50%;
     }</style>
+    {:hook('pageHeader', "")}
+
 </head>
 
 <body>
+{:hook('userHeader', "")}
 {:W('Widget/menuHead')}
 
 
@@ -144,6 +147,7 @@
 <include file="Public:footer"/>
 
 <include file="Public:foot"/>
+{:hook('pageFooter', "")}
 
 </body>
 </html>

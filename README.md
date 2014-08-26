@@ -29,7 +29,7 @@ GreenCMS 欢迎学习交流，版权归作者所有，未经作者同意，不�
 ## 关于商业用途：
   
 **需在Footer注明使用GreenCMS**
-  
+**或者加入友情链接指向GreenCMS.net**
   
 ## 联系方式:  
 Email: admin@njut.asia

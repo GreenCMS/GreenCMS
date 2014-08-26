@@ -1,0 +1,119 @@
+<div id="gcsadminbar" class="" role="navigation">
+    <a class="screen-reader-shortcut" href="#">跳至工具栏</a>
+
+    <div class="quicklinks" id="gcs-toolbar" role="navigation" aria-label="顶部导航工具栏。" tabindex="0">
+        <ul id="gcs-admin-bar-root-default" class="ab-top-menu">
+            <li id="gcs-admin-bar-gcs-logo" class="menupop">
+                <a class="ab-item" aria-haspopup="true" href="http://www.greencms.net/"
+                   title="关于GreenCMS">
+                    <span class="ab-icon"></span>
+                </a>
+
+                <div class="ab-sub-wrapper">
+                    <ul id="gcs-admin-bar-gcs-logo-default" class="ab-submenu">
+                        <li id="gcs-admin-bar-about">
+                            <a class="ab-item" href="http://www.greencms.net/">关于GreenCMS</a>
+                        </li>
+                    </ul>
+                    <ul id="gcs-admin-bar-gcs-logo-external" class="ab-sub-secondary ab-submenu">
+
+                        <li id="gcs-admin-bar-documentation">
+                            <a class="ab-item" href="https://github.com/zts1993/GreenCMS">Github</a>
+                        </li>
+                        <li id="gcs-admin-bar-support-forums">
+                            <a class="ab-item" href="#">支持论坛</a>
+                        </li>
+                        <li id="gcs-admin-bar-feedback">
+                            <a class="ab-item" href="mailto:admin@zts1993.com">反馈</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li id="gcs-admin-bar-site-name" class="menupop">
+                <a class="ab-item" href="{:U('Home/Index/index')}"> {:get_opinion('title')}</a>
+
+
+                <div class="ab-sub-wrapper">
+                    <ul id="gcs-admin-bar-site-name-default" class="ab-submenu">
+                        <li id="gcs-admin-bar-dashboard">
+                            <a class="ab-item" href="{:U('Admin/Index/index')}">仪表盘</a>
+                        </li>
+                    </ul>
+                    <ul id="gcs-admin-bar-appearance" class="ab-submenu">
+                        <li id="gcs-admin-bar-customize" class="hide-if-no-customize">
+                            <a class="ab-item" href="{:U('Admin/System/index')}">系统设置</a>
+                        </li>
+                        <li id="gcs-admin-bar-themes">
+                            <a class="ab-item" href="{:U('Admin/Custom/theme')}">主题</a>
+                        </li>
+                        <li id="gcs-admin-bar-widgets">
+                            <a class="ab-item" href="{:U('Admin/Posts/add')}">投稿</a>
+                        </li>
+                        <li id="gcs-admin-bar-menus">
+                            <a class="ab-item" href="{:U('Admin/Custom/menu')}">菜单</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li id="gcs-admin-bar-new-content" class="menupop"><a class="ab-item" aria-haspopup="true"
+                                                                  href="#"
+                                                                  title="添加"><span class="ab-icon"></span><span
+                    class="ab-label">新建</span></a>
+
+                <div class="ab-sub-wrapper">
+                    <ul id="gcs-admin-bar-new-content-default" class="ab-submenu">
+                        <li id="gcs-admin-bar-new-post"><a class="ab-item"
+                                                           href="#">文章</a>
+                        </li>
+                        <li id="gcs-admin-bar-new-media"><a class="ab-item"
+                                                            href="#">媒体</a>
+                        </li>
+                        <li id="gcs-admin-bar-new-page"><a class="ab-item"
+                                                           href="#">页面</a>
+                        </li>
+                        <li id="gcs-admin-bar-new-tie_slider"><a class="ab-item"
+                                                                 href="#">Slider</a>
+                        </li>
+                        <li id="gcs-admin-bar-new-user"><a class="ab-item"
+                                                           href="#">用户</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
+            {:hook('userHeaderLink', "")}
+
+
+        </ul>
+        <ul id="gcs-admin-bar-top-secondary" class="ab-top-secondary ab-top-menu">
+
+
+            <li id="gcs-admin-bar-my-account" class="menupop with-avatar">
+                <a class="ab-item" aria-haspopup="true" href="#" title="我的帐户">
+                    您好，{$user.user_nicename}
+                    <img alt="" src="__PUBLIC__/baracktocat.jpg" class="avatar avatar-26 photo"
+                         height="26" width="26"></a>
+
+                <div class="ab-sub-wrapper">
+                    <ul id="gcs-admin-bar-user-actions" class="ab-submenu">
+                        <li id="gcs-admin-bar-user-info">
+                            <a class="ab-item" tabindex="-1" href="#">
+                                <img src="__PUBLIC__/baracktocat.jpg"
+                                     class="avatar avatar-64 photo" height="64" width="64"><span
+                                    class="display-name">admin</span></a></li>
+                        <li id="gcs-admin-bar-edit-profile"
+                                ><a class="ab-item" href="{:U('Admin/Access/profile',array('uid'=>$user['user_id']))}">用户档案</a>
+                        </li>
+                        <li id="gcs-admin-bar-logout">
+                            <a class="ab-item" href="{:U('Admin/Login/logout')}">登出</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <a class="screen-reader-shortcut"
+       href="#">登出</a>
+</div>

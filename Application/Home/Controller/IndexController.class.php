@@ -7,7 +7,6 @@
  * Time: 下午1:40
  */
 namespace Home\Controller;
-use Common\Util\File;
 use Think\Hook;
 
 /**
@@ -15,47 +14,42 @@ use Think\Hook;
  * Class IndexController
  * @package Home\Controller
  */
-class IndexController extends HomeBaseController
-{
 
-    /**
-     * 构造函数
-     */
-    function __construct()
-    {
-        parent::__construct();
-    }
+class IndexController extends HomeBaseController {
 
-    /**
-     * 显示首页
-     */
-    public function index()
-    {
-        $this->display('index');
-    }
+	/**
+	 * 构造函数
+	 */
+	function __construct() {
+		parent::__construct();
+	}
 
+	/**
+	 * 显示首页
+	 */
+	public function index() {
+		$this->display('index');
+	}
 
-    /**
-     * 显示首页为空时
-     * @param $method
-     * @param $args
-     */
-    public function _empty($method, $args)
-    {
-        Hook::listen('home_index_empty');
+	/**
+	 * 显示首页为空时
+	 * @param $method
+	 * @param $args
+	 */
+	public function _empty($method, $args) {
+		Hook::listen('home_index_empty');
 
+	}
 
-    }
+	/**
+	 * 测试使用
+	 */
+	function test() {
 
-    /**
-     * 测试使用
-     */
-    function test()
-    {
-
-//        include(Upgrade_PATH . 'init.php');
-//
-//        upgrade_20140620_to_20140625();
-    }
+		echo get_addon_url("Join2011/Join2011/index");
+		//        include(Upgrade_PATH . 'init.php');
+		//
+		//        upgrade_20140620_to_20140625();
+	}
 
 }

@@ -131,7 +131,12 @@ class GuestbookAddon extends Addon
         }
     }
 
-
+    //实现的adminSideBar钩子方法
+    public function adminSideBar($param)
+    {
+        echo '<li><a href="'. addons_url('Guestbook://Guestbook/manage') .'">
+        <i class="fa fa-angle-double-right"></i>留言板</a></li>';
+    }
 
 
     public function adminMenu($param)
