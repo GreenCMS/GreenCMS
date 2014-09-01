@@ -106,7 +106,7 @@ $menu_arr = array(
             'Access/addRole' => '添加角色',
 
             'Access/loginlog' => '登陆记录',
-            'Access/log' => '操作记录',
+          //  'Access/log' => '操作记录',
 
         ),
 

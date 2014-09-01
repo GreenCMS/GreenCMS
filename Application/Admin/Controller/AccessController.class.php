@@ -637,6 +637,9 @@ class AccessController extends AdminBaseController
     public function profile($uid)
     {
 
+        if($uid!=get_current_user_id()){
+            $this->error("只能浏览自己的档案");
+        }
         $user = D('User', 'Logic')->cache(true)->detail($uid);
         $this->assign('user', $user);
         $this->assign('action', '用户档案');

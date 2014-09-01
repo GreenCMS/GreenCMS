@@ -41,6 +41,10 @@ return array(
 
     'DEFAULT_MODULE'       => 'Home',
 
+    'VAR_FILTERS'       => 'remove_xss',
+    'DEFAULT_FILTER'       => 'htmlspecialchars',
+
+
     'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install','Api','Zel','Oauth'), //配置你原来的分组列表
     'MODULE_DENY_LIST'     => array('Common'),
 
