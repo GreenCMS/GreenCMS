@@ -1,5 +1,13 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.1.0901 build 20140901
+禁用日志系统，修复Nginx下面ajax bug
+修复微信模块的一些bug
+增加用户登录顶部导航插件，GreenStudio主题升级
+修复插件链接在html suffix设置时候的bug
+增加插件匿名访问
+其他细节优化
+
 
 version v2.1.0822 build 20140822
 插件安装修正
