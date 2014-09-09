@@ -55,7 +55,22 @@ class File
         @$content = $Storage::read($filename);
         return $content;
     }
-
+    
+    /**
+     * @param $filename
+     * @return string
+     */
+    public static function readXml($filename)
+    {
+		if (@$fp=fopen($filename,'r')){ 
+			$content=fread($fp,4086);
+			fclose($fp);
+			$content=chop($content);
+			return $content;
+		}else{
+			return false;
+		}
+	}
 
     /**
      * @param $filename
