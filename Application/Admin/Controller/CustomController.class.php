@@ -104,7 +104,7 @@ class CustomController extends AdminBaseController
     {
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
 
-        $menu_list = $Menu->getList(null, 0, 'menu_sort'); // 获取分类结构
+        $menu_list = $Menu->getList(null, 0, 'menu_sort desc'); // 获取分类结构
         $this->assign('menu', $menu_list);
 
         $this->display();

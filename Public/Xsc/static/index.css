@@ -766,8 +766,9 @@ img {
 
 #content {
     width: 1140px;
-    margin: 0 auto;
     background: #FFFFFF;
+    margin: 0 auto  ;
+    padding-bottom: 10px;
 }
 
 .news-slide {
@@ -854,4 +855,8 @@ img {
 
 .mt {
     margin-top: 20px;
+}
+
+.post-content{
+    min-height: 300px;
 }

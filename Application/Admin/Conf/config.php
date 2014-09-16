@@ -112,7 +112,7 @@ $menu_arr = array(
 
         'Tools' => array(
             'Tools/index' => '可用工具',
-            'Tools/wordpress' => '从wordpress导入',
+            'Tools/wordpress' => '从WordPress导入',
             // 'Tools/rss'    => '从rss导入',
             // 'Tools/export'    => '导出',
 
