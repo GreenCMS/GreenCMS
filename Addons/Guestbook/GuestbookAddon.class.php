@@ -67,9 +67,9 @@ class GuestbookAddon extends Addon
 
         }
 
-        $adminMenu = $Hooks->where(array('name' => 'adminMenu'))->find();
+        $adminMenu = $Hooks->where(array('name' => 'adminSideBar'))->find();
         if (!$adminMenu) {
-            $data = array('name' => 'adminMenu', 'description' => 'adminMenu', 'type' => 1);
+            $data = array('name' => 'adminSideBar', 'description' => 'adminSideBar', 'type' => 1);
             $Hooks->data($data)->add();
         }
 
@@ -134,17 +134,10 @@ class GuestbookAddon extends Addon
     //实现的adminSideBar钩子方法
     public function adminSideBar($param)
     {
-        echo '<li><a href="'. addons_url('Guestbook://Guestbook/manage') .'">
+        echo '<li><a href="'. get_addon_url("Guestbook/Guestbook/manage",array(),"Admin").'">
         <i class="fa fa-angle-double-right"></i>留言板</a></li>';
-    }
-
-
-    public function adminMenu($param)
-    {
-
-        echo "<li><a href='" . addons_url('Guestbook://Guestbook/manage') . "'><h4>留言板</h4></a></li>
-            ";
 
     }
+
 
 }

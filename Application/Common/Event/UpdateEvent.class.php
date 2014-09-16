@@ -58,4 +58,12 @@ class UpdateEvent extends BaseController
 
 
     }
+
+
+    public function copyAndBackup($file_path1,$file_path2)
+    {
+
+
+
+    }
 }

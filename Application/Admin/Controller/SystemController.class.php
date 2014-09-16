@@ -298,6 +298,7 @@ class SystemController extends AdminBaseController
             $update_content = nl2br($Storage::read('UpdateLOG'));
             $this->assign('update_content', $update_content);
         }
+        S("checkVersionRes",null);
 
         $this->display("updatecomplete");
 

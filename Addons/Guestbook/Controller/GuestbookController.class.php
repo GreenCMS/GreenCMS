@@ -2,41 +2,11 @@
 
 namespace Addons\Guestbook\Controller;
 
-use Home\Controller\AddonsController;
+use Admin\Controller\AddonsController;
 use Common\Util\GreenPage;
 
 class GuestbookController extends AddonsController
 {
-    /**
-     * 添加留言
-     */
-    public function add()
-    {
-        if (!I('name') || !I('email') || !I('title') || !I('content')) {
-            $this->error('表单未填写完整！');
-        } else {
-
-            $post_id = I('post_id');
-            $post_type = 'page';
-            // dump(I());die;
-            $data = array(
-                'name' => I('name', 'htmlspecialchars'),
-                'email' => I('email', 'htmlspecialchars'),
-                'title' => I('title', 'htmlspecialchars'),
-                'content' => I('content', 'htmlspecialchars'),
-                'date' => date("Y-m-d H:m:s", time()),
-                'ip' => get_client_ip(),
-                'status' => 1,
-            );
-            $result = M('guestbook')->add($data);
-
-            if ($result) {
-                $this->success('留言成功', U('Home/Post/' . $post_type, array('info' => $post_id)));
-            } else {
-                $this->error('留言失败');
-            }
-        }
-    }
 
     public function manage()
     {
@@ -79,7 +49,7 @@ class GuestbookController extends AddonsController
 
     /**
      * 回复留言
-     * @return [type] [description]
+     * @return void [type] [description]
      */
     public function reply()
     {
@@ -99,7 +69,7 @@ class GuestbookController extends AddonsController
 
     /**
      * 删除留言
-     * @return [type] [description]
+     * @return void [type] [description]
      */
     public function del()
     {
@@ -114,7 +84,7 @@ class GuestbookController extends AddonsController
 
     /**
      * 审核留言
-     * @return [type] [description]
+     * @return void [type] [description]
      */
     public function approve()
     {

@@ -189,29 +189,5 @@
 
 <include file="Public:foot"/>
 
-<script>
-
-    $(document).ready(function () {
-
-        var url = '{:U("Admin/Index/checkVersion")}';
-
-        $.get(url, function (data) {
-            if (data != 'none') {
-                //发现新版本
-                $('#sys_up').show();
-
-            } else {
-                $('#sys_up').show();
-                $('#sys_up').html("当前为最新版本");
-            }
-        });
-
-    });
-
-
-
-
-
-</script>
 </body>
 </html>
