@@ -695,12 +695,12 @@ img {
 }
 
 .right_box {
-    margin-left: 25px;
+    margin-left: 5px;
     border: 2px solid #1b68af;
-    height: 357px;
+    height: 300px;
     float: left;
 
-    width: 350px;
+
     margin-top: 25px;
 
 }
@@ -738,8 +738,8 @@ img {
 }
 
 .right_box .body {
-    margin-top: 8px;
-    padding: 10px 15px;
+    /*margin-top: 8px;*/
+    padding: 0px 15px;
 }
 
 .right_box .body .box {
@@ -750,7 +750,7 @@ img {
 }
 
 .right_box .body ul li {
-    line-height: 32px;
+    line-height: 25px;
 }
 
 .right_box .body ul li a {

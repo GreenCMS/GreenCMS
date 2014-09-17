@@ -11,7 +11,7 @@
 <body>
 
 <php>
-    $xgxw = D('Cats', 'Logic')->getPostsByCat(7, 8);
+    $xgxw = D('Cats', 'Logic')->getPostsByCat(7, 9);
 
     $ggtz = D('Cats', 'Logic')->getPostsByCat(8, 6);
     $xyfc = D('Cats', 'Logic')->getPostsByCat(10, 6);
@@ -26,39 +26,73 @@
 {:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
 <div id="content" class="clearfix">
 
- <style>
+<style>
     .news-slide a img {
-        width: 725px;
-        height: 357px;
+        width: 400px;
+        height: 305px;
     }
 
 </style>
-<div id="slide" class="news-slide w2 ml20 fl">
-    <volist name="slider" id="v">
-        {:get_post_thumbnail($v)}
-    </volist>
-</div>
 
-<div class="right_box">
-    <div class="header"><a href="{:getCatURLByID(7)}"
-                           class="more">更多</a><span>学工新闻</span></div>
-    <div class="body">
-        <div class="box">
+<div style="width: 1080px;margin: 0 auto;height: 220px">
 
 
-            <ul class="list1">
-
-                <volist name="xgxw" id="v">
-                    <li>
-                        <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}"> <i>·&nbsp;&nbsp;</i>
-                            {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
-
-                    </li>
-                </volist>
+    <!--
+    <div class="right_box" style="width: 200px">
+        <div class="header"><a href="{:getCatURLByID(8)}"
+                               class="more">更多</a><span>公告通知</span></div>
+        <div class="body">
+            <div class="box">
 
 
-            </ul>
+                <ul class="list1">
+
+                    <volist name="ggtz" id="v">
+                        <li>
+                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}"> <i>·&nbsp;&nbsp;</i>
+                                {$v['post_title']|strip_tags|mb_substr=0,10,"UTF-8"}</a>
+
+                        </li>
+                    </volist>
+
+
+                </ul>
+            </div>
         </div>
+
+    </div>
+-->
+
+    <div id="slide" style="margin-left: 5px" class="news-slide w2 fl">
+        <volist name="slider" id="v">
+            {:get_post_thumbnail($v)}
+        </volist>
+    </div>
+
+    <div class="right_box" style="width: 665px;">
+        <div class="header"><a href="{:getCatURLByID(7)}"
+                               class="more">更多</a><span>学工新闻</span></div>
+        <div class="body">
+            <div class="box">
+
+
+                <ul class="list1">
+
+                    <volist name="xgxw" id="v">
+                        <li>
+                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}"> <i>·&nbsp;&nbsp;</i>
+                                {$v['post_title']|strip_tags|mb_substr=0,40,"UTF-8"}</a>
+                           &nbsp;&nbsp;  {$v['post_date']|mb_substr=0,10,"UTF-8"}
+
+
+                        </li>
+                    </volist>
+
+
+                </ul>
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -272,7 +306,6 @@
 
 </tbody>
 </table>
-
 
 
 </div>
