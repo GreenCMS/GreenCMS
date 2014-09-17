@@ -4,8 +4,8 @@
 }
 
 html {
-    /*background:url(../images/1/indexbg.png) repeat-x;*/
-    background-color: #f2f2f2;
+    background:url(./images/bg.gif) repeat;
+    /*background-color: #f2f2f2;*/
     margin: 0;
     padding: 0;
 }
@@ -371,10 +371,14 @@ img {
 }
 
 .headerwrap {
-    width: 100%;
-    height: 146px;
+    /*width: 100%;*/
+
+    width: 1140px;
+    margin: 0 auto;
+
+    /*height: 146px;*/
     overflow: hidden;
-    background: #333128 url(../images/1/headerbg.png) no-repeat center top;
+    background: RGB(25, 103, 175) url(../images/1/headerbg.png) no-repeat center top;
 }
 
 .headerwrap .header {
@@ -695,7 +699,7 @@ img {
 }
 
 .right_box {
-    margin-left: 5px;
+    margin-left: 10px;
     border: 2px solid #1b68af;
     height: 300px;
     float: left;
@@ -766,9 +770,10 @@ img {
 
 #content {
     width: 1140px;
-    background: #FFFFFF;
+    background: #F8F8F8;
     margin: 0 auto  ;
     padding-bottom: 10px;
+    border: 1px solid #e7eaed;
 }
 
 .news-slide {
