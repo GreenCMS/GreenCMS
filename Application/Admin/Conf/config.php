@@ -132,6 +132,8 @@ $menu_arr = array(
             'System/green' => '强制设置',
             'System/update' => '系统升级',
             'System/info' => '系统信息',
+            'System/bugs' => 'Bug反馈',
+
 
         )
     ),

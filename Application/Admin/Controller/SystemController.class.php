@@ -389,4 +389,11 @@ class SystemController extends AdminBaseController
         $this->show(phpinfo());
     }
 
+
+    public function bugs()
+    {
+        $this->display();
+    }
+
+
 }
