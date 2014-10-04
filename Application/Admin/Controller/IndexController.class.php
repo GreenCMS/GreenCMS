@@ -40,7 +40,8 @@ class IndexController extends AdminBaseController
 
     public function checkTodo()
     {
-        if (empty(S("checkTodo"))) {
+        $checkTodo=S("checkTodo");
+        if (empty($checkTodo)) {
 
 
             $check_res = "";
