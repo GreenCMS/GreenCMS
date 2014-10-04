@@ -9,7 +9,6 @@
 
 namespace Admin\Controller;
 
-use Common\Event\DBInfoEvent;
 use Common\Event\MySQLInfoEvent;
 use Common\Event\MySQLMaintainEvent;
 use Common\Util\File;
