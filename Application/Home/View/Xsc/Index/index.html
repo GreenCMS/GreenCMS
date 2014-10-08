@@ -158,34 +158,67 @@
 
             </div>
 
-            <div class="cright">
-                <div class="header">
-                    <!--<a href="" > 更多+</a>-->
 
-                    <div class="tip">快捷方式</div>
+
+            <div id="c4_right">
+                <div id="c4_right_1">
+                    <a href="#">
+                        更多+</a>
+
+                    <div class="tip">服务链接</div>
                 </div>
-                <div id="c3_right_2" class="body" style="padding-top: 10px;">
 
-                    <a href="{:U('Zel/Index/index')}">
-                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/zelbn.png" width="145"
-                             height="55" border="0"></a>
+                <div id="c4_right_2">
 
-
-                    <a href="{:U('Admin/Index/index')}">
-                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/tgdln.png" width="145" height="55"
-                             border="0"></a>
+                    <div style="height: 150px;text-align: center;">
 
 
-                    <a href="{:getSingleURLByID(9,'page')}">
-                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/hybn.png" width="145" height="55"
-                             border="0"></a>
+                        <ul>
+                            <!--<li><a href="#"> 投稿登陆</a></li>-->
 
-                    <a href="">
-                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/hybn.png" width="145" height="55"
-                             border="0"></a>
+                            <li><a href="#"> 奥蓝系统管理版</a></li>
+
+                            <li><a href="#"> 奥蓝系统学生版</a></li>
+
+                            <li><a href="#"> 下载专区</a></li>
+                            <li><a href="#"> 学生手册</a></li>
+                            <li><a href="#"> 入学指南</a></li>
+
+
+                        </ul>
+
+                    </div>
+
+                    <div style="text-align: center">
+                        <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                                size="1"
+                                name="mlink">
+                            <option>---|校内链接|---</option>
+
+
+                            <optionfriendlist link_group_id="1"></optionfriendlist>
+
+
+                        </select>
+
+                        <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                                size="1"
+                                name="mlink2">
+                            <option>---|校外链接|---</option>
+
+
+                            <optionfriendlist link_group_id="3"></optionfriendlist>
+
+
+                        </select>
+
+                    </div>
 
                 </div>
             </div>
+
+
+
 
         </div>
     </td>
@@ -243,63 +276,34 @@
 
             </div>
 
-            <div id="c4_right">
-                <div id="c4_right_1">
-                    <a href="#">
-                        更多+</a>
+            <div class="cright">
+                <div class="header">
+                    <!--<a href="" > 更多+</a>-->
 
-                    <div class="tip">外部链接</div>
+                    <div class="tip">快捷方式</div>
                 </div>
+                <div id="c3_right_2" class="body" style="padding-top: 10px;">
 
-                <div id="c4_right_2">
-
-                    <div style="height: 150px;text-align: center;">
-
-
-                        <ul>
-                            <!--<li><a href="#"> 投稿登陆</a></li>-->
-
-                            <li><a href="#"> 奥蓝系统管理版</a></li>
-
-                            <li><a href="#"> 奥蓝系统学生版</a></li>
-
-                            <li><a href="#"> 下载专区</a></li>
-                            <li><a href="#"> 学生手册</a></li>
-                            <li><a href="#"> 入学指南</a></li>
+                    <a href="{:U('Zel/Index/index')}">
+                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/zelbn.png" width="145"
+                             height="55" border="0"></a>
 
 
-                        </ul>
-
-                    </div>
-
-                    <div style="text-align: center">
-                        <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
-                                size="1"
-                                name="mlink">
-                            <option>---|校内链接|---</option>
+                    <a href="{:U('Admin/Index/index')}">
+                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/tgdln.png" width="145" height="55"
+                             border="0"></a>
 
 
-                            <optionfriendlist link_group_id="1"></optionfriendlist>
+                    <a href="{:getSingleURLByID(9,'page')}">
+                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/hybn.png" width="145" height="55"
+                             border="0"></a>
 
-
-                        </select>
-
-                        <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
-                                size="1"
-                                name="mlink2">
-                            <option>---|校外链接|---</option>
-
-
-                            <optionfriendlist link_group_id="3"></optionfriendlist>
-
-
-                        </select>
-
-                    </div>
+                    <a href="">
+                        <img style="margin-top: 10px;" src="__PUBLIC__/Xsc/pictures/hybn.png" width="145" height="55"
+                             border="0"></a>
 
                 </div>
             </div>
-
         </div>
     </td>
 </tr>
