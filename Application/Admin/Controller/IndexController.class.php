@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 use Common\Event\AccessEvent;
+use Common\Event\CountEvent;
 use Common\Event\UpdateEvent;
 use Common\Event\UserEvent;
 use Think\Storage;
@@ -25,7 +26,19 @@ class IndexController extends AdminBaseController
      */
     public function index()
     {
-        $this->display();
+        $CountEvent = new CountEvent();
+
+
+        $this->assign("PostCount", $CountEvent->getPostCount());
+        $this->assign("UserCount", $CountEvent->getUserCount());
+
+
+        if(get_opinion("oem_info",false,'original')!='original' ){
+            $this->display("oem");
+        }else{
+            $this->display();
+        }
+
     }
 
 
@@ -40,7 +53,7 @@ class IndexController extends AdminBaseController
 
     public function checkTodo()
     {
-        $checkTodo=S("checkTodo");
+        $checkTodo = S("checkTodo");
         if (empty($checkTodo)) {
 
 
@@ -75,7 +88,7 @@ class IndexController extends AdminBaseController
 
             die($check_res);
 
-        }else{
+        } else {
 
             die(S("checkTodo"));
 

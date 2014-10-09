@@ -92,7 +92,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('19', 'smtp_user', 'test@njut.edu.cn',
 INSERT INTO `{$db_prefix}options` VALUES ('20', 'from_email', 'test@njut.edu.cn', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('21', 'smtp_pass', ' ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('22', 'PAGER', '20', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('23', 'ome_info', 'original', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('23', 'oem_info', 'original', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('24', 'db_fieldtype_check', '0', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('25', 'DEFAULT_FILTER', 'htmlspecialchars', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('26', 'COOKIE_PREFIX', 'greencms_', 'yes');
