@@ -51,7 +51,8 @@ img {
 
 .head-nav {
 
-    width: 1050px;
+    /*width: 1050px;*/
+    width: 90%;
     margin: 0px auto;
 }
 
@@ -767,9 +768,7 @@ img {
     border: 1px solid #e7eaed;
 }
 
-#content row {
 
-}
 
 .preBtn {
     position: absolute;
