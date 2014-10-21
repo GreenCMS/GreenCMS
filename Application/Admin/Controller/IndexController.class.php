@@ -138,9 +138,14 @@ class IndexController extends AdminBaseController
      */
     public function profile()
     {
+        $CountEvent = new CountEvent();
+
 
         $uid = get_current_user_id();
         $user = D('User', 'Logic')->detail($uid);
+
+        $this->assign("PostCount", $CountEvent->getPostCount(array("user_id"=>$uid)));
+
         $this->assign('user', $user);
         $this->assign('action', '用户档案');
 

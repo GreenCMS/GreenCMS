@@ -200,6 +200,9 @@ jQuery(document).ready(function () {
 
     //zip
     $(".zip").click(function () {
+
+        $("#zip").attr("disabledSubmit", true).html("已提交，系统在处理中...");
+
         var obj2 = document.getElementsByName('sqlFiles');
         // var file = [];
         var sqlFiles2 = '';
@@ -226,12 +229,19 @@ jQuery(document).ready(function () {
                 if (data.url) {
                     location.href = data.url;
                 }
+
             }
             else {
                 $("#success").fadeIn().html(data.info);
                 $("#success").fadeOut(3000);
+
             }
+
+            $("#zip").attr("disabledSubmit", false).html("压缩SQL为Zip...");
+
         }, "json");
+
+
 
     });
 
@@ -244,6 +254,8 @@ jQuery(document).ready(function () {
             return false;
         }
     });
+
+
     //提交数据恢复操作
     $(".restore").click(function () {
         if ($(this).attr("disabledSubmit")) {
@@ -270,6 +282,7 @@ jQuery(document).ready(function () {
         $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("系统处理中请稍候....<br />可能需要较长时间");
         return false;
     });
+
     //刷新操作
     var repeat = function (url, type) {
         $.post(url, function (json) {

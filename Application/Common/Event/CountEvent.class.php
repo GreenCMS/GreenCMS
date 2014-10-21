@@ -15,14 +15,12 @@ class CountEvent
 {
 
 
-    public function getPostCount()
+    public function getPostCount($info=array())
     {
-
+        $info['post_status']="publish";
         $PostsLogic = new PostsLogic();
-        $post_count = $PostsLogic->countAll("single", array("post_status" => "publish"));
-
+        $post_count = $PostsLogic->countAll("single", $info);
         return $post_count;
-
     }
 
 

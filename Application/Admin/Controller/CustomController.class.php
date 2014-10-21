@@ -1120,6 +1120,7 @@ str;
                     $image = new \Think\Image();
                     $image->open($file_path_full);
                     $image->thumb(200, 150)->save($file_path_full);
+
                     $img_url = $info['img']['urlpath'];
 
                     // $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
@@ -1169,49 +1170,6 @@ str;
         }
     }
 
-    /**
-     * //todo not used yet
-     * 轮播说明
-     * post_img->幻灯图片 url
-     * post_top->顺序
-     * post_template->分组
-     * post_name->链接URL
-     * post_content->文字
-     * */
-    public function slider()
-    {
-        $PostsList = new PostsLogic();
-        $slider = $PostsList->getList(0, 'slider', 'post_top', false);
-
-        $this->assign('slider', $slider);
-
-        $this->display();
-    }
-
-    /**
-     * //todo not used yet
-     * 添加幻灯
-     */
-    public function addslider()
-    {
-
-        $this->display();
-    }
-
-    /**
-     * //todo not used yet
-     * @param $id
-     */
-    public function delslider($id)
-    {
-
-        if (D("Posts", 'Logic')->where(array('post_type' => 'slider', 'post_id' => $id))->delete()) {
-            $this->success('永久删除成功');
-        } else {
-            $this->error('永久删除失败');
-        }
-
-    }
 
     public function themeInstallHandle($theme_name)
     {

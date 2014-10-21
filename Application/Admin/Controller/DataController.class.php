@@ -31,28 +31,6 @@ class DataController extends AdminBaseController
     }
 
 
-    /**
-     *
-     */
-    public function db()
-    {
-
-        $this->assign('db_path', DB_Backup_PATH);
-        $this->display();
-
-
-    }
-
-    /**
-     *
-     */
-    public function dbHandle()
-    {
-        $this->saveConfig();
-        $this->success('配置成功');
-
-    }
-
 
     /**
      * 列出系统中所有数据库表信息
@@ -518,31 +496,6 @@ class DataController extends AdminBaseController
             $this->assign("totalsize", $total_size);
             $this->display();
         }
-    }
-
-
-    /**
-     *
-     */
-    public function cache()
-    {
-        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
-        $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
-        $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
-        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(C("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
-
-
-        $this->display();
-    }
-
-    /**
-     *
-     */
-    public function cacheHandle()
-    {
-        $this->saveConfig();
-        $this->success('配置成功');
-
     }
 
 

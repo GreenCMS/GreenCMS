@@ -396,4 +396,29 @@ class SystemController extends AdminBaseController
     }
 
 
+
+    public function db()
+    {
+
+        $this->assign('db_path', DB_Backup_PATH);
+        $this->display();
+
+
+    }
+
+
+
+    public function cache()
+    {
+        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
+        $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
+        $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
+        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(C("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
+
+
+        $this->display();
+    }
+
+
+
 }

@@ -45,6 +45,20 @@ class LoginController extends BaseController
         $Verify->entry();
     }
 
+
+    public function vertifyHandle()
+    {
+        if (get_opinion('vertify_code', true, true)) {
+            $verify = new \Think\Verify();
+
+            if (!$verify->check(I('post.vertify'))) {
+                $this->error("验证码错误");
+            }
+        }
+
+    }
+
+
     /**
      *
      */
@@ -104,14 +118,8 @@ class LoginController extends BaseController
     {
         // $ipLocation = new IpLocation();
         // $ip_info = $ipLocation->getIpInfo();
+        $this->vertifyHandle();
 
-        if (get_opinion('vertify_code', true, true)) {
-            $verify = new \Think\Verify();
-
-            if (!$verify->check(I('post.vertify'))) {
-                $this->error("验证码错误",U('Admin/Login/index'));
-            }
-        }
         $map = array();
         $map['user_login'] = I('post.username');
         $map['user_status'] = array('gt', 0);
@@ -122,7 +130,6 @@ class LoginController extends BaseController
         $this->json2Response($loginRes);
 
     }
-
 
     public function register()
     {
@@ -136,6 +143,7 @@ class LoginController extends BaseController
 
     public function registerHandle()
     {
+        $this->vertifyHandle();
 
         $user_can_regist = get_opinion('user_can_regist', true, 1);
         if ($user_can_regist) {
@@ -177,7 +185,7 @@ class LoginController extends BaseController
         $verify = new \Think\Verify();
 
         if (!$verify->check(I('post.vertify'))) {
-            $this->error("验证码错误",U('Admin/Login/forgetpassword'));
+            $this->error("验证码错误", U('Admin/Login/forgetpassword'));
         }
 
         if (IS_POST) {
