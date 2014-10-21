@@ -150,7 +150,7 @@ input:focus{outline:none; border:none;}
 .visitor-wrap .article .look a{float:right; display:inline; padding-right:26px;background:url(others.png) no-repeat; background-position:right -125px;font-family:\5FAE\8F6F\96C5\9ED1,sans-serif;color:#874000; margin-left:62px;}
 .visitor-wrap .article .look a:hover{color:#004732}
 .cooperation-wrap{width:980px; margin:38px auto 0px auto;}
-.cooperation-wrap .menu {padding:0px;width:215px; height:448px; float:left; display:inline;margin:0px;background:url(coleftbg.png) no-repeat;padding-top:15px;}
+.cooperation-wrap .menu {padding:0px;width:215px; height:448px; float:left; display:inline;margin:0px;padding-top:15px;}
 .cooperation-wrap .menu dd a.t{ font-family:\5FAE\8F6F\96C5\9ED1,sans-serif;margin-left:27px;font-size:14px; color:#004732; line-height:22px;}
 .cooperation-wrap .menu dd a.t:hover {color:#874000}
 .cooperation-wrap .menu dd {padding-left:3px;margin-top:18px;}

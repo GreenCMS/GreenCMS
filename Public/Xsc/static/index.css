@@ -7,7 +7,8 @@ html {
 }
 
 body {
-    margin: 0px auto;
+    margin: 0 auto;
+    min-height: 600px;
 
     /*	background-color:#FFFFFF;*/
     font-size: 12px;
@@ -230,7 +231,7 @@ img {
     font-size: 12px;
     list-style: none;
 
-    width: 90%;
+    width: 97%;
     overflow: hidden;
 }
 
@@ -347,16 +348,17 @@ img {
     /*width: 1140px;*/
     margin: 0 auto;
 
-    /*height: 146px;*/
+    height: 180px;
     overflow: hidden;
     background: RGB(25, 103, 175) url(../images/1/headerbg.png) no-repeat center top;
 }
 
 .headerwrap .header {
-    width: 940px;
+    /*width: 940px;*/
+    width: 75%;
     margin: 0px auto;
-    height: 34px;
-    line-height: 34px;
+    height: 35px;
+    line-height: 35px;
     color: #ced7ce;
 }
 
@@ -394,16 +396,22 @@ img {
 }
 
 .headerwrap .logoarea {
-    height: 112px;
-    width: 940px;
-    margin: 0px auto;
+    height: 100%;
+    /*width: 940px;*/
+    width: 80%;
+
+    margin: auto auto;
     /*overflow: hidden;*/
 }
 
 .headerwrap .logoarea .logo {
     float: left;
     display: inline;
-    margin-top: 10px;
+    margin-top: 20px;
+}
+
+.headerwrap .logoarea .logo img {
+    height: 110px;
 }
 
 .headerwrap .logoarea .searcharea {
@@ -851,4 +859,7 @@ img {
 
 .post-content {
     min-height: 300px;
+
+    font-size: 16px;
+
 }
