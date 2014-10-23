@@ -44,13 +44,57 @@
                         <div class="box-body">
 
 
-                            正在准备中 <br/>
-                            在线提交Issue ：
-                            <a href="https://github.com/GreenCMS/GreenCMS/issues">
-                                https://github.com/GreenCMS/GreenCMS/issues
-                            </a>
+                            <form role="form" action="{:U('Admin/System/bugsHandle')}"
+                                  method="post">
+
+                                <input type="hidden" name="site_url" value="{:get_opinion('site_url')}"/>
+
+                                <input type="hidden" name="title" value="{:get_opinion('title')}"/>
+
+                                <input type="hidden" name="track_id" value="{:gen_uuid()}"/>
 
 
+                                <div class="form-group">
+                                    <label class="control-label">Bug信息描述</label>
+
+                                    <div class="controls">
+
+                                        <textarea class="form-control large" name="foot" rows="6"></textarea>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">通知邮箱</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="" class="form-control large" name="notify_mail"
+                                               value="{:C('sql_mail')}"/>
+                                        <span class="help-inline">通知处理结果</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 提交</button>
+                                </div>
+
+                            </form>
+
+                            <div style="margin-top: 50px" class=" col-md-8">
+
+
+                                <div class="well">
+
+                                    在线提交Issue ：
+                                    <a href="https://github.com/GreenCMS/GreenCMS/issues">
+                                        https://github.com/GreenCMS/GreenCMS/issues
+                                    </a>
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

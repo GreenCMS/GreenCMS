@@ -13,6 +13,11 @@ use Think\Log;
 use Weixin\Event\TextEvent;
 use Weixin\Util\ThinkWechat;
 
+/***
+ * 微信模块所使用的服务API
+ * Class ApiController
+ * @package Weixin\Controller
+ */
 class ApiController extends WeixinCoreController
 {
 

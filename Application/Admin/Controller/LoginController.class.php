@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 use Common\Controller\BaseController;
+use Common\Event\UserEvent;
 use Org\Util\Rbac;
 
 /**
@@ -45,55 +46,35 @@ class LoginController extends BaseController
         $Verify->entry();
     }
 
-
-    public function vertifyHandle()
-    {
-        if (get_opinion('vertify_code', true, true)) {
-            $verify = new \Think\Verify();
-
-            if (!$verify->check(I('post.vertify'))) {
-                $this->error("验证码错误");
-            }
-        }
-
-    }
-
-
     /**
      *
      */
     public function _before_index()
     {
-//        $user_session = cookie('user_session');
-        $map['user_session'] = cookie('user_session');
 
-        $UserEvent = new \Common\Event\UserEvent();
-        $loginRes = $UserEvent->auth($map);
-        $loginResArray = json_decode($loginRes, true);
+        $user_session = cookie('user_session');
 
-        if ($loginResArray['status'] == 1) {
-            $authInfo = D('User', 'Logic')->where($map)->find();
-            $log['log_user_id'] = $authInfo['user_id'];
-            $log['log_user_name'] = $authInfo['user_login'];
-            $log['log_password'] = $authInfo['user_pass'];
-            $log['log_ip'] = get_client_ip();
-            $log['log_status'] = 2;
+        if ($user_session) {
+            //auto login
+            $map['user_session'] = $user_session;
+            $UserEvent = new UserEvent();
+            $loginRes = $UserEvent->auth($map);
+            $loginResArray = json_decode($loginRes, true);
+            if ($loginResArray['status'] == 1) {
+                //登陆成功
+                $authInfo = D('User', 'Logic')->where($map)->find();
+                $log['log_user_id'] = $authInfo['user_id'];
+                $log['log_user_name'] = $authInfo['user_login'];
+                $log['log_password'] = $authInfo['user_pass'];
+                $log['log_ip'] = get_client_ip();
+                $log['log_status'] = 2;
 
-            D('login_log')->data($log)->add();
-
-            /**
-             * 自动恢复原状态
-             */
-            $httpReferer = $_SERVER['HTTP_REFERER'];
-            $parsedHttpReferer = parse_url($httpReferer);
-            $httpQuery = $parsedHttpReferer['query'];
-            parse_str($httpQuery, $parsedHttpQuery);
+                D('login_log')->data($log)->add();
 
 
-            if ($parsedHttpQuery['m'] == 'admin' && $parsedHttpQuery['c'] != 'login' && $parsedHttpQuery['c'] != 'index' && $parsedHttpQuery['c'] != '' && $parsedHttpQuery['a'] != '') {
-                $this->redirect('Admin/' . $parsedHttpQuery['c'] . '/' . $parsedHttpQuery['a'] . '');
-            } else {
                 $this->redirect('Admin/Index/index');
+
+
             }
 
         }
@@ -106,8 +87,6 @@ class LoginController extends BaseController
      */
     public function index()
     {
-
-
         $this->display();
     }
 
@@ -125,17 +104,35 @@ class LoginController extends BaseController
         $map['user_status'] = array('gt', 0);
         $map['user_pass'] = encrypt(I('post.password'));
 
-        $UserEvent = new \Common\Event\UserEvent();
+        $UserEvent = new UserEvent();
         $loginRes = $UserEvent->auth($map);
         $this->json2Response($loginRes);
 
     }
 
+    public function vertifyHandle()
+    {
+        if (get_opinion('vertify_code', true, true)) {
+            $verify = new \Think\Verify();
+
+            if (!$verify->check(I('post.vertify'))) {
+                $this->error("验证码错误");
+            }
+        }
+
+    }
+
     public function register()
+    {
+        $this->registerJudge();
+        $this->display();
+
+    }
+
+    public function registerJudge()
     {
         $user_can_regist = get_opinion('user_can_regist', true, 1);
         if ($user_can_regist) {
-            $this->display();
         } else {
             $this->error("不开放注册");
         }
@@ -143,27 +140,20 @@ class LoginController extends BaseController
 
     public function registerHandle()
     {
+        $this->registerJudge();
         $this->vertifyHandle();
 
-        $user_can_regist = get_opinion('user_can_regist', true, 1);
-        if ($user_can_regist) {
-            $username = I('post.username');
-            $nickname = I('post.nickname');
-            $password = I('post.password');
-            $email = I('post.email');
-            if (!($username && $nickname && $password && $email)) {
-                $this->error("字段不能为空");
-            }
-
-            $UserEvent = new \Common\Event\UserEvent();
-            $registerRes = $UserEvent->register($username, $nickname, $password, $email);
-            $this->json2Response($registerRes);
-
-
-        } else {
-            $this->error("不开放注册");
-
+        $username = I('post.username');
+        $nickname = I('post.nickname');
+        $password = I('post.password');
+        $email = I('post.email');
+        if (!($username && $nickname && $password && $email)) {
+            $this->error("字段不能为空");
         }
+
+        $UserEvent = new UserEvent();
+        $registerRes = $UserEvent->register($username, $nickname, $password, $email);
+        $this->json2Response($registerRes);
 
 
     }
@@ -182,23 +172,14 @@ class LoginController extends BaseController
      */
     public function forgetpasswordHandle()
     {
-        $verify = new \Think\Verify();
-
-        if (!$verify->check(I('post.vertify'))) {
-            $this->error("验证码错误", U('Admin/Login/forgetpassword'));
-        }
+        $this->vertifyHandle();
 
         if (IS_POST) {
-
             $email = I('post.email');
-
-            $UserEvent = new \Common\Event\UserEvent();
+            $UserEvent = new UserEvent();
             $forgetPasswordRes = $UserEvent->forgetPassword($email);
             $this->json2Response($forgetPasswordRes);
-
         }
-
-
     }
 
     /**
@@ -206,9 +187,8 @@ class LoginController extends BaseController
      */
     public function logout()
     {
-        $UserEvent = new \Common\Event\UserEvent();
+        $UserEvent = new UserEvent();
         $logoutRes = $UserEvent->logout();
         $this->json2Response($logoutRes);
-
     }
 }
