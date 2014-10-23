@@ -15,9 +15,9 @@ class Media {
 
     private $accessToken;
 
-    private $uploadMedia='http://file.api.weixin.qq.com/cgi-bin/media/upload';
+    private $uploadMediaURL='http://file.api.weixin.qq.com/cgi-bin/media/upload';
 
-    private $downloadMedia='http://file.api.weixin.qq.com/cgi-bin/media/get';
+    private $downloadMediaURL='http://file.api.weixin.qq.com/cgi-bin/media/get';
 
 
     public function __construct()
@@ -46,8 +46,15 @@ class Media {
 
         $params['access_token'] =$this->accessToken;
         $params['type'] = $type;
-        $params['media'] = $filename;
-        $res = $Curl->callApi($this->$uploadMedia, $params, 'POST');
+
+        $data['media'] = $filename;
+
+        $url=$this->uploadMediaURL;
+        $url.= (strpos($url, '?') === false) ? '?' : '&';
+        $url.= is_array($params) ? http_build_query($params) : $params;
+
+        dump($url);
+        $res = $Curl->callApi($url, $data, 'POST');
 
         return $res;
     }
@@ -72,7 +79,7 @@ class Media {
 
         $params['access_token'] =$this->accessToken;
         $params['media_id'] = $mediaId;
-        $res = $Curl->callApi($this->$downloadMedia, $params, 'GET');
+        $res = $Curl->callApi($this->downloadMediaURL, $params, 'GET');
 
         return $res;
     }

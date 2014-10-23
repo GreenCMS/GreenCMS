@@ -10,25 +10,78 @@ namespace Weixin\Controller;
 
 
 use Common\Util\Curl;
+use Think\Model;
 use Weixin\Util\AccessToken;
+use Weixin\Util\Media;
+use Weixin\Util\Menu;
 use Weixin\Util\SendMsg;
+use Weixin\Util\UserManagemant;
 
 class TestController extends WeixinCoreController
 {
 
-
-    public function index()
+    public function media()
     {
 
-        $SendMsg=new SendMsg();
-        $SendMsg->test();
+        $Media = new Media();
+        $res = $Media->upload("http://static.cnbetacdn.com/slide/2014/1022/1413990687.jpg", "image");
+        dump($res);
+
+
+
+        $res =$Media->download($res['media_id']);
+        dump($res);
+
+    }
+
+
+    public function menu()
+    {
+
+        $Menu = new Menu();
+
+        $menu_content = $Menu->getMenu();
+
+        dump($menu_content);
+
+
+    }
+
+    public function userManagemant()
+    {
+
+        $UserManagemant = new UserManagemant();
+
+        $res = $UserManagemant->getFansList();
+
+        foreach ($res["data"]['openid'] as $user_openid) {
+            dump($UserManagemant->getUserInfo($user_openid));
+        }
+        dump($res);
+
+        // dump($UserManagemant->createGroup("Timothy"));
+        dump($UserManagemant->getGroupList());
+
+        dump($UserManagemant->editUserGroup("oaUKpjkc5GaYdrlU0-IO2D-lpozI", 100));
+
+        dump($UserManagemant->getGroupByOpenId("oaUKpjkc5GaYdrlU0-IO2D-lpozI"));
+
+
+    }
+
+
+    public function sendMsg()
+    {
+
+        $SendMsg = new SendMsg();
+        $SendMsg->text("oaUKpjkc5GaYdrlU0-IO2D-lpozI", "fuck");
 
     }
 
     public function getAccessToken()
     {
 
-        $Access= new AccessToken();
+        $Access = new AccessToken();
         $res = $Access->getAccessToken();
         dump($res);
 

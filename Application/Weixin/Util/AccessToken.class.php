@@ -10,24 +10,38 @@ namespace Weixin\Util;
 
 
 use Common\Util\Curl;
+use Think\Log;
 
+/**
+ * Class AccessToken
+ * @package Weixin\Util
+ */
 class AccessToken
 {
 
 
-    private static $AccessAPI = 'https://api.weixin.qq.com/cgi-bin/token';
+    /**
+     * AccessAPI
+     * @var string
+     */
+    private static $AccessTokenURL = 'https://api.weixin.qq.com/cgi-bin/token';
 
 
+    /**
+     * 活得当前使用的AccessToken
+     * @return bool|mixed|null
+     */
     public function getAccessToken()
     {
 
-        //使用缓存保存access_token , access_token有效时间是7200秒
+        //使用缓存保存access_token , access_token有效时间是7200秒 , 防止超时保守起见设定 6000 秒
         if (S('access_token') == '' || S('access_token') == false) {
             $access_token = $this->_fetchAccessToken();
             if ($access_token) {
-                S('access_token', $access_token, 7000);
+                S('access_token', $access_token, 6000);
                 return $access_token;
             } else {
+                Log::write("Error occurred when fetch AccessToken");
                 return false;
             }
         } else {
@@ -36,6 +50,9 @@ class AccessToken
     }
 
 
+    /**
+     * @return null
+     */
     private function _fetchAccessToken()
     {
 
@@ -46,9 +63,10 @@ class AccessToken
         $params['secret'] = C('Weixin_secret');
 
 
-        $accessToken = $Curl->callApi($this::$AccessAPI, $params, 'GET');
+        $accessToken = $Curl->callApi($this::$AccessTokenURL, $params, 'GET');
 
         if (!isset($accessToken['access_token'])) {
+            Log::write("Error occurred when call AccessToken Api");
             return null;
         }
 

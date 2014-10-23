@@ -31,15 +31,10 @@ class SendMsg
 
     }
 
-    public function test()
-    {
-
-        dump($this->msgUrl);
-    }
 
 
     /**
-     * @descrpition 文本
+     * 文本
      * @param $tousername
      * @param $content 回复的消息内容（换行：在content中能够换行，微信客户端就支持换行显示）
      * @return string
@@ -64,7 +59,7 @@ class SendMsg
     }
 
     /**
-     * @descrpition 图片
+     * 图片
      * @param $tousername
      * @param $mediaId 通过上传多媒体文件，得到的id。
      * @return string
@@ -87,7 +82,7 @@ class SendMsg
     }
 
     /**
-     * @descrpition 语音
+     * 语音
      * @param $tousername
      * @param $mediaId 通过上传多媒体文件，得到的id
      * @return string
@@ -110,7 +105,7 @@ class SendMsg
     }
 
     /**
-     * @descrpition 视频
+     * 视频
      * @param $tousername
      * @param $mediaId 通过上传多媒体文件，得到的id
      * @param $title 标题
@@ -138,7 +133,7 @@ class SendMsg
     }
 
     /**
-     * @descrpition 音乐
+     * 音乐
      * @param $tousername
      * @param $title 标题
      * @param $description 描述
@@ -170,7 +165,7 @@ class SendMsg
     }
 
     /**
-     * @descrpition 图文消息 - 单个项目的准备工作，用于内嵌到self::news()中。现调用本方法，再调用self::news()
+     * 图文消息 - 单个项目的准备工作，用于内嵌到self::news()中。现调用本方法，再调用self::news()
      *              多条图文消息信息，默认第一个item为大图,注意，如果调用本方法得到的数组总项数超过10，则将会无响应
      * @param $title 标题
      * @param $description 描述
@@ -189,7 +184,7 @@ class SendMsg
     }
 
     /**
-     * @descrpition 图文 - 先调用self::newsItem()再调用本方法
+     * 图文 - 先调用self::newsItem()再调用本方法
      * @param $tousername
      * @param $item 数组，每个项由self::newsItem()返回
      * @return string

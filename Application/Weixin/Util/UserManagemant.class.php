@@ -31,7 +31,7 @@ class UserManagemant
     //-----------------------------组--------------管-------------理----------------------
 
     /**
-     * @descrpition 创建分组
+     * 创建分组
      * @param $groupName 组名 UTF-8
      * @return JSON {"group": {"id": 107,"name": "test"}}
      */
@@ -49,7 +49,7 @@ class UserManagemant
     }
 
     /**
-     * @descrpition 获取分组列表
+     * 获取分组列表
      * @return JSON {"groups":[{"id": 0,"name": "未分组", "count": 72596}]}
      */
     public function getGroupList()
@@ -66,7 +66,7 @@ class UserManagemant
     }
 
     /**
-     * @descrpition 查询用户所在分组
+     * 查询用户所在分组
      * @param $openId 用户唯一OPENID
      * @return JSON {"groupid": 102}
      */
@@ -84,7 +84,7 @@ class UserManagemant
     }
 
     /**
-     * @descrpition 修改分组名
+     * 修改分组名
      * @param $groupId 要修改的分组ID
      * @param $groupName 新分组名
      * @return JSON {"errcode": 0, "errmsg": "ok"}
@@ -103,7 +103,7 @@ class UserManagemant
     }
 
     /**
-     * @descrpition 移动用户分组
+     * 移动用户分组
      * @param $openid 要移动的用户OpenId
      * @param $to_groupid 移动到新的组ID
      * @return JSON {"errcode": 0, "errmsg": "ok"}
@@ -124,7 +124,7 @@ class UserManagemant
     //-----------------------------用-------户-------管--------理----------------------
 
     /**
-     * @descrpition 获取用户基本信息
+     * 获取用户基本信息
      * @param $openId 用户唯一OpenId
      * @return JSON {
      * "subscribe": 1,
@@ -152,7 +152,7 @@ class UserManagemant
     }
 
     /**
-     * @descrpition 获取关注者列表
+     * 获取关注者列表
      * @param string|\Weixin\Util\第一个拉取的OPENID $next_openid 第一个拉取的OPENID，不填默认从头开始拉取
      * @return JSON {"total":2,"count":2,"data":{"openid":["","OPENID1","OPENID2"]},"next_openid":"NEXT_OPENID"}
      */
@@ -174,8 +174,22 @@ class UserManagemant
         return $Curl->callApi($queryUrl, $data, 'GET');
     }
 
+
     /**
-     * @descrpition 获取网络状态
+     * 获取所有关注者列表
+     */
+    public function getAllFansList()
+    {
+
+
+
+    }
+
+
+
+
+        /**
+     * 获取网络状态
      * @return String network_type:wifi wifi网络。network_type:edge 非wifi,包含3G/2G。network_type:fail 网络断开连接
      */
     public function getNetworkState()
