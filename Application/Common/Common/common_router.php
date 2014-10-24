@@ -104,8 +104,7 @@ function getURL($url = '', $vars = '')
  */
 function getRealURL($menu_item = array(), $is_home = false)
 {
-
-    if ($menu_item['menu_function'] == 'direct') {
+     if ($menu_item['menu_function'] == 'direct'|| $menu_item['menu_function'] == 'native'  ) {
         $real_url = $menu_item['menu_url'];
     } elseif ($menu_item['menu_function'] == 'none') {
         $real_url = '#';

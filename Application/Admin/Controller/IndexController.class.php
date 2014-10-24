@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 use Common\Event\AccessEvent;
+use Common\Event\CountEvent;
 use Common\Event\UpdateEvent;
 use Common\Event\UserEvent;
 use Think\Storage;
@@ -25,7 +26,19 @@ class IndexController extends AdminBaseController
      */
     public function index()
     {
-        $this->display();
+        $CountEvent = new CountEvent();
+
+
+        $this->assign("PostCount", $CountEvent->getPostCount());
+        $this->assign("UserCount", $CountEvent->getUserCount());
+
+
+        if(get_opinion("oem_info",false,'original')!='original' ){
+            $this->display("oem");
+        }else{
+            $this->display();
+        }
+
     }
 
 
@@ -38,56 +51,49 @@ class IndexController extends AdminBaseController
     }
 
 
-    /**
-     * 检查版本
-     */
-    public function checkVersion()
-    {
-        $UpdateEvent = new UpdateEvent();
-        $cheack_res = $UpdateEvent->check();
-
-        if ($cheack_res) {
-            $message =
-                '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 发现新的可升级版本</a></li>';
-        } else {
-            $message = 'none';
-        }
-
-        die($message);
-    }
-
-
-
-
     public function checkTodo()
     {
-        $cheack_res="";
+        $checkTodo = S("checkTodo");
+        if (empty($checkTodo)) {
 
-        $AccessEvent= new AccessEvent();
-        $UpdateEvent = new UpdateEvent();
 
-        if($UpdateEvent->check()){
-            $cheack_res.=  '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 发现新的可升级版本</a></li>';
+            $check_res = "";
+
+            $AccessEvent = new AccessEvent();
+            $UpdateEvent = new UpdateEvent();
+
+            if ($UpdateEvent->check()) {
+                $check_res .= '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 发现新的可升级版本</a></li>';
+            }
+
+
+            if (!$AccessEvent->checkAccess()) {
+                $check_res .= '<li><a href="' . U("Admin/Access/rolelist") . '"><i class="fa fa-laptop"></i> 需要重建角色权限！</a></li>';
+
+            }
+
+            if (!$AccessEvent->checkNode()) {
+                $check_res .= '<li><a href="' . U("Admin/Access/nodelist") . '"><i class="fa fa-laptop"></i> 需要重建节点！</a></li>';
+
+
+            }
+
+            if ($check_res == "") {
+                $check_res = "none";
+            }
+
+
+            S("checkTodo", $check_res);
+
+
+            die($check_res);
+
+        } else {
+
+            die(S("checkTodo"));
+
         }
-
-
-        if(!$AccessEvent->checkAccess()){
-            $cheack_res.='<li><a href="' . U("Admin/Access/rolelist") . '"><i class="fa fa-laptop"></i> 需要重建角色权限！</a></li>';
-
-        }
-
-        if(!$AccessEvent->checkNode()){
-            $cheack_res.='<li><a href="' . U("Admin/Access/nodelist") . '"><i class="fa fa-laptop"></i> 需要重建节点！</a></li>';
-
-
-        }
-
-
-        if($cheack_res=="") die("none");
-        die($cheack_res);
-
     }
-
 
     /**
      * ajax定时计划触发
@@ -132,9 +138,14 @@ class IndexController extends AdminBaseController
      */
     public function profile()
     {
+        $CountEvent = new CountEvent();
+
 
         $uid = get_current_user_id();
         $user = D('User', 'Logic')->detail($uid);
+
+        $this->assign("PostCount", $CountEvent->getPostCount(array("user_id"=>$uid)));
+
         $this->assign('user', $user);
         $this->assign('action', '用户档案');
 
@@ -152,9 +163,6 @@ class IndexController extends AdminBaseController
         $this->display();
 
     }
-
-
-
 
 
 }

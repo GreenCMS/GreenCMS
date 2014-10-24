@@ -49,7 +49,7 @@
                                 最新版本{$versions["lastest_version"]}&nbsp; &nbsp; &nbsp; &nbsp;
                             </h4>
                             <br/>
-                              {$message}
+                            {$message}
                             <br/>
 
                             <table class="table table-bordered table-striped">
@@ -70,7 +70,8 @@
                                         <td class="hidden-480">
 
                                             <if condition="($v.build_from eq $versions['user_version'] ) ">
-                                                <a class="btn btn-success" href="{:U('Admin/System/updateHandle', array('version' => $v['version']))}">立即开始升级</a>
+                                                <a class="btn btn-success"
+                                                   href="{:U('Admin/System/updateHandle', array('version' => $v['version']))}">立即开始升级</a>
                                                 &nbsp;&nbsp;&nbsp;
                                                 <else/>
                                                 <a class="btn btn-danger">不可从此版本升级</a>
@@ -84,7 +85,6 @@
                                 </foreach>
                                 </tbody>
                             </table>
-
 
 
                         </div>

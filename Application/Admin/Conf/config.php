@@ -69,12 +69,10 @@ $menu_arr = array(
 
 
         'Data' => array(
-            'Data/db' => '数据库设置',
             'Data/index' => '数据库备份',
             'Data/restore' => '数据库导入',
             'Data/zipList' => '数据库压缩',
             'Data/repair' => '数据库优化',
-            'Data/cache' => '缓存设置',
             'Data/clear' => '缓存清理',
 
 
@@ -106,13 +104,13 @@ $menu_arr = array(
             'Access/addRole' => '添加角色',
 
             'Access/loginlog' => '登陆记录',
-            'Access/log' => '操作记录',
+          //  'Access/log' => '操作记录',
 
         ),
 
         'Tools' => array(
             'Tools/index' => '可用工具',
-            'Tools/wordpress' => '从wordpress导入',
+            'Tools/wordpress' => '从WordPress导入',
             // 'Tools/rss'    => '从rss导入',
             // 'Tools/export'    => '导出',
 
@@ -126,12 +124,17 @@ $menu_arr = array(
             'System/post' => '文章设置',
             'System/url' => '链接设置',
             'System/safe' => '安全选项',
+            'System/db' => '数据库设置',
+            'System/cache' => '缓存设置',
+
             'System/email' => '邮箱配置',
 //            'System/kvset'  => '其他设置',
             'System/sns' => '社交登录设置',
             'System/green' => '强制设置',
             'System/update' => '系统升级',
             'System/info' => '系统信息',
+            'System/bugs' => 'Bug反馈',
+
 
         )
     ),

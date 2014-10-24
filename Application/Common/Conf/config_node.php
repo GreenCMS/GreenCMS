@@ -47,6 +47,7 @@ return array(
             'changepass' => '修改密码',
             'changepasshandle' => '修改密码处理',
             'updatecomplete' => '升级完成',
+            'checkTodo' => '检查',
         ),
 
         'Posts' => array(

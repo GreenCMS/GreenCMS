@@ -131,7 +131,7 @@ class Green extends TagLib
      */
     public function _friendlist($tag, $content)
     {
-        $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 5;
+         $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 5;
         $link_tag = isset ($tag ['link_tag']) ? $tag ['link_tag'] : '';
         $link_group_id = isset ($tag ['link_group_id']) ? $tag ['link_group_id'] : '';
         $order = isset ($tag ['order']) ? $tag ['order'] : 'link_sort desc ,link_id asc';
@@ -149,8 +149,19 @@ class Green extends TagLib
         $link_list = D('Links', 'Logic')->cache(true,2)->where($condition)->order($order)->limit($num)->select();
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($link_list as $value) {
-            $parseStr .= '<li ' . $li_attr . '><a href="' . $value['link_url'] . '" title="' .
-                $value['link_name'] . '"> ' . mb_substr($value['link_name'], 0, $length, 'UTF-8') . ' </a></li>';
+            if($value['link_img']=="" ){
+                $parseStr .= '<li ' . $li_attr . '><a href="' . $value['link_url'] . '" title="' .
+                    $value['link_name'] . '"> ' . mb_substr($value['link_name'], 0, $length, 'UTF-8') . ' </a></li>';
+
+            }else{
+                $parseStr .= '<li ' . $li_attr . '><a href="' . $value['link_url'] . '" title="' .
+                    $value['link_name'] . '">  <img src="' . $value['link_img']. '"/> </a></li>';
+
+            }
+
+
+
+
         }
         $parseStr .= '</ul>';
         if (!empty ($parseStr)) {

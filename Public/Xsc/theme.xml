@@ -24,4 +24,23 @@
             <tpl>guestbook</tpl>
         </guestbook>
     </post>
+
+
+    <config>
+        <kv>
+            <zt1>
+                <title>专题一</title>
+                <type>text</type>
+                <value>周恩来版</value>
+            </zt1>
+
+            <zt1url>
+                <title>专题一链接</title>
+                <type>text</type>
+                <value>周恩来版</value>
+            </zt1url>
+
+        </kv>
+    </config>
+
 </theme>

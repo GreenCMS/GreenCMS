@@ -211,9 +211,13 @@
             });
         }
         $(".optimize").click(function () {
+            $(".optimize").attr("disabledSubmit", false).html("处理中，请稍后...");
+
             handle("optimize");
         });
         $(".repair").click(function () {
+            $(".repair").attr("disabledSubmit", false).html("处理中，请稍后...");
+
             handle("repair");
         });
     });

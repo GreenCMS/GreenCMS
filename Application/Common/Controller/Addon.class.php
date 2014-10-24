@@ -175,4 +175,26 @@ abstract class Addon{
      * @return mixed
      */
     abstract public function uninstall();
+
+
+
+
+    public function addNewHook($hook_name,$description){
+
+        $Hooks = D('Hooks');
+        $new_hook= $Hooks->where(array('name' => $hook_name))->find();
+        if (!$new_hook) {
+            $data = array('name' =>$hook_name, 'description' => $description, 'type' => 1);
+            $Hooks->data($data)->add();
+        }
+    }
+
+
+    public function excuteSql($sql){
+
+        M()->query($sql);
+
+    }
+
+
 }

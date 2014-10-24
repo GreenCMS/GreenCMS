@@ -23,41 +23,31 @@
                 //----->
             </script>
         </div>
-        <div class="right"><span class="userarea">奥蓝系统</span>
-            <a href="http://202.119.248.129" target="_blank">管理入口</a>
-            <a href="http://202.119.248.129:886" target="_blank">学生入口</a>
-            <span class="userarea">学生工作</span>
-            <a href="{:U('Admin/Index/index')}" target="_blank">管理登录</a>
-            <a href="{:U('Admin/Index/index')}" target="_blank">投稿登录</a>
+        <div class="right">
+            <!--<span class="userarea">链接 </span>-->
+            <a href="http://www.njtech.edu.cn/" target="_blank">学校首页</a>
+            <!--<a href="#" target="_blank">学生入口</a>-->
+            <!--<span class="userarea">学生工作</span>-->
+            <!--<a href="{:U('Admin/Index/index')}" target="_blank">管理登录</a>-->
+            <!--<a href="{:U('Admin/Index/index')}" target="_blank">投稿登录</a>-->
             <span class="userarea"><a href="#" target="_blank">旧版主页</a></span>
 
         </div>
     </div>
     <div class="logoarea">
-        <a class="logo" href="{:U('/')}"><img src="__PUBLIC__/Xsc/images/logo.png" alt=""></a>
-
-        <div class="searcharea">
-            <div class="searchdiv clearfix">
-                <!--<div class="en"><a href="#">English Version</a>　　　|</div>-->
-                <div class="searinput">
-                    <form action="{:U('Archive/search')}"
-                          target="_blank"  ><input type="text" class="searchinput" placeholder="搜索"
-                                                            name="keyword">
-                    </form>
-                </div>
-
-            </div>
-
-        </div>
+        <a class="logo" href="{:U('Home/Index/index')}"><img src="__PUBLIC__/Xsc/images/logo.png" alt=""></a>
     </div>
 </div>
 
+    <div class="green_background" style=" ">
+
+        <div class="head-nav">
+            {$home_menu}
+        </div>
+
+    </div>
 
 
-<div class="green_background" style="width: 100%;">
 
-<div class="head-nav ">
-    {$home_menu}
-</div>
 
-</div>
+

@@ -48,6 +48,7 @@ class CommonWidget extends Controller
     {
         C('admin_sub_menu', array_change_key_case(C('admin_sub_menu')));
         C('admin_big_menu', array_change_key_case(C('admin_big_menu')));
+        C('admin_black_list_menu', array_change_key_case(C('menu_black_list')));
         C('admin_big_menu_icon', array_change_key_case(C('admin_big_menu_icon')));
 
         $accessList = RBAC::getAccessList($_SESSION [C('USER_AUTH_KEY')]);

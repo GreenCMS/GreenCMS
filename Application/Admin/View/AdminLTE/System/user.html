@@ -48,11 +48,9 @@
                                   method="post">
 
 
-
-
-
                                 <div class="form-group">
                                     <label class="control-label">是否开启用户注册</label>
+
                                     <div class="controls">
 
                                         <label class="radio">
@@ -60,7 +58,8 @@
                                             <switch name="user_can_regist">
                                                 <case value="1"><input type="radio" name="user_can_regist"
                                                                        checked="checked" value="1"/></case>
-                                                <case value="0"><input type="radio" name="user_can_regist" value="1"/></case>
+                                                <case value="0"><input type="radio" name="user_can_regist" value="1"/>
+                                                </case>
 
                                                 <default/>
                                                 <input type="radio" name="user_can_regist"
@@ -74,8 +73,10 @@
 
                                         <label class="radio">
                                             <switch name="user_can_regist">
-                                                <case value="1"><input type="radio" name="user_can_regist" value="0"/></case>
-                                                <case value="0"><input type="radio" name="user_can_regist" checked="checked"
+                                                <case value="1"><input type="radio" name="user_can_regist" value="0"/>
+                                                </case>
+                                                <case value="0"><input type="radio" name="user_can_regist"
+                                                                       checked="checked"
                                                                        value="0"/></case>
 
                                                 <default/>
@@ -90,21 +91,18 @@
                                 </div>
 
 
-
-
-
                                 <div class="form-group">
                                     <label class="control-label">新用户角色</label>
 
                                     <div class="controls">
-                                        <select class="form-control" tabindex="1" name="new_user_role" id="new_user_role">
+                                        <select class="form-control" tabindex="1" name="new_user_role"
+                                                id="new_user_role">
                                             {$new_user_role}
 
                                         </select>
                                         <span class="help-inline">慎重</span>
                                     </div>
                                 </div>
-
 
 
                                 <div class="form-actions">

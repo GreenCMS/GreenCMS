@@ -632,13 +632,12 @@ CREATE TABLE `{$db_prefix}theme` (
   `theme_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `theme_name` varchar(255) DEFAULT NULL,
   `theme_description` varchar(255) DEFAULT NULL,
-  `theme_build` varchar(255) CHARACTER SET utf8_general_ci DEFAULT NULL,
-  `theme_versioin` varchar(255) CHARACTER SET utf8_general_ci DEFAULT NULL,
+  `theme_build` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `theme_versioin` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `theme_preview` varchar(255) DEFAULT NULL,
   `theme_copyright` varchar(255) DEFAULT NULL,
   `theme_xml` text,
-  `theme_config` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `theme_config` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   PRIMARY KEY (`theme_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='主题信息表';
-
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 

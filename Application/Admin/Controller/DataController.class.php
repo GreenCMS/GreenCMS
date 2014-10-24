@@ -9,6 +9,8 @@
 
 namespace Admin\Controller;
 
+use Common\Event\MySQLInfoEvent;
+use Common\Event\MySQLMaintainEvent;
 use Common\Util\File;
 use Common\Event\SystemEvent;
 
@@ -29,28 +31,6 @@ class DataController extends AdminBaseController
     }
 
 
-    /**
-     *
-     */
-    public function db()
-    {
-
-        $this->assign('db_path', DB_Backup_PATH);
-        $this->display();
-
-
-    }
-
-    /**
-     *
-     */
-    public function dbHandle()
-    {
-        $this->saveConfig();
-        $this->success('配置成功');
-
-    }
-
 
     /**
      * 列出系统中所有数据库表信息
@@ -58,17 +38,12 @@ class DataController extends AdminBaseController
      */
     public function index()
     {
-        $tabs = M()->query('SHOW TABLE STATUS');
-        $total_length = 0;
-        foreach ($tabs as $key => $value) {
-            $tabs[$key]['size'] = File::byteFormat($value['Data_length'] + $value['Index_length']);
-            $total_length += $value['Data_length'] + $value['Index_length'];
-        }
+        $MySQLEvent = new MySQLInfoEvent();
 
         $this->assign("formUrl", U('Admin/Data/backupHandle'));
-        $this->assign("list", $tabs);
-        $this->assign("total", File::byteFormat($total_length));
-        $this->assign("tables", count($tabs));
+        $this->assign("list", $MySQLEvent->getTabs());
+        $this->assign("total", $MySQLEvent->getTotalLengthFormated());
+        $this->assign("tables", $MySQLEvent->countTabs());
         $this->display();
     }
 
@@ -80,12 +55,15 @@ class DataController extends AdminBaseController
     {
 
         if (!IS_POST) $this->error("访问出错啦");
+
         $type = "手动自动备份";
         $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
         $tables = empty($_POST['table']) ? array() : $_POST['table'];
+
         $System = new SystemEvent();
-        //$System->backupFile(); //test ok~
         $res = $System->backupDB($type, $tables, $path);
+        //不支持分卷
+
 
         if ($res['status'] == 1)
             $this->success($res['info'], $res['url']);
@@ -98,52 +76,13 @@ class DataController extends AdminBaseController
      */
     public function restore()
     {
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
+        $MySQLMaintainEvent = new MySQLMaintainEvent();
 
-        $data = $MySQLLogic->getSqlFilesList();
+        $data = $MySQLMaintainEvent->getSqlFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
         $this->display();
-    }
-
-    /**
-     * 读取要导入的sql文件列表并排序后插入SESSION中
-     */
-    /*static*/
-    /**
-     * @return array
-     */
-    private function getRestoreFiles()
-    {
-        $_SESSION['cacheRestore']['time'] = time();
-
-        if (empty($_GET['sqlPre']))
-            $this->error('错误的请求');
-        // die(json_encode(array("status" => 0, "info" => "错误的请求")));
-//获取sql文件前缀
-        $sqlPre = $_GET['sqlPre'];
-        $handle = opendir(DB_Backup_PATH);
-        $sqlFiles = array();
-        while ($file = readdir($handle)) {
-//获取以$sqlPre为前缀的所有sql文件
-            if (preg_match('#\.sql$#i', $file) && preg_match('#' . $sqlPre . '#i', $file))
-                $sqlFiles[] = $file;
-        }
-        closedir($handle);
-        if (count($sqlFiles) == 0)
-            $this->error('错误的请求，不存在对应的SQL文件');
-        // die(json_encode(array("status" => 0, "info" => "错误的请求，不存在对应的SQL文件")));
-//将要还原的sql文件按顺序组成数组，防止先导入不带表结构的sql文件
-        $files = array();
-        foreach ($sqlFiles as $sqlFile) {
-            $k = str_replace(".sql", "", str_replace($sqlPre . "_", "", $sqlFile));
-            $files[$k] = $sqlFile;
-        }
-        unset($sqlFiles, $sqlPre);
-        ksort($files);
-        $_SESSION['cacheRestore']['files'] = $files;
-        return $files;
     }
 
     /**
@@ -206,6 +145,41 @@ class DataController extends AdminBaseController
     }
 
     /**
+     * @return array
+     */
+    private function getRestoreFiles()
+    {
+        $_SESSION['cacheRestore']['time'] = time();
+
+        if (empty($_GET['sqlPre']))
+            $this->error('错误的请求');
+        // die(json_encode(array("status" => 0, "info" => "错误的请求")));
+//获取sql文件前缀
+        $sqlPre = $_GET['sqlPre'];
+        $handle = opendir(DB_Backup_PATH);
+        $sqlFiles = array();
+        while ($file = readdir($handle)) {
+//获取以$sqlPre为前缀的所有sql文件
+            if (preg_match('#\.sql$#i', $file) && preg_match('#' . $sqlPre . '#i', $file))
+                $sqlFiles[] = $file;
+        }
+        closedir($handle);
+        if (count($sqlFiles) == 0)
+            $this->error('错误的请求，不存在对应的SQL文件');
+        // die(json_encode(array("status" => 0, "info" => "错误的请求，不存在对应的SQL文件")));
+//将要还原的sql文件按顺序组成数组，防止先导入不带表结构的sql文件
+        $files = array();
+        foreach ($sqlFiles as $sqlFile) {
+            $k = str_replace(".sql", "", str_replace($sqlPre . "_", "", $sqlFile));
+            $files[$k] = $sqlFile;
+        }
+        unset($sqlFiles, $sqlPre);
+        ksort($files);
+        $_SESSION['cacheRestore']['files'] = $files;
+        return $files;
+    }
+
+    /**
      * 删除已备份数据库文件
      */
     public function delSqlFiles()
@@ -226,6 +200,44 @@ class DataController extends AdminBaseController
             $this->jsonReturn(1, "已删除：" . implode("、", $files), __URL__);
 
         }
+    }
+
+    /**
+     * 将已备份数据库文件通过系统邮箱发送到指定邮箱中
+     */
+    public function sendSql()
+    {
+        set_time_limit(0);
+        if (IS_POST) {
+            header('Content-Type:application/json; charset=utf-8');
+            $sqlFiles = explode(',', $_POST['sqlFiles']);
+
+
+            $files = isset($_SESSION['cacheSendSql']['files']) ? $_SESSION['cacheSendSql']['files'] : self::getSqlFilesGroups();
+            $to = $_SESSION['cacheSendSql']['to'];
+            $sum = $_SESSION['cacheSendSql']['count'];
+
+
+            $zipOut = "sqlBackup.zip";
+            if (File::zip($sqlFiles, $zipOut)) {
+                //TODO send_mail
+                $res = send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
+
+            }
+
+
+            File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
+
+            $time = time() - $_SESSION['cacheSendSql']['time'];
+            unset($_SESSION['cacheSendSql']);
+
+            if (is_bool($res) && $res == true) {
+                $this->jsonReturn(1, "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒");
+            } else {
+                $this->jsonReturn(1, "$res");
+            }
+        }
+        $this->display();
     }
 
     /**
@@ -288,44 +300,6 @@ class DataController extends AdminBaseController
 
         //TODO 测试分卷发送
         return $_SESSION['cacheSendSql']['files'] = $files;
-    }
-
-    /**
-     * 将已备份数据库文件通过系统邮箱发送到指定邮箱中
-     */
-    public function sendSql()
-    {
-        set_time_limit(0);
-        if (IS_POST) {
-            header('Content-Type:application/json; charset=utf-8');
-            $sqlFiles = explode(',', $_POST['sqlFiles']);
-
-
-            $files = isset($_SESSION['cacheSendSql']['files']) ? $_SESSION['cacheSendSql']['files'] : self::getSqlFilesGroups();
-            $to = $_SESSION['cacheSendSql']['to'];
-            $sum = $_SESSION['cacheSendSql']['count'];
-
-
-            $zipOut = "sqlBackup.zip";
-            if (File::zip($sqlFiles, $zipOut)) {
-                //TODO send_mail
-                $res = send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
-
-            }
-
-
-            File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
-
-            $time = time() - $_SESSION['cacheSendSql']['time'];
-            unset($_SESSION['cacheSendSql']);
-
-            if (is_bool($res) && $res == true) {
-                $this->jsonReturn(1, "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒");
-            } else {
-                $this->jsonReturn(1, "$res");
-            }
-        }
-        $this->display();
     }
 
     /**
@@ -522,31 +496,6 @@ class DataController extends AdminBaseController
             $this->assign("totalsize", $total_size);
             $this->display();
         }
-    }
-
-
-    /**
-     *
-     */
-    public function cache()
-    {
-        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
-        $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
-        $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
-        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(C("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
-
-
-        $this->display();
-    }
-
-    /**
-     *
-     */
-    public function cacheHandle()
-    {
-        $this->saveConfig();
-        $this->success('配置成功');
-
     }
 
 

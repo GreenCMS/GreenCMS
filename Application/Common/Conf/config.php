@@ -37,9 +37,13 @@ return array(
 
     'TAGLIB_BUILD_IN'      => 'Green,Cx',
 
-    'LOAD_EXT_CONFIG'      => 'config_opinion,config_node,config_custom', // 加载扩展配置文件 config_alias,config_db,config_system
+    'LOAD_EXT_CONFIG'      => 'config_opinion,config_node,config_custom,config_oem', // 加载扩展配置文件 config_alias,config_db,config_system
 
     'DEFAULT_MODULE'       => 'Home',
+
+    'VAR_FILTERS'       => 'remove_xss',
+    'DEFAULT_FILTER'       => 'htmlspecialchars',
+
 
     'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install','Api','Zel','Oauth'), //配置你原来的分组列表
     'MODULE_DENY_LIST'     => array('Common'),

@@ -44,7 +44,7 @@
                         <div class="box-body">
 
 
-                            <form action="{:U('Admin/Data/dbHandle')}" name="change_System"
+                            <form action="{:U('Admin/System/saveHandle')}" name="change_System"
                                   method="post">
 
                                 <div class="form-group">
@@ -53,6 +53,8 @@
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large"
                                                value="{$db_path}" disabled/>
+                                        <span class="help-inline">DB_Backup_PATH常量</span>
+
                                     </div>
                                 </div>
 
@@ -61,7 +63,8 @@
                                     <label class="control-label">SQL文件分卷大小</label>
 
                                     <div class="controls">
-                                        <input type="number" placeholder="默认5000000" class="form-control large" name="sqlFileSize"
+                                        <input type="number" placeholder="默认5000000" class="form-control large"
+                                               name="sqlFileSize"
                                                value="{:C('sqlFileSize')}"/>
                                         <span class="help-inline">单位byte</span>
                                     </div>
@@ -69,7 +72,7 @@
 
 
                                 <div class="form-group">
-                                    <label class="control-label">SQL文件发送邮箱</label>
+                                    <label class="control-label">备份文件默认发送邮箱</label>
 
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large" name="sql_mail"
@@ -83,7 +86,6 @@
                                 </div>
 
                             </form>
-
 
 
                         </div>

@@ -38,11 +38,10 @@
                 <div class="col-md-10">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title"  style="color: #FF0000">{$action}-如果你不了解这里的用处,请勿随意更改</h3>
+                            <h3 class="box-title" style="color: #FF0000">{$action}-如果你不了解这里的用处,请勿随意更改</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-
 
 
                             <form action="{:U('Admin/System/saveHandle')}" name="change_System" role="form"
@@ -51,7 +50,8 @@
                                     <label class="control-label">系统build</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="software_build"
+                                        <input type="text" placeholder="" class="form-control large"
+                                               name="software_build"
                                                value="{:get_opinion('software_build')}"/>
                                         <span class="help-inline">请勿随意修改,会影响自动升级</span>
                                     </div>
@@ -61,7 +61,8 @@
                                     <label class="control-label">系统版本</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="software_version"
+                                        <input type="text" placeholder="" class="form-control large"
+                                               name="software_version"
                                                value="{:get_opinion('software_version')}"/>
                                         <span class="help-inline">请勿修改</span>
                                     </div>
@@ -69,15 +70,15 @@
 
 
                                 <!--<div class="form-group">-->
-                                    <!--<label class="control-label">后台主题</label>-->
+                                <!--<label class="control-label">后台主题</label>-->
 
-                                    <!--<div class="controls">-->
-                                        <!--<select class="form-control large"   tabindex="1" name="DEFAULT_ADMIN_THEME" id="DEFAULT_ADMIN_THEME">-->
-                                            <!--{$DEFAULT_ADMIN_THEME}-->
+                                <!--<div class="controls">-->
+                                <!--<select class="form-control large"   tabindex="1" name="DEFAULT_ADMIN_THEME" id="DEFAULT_ADMIN_THEME">-->
+                                <!--{$DEFAULT_ADMIN_THEME}-->
 
-                                        <!--</select>-->
-                                        <!--<span class="help-inline">AdminLTE bug较多，仅支持ie9以上</span>-->
-                                    <!--</div>-->
+                                <!--</select>-->
+                                <!--<span class="help-inline">AdminLTE bug较多，仅支持ie9以上</span>-->
+                                <!--</div>-->
                                 <!--</div>-->
 
 

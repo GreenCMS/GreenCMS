@@ -35,25 +35,25 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
+                            <h3 class="box-title">{$action}</h3>Beta
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <div class="well">
-                                    UID: {$user.user_id} <br />
-                                    用户名: {$user.user_nicename} <br />
-                                    Email: {$user.user_email} <br />
-                                    主页: {$user.user_url} <br />
-                                    注册时间: {$user.user_registered} <br />
-                                    自我介绍: {$user.user_intro} <br />
-                                    用户角色: {$user['role_info'][0]["name"]} <br />
+                            <div class="well" style="padding-left: 50px;line-height: 30px;font-size: 20px">
+
+                                UID: {$user.user_id} <br/>
+                                用户名: {$user.user_nicename} <br/>
+                                电子邮箱: {$user.user_email} <br/>
+                                个人主页: {$user.user_url} <br/>
+                                加入时间: {$user.user_registered} <br/>
+                                自我介绍: {$user.user_intro} <br/>
+                                用户角色: {$user['role_info'][0]["name"]} <br/>
+                                文章数量: {$PostCount} 篇<br/>
 
                             </div>
-
-
 
                         </div>
                     </div>
