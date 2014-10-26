@@ -19,7 +19,9 @@ class UserManagemant
     private $groupsCreateURL = '';
 
 
-
+    /**
+     * 自动注入AccessToken
+     */
     public function __construct()
     {
         $this->accessToken = new AccessToken();

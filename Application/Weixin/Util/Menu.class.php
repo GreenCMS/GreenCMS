@@ -21,7 +21,9 @@ class Menu {
 
     private $delMenuUrl='https://api.weixin.qq.com/cgi-bin/menu/delete';
 
-
+    /**
+     * 自动注入AccessToken
+     */
     public function __construct()
     {
         $AccessToken=new AccessToken();
@@ -117,9 +119,10 @@ class Menu {
     }
 
 
-
-
-
+    /**
+     * 获取当前菜单
+     * @return bool|mixed|string
+     */
     public function getMenu(){
 
         $Curl = new Curl();
@@ -131,8 +134,10 @@ class Menu {
     }
 
 
-
-
+    /**
+     * 删除菜单
+     * @return bool|mixed|string
+     */
     public function delMenu(){
 
         $Curl = new Curl();

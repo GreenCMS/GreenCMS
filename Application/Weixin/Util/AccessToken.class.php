@@ -28,7 +28,7 @@ class AccessToken
 
 
     /**
-     * 活得当前使用的AccessToken
+     * 获取当前使用的AccessToken
      * @return bool|mixed|null
      */
     public function getAccessToken()
@@ -51,7 +51,8 @@ class AccessToken
 
 
     /**
-     * @return null
+     * 获取Access Token
+     * @return null | string
      */
     private function _fetchAccessToken()
     {

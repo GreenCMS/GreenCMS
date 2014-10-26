@@ -20,6 +20,9 @@ class Media {
     private $downloadMediaURL='http://file.api.weixin.qq.com/cgi-bin/media/get';
 
 
+    /**
+     * 自动注入AccessToken
+     */
     public function __construct()
     {
         $AccessToken=new AccessToken();

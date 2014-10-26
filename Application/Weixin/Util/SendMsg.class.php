@@ -18,6 +18,9 @@ class SendMsg
 
     private $msgUrl = 'https://api.weixin.qq.com/cgi-bin/message/custom/send';
 
+    /**
+     * 自动注入AccessToken
+     */
     public function __construct()
     {
         $AccessToken = new AccessToken();
