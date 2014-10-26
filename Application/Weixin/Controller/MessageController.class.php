@@ -100,9 +100,9 @@ class MessageController extends WeixinBaseController
 
         foreach ($user_list as $value) {
             $time_remain = $now - (int)$value['log'][0]['CreateTime'] - 60 * 60 * 24 * 2;
-            if ($openid!= '' && $value['openid'] == $openid && ($time_remain > 0)) {
-                $this->error('已经超过48小时,不能回复他了');
-            }
+//            if ($openid!= '' && $value['openid'] == $openid && ($time_remain > 0)) {
+//                $this->error('已经超过48小时,不能回复他了');
+//            }
 
             if ($value['log'][0]['CreateTime'] != null && ($time_remain < 0)) {
                 $user_option .= '<option value="' . $value['openid'] . '"';

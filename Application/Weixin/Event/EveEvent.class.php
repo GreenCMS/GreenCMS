@@ -62,7 +62,7 @@ class EveEvent extends WeixinCoreController
     public function LOCATION($data)
     {
         $reply = array(
-            "使用定位服务",
+            "使用LOCATION服务",
             'text'
         );
 

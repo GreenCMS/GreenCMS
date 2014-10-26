@@ -11,6 +11,7 @@ namespace Admin\Controller;
 
 use Common\Event\WordpressEvent;
 use Common\Util\File;
+use Think\Log;
 use Think\Upload;
 
 /**
@@ -29,7 +30,7 @@ class ToolsController extends AdminBaseController
     }
 
     /**
-     *
+     * WordPress 导入
      */
     public function wordpress()
     {
@@ -37,7 +38,7 @@ class ToolsController extends AdminBaseController
     }
 
     /**
-     *
+     * WordPress 导入处理
      */
     public function wordpressHandle()
     {
@@ -74,5 +75,72 @@ class ToolsController extends AdminBaseController
 
 
     }
+
+
+    /**
+     *
+     */
+    public function log(){
+
+        $file_list = array();
+        $files_list = array();
+
+        File::getFiles(LOG_PATH, $file_list, '#\.log#i');
+
+        foreach ($file_list as $key => $value) {
+            $files_list_temp = array();
+            $files_list_temp['id'] = base64_encode($value);
+            $files_list_temp['name'] = $value;
+             $files_list_temp['size'] = File::realSize($value);
+            $files_list_temp['create_time'] = date("Y-m-d H:i:s", File::filectime($value));
+            $files_list_temp['mod_time'] = date("Y-m-d H:i:s", File::filemtime($value));
+
+
+            $files_list[] = $files_list_temp;
+
+        }
+
+        $files_list=array_sort($files_list,"mod_time");
+
+
+        $this->assign('logs_list', $files_list);
+        $this->display();
+
+
+    }
+
+
+    public function logClearHandle(){
+        $res = File::delAll(LOG_PATH, true);
+        $this->success("清除成功");
+
+    }
+
+
+
+    public function downFile()
+    {
+
+        if (empty($_GET['id'])) {
+            $this->error("下载地址不存在");
+        }
+
+        $filename = base64_decode($_GET['id']);
+
+
+        $filePath = $filename;
+
+        if (!file_exists($filePath)) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($filePath);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($filePath));
+        readfile($filePath);
+    }
+
+
+
 
 }
