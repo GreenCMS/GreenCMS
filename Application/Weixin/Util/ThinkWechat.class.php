@@ -35,7 +35,7 @@ class ThinkWechat
             exit($_GET['echostr']);
         } else {
             $xml = file_get_contents("php://input");
-            \Think\Log::record('消息内容GET' . $xml);
+           // \Think\Log::record('消息内容GET' . $xml);
             $xml = new \SimpleXMLElement($xml);
             $xml || exit;
 
@@ -84,7 +84,7 @@ class ThinkWechat
         $xml = new \SimpleXMLElement('<xml></xml>');
         $this->data2xml($xml, $this->data);
 
-        \Think\Log::record('echo:' . $xml->asXML());
+       // \Think\Log::record('echo:' . $xml->asXML());
 
         exit($xml->asXML());
     }
@@ -129,7 +129,7 @@ class ThinkWechat
 
     /**
      * 回复图文信息
-     * @param  string $news 要回复的图文内容
+     * @param  array $news 要回复的图文内容
      */
     private function news($news)
     {

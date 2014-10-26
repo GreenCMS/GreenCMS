@@ -118,9 +118,10 @@ class MediaController extends AdminBaseController
     {
         $handle = opendir(System_Backup_PATH);
 
+        $file_list = array();
+
         File::getFiles(System_Backup_PATH, $file_list, '#\.zip$#i');
 
-        $files_list = array();
         foreach ($file_list as $key => $value) {
             $files_list_temp = array();
             $files_list_temp['id'] = base64_encode($value);

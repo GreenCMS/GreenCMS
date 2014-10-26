@@ -10,9 +10,17 @@
 namespace Weixin\Controller;
 
 use Think\Log;
+use Weixin\Event\ButtomEvent;
+use Weixin\Event\EveEvent;
+use Weixin\Event\PoiEvent;
 use Weixin\Event\TextEvent;
 use Weixin\Util\ThinkWechat;
 
+/***
+ * 微信模块所使用的服务API
+ * Class ApiController
+ * @package Weixin\Controller
+ */
 class ApiController extends WeixinCoreController
 {
 
@@ -67,21 +75,18 @@ class ApiController extends WeixinCoreController
             $reply = $TextEvent->$keyword($data);
 
 
-
-
         } elseif ('image' == $data ['MsgType']) {
 
             $reply = array(
-                'image',
+                '图像已接受',
                 'text'
             );
 
         } elseif ('location' == $data ['MsgType']) {
 
-            //http://api.map.baidu.com/geocoder/v2/?ak=96a6bf4739da4e7c5bf6e916ff1ad51c&callback=renderReverse&location=32.106186,118.813850&output=json&pois=1
-            $TextEvent = new TextEvent();
+            $TextEvent = new PoiEvent();
 
-            $contentStr = $TextEvent->poi($data);
+            $contentStr = $TextEvent->process($data);
 
             $reply = array(
                 $contentStr,
@@ -89,26 +94,16 @@ class ApiController extends WeixinCoreController
             );
 
         } elseif ('event' == $data ['MsgType']) {
-            if ('subscribe' == $data ['Event']) {
-                $reply = array(
-                    C('Weixin_reply_subscribe'),
-                    'text'
-                );
-            } elseif ('unsubscribe' == $data ['Event']) {
-                $reply = array(
-                    C('Weixin_reply_unsubscribe'),
-                    'text'
-                );
-            } elseif ('CLICK' == $data ['Event']) {
-                $Buttom = new \Weixin\Event\ButtomEvent();
-                $reply = $Buttom->$data ['EventKey']();
 
-            }
+            $event=$data ['Event'];
+
+            $EveEvent = new EveEvent();
+            $reply = $EveEvent->$event($data);
 
 
         } else {
             $reply = array(
-                "error occur",
+                "error : unknown MsgType" . $data ['MsgType'],
                 'text'
             );
         }

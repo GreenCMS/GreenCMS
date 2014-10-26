@@ -29,7 +29,7 @@ class UserController extends WeixinBaseController
 
         $User = new \Weixin\Event\UserEvent();
 
-        $res = $User->renew();
+        $User->renew();
 
 
         $this->success('更新成功');

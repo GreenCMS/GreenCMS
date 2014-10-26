@@ -11,6 +11,7 @@ namespace Weixin\Event;
 
 
 use Weixin\Controller\WeixinCoreController;
+use Weixin\Util\UserManagemant;
 
 /**
  * Class UserEvent
@@ -24,12 +25,15 @@ class UserEvent extends WeixinCoreController
      */
     public function renew()
     {
+        $UserManagemant=new UserManagemant();
 
-        $res = $this->getUserList();
+        $res =$UserManagemant->getFansList();
 
-        foreach ($res as $openid) {
+       // $res = $this->getUserList();
 
+        foreach ($res["data"]["openid"] as $openid) {
             $ifuser = D('Weixinuser')->where(array('openid' => $openid))->find();
+
             if ($ifuser) {
                 $data = $this->getUserDetail($openid);
                 unset($data['openid']);
@@ -45,12 +49,16 @@ class UserEvent extends WeixinCoreController
     public function update()
     {
 
-        $res = $this->getUserList();
+        $UserManagemant=new UserManagemant();
 
-        foreach ($res as $openid) {
+        $res =$UserManagemant->getFansList();
+
+        foreach ($res["data"]["openid"] as $openid) {
             $ifuser = D('Weixinuser')->where(array('openid' => $openid))->find();
+
             if (!$ifuser) {
-                $data = $this->getUserDetail($openid);
+                $data =$UserManagemant->getUserInfo($openid);
+                unset($data['remark']);
                 D('Weixinuser')->data($data)->add();
             }
         }

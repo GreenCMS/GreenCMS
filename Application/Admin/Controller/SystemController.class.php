@@ -390,12 +390,6 @@ class SystemController extends AdminBaseController
     }
 
 
-    public function bugs()
-    {
-        $this->display();
-    }
-
-
 
     public function db()
     {
@@ -417,6 +411,23 @@ class SystemController extends AdminBaseController
 
 
         $this->display();
+    }
+
+
+    public function bugs()
+    {
+        $this->display();
+    }
+
+
+
+    public function bugsHandle(){
+
+
+        $post_info=I('post.');
+
+        dump($post_info);
+
     }
 
 
