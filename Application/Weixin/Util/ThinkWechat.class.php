@@ -35,7 +35,7 @@ class ThinkWechat
             exit($_GET['echostr']);
         } else {
             $xml = file_get_contents("php://input");
-           // \Think\Log::record('消息内容GET' . $xml);
+            \Think\Log::record('消息内容GET' . $xml);
             $xml = new \SimpleXMLElement($xml);
             $xml || exit;
 

@@ -50,14 +50,15 @@ class Media {
         $params['access_token'] =$this->accessToken;
         $params['type'] = $type;
 
-        $data['media'] = $filename;
+        $data['media'] =  '@' . $filename;
 
         $url=$this->uploadMediaURL;
         $url.= (strpos($url, '?') === false) ? '?' : '&';
         $url.= is_array($params) ? http_build_query($params) : $params;
 
-        dump($url);
-        $res = $Curl->callApi($url, $data, 'POST');
+
+
+        $res = $Curl->callApi($url, $data, 'POST',true,false);
 
         return $res;
     }

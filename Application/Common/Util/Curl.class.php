@@ -136,13 +136,18 @@ class Curl
             }
         }
 
+
         curl_setopt($this->_ch, CURLOPT_URL, $url);
         curl_setopt($this->_ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($this->_ch, CURLOPT_USERAGENT, 'Mozilla / 5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+
         curl_setopt($this->_ch, CURLOPT_HEADER, 0);
         curl_setopt($this->_ch, CURLOPT_POST, true);
         curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $query);
         curl_setopt($this->_ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($this->_ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+
+        curl_setopt($this->_ch, CURLOPT_AUTOREFERER, 1);
 
 
         $ret = $this->_execute();

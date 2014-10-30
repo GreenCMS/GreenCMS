@@ -100,14 +100,14 @@
       this.$input.attr('name', '')
 
       //ie8+ doesn't support changing the value of input with type=file so clone instead
-      if($.browser.msie){
-          var inputClone = this.$input.clone(true);
-          this.$input.after(inputClone);
-          this.$input.remove();
-          this.$input = inputClone;
-      }else{
-          this.$input.val('')
-      }
+//      if($.browser.msie){
+//          var inputClone = this.$input.clone(true);
+//          this.$input.after(inputClone);
+//          this.$input.remove();
+//          this.$input = inputClone;
+//      }else{
+//          this.$input.val('')
+//      }
 
       this.$preview.html('')
       this.$element.addClass('fileupload-new').removeClass('fileupload-exists')

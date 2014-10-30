@@ -10,15 +10,28 @@
 namespace Weixin\Controller;
 
 
+use Common\Util\GreenPage;
 use Think\Upload;
+use Weixin\Util\Media;
 
 class ReplyController extends WeixinBaseController
 {
 
     public function index()
     {
-        $weixinre = D('Weixinre')->select();
+        $page = I('get.page', C('PAGER'));
 
+
+
+        $count= D('Weixinre')->count();
+        $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+        $pager_bar = $Page->show();
+        $limit = $Page->firstRow . ',' . $Page->listRows;
+
+
+        $weixinre = D('Weixinre')->limit($limit)->select();
+
+        $this->assign('pager', $pager_bar);
         $this->assign('weixinre', $weixinre);
 
         $this->display();
@@ -89,7 +102,7 @@ class ReplyController extends WeixinBaseController
         $config = array(
             "savePath" => 'Weixin/',
             "maxSize" => 1000000, // 单位B
-            "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+            "exts" => array('jpg' , 'jpeg'),
             "subName" => array('date', 'Y/m-d'),
         );
         $upload = new Upload($config);
@@ -114,15 +127,9 @@ class ReplyController extends WeixinBaseController
             }
 
 
+            $Media=new Media();
+            $res = $Media->upload($file_path_full,"image");
 
-            $ACCESS_TOKEN = $this->getAccess();
-
-            $post_data = array(
-                "media" => '@' . $file_path_full
-            );
-
-            $URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token=$ACCESS_TOKEN&type=image";
-            $res = json_decode(simple_post($URL, $post_data), true);
 
             $data['type'] = $res['type'];
             $data['mediaId'] = $res['media_id'];
