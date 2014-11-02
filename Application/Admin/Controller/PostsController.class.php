@@ -23,63 +23,6 @@ use Org\Util\Rbac;
 class PostsController extends AdminBaseController
 {
     /**
-     * 列表显示，包括page和single
-     * @param string $post_type 文章类型
-     * @param string $post_status 文章状态
-     * @param string $order 顺序
-     * @param string $keyword 搜索关键词
-     */
-    public function index($post_type = 'single', $post_status = 'publish', $order = 'post_date desc', $keyword = '')
-    {
-
-        //获取get参数
-        $cat = I('get.cat');
-        $tag = I('get.tag');
-        $page = I('get.page', C('PAGER'));
-        $where = array('post_status' => $post_status);
-        $where['post_content|post_title'] = array('like', "%$keyword%");
-        $post_ids = array();
-
-        //投稿员只能看到自己的
-        if (!$this->noVerify()) {
-            $where['user_id'] = get_current_user_id();
-        }
-
-        //处理详细信息 搜索，指定TAG CAT文章
-        if ($cat != '') {
-            $post_ids = D('Cats', 'Logic')->getPostsId($cat);
-            $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
-            $cat_detail = D('Cats', 'Logic')->detail($cat);
-            $cat = '关于分类 ' . $cat_detail['cat_name'] . ' 的';
-        } else if ($tag != '') {
-            $post_ids = D('Tags', 'Logic')->getPostsId($tag);
-            $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
-            $tag_detail = D('Tags', 'Logic')->detail($tag);
-            $tag = '关于标签' . $tag_detail['tag_name'] . ' 的';
-        } else if ($keyword != '') {
-            $key = '关于' . $keyword . ' 的';
-
-        }
-
-
-        $PostsLogic = new PostsLogic();
-        $count = $PostsLogic->countAll($post_type, $where, $post_ids); // 查询满足要求的总记录数
-
-        if ($count != 0) {
-            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
-            $pager_bar = $Page->show();
-            $limit = $Page->firstRow . ',' . $Page->listRows;
-            $posts_list = $PostsLogic->getList($limit, $post_type, $order, true, $where, $post_ids);
-        }
-
-        $this->assign('post_type', $post_type);
-        $this->assign('action', $key . $cat . $tag . get_real_string($post_type) . '列表');
-        $this->assign('posts', $posts_list);
-        $this->assign('pager', $pager_bar);
-        $this->display('index_no_js');
-    }
-
-    /**
      * index页面操作筛选
      */
     public function indexHandle()
@@ -128,6 +71,81 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 列表显示，包括page和single
+     * @param string $post_type 文章类型
+     * @param string $post_status 文章状态
+     * @param string $order 顺序
+     * @param string $keyword 搜索关键词
+     * @param string $tpl
+     */
+    public function index($post_type = 'single', $post_status = 'publish', $order = 'post_date desc',
+                          $keyword = '', $tpl = 'index_no_js', $name = '')
+    {
+
+        //获取get参数
+        $cat = I('get.cat');
+        $tag = I('get.tag');
+        $page = I('get.page', C('PAGER'));
+        $where = array('post_status' => $post_status);
+        $where['post_content|post_title'] = array('like', "%$keyword%");
+        $post_ids = array();
+
+        //投稿员只能看到自己的
+        if (!$this->noVerify()) {
+            $where['user_id'] = get_current_user_id();
+        }
+
+        //处理详细信息 搜索，指定TAG CAT文章
+        if ($cat != '') {
+            $post_ids = D('Cats', 'Logic')->getPostsId($cat);
+            $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
+            $cat_detail = D('Cats', 'Logic')->detail($cat);
+            $cat = '关于分类 ' . $cat_detail['cat_name'] . ' 的';
+        } else if ($tag != '') {
+            $post_ids = D('Tags', 'Logic')->getPostsId($tag);
+            $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
+            $tag_detail = D('Tags', 'Logic')->detail($tag);
+            $tag = '关于标签' . $tag_detail['tag_name'] . ' 的';
+        } else if ($keyword != '') {
+            $key = '关于' . $keyword . ' 的';
+
+        }
+
+
+        $PostsLogic = new PostsLogic();
+        $count = $PostsLogic->countAll($post_type, $where, $post_ids); // 查询满足要求的总记录数
+
+        if ($count != 0) {
+            $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
+            $pager_bar = $Page->show();
+            $limit = $Page->firstRow . ',' . $Page->listRows;
+            $posts_list = $PostsLogic->getList($limit, $post_type, $order, true, $where, $post_ids);
+        }
+
+        $this->assign('post_type', $post_type);
+        $this->assign('action', $name . $key . $cat . $tag . get_real_string($post_type) . '列表');
+        $this->assign('posts', $posts_list);
+        $this->assign('pager', $pager_bar);
+        $this->display($tpl);
+    }
+
+    /**
+     * 无需审核直接发布
+     * @return bool 如果不用审核返回true，需要返回false
+     */
+    public function noVerify()
+    {
+        $user_id = get_current_user_id();
+        $access_list = RBAC::getAccessList($user_id);
+        if ($access_list['ADMIN']['POSTS']['NOVERIFY'] != '' || ($user_id == 1)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
      * 页面列表
      */
     public function page($post_type = 'page', $post_status = 'publish', $order = 'post_date desc', $keyword = '')
@@ -160,7 +178,7 @@ class PostsController extends AdminBaseController
             $tags = D('Tags', 'Logic')->select();
         }
 
-         $this->assign("info", $post_restored);
+        $this->assign("info", $post_restored);
         $this->assign("tags", $tags);
         $this->assign("cats", $cats);
         $this->assign('tpl_type', gen_opinion_list($tpl_list));
@@ -183,22 +201,6 @@ class PostsController extends AdminBaseController
     }
 
     /**
-     * 无需审核直接发布
-     * @return bool 如果不用审核返回true，需要返回false
-     */
-    public function noVerify()
-    {
-        $user_id = get_current_user_id();
-        $access_list = RBAC::getAccessList($user_id);
-        if ($access_list['ADMIN']['POSTS']['NOVERIFY'] != '' || ($user_id == 1)) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    /**
      * @return mixed
      */
     private function dataHandle()
@@ -209,8 +211,8 @@ class PostsController extends AdminBaseController
         $data['post_template'] = I('post.post_template', $data['post_type']);
         $data['post_name'] = urlencode(I('post.post_name', $data['post_title'], ''));
 
-        $data['post_date'] = I('post.post_date')?I('post.post_date'): date("Y-m-d H:m:s", time());
-        $data['post_modified'] = I('post.post_modified')?I('post.post_modified'): date("Y-m-d H:m:s", time());
+        $data['post_date'] = I('post.post_date') ? I('post.post_date') : date("Y-m-d H:m:s", time());
+        $data['post_modified'] = I('post.post_modified') ? I('post.post_modified') : date("Y-m-d H:m:s", time());
 
         $data['user_id'] = I('post.post_user') ? I('post.post_user') : $_SESSION [C('USER_AUTH_KEY')];
 
@@ -218,7 +220,7 @@ class PostsController extends AdminBaseController
         $data['post_cat'] = I('post.cats', array());
 
         //TODO hook here to modifty the post data
-         return $data;
+        return $data;
     }
 
     /**
@@ -286,16 +288,10 @@ class PostsController extends AdminBaseController
      */
     public function unverified($post_type = "all")
     {
-        $where['post_status'] = 'unverified';
 
-        //投稿员只能看到自己的
-        if (!$this->noVerify()) {
-            $where['user_id'] = get_current_user_id();
-        }
-        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
+        $this->index($post_type, 'unverified', 'post_date desc', '', 'unverified',"待审核");
+        die();
 
-        $this->assign('posts', $posts);
-        $this->display();
     }
 
     /**
@@ -325,13 +321,12 @@ class PostsController extends AdminBaseController
      */
     public function recycle($post_type = "all")
     {
-        $where['post_status'] = 'preDel';
 
-        $posts_list = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
 
-        $this->assign('posts', $posts_list);
+        $this->index($post_type, 'preDel', 'post_date desc', '', 'recycle',"回收站");
+        die();
 
-        $this->display();
+
     }
 
     /**
@@ -371,16 +366,9 @@ class PostsController extends AdminBaseController
      */
     public function reverify($post_type = "all")
     {
-        $where['post_status'] = 'reverify';
 
-        //投稿员只能看到自己的
-        if (!$this->noVerify()) {
-            $where['user_id'] = get_current_user_id();
-        }
-        $posts = D('Posts', 'Logic')->getList(0, $post_type, 'post_date desc', true, $where);
-
-        $this->assign('posts', $posts);
-        $this->display();
+        $this->index($post_type, 'reverify', 'post_date desc', '', 'reverify',"未通过");
+        die();
 
     }
 
