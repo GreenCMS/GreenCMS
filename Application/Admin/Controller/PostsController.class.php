@@ -77,6 +77,7 @@ class PostsController extends AdminBaseController
      * @param string $order 顺序
      * @param string $keyword 搜索关键词
      * @param string $tpl
+     * @param string $name
      */
     public function index($post_type = 'single', $post_status = 'publish', $order = 'post_date desc',
                           $keyword = '', $tpl = 'index_no_js', $name = '')
