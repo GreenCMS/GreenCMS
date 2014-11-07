@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: AccessLogic.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 下午7:27
  */

@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: MediaController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-25
  * Time: 下午7:54
  */

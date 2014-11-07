@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: UeditorController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-27
  * Time: ??9:24
  */

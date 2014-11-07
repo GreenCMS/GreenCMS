@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: MenuLogic.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-12
  * Time: 下午6:07
  */

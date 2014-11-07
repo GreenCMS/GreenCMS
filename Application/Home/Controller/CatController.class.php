@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: CatController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-23
  * Time: 下午8:00
  */

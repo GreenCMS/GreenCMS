@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: ArchiveController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-21
  * Time: 下午9:33
  */

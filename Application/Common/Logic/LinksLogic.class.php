@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: LinksLogic.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 上午12:29
  */

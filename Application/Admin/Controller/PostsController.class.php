@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: PostsController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 上午10:43
  */

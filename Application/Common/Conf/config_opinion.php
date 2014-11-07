@@ -2,7 +2,7 @@
 /**
  * opinion数组预定义区
  * Created by PhpStorm.
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-6-15
  * Time: 下午2:47
  */

@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: TextEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-25
  * Time: 下午8:33
  */

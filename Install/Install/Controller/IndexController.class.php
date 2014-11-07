@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: IndexController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-6
  * Time: 上午10:07
  */

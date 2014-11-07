@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: config.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-15
  * Time: 下午11:23
  */

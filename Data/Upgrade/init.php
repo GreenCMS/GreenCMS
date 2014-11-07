@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: Upgrade.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-4-20
  * Time: 下午4:51
  */
