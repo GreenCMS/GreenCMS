@@ -216,8 +216,6 @@ class PostsController extends AdminBaseController
      */
     public function add()
     {
-//        dump(gen_uuid());
-
         $PostsEvent=new PostsEvent();
         $post_id=$PostsEvent->insertEmpty();
 
@@ -430,9 +428,10 @@ class PostsController extends AdminBaseController
      */
     public function posts($id = -1)
     {
+        $PostEvent = new PostsEvent();
 
-        $this->action = '编辑文章';
-        $this->action_name = 'posts';
+
+
         $this->post_id = $post_id = $id ? (int)$id : false;
         $Posts = new PostsLogic();
 
@@ -469,6 +468,7 @@ class PostsController extends AdminBaseController
             if ($Posts->where(array("post_id" => $post_data["post_id"]))->save($post_data)) {
                 $this->jsonReturn(1, "已经更新", $url);
             } else {
+                //处理失败
                 cookie('post_add'. $post_data["post_id"], gzcompress(json_encode($post_data)), 3600000);
                 //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
                 $this->jsonReturn(0, "更新失败", $url);
@@ -488,40 +488,37 @@ class PostsController extends AdminBaseController
                 $this->error("不存在该记录");
             }
 
-            $PostEvent = new PostsEvent();
             $tpl_type_list = $PostEvent->getTplList();
+
+            //投稿员只能看到权限内部的分类
+            if (!$this->noVerify()) {
+                $user = D('User', 'Logic')->detail(( int )$_SESSION [C('USER_AUTH_KEY')]);
+                $role = D('Role')->where(array('id' =>  $user["user_role"] ["role_id"]))->find();
+                $cats = D('Cats', 'Logic')->where(array('in', json_decode($role ["cataccess"])))->select();
+                foreach ($cats as $key => $value) {
+                    $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
+                }
+                $tags =array();
+            } else {
+                $cats = D('Cats', 'Logic')->category();
+                $tags = D('Tags', 'Logic')->select();
+            }
+
+
+            $this->assign("cats", $cats);
+            $this->assign("tags", $tags);
 
             $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
             $this->assign('post_status', gen_opinion_list(get_opinion("post_status"), $post['post_status']));
             $this->assign('post_type', gen_opinion_list(get_opinion("post_type"), $post['post_type']));
 
 
-            //投稿员只能看到自己的
-            if (!$this->noVerify()) {
-                $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
-                $user = D('User', 'Logic')->detail($user_id);
-                $role_id = $user["user_role"] ["role_id"];
-                $role = D('Role')->where(array('id' => $role_id))->find();
-                $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
-                $cats = D('Cats', 'Logic')->where($where)->select();
-                foreach ($cats as $key => $value) {
-                    $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
-                }
-
-            } else {
-
-                $cats = D('Cats', 'Logic')->category();
-                $tags = D('Tags', 'Logic')->select();
-            }
-
-            $this->assign("cats", $cats);
-            $this->assign("tags", $tags);
-
             $this->assign("info", $post);
             $this->assign("handle", U('Admin/Posts/posts', array('id' => $id), true, false));
 
-            $this->assign("publish", "更新");
-//            $this->display('add');
+            $this->assign("action", '编辑文章');
+            $this->assign("action_name", 'posts');
+
             $this->display('post_v3');
 
         }

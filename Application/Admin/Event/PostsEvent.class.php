@@ -23,6 +23,10 @@ class PostsEvent
     public function getTplList()
     {
 
+        if(S("post_tpl")){
+            return S("post_tpl");
+        }
+
         $tpl_static_path = WEB_ROOT . 'Public/' . get_kv('home_theme') . '/';
         if (file_exists($tpl_static_path . 'theme.xml')) {
             $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
@@ -32,8 +36,9 @@ class PostsEvent
             $tpl_type_list = C('post_tpl');
         }
 
-        return $tpl_type_list;
+        S("post_tpl",$tpl_type_list,600);
 
+        return $tpl_type_list;
     }
 
 

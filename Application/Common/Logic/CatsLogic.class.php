@@ -161,7 +161,7 @@ class CatsLogic extends RelationModel
      */
     public function getPostIdsByCat($cat_id)
     {
-        $cat = $this->getPosts($cat_id);
+        $cat = $this->getPostsByCat($cat_id);
         foreach ($cat as $key => $value) {
             $cat[$key] = $cat[$key]['post_id'];
         }

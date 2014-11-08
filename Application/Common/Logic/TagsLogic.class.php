@@ -22,7 +22,7 @@ class TagsLogic extends RelationModel
 
     /**
      * 获取指定标签信息
-     * @param $id id或者slug
+     * @param $id string id|slug ID
      * @param bool $relation 是否关联
      * @return mixed
      */
@@ -34,9 +34,8 @@ class TagsLogic extends RelationModel
     }
 
     /**
-     *
-     * @param $info 输入tag_id|tag_slug
-     *
+     * 输入
+     * @param $info string tag_id|tag_slug
      * @param string $post_status
      * @return mixed 找到的话返回post_id数组集合
      */
@@ -96,6 +95,13 @@ class TagsLogic extends RelationModel
     }
 
 
+    /**
+     * @param int $limit
+     * @param bool $relation
+     * @param array $where
+     * @param string $order
+     * @return mixed
+     */
     public function selectWithPostsCount($limit = 0, $relation = false, $where = array(), $order = '')
     {
 
