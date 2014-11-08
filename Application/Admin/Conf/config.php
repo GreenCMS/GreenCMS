@@ -53,6 +53,9 @@ $menu_arr = array(
             'Posts/category' => '分类管理',
             'Posts/tag' => '标签管理',
             'Posts/add' => '添加文章',
+
+
+            'Posts/draft' => '草稿箱',
             'Posts/reverify' => '未通过',
             'Posts/unverified' => '待审核',
             'Posts/recycle' => '回收站',

@@ -61,4 +61,26 @@ class PostsEvent
 
 
     }
+
+    public function hasPost($post_id){
+        $post_detail = D('Posts', 'Logic')->relation(false)->where(array("post_id" => $post_id))->find();
+
+        if (empty($post_detail)) {
+           return false;
+        }else{
+            return $post_detail;
+        }
+    }
+
+
+    public function changePostStatue($post_id,$post_status){
+        return D('Posts', 'Logic')->where(array('post_id' => $post_id))->setField(array("post_status"=>$post_status));
+    }
+
+
+
+
+
+
+
 }
