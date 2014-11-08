@@ -17,6 +17,7 @@ class PostsEvent
 {
 
     /**
+     * 获取当前主题的模板列表
      * @return array
      */
     public function getTplList()
@@ -37,6 +38,7 @@ class PostsEvent
 
 
     /**
+     * 从Cookie中恢复
      * @return mixed
      */
     public function restoreFromCookie()
@@ -59,9 +61,34 @@ class PostsEvent
     public function insertEmpty()
     {
 
+        $post_data['post_type'] =  'single';
+        $post_data['post_title'] = 'title';
+        $post_data['post_content'] =  'content';
+        $post_data['post_template'] = 'single';
+        $post_data['post_name'] = 'title';
+
+        $post_data['post_status'] = 'draft';
+
+
+        $post_data['post_date'] = date("Y-m-d H:m:s", time());
+        $post_data['post_modified'] =date("Y-m-d H:m:s", time());
+
+        $post_data['user_id'] = $_SESSION [C('USER_AUTH_KEY')];
+
+        $post_data['post_tag'] = I('post.tags', array());
+        $post_data['post_cat'] = I('post.cats', array());
+
+        $post_id = D('Posts')->relation(true)->add($post_data);
+
+        return $post_id;
 
     }
 
+    /**
+     * 检查是否有Post
+     * @param $post_id
+     * @return bool
+     */
     public function hasPost($post_id){
         $post_detail = D('Posts', 'Logic')->relation(false)->where(array("post_id" => $post_id))->find();
 
@@ -72,7 +99,12 @@ class PostsEvent
         }
     }
 
-
+    /**
+     * 修改文章状态
+     * @param $post_id
+     * @param $post_status
+     * @return mixed
+     */
     public function changePostStatue($post_id,$post_status){
         return D('Posts', 'Logic')->where(array('post_id' => $post_id))->setField(array("post_status"=>$post_status));
     }

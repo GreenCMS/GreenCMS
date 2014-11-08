@@ -218,33 +218,18 @@ class PostsController extends AdminBaseController
     {
 //        dump(gen_uuid());
 
-
-        $PostEvent = new PostsEvent();
-
-
-        $tpl_list = $PostEvent->getTplList();
-        $post_restored = $PostEvent->restoreFromCookie();
+        $PostsEvent=new PostsEvent();
+        $post_id=$PostsEvent->insertEmpty();
 
 
-        //投稿员只能看到自己的
-        if (!$this->noVerify()) {
-            $user_id = get_current_user_id();
-            $cats = D('User', 'Logic')->getCatAccess($user_id);
-            $tags = array();
-        } else {
-            $cats = D('Cats', 'Logic')->category();
-            $tags = D('Tags', 'Logic')->select();
-        }
+ //       $this->redirect(U("Admin/Posts/posts",array("id"=>$post_id)));
+//      $post_restored = $PostEvent->restoreFromCookie();
 
-        $this->assign("info", $post_restored);
-        $this->assign("tags", $tags);
-        $this->assign("cats", $cats);
-        $this->assign('tpl_type', gen_opinion_list($tpl_list));
+        $this->posts($post_id);
 
-        $this->assign("handle", U('Admin/Posts/addHandle'));
-        $this->assign("publish", "发布");
+        die();
 
-        $this->display('post_v2');
+
     }
 
     /**
@@ -448,7 +433,7 @@ class PostsController extends AdminBaseController
 
         $this->action = '编辑文章';
         $this->action_name = 'posts';
-        $this->post_id = $post_id = $_GET['id'] ? (int)$_GET['id'] : false;
+        $this->post_id = $post_id = $id ? (int)$id : false;
         $Posts = new PostsLogic();
 
         if (IS_POST) {
@@ -484,6 +469,8 @@ class PostsController extends AdminBaseController
             if ($Posts->where(array("post_id" => $post_data["post_id"]))->save($post_data)) {
                 $this->jsonReturn(1, "已经更新", $url);
             } else {
+                cookie('post_add'. $post_data["post_id"], gzcompress(json_encode($post_data)), 3600000);
+                //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
                 $this->jsonReturn(0, "更新失败", $url);
             }
         } else {
@@ -505,6 +492,8 @@ class PostsController extends AdminBaseController
             $tpl_type_list = $PostEvent->getTplList();
 
             $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
+            $this->assign('post_status', gen_opinion_list(get_opinion("post_status"), $post['post_status']));
+            $this->assign('post_type', gen_opinion_list(get_opinion("post_type"), $post['post_type']));
 
 
             //投稿员只能看到自己的
@@ -533,7 +522,7 @@ class PostsController extends AdminBaseController
 
             $this->assign("publish", "更新");
 //            $this->display('add');
-            $this->display('post_v2');
+            $this->display('post_v3');
 
         }
 
