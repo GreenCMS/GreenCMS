@@ -40,7 +40,8 @@ img {
 }
 
 .green_background {
-    background-image: url(../images/1/indexnav.png);
+    /*background-image: url(../images/1/indexnav.png);*/
+    background: #22427f;
 
 
     width: 100%;
@@ -366,7 +367,7 @@ img {
 .headerwrap .header {
     /*width: 940px;*/
     width: 75%;
-    margin: 0px auto;
+    margin: 0 auto;
     height: 35px;
     line-height: 35px;
     color: #ced7ce;
