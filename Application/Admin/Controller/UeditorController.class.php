@@ -21,12 +21,23 @@ use Think\Upload;
 class UeditorController extends AdminBaseController
 {
 
+
+    private $post_id = 0;
+    private $sub_name = array('date', 'Y/m-d');
+
+
     /**
      *
      */
     public function __construct()
     {
         parent::__construct();
+
+        date_default_timezone_set("Asia/Shanghai");
+
+
+        $this->post_id=(I('param.post_id', 0));
+
         error_reporting(E_ERROR | E_WARNING);
     }
 
@@ -35,88 +46,9 @@ class UeditorController extends AdminBaseController
      */
     public function index()
     {
-        $this->display();
+        // $this->display();
     }
 
-    /**
-     *
-     */
-    public function getContent()
-    {
-
-
-        echo '<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-            <script src="' . __ROOT__ . '/Extend/Ueditor/ueditor.parse.js" type="text/javascript"></script>
-            <script>' . " uParse('.content',{
-                  'highlightJsUrl':'" . __ROOT__ . "/Extend/Ueditor/third-party/SyntaxHighlighter/shCore.js',
-                  'highlightCssUrl':" . __ROOT__ . "/Extend/Ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
-              })</script>";
-
-
-        $content = htmlspecialchars(stripslashes($_REQUEST ['myEditor']));
-
-        // 存入数据库或者其他操作
-
-        // 显示
-        echo "第1个编辑器的值";
-        echo "<div class='content'>" . htmlspecialchars_decode($content) . "</div>";
-
-    }
-
-    /**
-     *
-     */
-    public function fileUp()
-    {
-        header("Content-Type: text/html; charset=utf-8");
-
-        $config = array(
-            "savePath" => 'File/',
-            "maxSize" => 10000000, // 单位B
-            "exts" => array("rar", "doc", "docx", "zip", "pdf", "txt", "ppt", "pptx", "xls", "xlsx"),
-            "subName" => array('date', 'Y/m-d'),
-        );
-
-        $upload = new Upload($config);
-        $info = $upload->upload();
-
-        if ($info) {
-            $state = "SUCCESS";
-        } else {
-            $state = "ERROR" . $upload->getError();
-        }
-        /**
-         * 得到上传文件所对应的各个参数,数组结构
-         * array(1) {
-         * ["upfile"] => array(9) {  //表单中字段名称
-         * ["name"] => string(8) "head.jpg"  //源文件名称
-         * ["type"] => string(10) "image/jpeg" //mine type
-         * ["size"] => int(35578)  //文件大小
-         * ["key"] => string(3) "img" //
-         * ["ext"] => string(3) "jpg" //后缀
-         * ["md5"] => string(32) "70f514f29b318f4cd6d8a4089a989f3c"
-         * ["sha1"] => string(40) "d9c0a401b64a394ff71085205036b8a5d0e4a74d"
-         * ["savename"] => string(17) "539992b8670f3.jpg" //保存名称
-         * ["savepath"] => string(17) "Links/2014/06-12/" //保存路径
-         * }
-         * }
-         */
-
-
-        $file_path_full = $info['upfile']['urlpath'];
-
-
-        /**
-         * 向浏览器返回数据json数据
-         * {
-         *   'url'      :'a.rar',        //保存后的文件路径
-         *   'fileType' :'.rar',         //文件描述，对图片来说在前端会添加到title属性上
-         *   'original' :'编辑器.jpg',   //原始文件名
-         *   'state'    :'SUCCESS'       //上传状态，成功时返回SUCCESS,其他任何值将原样返回至图片上传框中
-         * }
-         */
-        echo '{"url":"' . $file_path_full . '","fileType":".' . $info['upfile']['ext'] . '","original":"' . $info['upfile']['name'] . '","state":"' . $state . '"}';
-    }
 
     /**
      *
@@ -159,6 +91,94 @@ class UeditorController extends AdminBaseController
 //    }
 
     /**
+     *
+     */
+    public function getContent()
+    {
+
+
+        echo '<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+            <script src="' . __ROOT__ . '/Extend/Ueditor/ueditor.parse.js" type="text/javascript"></script>
+            <script>' . " uParse('.content',{
+                  'highlightJsUrl':'" . __ROOT__ . "/Extend/Ueditor/third-party/SyntaxHighlighter/shCore.js',
+                  'highlightCssUrl':" . __ROOT__ . "/Extend/Ueditor/third-party/SyntaxHighlighter/shCoreDefault.css'
+              })</script>";
+
+
+        $content = htmlspecialchars(stripslashes($_REQUEST ['myEditor']));
+
+        // 存入数据库或者其他操作
+
+        // 显示
+        echo "第1个编辑器的值";
+        echo "<div class='content'>" . htmlspecialchars_decode($content) . "</div>";
+
+    }
+
+    /**
+     *
+     */
+    public function fileUp()
+    {
+        // header("Content-Type: text/html; charset=utf-8");
+
+
+        $config = array(
+            "savePath" => 'File/',
+            "maxSize" => get_opinion('sqlFileSize', false, 20000000), // 单位B
+            "exts" => explode(",", get_opinion("attachFileSuffix", false, 'zip,rar,doc,docx,zip,pdf,txt,ppt,pptx,xls,xlsx')),
+            "subName" => $this->sub_name,
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+
+        if ($info) {
+            $state = "SUCCESS";
+        } else {
+            $state = "ERROR" . $upload->getError();
+        }
+        /**
+         * 得到上传文件所对应的各个参数,数组结构
+         * array(1) {
+         * ["upfile"] => array(9) {  //表单中字段名称
+         * ["name"] => string(8) "head.jpg"  //源文件名称
+         * ["type"] => string(10) "image/jpeg" //mine type
+         * ["size"] => int(35578)  //文件大小
+         * ["key"] => string(3) "img" //
+         * ["ext"] => string(3) "jpg" //后缀
+         * ["md5"] => string(32) "70f514f29b318f4cd6d8a4089a989f3c"
+         * ["sha1"] => string(40) "d9c0a401b64a394ff71085205036b8a5d0e4a74d"
+         * ["savename"] => string(17) "539992b8670f3.jpg" //保存名称
+         * ["savepath"] => string(17) "Links/2014/06-12/" //保存路径
+         * }
+         * }
+         */
+
+
+        //save img info here
+
+
+        /**
+         * 向浏览器返回数据json数据
+         * {
+         *   'url'      :'a.rar',        //保存后的文件路径
+         *   'fileType' :'.rar',         //文件描述，对图片来说在前端会添加到title属性上
+         *   'original' :'编辑器.jpg',   //原始文件名
+         *   'state'    :'SUCCESS'       //上传状态，成功时返回SUCCESS,其他任何值将原样返回至图片上传框中
+         * }
+         */
+
+        $return_data['url'] = $info['upfile']['urlpath'];
+        $return_data['fileType'] = $info['upfile']['ext'];
+        $return_data['original'] = $info['upfile']['name'];
+        $return_data['state'] = $state;
+
+        $this->ajaxReturn($return_data);
+
+    }
+
+    /**
      * 获取远程图片
      */
     public function getRemoteImage()
@@ -169,7 +189,7 @@ class UeditorController extends AdminBaseController
         $config = array(
             "savePath" => Upload_PATH . 'remote/' . date('Y') . '/' . date('m') . '/', //保存路径
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp"), //文件允许格式
-            "maxSize" => 30000 //文件大小限制，单位KB
+            "maxSize" => get_opinion('sqlImgSize', false, 20000000),
         );
         $uri = htmlspecialchars($_REQUEST['upfile']);
         $uri = str_replace("&amp;", "&", $uri);
@@ -196,7 +216,7 @@ class UeditorController extends AdminBaseController
                 continue;
             }
 
-            if(!defined('SAE_TMP_PATH')){
+            if (!defined('SAE_TMP_PATH')) {
                 //获取请求头
                 $heads = get_headers($imgUrl);
                 //死链检测
@@ -252,7 +272,7 @@ class UeditorController extends AdminBaseController
                     File::writeFile($tmpName, $img, "a");
 
                     array_push($tmpNames, __ROOT__ . '/' . $tmpName);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     array_push($tmpNames, "error");
                 }
             } else {
@@ -260,7 +280,7 @@ class UeditorController extends AdminBaseController
 
                 $Storage = new \SaeStorage();
                 $domain = C('SaeStorage');
-                $destFileName = 'remote/' . date('Y') . '/' . date('m') . '/'  . rand(1, 10000) . time() . strrchr($imgUrl, '.');
+                $destFileName = 'remote/' . date('Y') . '/' . date('m') . '/' . rand(1, 10000) . time() . strrchr($imgUrl, '.');
                 $result = $Storage->write($domain, $destFileName, $img, -1);
                 Log::write('$destFileName:' . $destFileName);
                 if ($result) {
@@ -290,9 +310,10 @@ class UeditorController extends AdminBaseController
     public function getMovie()
     {
 
-        $key = htmlspecialchars($_POST["searchKey"]);
-        $type = htmlspecialchars($_POST["videoType"]);
-        $html = file_get_contents('http://api.tudou.com/v3/gw?method=item.search&appKey=myKey&format=json&kw=' . $key . '&pageNo=1&pageSize=20&channelId=' . $type . '&inDays=7&media=v&sort=s');
+        $key = get_opinion("tudouSearchKey");
+        $type = I('post.videoType');
+        $html = file_get_contents('http://api.tudou.com/v3/gw?method=item.search&appKey=myKey&format=json&kw=' .
+            $key . '&pageNo=1&pageSize=20&channelId=' . $type . '&inDays=7&media=v&sort=s');
         echo $html;
     }
 
@@ -361,18 +382,17 @@ class UeditorController extends AdminBaseController
      */
     public function imageUp()
     {
-        header("Content-Type: text/html; charset=utf-8");
+     //   header("Content-Type: text/html; charset=utf-8");
 
-        date_default_timezone_set("Asia/chongqing");
         // 上传图片框中的描述表单名称，
         $title = htmlspecialchars($_POST ['pictitle'], ENT_QUOTES);
         $path = htmlspecialchars($_POST ['dir'], ENT_QUOTES);
 
         $config = array(
             "savePath" => 'Img/',
-            "maxSize" => 10000000, // 单位B
-            "exts" => array("gif", "png", "jpg", "jpeg", "bmp"),
-            "subName" => array('date', 'Y/m-d'),
+            "maxSize" => get_opinion('sqlImgSize', false, 20000000), // 单位B
+            "exts" => explode(",", get_opinion("attachImgSuffix", false, 'gif,png,jpg,jpeg,bmp')),
+            "subName" =>$this->sub_name,
         );
 
         $upload = new Upload($config);
@@ -403,7 +423,7 @@ class UeditorController extends AdminBaseController
          */
 
 
-        $file_path_full = $info['upfile']['urlpath'];
+
 
 
         /**
@@ -415,7 +435,16 @@ class UeditorController extends AdminBaseController
          * 'state' :'SUCCESS' //上传状态，成功时返回SUCCESS,其他任何值将原样返回至图片上传框中
          * }
          */
-        echo "{'url':'" . $file_path_full . "','title':'" . $title . "','original':'" . $info['upfile']['name'] . "','state':'" . $state . "'}";
+
+        $return_data['url'] = $info['upfile']['urlpath'];
+        $return_data['title'] =$title;
+        $return_data['original'] = $info['upfile']['name'];
+        $return_data['state'] = $state;
+
+        $this->ajaxReturn($return_data);
+
+
+
 
 
     }

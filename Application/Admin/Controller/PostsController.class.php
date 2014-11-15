@@ -419,7 +419,29 @@ class PostsController extends AdminBaseController
     }
 
 
+    private function initEditor($post_id){
 
+        /**
+         *    var URL_upload = "{:U('Admin/Ueditor/imageUp')}";
+        var URL_fileUp = "{:U('Admin/Ueditor/fileUp')}";
+        var URL_scrawlUp = "{:U('Admin/Ueditor/scrawlUp')}";
+        var URL_getRemoteImage = "{:U('Admin/Ueditor/getRemoteImage')}";
+        var URL_imageManager = "{:U('Admin/Ueditor/imageManager')}";
+        var URL_imageUp = "{:U('Admin/Ueditor/imageUp')}";
+        var URL_getMovie = "{:U('Admin/Ueditor/getMovie')}";
+        var URL_home = "";
+         */
+        $this->assign("URL_upload",U('Admin/Ueditor/imageUp',array("post_id"=>$post_id)) );
+        $this->assign("URL_fileUp",U('Admin/Ueditor/fileUp',array("post_id"=>$post_id))  );
+        $this->assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array("post_id"=>$post_id)) );
+        $this->assign("URL_getRemoteImage",U('Admin/Ueditor/getRemoteImage',array("post_id"=>$post_id))  );
+        $this->assign("URL_imageManager",U('Admin/Ueditor/imageManager',array("post_id"=>$post_id))  );
+        $this->assign("URL_imageUp", U('Admin/Ueditor/imageUp',array("post_id"=>$post_id)) );
+        $this->assign("URL_getMovie",U('Admin/Ueditor/getMovie',array("post_id"=>$post_id))  );
+        $this->assign("URL_home","" );
+
+
+    }
 
 
 
@@ -475,6 +497,7 @@ class PostsController extends AdminBaseController
             }
         } else {
 
+            $this->initEditor($id);
             //投稿员只能看到自己的
             if (!$this->noVerify()) {
                 $where['user_id'] = get_current_user_id();
@@ -791,7 +814,7 @@ class PostsController extends AdminBaseController
      * 无需审核直接发布
      * @return bool 如果不用审核返回true，需要返回false
      */
-    public function noVerify()
+    private function noVerify()
     {
         $user_id = get_current_user_id();
         $access_list = RBAC::getAccessList($user_id);

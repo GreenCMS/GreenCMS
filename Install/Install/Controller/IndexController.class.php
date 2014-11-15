@@ -159,9 +159,10 @@ class IndexController extends \Think\Controller
         mysql_query("set names 'utf8'");
 
 
+
+
+
         $file = WEB_ROOT . 'Install/Data/db_config_sample.php';
-
-
 
         if (!File::file_exists($file))
             $this->error('Install/Data/db_config_sample.php文件不存在,请检查');
@@ -176,9 +177,27 @@ class IndexController extends \Think\Controller
 
         if (!File::writeFile(WEB_ROOT . 'db_config.php', $content, 'w+')) {
             $this->error("数据库配置文件写入失败，请您手动根据Install/Data/db_config_sample.php文件在根目录创建文件");
-        }else{
-            
         }
+
+
+
+
+        $file = WEB_ROOT . 'Install/Data/const_config_sample.php';
+
+        if (!File::file_exists($file))
+            $this->error('Install/Data/const_config_sample.php文件不存在,请检查');
+        $content = File::readFile($file);
+
+        $content = str_replace("xxxxxxxxxx", substr(md5(time()),0,10), $content);
+
+        if (!File::writeFile(WEB_ROOT . 'const_config.php', $content, 'w+')) {
+            $this->error("常量配置文件写入失败");
+        }
+
+
+
+
+
 
         File::makeDir(WEB_ROOT . 'Data/Cache');
 

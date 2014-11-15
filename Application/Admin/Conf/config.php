@@ -126,6 +126,7 @@ $menu_arr = array(
             'System/user' => '用户设置',
 
             'System/post' => '文章设置',
+            'System/attach' => '附件设置',
             'System/url' => '链接设置',
             'System/safe' => '安全选项',
             'System/db' => '数据库设置',

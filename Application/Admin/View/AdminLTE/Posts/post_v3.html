@@ -5,20 +5,23 @@
     <title> {$action} | {:get_opinion('title')}</title>
 
     <include file="Public:head"/>
+
     <link href="__PUBLIC__/AdminLTE/css/timepicker/jquery-ui-1.8.17.custom.css" rel="stylesheet"/>
     <link href="__PUBLIC__/AdminLTE/css/timepicker/jquery-ui-timepicker-addon.css" rel="stylesheet"/>
 
     <script type="text/javascript">
         window.UEDITOR_HOME_URL = "__ROOT__/Extend/Ueditor/";
 
-        var URL_upload = "{:U('Admin/Ueditor/imageUp')}";
-        var URL_fileUp = "{:U('Admin/Ueditor/fileUp')}";
-        var URL_scrawlUp = "{:U('Admin/Ueditor/scrawlUp')}";
-        var URL_getRemoteImage = "{:U('Admin/Ueditor/getRemoteImage')}";
-        var URL_imageManager = "{:U('Admin/Ueditor/imageManager')}";
-        var URL_imageUp = "{:U('Admin/Ueditor/imageUp')}";
-        var URL_getMovie = "{:U('Admin/Ueditor/getMovie')}";
-        var URL_home = "";
+        var post_id ='{$post_id}';
+
+        var URL_upload = "{$URL_upload}";
+        var URL_fileUp = "{$URL_fileUp}";
+        var URL_scrawlUp =  "{$URL_scrawlUp}";
+        var URL_getRemoteImage = "{$URL_getRemoteImage}";
+        var URL_imageManager = "{$URL_imageManager}";
+        var URL_imageUp = "{$URL_imageUp}";
+        var URL_getMovie =  "{$URL_getMovie}";
+        var URL_home = "{$URL_home}";
 
     </script>
 

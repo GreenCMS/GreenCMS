@@ -32,6 +32,12 @@ class SystemController extends AdminBaseController
     }
 
 
+    public function attach()
+    {
+        $this->display();
+    }
+
+
     public function user()
     {
         $role_list = array_column_5(D('Role')->select(), 'name', 'id');

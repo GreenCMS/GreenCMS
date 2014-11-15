@@ -412,16 +412,19 @@ img {
 .headerwrap .logoarea {
     height: 100%;
     /*width: 940px;*/
-    width: 80%;
+    /*width: 80%;*/
+    width: 100%;
 
-    margin: auto auto;
+    margin: 0 auto;
     /*overflow: hidden;*/
 }
 
 .headerwrap .logoarea .logo {
-    float: left;
-    display: inline;
-    margin-top: 20px;
+    width: 400px;
+    /*float: left;*/
+    display: block;
+    margin: 20px auto 0;
+
 }
 
 .headerwrap .logoarea .logo img {
