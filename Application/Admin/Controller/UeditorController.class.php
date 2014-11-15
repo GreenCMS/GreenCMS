@@ -36,7 +36,7 @@ class UeditorController extends AdminBaseController
         date_default_timezone_set("Asia/Shanghai");
 
 
-        $this->post_id=(I('param.post_id', 0));
+        $this->post_id = (I('param.post_id', 0));
 
         error_reporting(E_ERROR | E_WARNING);
     }
@@ -189,7 +189,7 @@ class UeditorController extends AdminBaseController
         $config = array(
             "savePath" => Upload_PATH . 'remote/' . date('Y') . '/' . date('m') . '/', //保存路径
             "allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp"), //文件允许格式
-            "maxSize" => get_opinion('sqlImgSize', false, 20000000),
+            "maxSize" => get_opinion('attachImgSize', false, 20000000),
         );
         $uri = htmlspecialchars($_REQUEST['upfile']);
         $uri = str_replace("&amp;", "&", $uri);
@@ -216,6 +216,7 @@ class UeditorController extends AdminBaseController
                 continue;
             }
 
+            //sae环境 不兼容
             if (!defined('SAE_TMP_PATH')) {
                 //获取请求头
                 $heads = get_headers($imgUrl);
@@ -257,7 +258,7 @@ class UeditorController extends AdminBaseController
             }
 
             $savePath = $config['savePath'];
-            Log::write('$savePath:' . $savePath);
+
 
             if (!defined('SAE_TMP_PATH')) {
 
@@ -300,7 +301,17 @@ class UeditorController extends AdminBaseController
          *   'tip'   : '状态提示'
          * }
          */
-        echo "{'url':'" . implode("ue_separate_ue", $tmpNames) . "','tip':'远程图片抓取成功！','srcUrl':'" . $uri . "'}";
+        //save file info here
+
+        $return_data['url'] = implode("ue_separate_ue", $tmpNames) ;
+        $return_data['tip'] = '远程图片抓取成功！';
+        $return_data['srcUrl'] = $uri;
+
+        $this->ajaxReturn($return_data);
+
+
+
+  //      echo "{'url':'" . implode("ue_separate_ue", $tmpNames) . "','tip':'远程图片抓取成功！','srcUrl':'" . $uri . "'}";
     }
 
     /**
@@ -382,7 +393,7 @@ class UeditorController extends AdminBaseController
      */
     public function imageUp()
     {
-     //   header("Content-Type: text/html; charset=utf-8");
+        //   header("Content-Type: text/html; charset=utf-8");
 
         // 上传图片框中的描述表单名称，
         $title = htmlspecialchars($_POST ['pictitle'], ENT_QUOTES);
@@ -390,9 +401,9 @@ class UeditorController extends AdminBaseController
 
         $config = array(
             "savePath" => 'Img/',
-            "maxSize" => get_opinion('sqlImgSize', false, 20000000), // 单位B
+            "maxSize" => get_opinion('attachImgSize', false, 20000000), // 单位B
             "exts" => explode(",", get_opinion("attachImgSuffix", false, 'gif,png,jpg,jpeg,bmp')),
-            "subName" =>$this->sub_name,
+            "subName" => $this->sub_name,
         );
 
         $upload = new Upload($config);
@@ -423,9 +434,6 @@ class UeditorController extends AdminBaseController
          */
 
 
-
-
-
         /**
          * 向浏览器返回数据json数据
          * {
@@ -436,15 +444,15 @@ class UeditorController extends AdminBaseController
          * }
          */
 
+
+        //save img attch info
+
         $return_data['url'] = $info['upfile']['urlpath'];
-        $return_data['title'] =$title;
+        $return_data['title'] = $title;
         $return_data['original'] = $info['upfile']['name'];
         $return_data['state'] = $state;
 
         $this->ajaxReturn($return_data);
-
-
-
 
 
     }
