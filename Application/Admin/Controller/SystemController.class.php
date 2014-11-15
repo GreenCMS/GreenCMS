@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: SystemController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 下午5:28
  */
@@ -27,6 +27,12 @@ class SystemController extends AdminBaseController
      *
      */
     public function index()
+    {
+        $this->display();
+    }
+
+
+    public function attach()
     {
         $this->display();
     }

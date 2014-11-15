@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: TagController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-23
  * Time: 下午7:30
  */

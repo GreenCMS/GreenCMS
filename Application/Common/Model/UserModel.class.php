@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: UserModel.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 上午12:51
  */

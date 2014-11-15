@@ -2,14 +2,14 @@
 /**
  * Created by Green Studio.
  * File: AuthController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-4-22
  * Time: 下午6:14
  */
 /**
  * Created by Green Studio.
  * File: AuthController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-4-22
  * Time: 下午6:14
  */

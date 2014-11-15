@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: CatsLogic.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 上午12:34
  */
@@ -161,7 +161,7 @@ class CatsLogic extends RelationModel
      */
     public function getPostIdsByCat($cat_id)
     {
-        $cat = $this->getPosts($cat_id);
+        $cat = $this->getPostsByCat($cat_id);
         foreach ($cat as $key => $value) {
             $cat[$key] = $cat[$key]['post_id'];
         }

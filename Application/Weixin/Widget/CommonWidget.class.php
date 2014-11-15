@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: CommonWidget.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-25
  * Time: 上午10:41
  */

@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: HomeBaseController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-11
  * Time: 下午1:48
  */

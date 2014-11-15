@@ -1,7 +1,7 @@
 <?php
 /**
  * OEM 版本屏蔽左侧菜单
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-9-24
  * Time: 下午9:20
  */

@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: Uploader.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-27
  * Time: 上午9:26
  */

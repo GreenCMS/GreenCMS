@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: WeixinBaseController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-18
  * Time: 下午2:01
  */

@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: Weixinlog.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-25
  * Time: 上午11:10
  */

@@ -2,14 +2,14 @@
 /**
  * Created by Green Studio.
  * File: EmptyController.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-4-6
  * Time: 下午8:43
  */
 /**
  * Created by Green Studio.
  * File: EmptyController.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-4-6
  * Time: 下午8:43
  */

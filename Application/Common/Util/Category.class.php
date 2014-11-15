@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: Category.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-23
  * Time: 上午11:22
  * Use: Category Class For ThinkPHP 3.2

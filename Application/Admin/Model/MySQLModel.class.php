@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: MySQLModel.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-27
  * Time: 下午8:32
  */

@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: WordpressEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-20
  * Time: 上午11:23
  */

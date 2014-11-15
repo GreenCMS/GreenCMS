@@ -2,14 +2,14 @@
 /**
  * Created by Green Studio.
  * File: IndexController.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-4-22
  * Time: 下午5:58
  */
 /**
  * Created by Green Studio.
  * File: IndexController.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-4-22
  * Time: 下午5:58
  */

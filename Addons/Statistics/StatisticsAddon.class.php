@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: StatisticsAddmin.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-3-9
  * Time: 下午12:28
  */

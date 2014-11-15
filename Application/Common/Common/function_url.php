@@ -2,7 +2,7 @@
 /**
  * 全新链接函数
  * Created by PhpStorm.
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-6-11
  * Time: 下午10:45
  */

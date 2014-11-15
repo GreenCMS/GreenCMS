@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: PostsController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 上午10:43
  */
@@ -62,8 +62,22 @@ class PostsController extends AdminBaseController
 
     }
 
+
+
+
+
     /**
-     * 页面列表
+     * ==============================================================
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     *              页面
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     * ==============================================================
+     */
+
+
+
+    /**
+     * 通用页面列表
      */
     public function single($post_type = 'single', $post_status = 'publish', $order = 'post_date desc', $keyword = '')
     {
@@ -77,6 +91,7 @@ class PostsController extends AdminBaseController
      * @param string $order 顺序
      * @param string $keyword 搜索关键词
      * @param string $tpl
+     * @param string $name
      */
     public function index($post_type = 'single', $post_status = 'publish', $order = 'post_date desc',
                           $keyword = '', $tpl = 'index_no_js', $name = '')
@@ -130,22 +145,6 @@ class PostsController extends AdminBaseController
     }
 
     /**
-     * 无需审核直接发布
-     * @return bool 如果不用审核返回true，需要返回false
-     */
-    public function noVerify()
-    {
-        $user_id = get_current_user_id();
-        $access_list = RBAC::getAccessList($user_id);
-        if ($access_list['ADMIN']['POSTS']['NOVERIFY'] != '' || ($user_id == 1)) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    /**
      * 页面列表
      */
     public function page($post_type = 'page', $post_status = 'publish', $order = 'post_date desc', $keyword = '')
@@ -154,39 +153,81 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 回收站列表
+     * @param string $post_type
+     */
+    public function recycle($post_type = "all")
+    {
+        $this->index($post_type, 'preDel', 'post_date desc', '', 'recycle', "回收站");
+        die();
+
+
+    }
+
+    /**
+     * 未通过文章列表
+     * @param string $post_type
+     */
+    public function reverify($post_type = "all")
+    {
+
+        $this->index($post_type, 'reverify', 'post_date desc', '', 'reverify', "未通过");
+        die();
+
+    }
+
+    /**
+     * 草稿箱列表
+     * @param string $post_type
+     */
+    public function draft($post_type = "all")
+    {
+        $this->index($post_type, 'draft', 'post_date desc', '', 'draft', "草稿箱");
+        die();
+
+    }
+
+    /**
+     * 待审核列表
+     * @param string $post_type
+     */
+    public function unverified($post_type = "all")
+    {
+        $this->index($post_type, 'unverified', 'post_date desc', '', 'unverified', "待审核");
+        die();
+    }
+
+
+
+
+
+    /**
+     * ==============================================================
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     *              文章操作
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     * ==============================================================
+     */
+
+
+
+    /**
      * 添加文章的操作
      */
     public function add()
     {
-//        dump(gen_uuid());
+        $PostsEvent=new PostsEvent();
+        $post_id=$PostsEvent->insertEmpty();
 
 
-        $PostEvent = new PostsEvent();
+ //       $this->redirect(U("Admin/Posts/posts",array("id"=>$post_id)));
+//      $post_restored = $PostEvent->restoreFromCookie();
+
+        $this->posts($post_id);
+
+        die();
 
 
-        $tpl_list = $PostEvent->getTplList();
-        $post_restored = $PostEvent->restoreFromCookie();
-
-
-        //投稿员只能看到自己的
-        if (!$this->noVerify()) {
-            $user_id = get_current_user_id();
-            $cats = D('User', 'Logic')->getCatAccess($user_id);
-            $tags = array();
-        } else {
-            $cats = D('Cats', 'Logic')->category();
-            $tags = D('Tags', 'Logic')->select();
-        }
-
-        $this->assign("info", $post_restored);
-        $this->assign("tags", $tags);
-        $this->assign("cats", $cats);
-        $this->assign('tpl_type', gen_opinion_list($tpl_list));
-
-        $this->assign("handle", U('Admin/Posts/addHandle'));
-        $this->assign("publish", "发布");
-
-        $this->display('post_v2');
     }
 
     /**
@@ -258,7 +299,82 @@ class PostsController extends AdminBaseController
 
     }
 
+
+
+
     /**
+     * 通用文章状态修改器
+     * @param $id
+     * @param string $post_status
+     * @param string $message
+     */
+    private function changePostStatue($id,$post_status="publish",$message=""){
+        $PostEvent = new PostsEvent();
+
+        if ($PostEvent->hasPost($id) == false) {
+            $this->error("不存在该记录");
+        }
+
+        if ($PostEvent->changePostStatue($id, $post_status)) {
+            $this->success($message.'成功');
+        } else {
+            $this->error($message.'失败');
+        }
+
+
+
+    }
+
+
+
+    /**
+     * 还原文章
+     * @param int $id
+     */
+    public function recycleHandle($id = 0)
+    {
+        $this->changePostStatue($id,"publish","恢复");
+    }
+
+    /**
+     * 修改为已审核
+     * @param $id
+     * @param string $post_status
+     */
+    public function unverifiedHandle($id, $post_status = 'publish')
+    {
+        $this->changePostStatue($id,$post_status,"审核状态修改");
+    }
+
+    /**
+     * 修改为未审核
+     * @param $id
+     */
+    public function reverifyHandle($id)
+    {
+        $this->changePostStatue($id,"unverified","审核状态修改");
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * ==============================================================
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     *              回收站
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     * ==============================================================
+     */
+
+    /**
+     * 删除到回收站
      * @param int $id
      */
     public function preDel($id = 0)
@@ -271,6 +387,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 彻底删除
      * @param int $id
      */
     public function del($id = 0)
@@ -283,68 +400,9 @@ class PostsController extends AdminBaseController
         }
     }
 
-    /**
-     * @param string $post_type
-     */
-    public function unverified($post_type = "all")
-    {
-
-        $this->index($post_type, 'unverified', 'post_date desc', '', 'unverified',"待审核");
-        die();
-
-    }
 
     /**
-     * @param $id
-     * @param string $post_status
-     */
-    public function unverifiedHandle($id, $post_status = 'publish')
-    {
-
-        $post_detail = D('Posts', 'Logic')->relation(true)->where(array("post_id" => $id))->find();
-        if (empty($post_detail)) {
-            $this->error("不存在该记录");
-        }
-
-        $post_data['post_status'] = $post_status;
-
-        if (D('Posts', 'Logic')->where(array('post_id' => $id))->setField($post_data)) {
-            $this->success('审核状态修改成功');
-        } else {
-            $this->error('审核状态修改失败');
-        }
-
-    }
-
-    /**
-     * @param string $post_type
-     */
-    public function recycle($post_type = "all")
-    {
-
-
-        $this->index($post_type, 'preDel', 'post_date desc', '', 'recycle',"回收站");
-        die();
-
-
-    }
-
-    /**
-     * @param int $id
-     */
-    public function recycleHandle($id = 0)
-    {
-
-        $data['post_status'] = 'publish';
-        if (D('Posts')->where(array('post_id' => $id))->setField($data)) {
-            $this->success('恢复成功');
-        } else {
-            $this->error('恢复失败');
-        }
-    }
-
-    /**
-     *
+     * 清空回收站
      */
     public function emptyRecycleHandle()
     {
@@ -361,37 +419,30 @@ class PostsController extends AdminBaseController
     }
 
 
-    /**
-     * @param string $post_type
-     */
-    public function reverify($post_type = "all")
-    {
+    private function initEditor($post_id){
 
-        $this->index($post_type, 'reverify', 'post_date desc', '', 'reverify',"未通过");
-        die();
+        /**
+         *    var URL_upload = "{:U('Admin/Ueditor/imageUp')}";
+        var URL_fileUp = "{:U('Admin/Ueditor/fileUp')}";
+        var URL_scrawlUp = "{:U('Admin/Ueditor/scrawlUp')}";
+        var URL_getRemoteImage = "{:U('Admin/Ueditor/getRemoteImage')}";
+        var URL_imageManager = "{:U('Admin/Ueditor/imageManager')}";
+        var URL_imageUp = "{:U('Admin/Ueditor/imageUp')}";
+        var URL_getMovie = "{:U('Admin/Ueditor/getMovie')}";
+        var URL_home = "";
+         */
+        $this->assign("URL_upload",U('Admin/Ueditor/imageUp',array("post_id"=>$post_id)) );
+        $this->assign("URL_fileUp",U('Admin/Ueditor/fileUp',array("post_id"=>$post_id))  );
+        $this->assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array("post_id"=>$post_id)) );
+        $this->assign("URL_getRemoteImage",U('Admin/Ueditor/getRemoteImage',array("post_id"=>$post_id))  );
+        $this->assign("URL_imageManager",U('Admin/Ueditor/imageManager',array("post_id"=>$post_id))  );
+        $this->assign("URL_imageUp", U('Admin/Ueditor/imageUp',array("post_id"=>$post_id)) );
+        $this->assign("URL_getMovie",U('Admin/Ueditor/getMovie',array("post_id"=>$post_id))  );
+        $this->assign("URL_home","" );
 
-    }
-
-
-    /**
-     * @param $id
-     */
-    public function reverifyHandle($id)
-    {
-        $post_detail = D('Posts', 'Logic')->relation(true)->where(array("post_id" => $id))->find();
-        if (empty($post_detail)) {
-            $this->error("不存在该记录");
-        }
-
-        $post_data['post_status'] = "unverified";
-
-        if (D('Posts', 'Logic')->where(array('post_id' => $id))->setField($post_data)) {
-            $this->success('审核状态修改成功');
-        } else {
-            $this->error('审核状态修改失败');
-        }
 
     }
+
 
 
     /**
@@ -399,28 +450,30 @@ class PostsController extends AdminBaseController
      */
     public function posts($id = -1)
     {
+        $PostEvent = new PostsEvent();
 
-        $this->action = '编辑文章';
-        $this->action_name = 'posts';
-        $this->post_id = $post_id = $_GET['id'] ? (int)$_GET['id'] : false;
+
+
+        $this->post_id = $post_id = $id ? (int)$id : false;
         $Posts = new PostsLogic();
+
         if (IS_POST) {
             $post_data = $_POST;
 
             $post_data['post_modified'] = date("Y-m-d H:m:s", time());
             $post_data['post_type'] = $_POST['post_type'] ? $_POST['post_type'] : 'single';
-            M("post_cat")->where(array("post_id" => $post_data['post_id']))->delete();
-            M("post_tag")->where(array("post_id" => $post_data['post_id']))->delete();
+            D("post_cat")->where(array("post_id" => $post_data['post_id']))->delete();
+            D("post_tag")->where(array("post_id" => $post_data['post_id']))->delete();
 
             if (!empty($_POST['cats'])) {
                 foreach ($_POST['cats'] as $cat_id) {
-                    M("Post_cat")->add(array("cat_id" => $cat_id, "post_id" => $post_data['post_id']));
+                    D("Post_cat")->add(array("cat_id" => $cat_id, "post_id" => $post_data['post_id']));
                 };
             }
 
             if (!empty($_POST['tags'])) {
                 foreach ($_POST['tags'] as $tag_id) {
-                    M("Post_tag")->add(array("tag_id" => $tag_id, "post_id" => $post_data['post_id']));
+                    D("Post_tag")->add(array("tag_id" => $tag_id, "post_id" => $post_data['post_id']));
                 }
             }
 
@@ -434,13 +487,17 @@ class PostsController extends AdminBaseController
             }
 
 
-            if ($Posts->save($post_data)) {
+            if ($Posts->where(array("post_id" => $post_data["post_id"]))->save($post_data)) {
                 $this->jsonReturn(1, "已经更新", $url);
             } else {
+                //处理失败
+                cookie('post_add'. $post_data["post_id"], gzcompress(json_encode($post_data)), 3600000);
+                //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
                 $this->jsonReturn(0, "更新失败", $url);
             }
         } else {
 
+            $this->initEditor($id);
             //投稿员只能看到自己的
             if (!$this->noVerify()) {
                 $where['user_id'] = get_current_user_id();
@@ -454,46 +511,60 @@ class PostsController extends AdminBaseController
                 $this->error("不存在该记录");
             }
 
-            $PostEvent = new PostsEvent();
             $tpl_type_list = $PostEvent->getTplList();
 
-            $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
-
-
-            //投稿员只能看到自己的
+            //投稿员只能看到权限内部的分类
             if (!$this->noVerify()) {
-                $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
-                $user = D('User', 'Logic')->detail($user_id);
-                $role_id = $user["user_role"] ["role_id"];
-                $role = D('Role')->where(array('id' => $role_id))->find();
-                $where['cat_id'] = array('in', json_decode($role ["cataccess"]));
-                $cats = D('Cats', 'Logic')->where($where)->select();
+                $user = D('User', 'Logic')->detail(( int )$_SESSION [C('USER_AUTH_KEY')]);
+                $role = D('Role')->where(array('id' =>  $user["user_role"] ["role_id"]))->find();
+                $cats = D('Cats', 'Logic')->where(array('in', json_decode($role ["cataccess"])))->select();
                 foreach ($cats as $key => $value) {
                     $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
                 }
-
+                $tags =array();
             } else {
-
                 $cats = D('Cats', 'Logic')->category();
                 $tags = D('Tags', 'Logic')->select();
             }
 
+
             $this->assign("cats", $cats);
             $this->assign("tags", $tags);
+
+            $this->assign('tpl_type', gen_opinion_list($tpl_type_list, $post['post_template']));
+            $this->assign('post_status', gen_opinion_list(get_opinion("post_status"), $post['post_status']));
+            $this->assign('post_type', gen_opinion_list(get_opinion("post_type"), $post['post_type']));
+
 
             $this->assign("info", $post);
             $this->assign("handle", U('Admin/Posts/posts', array('id' => $id), true, false));
 
-            $this->assign("publish", "更新");
-//            $this->display('add');
-            $this->display('post_v2');
+            $this->assign("action", '编辑文章');
+            $this->assign("action_name", 'posts');
+
+            $this->display('post_v3');
 
         }
 
     }
 
+
+
+
+
+
+
+
     /**
-     *
+     * ==============================================================
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     *              分类 与 标签
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     * ==============================================================
+     */
+
+    /**
+     * 分类
      */
     public function category()
     {
@@ -508,7 +579,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
-     *
+     * 添加分类
      */
     public function addCategory()
     {
@@ -521,7 +592,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
-     *
+     * 处理添加分类
      */
     public function addCategoryHandle()
     {
@@ -543,6 +614,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 编辑分类
      * @param $id
      */
     public function editCategory($id)
@@ -560,6 +632,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 处理编辑分类
      * @param $id
      */
     public function editCategoryHandle($id)
@@ -578,6 +651,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 删除分类
      * @param $id
      */
     public function delCategory($id = -1)
@@ -604,7 +678,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
-     *
+     * 标签
      */
     public function tag()
     {
@@ -630,7 +704,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
-     *
+     * 添加标签
      */
     public function addTag()
     {
@@ -639,7 +713,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
-     *
+     * 处理添加标签
      */
     public function addTagHandle()
     {
@@ -660,6 +734,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 编辑标签
      * @param $id
      */
     public function editTag($id)
@@ -674,6 +749,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 处理编辑标签
      * @param $id
      */
     public function editTagHandle($id)
@@ -696,6 +772,7 @@ class PostsController extends AdminBaseController
     }
 
     /**
+     * 删除标签
      * @param $id
      */
     public function delTag($id = -1)
@@ -708,11 +785,45 @@ class PostsController extends AdminBaseController
     }
 
 
+
+
+
+
     /**
+     * ==============================================================
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     *              其他
+     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     * ==============================================================
+     */
+
+
+
+    /**
+     * 通用列表页面
      * @function 未知类型单页
      */
     public function _empty($method, $args)
     {
         $this->index($method, I('get.post_status', 'publish'), I('get.order', 'post_date desc'), I('get.keyword', ''));
     }
+
+
+
+    /**
+     * 无需审核直接发布
+     * @return bool 如果不用审核返回true，需要返回false
+     */
+    private function noVerify()
+    {
+        $user_id = get_current_user_id();
+        $access_list = RBAC::getAccessList($user_id);
+        if ($access_list['ADMIN']['POSTS']['NOVERIFY'] != '' || ($user_id == 1)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }

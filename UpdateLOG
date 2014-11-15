@@ -1,6 +1,15 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
 
+version v2.1.1107 build 20141107
+文章列表增强
+修复微信模块Bug
+Weixin Enhance
+优化后台菜单
+OEM首页
+GreenTag更新，支持链接图片前台显示
+
+
 version v2.1.1001 build 20141001
 细节优化
 删除无用文件

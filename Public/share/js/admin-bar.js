@@ -1,5 +1,5 @@
 /**
- * Created by TianShuo on 14-8-23.
+ * Created by Timothy Zhang on 14-8-23.
  */
 "undefined" != typeof jQuery ? ("undefined" == typeof jQuery.fn.hoverIntent && !function (a) {
     a.fn.hoverIntent = function (b, c, d) {

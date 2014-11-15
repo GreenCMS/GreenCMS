@@ -2,7 +2,7 @@
 /**
  * Created by Green Studio.
  * File: config.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-15
  * Time: 下午11:23
  */
@@ -53,6 +53,9 @@ $menu_arr = array(
             'Posts/category' => '分类管理',
             'Posts/tag' => '标签管理',
             'Posts/add' => '添加文章',
+
+
+            'Posts/draft' => '草稿箱',
             'Posts/reverify' => '未通过',
             'Posts/unverified' => '待审核',
             'Posts/recycle' => '回收站',
@@ -123,6 +126,7 @@ $menu_arr = array(
             'System/user' => '用户设置',
 
             'System/post' => '文章设置',
+            'System/attach' => '附件设置',
             'System/url' => '链接设置',
             'System/safe' => '安全选项',
             'System/db' => '数据库设置',
