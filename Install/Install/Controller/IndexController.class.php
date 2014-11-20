@@ -10,13 +10,14 @@
 namespace Install\Controller;
 
 use Common\Util\File;
+use Think\Controller;
 
 
 /**
  * Class IndexController
  * @package Install\Controller
  */
-class IndexController extends \Think\Controller
+class IndexController extends Controller
 {
     /**
      *
@@ -30,7 +31,8 @@ class IndexController extends \Think\Controller
         $lockFile = WEB_ROOT . 'Data/Install.lock';
 
         if (File::file_exists($lockFile)) {
-            $this->error(" 你已经安装过GreenCMS，如果想重新安装，请先删除站点Data目录下的 install.lock 文件，然后再安装。");
+            $this->error(" 你已经安装过GreenCMS，如果想重新安装，
+            请先删除站点Data目录下的 install.lock 文件，然后再安装。");
         }
 
 
