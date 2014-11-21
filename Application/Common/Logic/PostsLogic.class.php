@@ -19,7 +19,7 @@ use Think\Model\RelationModel;
 class PostsLogic extends RelationModel
 {
 
-    public $hp_cache=false;
+    public $hp_cache=APP_Cache;
     /**
      * @param $id 文章id或者其他识别符
      * @param bool $relation 是否关联其他信息
@@ -62,7 +62,7 @@ class PostsLogic extends RelationModel
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
-        $post_list = D('Posts')->cache($this->hp_cache)->where($info)->order('post_top desc ,' . $order)
+        $post_list = D('Posts')->where($info)->order('post_top desc ,' . $order)
             ->limit($limit)->relation($relation)->select();
         return $post_list;
     }

@@ -61,7 +61,7 @@ abstract class BaseController extends Controller {
 		if ($customConfig && APP_Cache) {
 			$options = $customConfig;
 		} else {
-			$options = D('Options')->where(array('autoload' => 'yes'))->select();
+			$options = D('Options')->select();
 
 			if (APP_Cache) {S('customConfig', $options);
 			}

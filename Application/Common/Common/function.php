@@ -92,7 +92,7 @@ function get_opinion($key, $realtime = false, $default = '')
         } else {
             $res = S('option_' . $key);
             if ($res) return $res;
-            else return get_opinion($key, true, $default = '');
+            else return get_opinion($key, true, $default );
         }
     } else {
         $res = D('Options')->where(array('option_name' => $key))->find();
@@ -128,6 +128,7 @@ function set_opinion($key, $value)
         $data ['option_id'] = $find [0] ['option_id'];
         $options->save($data);
     }
+    S('option_' . $key,$value);
 
 }
 
