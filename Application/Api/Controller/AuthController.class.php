@@ -1,13 +1,13 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: AuthController.class.php
  * User: Timothy Zhang
  * Date: 14-4-22
  * Time: 下午6:14
  */
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: AuthController.class.php
  * User: Timothy Zhang
  * Date: 14-4-22

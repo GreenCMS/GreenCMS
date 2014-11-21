@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: Upgrade.php
  * User: Timothy Zhang
  * Date: 14-4-20

@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: CustomController.class.php
  * User: Timothy Zhang
  * Date: 14-1-26

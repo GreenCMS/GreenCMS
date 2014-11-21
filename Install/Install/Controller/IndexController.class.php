@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: IndexController.class.php
  * User: Timothy Zhang
  * Date: 14-2-6
@@ -132,7 +132,6 @@ class IndexController extends Controller
         $db_name = $_POST["db_name"];
         $db_prefix = $_POST["db_prefix"];
 
- 
 
         if ($_POST['admin_password'] != $_POST['admin_password2'] || trim($_POST['admin_password']) == '' || trim($_POST['admin_password2']) == '')
             $this->error("两次输入的密码不一致，请重新设定！，或者密码为空");
@@ -161,9 +160,6 @@ class IndexController extends Controller
         mysql_query("set names 'utf8'");
 
 
-
-
-
         $file = WEB_ROOT . 'Install/Data/db_config_sample.php';
 
         if (!File::file_exists($file))
@@ -182,23 +178,17 @@ class IndexController extends Controller
         }
 
 
-
-
         $file = WEB_ROOT . 'Install/Data/const_config_sample.php';
 
         if (!File::file_exists($file))
             $this->error('Install/Data/const_config_sample.php文件不存在,请检查');
         $content = File::readFile($file);
 
-        $content = str_replace("xxxxxxxxxx", substr(md5(time()),0,10), $content);
+        $content = str_replace("xxxxxxxxxx", substr(md5(time()), 0, 10), $content);
 
         if (!File::writeFile(WEB_ROOT . 'const_config.php', $content, 'w+')) {
             $this->error("常量配置文件写入失败");
         }
-
-
-
-
 
 
         File::makeDir(WEB_ROOT . 'Data/Cache');
@@ -259,38 +249,35 @@ class IndexController extends Controller
         File::delAll(WEB_ROOT . 'Data/Temp');
 
 
-        $dirs=array();
+        $dirs = array();
 
-        array_push($dirs,WEB_ROOT . 'Extend');
-        array_push($dirs,WEB_ROOT . 'Public');
-        array_push($dirs,WEB_ROOT . 'Upload');
-        array_push($dirs,WEB_ROOT . 'Data/Cache');
-        array_push($dirs,WEB_ROOT . 'Data/Temp');
-        array_push($dirs,LOG_PATH);
-        array_push($dirs,RUNTIME_PATH);
-        array_push($dirs,WEB_CACHE_PATH);
-        array_push($dirs,DB_Backup_PATH);
-        array_push($dirs,System_Backup_PATH);
-        array_push($dirs,Upgrade_PATH);
-
-
+        array_push($dirs, WEB_ROOT . 'Extend');
+        array_push($dirs, WEB_ROOT . 'Public');
+        array_push($dirs, WEB_ROOT . 'Upload');
+        array_push($dirs, WEB_ROOT . 'Data/Cache');
+        array_push($dirs, WEB_ROOT . 'Data/Temp');
+        array_push($dirs, LOG_PATH);
+        array_push($dirs, RUNTIME_PATH);
+        array_push($dirs, WEB_CACHE_PATH);
+        array_push($dirs, DB_Backup_PATH);
+        array_push($dirs, System_Backup_PATH);
+        array_push($dirs, Upgrade_PATH);
 
 
         build_dir_secure($dirs);
         //A('Install/Test')->init($key = 'zts');
-        
-        
-       // $Access = new AccessEvent();
-      //   $Access->initAdmin();
-       //  $Access->initWeixin();
 
 
-       $site_url= get_opinion("site_url");
-       // File::delAll(WEB_ROOT . 'Install/Data');
+        // $Access = new AccessEvent();
+        //   $Access->initAdmin();
+        //  $Access->initWeixin();
+
+
+        // File::delAll(WEB_ROOT . 'Install/Data');
 
         if (File::writeFile(WEB_ROOT . 'Data/Install.lock', 'installed', 'w+')) {
-            C('URL_MODEL',3);
-            $this->success('GreenCMS安装成功,5秒钟返回首页', $site_url , 5);
+            C('URL_MODEL', 3);
+            $this->success('GreenCMS安装成功,5秒钟返回首页', get_opinion("site_url"), 5);
         }
 
     }

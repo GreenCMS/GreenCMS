@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: const_config.php
  * User: Timothy Zhang
  * Date: 14-1-25

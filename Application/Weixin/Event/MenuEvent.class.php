@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: MenuEvent.class.php
  * User: Timothy Zhang
  * Date: 14-2-18
