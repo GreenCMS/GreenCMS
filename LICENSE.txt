@@ -1,3 +1,5 @@
+Product Licence
+
 GreenCMS遵循Apache2开源协议发布，并提供免费使用。
 版权所有Copyright © 2013-2014 by GreenCMS (http://www.greencms.net)
 All rights reserved。
@@ -28,3 +30,13 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+
+Component Licence
+
+GreenCMS v2 Core -- Apache Licence
+GreenCMS v2 Plugin Module -- Apache Licence From ThinkPHP
+GreenCMS Upgrade System Module -- Apache Licence
+GreenCMS GreenFinder -- BSD license From elFinder
+
+PHPMailer -- GNU Lesser General Public License
