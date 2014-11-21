@@ -807,18 +807,18 @@ function U($url = '', $vars = '', $suffix = true, $domain = false)
         $domain = $host . (strpos($host, '.') ? '' : strstr($_SERVER['HTTP_HOST'], '.'));
     } elseif ($domain === true) {
         $domain = $_SERVER['HTTP_HOST'];
-        if (C('APP_SUB_DOMAIN_DEPLOY')) { // 开启子域名部署
-            $domain = $domain == 'localhost' ? 'localhost' : 'www' . strstr($_SERVER['HTTP_HOST'], '.');
-            // '子域名'=>array('模块[/控制器]');
-            foreach (C('APP_SUB_DOMAIN_RULES') as $key => $rule) {
-                $rule = is_array($rule) ? $rule[0] : $rule;
-                if (false === strpos($key, '*') && 0 === strpos($url, $rule)) {
-                    $domain = $key . strstr($domain, '.'); // 生成对应子域名
-                    $url = substr_replace($url, '', 0, strlen($rule));
-                    break;
-                }
-            }
-        }
+//        if (C('APP_SUB_DOMAIN_DEPLOY')) { // 开启子域名部署
+//            $domain = $domain == 'localhost' ? 'localhost' : 'www' . strstr($_SERVER['HTTP_HOST'], '.');
+//            // '子域名'=>array('模块[/控制器]');
+//            foreach (C('APP_SUB_DOMAIN_RULES') as $key => $rule) {
+//                $rule = is_array($rule) ? $rule[0] : $rule;
+//                if (false === strpos($key, '*') && 0 === strpos($url, $rule)) {
+//                    $domain = $key . strstr($domain, '.'); // 生成对应子域名
+//                    $url = substr_replace($url, '', 0, strlen($rule));
+//                    break;
+//                }
+//            }
+//        }
     }
 
     // 解析参数

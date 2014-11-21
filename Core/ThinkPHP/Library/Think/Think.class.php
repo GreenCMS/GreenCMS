@@ -83,7 +83,8 @@ class Think {
               Hook::import(include CONF_PATH.'tags.php');   
 
           // 加载框架底层语言包
-          L(include THINK_PATH.'Lang/'.strtolower(C('DEFAULT_LANG')).'.php');
+          //L(include THINK_PATH.'Lang/'.strtolower(C('DEFAULT_LANG')).'.php');
+          L(include THINK_PATH.'Lang/zh-cn.php');
 
           if(!APP_DEBUG){
               $content  .=  "\nnamespace { Think\Think::addMap(".var_export(self::$_map,true).");";
@@ -99,20 +100,21 @@ class Think {
       }
 
       // 读取当前应用状态对应的配置文件
-      if(APP_STATUS && is_file(CONF_PATH.APP_STATUS.'.php'))
-          C(include CONF_PATH.APP_STATUS.'.php');   
+//      if(APP_STATUS && is_file(CONF_PATH.APP_STATUS.'.php'))
+//          C(include CONF_PATH.APP_STATUS.'.php');
 
       // 设置系统时区
       date_default_timezone_set(C('DEFAULT_TIMEZONE'));
 
       // 检查应用目录结构 如果不存在则自动创建
-      if(C('CHECK_APP_DIR') && !is_dir(LOG_PATH)) {
-          // 创建应用目录结构
-          require THINK_PATH.'Common/build.php';
-      }
+        //REMOVE BY GreenCMS
+//      if(C('CHECK_APP_DIR') && !is_dir(LOG_PATH)) {
+//          // 创建应用目录结构
+//          require THINK_PATH.'Common/build.php';
+//      }
 
       // 记录加载文件时间
-      G('loadTime');
+        G('loadTime');
       // 运行应用
       App::run();
     }
