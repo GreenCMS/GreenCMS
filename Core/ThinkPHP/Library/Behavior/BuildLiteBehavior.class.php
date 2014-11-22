@@ -14,6 +14,7 @@ namespace Behavior;
 // 建议绑定位置app_init
 class BuildLiteBehavior {
     public function run(&$params) {
+
         if(!defined('BUILD_LITE_FILE')) return ;
         $litefile   =   C('RUNTIME_LITE_FILE',null,RUNTIME_PATH.'lite.php');
         if(is_file($litefile)) return;
@@ -46,9 +47,12 @@ class BuildLiteBehavior {
                 CORE_PATH . 'Storage'.EXT,
                 CORE_PATH . 'Storage/Driver/File'.EXT,
                 CORE_PATH . 'Exception'.EXT,
+                BEHAVIOR_PATH . 'ShowPageTraceBehavior'.EXT,
+                BEHAVIOR_PATH . 'WriteHtmlCacheBehavior'.EXT,
                 BEHAVIOR_PATH . 'ParseTemplateBehavior'.EXT,
                 BEHAVIOR_PATH . 'ContentReplaceBehavior'.EXT,
             );
+
 
         // 编译文件
         foreach ($filelist as $file){

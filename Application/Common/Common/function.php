@@ -86,7 +86,7 @@ function get_opinion($key, $realtime = false, $default = '')
 {
 
     if (!$realtime) {
-        $res = C($key);
+        $res = TP_C($key);
         if ($res != null) {
             return $res;
         } else {

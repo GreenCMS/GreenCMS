@@ -22,6 +22,20 @@
  */
 function C($name = null, $value = null, $default = null)
 {
+    return TP_C($name, $value, $default);
+}
+
+
+/**
+ * ThinkPHP原版C函数
+ * 获取和设置配置参数 支持批量定义
+ * @param string|array $name 配置变量
+ * @param mixed $value 配置值
+ * @param mixed $default 默认值
+ * @return mixed
+ */
+function TP_C($name = null, $value = null, $default = null)
+{
     static $_config = array();
     // 无参数时获取所有
     if (empty($name)) {

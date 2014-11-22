@@ -36,9 +36,9 @@ abstract class Controller {
         Hook::listen('action_begin',$this->config);
         //实例化视图类
         $this->view     = Think::instance('Think\View');
-        //控制器初始化
-        if(method_exists($this,'_initialize'))
-            $this->_initialize();
+        //控制器初始化,GreenCMS手动加载，谢谢
+//        if(method_exists($this,'_initialize'))
+//            $this->_initialize();
     }
 
     /**
@@ -303,4 +303,4 @@ abstract class Controller {
     }
 }
 // 设置控制器别名 便于升级
-class_alias('Think\Controller','Think\Action');
+//class_alias('Think\Controller','Think\Action');
