@@ -209,7 +209,7 @@ img {
     font-size: 18px;
 }
 
-.center_middle .left_half .body {
+.left_half .body {
     width: 100%;
 
     float: left;
@@ -218,12 +218,12 @@ img {
 
 }
 
-.center_middle .left_half .body ul {
+.left_half .body ul {
     padding-left: 10px;
     margin: 16px 3px;
 }
 
-.center_middle .left_half .body ul li {
+.left_half .body ul li {
 
     height: 26px;
     border-bottom: 1px dashed #d8d8d8;
@@ -236,17 +236,17 @@ img {
     overflow: hidden;
 }
 
-.center_middle .left_half .body ul li span {
+.left_half .body ul li span {
     float: right;
     padding-right: 15px;
     line-height: 26px;
 }
 
-.center_middle .left_half .body ul li a {
+.left_half .body ul li a {
     color: #676767;
 }
 
-.center_middle .left_half .body ul li a:hover {
+.left_half .body ul li a:hover {
     color: #0a5ab3;
 }
 
@@ -886,5 +886,12 @@ img {
     min-height: 300px;
 
     font-size: 16px;
+
+}
+
+#links ul li{
+
+    line-height: 30px;
+    height:  30px;
 
 }
