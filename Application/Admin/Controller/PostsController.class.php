@@ -568,7 +568,7 @@ class PostsController extends AdminBaseController
      */
     public function category()
     {
-        $cat_list = D("Cats", "Logic")->relation(true)->category();
+        $cat_list = D("Cats", "Logic")->relation(true)->selectWithPostsCount();
         foreach ($cat_list as $key => $value) {
             $cat_list[$key]["cat_father"] = D('Cats', 'Logic')->detail($value["cat_father"]);
         }

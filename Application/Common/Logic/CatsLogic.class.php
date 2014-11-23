@@ -186,4 +186,26 @@ class CatsLogic extends RelationModel
         return $Cat->getList();
 
     }
+
+
+    /**
+     * 获取结构化分类With 文章数量统计
+     * 此操作消耗资源，仅限后台使用
+     * @return array
+     */
+    public function selectWithPostsCount()
+    {
+
+        $Cat = new Category ('Cats', array(
+            'cat_id',
+            'cat_father',
+            'cat_name',
+            'cat_slug'
+        )); // , array('cid', 'pid', 'name', 'fullname')
+
+        return $Cat->getListWithCount();
+
+    }
+
+
 }
