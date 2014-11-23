@@ -315,10 +315,12 @@ img {
 }
 
 #c4_right_2 ul li {
-    width: 30%;
+    width: 40%;
     text-align: center;
 
     /*background-color: #1967ae;*/
+
+    height: 56px;
 
     display: inline-block;
     margin: 5px;
