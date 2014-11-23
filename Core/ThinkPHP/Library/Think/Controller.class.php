@@ -88,6 +88,8 @@ abstract class Controller {
      * @access protected
      * @htmlfile 生成的静态文件名称
      * @htmlpath 生成的静态文件路径
+     * @param string $htmlfile
+     * @param string $htmlpath
      * @param string $templateFile 指定要调用的模板文件
      * 默认为空 由系统自动定位模板文件
      * @return string
