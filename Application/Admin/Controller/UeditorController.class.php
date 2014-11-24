@@ -10,7 +10,6 @@
 namespace Admin\Controller;
 
 use Common\Util\File;
-use Common\Util\Uploader;
 use Think\Log;
 use Think\Upload;
 

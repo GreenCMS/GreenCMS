@@ -106,7 +106,7 @@ class File
                 return rmdir($path);
         } else {
             if (file_exists($path)) {
-                return unlink($path);
+                return  self::delFile($path);
             } else {
                 return false;
             }
