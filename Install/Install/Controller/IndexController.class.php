@@ -178,7 +178,7 @@ class IndexController extends Controller
         }
 
 
-        $file = WEB_ROOT . 'Install/Data/const_config_sample.php';
+        $file = WEB_ROOT . 'Install/Data/const_config_sample.php.bak';
 
         if (!File::file_exists($file))
             $this->error('Install/Data/const_config_sample.php文件不存在,请检查');
