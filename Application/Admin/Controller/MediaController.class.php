@@ -189,7 +189,7 @@ class MediaController extends AdminBaseController
 
         $filePath = $filename;
 
-          if (!file_exists($filePath)) {
+        if (!file_exists($filePath)) {
             $this->error("该文件不存在，可能是被删除");
         }
         $filename = basename($filePath);

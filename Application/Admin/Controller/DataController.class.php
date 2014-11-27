@@ -31,7 +31,6 @@ class DataController extends AdminBaseController
     }
 
 
-
     /**
      * 列出系统中所有数据库表信息
      * For MySQL
@@ -339,7 +338,7 @@ class DataController extends AdminBaseController
      */
     public function zipList()
     {
-         $data = $this->getZipFilesList();
+        $data = $this->getZipFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
@@ -369,7 +368,6 @@ class DataController extends AdminBaseController
         }
         return array("list" => $list, "size" => File::byteFormat($size));
     }
-
 
 
     /**

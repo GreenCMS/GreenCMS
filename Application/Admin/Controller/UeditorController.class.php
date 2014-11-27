@@ -302,15 +302,14 @@ class UeditorController extends AdminBaseController
          */
         //save file info here
 
-        $return_data['url'] = implode("ue_separate_ue", $tmpNames) ;
+        $return_data['url'] = implode("ue_separate_ue", $tmpNames);
         $return_data['tip'] = '远程图片抓取成功！';
         $return_data['srcUrl'] = $uri;
 
         $this->ajaxReturn($return_data);
 
 
-
-  //      echo "{'url':'" . implode("ue_separate_ue", $tmpNames) . "','tip':'远程图片抓取成功！','srcUrl':'" . $uri . "'}";
+        //      echo "{'url':'" . implode("ue_separate_ue", $tmpNames) . "','tip':'远程图片抓取成功！','srcUrl':'" . $uri . "'}";
     }
 
     /**

@@ -9,7 +9,8 @@
 namespace Admin\Controller;
 
 
-class EmptyController extends AdminBaseController {
+class EmptyController extends AdminBaseController
+{
 
 
     /**
@@ -19,7 +20,8 @@ class EmptyController extends AdminBaseController {
      * @return mixed|void
      * @internal param $null
      */
-    public function __call($method, $args) {
+    public function __call($method, $args)
+    {
 
         $pluginRes = $this->anonymousPlugin(CONTROLLER_NAME, ACTION_NAME, I('get.action'));
 
