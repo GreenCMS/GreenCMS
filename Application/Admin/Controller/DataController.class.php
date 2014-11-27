@@ -339,14 +339,38 @@ class DataController extends AdminBaseController
      */
     public function zipList()
     {
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
-
-        $data = $MySQLLogic->getZipFilesList();
+         $data = $this->getZipFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
         $this->display();
     }
+
+
+    /**
+     * @return array
+     */
+    private function getZipFilesList()
+    {
+        $list = array();
+        $size = 0;
+        $handle = opendir(DB_Backup_PATH . "Zip/");
+
+        while ($file = readdir($handle)) {
+            if ($file != "." && $file != "..") {
+                $tem = array();
+                $tem['file'] = $file;
+                $_size = filesize(DB_Backup_PATH . "Zip/$file");
+                $tem['size'] = File::byteFormat($_size);
+                $tem['time'] = date("Y-m-d H:i:s", filectime(DB_Backup_PATH . "Zip/$file"));
+                $size += $_size;
+                $list[] = $tem;
+            }
+        }
+        return array("list" => $list, "size" => File::byteFormat($size));
+    }
+
+
 
     /**
      * @return bool

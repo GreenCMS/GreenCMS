@@ -171,7 +171,7 @@ class SystemEvent
             "# " . get_opinion('title') . " database backup files\n" .
             "# URL: " . get_opinion('site_url') . "\n" .
             "# Type: {$type}\n";
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
+        $MySQLLogic = new \Common\Util\MySQLUtil();
         $bdTable = $MySQLLogic->backupTable($tables); //取得表结构信息
         $outPut = "";
         $file_n = 1;
@@ -249,7 +249,7 @@ class SystemEvent
         $type = "系统自动备份";
         $path = DB_Backup_PATH . "/SYSTEM_" . date("Ymd");
 
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
+        $MySQLLogic = new \Common\Util\MySQLUtil();
         $tables = $MySQLLogic->getAllTableName();
         return $this->backupDB($type, $tables, $path);
     }
