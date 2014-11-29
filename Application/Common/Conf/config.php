@@ -10,7 +10,7 @@ return array(
     'DB_PWD'               => GreenCMS_DB_PWD,
     'DB_PORT'              => GreenCMS_DB_PORT,
     'DB_PREFIX'            => GreenCMS_DB_PREFIX, //测试是为空，生产环境需要自形添加 如 green_
-
+ //   'DB_DSN' => 'pgsql:host=localhost;port=5432;dbname=green;',
     'AUTOLOAD_NAMESPACE'   => array('Addons' => './Addons/'), //扩展模块列表
 
     'SHOW_PAGE_TRACE'      => false,
