@@ -397,6 +397,24 @@ class PostsController extends AdminBaseController
 
 
     /**
+     * 清空草稿站
+     */
+    public function emptyDraftHandle()
+    {
+        $where['post_status'] = 'draft';
+
+        $PostsLogic = new PostsLogic();
+
+        if ($PostsLogic->where($where)->relation(true)->delete()) {
+            $this->success('清空草稿箱成功');
+        } else {
+            $this->error('清空草稿箱失败');
+        }
+
+    }
+
+
+    /**
      * 清空回收站
      */
     public function emptyRecycleHandle()

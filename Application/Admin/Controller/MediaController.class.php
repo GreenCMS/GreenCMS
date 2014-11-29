@@ -43,6 +43,14 @@ class MediaController extends AdminBaseController
 
     public function superFileEdit()
     {
+
+        $this->superFileEditText();
+
+    }
+
+
+    public function superFileEditText()
+    {
         $path = I('get.path', WEB_ROOT, 'base64_decode');
         $file=File::readFile($path);
 
@@ -53,14 +61,18 @@ class MediaController extends AdminBaseController
             array("path"=>base64_encode(dirname($path))        )));
 
         $this->assign("file",$file);
-        $this->display();
-
+        $this->display("superFileEdit");
     }
 
 
 
     public function superFile()
     {
+
+        $this->assign('action', '文件管理');
+
+
+
         $path = I('get.path', WEB_ROOT, 'base64_decode');
 
         $path=str_replace('//','/',$path);
