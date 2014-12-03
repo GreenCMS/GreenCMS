@@ -27,7 +27,7 @@ class MediaController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-
+        //gc_disable();
     }
 
     /**
@@ -178,7 +178,7 @@ class MediaController extends AdminBaseController
 
         define('GreenCMS', 'GreenCMS');
 
-        include WEB_ROOT . 'Extend/GreenFinder/php/connector.php'; //包含elfinder自带php接口的入口文件
+        include WEB_ROOT . 'Extend/Elfinder/php/connector.php'; //包含elfinder自带php接口的入口文件
     }
 
     /**
