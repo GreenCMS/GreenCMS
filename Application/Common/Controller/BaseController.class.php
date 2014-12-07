@@ -99,17 +99,17 @@ abstract class BaseController extends Controller {
 	}
 
 	function json2Response($json) {
-		$changePasswordResArray = json_decode($json, true);
+		$resArray = json_decode($json, true);
 
-		if ($changePasswordResArray['status'] == 1) {
-			if ($changePasswordResArray['url'] != '') {
-				$this->success($changePasswordResArray['info'], $changePasswordResArray['url'], false);
+		if ($resArray['status'] == 1) {
+			if ($resArray['url'] != '') {
+				$this->success($resArray['info'], $resArray['url'], false);
 			} else {
-				$this->success($changePasswordResArray['info']);
+				$this->success($resArray['info']);
 
 			}
 		} else {
-			$this->error($changePasswordResArray['info']);
+			$this->error($resArray['info']);
 		}
 	}
 
