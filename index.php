@@ -22,7 +22,7 @@ error_reporting(0);
  * 系统调试设置 true
  * 项目正式部署后请设置为 false
  */
-define('APP_DEBUG', false);
+define('APP_DEBUG', true);
 
 /**
  * 正式稳定运行后，改成true，开启后会影响设置的即使生效
@@ -33,6 +33,8 @@ define('APP_Cache', true);
  * 定义网站根目录
  */
 define("WEB_ROOT", './');  //dirname(__FILE__) .'/'
+
+define("WEB_ROOT_Real", __DIR__);  //dirname(__FILE__) .'/'
 
 /**
  * 应用目录设置

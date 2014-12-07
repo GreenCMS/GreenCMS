@@ -178,7 +178,7 @@ class IndexController extends Controller
         }
 
 
-        $file = WEB_ROOT . 'Install/Data/const_config_sample.php';
+        $file = WEB_ROOT . 'Install/Data/const_config_sample.php.bak';
 
         if (!File::file_exists($file))
             $this->error('Install/Data/const_config_sample.php文件不存在,请检查');
@@ -249,22 +249,22 @@ class IndexController extends Controller
         File::delAll(WEB_ROOT . 'Data/Temp');
 
 
-        $dirs = array();
+//        $dirs = array();
+//
+//        array_push($dirs, WEB_ROOT . 'Extend');
+//        array_push($dirs, WEB_ROOT . 'Public');
+//        array_push($dirs, WEB_ROOT . 'Upload');
+//        array_push($dirs, WEB_ROOT . 'Data/Cache');
+//        array_push($dirs, WEB_ROOT . 'Data/Temp');
+//        array_push($dirs, LOG_PATH);
+//        array_push($dirs, RUNTIME_PATH);
+//        array_push($dirs, WEB_CACHE_PATH);
+//        array_push($dirs, DB_Backup_PATH);
+//        array_push($dirs, System_Backup_PATH);
+//        array_push($dirs, Upgrade_PATH);
 
-        array_push($dirs, WEB_ROOT . 'Extend');
-        array_push($dirs, WEB_ROOT . 'Public');
-        array_push($dirs, WEB_ROOT . 'Upload');
-        array_push($dirs, WEB_ROOT . 'Data/Cache');
-        array_push($dirs, WEB_ROOT . 'Data/Temp');
-        array_push($dirs, LOG_PATH);
-        array_push($dirs, RUNTIME_PATH);
-        array_push($dirs, WEB_CACHE_PATH);
-        array_push($dirs, DB_Backup_PATH);
-        array_push($dirs, System_Backup_PATH);
-        array_push($dirs, Upgrade_PATH);
 
-
-        build_dir_secure($dirs);
+        //build_dir_secure($dirs);
         //A('Install/Test')->init($key = 'zts');
 
 

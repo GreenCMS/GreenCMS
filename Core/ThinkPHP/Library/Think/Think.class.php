@@ -37,6 +37,7 @@ class Think {
       // 初始化文件存储方式
       Storage::connect(STORAGE_TYPE);
 
+
       $runtimefile  = RUNTIME_PATH.APP_MODE.'~runtime.php';
       if(!APP_DEBUG && Storage::has($runtimefile)){
           Storage::load($runtimefile);
@@ -50,7 +51,8 @@ class Think {
           foreach ($mode['core'] as $file){
               if(is_file($file)) {
                 include $file;
-                if(!APP_DEBUG) $content   .= compile($file);
+                if(!APP_DEBUG)
+                    $content   .= compile($file);
               }
           }
 

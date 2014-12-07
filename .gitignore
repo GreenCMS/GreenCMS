@@ -17,9 +17,9 @@
 
 /Application/Weixin/View/Metronic
 /Application/Home/View/2011college
-/Application/Home/View/Xsc
+#/Application/Home/View/Xsc
 /Public/2011college
-/Public/Xsc
+#/Public/Xsc
 
 
 Temp

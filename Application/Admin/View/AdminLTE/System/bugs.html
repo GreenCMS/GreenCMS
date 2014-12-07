@@ -38,7 +38,7 @@
                 <div class="col-md-12">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
+                            <h3 class="box-title">{$action}</h3>Beta
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -55,11 +55,11 @@
 
 
                                 <div class="form-group">
-                                    <label class="control-label">Bug信息描述</label>
+                                    <label class="control-label">Bug信息描述</label>请勿使用
 
                                     <div class="controls">
 
-                                        <textarea class="form-control large" name="foot" rows="6"></textarea>
+                                        <textarea class="form-control large" name="description" rows="6"></textarea>
                                     </div>
 
                                 </div>
@@ -69,7 +69,7 @@
                                     <label class="control-label">通知邮箱</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="notify_mail"
+                                        <input type="email" placeholder="" class="form-control large" name="notify_mail"
                                                value="{:C('sql_mail')}"/>
                                         <span class="help-inline">通知处理结果</span>
                                     </div>

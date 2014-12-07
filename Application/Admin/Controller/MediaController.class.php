@@ -11,6 +11,7 @@ namespace Admin\Controller;
 
 use Common\Event\SystemEvent;
 use Common\Util\File;
+use Think\Storage;
 use Think\Think;
 
 /**
@@ -26,7 +27,137 @@ class MediaController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
+        //gc_disable();
+    }
 
+    /**
+     *
+     */
+
+    public function superFileAjaxSize()
+    {
+        $path = I('get.path', WEB_ROOT, 'base64_decode');
+       return File::realSize($path);
+    }
+
+
+    public function superFileEdit()
+    {
+
+        $this->superFileEditText();
+
+    }
+
+
+    public function superFileEditText()
+    {
+        $path = I('get.path', WEB_ROOT, 'base64_decode');
+        $file=File::readFile($path);
+
+
+        $this->assign('current_path', $path);
+
+        $this->assign('father_path', U("Admin/Media/superFile",
+            array("path"=>base64_encode(dirname($path))        )));
+
+        $this->assign("file",$file);
+        $this->display("superFileEdit");
+    }
+
+
+
+    public function superFile()
+    {
+
+        $this->assign('action', '文件管理');
+
+
+
+        $path = I('get.path', WEB_ROOT, 'base64_decode');
+
+        $path=str_replace('//','/',$path);
+        $path=str_replace('\\','/',$path);
+
+
+//        $paths=explode('/',$path);
+//        dump($paths);
+//
+//
+//        implode('/',$paths);
+
+
+        $all = File::scanDir($path, true);
+        $folders = File::scanDir($path, false);
+        $files =array();
+        foreach($all as $t){
+            if(!in_array($t,$folders)){
+                array_push($files, $t);
+            }
+        }
+
+
+        $root_info = array();
+
+//        if($path!=WEB_ROOT){
+//
+//
+//
+//            $path_full= realpath($path  .'/../') ;
+//         //   $path_full=WEB_ROOT_Real ;
+//            $root_info_temp = array();
+//            $root_info_temp['name'] = "..";
+//            $root_info_temp['path'] =$path_full;
+//            $root_info_temp['link'] = U("Admin/Media/superFile",
+//                array("path"=>base64_encode($path_full)));
+//
+//            array_push($root_info, $root_info_temp);
+//        }
+
+
+
+
+        foreach ($folders as $value) {
+            $path_full=$path .'/'. $value;
+
+            $root_info_temp = array();
+            $root_info_temp['name'] = $value;
+            $root_info_temp['path'] = $path_full;
+            $root_info_temp['link'] = U("Admin/Media/superFile",
+                array("path"=>base64_encode($path_full)));
+            $root_info_temp['size'] = "点击显示大小";
+
+            $root_info_temp['mtime'] =  File::filemtime($path_full,true);
+
+            array_push($root_info, $root_info_temp);
+        }
+
+        foreach ($files as $value) {
+            $path_full=$path.'/'. $value;
+
+            $path_full=str_replace('//','/',$path_full);
+
+            $root_info_temp = array();
+            $root_info_temp['name'] = $value;
+            $root_info_temp['path'] = $path_full;
+            $root_info_temp['link'] = U("Admin/Media/superFileEdit",
+                array("path"=>base64_encode($path_full)));
+
+            $root_info_temp['size'] = File::realSize($path_full);
+
+            $root_info_temp['mtime'] =  File::filemtime($path_full,true);
+
+
+            array_push($root_info, $root_info_temp);
+        }
+
+        // dump($root_info);
+        $this->assign('father_path', U("Admin/Media/superFile",
+            array("path"=>base64_encode(realpath($path  .'/../'))        )));
+        $this->assign('current_path', $path);
+        $this->assign('root_info', $root_info);
+
+
+        $this->display("superfile");
     }
 
     /**
@@ -47,7 +178,7 @@ class MediaController extends AdminBaseController
 
         define('GreenCMS', 'GreenCMS');
 
-        include WEB_ROOT . 'Extend/GreenFinder/php/connector.php'; //包含elfinder自带php接口的入口文件
+        include WEB_ROOT . 'Extend/Elfinder/php/connector.php'; //包含elfinder自带php接口的入口文件
     }
 
     /**
@@ -189,7 +320,7 @@ class MediaController extends AdminBaseController
 
         $filePath = $filename;
 
-          if (!file_exists($filePath)) {
+        if (!file_exists($filePath)) {
             $this->error("该文件不存在，可能是被删除");
         }
         $filename = basename($filePath);

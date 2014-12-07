@@ -28,7 +28,8 @@ class IndexController extends HomeBaseController {
 	 * 显示首页
 	 */
 	public function index() {
-		$this->display('index');
+
+       $this->display('index');
 	}
 
 	/**

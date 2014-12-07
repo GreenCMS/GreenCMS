@@ -106,7 +106,7 @@ class File
                 return rmdir($path);
         } else {
             if (file_exists($path)) {
-                return unlink($path);
+                return  self::delFile($path);
             } else {
                 return false;
             }
@@ -443,25 +443,44 @@ class File
     }
 
 
-    public static function filemtime($file)
+    public static function filemtime($file,$ifstr=false)
     {
-        return filemtime($file);
+
+        $time=filemtime($file);
+        if($ifstr){
+            return date('Y-m-d H:i:s',$time);
+        }else{
+            return $time;
+        }
+
+
+
 
     }
 
 
-    public static function filectime($file)
+    public static function filectime($file,$ifstr=false)
     {
-        return filectime($file);
+        $time= filectime($file);
+        if($ifstr){
+            return date('Y-m-d H:i:s',$time);
+        }else{
+            return $time;
+        }
 
 
     }
 
 
-    public static function fileatime($file)
+    public static function fileatime($file,$ifstr=false)
     {
-        return fileatime($file);
+        $time= fileatime($file);
 
+        if($ifstr){
+            return date('Y-m-d H:i:s',$time);
+        }else{
+            return $time;
+        }
 
     }
 

@@ -132,6 +132,40 @@ class Category
         }
     }
 
+
+
+    /**
+     * 递归格式化分类前的字符
+     * @param   int $cat_id    分类cat_id
+     * @param   string $space
+     */
+    private function _searchListWithCount($cat_id = 0, $space = "")
+    {
+        $childs = $this->getChild($cat_id);
+        //下级分类的数组
+        //如果没下级分类，结束递归
+        if (!($n = count($childs)))
+            return;
+        $m = 1;
+        //循环所有的下级分类
+        for ($i = 0; $i < $n; $i++) {
+            $pre = "";
+            $pad = "";
+            if ($n == $m) {
+                $pre = $this->icon[2];
+            } else {
+                $pre = $this->icon[1];
+                $pad = $space ? $this->icon[0] : "";
+            }
+
+            $childs[$i][$this->fields['cat_name']] = ($space ? $space . $pre : "") . $childs[$i][$this->fields['cat_slug']];
+            $childs[$i]['post_count']=D("Post_cat")->where(array("cat_id"=>$childs[$i]["cat_id"]))->cache(true)->count();
+            $this->formatList[] = $childs[$i];
+            $this->_searchListWithCount($childs[$i][$this->fields['cat_id']], $space . $pad . "&nbsp;"); //递归下一级分类 &nbsp;
+            $m++;
+        }
+    }
+
     /**
      * 不采用数据模型时，可以从外部传递数据，得到递归格式化分类
      * @param   array,string     $condition    条件
@@ -147,6 +181,24 @@ class Category
         $this->_searchList($cat_id);
         return $this->formatList;
     }
+
+
+    /**
+     * 不采用数据模型时，可以从外部传递数据，得到递归格式化分类
+     * @param   array,string     $condition    条件
+     * @param   int $cat_id          起始分类
+     * @param   string $orderby      排序
+     *
+     * @return  array           返回结构信息
+     */
+    public function getListWithCount($condition = null, $cat_id = 0, $orderby = null)
+    {
+        unset($this->rawList, $this->formatList);
+        $this->_findAllCat($condition, $orderby, $orderby);
+        $this->_searchListWithCount($cat_id);
+        return $this->formatList;
+    }
+
 
     /**
      * 获取结构

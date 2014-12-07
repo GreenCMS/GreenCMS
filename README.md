@@ -32,7 +32,7 @@ GreenCMS 欢迎学习交流，版权归作者所有，未经作者同意，不�
 **或者加入友情链接指向GreenCMS.net**
   
 ## 联系方式:  
-Email: admin@njut.asia
+Email: greencms(@)zts1993.com
   
   
 ## GreenCMS交流群:  
@@ -227,6 +227,20 @@ __如果你需要升级ThinkPHP框架请注意上面文件区别__
   
   
   
+###数据库须知
+
+####MySQL
+> - 默认引擎是用MyISAM可以选择Innodb
+
+####SqlServer
+> - 不支持
+
+
+####PostgreSQL
+> - PDO模式可以访问，不能插入数据，(ThinkPHP)主键获取有问题
+> - pg_sql模式几乎不能使用，(ThinkPHP Pgsql支持不力)。。。。。。。。
+> - 有GreenCMS init SQL for PostgreSQL需要的可以索取
+
 
 
 ![GreenStudio](http://green.njut.asia/Public/share/img/logo-png.png "GreenStudio logo")  

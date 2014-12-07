@@ -80,7 +80,8 @@ class ToolsController extends AdminBaseController
     /**
      *
      */
-    public function log(){
+    public function log()
+    {
 
         $file_list = array();
         $files_list = array();
@@ -91,7 +92,7 @@ class ToolsController extends AdminBaseController
             $files_list_temp = array();
             $files_list_temp['id'] = base64_encode($value);
             $files_list_temp['name'] = $value;
-             $files_list_temp['size'] = File::realSize($value);
+            $files_list_temp['size'] = File::realSize($value);
             $files_list_temp['create_time'] = date("Y-m-d H:i:s", File::filectime($value));
             $files_list_temp['mod_time'] = date("Y-m-d H:i:s", File::filemtime($value));
 
@@ -100,7 +101,7 @@ class ToolsController extends AdminBaseController
 
         }
 
-        $files_list=array_sort($files_list,"mod_time");
+        $files_list = array_sort($files_list, "mod_time");
 
 
         $this->assign('logs_list', $files_list);
@@ -110,12 +111,12 @@ class ToolsController extends AdminBaseController
     }
 
 
-    public function logClearHandle(){
+    public function logClearHandle()
+    {
         $res = File::delAll(LOG_PATH, true);
         $this->success("清除成功");
 
     }
-
 
 
     public function downFile()
@@ -139,8 +140,6 @@ class ToolsController extends AdminBaseController
         header("Content-Length: " . filesize($filePath));
         readfile($filePath);
     }
-
-
 
 
 }

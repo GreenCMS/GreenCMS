@@ -8,18 +8,71 @@
 
     <include file="Public:head"/>
 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrap {
+            /*width: 320px;*/
+            width: 95%;
+            margin: 10px auto 0;
+            border-bottom:1px dashed #686868;
+        }
+
+        .body-top {
+            width: 100%;
+            /*height: 100px;*/
+            margin-bottom: 10px;
+        }
+
+        .bt-imgbox {
+            width: 50%;
+            /*height: 100px;*/
+            float: left;
+        }
+
+        .bt-img {
+            width: 90%;
+            /*height: 100px;*/
+        }
+
+        .bt-text {
+            width: 50%;
+            float: right;
+        }
+
+        .bt-title {
+            color: #000000;
+            height: 24px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .bt-cont {
+            height: 86px;
+            overflow: hidden;
+        }
+
+        .clr {
+            clear: both;
+        }
+    </style>
+
 </head>
 <body>
 
 <php>
-    $xgxw = D('Cats', 'Logic')->getPostsByCat(64, 9);
+    $xgxw = D('Cats', 'Logic')->getPostsByCat(64, 10);
 
-    $ggtz = D('Cats', 'Logic')->getPostsByCat(3, 7);
-    $xyfc = D('Cats', 'Logic')->getPostsByCat(24, 7);
-    $llqy = D('Cats', 'Logic')->getPostsByCat(53, 7);
-    $xjdx = D('Cats', 'Logic')->getPostsByCat(34, 7);
+    $ggtz = D('Cats', 'Logic')->getPostsByCat(3, 10);
+    $xyfc = D('Cats', 'Logic')->getPostsByCat(24, 10);
+    $llqy = D('Cats', 'Logic')->getPostsByCat(53, 10);
+    $xjdx = D('Cats', 'Logic')->getPostsByCat(34, 10);
 
-    $slider = D('Tags', 'Logic')->getPostsByTag(3, 7);
+    $slider = D('Tags', 'Logic')->getPostsByTag(3, 10);
 
 
 </php>
@@ -27,9 +80,9 @@
 {:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
 <div id="content" class="clearfix">
 
-<div style="width: 90%; margin: 0 auto;">
+<div style="margin: 0 auto;">
 
-    <div class="head_box" style="width: 71%;">
+    <div class="head_box" style="margin-left: 1%;width: 71%;">
 
         <div class="header"><a href="{:getCatURLByID(64)}"
                                class="more">更多</a><span>校园文化</span></div>
@@ -54,9 +107,12 @@
                         <li>
                             <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                                {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
+                                                    <span>
+
                             &nbsp;&nbsp; {$v['post_date']|mb_substr=0,10,"UTF-8"}
 
+                        </span>
 
                         </li>
                     </volist>
@@ -68,10 +124,10 @@
 
     </div>
 
-    <div class="head_box" style="margin-left: 1%;width: 26%;">
+    <div class="head_box" style="margin-left: 1%;width: 25%;">
 
-        <div class="header"  ><a href="{:getCatURLByID(64)}"
-                               class="more">更多</a><span>校园文化</span></div>
+        <div class="header"><a href="{:getCatURLByID(3)}"
+                               class="more">更多</a><span>公告通知</span></div>
         <div class="body">
 
 
@@ -80,13 +136,15 @@
 
                 <ul class="list1">
 
-                    <volist name="xgxw" id="v">
+                    <volist name="ggtz" id="v">
                         <li>
                             <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,11,"UTF-8"}</a>
-                            &nbsp;&nbsp; {$v['post_date']|mb_substr=0,10,"UTF-8"}
-
+                            &nbsp;&nbsp;
+                        <span>
+                        {$v['post_date']|mb_substr=2,8,"UTF-8"}
+                        </span>
 
                         </li>
                     </volist>
@@ -102,317 +160,377 @@
 
 <div style="clear:both;"></div>
 
+
 <div class="center_middle" style="">
-    <div class="left">
 
-        <div class="left_half">
-            <div class="header" style="border-top: solid 7px #3686be;">
-                <a href="{:getCatURLByID(3)}">更多+</a>
+    <div class="left_half">
+        <div class="header" style="border-top: solid 7px #3686be;">
+            <a href="{:getCatURLByID(3)}">更多+</a>
 
-                <div class="header_info">公告通知</div>
-            </div>
-            <div class="body">
-                <ul>
-
-
-                    <volist name="ggtz" id="v">
-                        <li>
-            <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-
-                        </li>
-                    </volist>
-
-
-                </ul>
-            </div>
+            <div class="header_info">公告通知</div>
         </div>
+        <div class="body">
 
 
-        <div class="left_half">
-            <div class="header" style="border-top: solid 7px #008287;">
-                <a href="{:getCatURLByID(10)}">更多+</a>
-
-                <div class="header_info">学院风采</div>
-            </div>
-            <div class="body">
-                <ul>
-                    <volist name="xyfc" id="v">
-                        <li>
-            <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-                        </li>
-                    </volist>
-
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="left_half" id="c4_right_2">
-            <div class="header" style="border-top: solid 7px #78BA00;">
-                <a href="{:getCatURLByID(10)}">更多+</a>
-
-                <div class="header_info">服务链接</div>
-            </div>
-            <div class="body" style="height: 220px">
-
-
-                <div style="height: 150px;text-align: center;padding-top: 20px;padding-bottom: 20px">
-
-
-                    <ul>
-
-                        <li><a href="#"> 奥蓝系统管理版</a></li>
-
-                        <li><a href="#"> 奥蓝系统学生版</a></li>
-
-                        <li><a href="#"> 下载专区</a></li>
-                        <li><a href="#"> 学生手册</a></li>
-                        <li><a href="#"> 入学指南</a></li>
-
-
-                    </ul>
-
-                    <div style="text-align: center">
-                        <select style="width:100px"
-                                onchange="window.open(this.options[this.selectedIndex].value)"
-                                size="1"
-                                name="mlink">
-                            <option>---|校内链接|---</option>
-
-
-                            <optionfriendlist link_group_id="1"></optionfriendlist>
-
-
-                        </select>
-
-                        <select style="width:100px"
-                                onchange="window.open(this.options[this.selectedIndex].value)"
-                                size="1"
-                                name="mlink2">
-                            <option>---|校外链接|---</option>
-
-
-                            <optionfriendlist link_group_id="3"></optionfriendlist>
-
-
-                        </select>
-
+            <div class="wrap">
+                <div class="body-top">
+                    <div class="bt-imgbox">
+                        <img
+                                src="{:get_post_img($xyfc[0])}"
+                                class="bt-img">
                     </div>
+                    <div class="bt-text">
+                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
 
-
+                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                    </div>
+                    <div class="clr"></div>
                 </div>
-
-
             </div>
+
+
+            <ul>
+
+
+                <volist name="ggtz" id="v">
+                    <li>
+            <span>
+              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+                        <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                            <i>·&nbsp;&nbsp;</i>
+                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+
+                    </li>
+                </volist>
+
+
+            </ul>
         </div>
-
-
     </div>
+
+
+    <div class="left_half">
+        <div class="header" style="border-top: solid 7px #008287;">
+            <a href="{:getCatURLByID(10)}">更多+</a>
+
+            <div class="header_info">学院风采</div>
+        </div>
+        <div class="body">
+
+
+            <div class="wrap">
+                <div class="body-top">
+                    <div class="bt-imgbox">
+                        <img
+                                src="{:get_post_img($xyfc[0])}"
+                                class="bt-img">
+                    </div>
+                    <div class="bt-text">
+                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+
+                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,200,"UTF-8"}</p>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+
+
+            <ul>
+                <volist name="xyfc" id="v" key="k">
+
+                    <eq name="k" value="1">
+
+                        <else/>
+                        <li>
+                            <span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                                <i>·&nbsp;&nbsp;</i>
+                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                        </li>
+                    </eq>
+
+
+                </volist>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="left_half">
+        <div class="header" style="border-top: solid 7px #F4B300;">
+            <a href="{:getCatURLByID(10)}">更多+</a>
+
+            <div class="header_info">学院风采</div>
+        </div>
+        <div class="body">
+            <div class="wrap">
+                <div class="body-top">
+                    <div class="bt-imgbox">
+                        <img
+                                src="{:get_post_img($xyfc[0])}"
+                                class="bt-img">
+                    </div>
+                    <div class="bt-text">
+                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+
+                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+
+
+            <ul>
+                <volist name="xyfc" id="v">
+                    <li>
+            <span>
+              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+                        <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                            <i>·&nbsp;&nbsp;</i>
+                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                    </li>
+                </volist>
+
+            </ul>
+        </div>
+    </div>
+
+
 </div>
 
 <div style="clear:both;"></div>
 
 
 <div class="center_middle" style="">
-    <div class="left">
 
-        <div class="left_half">
-            <div class="header" style="border-top: solid 7px #1FAEFF;">
-                <a href="{:getCatURLByID(3)}">更多+</a>
+<div class="left_half"  style="width: 40%;" >
+    <div class="header" style="border-top: solid 7px #1FAEFF;">
+        <a href="{:getCatURLByID(3)}">更多+</a>
 
-                <div class="header_info">公告通知</div>
-            </div>
-            <div class="body">
-                <ul>
+        <div class="header_info">公告通知</div>
+    </div>
+    <div class="body">
 
 
-                    <volist name="ggtz" id="v">
-                        <li>
-            <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+        <div class="wrap">
+            <div class="body-top">
+                <div class="bt-imgbox">
+                    <img
+                            src="{:get_post_img($xyfc[0])}"
+                            class="bt-img">
+                </div>
+                <div class="bt-text">
+                    <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
 
-                        </li>
-                    </volist>
-
-
-                </ul>
+                    <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                </div>
+                <div class="clr"></div>
             </div>
         </div>
 
 
-        <div class="left_half">
-            <div class="header" style="border-top: solid 7px #F4B300;">
-                <a href="{:getCatURLByID(10)}">更多+</a>
+        <!--<table border="0" cellspacing="0" cellpadding="0"-->
+               <!--style="margin:8px 10px;border-bottom:1px dashed #686868;">-->
+            <!--<tbody>-->
+            <!--<tr>-->
+                <!--<td width="110" style="padding-bottom:8px;"><img-->
+                        <!--src="{:get_post_img($xyfc[0])}"-->
+                        <!--border="0" width="97"-->
+                        <!--height="64"></td>-->
+                <!--<td valign="top" style="padding-bottom:8px;">-->
+                    <!--<p class="bc14"><a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
+                        <!--{$xyfc[0]['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}-->
+                    <!--</a></p>-->
 
-                <div class="header_info">学院风采</div>
-            </div>
-            <div class="body">
-                <ul>
-                    <volist name="xyfc" id="v">
-                        <li>
-            <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-                        </li>
-                    </volist>
+                    <!--<p class="be12">　　-->
+                        <!--<a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
+                            <!--{$xyfc[0]['post_content']|strip_tags|mb_substr=0,100,"UTF-8"}-->
+                        <!--</a>-->
+                    <!--</p></td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
 
-                </ul>
+
+        <div class="wrap">
+            <div class="body-top">
+                <div class="bt-imgbox">
+                    <img
+                            src="{:get_post_img($xyfc[0])}"
+                            class="bt-img">
+                </div>
+                <div class="bt-text">
+                    <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+
+                    <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                </div>
+                <div class="clr"></div>
             </div>
         </div>
 
 
-        <div class="left_half">
-            <div class="header" style="border-top: solid 7px #252525;">
-                <a href="{:getCatURLByID(10)}">更多+</a>
-
-                <div class="header_info">服务链接</div>
-            </div>
-            <div class="body" style="height: 220px">
-
-
-                <div style="height: 150px;text-align: center;">
-
-
-                    <ul>
-                        <!--<li><a href="#"> 投稿登陆</a></li>-->
-
-                        <li><a href="#"> 奥蓝系统管理版</a></li>
-
-                        <li><a href="#"> 奥蓝系统学生版</a></li>
-
-                        <li><a href="#"> 下载专区</a></li>
-                        <li><a href="#"> 学生手册</a></li>
-                        <li><a href="#"> 入学指南</a></li>
-
-
-                    </ul>
-
+        <div class="wrap">
+            <div class="body-top">
+                <div class="bt-imgbox">
+                    <img
+                            src="{:get_post_img($xyfc[0])}"
+                            class="bt-img">
                 </div>
+                <div class="bt-text">
+                    <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
 
-                <div style="text-align: center">
-                    <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
-                            size="1"
-                            name="mlink">
-                        <option>---|校内链接|---</option>
-
-
-                        <optionfriendlist link_group_id="1"></optionfriendlist>
-
-
-                    </select>
-
-                    <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
-                            size="1"
-                            name="mlink2">
-                        <option>---|校外链接|---</option>
-
-
-                        <optionfriendlist link_group_id="3"></optionfriendlist>
-
-
-                    </select>
-
+                    <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
                 </div>
+                <div class="clr"></div>
             </div>
+        </div>
+
+
+
+        <!--<ul>-->
+
+
+        <!--<volist name="ggtz" id="v">-->
+        <!--<li>-->
+        <!--<span>-->
+        <!--{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
+        <!--<a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">-->
+        <!--<i>·&nbsp;&nbsp;</i>-->
+        <!--{$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>-->
+
+        <!--</li>-->
+        <!--</volist>-->
+
+
+        <!--</ul>-->
+    </div>
+</div>
+
+
+<div class="left_half" style="width: 32%;" id="c4_right_2">
+    <div class="header" style="border-top: solid 7px #78BA00;">
+        <a href="{:getCatURLByID(10)}">更多+</a>
+
+        <div class="header_info">服务链接</div>
+    </div>
+    <div class="body" style="">
+
+
+        <div style="text-align: center;padding-top: 20px;padding-bottom: 20px">
+
+
+            <ul>
+
+                <li><a href="#"> 奥蓝系统管理版</a></li>
+
+                <li><a href="#"> 奥蓝系统学生版</a></li>
+
+                <li><a href="#"> 下载专区</a></li>
+                <li><a href="#"> 学生手册</a></li>
+                <li><a href="#"> 入学指南</a></li>
+
+
+            </ul>
+
+            <div style="text-align: center">
+                <select style="width:100px"
+                        onchange="window.open(this.options[this.selectedIndex].value)"
+                        size="1"
+                        name="mlink">
+                    <option>---|校内链接|---</option>
+
+
+                    <optionfriendlist link_group_id="1"></optionfriendlist>
+
+
+                </select>
+
+                <select style="width:100px"
+                        onchange="window.open(this.options[this.selectedIndex].value)"
+                        size="1"
+                        name="mlink2">
+                    <option>---|校外链接|---</option>
+
+
+                    <optionfriendlist link_group_id="3"></optionfriendlist>
+
+
+                </select>
+
+            </div>
+
+
         </div>
 
 
     </div>
 </div>
 
-<div style="clear:both;"></div>
 
+<div class="left_half"  style="width: 21%;" >
+    <div class="header" style="border-top: solid 7px #252525;">
+        <a href="{:getCatURLByID(10)}">更多+</a>
 
-<div class="center_middle" style="">
-    <div class="left">
-
-        <div class="left_half">
-            <div class="header" style="border-top: solid 7px #006ac1;">
-                <a href="{:getCatURLByID(3)}">更多+</a>
-
-                <div class="header_info">公告通知</div>
-            </div>
-            <div class="body">
-                <ul>
-
-
-                    <volist name="ggtz" id="v">
-                        <li>
-            <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-
-                        </li>
-                    </volist>
-
-
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="left_half">
-            <div class="header" style="border-top: solid 7px #008287;">
-                <a href="{:getCatURLByID(10)}">更多+</a>
-
-                <div class="header_info">学院风采</div>
-            </div>
-            <div class="body">
-                <ul>
-                    <volist name="xyfc" id="v">
-                        <li>
-            <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-                        </li>
-                    </volist>
-
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="left_half">
-            <div class="header" style="border-top: solid 7px #3686be;">
-                <a href="{:getCatURLByID(10)}">更多+</a>
-
-                <div class="header_info">学院风采</div>
-            </div>
-            <div class="body">
-                <ul>
-                    <volist name="xyfc" id="v">
-                        <li>
-            <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-                        </li>
-                    </volist>
-
-                </ul>
-            </div>
-        </div>
-
-
+        <div class="header_info">服务链接</div>
     </div>
+    <div class="body" style="margin-bottom: 50px">
+
+
+        <div style="text-align: center;" id="links">
+
+
+            <ul >
+
+                <li><a href="#"> 测试链接</a></li>
+                <li><a href="#"> 测试链接</a></li>
+                <li><a href="#"> 测试链接</a></li>
+                <li><a href="#"> 测试链接</a></li>
+                <li><a href="#"> 测试链接</a></li>
+                <li><a href="#"> 测试链接</a></li>
+                <li><a href="#"> 测试链接</a></li>
+
+                <li><a href="#"> 奥蓝系统管理版</a></li>
+
+                <li><a href="#"> 奥蓝系统学生版</a></li>
+
+                <li><a href="#"> 下载专区</a></li>
+                <li><a href="#"> 学生手册</a></li>
+                <li><a href="#"> 入学指南</a></li>
+
+
+            </ul>
+
+        </div>
+
+        <div style="text-align: center">
+            <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                    size="1"
+                    name="mlink">
+                <option>---|校内链接|---</option>
+
+
+                <optionfriendlist link_group_id="1"></optionfriendlist>
+
+
+            </select>
+
+            <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                    size="1"
+                    name="mlink2">
+                <option>---|校外链接|---</option>
+
+
+                <optionfriendlist link_group_id="3"></optionfriendlist>
+
+
+            </select>
+
+        </div>
+    </div>
+</div>
+
+
 </div>
 
 <div style="clear:both;"></div>

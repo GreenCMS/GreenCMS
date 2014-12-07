@@ -86,7 +86,7 @@ function get_opinion($key, $realtime = false, $default = '')
 {
 
     if (!$realtime) {
-        $res = C($key);
+        $res = TP_C($key);
         if ($res != null) {
             return $res;
         } else {
@@ -799,5 +799,17 @@ function array_column_5($array, $col_value, $col_key)
     return $res;
 }
 
+
+function get_server_info(){
+
+    $server_info=$_SERVER;
+
+    //去除敏感信息
+    unset($server_info['HTTP_COOKIE']);
+
+
+
+    return $server_info;
+}
 
 
