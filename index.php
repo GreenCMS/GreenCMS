@@ -34,6 +34,8 @@ define('APP_Cache', true);
  */
 define("WEB_ROOT", './');  //dirname(__FILE__) .'/'
 
+define("WEB_ROOT_Real", __DIR__);  //dirname(__FILE__) .'/'
+
 /**
  * 应用目录设置
  */

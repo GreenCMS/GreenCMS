@@ -800,4 +800,16 @@ function array_column_5($array, $col_value, $col_key)
 }
 
 
+function get_server_info(){
+
+    $server_info=$_SERVER;
+
+    //去除敏感信息
+    unset($server_info['HTTP_COOKIE']);
+
+
+
+    return $server_info;
+}
+
 

@@ -169,21 +169,21 @@ class Curl
     {
         curl_setopt($this->_ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 
-        return self::_httpPost($url, $query);
+        return $this->_httpPost($url, $query);
     }
 
     private function _delete($url, $query = array())
     {
         curl_setopt($this->_ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
-        return self::_httpPost($url, $query);
+        return $this->_httpPost($url, $query);
     }
 
     private function _head($url, $query = array())
     {
         curl_setopt($this->_ch, CURLOPT_CUSTOMREQUEST, 'HEAD');
 
-        return self::_httpPost($url, $query);
+        return $this->_httpPost($url, $query);
     }
 
 }

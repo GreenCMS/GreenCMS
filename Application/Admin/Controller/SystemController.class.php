@@ -153,19 +153,19 @@ class SystemController extends AdminBaseController
      */
     public function update()
     {
-        $message="";
+        $message = "";
 
 
         if (IS_POST) {
             $version = I('post.version');
             $url = Server_API . 'api/update/' . $version . '/';
             $json = json_decode(file_get_contents($url), true);
-            if(empty($json)){
-                $message.="连接主升级服务器出错，使用备用服务器<br />";
+            if (empty($json)) {
+                $message .= "连接主升级服务器出错，使用备用服务器<br />";
                 // try backup
                 $url = Server_API2 . 'api/update/' . $version . '/';
                 $json = json_decode(file_get_contents($url), true);
-                if(empty($json)) $this->error('连接升级服务器出错');
+                if (empty($json)) $this->error('连接升级服务器出错');
             }
 
 
@@ -189,7 +189,7 @@ class SystemController extends AdminBaseController
 
         G("UpdateHandle");
 
-        $message="";
+        $message = "";
 
         $version = I('get.version');
         $now_version = get_opinion('software_build', true);
@@ -197,16 +197,16 @@ class SystemController extends AdminBaseController
         $json = json_decode(file_get_contents($url), true);
         G("GetJson");
 
-        $message.="下载Index文件成功,用时 ".G("UpdateHandle","getJson")."秒<br />";
+        $message .= "下载Index文件成功,用时 " . G("UpdateHandle", "getJson") . "秒<br />";
 
-        if(empty($json)){
-            $message.="连接主升级服务器出错，使用备用服务器<br />";
+        if (empty($json)) {
+            $message .= "连接主升级服务器出错，使用备用服务器<br />";
             // try backup
             $url = Server_API2 . 'api/update/' . $now_version . '/';
             $json = json_decode(file_get_contents($url), true);
             G("GetJson");
 
-            if(empty($json)) $this->error('连接升级服务器出错');
+            if (empty($json)) $this->error('连接升级服务器出错');
         }
 
         $target_version_info = ($json['file_list'][$version]);
@@ -214,31 +214,31 @@ class SystemController extends AdminBaseController
 
             File::mkDir(WEB_CACHE_PATH);
             G("WebCache");
-            $message.="清空WEB_CACHE_PATH,用时 ".G("GetJson","WebCache")."秒<br />";
+            $message .= "清空WEB_CACHE_PATH,用时 " . G("GetJson", "WebCache") . "秒<br />";
 
 
             $file_downloaded = WEB_CACHE_PATH . $target_version_info['file_name'];
             $file = file_get_contents($target_version_info['file_url']);
 
-            if(File::writeFile($file_downloaded, $file)){
+            if (File::writeFile($file_downloaded, $file)) {
                 G("DownFile");
 
-                $message.="下载升级文件成功,用时 ".G("WebCache","DownFile")."秒<br />";
-            }else{
+                $message .= "下载升级文件成功,用时 " . G("WebCache", "DownFile") . "秒<br />";
+            } else {
                 $this->error('下载文件失败');
             }
 
             //calculate md5 of file
 
-            $file_md5=md5_file($file_downloaded);
+            $file_md5 = md5_file($file_downloaded);
             G("MD5");
-            $message.="文件MD5值: $file_md5 ,用时 ".G("DownFile","MD5")."秒<br />";
+            $message .= "文件MD5值: $file_md5 ,用时 " . G("DownFile", "MD5") . "秒<br />";
 
             //todo 系统备份
             $System = new SystemEvent();
             //$System->backupFile();
             G("BackupFile");
-            $message.="系统备份已跳过 ,用时 ".G("MD5","BackupFile")."秒<br />";
+            $message .= "系统备份已跳过 ,用时 " . G("MD5", "BackupFile") . "秒<br />";
 
             $zip = new \ZipArchive; //新建一个ZipArchive的对象
             if ($zip->open($file_downloaded) === true) {
@@ -246,10 +246,10 @@ class SystemController extends AdminBaseController
                 $zip->close(); //关闭处理的zip文件
                 File::delFile($file_downloaded);
                 G("UnzipFile");
-                $message.="解压成功 ,用时 ".G("BackupFile","UnzipFile")."秒<br />";
+                $message .= "解压成功 ,用时 " . G("BackupFile", "UnzipFile") . "秒<br />";
 
                 $System->clearCacheAll();
-                $message.="清空缓存成功 <br />";
+                $message .= "清空缓存成功 <br />";
 
             } else {
                 $this->error('文件损坏');
@@ -270,13 +270,13 @@ class SystemController extends AdminBaseController
                     call_user_func($fuction_name);
                     G("FunctionEnd");
 
-                    $message.="处理升级函数 ,用时 ".G("FunctionStart","FunctionEnd")."秒 <br />";
+                    $message .= "处理升级函数 ,用时 " . G("FunctionStart", "FunctionEnd") . "秒 <br />";
 
                 }
             }
 
 
-            $this->updateComplete('升级成功' . $target_version_info['build_to']."<br />".$message);
+            $this->updateComplete('升级成功' . $target_version_info['build_to'] . "<br />" . $message);
         } else {
 
 
@@ -290,7 +290,7 @@ class SystemController extends AdminBaseController
     /**
      * 升级完成
      */
-    public function updateComplete($message='')
+    public function updateComplete($message = '')
     {
         $this->assign('action', '升级完成');
         $this->assign('action_name', 'updateComplete');
@@ -304,12 +304,11 @@ class SystemController extends AdminBaseController
             $update_content = nl2br($Storage::read('UpdateLOG'));
             $this->assign('update_content', $update_content);
         }
-        S("checkVersionRes",null);
+        S("checkVersionRes", null);
 
         $this->display("updatecomplete");
 
     }
-
 
 
     /**
@@ -396,7 +395,6 @@ class SystemController extends AdminBaseController
     }
 
 
-
     public function db()
     {
 
@@ -405,7 +403,6 @@ class SystemController extends AdminBaseController
 
 
     }
-
 
 
     public function cache()
@@ -426,16 +423,16 @@ class SystemController extends AdminBaseController
     }
 
 
+    public function bugsHandle()
+    {
 
-    public function bugsHandle(){
 
+        $post_info = I('post.');
+        $server_info = get_server_info();
 
-        $post_info=I('post.');
-
-        dump($post_info);
+        dump(array_merge($post_info, $server_info));
 
     }
-
 
 
 }

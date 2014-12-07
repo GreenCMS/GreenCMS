@@ -75,7 +75,6 @@ class PostsController extends AdminBaseController
      */
 
 
-
     /**
      * 通用页面列表
      */
@@ -210,17 +209,16 @@ class PostsController extends AdminBaseController
      */
 
 
-
     /**
      * 添加文章的操作
      */
     public function add()
     {
-        $PostsEvent=new PostsEvent();
-        $post_id=$PostsEvent->insertEmpty();
+        $PostsEvent = new PostsEvent();
+        $post_id = $PostsEvent->insertEmpty();
 
 
- //       $this->redirect(U("Admin/Posts/posts",array("id"=>$post_id)));
+        //       $this->redirect(U("Admin/Posts/posts",array("id"=>$post_id)));
 //      $post_restored = $PostEvent->restoreFromCookie();
 
         $this->posts($post_id);
@@ -300,15 +298,14 @@ class PostsController extends AdminBaseController
     }
 
 
-
-
     /**
      * 通用文章状态修改器
      * @param $id
      * @param string $post_status
      * @param string $message
      */
-    private function changePostStatue($id,$post_status="publish",$message=""){
+    private function changePostStatue($id, $post_status = "publish", $message = "")
+    {
         $PostEvent = new PostsEvent();
 
         if ($PostEvent->hasPost($id) == false) {
@@ -316,15 +313,13 @@ class PostsController extends AdminBaseController
         }
 
         if ($PostEvent->changePostStatue($id, $post_status)) {
-            $this->success($message.'成功');
+            $this->success($message . '成功');
         } else {
-            $this->error($message.'失败');
+            $this->error($message . '失败');
         }
 
 
-
     }
-
 
 
     /**
@@ -333,7 +328,7 @@ class PostsController extends AdminBaseController
      */
     public function recycleHandle($id = 0)
     {
-        $this->changePostStatue($id,"publish","恢复");
+        $this->changePostStatue($id, "publish", "恢复");
     }
 
     /**
@@ -343,7 +338,7 @@ class PostsController extends AdminBaseController
      */
     public function unverifiedHandle($id, $post_status = 'publish')
     {
-        $this->changePostStatue($id,$post_status,"审核状态修改");
+        $this->changePostStatue($id, $post_status, "审核状态修改");
     }
 
     /**
@@ -352,7 +347,7 @@ class PostsController extends AdminBaseController
      */
     public function reverifyHandle($id)
     {
-        $this->changePostStatue($id,"unverified","审核状态修改");
+        $this->changePostStatue($id, "unverified", "审核状态修改");
     }
 
 
@@ -402,6 +397,24 @@ class PostsController extends AdminBaseController
 
 
     /**
+     * 清空草稿站
+     */
+    public function emptyDraftHandle()
+    {
+        $where['post_status'] = 'draft';
+
+        $PostsLogic = new PostsLogic();
+
+        if ($PostsLogic->where($where)->relation(true)->delete()) {
+            $this->success('清空草稿箱成功');
+        } else {
+            $this->error('清空草稿箱失败');
+        }
+
+    }
+
+
+    /**
      * 清空回收站
      */
     public function emptyRecycleHandle()
@@ -419,30 +432,30 @@ class PostsController extends AdminBaseController
     }
 
 
-    private function initEditor($post_id){
+    private function initEditor($post_id)
+    {
 
         /**
          *    var URL_upload = "{:U('Admin/Ueditor/imageUp')}";
-        var URL_fileUp = "{:U('Admin/Ueditor/fileUp')}";
-        var URL_scrawlUp = "{:U('Admin/Ueditor/scrawlUp')}";
-        var URL_getRemoteImage = "{:U('Admin/Ueditor/getRemoteImage')}";
-        var URL_imageManager = "{:U('Admin/Ueditor/imageManager')}";
-        var URL_imageUp = "{:U('Admin/Ueditor/imageUp')}";
-        var URL_getMovie = "{:U('Admin/Ueditor/getMovie')}";
-        var URL_home = "";
+         * var URL_fileUp = "{:U('Admin/Ueditor/fileUp')}";
+         * var URL_scrawlUp = "{:U('Admin/Ueditor/scrawlUp')}";
+         * var URL_getRemoteImage = "{:U('Admin/Ueditor/getRemoteImage')}";
+         * var URL_imageManager = "{:U('Admin/Ueditor/imageManager')}";
+         * var URL_imageUp = "{:U('Admin/Ueditor/imageUp')}";
+         * var URL_getMovie = "{:U('Admin/Ueditor/getMovie')}";
+         * var URL_home = "";
          */
-        $this->assign("URL_upload",U('Admin/Ueditor/imageUp',array("post_id"=>$post_id)) );
-        $this->assign("URL_fileUp",U('Admin/Ueditor/fileUp',array("post_id"=>$post_id))  );
-        $this->assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp',array("post_id"=>$post_id)) );
-        $this->assign("URL_getRemoteImage",U('Admin/Ueditor/getRemoteImage',array("post_id"=>$post_id))  );
-        $this->assign("URL_imageManager",U('Admin/Ueditor/imageManager',array("post_id"=>$post_id))  );
-        $this->assign("URL_imageUp", U('Admin/Ueditor/imageUp',array("post_id"=>$post_id)) );
-        $this->assign("URL_getMovie",U('Admin/Ueditor/getMovie',array("post_id"=>$post_id))  );
-        $this->assign("URL_home","" );
+        $this->assign("URL_upload", U('Admin/Ueditor/imageUp', array("post_id" => $post_id)));
+        $this->assign("URL_fileUp", U('Admin/Ueditor/fileUp', array("post_id" => $post_id)));
+        $this->assign("URL_scrawlUp", U('Admin/Ueditor/scrawlUp', array("post_id" => $post_id)));
+        $this->assign("URL_getRemoteImage", U('Admin/Ueditor/getRemoteImage', array("post_id" => $post_id)));
+        $this->assign("URL_imageManager", U('Admin/Ueditor/imageManager', array("post_id" => $post_id)));
+        $this->assign("URL_imageUp", U('Admin/Ueditor/imageUp', array("post_id" => $post_id)));
+        $this->assign("URL_getMovie", U('Admin/Ueditor/getMovie', array("post_id" => $post_id)));
+        $this->assign("URL_home", "");
 
 
     }
-
 
 
     /**
@@ -451,7 +464,6 @@ class PostsController extends AdminBaseController
     public function posts($id = -1)
     {
         $PostEvent = new PostsEvent();
-
 
 
         $this->post_id = $post_id = $id ? (int)$id : false;
@@ -491,7 +503,7 @@ class PostsController extends AdminBaseController
                 $this->jsonReturn(1, "已经更新", $url);
             } else {
                 //处理失败
-                cookie('post_add'. $post_data["post_id"], gzcompress(json_encode($post_data)), 3600000);
+                cookie('post_add' . $post_data["post_id"], gzcompress(json_encode($post_data)), 3600000);
                 //支持大约2.8万个字符 Ueditor计算方法，所有中文和英文数字都算一个字符计算
                 $this->jsonReturn(0, "更新失败", $url);
             }
@@ -516,12 +528,12 @@ class PostsController extends AdminBaseController
             //投稿员只能看到权限内部的分类
             if (!$this->noVerify()) {
                 $user = D('User', 'Logic')->detail(( int )$_SESSION [C('USER_AUTH_KEY')]);
-                $role = D('Role')->where(array('id' =>  $user["user_role"] ["role_id"]))->find();
+                $role = D('Role')->where(array('id' => $user["user_role"] ["role_id"]))->find();
                 $cats = D('Cats', 'Logic')->where(array('in', json_decode($role ["cataccess"])))->select();
                 foreach ($cats as $key => $value) {
                     $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
                 }
-                $tags =array();
+                $tags = array();
             } else {
                 $cats = D('Cats', 'Logic')->category();
                 $tags = D('Tags', 'Logic')->select();
@@ -798,7 +810,6 @@ class PostsController extends AdminBaseController
      */
 
 
-
     /**
      * 通用列表页面
      * @function 未知类型单页
@@ -807,7 +818,6 @@ class PostsController extends AdminBaseController
     {
         $this->index($method, I('get.post_status', 'publish'), I('get.order', 'post_date desc'), I('get.keyword', ''));
     }
-
 
 
     /**

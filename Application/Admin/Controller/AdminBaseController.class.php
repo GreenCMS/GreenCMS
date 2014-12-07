@@ -128,7 +128,7 @@ class AdminBaseController extends BaseController
         $options = D('Options');
         $data = array();
 
-        $post_data=I('post.');
+        $post_data = I('post.');
 
         foreach ($post_data as $name => $value) {
 //            unset ($data ['option_id']);
@@ -156,48 +156,48 @@ class AdminBaseController extends BaseController
         if ($uid == 1) return true;
         else return false;
     }
-/*
-    public function __destruct()
-    {
+    /*
+        public function __destruct()
+        {
 
-        $user_id = get_current_user_id();
-
-
-
-            $group_level_1 = C('group_level_1');
-            $admin_level_2 = C('admin_level_2');
-            $admin_level_3 = C('admin_level_3');
+            $user_id = get_current_user_id();
 
 
-            $this->group_name = $group_level_1[MODULE_NAME] ? $group_level_1[MODULE_NAME] : "Admin";
-            $this->module_name = $admin_level_2[CONTROLLER_NAME] ? $admin_level_2[CONTROLLER_NAME] : CONTROLLER_NAME;
-            $this->action_name = $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] ?
-                $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] : CONTROLLER_NAME . '/' . ACTION_NAME;
 
-        if($user_id){
-
-            $LogLogic = D('Log');
-
-            $log_data['user_id'] = $user_id;
-            $log_data['group_name'] = $this->group_name;
-            $log_data['module_name'] = $this->module_name;
-            $log_data['action_name'] = $this->action_name;
-            $log_data['message'] = '';
-            $log_data['log_type'] = 1;
-            $log_data['user_ip'] = get_client_ip();
+                $group_level_1 = C('group_level_1');
+                $admin_level_2 = C('admin_level_2');
+                $admin_level_3 = C('admin_level_3');
 
 
-            //Log::write( arr2str($log_data));
-            $LogLogic->data($log_data)->add();
-            //Log::write( $LogLogic->getlastsql());
+                $this->group_name = $group_level_1[MODULE_NAME] ? $group_level_1[MODULE_NAME] : "Admin";
+                $this->module_name = $admin_level_2[CONTROLLER_NAME] ? $admin_level_2[CONTROLLER_NAME] : CONTROLLER_NAME;
+                $this->action_name = $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] ?
+                    $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] : CONTROLLER_NAME . '/' . ACTION_NAME;
+
+            if($user_id){
+
+                $LogLogic = D('Log');
+
+                $log_data['user_id'] = $user_id;
+                $log_data['group_name'] = $this->group_name;
+                $log_data['module_name'] = $this->module_name;
+                $log_data['action_name'] = $this->action_name;
+                $log_data['message'] = '';
+                $log_data['log_type'] = 1;
+                $log_data['user_ip'] = get_client_ip();
+
+
+                //Log::write( arr2str($log_data));
+                $LogLogic->data($log_data)->add();
+                //Log::write( $LogLogic->getlastsql());
+
+            }
+
+
+            parent::__destruct();
 
         }
-
-
-        parent::__destruct();
-
-    }
-*/
+    */
     /**
      *
      */
