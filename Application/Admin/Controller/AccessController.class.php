@@ -653,6 +653,10 @@ class AccessController extends AdminBaseController
     {
 
         $user = D('User', 'Logic')->cache(true)->detail($uid);
+        unset($user['user_pass']);
+        unset($user['user_session']);
+        unset($user['user_activation_key']);
+//        unset($user['user_url']);
         $this->assign('user', $user);
         $this->assign('action', '用户档案');
 
