@@ -341,7 +341,7 @@
 </div>
 
 <div style="clear:both;"></div>
-<div class="center_middle" style="height: 150px;margin-right: 1.5%;margin-left: 1%;margin-top: 0;">
+<div class="center_middle" style="height: 150px;margin-right: 1.5%;margin-left: 1%;">
 
 
     <!--http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg-->
@@ -370,26 +370,46 @@
 
 
         <div class="bannerinner">
-            <a target="_blank" href="#" class="hrefbanner" style="display:block;">
-                <div class="describ" style="left:100px;top:60px"><span class="tpbg"></span>
+            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner1" style="display:block;">
+                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
 
                     <h3 class="tit">一切为了学生</h3>
                     <span class="content"></span>
                 </div>
             </a>
-            <a target="_blank" href="#" class="hrefbanner" style="display:none;">
-                <div class="describ" style="left:30%;top:50px"><span class="tpbg"></span>
+            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner2" style="display:none;">
+
+                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
+
+                    <h3 class="tit">一切为了学生</h3>
+                    <span class="content"></span>
+                </div>
+                <div class="describ" style=left:35%;top:40px;"><span class="tpbg"></span>
 
                     <h3 class="tit">为了一切学生</h3>
                     <span class="content"></span>
                 </div>
+
+
             </a>
-            <a target="_blank" href="#" class="hrefbanner" style="display: none;">
-                <div class="describ" style="right:130px;top:20px"><span class="tpbg"></span>
+            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner3" style="display: none;">
+
+                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
+
+                    <h3 class="tit">一切为了学生</h3>
+                    <span class="content"></span>
+                </div>
+                <div class="describ" style=left:35%;top:40px;"><span class="tpbg"></span>
+
+                    <h3 class="tit">为了一切学生</h3>
+                    <span class="content"></span>
+                </div>
+                <div class="describ" style="left:65%;top:20px"><span class="tpbg"></span>
 
                     <h3 class="tit">为了学生一切</h3>
                     <span class="content"></span>
                 </div>
+
             </a>
 
 
@@ -681,12 +701,14 @@ $(function(){ //头部nav部分； $('.indexnav-content div.menu1').hover(functi
             if(onbanner)return;
             indexp.index=(++indexp.index>=indexp.num?0:indexp.index);
             $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
-            $('#indexbanner .bannerinner .describ').eq(indexp.index).show().siblings('.describ').hide();
+           // $('#indexbanner .bannerinner .describ').eq(indexp.index).show().siblings('.describ').hide();
             //console.log($('#indexbanner .bannerchoose').eq(indexp.index).attr('style'));
             $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
             $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            console.log("indexp.index:"+indexp.index);
+            console.log("indexp.num:"+indexp.num);
             $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
-        },2500)
+        },3500)
     }
 
 //    $("#indexbanner").mouseover(function(){onbanner=true});

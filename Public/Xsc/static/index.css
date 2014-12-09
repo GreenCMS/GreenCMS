@@ -592,11 +592,11 @@ img {
 }
 
 #indexbanner .bannerinner .tit {
-    text-align: center;
+    /*text-align: center;*/
     font-family: \5FAE\8F6F\96C5\9ED1, sans-serif;
     color: #2f2f2f;
     font-size: 40px;
-    line-height: 60px;
+    line-height: 70px;
     height: 60px;
     font-weight: normal
 }
