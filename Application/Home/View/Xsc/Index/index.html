@@ -18,7 +18,7 @@
             /*width: 320px;*/
             width: 95%;
             margin: 10px auto 0;
-            border-bottom:1px dashed #686868;
+            border-bottom: 1px dashed #686868;
         }
 
         .body-top {
@@ -60,6 +60,20 @@
         .clr {
             clear: both;
         }
+
+        .box {
+
+            /* background-color: #ffffff;*/
+        }
+
+        .text1, .text2, .text3, .text4, .text5, .text6 {
+            font-family: '华文细黑';
+            color: #FFFFFF;
+            font-size: 35px;
+            display: none;
+        }
+
+
     </style>
 
 </head>
@@ -91,7 +105,7 @@
 
 
             <div id="slide" class="news-slide fl" style="margin-top:1%;margin-right: 1%; width: 50%;">
-                <volist name="slider"  id="v" key="k">
+                <volist name="slider" id="v" key="k">
                     {:get_post_thumbnail($v)}
                 </volist>
             </div>
@@ -104,11 +118,10 @@
 
                 <ul class="list1">
 
-                    <volist name="xgxw"  id="v" key="k">
+                    <volist name="xgxw" id="v" key="k">
 
 
-
-                            <li>
+                        <li>
                             <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
@@ -142,10 +155,7 @@
 
                 <ul class="list1">
 
-                    <volist name="ggtz"  id="v" key="k">
-
-
-
+                    <volist name="ggtz" id="v" key="k">
 
 
                         <li>
@@ -158,7 +168,6 @@
                         </span>
 
                         </li>
-
 
 
                     </volist>
@@ -206,24 +215,23 @@
             <ul>
 
 
-                <volist name="xyfc"  id="v" key="k">
+                <volist name="xyfc" id="v" key="k">
 
 
+                    <eq name="k" value="1">
 
-                        <eq name="k" value="1">
+                        <else/>
 
-                            <else/>
-
-                            <li>
+                        <li>
 
             <span>
               {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                        <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                            <i>·&nbsp;&nbsp;</i>
-                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                                <i>·&nbsp;&nbsp;</i>
+                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
 
-                            </li>
-</eq>
+                        </li>
+                    </eq>
 
 
                 </volist>
@@ -261,7 +269,7 @@
 
 
             <ul>
-                <volist name="xyfc"  id="v" key="k">
+                <volist name="xyfc" id="v" key="k">
 
                     <eq name="k" value="1">
 
@@ -307,24 +315,22 @@
 
 
             <ul>
-                <volist name="xyfc"  id="v" key="k">
+                <volist name="xyfc" id="v" key="k">
 
                     <eq name="k" value="1">
 
                         <else/>
 
 
-
-
                         <li>
             <span>
               {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                        <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                            <i>·&nbsp;&nbsp;</i>
-                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-                    </li>
+                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                                <i>·&nbsp;&nbsp;</i>
+                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                        </li>
 
-                        </eq>
+                    </eq>
                 </volist>
 
             </ul>
@@ -335,11 +341,77 @@
 </div>
 
 <div style="clear:both;"></div>
+<div class="center_middle" style="height: 150px;margin-right: 1.5%;margin-left: 1%;margin-top: 0;">
+
+
+    <!--http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg-->
+    <!--background:url('http://2011college.njtech.edu.cn/Public/2011college/images/slide.jpg') no-repeat #000000 ;background-size:100% 100%;-->
+    <!--background: url('http://xgw.njut.asia/images/logo.jpg') no-repeat;background-size:100% 100%;-->
+
+    <!--<div class="box" style="position: absolute;left: 60%;margin-top: 30px;">-->
+        <!--<span class="text1">一切为了学生</span>-->
+        <!--<span class="text2">为了一切学生</span>-->
+        <!--<span class="text3">为了学生一切</span>-->
+    <!--</div>-->
+    <!--<div class="box" style="position: absolute;left: 50%;margin-top: 90px;">-->
+        <!--<span class="text4">一切为了学生</span>-->
+        <!--<span class="text5">为了一切学生</span>-->
+        <!--<span class="text6">为了学生一切</span>-->
+    <!--</div>-->
+
+
+    <div class="banner" id="indexbanner">
+        <div class="ground"
+             style="display:block; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide.jpg') no-repeat no-repeat 100% 100%;;"></div>
+        <div class="ground"
+             style="display: none; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg') no-repeat no-repeat 100% 100%;;"></div>
+        <div class="ground"
+             style="display: none; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide3.jpg') no-repeat no-repeat 100% 100%;;"></div>
+
+
+        <div class="bannerinner">
+            <a target="_blank" href="#" class="hrefbanner" style="display:block;">
+                <div class="describ" style="left:100px;top:60px"><span class="tpbg"></span>
+
+                    <h3 class="tit">一切为了学生</h3>
+                    <span class="content"></span>
+                </div>
+            </a>
+            <a target="_blank" href="#" class="hrefbanner" style="display:none;">
+                <div class="describ" style="left:30%;top:50px"><span class="tpbg"></span>
+
+                    <h3 class="tit">为了一切学生</h3>
+                    <span class="content"></span>
+                </div>
+            </a>
+            <a target="_blank" href="#" class="hrefbanner" style="display: none;">
+                <div class="describ" style="right:130px;top:20px"><span class="tpbg"></span>
+
+                    <h3 class="tit">为了学生一切</h3>
+                    <span class="content"></span>
+                </div>
+            </a>
+
+
+            <a class="left"></a>
+            <a class="right"></a>
+              <span class="lights">
+                  <a class="focused"></a>
+                  <a></a>
+                  <a></a>
+
+ </span></div>
+    </div>
+
+
+</div>
+
+<div style="clear:both;"></div>
 
 
 <div class="center_middle" style="">
 
-<div class="left_half"  style="width: 47%;padding-bottom: 30px" >
+<div class="left_half" style="width: 47%;padding-bottom: 30px">
     <div class="header" style="border-top: solid 7px #1FAEFF;">
         <a href="{:getCatURLByID(3)}">更多+</a>
 
@@ -366,25 +438,25 @@
 
 
         <!--<table border="0" cellspacing="0" cellpadding="0"-->
-               <!--style="margin:8px 10px;border-bottom:1px dashed #686868;">-->
-            <!--<tbody>-->
-            <!--<tr>-->
-                <!--<td width="110" style="padding-bottom:8px;"><img-->
-                        <!--src="{:get_post_img($xyfc[0])}"-->
-                        <!--border="0" width="97"-->
-                        <!--height="64"></td>-->
-                <!--<td valign="top" style="padding-bottom:8px;">-->
-                    <!--<p class="bc14"><a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
-                        <!--{$xyfc[0]['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}-->
-                    <!--</a></p>-->
+        <!--style="margin:8px 10px;border-bottom:1px dashed #686868;">-->
+        <!--<tbody>-->
+        <!--<tr>-->
+        <!--<td width="110" style="padding-bottom:8px;"><img-->
+        <!--src="{:get_post_img($xyfc[0])}"-->
+        <!--border="0" width="97"-->
+        <!--height="64"></td>-->
+        <!--<td valign="top" style="padding-bottom:8px;">-->
+        <!--<p class="bc14"><a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
+        <!--{$xyfc[0]['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}-->
+        <!--</a></p>-->
 
-                    <!--<p class="be12">　　-->
-                        <!--<a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
-                            <!--{$xyfc[0]['post_content']|strip_tags|mb_substr=0,100,"UTF-8"}-->
-                        <!--</a>-->
-                    <!--</p></td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
+        <!--<p class="be12">　　-->
+        <!--<a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
+        <!--{$xyfc[0]['post_content']|strip_tags|mb_substr=0,100,"UTF-8"}-->
+        <!--</a>-->
+        <!--</p></td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
         <!--</table>-->
 
 
@@ -420,7 +492,6 @@
                 <div class="clr"></div>
             </div>
         </div>
-
 
 
         <!--<ul>-->
@@ -469,8 +540,6 @@
             </ul>
 
 
-
-
         </div>
 
 
@@ -478,7 +547,7 @@
 </div>
 
 
-<div class="left_half"  style="width: 21%;" >
+<div class="left_half" style="width: 21%;">
     <div class="header" style="border-top: solid 7px #252525;">
         <a href="{:getCatURLByID(10)}">更多+</a>
 
@@ -490,7 +559,7 @@
         <div style="text-align: center;" id="links">
 
 
-            <ul >
+            <ul>
 
                 <li><a href="#"> 测试链接</a></li>
                 <li><a href="#"> 测试链接</a></li>
@@ -548,6 +617,91 @@
 </div>
 
 <include file="Public:footer"/>
+
+
+
+
+<script type="application/javascript">
+
+
+
+$(function(){ //头部nav部分； $('.indexnav-content div.menu1').hover(function(){$(this).addClass('focuse');},function(){$(this).removeClass('focuse');}) //
+    $('#indexbanner .bannerchoose').each(function(){
+        var href=$(this).attr('href');
+        if(href!=""){(new Image()).src=href;}
+    })
+    var bannerfadetime=2000;
+    var onbanner=false;
+    if($('#indexbanner .bannerinner a.hrefbanner').length>1){
+        window.indexp={};
+        (function(){
+            indexp.num=$('#indexbanner .lights a').length;
+            indexp.index=0;
+            indexscroll();
+        }())
+        $('#indexbanner .right').bind('click',function(){
+            if($('#indexbanner').is(":animated")){return false;}
+            clearInterval(bannerinterval);
+            indexp.index=(++indexp.index>=indexp.num?0:indexp.index);
+            //console.log(indexp.index);
+            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+            indexscroll();
+        })
+        $('#indexbanner .left').bind('click',function(){
+            if($('#indexbanner').is(":animated")){return false;}
+            clearInterval(bannerinterval);
+            indexp.index=(indexp.index==0?indexp.num-1:--indexp.index);
+            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+            indexscroll();
+        })
+        $('#indexbanner .lights a').bind('click',function(){
+            indexp.index=$(this).index();
+            clearInterval(bannerinterval);
+            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+            indexscroll();
+        })
+
+        $('.index-colum .li-1 .news .tit').hover(
+                function(){
+                    $(this).addClass('bordernone');
+                    $(this).parents('.news').eq(0).siblings('.news').find('.con').stop().hide().end().find('.tit').removeClass('bordernone');
+                    $(this).next('.con').fadeIn();
+                },
+                function(){}
+        )
+    }
+    function indexscroll(){
+        bannerinterval=setInterval(function(){
+            if(onbanner)return;
+            indexp.index=(++indexp.index>=indexp.num?0:indexp.index);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            $('#indexbanner .bannerinner .describ').eq(indexp.index).show().siblings('.describ').hide();
+            //console.log($('#indexbanner .bannerchoose').eq(indexp.index).attr('style'));
+            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+        },2500)
+    }
+
+//    $("#indexbanner").mouseover(function(){onbanner=true});
+//    $("#indexbanner").mouseout(function(){onbanner=false})
+
+
+
+})
+
+
+
+
+
+
+</script>
 
 </body>
 </html>
