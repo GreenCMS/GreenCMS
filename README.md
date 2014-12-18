@@ -1,4 +1,4 @@
-GreenCMS - 基于ThikPHP的CMS系统  
+GreenCMS - 基于ThinkPHP 3.2.x的CMS系统
 ================================  
 
     ********************************************************************************************  
@@ -57,8 +57,13 @@ QQ群: 123085170
 
  - others who give us help and advice  
 
+## Milestone:
+ - V2 2014.1-2015.1
+ - v3 2015.1-on going
 
-  
+## ThinkPHP version
+ - Use 3.2.1
+ - Careful when upgrade framework
   
 ```php
     echo "

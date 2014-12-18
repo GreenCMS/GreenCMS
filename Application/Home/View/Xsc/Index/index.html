@@ -18,28 +18,29 @@
             /*width: 320px;*/
             width: 95%;
             margin: 10px auto 0;
-            border-bottom:1px dashed #686868;
+            border-bottom: 1px dashed #686868;
         }
 
         .body-top {
             width: 100%;
+            max-height: 120px;
+
             /*height: 100px;*/
             margin-bottom: 10px;
         }
 
         .bt-imgbox {
-            width: 50%;
-            /*height: 100px;*/
+            width: 40%;
             float: left;
         }
 
         .bt-img {
             width: 90%;
-            /*height: 100px;*/
+            height: 100px;
         }
 
         .bt-text {
-            width: 50%;
+            width: 60%;
             float: right;
         }
 
@@ -52,13 +53,27 @@
         }
 
         .bt-cont {
-            height: 86px;
+            height: 70px;
             overflow: hidden;
         }
 
         .clr {
             clear: both;
         }
+
+        .box {
+
+            /* background-color: #ffffff;*/
+        }
+
+        .text1, .text2, .text3, .text4, .text5, .text6 {
+            font-family: '华文细黑';
+            color: #FFFFFF;
+            font-size: 35px;
+            display: none;
+        }
+
+
     </style>
 
 </head>
@@ -68,9 +83,9 @@
     $xgxw = D('Cats', 'Logic')->getPostsByCat(64, 10);
 
     $ggtz = D('Cats', 'Logic')->getPostsByCat(3, 10);
-    $xyfc = D('Cats', 'Logic')->getPostsByCat(24, 10);
-    $llqy = D('Cats', 'Logic')->getPostsByCat(53, 10);
-    $xjdx = D('Cats', 'Logic')->getPostsByCat(34, 10);
+    $xyfc = D('Cats', 'Logic')->getPostsByCat(24, 8);
+    $llqy = D('Cats', 'Logic')->getPostsByCat(53, 8);
+    $xjdx = D('Cats', 'Logic')->getPostsByCat(34, 8);
 
     $slider = D('Tags', 'Logic')->getPostsByTag(3, 10);
 
@@ -90,7 +105,7 @@
 
 
             <div id="slide" class="news-slide fl" style="margin-top:1%;margin-right: 1%; width: 50%;">
-                <volist name="slider" id="v">
+                <volist name="slider" id="v" key="k">
                     {:get_post_thumbnail($v)}
                 </volist>
             </div>
@@ -98,12 +113,14 @@
             <!--<div style="clear:both;"></div>-->
 
 
-            <div class="box" style="margin-left: 350px;">
+            <div class="box" style="margin-left: 340px;">
 
 
                 <ul class="list1">
 
-                    <volist name="xgxw" id="v">
+                    <volist name="xgxw" id="v" key="k">
+
+
                         <li>
                             <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
@@ -115,6 +132,8 @@
                         </span>
 
                         </li>
+
+
                     </volist>
 
 
@@ -136,7 +155,9 @@
 
                 <ul class="list1">
 
-                    <volist name="ggtz" id="v">
+                    <volist name="ggtz" id="v" key="k">
+
+
                         <li>
                             <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
@@ -147,6 +168,8 @@
                         </span>
 
                         </li>
+
+
                     </volist>
 
 
@@ -167,7 +190,7 @@
         <div class="header" style="border-top: solid 7px #3686be;">
             <a href="{:getCatURLByID(3)}">更多+</a>
 
-            <div class="header_info">公告通知</div>
+            <div class="header_info">新闻栏目</div>
         </div>
         <div class="body">
 
@@ -192,15 +215,25 @@
             <ul>
 
 
-                <volist name="ggtz" id="v">
-                    <li>
+                <volist name="xyfc" id="v" key="k">
+
+
+                    <eq name="k" value="1">
+
+                        <else/>
+
+                        <li>
+
             <span>
               {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                        <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                            <i>·&nbsp;&nbsp;</i>
-                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                                <i>·&nbsp;&nbsp;</i>
+                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
 
-                    </li>
+                        </li>
+                    </eq>
+
+
                 </volist>
 
 
@@ -213,7 +246,7 @@
         <div class="header" style="border-top: solid 7px #008287;">
             <a href="{:getCatURLByID(10)}">更多+</a>
 
-            <div class="header_info">学院风采</div>
+            <div class="header_info">新闻栏目</div>
         </div>
         <div class="body">
 
@@ -261,7 +294,7 @@
         <div class="header" style="border-top: solid 7px #F4B300;">
             <a href="{:getCatURLByID(10)}">更多+</a>
 
-            <div class="header_info">学院风采</div>
+            <div class="header_info">新闻栏目</div>
         </div>
         <div class="body">
             <div class="wrap">
@@ -282,14 +315,22 @@
 
 
             <ul>
-                <volist name="xyfc" id="v">
-                    <li>
+                <volist name="xyfc" id="v" key="k">
+
+                    <eq name="k" value="1">
+
+                        <else/>
+
+
+                        <li>
             <span>
               {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                        <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
-                            <i>·&nbsp;&nbsp;</i>
-                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-                    </li>
+                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                                <i>·&nbsp;&nbsp;</i>
+                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                        </li>
+
+                    </eq>
                 </volist>
 
             </ul>
@@ -300,15 +341,101 @@
 </div>
 
 <div style="clear:both;"></div>
+<div class="center_middle" style="height: 150px;margin-right: 1.5%;margin-left: 1%;">
+
+
+    <!--http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg-->
+    <!--background:url('http://2011college.njtech.edu.cn/Public/2011college/images/slide.jpg') no-repeat #000000 ;background-size:100% 100%;-->
+    <!--background: url('http://xgw.njut.asia/images/logo.jpg') no-repeat;background-size:100% 100%;-->
+
+    <!--<div class="box" style="position: absolute;left: 60%;margin-top: 30px;">-->
+        <!--<span class="text1">一切为了学生</span>-->
+        <!--<span class="text2">为了一切学生</span>-->
+        <!--<span class="text3">为了学生一切</span>-->
+    <!--</div>-->
+    <!--<div class="box" style="position: absolute;left: 50%;margin-top: 90px;">-->
+        <!--<span class="text4">一切为了学生</span>-->
+        <!--<span class="text5">为了一切学生</span>-->
+        <!--<span class="text6">为了学生一切</span>-->
+    <!--</div>-->
+
+
+    <div class="banner" id="indexbanner">
+        <div class="ground"
+             style="display:block; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide.jpg') no-repeat no-repeat 100% 100%;;"></div>
+        <div class="ground"
+             style="display: none; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg') no-repeat no-repeat 100% 100%;;"></div>
+        <div class="ground"
+             style="display: none; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide3.jpg') no-repeat no-repeat 100% 100%;;"></div>
+
+
+        <div class="bannerinner">
+            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner1" style="display:block;">
+                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
+
+                    <h3 class="tit">一切为了学生</h3>
+                    <span class="content"></span>
+                </div>
+            </a>
+            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner2" style="display:none;">
+
+                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
+
+                    <h3 class="tit">一切为了学生</h3>
+                    <span class="content"></span>
+                </div>
+                <div class="describ" style=left:35%;top:40px;"><span class="tpbg"></span>
+
+                    <h3 class="tit">为了一切学生</h3>
+                    <span class="content"></span>
+                </div>
+
+
+            </a>
+            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner3" style="display: none;">
+
+                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
+
+                    <h3 class="tit">一切为了学生</h3>
+                    <span class="content"></span>
+                </div>
+                <div class="describ" style=left:35%;top:40px;"><span class="tpbg"></span>
+
+                    <h3 class="tit">为了一切学生</h3>
+                    <span class="content"></span>
+                </div>
+                <div class="describ" style="left:65%;top:20px"><span class="tpbg"></span>
+
+                    <h3 class="tit">为了学生一切</h3>
+                    <span class="content"></span>
+                </div>
+
+            </a>
+
+
+            <a class="left"></a>
+            <a class="right"></a>
+              <span class="lights">
+                  <a class="focused"></a>
+                  <a></a>
+                  <a></a>
+
+ </span></div>
+    </div>
+
+
+</div>
+
+<div style="clear:both;"></div>
 
 
 <div class="center_middle" style="">
 
-<div class="left_half"  style="width: 40%;" >
+<div class="left_half" style="width: 47%;padding-bottom: 30px">
     <div class="header" style="border-top: solid 7px #1FAEFF;">
         <a href="{:getCatURLByID(3)}">更多+</a>
 
-        <div class="header_info">公告通知</div>
+        <div class="header_info">新闻栏目</div>
     </div>
     <div class="body">
 
@@ -331,25 +458,25 @@
 
 
         <!--<table border="0" cellspacing="0" cellpadding="0"-->
-               <!--style="margin:8px 10px;border-bottom:1px dashed #686868;">-->
-            <!--<tbody>-->
-            <!--<tr>-->
-                <!--<td width="110" style="padding-bottom:8px;"><img-->
-                        <!--src="{:get_post_img($xyfc[0])}"-->
-                        <!--border="0" width="97"-->
-                        <!--height="64"></td>-->
-                <!--<td valign="top" style="padding-bottom:8px;">-->
-                    <!--<p class="bc14"><a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
-                        <!--{$xyfc[0]['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}-->
-                    <!--</a></p>-->
+        <!--style="margin:8px 10px;border-bottom:1px dashed #686868;">-->
+        <!--<tbody>-->
+        <!--<tr>-->
+        <!--<td width="110" style="padding-bottom:8px;"><img-->
+        <!--src="{:get_post_img($xyfc[0])}"-->
+        <!--border="0" width="97"-->
+        <!--height="64"></td>-->
+        <!--<td valign="top" style="padding-bottom:8px;">-->
+        <!--<p class="bc14"><a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
+        <!--{$xyfc[0]['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}-->
+        <!--</a></p>-->
 
-                    <!--<p class="be12">　　-->
-                        <!--<a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
-                            <!--{$xyfc[0]['post_content']|strip_tags|mb_substr=0,100,"UTF-8"}-->
-                        <!--</a>-->
-                    <!--</p></td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
+        <!--<p class="be12">　　-->
+        <!--<a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
+        <!--{$xyfc[0]['post_content']|strip_tags|mb_substr=0,100,"UTF-8"}-->
+        <!--</a>-->
+        <!--</p></td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
         <!--</table>-->
 
 
@@ -387,11 +514,10 @@
         </div>
 
 
-
         <!--<ul>-->
 
 
-        <!--<volist name="ggtz" id="v">-->
+        <!--<volist name="ggtz"  id="v" key="k">-->
         <!--<li>-->
         <!--<span>-->
         <!--{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
@@ -408,11 +534,11 @@
 </div>
 
 
-<div class="left_half" style="width: 32%;" id="c4_right_2">
+<div class="left_half" style="width: 25%;padding-bottom: 0px" id="c4_right_2">
     <div class="header" style="border-top: solid 7px #78BA00;">
         <a href="{:getCatURLByID(10)}">更多+</a>
 
-        <div class="header_info">服务链接</div>
+        <div class="header_info">专题链接</div>
     </div>
     <div class="body" style="">
 
@@ -433,33 +559,6 @@
 
             </ul>
 
-            <div style="text-align: center">
-                <select style="width:100px"
-                        onchange="window.open(this.options[this.selectedIndex].value)"
-                        size="1"
-                        name="mlink">
-                    <option>---|校内链接|---</option>
-
-
-                    <optionfriendlist link_group_id="1"></optionfriendlist>
-
-
-                </select>
-
-                <select style="width:100px"
-                        onchange="window.open(this.options[this.selectedIndex].value)"
-                        size="1"
-                        name="mlink2">
-                    <option>---|校外链接|---</option>
-
-
-                    <optionfriendlist link_group_id="3"></optionfriendlist>
-
-
-                </select>
-
-            </div>
-
 
         </div>
 
@@ -468,26 +567,25 @@
 </div>
 
 
-<div class="left_half"  style="width: 21%;" >
+<div class="left_half" style="width: 21%;">
     <div class="header" style="border-top: solid 7px #252525;">
         <a href="{:getCatURLByID(10)}">更多+</a>
 
         <div class="header_info">服务链接</div>
     </div>
-    <div class="body" style="margin-bottom: 50px">
+    <div class="body" style="padding-bottom: 30px">
 
 
         <div style="text-align: center;" id="links">
 
 
-            <ul >
+            <ul>
 
                 <li><a href="#"> 测试链接</a></li>
                 <li><a href="#"> 测试链接</a></li>
                 <li><a href="#"> 测试链接</a></li>
                 <li><a href="#"> 测试链接</a></li>
-                <li><a href="#"> 测试链接</a></li>
-                <li><a href="#"> 测试链接</a></li>
+
                 <li><a href="#"> 测试链接</a></li>
 
                 <li><a href="#"> 奥蓝系统管理版</a></li>
@@ -539,6 +637,93 @@
 </div>
 
 <include file="Public:footer"/>
+
+
+
+
+<script type="application/javascript">
+
+
+
+$(function(){ //头部nav部分； $('.indexnav-content div.menu1').hover(function(){$(this).addClass('focuse');},function(){$(this).removeClass('focuse');}) //
+    $('#indexbanner .bannerchoose').each(function(){
+        var href=$(this).attr('href');
+        if(href!=""){(new Image()).src=href;}
+    })
+    var bannerfadetime=2000;
+    var onbanner=false;
+    if($('#indexbanner .bannerinner a.hrefbanner').length>1){
+        window.indexp={};
+        (function(){
+            indexp.num=$('#indexbanner .lights a').length;
+            indexp.index=0;
+            indexscroll();
+        }())
+        $('#indexbanner .right').bind('click',function(){
+            if($('#indexbanner').is(":animated")){return false;}
+            clearInterval(bannerinterval);
+            indexp.index=(++indexp.index>=indexp.num?0:indexp.index);
+            //console.log(indexp.index);
+            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+            indexscroll();
+        })
+        $('#indexbanner .left').bind('click',function(){
+            if($('#indexbanner').is(":animated")){return false;}
+            clearInterval(bannerinterval);
+            indexp.index=(indexp.index==0?indexp.num-1:--indexp.index);
+            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+            indexscroll();
+        })
+        $('#indexbanner .lights a').bind('click',function(){
+            indexp.index=$(this).index();
+            clearInterval(bannerinterval);
+            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+            indexscroll();
+        })
+
+        $('.index-colum .li-1 .news .tit').hover(
+                function(){
+                    $(this).addClass('bordernone');
+                    $(this).parents('.news').eq(0).siblings('.news').find('.con').stop().hide().end().find('.tit').removeClass('bordernone');
+                    $(this).next('.con').fadeIn();
+                },
+                function(){}
+        )
+    }
+    function indexscroll(){
+        bannerinterval=setInterval(function(){
+            if(onbanner)return;
+            indexp.index=(++indexp.index>=indexp.num?0:indexp.index);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+           // $('#indexbanner .bannerinner .describ').eq(indexp.index).show().siblings('.describ').hide();
+            //console.log($('#indexbanner .bannerchoose').eq(indexp.index).attr('style'));
+            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
+            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+            console.log("indexp.index:"+indexp.index);
+            console.log("indexp.num:"+indexp.num);
+            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+        },3500)
+    }
+
+//    $("#indexbanner").mouseover(function(){onbanner=true});
+//    $("#indexbanner").mouseout(function(){onbanner=false})
+
+
+
+})
+
+
+
+
+
+
+</script>
 
 </body>
 </html>

@@ -8,6 +8,10 @@
 
 
 
+    <style>
+
+
+    </style>
 
 
 </head>
@@ -93,6 +97,28 @@
             lang: 'zh_CN'            // language (OPTIONAL)
         }).elfinder('instance');
     });
+
+
+
+    $('#elfinder').mousedown(function(e){
+        if(3 == e.which){
+            //alert('这 是右键单击事件');
+
+//            alert(event.pageX);
+//            alert(event.pageY);
+
+         //   console.log("X:"+event.pageX+" Y:"+event.pageY);
+
+            $(".elfinder-contextmenu").css("left",event.pageX+"px","top",event.pageY+"px");
+          //  $(".elfinder-contextmenu").css("top",event.pageY+"px");
+
+        }else if(1 == e.which){
+            //alert('这 是左键单击事件');
+
+        }
+    })
+
+
 </script>
 </body>
 </html>
