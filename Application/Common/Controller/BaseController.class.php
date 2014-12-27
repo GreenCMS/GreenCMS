@@ -51,25 +51,24 @@ abstract class BaseController extends Controller {
 		return $res_array;
 	}
 
-//	/**
-//	 * 用户存放在数据库中的配置，覆盖config中的
-//	 */
-//	function customConfig() {
-//		$customConfig = S('customConfig');
-//		if ($customConfig && APP_Cache) {
-//			$options = $customConfig;
-//		} else {
-//			$options = D('Options')->select();
-//
-//			if (APP_Cache) {S('customConfig', $options);
-//			}
-//		}
-//
-//		foreach ($options as $config) {
-//			C($config['option_name'], $config['option_value']);
-//		}
+	/**
+	 * 用户存放在数据库中的配置，覆盖config中的
+	 */
+	function customConfig() {
+		$customConfig = S('customConfig');
+		if ($customConfig && APP_Cache) {
+			$options = $customConfig;
+		} else {
+			$options = D('Options')->select();
 
-//	}
+			if (APP_Cache) {S('customConfig', $options);
+			}
+		}
+
+		foreach ($options as $config) {
+			C($config['option_name'], $config['option_value']);
+		}
+	}
 
 	/**
 	 * 判断是否为Sae平台

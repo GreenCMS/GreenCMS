@@ -33,6 +33,7 @@ class Log {
 
     // 日志初始化
     static public function init($config=array()){
+
         $type   =   isset($config['type'])?$config['type']:'File';
         $class  =   strpos($type,'\\')? $type: 'Think\\Log\\Driver\\'. ucwords(strtolower($type));           
         unset($config['type']);
@@ -63,8 +64,8 @@ class Log {
      * @return void
      */
     static function save($type='',$destination='') {
-        if(empty(self::$log)) return ;
 
+        if(empty(self::$log)) return ;
         if(empty($destination))
             $destination = C('LOG_PATH').date('y_m_d').'.log';
         if(!self::$storage){

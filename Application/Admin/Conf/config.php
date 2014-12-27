@@ -167,9 +167,8 @@ $config_admin = array(
     'COOKIE_PATH' => get_opinion('COOKIE_PATH', false),
 
 
+    'LOG_LEVEL' => get_opinion('LOG_LEVEL', false),
     'LOG_RECORD' => get_opinion('LOG_RECORD', false),
-    'LOG_LEVEL' => get_opinion('LOG_LEVEL', false,''),
-
 
     /*
      * RBAC认证配置信息
