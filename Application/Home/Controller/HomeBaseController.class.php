@@ -28,7 +28,7 @@ abstract class HomeBaseController extends BaseController
     {
         parent::__construct();
 
-        $this->customConfig();
+//        $this->customConfig();
         $this->themeConfig();
 
     }

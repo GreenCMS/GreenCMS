@@ -13,7 +13,7 @@ $config = array(
         '*' => array('{$_SERVER.REQUEST_URI|md5}'), //全局静态缓存，第二个参数为时间单位秒
     ),
 
-
+    'DATA_CACHE_TYPE'      => get_opinion('DATA_CACHE_TYPE', false, 'File'), // 数据缓存类型,支持:File||Memcache|Xcache
     'DATA_CACHE_TIME' => get_opinion("DATA_CACHE_TIME", false, 10),
 
     //'DB_SQL_BUILD_LENGTH' =>  get_opinion("DB_SQL_BUILD_LENGTH", false, 20),// SQL缓存的队列长度

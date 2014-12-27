@@ -47,33 +47,29 @@ abstract class BaseController extends Controller {
 			}
 		}
 
-		Hook::listen('base_getKvs');
-
 		C('kv', $res_array);
 		return $res_array;
 	}
 
-	/**
-	 * 用户存放在数据库中的配置，覆盖config中的
-	 */
-	function customConfig() {
-		$customConfig = S('customConfig');
-		if ($customConfig && APP_Cache) {
-			$options = $customConfig;
-		} else {
-			$options = D('Options')->select();
+//	/**
+//	 * 用户存放在数据库中的配置，覆盖config中的
+//	 */
+//	function customConfig() {
+//		$customConfig = S('customConfig');
+//		if ($customConfig && APP_Cache) {
+//			$options = $customConfig;
+//		} else {
+//			$options = D('Options')->select();
+//
+//			if (APP_Cache) {S('customConfig', $options);
+//			}
+//		}
+//
+//		foreach ($options as $config) {
+//			C($config['option_name'], $config['option_value']);
+//		}
 
-			if (APP_Cache) {S('customConfig', $options);
-			}
-		}
-
-		foreach ($options as $config) {
-			C($config['option_name'], $config['option_value']);
-		}
-
-		Hook::listen('base_customConfig');
-
-	}
+//	}
 
 	/**
 	 * 判断是否为Sae平台
@@ -117,14 +113,12 @@ abstract class BaseController extends Controller {
 
     protected function themeConfig()
     {
-        if (S('theme_config')) {
+        $theme_name=get_kv('home_theme');
+        if (S($theme_name.'_theme_config')) {
             //有缓存
-            $theme_config = S('theme_config');
-            C('theme_config', $theme_config);
-
+            C('theme_config',S($theme_name.'_theme_config'));
         } else {
-
-            $theme = D("Theme")->field('theme_config')->where(array("theme_name" => get_kv('home_theme', true)))->find();
+            $theme = D("Theme")->field('theme_config')->where(array("theme_name" => $theme_name))->find();
             $theme = json_decode($theme['theme_config'], true);
             $theme = $theme['kv'];
 
@@ -133,10 +127,8 @@ abstract class BaseController extends Controller {
                 $theme_config[$key] = $value['value'];
             }
 
-            S('theme_config', $theme_config, 100000);
-
+            S($theme_name.'_theme_config', $theme_config, DEFAULT_EXPIRES_TIME);
             C('theme_config', $theme_config);
-
 
         }
 

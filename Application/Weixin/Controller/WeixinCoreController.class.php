@@ -27,7 +27,7 @@ abstract class WeixinCoreController extends BaseController
         parent::__construct();
 
 
-        $this->customConfig();
+//        $this->customConfig();
 
     }
 

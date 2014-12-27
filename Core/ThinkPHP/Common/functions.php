@@ -15,14 +15,14 @@
 
 /**
  * 获取和设置配置参数 支持批量定义
- * @param string|array $name 配置变量
+ * @param string|array $key 配置变量
  * @param mixed $value 配置值
  * @param mixed $default 默认值
  * @return mixed
  */
-function C($name = null, $value = null, $default = null)
+function C($key = null, $value = null, $default = null)
 {
-    return TP_C($name, $value, $default);
+    return TP_C($key, $value, $default);
 }
 
 

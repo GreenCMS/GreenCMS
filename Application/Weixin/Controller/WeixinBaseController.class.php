@@ -28,7 +28,7 @@ namespace Weixin\Controller;
         $this->_currentPostion();
         $this->_currentUser();
 
-        $this->customConfig();
+//        $this->customConfig();
 
     }
 

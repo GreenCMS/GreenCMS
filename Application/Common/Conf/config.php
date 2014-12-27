@@ -23,7 +23,6 @@ return array(
     'ADMIN'                => 'admin',//如果管理员不是admin 需要修改此项
     'TOKEN_ON'             => false, //TOKEN_ON
 
-    'DATA_CACHE_TYPE'      => get_opinion('DATA_CACHE_TYPE', false, 'File'), // 数据缓存类型,支持:File||Memcache|Xcache
     'DATA_CACHE_SUBDIR'    => true, // 使用子目录缓存 (自动根据缓存标识的哈希创建子目录)
 
     'URL_CASE_INSENSITIVE' => true, //URL大小写不敏感

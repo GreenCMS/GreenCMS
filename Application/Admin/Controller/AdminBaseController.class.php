@@ -40,7 +40,7 @@ class AdminBaseController extends BaseController
 
         $this->_currentUser();
 
-        $this->customConfig();
+//        $this->customConfig();
 
     }
 
@@ -147,7 +147,7 @@ class AdminBaseController extends BaseController
             set_opinion($name, $value);
         }
 
-        $this->customConfig();
+//        $this->customConfig();
     }
 
     public function isSuperAdmin()

@@ -1397,6 +1397,9 @@ str;
 
 
         $res = set_kv('home_theme', $theme_name);
+
+        set_kv($theme_name.'_theme_config', null);
+
         if ($res) {
             $cache_control = new SystemEvent();
             $cache_control->clearCacheAll();

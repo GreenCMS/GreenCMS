@@ -18,7 +18,7 @@ class LoginController extends BaseController{
     {
         parent::__construct();
 
-        $this->customConfig();
+//        $this->customConfig();
 
     }
 
