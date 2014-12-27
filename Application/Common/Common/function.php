@@ -44,7 +44,7 @@ function object_to_array($obj)
 function encrypt($data)
 {
     //return md5($data);
-    return md5(C("AUTH_CODE") . md5($data));
+    return md5(get_opinion("AUTH_CODE") . md5($data));
 }
 
 
@@ -383,12 +383,12 @@ function get_addon_config($name)
 function addons_url($url, $param = array())
 {
 
-   $URL_HTML_SUFFIX= C( 'URL_HTML_SUFFIX');
-    C( 'URL_HTML_SUFFIX','');
+   $URL_HTML_SUFFIX= get_opinion('URL_HTML_SUFFIX');
+    C('URL_HTML_SUFFIX','');
 
     $url = parse_url($url);
 
-    $case = C('URL_CASE_INSENSITIVE');
+    $case = get_opinion('URL_CASE_INSENSITIVE');
     $addons = $case ? parse_name($url['scheme']) : $url['scheme'];
     $controller = $case ? parse_name($url['host']) : $url['host'];
     $action = trim($case ? strtolower($url['path']) : $url['path'], '/');
@@ -720,9 +720,9 @@ function check_access($access = "")
 {
 
     $path = explode('/', strtoupper($access));
-    $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
+    $accessList = \Org\Util\Rbac::getAccessList($_SESSION[get_opinion('USER_AUTH_KEY')]);
 
-    if ((( int )$_SESSION [C('USER_AUTH_KEY')] == 1)|| $accessList[$path[0]][$path[1]][$path[2]] != '' ) {
+    if ((( int )$_SESSION [get_opinion('USER_AUTH_KEY')] == 1)|| $accessList[$path[0]][$path[1]][$path[2]] != '' ) {
         return true;
     } else {
         return false;
@@ -767,7 +767,7 @@ function simple_post($url, $data)
  */
 function get_current_user_id()
 {
-    return ( int )$_SESSION [C('USER_AUTH_KEY')];
+    return ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
 }
 
 

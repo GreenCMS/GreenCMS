@@ -274,7 +274,7 @@ function getCatURLByID($ID)
  */
 function getChannelURLByID($ID)
 {
-    $home_cat_model = get_opinion('home_cat_model');
+    //$home_cat_model = get_opinion('home_cat_model');
 
      $URL = getURL('Cat/channel', array("info" => $ID));
 

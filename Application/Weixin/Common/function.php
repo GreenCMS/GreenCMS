@@ -33,7 +33,7 @@ function getRealText($keyword)
 
 function getMenuButtons()
 {
-    $menu = trim(C('Weixin_menu'));
+    $menu = trim(get_opinion('Weixin_menu'));
 
     $menu = json_decode($menu, true);
     $array = $menu['button'];

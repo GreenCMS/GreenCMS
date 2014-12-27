@@ -220,7 +220,7 @@ class DataController extends AdminBaseController
             $zipOut = "sqlBackup.zip";
             if (File::zip($sqlFiles, $zipOut)) {
                 //TODO send_mail
-                $res = send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
+                $res = send_mail($to, "", "数据库备份", "网站：<b>" . get_opinion('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
 
             }
 
@@ -467,7 +467,7 @@ class DataController extends AdminBaseController
      */
     public function repair()
     {
-        if (C('DB_TYPE') != 'mysql' && C('DB_TYPE') != 'mysqli') {
+        if (get_opinion('DB_TYPE') != 'mysql' && get_opinion('DB_TYPE') != 'mysqli') {
             $this->error('当前数据库类型不被支持');
         }
 
@@ -565,7 +565,7 @@ class DataController extends AdminBaseController
         // p($_POST['cache']);die;
         if (IS_POST) {
 
-            if (C('DATA_CACHE_TYPE') == 'File') {
+            if (get_opinion('DATA_CACHE_TYPE') == 'File') {
                 $paths = $_POST ['cache'];
                 foreach ($paths as $path) {
                     if (isset ($caches [$path])) {

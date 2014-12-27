@@ -60,8 +60,8 @@ class AccessToken
         $Curl = new Curl();
 
         $params['grant_type'] = 'client_credential';
-        $params['appid'] = C('Weixin_appid');
-        $params['secret'] = C('Weixin_secret');
+        $params['appid'] = get_opinion('Weixin_appid');
+        $params['secret'] = get_opinion('Weixin_secret');
 
 
         $accessToken = $Curl->callApi($this::$AccessTokenURL, $params, 'GET');

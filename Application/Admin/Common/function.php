@@ -25,15 +25,15 @@
  */
 function send_mail($to, $name, $subject = '', $body = '', $attachment = null, $config = '')
 {
-    // $config = is_array($config) ? $config : C('SYSTEM_EMAIL');
+    // $config = is_array($config) ? $config : get_opinion('SYSTEM_EMAIL');
     //从数据库读取smtp配置
     $config = array(
-        'smtp_host' => C('smtp_host'),
-        'smtp_port' => C('smtp_port'),
-        'smtp_user' => C('smtp_user'),
-        'smtp_pass' => C('smtp_pass'),
-        'from_email' => C('from_email'),
-        'from_name' => C('title')
+        'smtp_host' => get_opinion('smtp_host'),
+        'smtp_port' => get_opinion('smtp_port'),
+        'smtp_user' => get_opinion('smtp_user'),
+        'smtp_pass' => get_opinion('smtp_pass'),
+        'from_email' => get_opinion('from_email'),
+        'from_name' => get_opinion('title')
     );
 
     include Extend_PATH . 'PHPMailer/phpmailer.class.php'; //从PHPMailer目录导phpmailer.class.php类文件

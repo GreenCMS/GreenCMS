@@ -128,7 +128,7 @@ class CustomController extends AdminBaseController
 
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInc('menu_sort');
+        $res = $Menu->where($map)->setInget_opinion('menu_sort');
 
 
         $menu_item['menu_sort'] = $menu_item_target['menu_sort'] + 1;
@@ -197,10 +197,10 @@ class CustomController extends AdminBaseController
         $menu_list = $Menu->getList(); // 获取分类结构
 
 
-        $url_function = C('url_function');
+        $url_function = get_opinion('url_function');
         $this->assign('url_function', gen_opinion_list($url_function));
 
-        $url_open = C('url_open');
+        $url_open = get_opinion('url_open');
         $this->assign('url_open', gen_opinion_list($url_open));
 
 
@@ -228,7 +228,7 @@ class CustomController extends AdminBaseController
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInc('menu_sort');
+        $res = $Menu->where($map)->setInget_opinion('menu_sort');
 
         $result = $Menu->data($post_data)->add();
         if ($result) {
@@ -279,10 +279,10 @@ class CustomController extends AdminBaseController
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
         $menu_list = $Menu->getList(); // 获取分类结构
 
-        $url_function = C('url_function');
+        $url_function = get_opinion('url_function');
         $this->assign('url_function', gen_opinion_list($url_function, $menu_item["menu_function"]));
 
-        $url_open = C('url_open');
+        $url_open = get_opinion('url_open');
         $this->assign('url_open', gen_opinion_list($url_open, $menu_item["menu_action"]));
 
         //父级节点
@@ -314,7 +314,7 @@ class CustomController extends AdminBaseController
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInc('menu_sort');
+        $res = $Menu->where($map)->setInget_opinion('menu_sort');
 
 
         if ($post_data['menu_pid'] == $post_data['menu_id']) {
@@ -335,7 +335,7 @@ class CustomController extends AdminBaseController
      */
     public function plugin()
     {
-        //$page = I('get.page', C('PAGER'));
+        //$page = I('get.page', get_opinion('PAGER'));
 
         $Addons = new AddonsModel();
 
@@ -835,7 +835,7 @@ str;
 
         $count = D("Hooks")->count();
         if ($count != 0) {
-            $page = I('get.page', C('PAGER'));
+            $page = I('get.page', get_opinion('PAGER'));
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
@@ -917,7 +917,7 @@ str;
      */
     public function execute($_addons = null, $_controller = null, $_action = null)
     {
-        if (C('URL_CASE_INSENSITIVE')) {
+        if (get_opinion('URL_CASE_INSENSITIVE')) {
             $_addons = ucfirst(parse_name($_addons, 1));
             $_controller = parse_name($_controller, 1);
         }

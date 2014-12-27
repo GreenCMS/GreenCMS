@@ -59,9 +59,9 @@ abstract class Addon{
     public function __construct(){
         $this->view         =   \Think\Think::instance('Think\View');
         $this->addon_path   =   Addon_PATH.$this->getName().'/';
-        $TMPL_PARSE_STRING = C('TMPL_PARSE_STRING');
+        $TMPL_PARSE_STRING = get_opinion('TMPL_PARSE_STRING');
         $TMPL_PARSE_STRING['__ADDONROOT__'] = __ROOT__ . '/Addons/'.$this->getName();
-        C('TMPL_PARSE_STRING', $TMPL_PARSE_STRING);
+        get_opinion('TMPL_PARSE_STRING', $TMPL_PARSE_STRING);
         if(is_file($this->addon_path.'config.php')){
             $this->config_file = $this->addon_path.'config.php';
         }
@@ -109,7 +109,7 @@ abstract class Addon{
      */
     final protected function fetch($templateFile = CONTROLLER_NAME){
         if(!is_file($templateFile)){
-            $templateFile = $this->addon_path.$templateFile.C('TMPL_TEMPLATE_SUFFIX');
+            $templateFile = $this->addon_path.$templateFile.get_opinion('TMPL_TEMPLATE_SUFFIX');
             if(!is_file($templateFile)){
                 throw new \Exception("模板不存在:$templateFile");
             }

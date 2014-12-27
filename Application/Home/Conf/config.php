@@ -13,14 +13,28 @@ $config = array(
         '*' => array('{$_SERVER.REQUEST_URI|md5}'), //全局静态缓存，第二个参数为时间单位秒
     ),
 
-    'DATA_CACHE_TYPE'      => get_opinion('DATA_CACHE_TYPE', false, 'File'), // 数据缓存类型,支持:File||Memcache|Xcache
-    'DATA_CACHE_TIME' => get_opinion("DATA_CACHE_TIME", false, 10),
-
-    //'DB_SQL_BUILD_LENGTH' =>  get_opinion("DB_SQL_BUILD_LENGTH", false, 20),// SQL缓存的队列长度
-
-    'SHOW_PAGE_TRACE' => get_opinion('SHOW_PAGE_TRACE', false, false),
     'URL_MODEL' => get_opinion('home_url_model', false, 0),
     'DEFAULT_THEME' => $DEFAULT_THEME,
+
+
+
+    'DATA_CACHE_TYPE' => get_opinion('DATA_CACHE_TYPE', false, 'File'), // 数据缓存类型,支持:File||Memcache|Xcache
+    'DATA_CACHE_TIME' => get_opinion("DATA_CACHE_TIME", false, 10),
+    'DEFAULT_FILTER'  => get_opinion('DEFAULT_FILTER', false, 'htmlspecialchars'),
+    'SHOW_PAGE_TRACE' => get_opinion('SHOW_PAGE_TRACE', false, false),
+    'SHOW_CHROME_TRACE' => get_opinion('SHOW_CHROME_TRACE', false, false),
+
+
+    'COOKIE_PREFIX' => get_opinion('COOKIE_PREFIX', false,'greencms_'),
+    'COOKIE_EXPIRE' => get_opinion('COOKIE_EXPIRE', false, 3600),
+    'COOKIE_DOMAIN' => get_opinion('COOKIE_DOMAIN', false),
+    'COOKIE_PATH' => get_opinion('COOKIE_PATH', false),
+
+
+    'LOG_RECORD' => get_opinion('LOG_RECORD', false),
+    'LOG_LEVEL' => get_opinion('LOG_LEVEL', false,''),
+
+
 
 );
 

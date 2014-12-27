@@ -97,10 +97,10 @@ class SystemController extends AdminBaseController
     public function url()
     {
         //普通模式0, PATHINFO模式1, REWRITE模式2, 兼容模式3
-        $url_model = C('url_model0');
-        $home_post_model = C('post_model');
-        $home_tag_model = C('tag_model');
-        $home_cat_model = C('cat_model');
+        $url_model = get_opinion('url_model0');
+        $home_post_model = get_opinion('post_model');
+        $home_tag_model = get_opinion('tag_model');
+        $home_cat_model = get_opinion('cat_model');
 
         $this->assign('home_post_model', gen_opinion_list($home_post_model, get_opinion('home_post_model', true)));
         $this->assign('home_tag_model', gen_opinion_list($home_tag_model, get_opinion('home_tag_model', true)));
@@ -117,7 +117,7 @@ class SystemController extends AdminBaseController
      */
     public function email()
     {
-        $this->assign('send_mail', C('send_mail'));
+        $this->assign('send_mail', get_opinion('send_mail'));
         $this->display();
     }
 
@@ -129,10 +129,10 @@ class SystemController extends AdminBaseController
     {
 
         $this->assign('vertify_code', get_opinion('vertify_code', true));
-        $this->assign('db_fieldtype_check', C('db_fieldtype_check'));
-        $this->assign('LOG_RECORD', C('LOG_RECORD'));
-        $this->assign('SHOW_CHROME_TRACE', C('SHOW_CHROME_TRACE'));
-        $this->assign('SHOW_PAGE_TRACE', C('SHOW_PAGE_TRACE'));
+        $this->assign('db_fieldtype_check', get_opinion('db_fieldtype_check'));
+        $this->assign('LOG_RECORD', get_opinion('LOG_RECORD'));
+        $this->assign('SHOW_CHROME_TRACE', get_opinion('SHOW_CHROME_TRACE'));
+        $this->assign('SHOW_PAGE_TRACE', get_opinion('SHOW_PAGE_TRACE'));
 
         $this->display();
     }
@@ -410,7 +410,7 @@ class SystemController extends AdminBaseController
         $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
         $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
         $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
-        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(C("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
+        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(get_opinion("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
 
 
         $this->display();

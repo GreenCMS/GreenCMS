@@ -279,7 +279,7 @@ class UeditorController extends AdminBaseController
                 //SAE
 
                 $Storage = new \SaeStorage();
-                $domain = C('SaeStorage');
+                $domain = get_opinion('SaeStorage');
                 $destFileName = 'remote/' . date('Y') . '/' . date('m') . '/' . rand(1, 10000) . time() . strrchr($imgUrl, '.');
                 $result = $Storage->write($domain, $destFileName, $img, -1);
                 Log::write('$destFileName:' . $destFileName);
@@ -370,7 +370,7 @@ class UeditorController extends AdminBaseController
                 *  参数：存储域，路径前缀，返回条数，起始条数
                 */
                 $num = 0;
-                while ($ret = $st->getList(C('SaeStorage'), null, 100, $num)) {
+                while ($ret = $st->getList(get_opinion('SaeStorage'), null, 100, $num)) {
                     foreach ($ret as $file) {
                         if (preg_match("/\.(gif|jpeg|jpg|png|bmp)$/i", $file))
 

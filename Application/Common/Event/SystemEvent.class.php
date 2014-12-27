@@ -103,7 +103,7 @@ class SystemEvent
     {
 
 
-        if (C('DATA_CACHE_TYPE') == 'File') {
+        if (get_opinion('DATA_CACHE_TYPE') == 'File') {
 
             $caches = array(
                 RUNTIME_PATH . "HTML",
@@ -202,7 +202,7 @@ class SystemEvent
                     } else {
                         $sqlNo = "# Description:当前SQL文件包含了表：" . implode("、", $backedTable) . "的数据" . $sqlNo;
                     }
-                    if (strlen($pre) + strlen($sqlNo) + strlen($bdTable) + strlen($outPut) + strlen($temSql) > C("sqlFileSize")) {
+                    if (strlen($pre) + strlen($sqlNo) + strlen($bdTable) + strlen($outPut) + strlen($temSql) > get_opinion("sqlFileSize")) {
                         $file_name = $path . "_" . $file_n . ".sql";
                         $outPut = $file_n == 1 ? $pre . $sqlNo . $bdTable . $outPut : $pre . $sqlNo . $outPut;
                         //file_put_contents($file, $outPut, FILE_APPEND);

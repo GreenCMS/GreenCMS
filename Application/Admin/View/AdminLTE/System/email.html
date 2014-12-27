@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -78,7 +78,7 @@
 
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large" name="smtp_host"
-                                               value="{:C('smtp_host')}"/>
+                                               value="{:get_opinion('smtp_host')}"/>
                                         <span class="help-inline">smtp.domain.com</span>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
 
                                     <div class="controls">
                                         <input type="number" placeholder="" class="form-control large" name="smtp_port"
-                                               value="{:C('smtp_port')}"/>
+                                               value="{:get_opinion('smtp_port')}"/>
                                         <span class="help-inline">默认为25</span>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
 
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large" name="smtp_user"
-                                               value="{:C('smtp_user')}"/>
+                                               value="{:get_opinion('smtp_user')}"/>
                                         <span class="help-inline">你的邮箱帐号</span>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
 
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large" name="from_email"
-                                               value="{:C('from_email')}"/>
+                                               value="{:get_opinion('from_email')}"/>
                                         <span class="help-inline">与发件人地址相同</span>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                     <div class="controls">
                                         <input type="password" placeholder="" class="form-control large"
                                                name="smtp_pass"
-                                               value="{:C('smtp_pass')}"/>
+                                               value="{:get_opinion('smtp_pass')}"/>
                                         <span class="help-inline">你的邮箱密码</span>
                                     </div>
                                 </div>

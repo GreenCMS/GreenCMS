@@ -143,7 +143,7 @@ abstract class BaseController extends Controller {
             return false;
         }
 
-        if (C('URL_CASE_INSENSITIVE')) {
+        if (get_opinion('URL_CASE_INSENSITIVE')) {
             $_addons     = ucfirst(parse_name($_addons, 1));
             $_controller = parse_name($_controller, 1);
         }
@@ -165,7 +165,7 @@ abstract class BaseController extends Controller {
      */
     protected function _currentUser()
     {
-        $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $user_id = ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
         $user = D('User', 'Logic')->cache(true)->detail($user_id);
         $this->assign('user', $user);
     }

@@ -28,7 +28,7 @@ class Join2011adminController extends AddonsController
 
     public function index()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
 
         $Bmb = D('Bmb');
         //$stu = $Stu->select();

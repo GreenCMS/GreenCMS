@@ -99,7 +99,7 @@ class PostsController extends AdminBaseController
         //获取get参数
         $cat = I('get.cat');
         $tag = I('get.tag');
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
         $where = array('post_status' => $post_status);
         $where['post_content|post_title'] = array('like', "%$keyword%");
         $post_ids = array();
@@ -253,7 +253,7 @@ class PostsController extends AdminBaseController
         $data['post_date'] = I('post.post_date') ? I('post.post_date') : date("Y-m-d H:m:s", time());
         $data['post_modified'] = I('post.post_modified') ? I('post.post_modified') : date("Y-m-d H:m:s", time());
 
-        $data['user_id'] = I('post.post_user') ? I('post.post_user') : $_SESSION [C('USER_AUTH_KEY')];
+        $data['user_id'] = I('post.post_user') ? I('post.post_user') : $_SESSION [get_opinion('USER_AUTH_KEY')];
 
         $data['post_tag'] = I('post.tags', array());
         $data['post_cat'] = I('post.cats', array());
@@ -527,7 +527,7 @@ class PostsController extends AdminBaseController
 
             //投稿员只能看到权限内部的分类
             if (!$this->noVerify()) {
-                $user = D('User', 'Logic')->detail(( int )$_SESSION [C('USER_AUTH_KEY')]);
+                $user = D('User', 'Logic')->detail(( int )$_SESSION [get_opinion('USER_AUTH_KEY')]);
                 $role = D('Role')->where(array('id' => $user["user_role"] ["role_id"]))->find();
                 $cats = D('Cats', 'Logic')->where(array('in', json_decode($role ["cataccess"])))->select();
                 foreach ($cats as $key => $value) {
@@ -694,7 +694,7 @@ class PostsController extends AdminBaseController
      */
     public function tag()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
 
         $TagsLogic = new TagsLogic();
 

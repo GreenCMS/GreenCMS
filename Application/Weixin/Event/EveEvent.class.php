@@ -20,7 +20,7 @@ class EveEvent extends WeixinCoreController
 
 
         $reply = array(
-            C('Weixin_reply_subscribe'),
+            get_opinion('Weixin_reply_subscribe'),
             'text'
         );
 
@@ -31,7 +31,7 @@ class EveEvent extends WeixinCoreController
     public function unsubscribe($data)
     {
         $reply = array(
-            C('Weixin_reply_unsubscribe'),
+            get_opinion('Weixin_reply_unsubscribe'),
             'text'
         );
 
