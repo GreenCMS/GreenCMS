@@ -168,7 +168,7 @@ $config_admin = array(
 
 
     'LOG_LEVEL' => get_opinion('LOG_LEVEL', false),
-    'LOG_RECORD' => get_opinion('LOG_RECORD', false),
+    'LOG_RECORD' =>  (bool)get_opinion('LOG_RECORD', false),
 
     /*
      * RBAC认证配置信息

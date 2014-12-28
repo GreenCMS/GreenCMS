@@ -24,6 +24,7 @@ class Log {
     const INFO      = 'INFO';  // 信息: 程序输出信息
     const DEBUG     = 'DEBUG';  // 调试: 调试信息
     const SQL       = 'SQL';  // SQL：SQL语句 注意只在调试模式开启时有效
+    const FILE       = 'FILE';  // FILE：FILE
 
     // 日志信息
     static protected $log       =  array();

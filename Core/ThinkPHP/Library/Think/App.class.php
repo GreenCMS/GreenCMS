@@ -38,6 +38,9 @@ class App {
         Hook::listen('url_dispatch');         
 
         // 日志目录转换为绝对路径
+        if(!realpath(LOG_PATH)){
+            mkdir(LOG_PATH);
+        }
         C('LOG_PATH',realpath(LOG_PATH).'/');
         // TMPL_EXCEPTION_FILE 改为绝对地址
         C('TMPL_EXCEPTION_FILE',realpath(C('TMPL_EXCEPTION_FILE')));

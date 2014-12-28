@@ -17,7 +17,7 @@ $config = array(
     'DEFAULT_THEME' => $DEFAULT_THEME,
 
     'LOG_LEVEL' => get_opinion('LOG_LEVEL', false),
-    'LOG_RECORD' => get_opinion('LOG_RECORD', false),
+    'LOG_RECORD' =>  (bool)get_opinion('LOG_RECORD', false),
 
     'DATA_CACHE_TYPE' => get_opinion('DATA_CACHE_TYPE', false, 'File'), // 数据缓存类型,支持:File||Memcache|Xcache
     'DATA_CACHE_TIME' => get_opinion("DATA_CACHE_TIME", false, 10),

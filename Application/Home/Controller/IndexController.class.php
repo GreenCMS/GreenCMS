@@ -47,7 +47,9 @@ class IndexController extends HomeBaseController {
 	 */
 	function test() {
 
-		echo get_addon_url("Join2011/Join2011/index");
+        dump(TP_C());
+
+        //echo get_addon_url("Join2011/Join2011/index");
 		//        include(Upgrade_PATH . 'init.php');
 		//
 		//        upgrade_20140620_to_20140625();
