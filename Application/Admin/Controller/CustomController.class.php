@@ -1043,7 +1043,7 @@ str;
                 $config = array(
                     "savePath" => 'Links/',
                     "maxSize" => 1000000, // 单位B
-                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "exts" => array('jpg', 'bmp', 'png', 'jpeg'),
                     "subName" => array('date', 'Y/m-d'),
                 );
                 $upload = new Upload($config);
@@ -1105,7 +1105,7 @@ str;
                 $config = array(
                     "savePath" => 'Links/',
                     "maxSize" => 1000000, // 单位B
-                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "exts" => array('jpg', 'bmp', 'png', 'jpeg'),
                     "subName" => array('date', 'Y/m-d'),
                 );
                 $upload = new Upload($config);
