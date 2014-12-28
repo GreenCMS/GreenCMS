@@ -205,7 +205,7 @@ class Rss
 
             $rss .= "<title><![CDATA[{$this->items[$i]['title']}]]></title>\r\n";
 
-            $rss .= "<link>{$this->items[$i]['link']}</link>\r\n";
+            $rss .= "<link><![CDATA[{$this->items[$i]['link']}]]></link>\r\n";
 
             $rss .= "<description><![CDATA[{$this->items[$i]['description']}]]></description>\r\n";
 
