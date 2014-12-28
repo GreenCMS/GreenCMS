@@ -1183,7 +1183,7 @@ str;
         $theme_xml_path = $tpl_static_path . 'theme.xml';
         if (file_exists($theme_xml_path)) {
 
-            $theme_xml = File::readFile($theme_xml_path);
+            $theme_xml = File::readXml($theme_xml_path);
 
             $theme = simplexml_load_string($theme_xml);
             $theme_temp["theme_name"] = (string)$theme->name;
