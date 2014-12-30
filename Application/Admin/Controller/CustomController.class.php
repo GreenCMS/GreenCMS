@@ -16,6 +16,7 @@ use Common\Event\UpdateEvent;
 use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
+use Common\Util\CacheManager;
 use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
@@ -29,6 +30,18 @@ use Think\Upload;
  */
 class CustomController extends AdminBaseController
 {
+
+    public function __construct()
+    {
+
+        parent::__construct();
+
+        CacheManager::clearLink();
+        CacheManager::clearMenu();
+
+
+    }
+
 
     /**
      *
@@ -167,6 +180,9 @@ class CustomController extends AdminBaseController
             $res = $Menu->where(array('menu_pid' => $id))->setField($data);
         }
         //TODO 判断
+
+
+
         $this->success('删除成功', 'Admin/Custom/menu');
 
     }
@@ -223,6 +239,8 @@ class CustomController extends AdminBaseController
      */
     public function menuAddHandle()
     {
+
+
         $post_data = I('post.');
 
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
@@ -244,6 +262,7 @@ class CustomController extends AdminBaseController
      */
     public function menuEdit($id)
     {
+
         $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
         if (!$menu_item) {
             $this->error('不存在这个菜单项');
@@ -309,6 +328,7 @@ class CustomController extends AdminBaseController
      */
     public function menuEditHandle($id)
     {
+
         $post_data = I('post.');
 
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);

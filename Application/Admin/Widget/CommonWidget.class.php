@@ -46,10 +46,10 @@ class CommonWidget extends Controller
 
     private function show_side_menu()
     {
-        C('admin_sub_menu', array_change_key_case(get_opinion('admin_sub_menu')));
-        C('admin_big_menu', array_change_key_case(get_opinion('admin_big_menu')));
-        C('admin_black_list_menu', array_change_key_case(get_opinion('menu_black_list')));
-        C('admin_big_menu_icon', array_change_key_case(get_opinion('admin_big_menu_icon')));
+        C('admin_sub_menu', array_change_key_case(C('admin_sub_menu')));
+        C('admin_big_menu', array_change_key_case(C('admin_big_menu')));
+        C('admin_black_list_menu', array_change_key_case(C('menu_black_list')));
+        C('admin_big_menu_icon', array_change_key_case(C('admin_big_menu_icon')));
 
         $accessList = RBAC::getAccessList($_SESSION [get_opinion('USER_AUTH_KEY')]);
         $cache_access = array_change_key_case($accessList [strtoupper(MODULE_NAME)]);

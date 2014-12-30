@@ -13,6 +13,7 @@ use Admin\Event\PostsEvent;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
 use Common\Util\GreenPage;
+use Common\Util\CacheManager;
 use Org\Util\Rbac;
 
 /**
@@ -22,6 +23,17 @@ use Org\Util\Rbac;
  */
 class PostsController extends AdminBaseController
 {
+
+    public function __construct()
+    {
+
+        parent::__construct();
+
+        CacheManager::clearCat();
+        CacheManager::clearPost();
+        CacheManager::clearMenu();
+
+    }
     /**
      * index页面操作筛选
      */
