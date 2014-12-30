@@ -107,7 +107,7 @@ abstract class ThinkOauth
         $this->Type = strtoupper(substr($class, 0, strlen($class) - 3));
 
         //获取应用配置
-        $config = C("THINK_SDK_{$this->Type}");
+        $config = get_opinion("THINK_SDK_{$this->Type}");
         if (empty($config['APP_KEY']) || empty($config['APP_SECRET'])) {
             throw new \Think\Exception('请配置您申请的APP_KEY和APP_SECRET');
         } else {
@@ -145,7 +145,7 @@ abstract class ThinkOauth
      */
     private function config()
     {
-        $config = C("THINK_SDK_{$this->Type}");
+        $config = get_opinion("THINK_SDK_{$this->Type}");
         if (!empty($config['AUTHORIZE']))
             $this->Authorize = $config['AUTHORIZE'];
         if (!empty($config['CALLBACK']))
@@ -183,7 +183,9 @@ abstract class ThinkOauth
      * 获取access_token
      * @param string $code 上一步请求到的code
      * @param null $extend
-     * @return
+     * @throws \Exception
+     * @throws \Think\Exception
+     * @return array|null
      */
     public function getAccessToken($code, $extend = null)
     {
