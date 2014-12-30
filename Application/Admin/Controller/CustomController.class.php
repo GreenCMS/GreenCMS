@@ -183,7 +183,7 @@ class CustomController extends AdminBaseController
 
 
 
-        $this->success('删除成功', 'Admin/Custom/menu');
+        $this->success('删除成功', U('Admin/Custom/menu'));
 
     }
 
