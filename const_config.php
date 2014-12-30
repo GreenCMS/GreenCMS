@@ -81,7 +81,7 @@ define("TIME_FIX", 0);
 
 
 //
-define("DEFAULT_EXPIRES_TIME", 1000);
+define("DEFAULT_EXPIRES_TIME", 60000);
 
 
 /**
