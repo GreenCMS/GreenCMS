@@ -104,7 +104,7 @@ class GreenPage
     {
         $this->totalRows = $totalRows;
         $this->parameter = $parameter;
-        $this->varPage = get_opinion('VAR_PAGE') ? get_opinion('VAR_PAGE') : 'p';
+        $this->varPage = C('VAR_PAGE') ? C('VAR_PAGE') : 'p';
         if (!empty($listRows)) {
             $this->listRows = intval($listRows);
         }
@@ -142,7 +142,7 @@ class GreenPage
 
         // 分析分页参数
         if ($this->url) {
-            $depr = get_opinion('URL_PATHINFO_DEPR');
+            $depr = C('URL_PATHINFO_DEPR');
             $url = rtrim(U('/' . $this->url, '', false), $depr) . $depr . '__PAGE__';
         } else {
             if ($this->parameter && is_string($this->parameter)) {
@@ -150,7 +150,7 @@ class GreenPage
             } elseif (is_array($this->parameter)) {
                 $parameter = $this->parameter;
             } elseif (empty($this->parameter)) {
-                unset($_GET[get_opinion('VAR_URL_PARAMS')]);
+                unset($_GET[C('VAR_URL_PARAMS')]);
                 $var = !empty($_POST) ? $_POST : $_GET;
                 if (empty($var)) {
                     $parameter = array();
