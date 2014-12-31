@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -86,7 +86,7 @@
                                 <div class="control-group send_box" style="text-align: center; display:none;">
                                     <div class="controls">
                                         <span id="input_email">请输入邮箱：&nbsp;&nbsp;</span>
-                                        <input type="text" placeholder="邮箱" class="m-wrap medium" name="to" id="to" value="{:C('sql_mail')}"/>
+                                        <input type="text" placeholder="邮箱" class="m-wrap medium" name="to" id="to" value="{:get_opinion('sql_mail')}"/>
                                         <span class="help-inline"></span>
                                         <button type="button" class="btn send_email red">发送</button>
                                     </div>

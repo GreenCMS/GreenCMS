@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -65,7 +65,7 @@
                                     <div class="controls">
                                         <input type="number" placeholder="默认5000000" class="form-control large"
                                                name="sqlFileSize"
-                                               value="{:C('sqlFileSize')}"/>
+                                               value="{:get_opinion('sqlFileSize')}"/>
                                         <span class="help-inline">单位byte</span>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
 
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large" name="sql_mail"
-                                               value="{:C('sql_mail')}"/>
+                                               value="{:get_opinion('sql_mail')}"/>
                                         <span class="help-inline">默认邮箱</span>
                                     </div>
                                 </div>

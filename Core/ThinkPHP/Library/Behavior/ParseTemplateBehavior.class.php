@@ -83,7 +83,8 @@ class ParseTemplateBehavior {
      * 检查缓存内容是否有效
      * 如果无效则需要重新编译
      * @access public
-     * @param string $tmplContent  模板内容
+     * @param string $tmplContent 模板内容
+     * @param string $prefix
      * @return boolean
      */
     protected function checkContentCache($tmplContent,$prefix='') {

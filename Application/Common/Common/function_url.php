@@ -237,8 +237,8 @@ function get_channel_url($cat, $group = '') {
  */
 function get_addon_url($url, $param = array(), $group = 'Home') {
 
-    $URL_HTML_SUFFIX=  C( 'URL_HTML_SUFFIX');
-    C( 'URL_HTML_SUFFIX','');
+    $URL_HTML_SUFFIX=  get_opinion('URL_HTML_SUFFIX');
+    C('URL_HTML_SUFFIX','');
 
 	$url_arr = preg_split('/\//', $url);
 
@@ -246,7 +246,7 @@ function get_addon_url($url, $param = array(), $group = 'Home') {
 
     $url=U($group.'/'.$url_arr[0].'/'.$url_arr[1], $param);
 
-    C( 'URL_HTML_SUFFIX',$URL_HTML_SUFFIX);
+    C('URL_HTML_SUFFIX',$URL_HTML_SUFFIX);
 
     return $url;
 }

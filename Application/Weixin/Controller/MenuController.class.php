@@ -32,7 +32,7 @@ class MenuController extends WeixinBaseController
         $this->assign('action_name', '编辑');
         $this->assign('action_url', U('Weixin/Menu/edit', array('level' => $level, 'pid' => $pid, 'id' => $id, 'type' => $type)));
 
-        $Weixin_menu = json_decode(get_opinion(C('Weixin_menu',true)), true);
+        $Weixin_menu = json_decode(get_opinion(get_opinion('Weixin_menu',true)), true);
         $Weixin_menu = $Weixin_menu['button'];
 
         $this->assign('weixin_menu', $Weixin_menu);
@@ -94,7 +94,7 @@ class MenuController extends WeixinBaseController
 
 
         $Menu = new MenuEvent();
-        $Weixin_menu = json_decode(trim(C('Weixin_menu')), true);
+        $Weixin_menu = json_decode(trim(get_opinion('Weixin_menu')), true);
 
 
         if ($level == 1 && $pid == $id && I('post.reply_type') == 'empty') {
@@ -157,7 +157,7 @@ class MenuController extends WeixinBaseController
     public function delitem($level = 1, $pid = 0, $id = 0, $type = 'empty')
     {
         $Menu = new MenuEvent();
-        $Weixin_menu = json_decode(trim(C('Weixin_menu')), true);
+        $Weixin_menu = json_decode(trim(get_opinion('Weixin_menu')), true);
 
 
         if ($level == 1 && $pid == $id) {
@@ -225,7 +225,7 @@ class MenuController extends WeixinBaseController
     {
         $Menu = new MenuEvent();
 
-        $Weixin_menu_decode = json_decode(trim(C('Weixin_menu')), true);
+        $Weixin_menu_decode = json_decode(trim(get_opinion('Weixin_menu')), true);
         $menu = decodeUnicode(json_encode($Weixin_menu_decode));
 
         $res_info = ($Menu->create($menu));

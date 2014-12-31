@@ -16,6 +16,7 @@ use Common\Event\UpdateEvent;
 use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
+use Common\Util\CacheManager;
 use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
@@ -29,6 +30,18 @@ use Think\Upload;
  */
 class CustomController extends AdminBaseController
 {
+
+    public function __construct()
+    {
+
+        parent::__construct();
+
+        CacheManager::clearLink();
+        CacheManager::clearMenu();
+
+
+    }
+
 
     /**
      *
@@ -128,7 +141,7 @@ class CustomController extends AdminBaseController
 
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInc('menu_sort');
+        $res = $Menu->where($map)->setInget_opinion('menu_sort');
 
 
         $menu_item['menu_sort'] = $menu_item_target['menu_sort'] + 1;
@@ -167,7 +180,10 @@ class CustomController extends AdminBaseController
             $res = $Menu->where(array('menu_pid' => $id))->setField($data);
         }
         //TODO 判断
-        $this->success('删除成功', 'Admin/Custom/menu');
+
+
+
+        $this->success('删除成功', U('Admin/Custom/menu'));
 
     }
 
@@ -197,10 +213,10 @@ class CustomController extends AdminBaseController
         $menu_list = $Menu->getList(); // 获取分类结构
 
 
-        $url_function = C('url_function');
+        $url_function = get_opinion('url_function');
         $this->assign('url_function', gen_opinion_list($url_function));
 
-        $url_open = C('url_open');
+        $url_open = get_opinion('url_open');
         $this->assign('url_open', gen_opinion_list($url_open));
 
 
@@ -223,12 +239,14 @@ class CustomController extends AdminBaseController
      */
     public function menuAddHandle()
     {
+
+
         $post_data = I('post.');
 
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInc('menu_sort');
+        $res = $Menu->where($map)->setInget_opinion('menu_sort');
 
         $result = $Menu->data($post_data)->add();
         if ($result) {
@@ -244,6 +262,7 @@ class CustomController extends AdminBaseController
      */
     public function menuEdit($id)
     {
+
         $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
         if (!$menu_item) {
             $this->error('不存在这个菜单项');
@@ -279,10 +298,10 @@ class CustomController extends AdminBaseController
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
         $menu_list = $Menu->getList(); // 获取分类结构
 
-        $url_function = C('url_function');
+        $url_function = get_opinion('url_function');
         $this->assign('url_function', gen_opinion_list($url_function, $menu_item["menu_function"]));
 
-        $url_open = C('url_open');
+        $url_open = get_opinion('url_open');
         $this->assign('url_open', gen_opinion_list($url_open, $menu_item["menu_action"]));
 
         //父级节点
@@ -309,12 +328,13 @@ class CustomController extends AdminBaseController
      */
     public function menuEditHandle($id)
     {
+
         $post_data = I('post.');
 
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInc('menu_sort');
+        $res = $Menu->where($map)->setInget_opinion('menu_sort');
 
 
         if ($post_data['menu_pid'] == $post_data['menu_id']) {
@@ -335,7 +355,7 @@ class CustomController extends AdminBaseController
      */
     public function plugin()
     {
-        //$page = I('get.page', C('PAGER'));
+        //$page = I('get.page', get_opinion('PAGER'));
 
         $Addons = new AddonsModel();
 
@@ -835,7 +855,7 @@ str;
 
         $count = D("Hooks")->count();
         if ($count != 0) {
-            $page = I('get.page', C('PAGER'));
+            $page = I('get.page', get_opinion('PAGER'));
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
@@ -917,7 +937,7 @@ str;
      */
     public function execute($_addons = null, $_controller = null, $_action = null)
     {
-        if (C('URL_CASE_INSENSITIVE')) {
+        if (get_opinion('URL_CASE_INSENSITIVE')) {
             $_addons = ucfirst(parse_name($_addons, 1));
             $_controller = parse_name($_controller, 1);
         }
@@ -1043,7 +1063,7 @@ str;
                 $config = array(
                     "savePath" => 'Links/',
                     "maxSize" => 1000000, // 单位B
-                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "exts" => array('jpg', 'bmp', 'png', 'jpeg'),
                     "subName" => array('date', 'Y/m-d'),
                 );
                 $upload = new Upload($config);
@@ -1105,7 +1125,7 @@ str;
                 $config = array(
                     "savePath" => 'Links/',
                     "maxSize" => 1000000, // 单位B
-                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "exts" => array('jpg', 'bmp', 'png', 'jpeg'),
                     "subName" => array('date', 'Y/m-d'),
                 );
                 $upload = new Upload($config);
@@ -1397,6 +1417,9 @@ str;
 
 
         $res = set_kv('home_theme', $theme_name);
+
+        set_kv($theme_name.'_theme_config', null);
+
         if ($res) {
             $cache_control = new SystemEvent();
             $cache_control->clearCacheAll();

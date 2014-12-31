@@ -18,7 +18,7 @@ class LoginController extends BaseController{
     {
         parent::__construct();
 
-        $this->customConfig();
+//        $this->customConfig();
 
     }
 
@@ -30,10 +30,10 @@ class LoginController extends BaseController{
             $authInfo = D('User', 'Logic')->where(array('user_session' => $user_session))->find();
 
             if (!empty($authInfo)) {
-                $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
+                $_SESSION[get_opinion('USER_AUTH_KEY')] = $authInfo['user_id'];
 
                 if ($authInfo ['user_login'] == get_opinion('ADMIN')) {
-                    $_SESSION [C('ADMIN_AUTH_KEY')] = true;
+                    $_SESSION [get_opinion('ADMIN_AUTH_KEY')] = true;
                 }
 
                 $this->redirect('Weixin/Home/index');
@@ -74,9 +74,9 @@ class LoginController extends BaseController{
             if ($authInfo['user_pass'] != encrypt($_POST['password'])) {
                 $this->error('密码错误或者帐号已禁用');
             }
-            $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
+            $_SESSION[get_opinion('USER_AUTH_KEY')] = $authInfo['user_id'];
             if ($authInfo['user_login'] == get_opinion('Admin')) {
-                $_SESSION[C('ADMIN_AUTH_KEY')] = true;
+                $_SESSION[get_opinion('ADMIN_AUTH_KEY')] = true;
             }
 
             //记住我
@@ -101,7 +101,7 @@ class LoginController extends BaseController{
     public function logout()
     {
         $User = D('User', 'Logic');
-        $authInfo = $User->detail(session(C('ADMIN_AUTH_KEY')));
+        $authInfo = $User->detail(session(get_opinion('ADMIN_AUTH_KEY')));
 
         $greencms_hash = $User->genHash($authInfo);
         cookie('user_session', null);

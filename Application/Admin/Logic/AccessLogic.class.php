@@ -72,11 +72,11 @@ class AccessLogic extends RelationModel
 
         foreach ($temp as $key=>$value) {
 
-            if($value['level']=1&&array_key_exists($value['name'],C('group_level_1'))){
-                $group_level_1=C('group_level_1');
+            if($value['level']=1&&array_key_exists($value['name'],get_opinion('group_level_1'))){
+                $group_level_1=get_opinion('group_level_1');
               $temp[$key]["remark"]=$group_level_1[$value['name']];
-            }else if($value['level']=2&&array_key_exists($value['name'],C('admin_level_2'))){
-                $admin_level_2=C('admin_level_2');
+            }else if($value['level']=2&&array_key_exists($value['name'],get_opinion('admin_level_2'))){
+                $admin_level_2=get_opinion('admin_level_2');
                 $temp[$key]["remark"]=$admin_level_2[$value['name']];
 
             }
@@ -209,8 +209,8 @@ class AccessLogic extends RelationModel
                 'user_id' => $M->getLastInsID(),
                 'role_id' => ( int )$_POST ['role_id']
             ));
-            if (C("SYSTEM_EMAIL")) {
-                $body = "你的账号已开通，登录地址：" . C('WEB_ROOT') . U("Admin/Login/index") . "<br/>登录账号是：" . $datas ["user_email"] . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录密码是：" . $_POST ['password'];
+            if (get_opinion("SYSTEM_EMAIL")) {
+                $body = "你的账号已开通，登录地址：" . get_opinion('WEB_ROOT') . U("Admin/Login/index") . "<br/>登录账号是：" . $datas ["user_email"] . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录密码是：" . $_POST ['password'];
                 $info = send_mail($datas ["user_email"], "", "开通账号", $body) ? "添加新账号成功并已发送账号开通通知邮件" : "添加新账号成功但发送账号开通通知邮件失败";
             } else {
                 $info = "账号已开通，请通知相关人员";

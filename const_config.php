@@ -80,6 +80,10 @@ define("Upload_PATH", "Upload/");
 define("TIME_FIX", 0);
 
 
+//
+define("DEFAULT_EXPIRES_TIME", 60000);
+
+
 /**
  * BUILD_DIR_SECURE 目录安全，设置详细参考thinkphp手册
  */

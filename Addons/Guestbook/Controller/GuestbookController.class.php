@@ -13,7 +13,7 @@ class GuestbookController extends AddonsController
 
         $order = 'date DESC';
 
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
 
         $count = count(M('guestbook')->where($where)->select());
 

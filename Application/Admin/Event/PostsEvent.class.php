@@ -33,7 +33,7 @@ class PostsEvent
             $tpl_type = object_to_array($theme->post);
             $tpl_type_list = array_column_5($tpl_type, 'name', 'tpl');
         } else {
-            $tpl_type_list = C('post_tpl');
+            $tpl_type_list = get_opinion('post_tpl');
         }
 
         S("post_tpl",$tpl_type_list,600);
@@ -78,7 +78,7 @@ class PostsEvent
         $post_data['post_date'] = date("Y-m-d H:m:s", time());
         $post_data['post_modified'] =date("Y-m-d H:m:s", time());
 
-        $post_data['user_id'] = $_SESSION [C('USER_AUTH_KEY')];
+        $post_data['user_id'] = $_SESSION [get_opinion('USER_AUTH_KEY')];
 
         $post_data['post_tag'] = I('post.tags', array());
         $post_data['post_cat'] = I('post.cats', array());

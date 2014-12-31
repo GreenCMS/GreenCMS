@@ -38,7 +38,7 @@ class AccessController extends AdminBaseController
      */
     public function index()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
 
         $UserLogic = new UserLogic();
 
@@ -65,7 +65,7 @@ class AccessController extends AdminBaseController
      */
     public function guest()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
 
         $UserLogic = new UserLogic();
 

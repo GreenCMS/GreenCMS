@@ -103,9 +103,9 @@ class UserEvent extends BaseController
         } else {
 
 
-            $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
+            $_SESSION[get_opinion('USER_AUTH_KEY')] = $authInfo['user_id'];
             if ($authInfo['user_login'] == get_opinion('Admin') || $authInfo['user_id'] == 1) {
-                $_SESSION[C('ADMIN_AUTH_KEY')] = true;
+                $_SESSION[get_opinion('ADMIN_AUTH_KEY')] = true;
             }
 
             //记住我
@@ -143,7 +143,7 @@ class UserEvent extends BaseController
     {
 
         $User = new UserLogic();
-        $authInfo = $User->detail(session(C('ADMIN_AUTH_KEY')));
+        $authInfo = $User->detail(session(get_opinion('ADMIN_AUTH_KEY')));
 
         $User->genHash($authInfo);
         cookie('user_session', null);

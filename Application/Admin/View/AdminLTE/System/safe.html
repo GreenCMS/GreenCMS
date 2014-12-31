@@ -23,7 +23,7 @@
 <section class="content-header">
     <h1>
         {$action}
-        <small>{$Think.config.title}</small>
+        <small>{:get_opinion('title')}</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -55,7 +55,7 @@
 
     <div class="controls">
         <input type="text" placeholder="" class="form-control large" name="COOKIE_PREFIX"
-               value="{:C('COOKIE_PREFIX')}"/>
+               value="{:get_opinion('COOKIE_PREFIX')}"/>
         <span class="help-inline">默认greencms_</span>
     </div>
 </div>
@@ -66,7 +66,7 @@
 
     <div class="controls">
         <input type="number" placeholder="" class="form-control large" name="COOKIE_EXPIRE"
-               value="{:C('COOKIE_EXPIRE')}"/>
+               value="{:get_opinion('COOKIE_EXPIRE')}"/>
         <span class="help-inline">默认3600 (单位-秒)</span>
     </div>
 </div>
@@ -76,7 +76,7 @@
 
     <div class="controls">
         <input type="text" placeholder="" class="form-control large" name="COOKIE_DOMAIN"
-               value="{:C('COOKIE_DOMAIN')}"/>
+               value="{:get_opinion('COOKIE_DOMAIN')}"/>
         <span class="help-inline">默认为空</span>
     </div>
 </div>
@@ -86,7 +86,7 @@
 
     <div class="controls">
         <input type="text" placeholder="" class="form-control large" name="COOKIE_PATH"
-               value="{:C('COOKIE_PATH')}"/>
+               value="{:get_opinion('COOKIE_PATH')}"/>
         <span class="help-inline">默认为 / </span>
     </div>
 </div>
@@ -240,8 +240,8 @@
     <label class="control-label">日志记录等级</label>
 
     <div class="controls">
-        <input type="text" placeholder="" class="form-control large" name="DEFAULT_FILTER"
-               value="{:C('LOG_LEVEL')}" style="width: 500px !important;
+        <input type="text" placeholder="" class="form-control large" name="LOG_LEVEL"
+               value="{:get_opinion('LOG_LEVEL')}" style="width: 500px !important;
 "/>
         <span class="help-inline">可选SQL,DEBUG,EMERG,ALERT,CRIT,ERR,WARN,INFO</span>
     </div>
@@ -254,7 +254,7 @@
 
     <div class="controls">
         <input type="text" placeholder="" class="form-control large" name="DEFAULT_FILTER"
-               value="{:C('DEFAULT_FILTER')}"/>
+               value="{:get_opinion('DEFAULT_FILTER')}"/>
         <span class="help-inline">默认htmlspecialchars</span>
     </div>
 </div>

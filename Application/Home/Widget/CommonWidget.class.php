@@ -32,12 +32,25 @@ class CommonWidget extends Controller
     public function mainMenu($ul_attr = 'class="navigation"', $li_attr = '', $ul_attr2 = '', $li_attr2 = '', $split = '', $position = 'head')
     {
 
-        $Menu = new MenuLogic();
-        $home_menu = $Menu->genMenu($position, $ul_attr, $li_attr, $ul_attr2, $li_attr2, $split);
 
-        $this->assign('home_menu', $home_menu);
+        if( S("Widget_mainMenu")==null ){
 
-        $this->display('Widget:mainMenu');
+            $Menu = new MenuLogic();
+            $home_menu = $Menu->genMenu($position, $ul_attr, $li_attr, $ul_attr2, $li_attr2, $split);
+
+            $this->assign('home_menu',$home_menu );
+            $menu = $this->fetch('Widget:mainMenu');
+
+            S("Widget_mainMenu",$menu,DEFAULT_EXPIRES_TIME);
+            echo $menu;
+
+        }else{
+
+            echo S("Widget_mainMenu");
+
+        }
+
+
 
     }
 }

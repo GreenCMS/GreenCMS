@@ -19,7 +19,7 @@ class ReplyController extends WeixinBaseController
 
     public function index()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
 
 
 

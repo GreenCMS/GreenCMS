@@ -40,7 +40,7 @@ class AdminBaseController extends BaseController
 
         $this->_currentUser();
 
-        $this->customConfig();
+//        $this->customConfig();
 
     }
 
@@ -87,7 +87,7 @@ class AdminBaseController extends BaseController
         //  echo CONTROLLER_NAME;
         //  echo ACTION_NAME;
 
-        $cache = C('admin_big_menu');
+        $cache = get_opinion('admin_big_menu');
         foreach ($cache as $big_url => $big_name) {
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 $module = $big_name;
@@ -96,7 +96,7 @@ class AdminBaseController extends BaseController
             }
         }
 
-        $cache = C('admin_sub_menu');
+        $cache = get_opinion('admin_sub_menu');
         foreach ($cache as $big_url => $big_name) {
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 foreach ($big_name as $sub_url => $sub_name) {
@@ -123,36 +123,16 @@ class AdminBaseController extends BaseController
      */
     public function saveConfig()
     {
-        S('customConfig', null); //清空缓存
-
-        $options = D('Options');
-        $data = array();
-
         $post_data = I('post.');
-
         foreach ($post_data as $name => $value) {
-//            unset ($data ['option_id']);
-//            $data ['option_name'] = $name;
-//            $data ['option_value'] = $value;
-//
-//            $find = $options->where(array(
-//                'option_name' => $name
-//            ))->select();
-//            if (!$find) {
-//                $options->data($data)->add();
-//            } else {
-//                $data ['option_id'] = $find [0] ['option_id'];
-//                $options->save($data);
-//            }
             set_opinion($name, $value);
         }
-
-        $this->customConfig();
     }
+
 
     public function isSuperAdmin()
     {
-        $uid = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $uid = ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
         if ($uid == 1) return true;
         else return false;
     }
@@ -164,9 +144,9 @@ class AdminBaseController extends BaseController
 
 
 
-                $group_level_1 = C('group_level_1');
-                $admin_level_2 = C('admin_level_2');
-                $admin_level_3 = C('admin_level_3');
+                $group_level_1 = get_opinion('group_level_1');
+                $admin_level_2 = get_opinion('admin_level_2');
+                $admin_level_3 = get_opinion('admin_level_3');
 
 
                 $this->group_name = $group_level_1[MODULE_NAME] ? $group_level_1[MODULE_NAME] : "Admin";

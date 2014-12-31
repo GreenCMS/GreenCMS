@@ -47,8 +47,6 @@ abstract class BaseController extends Controller {
 			}
 		}
 
-		Hook::listen('base_getKvs');
-
 		C('kv', $res_array);
 		return $res_array;
 	}
@@ -70,9 +68,6 @@ abstract class BaseController extends Controller {
 		foreach ($options as $config) {
 			C($config['option_name'], $config['option_value']);
 		}
-
-		Hook::listen('base_customConfig');
-
 	}
 
 	/**
@@ -117,14 +112,12 @@ abstract class BaseController extends Controller {
 
     protected function themeConfig()
     {
-        if (S('theme_config')) {
+        $theme_name=get_kv('home_theme');
+        if (S($theme_name.'_theme_config')) {
             //有缓存
-            $theme_config = S('theme_config');
-            C('theme_config', $theme_config);
-
+            C('theme_config',S($theme_name.'_theme_config'));
         } else {
-
-            $theme = D("Theme")->field('theme_config')->where(array("theme_name" => get_kv('home_theme', true)))->find();
+            $theme = D("Theme")->field('theme_config')->where(array("theme_name" => $theme_name))->find();
             $theme = json_decode($theme['theme_config'], true);
             $theme = $theme['kv'];
 
@@ -133,10 +126,8 @@ abstract class BaseController extends Controller {
                 $theme_config[$key] = $value['value'];
             }
 
-            S('theme_config', $theme_config, 100000);
-
+            S($theme_name.'_theme_config', $theme_config, DEFAULT_EXPIRES_TIME);
             C('theme_config', $theme_config);
-
 
         }
 
@@ -151,7 +142,7 @@ abstract class BaseController extends Controller {
             return false;
         }
 
-        if (C('URL_CASE_INSENSITIVE')) {
+        if (get_opinion('URL_CASE_INSENSITIVE')) {
             $_addons     = ucfirst(parse_name($_addons, 1));
             $_controller = parse_name($_controller, 1);
         }
@@ -173,7 +164,7 @@ abstract class BaseController extends Controller {
      */
     protected function _currentUser()
     {
-        $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $user_id = ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
         $user = D('User', 'Logic')->cache(true)->detail($user_id);
         $this->assign('user', $user);
     }

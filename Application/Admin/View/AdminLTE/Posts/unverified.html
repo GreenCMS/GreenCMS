@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -59,7 +59,7 @@
                                             onchange="self.location.href=options[selectedIndex].value"
                                             size="1"
                                             name="mlink2">
-                                        <option value="__SELF__&page={:C('PAGER')}">选择分页</option>
+                                        <option value="__SELF__&page={:get_opinion('PAGER')}">选择分页</option>
 
                                         <option value="__SELF__&page=5">5</option>
                                         <option value="__SELF__&page=10">10</option>

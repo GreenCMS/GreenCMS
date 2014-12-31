@@ -54,6 +54,7 @@ class FeedController extends HomeBaseController
         $post_list = $PostsList->getList(get_opinion('feed_num'), $type, 'post_date desc', true);
         $RSS = new RSS (get_opinion('title'), '', get_opinion('description'), ''); // 站点标题的链接
         foreach ($post_list as $list) {
+           // dump($list);
             $RSS->addItem(
                 $list ['post_title'],
                 //               $list ['post_id'],

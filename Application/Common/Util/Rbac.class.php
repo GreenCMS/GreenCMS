@@ -87,7 +87,7 @@ class Rbac
      */
     static public function authenticate($map, $model = '')
     {
-        if (empty($model)) $model = C('USER_AUTH_MODEL');
+        if (empty($model)) $model = get_opinion('USER_AUTH_MODEL');
         //使用给定的Map进行认证
         return M($model)->where($map)->find();
     }
@@ -98,10 +98,10 @@ class Rbac
      */
     static function saveAccessList($authId = null)
     {
-        if (null === $authId) $authId = $_SESSION[C('USER_AUTH_KEY')];
+        if (null === $authId) $authId = $_SESSION[get_opinion('USER_AUTH_KEY')];
         // 如果使用普通权限模式，保存当前用户的访问权限列表
         // 对管理员开发所有权限
-        if (C('USER_AUTH_TYPE') != 2 && !$_SESSION[C('ADMIN_AUTH_KEY')])
+        if (get_opinion('USER_AUTH_TYPE') != 2 && !$_SESSION[get_opinion('ADMIN_AUTH_KEY')])
             $_SESSION['_ACCESS_LIST'] = self::getAccessList($authId);
         return;
     }
@@ -114,7 +114,7 @@ class Rbac
      */
     static function getRecordAccessList($authId = null, $module = '')
     {
-        if (null === $authId) $authId = $_SESSION[C('USER_AUTH_KEY')];
+        if (null === $authId) $authId = $_SESSION[get_opinion('USER_AUTH_KEY')];
         if (empty($module)) $module = CONTROLLER_NAME;
         //获取权限访问列表
         $accessList = self::getModuleAccessList($authId, $module);
@@ -128,24 +128,24 @@ class Rbac
     static function checkAccess()
     {
         //如果项目要求认证，并且当前模块需要认证，则进行权限认证
-        if (C('USER_AUTH_ON')) {
+        if (get_opinion('USER_AUTH_ON')) {
             $_module = array();
             $_action = array();
-            if ("" != C('REQUIRE_AUTH_MODULE')) {
+            if ("" != get_opinion('REQUIRE_AUTH_MODULE')) {
                 //需要认证的模块
-                $_module['yes'] = explode(',', strtoupper(C('REQUIRE_AUTH_MODULE')));
+                $_module['yes'] = explode(',', strtoupper(get_opinion('REQUIRE_AUTH_MODULE')));
             } else {
                 //无需认证的模块
-                $_module['no'] = explode(',', strtoupper(C('NOT_AUTH_MODULE')));
+                $_module['no'] = explode(',', strtoupper(get_opinion('NOT_AUTH_MODULE')));
             }
             //检查当前模块是否需要认证
             if ((!empty($_module['no']) && !in_array(strtoupper(CONTROLLER_NAME), $_module['no'])) || (!empty($_module['yes']) && in_array(strtoupper(CONTROLLER_NAME), $_module['yes']))) {
-                if ("" != C('REQUIRE_AUTH_ACTION')) {
+                if ("" != get_opinion('REQUIRE_AUTH_ACTION')) {
                     //需要认证的操作
-                    $_action['yes'] = explode(',', strtoupper(C('REQUIRE_AUTH_ACTION')));
+                    $_action['yes'] = explode(',', strtoupper(get_opinion('REQUIRE_AUTH_ACTION')));
                 } else {
                     //无需认证的操作
-                    $_action['no'] = explode(',', strtoupper(C('NOT_AUTH_ACTION')));
+                    $_action['no'] = explode(',', strtoupper(get_opinion('NOT_AUTH_ACTION')));
                 }
                 //检查当前操作是否需要认证
                 if ((!empty($_action['no']) && !in_array(strtoupper(ACTION_NAME), $_action['no'])) || (!empty($_action['yes']) && in_array(strtoupper(ACTION_NAME), $_action['yes']))) {
@@ -169,15 +169,15 @@ class Rbac
         //检查当前操作是否需要认证
         if (self::checkAccess()) {
             //检查认证识别号
-            if (!$_SESSION[C('USER_AUTH_KEY')]) {
-                if (C('GUEST_AUTH_ON')) {
+            if (!$_SESSION[get_opinion('USER_AUTH_KEY')]) {
+                if (get_opinion('GUEST_AUTH_ON')) {
                     // 开启游客授权访问
                     if (!isset($_SESSION['_ACCESS_LIST']))
                         // 保存游客权限
-                    self::saveAccessList(C('GUEST_AUTH_ID'));
+                    self::saveAccessList(get_opinion('GUEST_AUTH_ID'));
                 } else {
                     // 禁止游客访问跳转到认证网关
-                    redirect(PHP_FILE . C('USER_AUTH_GATEWAY'));
+                    redirect(PHP_FILE . get_opinion('USER_AUTH_GATEWAY'));
                 }
             }
         }
@@ -195,11 +195,11 @@ class Rbac
         if (self::checkAccess()) {
             //存在认证识别号，则进行进一步的访问决策
             $accessGuid = md5($appName . CONTROLLER_NAME . ACTION_NAME);
-            if (empty($_SESSION[C('ADMIN_AUTH_KEY')])) {
-                if (C('USER_AUTH_TYPE') == 2) {
+            if (empty($_SESSION[get_opinion('ADMIN_AUTH_KEY')])) {
+                if (get_opinion('USER_AUTH_TYPE') == 2) {
                     //加强验证和即时验证模式 更加安全 后台权限修改可以即时生效
                     //通过数据库进行访问检查
-                    $accessList = self::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
+                    $accessList = self::getAccessList($_SESSION[get_opinion('USER_AUTH_KEY')]);
                 } else {
                     // 如果是管理员或者当前操作已经认证过，无需再次认证
                     if ($_SESSION[$accessGuid]) {
@@ -238,7 +238,7 @@ class Rbac
     {
         // Db方式权限数据
         $db = Db::getInstance(C('RBAC_DB_DSN'));
-        $table = array('role' => C('RBAC_ROLE_TABLE'), 'user' => C('RBAC_USER_TABLE'), 'access' => C('RBAC_ACCESS_TABLE'), 'node' => C('RBAC_NODE_TABLE'));
+        $table = array('role' => get_opinion('RBAC_ROLE_TABLE'), 'user' => get_opinion('RBAC_USER_TABLE'), 'access' => get_opinion('RBAC_ACCESS_TABLE'), 'node' => get_opinion('RBAC_NODE_TABLE'));
         $sql = "select node.id,node.name from " .
             $table['role'] . " as role," .
             $table['user'] . " as user," .
@@ -312,7 +312,7 @@ class Rbac
     {
         // Db方式
         $db = Db::getInstance(C('RBAC_DB_DSN'));
-        $table = array('role' => C('RBAC_ROLE_TABLE'), 'user' => C('RBAC_USER_TABLE'), 'access' => C('RBAC_ACCESS_TABLE'));
+        $table = array('role' => get_opinion('RBAC_ROLE_TABLE'), 'user' => get_opinion('RBAC_USER_TABLE'), 'access' => get_opinion('RBAC_ACCESS_TABLE'));
         $sql = "select access.node_id from " .
             $table['role'] . " as role," .
             $table['user'] . " as user," .

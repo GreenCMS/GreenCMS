@@ -43,7 +43,7 @@ class GuestbookAddon extends Addon
     {
 
         $sql = "
-                    CREATE TABLE IF NOT EXISTS `" . C('DB_PREFIX') . "guestbook` (
+                    CREATE TABLE IF NOT EXISTS `" . get_opinion('DB_PREFIX') . "guestbook` (
                       `id` int(11) NOT NULL AUTO_INCREMENT,
                       `name` tinytext NOT NULL,
                       `email` varchar(100) NOT NULL,
@@ -79,7 +79,7 @@ class GuestbookAddon extends Addon
 
     public function uninstall()
     {
-        $sql = "DROP TABLE IF EXISTS `" . C('DB_PREFIX') . "guestbook` ";
+        $sql = "DROP TABLE IF EXISTS `" . get_opinion('DB_PREFIX') . "guestbook` ";
 
         M()->query($sql);
 

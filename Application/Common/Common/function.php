@@ -44,7 +44,7 @@ function object_to_array($obj)
 function encrypt($data)
 {
     //return md5($data);
-    return md5(C("AUTH_CODE") . md5($data));
+    return md5(get_opinion("AUTH_CODE") . md5($data));
 }
 
 
@@ -84,23 +84,25 @@ function is_empty($test, $string = '空')
  */
 function get_opinion($key, $realtime = false, $default = '')
 {
-
     if (!$realtime) {
-        $res = TP_C($key);
+        $res = S('option_' . $key);
         if ($res != null) {
             return $res;
         } else {
-            $res = S('option_' . $key);
-            if ($res) return $res;
-            else return get_opinion($key, true, $default );
+            return get_opinion($key, true, $default);
         }
+
     } else {
         $res = D('Options')->where(array('option_name' => $key))->find();
-
         if (empty($res)) {
-            return $default;
+            $res = TP_C($key);
+            if ($res) {
+                S('option_' . $key, $res ,DEFAULT_EXPIRES_TIME);
+                return $res;
+            }
+            else return $default;
         } else {
-            S('option_' . $key, $res['option_value']);
+            S('option_' . $key, $res['option_value'],DEFAULT_EXPIRES_TIME);
             return $res['option_value'];
         }
 
@@ -128,7 +130,7 @@ function set_opinion($key, $value)
         $data ['option_id'] = $find [0] ['option_id'];
         $options->save($data);
     }
-    S('option_' . $key,$value);
+    S('option_'.$key,$value,DEFAULT_EXPIRES_TIME);
 
 }
 
@@ -142,15 +144,18 @@ function set_opinion($key, $value)
 function get_kv($key, $realtime = false, $default = '')
 {
     if (!$realtime) {
-
-        return S($key);
-
+        $res = S('kv_'.$key);
+        if ($res != null) {
+            return $res;
+        } else {
+            return get_kv($key, true, $default);
+        }
     } else {
         $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
         if ($options['kv_value'] == '') {
             return $default;
         } else {
-            S($key, $options['kv_value']);
+            S('kv_'.$key, $options['kv_value'],DEFAULT_EXPIRES_TIME);
             return $options['kv_value'];
         }
     }
@@ -166,6 +171,8 @@ function get_kv($key, $realtime = false, $default = '')
  */
 function set_kv($key, $value)
 {
+    if($value==null)S('kv_'.$key, null);
+
     $data['kv_value'] = $value;
     if (exist_kv($key)) {
         $res = D('Kv')->where(array('kv_key' => $key))->data($data)->save();
@@ -173,6 +180,7 @@ function set_kv($key, $value)
         $data['kv_key'] = $key;
         $res = D('Kv')->data($data)->add();
     }
+    S('kv_'.$key, $value,DEFAULT_EXPIRES_TIME);
     return $res;
 }
 
@@ -375,12 +383,12 @@ function get_addon_config($name)
 function addons_url($url, $param = array())
 {
 
-   $URL_HTML_SUFFIX= C( 'URL_HTML_SUFFIX');
-    C( 'URL_HTML_SUFFIX','');
+   $URL_HTML_SUFFIX= get_opinion('URL_HTML_SUFFIX');
+    C('URL_HTML_SUFFIX','');
 
     $url = parse_url($url);
 
-    $case = C('URL_CASE_INSENSITIVE');
+    $case = get_opinion('URL_CASE_INSENSITIVE');
     $addons = $case ? parse_name($url['scheme']) : $url['scheme'];
     $controller = $case ? parse_name($url['host']) : $url['host'];
     $action = trim($case ? strtolower($url['path']) : $url['path'], '/');
@@ -712,9 +720,9 @@ function check_access($access = "")
 {
 
     $path = explode('/', strtoupper($access));
-    $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
+    $accessList = \Org\Util\Rbac::getAccessList($_SESSION[get_opinion('USER_AUTH_KEY')]);
 
-    if ((( int )$_SESSION [C('USER_AUTH_KEY')] == 1)|| $accessList[$path[0]][$path[1]][$path[2]] != '' ) {
+    if ((( int )$_SESSION [get_opinion('USER_AUTH_KEY')] == 1)|| $accessList[$path[0]][$path[1]][$path[2]] != '' ) {
         return true;
     } else {
         return false;
@@ -759,7 +767,7 @@ function simple_post($url, $data)
  */
 function get_current_user_id()
 {
-    return ( int )$_SESSION [C('USER_AUTH_KEY')];
+    return ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
 }
 
 

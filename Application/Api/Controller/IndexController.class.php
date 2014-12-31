@@ -109,7 +109,7 @@ class IndexController extends ApiBaseController
         $count = $PostsList->countAll('single', $map); // 查询满足要求的总记录数
 
         if ($count != 0) {
-            $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
+            $Page = new GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
             $res = $PostsList->getList($limit, 'single', 'post_date desc', true, $map);
 

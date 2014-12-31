@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -52,7 +52,7 @@
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large"
                                                name="software_build"
-                                               value="{:get_opinion('software_build')}"/>
+                                               value="{:get_opinion('software_build',true)}"/>
                                         <span class="help-inline">请勿随意修改,会影响自动升级</span>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                     <div class="controls">
                                         <input type="text" placeholder="" class="form-control large"
                                                name="software_version"
-                                               value="{:get_opinion('software_version')}"/>
+                                               value="{:get_opinion('software_version',true)}"/>
                                         <span class="help-inline">请勿修改</span>
                                     </div>
                                 </div>

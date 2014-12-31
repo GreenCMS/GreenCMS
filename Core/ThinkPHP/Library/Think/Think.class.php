@@ -249,7 +249,7 @@ class Think {
           case E_COMPILE_ERROR:
           case E_USER_ERROR:
             ob_end_clean();
-            $errorStr = "$errstr ".$errfile." 第 $errline 行.";
+          $errorStr = "$errstr ".$errfile." 第 $errline 行.";
             if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR);
             self::halt($errorStr);
             break;
@@ -329,6 +329,7 @@ class Think {
         if('[think]' === $value){ // 获取trace信息
             return $_trace;
         }else{
+
             $info   =   ($label?$label.':':'').print_r($value,true);
             $level  =   strtoupper($level);
             

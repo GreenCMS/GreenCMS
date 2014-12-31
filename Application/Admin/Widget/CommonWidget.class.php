@@ -51,7 +51,7 @@ class CommonWidget extends Controller
         C('admin_black_list_menu', array_change_key_case(C('menu_black_list')));
         C('admin_big_menu_icon', array_change_key_case(C('admin_big_menu_icon')));
 
-        $accessList = RBAC::getAccessList($_SESSION [C('USER_AUTH_KEY')]);
+        $accessList = RBAC::getAccessList($_SESSION [get_opinion('USER_AUTH_KEY')]);
         $cache_access = array_change_key_case($accessList [strtoupper(MODULE_NAME)]);
 
         $cache = C('admin_big_menu');
@@ -59,7 +59,7 @@ class CommonWidget extends Controller
         $icon = C('admin_big_menu_icon');
 
 
-        if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
+        if ($_SESSION [get_opinion('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache as $cache_key => $cache_each) {
                 if (!array_key_exists($cache_key, $cache_access)) {
                     unset ($cache [$cache_key]);
@@ -68,7 +68,7 @@ class CommonWidget extends Controller
             }
         }
 
-        if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
+        if ($_SESSION [get_opinion('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache_access as $cache2_key => $cache2_each) {
                 foreach ($cache2_each as $key => $value) {
                     $cache2_each [$key] = strtolower($cache2_key) . '/' . strtolower($key);

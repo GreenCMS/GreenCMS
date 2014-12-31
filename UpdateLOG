@@ -1,6 +1,14 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
 
+
+version v2.3.0101 build 20150101
+widget缓存，增加CacheManager
+fix OAuth bugs
+取消链接图片gif支持
+修正option cache设计缺陷
+性能提升，加载时间减少50%以上
+
 version v2.1.1213 build 20141213
 修复ThinkPHP 3注入漏洞
 修复文件管理右键菜单位置
