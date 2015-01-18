@@ -1,8 +1,8 @@
 <?php
 if (APP_DEBUG) {
-    $DEFAULT_THEME = I('get.theme', get_kv('home_theme', true, 'NovaGreenStudio'));
+    $DEFAULT_THEME = I('get.theme', get_kv('home_theme', false, 'NovaGreenStudio'));
 } else {
-    $DEFAULT_THEME = get_kv('home_theme', true, 'NovaGreenStudio');
+    $DEFAULT_THEME = get_kv('home_theme', false, 'NovaGreenStudio');
 }
 
 $config = array(
@@ -32,6 +32,7 @@ $config = array(
     'COOKIE_PATH' => get_opinion('COOKIE_PATH', false),
 
 
+    //COOKIE_DOMAIN in db is empty cause db hit when init
 
 
 

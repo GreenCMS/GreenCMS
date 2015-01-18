@@ -23,9 +23,9 @@ class KvLogic extends Model
      */
     public function getAll()
     {
-        $kvs = $this->cache(APP_Cache,2)->where(1)->select();
+        $kvs = $this->cache(APP_Cache, 2)->where(1)->select();
 
-         return $kvs;
+        return $kvs;
     }
 
 

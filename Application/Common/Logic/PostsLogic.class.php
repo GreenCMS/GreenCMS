@@ -58,13 +58,14 @@ class PostsLogic extends RelationModel
      * @param array $info_with 强制传入的判断条件
      *
      * @param array $ids 需要限制的id
+     * @param string $except_field
      * @internal param string $field
      * @internal param string $fields
      * @internal param string $fileds
      * @return mixed 返回文章列表
      */
     public function getList($limit = 20, $type = 'single', $order = 'post_date desc',
-                            $relation = true, $info_with = array(), $ids = array())
+                            $relation = true, $info_with = array(), $ids = array(), $except_field = '')
     {
         $info = $info_with;
         if ($type != 'all') $info['post_type'] = $type;
@@ -72,7 +73,7 @@ class PostsLogic extends RelationModel
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
-        $post_list = D('Posts')->where($info)->order('post_top desc ,' . $order)
+        $post_list = D('Posts')->field($except_field, true)->where($info)->order('post_top desc ,' . $order)
             ->limit($limit)->relation($relation)->select();
         return $post_list;
     }

@@ -52,6 +52,27 @@ class TagsLogic extends RelationModel
         return $count;
     }
 
+    /**
+     * 获取指定tag的post id
+     * @param $tag_id
+     * @param int $num 数量
+     *
+     * @param int $start
+     * @param bool $relation
+     * @param string $except_field
+     * @internal param $cat_id 分类id
+     * @return mixed
+     */
+    public function getPostsByTag($tag_id, $num = 5, $start = 0 , $relation = true, $except_field = '')
+    {
+        $tag = $this->getPostsId($tag_id, 'publish', $start . ',' . $num);
+        if ($tag != null) {
+            $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', $relation, array(), $tag, $except_field);
+            return $posts;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 输入
@@ -61,16 +82,16 @@ class TagsLogic extends RelationModel
      * @internal param int $num
      * @return mixed 找到的话返回post_id数组集合
      */
-    public function getPostsId($info, $post_status = 'publish',$limit=99999999)
+    public function getPostsId($info, $post_status = 'publish', $limit = 99999999)
     {
 
         $tag_info ['tag_id'] = $info;
         $ids = array();
 
         $res = D('Post_tag')
-            ->table(GreenCMS_DB_PREFIX .'post_tag as pt,'.GreenCMS_DB_PREFIX .'posts as ps' )
+            ->table(GreenCMS_DB_PREFIX . 'post_tag as pt,' . GreenCMS_DB_PREFIX . 'posts as ps')
             ->field('ps.post_id')
-            ->where("tag_id ='%s' and pt.post_id=ps.post_id and ps.post_status ='%s'", $tag_info ['tag_id'],$post_status )
+            ->where("tag_id ='%s' and pt.post_id=ps.post_id and ps.post_status ='%s'", $tag_info ['tag_id'], $post_status)
             ->limit($limit)
             ->order('ps.post_top desc,ps.post_date desc')
             ->select();
@@ -84,27 +105,6 @@ class TagsLogic extends RelationModel
         return $ids;
     }
 
-
-    /**
-     * 获取指定tag的post id
-     * @param $tag_id
-     * @param int $num 数量
-     *
-     * @param $start
-     * @internal param $cat_id 分类id
-     * @return mixed
-     */
-    public function getPostsByTag($tag_id, $num = 5, $start = 0)
-    {
-        $tag = $this->getPostsId($tag_id, 'publish',$start.','.$num);
-        if ($tag != null) {
-            $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', true, array(), $tag);
-            return $posts;
-        } else {
-            return false;
-        }
-    }
-
     /**
      * 获取列表
      * @param int $limit
@@ -113,7 +113,7 @@ class TagsLogic extends RelationModel
      * @param string $order
      * @return mixed
      */
-    public function getList($limit = 20, $relation = true, $cache=false,$order="")
+    public function getList($limit = 20, $relation = true, $cache = false, $order = "")
     {
         return D('Tags')->cache($cache)->limit($limit)->relation($relation)->select();
     }
@@ -129,11 +129,11 @@ class TagsLogic extends RelationModel
     public function selectWithPostsCount($limit = 0, $relation = false, $where = array(), $order = '')
     {
 
-        $res= D('Tags')->where($where)->limit($limit)
-            ->field( GreenCMS_DB_PREFIX . 'tags.tag_id,'.
-                GreenCMS_DB_PREFIX . 'tags.tag_slug,'.
-                GreenCMS_DB_PREFIX . 'tags.tag_name,'.
-            'count( '  . GreenCMS_DB_PREFIX . 'post_tag.post_id) as post_count')
+        $res = D('Tags')->where($where)->limit($limit)
+            ->field(GreenCMS_DB_PREFIX . 'tags.tag_id,' .
+                GreenCMS_DB_PREFIX . 'tags.tag_slug,' .
+                GreenCMS_DB_PREFIX . 'tags.tag_name,' .
+                'count( ' . GreenCMS_DB_PREFIX . 'post_tag.post_id) as post_count')
             ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'post_tag ON ' . GreenCMS_DB_PREFIX .
                 'tags.tag_id = ' . GreenCMS_DB_PREFIX . 'post_tag.tag_id')
             ->group(GreenCMS_DB_PREFIX . 'tags.tag_id')->relation($relation)->select();
