@@ -33,6 +33,26 @@ class CatsLogic extends RelationModel
         return D('Cats')->where($map)->relation($relation)->find();
     }
 
+
+
+    /**
+     * @param array $info_with
+     * @param array $ids 需要限制的id
+     *
+     * @internal param string $type
+     * @return int
+     */
+    public function countAll($info_with = array(), $ids = array())
+    {
+        $info = $info_with;
+
+        if (!empty($ids)) $info['cat_id'] = array('in', $ids);
+
+        $count = $this->where($info)->count();
+        return $count;
+    }
+
+
     /**
      * 获取分类列表
      * @param int $limit limit
@@ -103,12 +123,13 @@ class CatsLogic extends RelationModel
     /**
      * 获取指定分类的post id
      * 使用原生SQL
-     * @param $info 分类info
+     * @param $info int 分类info
      * @param string $post_status
      *
+     * @param $limit
      * @return mixed 找到的话返回post_id数组集合
      */
-    public function getPostsId($info, $post_status = 'publish')
+    public function getPostsId($info, $post_status = 'publish',$limit=99999999)
     {
 
         $cat_info ['cat_id'] = $info;
@@ -118,6 +139,8 @@ class CatsLogic extends RelationModel
             ->table(GreenCMS_DB_PREFIX .'post_cat as pc,'.GreenCMS_DB_PREFIX .'posts as ps' )
             ->field('ps.post_id')
             ->where("cat_id ='%s' and pc.post_id=ps.post_id and ps.post_status ='%s'", $cat_info ['cat_id'],$post_status )
+            ->limit($limit)
+            ->order('ps.post_top desc,ps.post_date desc')
             ->select();
 
         foreach ($res as $key => $value) {
@@ -125,26 +148,21 @@ class CatsLogic extends RelationModel
 
         }
 
-
         return $ids;
     }
 
     /**
      * 获取分类的文章
-     * @param $cat_id 分类id
+     * @param $cat_id int 分类id
      * @param int $num 数量
      *
      * @param $start
      * @return mixed
      */
-    public function getPostsByCat($cat_id, $num = 5, $start = -1)
+    public function getPostsByCat($cat_id, $num = 5, $start = 0)
     {
-        $cat = $this->getPostsId($cat_id);
-        if ($start != -1) {
-            for ($i = 0; $i < $start; $i++) {
-                unset($cat[sizeof($cat) - 1]);
-            }
-        }
+        $cat = $this->getPostsId($cat_id,'publish',$start.','.$num);
+
         if ($cat != null) {
             $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', true, array(), $cat);
             return $posts;
@@ -155,18 +173,18 @@ class CatsLogic extends RelationModel
     }
 
     /**
-     * @param $cat_id 分类id
+     * @param $cat_id int 分类id
      *
      * @return mixed
      */
-    public function getPostIdsByCat($cat_id)
-    {
-        $cat = $this->getPostsByCat($cat_id);
-        foreach ($cat as $key => $value) {
-            $cat[$key] = $cat[$key]['post_id'];
-        }
-        return $cat;
-    }
+//    public function getPostIdsByCat($cat_id)
+//    {
+//        $cat = $this->getPostsByCat($cat_id);
+//        foreach ($cat as $key => $value) {
+//            $cat[$key] = $cat[$key]['post_id'];
+//        }
+//        return $cat;
+//    }
 
 
     /**

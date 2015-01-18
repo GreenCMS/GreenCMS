@@ -31,7 +31,7 @@ class PostController extends HomeBaseController
         $where['post_type'] = 'single';
 
         $Posts = new PostsLogic();
-        $post_detail = $Posts->detail($info, true, $where);
+        $post_detail = $Posts->detail($info, true, $where,true);
 
         $Posts->viewInc($post_detail['post_id']); //浏览计数
         $this->if404($post_detail, "非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");

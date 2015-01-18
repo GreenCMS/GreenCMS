@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 use Admin\Event\PostsEvent;
+use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
 use Common\Util\GreenPage;
@@ -31,7 +32,7 @@ class PostsController extends AdminBaseController
 
         CacheManager::clearCat();
         CacheManager::clearPost();
-        CacheManager::clearMenu();
+        CacheManager::clearTag();
 
     }
     /**
@@ -107,6 +108,8 @@ class PostsController extends AdminBaseController
     public function index($post_type = 'single', $post_status = 'publish', $order = 'post_date desc',
                           $keyword = '', $tpl = 'index_no_js', $name = '')
     {
+        $CatsLogic=new CatsLogic();
+        $TagsLogic=new TagsLogic();
 
         //获取get参数
         $cat = I('get.cat');
@@ -123,14 +126,18 @@ class PostsController extends AdminBaseController
 
         //处理详细信息 搜索，指定TAG CAT文章
         if ($cat != '') {
-            $post_ids = D('Cats', 'Logic')->getPostsId($cat);
+            $post_ids = $CatsLogic->getPostsId($cat);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
-            $cat_detail = D('Cats', 'Logic')->detail($cat);
+
+            $cat_detail = $CatsLogic->detail($cat);
+
             $cat = '关于分类 ' . $cat_detail['cat_name'] . ' 的';
         } else if ($tag != '') {
-            $post_ids = D('Tags', 'Logic')->getPostsId($tag);
+            $post_ids = $TagsLogic->getPostsId($tag);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
-            $tag_detail = D('Tags', 'Logic')->detail($tag);
+
+            $tag_detail = $TagsLogic->detail($tag);
+
             $tag = '关于标签' . $tag_detail['tag_name'] . ' 的';
         } else if ($keyword != '') {
             $key = '关于' . $keyword . ' 的';
@@ -276,9 +283,13 @@ class PostsController extends AdminBaseController
 
     /**
      * 文章添加处理
+     * to be removed
      */
     public function addHandle()
     {
+        $PostsLogic = new PostsLogic();
+
+
         $post_data = $this->dataHandle();
 
         if (($this->noverify() == false) || (I('post.post_status') == 'unverified')) {
@@ -288,7 +299,7 @@ class PostsController extends AdminBaseController
         }
 
 
-        if ($post_id = D('Posts')->relation(true)->add($post_data)) { //, 'Logic'
+        if ($post_id = $PostsLogic->relation(true)->add($post_data)) { //, 'Logic'
 
             cookie('post_add', null);
 
@@ -318,13 +329,13 @@ class PostsController extends AdminBaseController
      */
     private function changePostStatue($id, $post_status = "publish", $message = "")
     {
-        $PostEvent = new PostsEvent();
+        $PostsLogic = new PostsLogic();
 
-        if ($PostEvent->hasPost($id) == false) {
+        if (empty($PostsLogic->has($id))) {
             $this->error("不存在该记录");
         }
 
-        if ($PostEvent->changePostStatue($id, $post_status)) {
+        if ($PostsLogic->changePostStatue($id, $post_status)) {
             $this->success($message . '成功');
         } else {
             $this->error($message . '失败');
@@ -386,11 +397,7 @@ class PostsController extends AdminBaseController
      */
     public function preDel($id = 0)
     {
-        if (D('Posts', 'Logic')->preDel($id)) {
-            $this->success('删除到回收站成功');
-        } else {
-            $this->error('删除到回收站失败');
-        }
+        $this->changePostStatue($id, "preDel", "删除到回收站");
     }
 
     /**
@@ -399,8 +406,10 @@ class PostsController extends AdminBaseController
      */
     public function del($id = 0)
     {
+        $PostsLogic = new PostsLogic();
 
-        if (D("Posts", 'Logic')->del($id)) {
+
+        if ($PostsLogic->del($id)) {
             $this->success('永久删除成功');
         } else {
             $this->error('永久删除失败');
@@ -413,11 +422,9 @@ class PostsController extends AdminBaseController
      */
     public function emptyDraftHandle()
     {
-        $where['post_status'] = 'draft';
-
         $PostsLogic = new PostsLogic();
 
-        if ($PostsLogic->where($where)->relation(true)->delete()) {
+        if ($PostsLogic->emptyPostHandleByStatus('draft')) {
             $this->success('清空草稿箱成功');
         } else {
             $this->error('清空草稿箱失败');
@@ -431,11 +438,10 @@ class PostsController extends AdminBaseController
      */
     public function emptyRecycleHandle()
     {
-        $where['post_status'] = 'preDel';
 
         $PostsLogic = new PostsLogic();
 
-        if ($PostsLogic->where($where)->relation(true)->delete()) {
+        if ($PostsLogic->emptyPostHandleByStatus('preDel')) {
             $this->success('清空回收站成功');
         } else {
             $this->error('清空回收站失败');
@@ -443,7 +449,10 @@ class PostsController extends AdminBaseController
 
     }
 
-
+    /**
+     * @param $post_id post_id
+     * 初始化编辑器链接
+     */
     private function initEditor($post_id)
     {
 
@@ -509,6 +518,8 @@ class PostsController extends AdminBaseController
                 $url = U('Admin/Posts/index');
 
             }
+
+            CacheManager::clearPostCacheById($id);
 
 
             if ($Posts->where(array("post_id" => $post_data["post_id"]))->save($post_data)) {
@@ -592,9 +603,11 @@ class PostsController extends AdminBaseController
      */
     public function category()
     {
-        $cat_list = D("Cats", "Logic")->relation(true)->selectWithPostsCount();
+        $CatsLogic=new CatsLogic();
+
+        $cat_list =$CatsLogic->relation(true)->selectWithPostsCount();
         foreach ($cat_list as $key => $value) {
-            $cat_list[$key]["cat_father"] = D('Cats', 'Logic')->detail($value["cat_father"]);
+            $cat_list[$key]["cat_father"] =$CatsLogic->detail($value["cat_father"]);
         }
 
 
@@ -607,9 +620,11 @@ class PostsController extends AdminBaseController
      */
     public function addCategory()
     {
+        $CatsLogic=new CatsLogic();
+
         $action = '添加';
         $this->assign('action', $action);
-        $cat_list = D('Cats', 'Logic')->category();
+        $cat_list = $CatsLogic->category();
 
         $this->assign('cats', $cat_list);
         $this->display('addcategory');
@@ -620,7 +635,7 @@ class PostsController extends AdminBaseController
      */
     public function addCategoryHandle()
     {
-
+        $CatsLogic=new CatsLogic();
 
         $data['cat_name'] = I('post.cat_name');
         $data['cat_slug'] = urlencode(I('post.cat_slug'));
@@ -630,7 +645,7 @@ class PostsController extends AdminBaseController
             $data['cat_slug'] = $data['cat_name'];
         }
 
-        if (D('Cats')->data($data)->add()) {
+        if ($CatsLogic->data($data)->add()) {
             $this->success('分类添加成功', U('Admin/Posts/category'));
         } else {
             $this->error('分类添加失败', U('Admin/Posts/category'));
@@ -643,10 +658,11 @@ class PostsController extends AdminBaseController
      */
     public function editCategory($id)
     {
+        $CatsLogic=new CatsLogic();
 
         $action = '编辑';
-        $cat = D('Cats')->find($id);
-        $cats = D('Cats', 'Logic')->category();
+        $cat = $CatsLogic->detail($id);
+        $cats = $CatsLogic->category();
 
         $this->assign('action', $action);
         $this->assign('cat', $cat);
@@ -661,13 +677,13 @@ class PostsController extends AdminBaseController
      */
     public function editCategoryHandle($id)
     {
+        $CatsLogic=new CatsLogic();
 
-        $Cats = D('Cats');
         $cat_data['cat_name'] = I('post.cat_name');
         $cat_data['cat_slug'] = urlencode(I('post.cat_slug'));
         $cat_data['cat_father'] = I('post.cat_father');
 
-        if ($Cats->where(array('cat_id' => $id))->save($cat_data)) {
+        if ($CatsLogic->where(array('cat_id' => $id))->save($cat_data)) {
             $this->success('分类编辑成功', U('Admin/Posts/category'));
         } else {
             $this->error('分类编辑失败', U('Admin/Posts/category'));
@@ -680,11 +696,12 @@ class PostsController extends AdminBaseController
      */
     public function delCategory($id = -1)
     {
+        $CatsLogic=new CatsLogic();
 
         if ($id == 1) {
             $this->error("默认分类不可删除");
         } else {
-            if (D('Cats')->relation(true)->delete($id)) {
+            if ($CatsLogic->relation(true)->delete($id)) {
 
                 $data['cat_id'] = '1';
                 if (D('Post_cat')->where(array("cat_id" => $id))->find()) {
@@ -711,7 +728,7 @@ class PostsController extends AdminBaseController
         $TagsLogic = new TagsLogic();
 
 
-        $count = $TagsLogic->count(); // 查询满足要求的总记录数
+        $count = $TagsLogic->countAll(); // 查询满足要求的总记录数
 
         if ($count != 0) {
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
@@ -741,6 +758,9 @@ class PostsController extends AdminBaseController
      */
     public function addTagHandle()
     {
+        $TagsLogic = new TagsLogic();
+
+
         $tag_data['tag_name'] = I('post.tag_name');
         $tag_data['tag_slug'] = urlencode(I('post.tag_slug'));
 
@@ -748,7 +768,7 @@ class PostsController extends AdminBaseController
             $tag_data['tag_slug'] = urlencode($tag_data['tag_name']);
         }
 
-        if (D('Tags')->data($tag_data)->add()) {
+        if ($TagsLogic->data($tag_data)->add()) {
             $this->success('标签添加成功', U('Admin/Posts/tag'));
         } else {
 
@@ -763,10 +783,13 @@ class PostsController extends AdminBaseController
      */
     public function editTag($id)
     {
+        $TagsLogic = new TagsLogic();
+
+
         $action = '编辑';
         $this->assign('action', $action);
 
-        $tag = D('Tags')->find($id);
+        $tag = $TagsLogic->detail($id);
 
         $this->assign('tag', $tag);
         $this->display();
@@ -778,8 +801,8 @@ class PostsController extends AdminBaseController
      */
     public function editTagHandle($id)
     {
+        $TagsLogic = new TagsLogic();
 
-        $Tags = D('Tags');
         $tag_data['tag_name'] = I('post.tag_name');
         $tag_data['tag_slug'] = urlencode(I('post.tag_slug'));
 
@@ -787,7 +810,7 @@ class PostsController extends AdminBaseController
             $tag_data['tag_slug'] = urlencode($tag_data['tag_name']);
         }
 
-        if ($Tags->where(array('tag_id' => $id))->save($tag_data)) {
+        if ($TagsLogic->where(array('tag_id' => $id))->save($tag_data)) {
 
             $this->success('分类编辑成功', U('Admin/Posts/tag'));
         } else {
@@ -801,7 +824,9 @@ class PostsController extends AdminBaseController
      */
     public function delTag($id = -1)
     {
-        if (D('Tags')->relation(true)->delete($id)) {
+        $TagsLogic = new TagsLogic();
+
+        if ($TagsLogic->relation(true)->delete($id)) {
             $this->success('标签删除成功', U('Admin/Posts/tag'));
         } else {
             $this->success('标签删除失败:没有找到指定标签,可能它已经被删除', U('Admin/Posts/tag'));

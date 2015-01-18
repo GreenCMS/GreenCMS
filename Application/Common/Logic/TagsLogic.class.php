@@ -28,18 +28,40 @@ class TagsLogic extends RelationModel
      */
     public function detail($id, $relation = true)
     {
+        //todo add cache
+
         $map = array();
         $map['tag_id|tag_slug'] = urlencode($id);
         return D('Tags')->where($map)->relation($relation)->find();
     }
 
     /**
+     * @param array $info_with
+     * @param array $ids 需要限制的id
+     *
+     * @internal param string $type
+     * @return int
+     */
+    public function countAll($info_with = array(), $ids = array())
+    {
+        $info = $info_with;
+
+        if (!empty($ids)) $info['cat_id'] = array('in', $ids);
+
+        $count = $this->where($info)->count();
+        return $count;
+    }
+
+
+    /**
      * 输入
      * @param $info string tag_id|tag_slug
      * @param string $post_status
+     * @param int $limit
+     * @internal param int $num
      * @return mixed 找到的话返回post_id数组集合
      */
-    public function getPostsId($info, $post_status = 'publish')
+    public function getPostsId($info, $post_status = 'publish',$limit=99999999)
     {
 
         $tag_info ['tag_id'] = $info;
@@ -49,7 +71,10 @@ class TagsLogic extends RelationModel
             ->table(GreenCMS_DB_PREFIX .'post_tag as pt,'.GreenCMS_DB_PREFIX .'posts as ps' )
             ->field('ps.post_id')
             ->where("tag_id ='%s' and pt.post_id=ps.post_id and ps.post_status ='%s'", $tag_info ['tag_id'],$post_status )
-           ->select();
+            ->limit($limit)
+            ->order('ps.post_top desc,ps.post_date desc')
+            ->select();
+//        dump( D('Post_tag')->getlastsql());
 
         foreach ($res as $key => $value) {
             $ids[] = $res[$key]['post_id'];
@@ -69,16 +94,15 @@ class TagsLogic extends RelationModel
      * @internal param $cat_id 分类id
      * @return mixed
      */
-    public function getPostsByTag($tag_id, $num = 5, $start = -1)
+    public function getPostsByTag($tag_id, $num = 5, $start = 0)
     {
-        $tag = $this->getPostsId($tag_id);
-        if ($start != -1) {
-            for ($i = 0; $i < $start; $i++) {
-                unset($tag[sizeof($tag) - 1]);
-            }
+        $tag = $this->getPostsId($tag_id, 'publish',$start.','.$num);
+        if ($tag != null) {
+            $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', true, array(), $tag);
+            return $posts;
+        } else {
+            return false;
         }
-        $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', true, array(), $tag);
-        return $posts;
     }
 
     /**

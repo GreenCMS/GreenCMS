@@ -89,30 +89,6 @@ class PostsEvent
 
     }
 
-    /**
-     * 检查是否有Post
-     * @param $post_id
-     * @return bool
-     */
-    public function hasPost($post_id){
-        $post_detail = D('Posts', 'Logic')->relation(false)->where(array("post_id" => $post_id))->find();
-
-        if (empty($post_detail)) {
-           return false;
-        }else{
-            return $post_detail;
-        }
-    }
-
-    /**
-     * 修改文章状态
-     * @param $post_id
-     * @param $post_status
-     * @return mixed
-     */
-    public function changePostStatue($post_id,$post_status){
-        return D('Posts', 'Logic')->where(array('post_id' => $post_id))->setField(array("post_status"=>$post_status));
-    }
 
 
 

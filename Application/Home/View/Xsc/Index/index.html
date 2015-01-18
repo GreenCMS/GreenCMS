@@ -80,12 +80,14 @@
 <body>
 
 <php>
-    $xgxw = D('Cats', 'Logic')->getPostsByCat(64, 10);
+    $CatsLogic=new Common\Logic\CatsLogic();
 
-    $ggtz = D('Cats', 'Logic')->getPostsByCat(3, 10);
-    $xyfc = D('Cats', 'Logic')->getPostsByCat(24, 8);
-    $llqy = D('Cats', 'Logic')->getPostsByCat(53, 8);
-    $xjdx = D('Cats', 'Logic')->getPostsByCat(34, 8);
+    $xgxw = $CatsLogic->getPostsByCat(64, 10);
+
+    $ggtz = $CatsLogic->getPostsByCat(3, 10);
+    $xyfc = $CatsLogic->getPostsByCat(24, 8);
+    $llqy = $CatsLogic->getPostsByCat(53, 8);
+    $xjdx = $CatsLogic->getPostsByCat(34, 8);
 
     $slider = D('Tags', 'Logic')->getPostsByTag(3, 10);
 
