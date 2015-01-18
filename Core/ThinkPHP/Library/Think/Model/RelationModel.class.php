@@ -263,7 +263,7 @@ class RelationModel extends Model
                                 }
 
                             } else {
-                                echo "no cache cover";
+//                                echo "no cache cover";
 
                                 //todo improve performance
                                 $relationData = $this->query($sql);
