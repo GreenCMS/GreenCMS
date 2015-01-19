@@ -19,11 +19,17 @@ $config = array(
     'LOG_LEVEL' => get_opinion('LOG_LEVEL', false),
     'LOG_RECORD' =>  (bool)get_opinion('LOG_RECORD', false),
 
-    'DATA_CACHE_TYPE' => get_opinion('DATA_CACHE_TYPE', false, 'File'), // 数据缓存类型,支持:File||Memcache|Xcache
+    //'DATA_CACHE_TYPE' => get_opinion('DATA_CACHE_TYPE', false, 'File'), // 数据缓存类型,支持:File||Memcache|Xcache
+
+//    'DATA_CACHE_TYPE' => 'Memcache', // 数据缓存类型,支持:File||Memcache|Xcache
+//    'MEMCACHE_HOST'   =>  '127.0.0.1',
+//    'MEMCACHE_PORT'   =>  '11211',
+
+
     'DATA_CACHE_TIME' => get_opinion("DATA_CACHE_TIME", false, 10),
     'DEFAULT_FILTER'  => get_opinion('DEFAULT_FILTER', false, 'htmlspecialchars'),
     'SHOW_PAGE_TRACE' => get_opinion('SHOW_PAGE_TRACE', false, false),
-    'SHOW_CHROME_TRACE' => get_opinion('SHOW_CHROME_TRACE', false, false),
+//    'SHOW_CHROME_TRACE' => get_opinion('SHOW_CHROME_TRACE', false, false),
 
 
     'COOKIE_PREFIX' => get_opinion('COOKIE_PREFIX', false,'greencms_'),
