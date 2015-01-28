@@ -153,6 +153,21 @@ class PostsLogic extends RelationModel
 
 
     /**
+     * 修改为publish
+     * @param $post_id
+     * @return bool
+     */
+    public function restore($post_id)
+    {
+        if ($this->changePostStatue($post_id, 'publish'))
+            return true;
+        else
+            return false;
+
+    }
+
+
+    /**
      * 修改为unverified
      * @param $post_id
      * @return bool

@@ -70,6 +70,16 @@ class PostsController extends AdminBaseController
             }
             $this->success($num . '篇文章批量移至待审核列表' . $res_info);
         }
+        if (I('post.restoreAll') == 1) {
+            $post_ids = I('post.posts');
+            is_string($post_ids) == true ? $num = 0 : $num = count($post_ids);
+            $res_info = '';
+            foreach ($post_ids as $post_id) {
+                $res = $PostsLogic->restore($post_id);
+                if ($res == false) $res_info = $res_info . '文章ID：' . $post_id . '移至所有文章列表失败';
+            }
+            $this->success($num . '篇文章批量移至所有文章列表' . $res_info);
+        }
         if (I('post.postAdd') == 1) {
             $this->redirect('Admin/Posts/add');
         }
