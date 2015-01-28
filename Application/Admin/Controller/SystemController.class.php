@@ -429,8 +429,11 @@ class SystemController extends AdminBaseController
 
         $post_info = I('post.');
         $server_info = get_server_info();
+        $post_info['server_info'] = $server_info;
+        dump($post_info);
 
-        dump(array_merge($post_info, $server_info));
+        echo json_encode($post_info);
+
 
     }
 
