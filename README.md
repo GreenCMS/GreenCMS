@@ -58,8 +58,8 @@ QQ群: 123085170
  - others who give us help and advice  
 
 ## Milestone:
- - V2 2014.1-2015.1
- - v3 2015.1-on going
+ - V2.1 2014.1-2015.1
+ - v2.3 2015.1-on going
 
 ## ThinkPHP version
  - Use 3.2.1
@@ -228,9 +228,7 @@ __如果你需要升级ThinkPHP框架请注意上面文件区别__
 ####BAE(Baidu App Engine)平台不能使用的功能  
 > - 未测试
   
-2014/7/31
-  
-  
+
   
 ###数据库须知
 
@@ -245,6 +243,12 @@ __如果你需要升级ThinkPHP框架请注意上面文件区别__
 > - PDO模式可以访问，不能插入数据，(ThinkPHP)主键获取有问题
 > - pg_sql模式几乎不能使用，(ThinkPHP Pgsql支持不力)。。。。。。。。
 > - 有GreenCMS init SQL for PostgreSQL需要的可以索取
+
+
+
+2015/1/31
+
+
 
 
 

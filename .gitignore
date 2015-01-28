@@ -5,8 +5,6 @@
 /Data/Install/install.lock
 
 
-/db_config.php
-
 /Upload/Data
 /Upload/Img
 /Upload/.quarantine
@@ -21,12 +19,12 @@
 /Public/2011college
 #/Public/Xsc
 
+/Addons/Join2011
+/Addons/GreenRadius
+
 
 Temp
 .idea
 .tmb
 .quarantine
-
-/Addons/Join2011
-
-/Addons/GreenRadius
+/db_config.php
