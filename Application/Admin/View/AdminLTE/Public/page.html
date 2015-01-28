@@ -1,0 +1,12 @@
+<label>分页:</label>
+<select style="width:100px"
+        onchange="self.location.href=options[selectedIndex].value"
+        size="1"
+        name="mlink2">
+    <option value="__SELF__&page={:get_opinion('PAGER')}">选择分页</option>
+
+    <option value="__SELF__&page=5">5</option>
+    <option value="__SELF__&page=10">10</option>
+    <option value="__SELF__&page=20">20</option>
+    <option value="__SELF__&page=100">100</option>
+</select>

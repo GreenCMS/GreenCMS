@@ -60,30 +60,13 @@
 
 
                                 <div class="col-md-3 margin">
-
-                                    <label>分页:</label>
-                                    <select style="width:100px"
-                                            onchange="self.location.href=options[selectedIndex].value"
-                                            size="1"
-                                            name="mlink2">
-                                        <option value="__SELF__&page={:get_opinion('PAGER')}">选择分页</option>
-
-                                        <option value="__SELF__&page=5">5</option>
-                                        <option value="__SELF__&page=10">10</option>
-                                        <option value="__SELF__&page=20">20</option>
-                                        <option value="__SELF__&page=100">100</option>
-                                    </select>
-
-
+                                    <include file="Public:page"/>
                                 </div>
 
                                 <div class="col-md-3 margin">
-                                    <label>搜索:</label>
-
-                                    <input type="text" name="keyword" class=" large"
-                                           placeholder="输入关键字,回车搜索" value="{:I('get.keyword')}">
-                                    <input type="hidden" name="post_type" value="{$post_type}">
+                                    <include file="Public:search"/>
                                 </div>
+
 
 
 
