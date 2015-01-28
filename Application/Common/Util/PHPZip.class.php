@@ -17,7 +17,7 @@ class PHPZip
 {
     /**
      * @param $folder
-     * @param $zipFile
+     * @param \ZipArchive $zipFile
      * @param null $subfolder
      * @return bool
      */
@@ -30,6 +30,7 @@ class PHPZip
         if (is_file($folder)) {
             $zipFile->addFile($folder);
         }
+        dump($folder);
         // we check if $folder has a slash at its end, if not, we append one
         $folder .= end(str_split($folder)) == "/" ? "" : "/";
         $subfolder .= end(str_split($subfolder)) == "/" ? "" : "/";

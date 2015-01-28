@@ -21,6 +21,7 @@ class PostsLogic extends RelationModel
 {
 
     /**
+     * 获取文章详细
      * @param $id int 文章id或者其他识别符
      * @param bool $relation 是否关联其他信息
      * @param array $info_with 强制传入的判断条件
@@ -42,6 +43,11 @@ class PostsLogic extends RelationModel
         return $post_res;
     }
 
+    /**
+     * 判断文章是否存在
+     * @param $id int 文章id或者其他识别符
+     * @return mixed 如果找到返回true
+     */
     public function has($id)
     {
         $info['post_id|post_name'] = urlencode($id);
@@ -79,6 +85,7 @@ class PostsLogic extends RelationModel
     }
 
     /**
+     * 统计数量
      * @param string $type
      * @param array $info_with
      * @param array $ids 需要限制的id
@@ -100,6 +107,7 @@ class PostsLogic extends RelationModel
 
 
     /**
+     * 删除文章
      * @param $id int 需要预删除的id
      * @param string $relation 是否删除关联(脑残才不删除关联呢。。。。)
      *
@@ -118,8 +126,8 @@ class PostsLogic extends RelationModel
     }
 
     /**
+     * 预删除文章
      * @param $post_id int 需要预删除的id
-     *
      * @return bool 是否删除成功
      */
     public function preDel($post_id)
@@ -142,19 +150,7 @@ class PostsLogic extends RelationModel
         return $this->where(array('post_id' => $post_id))->setField(array("post_status" => $post_status));
     }
 
-    /**
-     * 修改为unverify
-     * @param $id
-     * @return bool
-     */
-//    public function unverify($id)
-//    {
-//        if ($this->changePostStatue($id,'publish'))
-//            return true;
-//        else
-//            return false;
-//
-//    }
+
 
     /**
      * 修改为unverified
@@ -171,8 +167,8 @@ class PostsLogic extends RelationModel
     }
 
     /**
+     * 文章计数+1
      * @param $post_id int 需要计数的id
-     *
      * @return bool 返回是否成功
      */
     public function viewInc($post_id)
@@ -185,6 +181,11 @@ class PostsLogic extends RelationModel
             return false;
     }
 
+    /**
+     * 清空指定状态文章
+     * @param $post_status
+     * @return mixed
+     */
     public function emptyPostHandleByStatus($post_status)
     {
         return $this->where(array('post_status' => $post_status))->relation(true)->delete();

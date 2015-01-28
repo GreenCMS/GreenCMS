@@ -154,8 +154,9 @@
                                         <td>
 
                                             <a class="btn bg-olive" href="{:U('Admin/Custom/themeInstallHandle', array('theme_name' => $vo['name']))}">安装</a>
+                                            &nbsp;&nbsp;<a class="btn bg-blue" href="{:U('Admin/Custom/themeExportHandle', array('theme_name' => $vo['name']))}">导出</a>
 
-                                            <!--<a class="btn btn-info" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
+                                             <!--<a class="btn btn-info" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
                                             <a class="btn btn-danger"  onclick="javascript:return a_confirm()" href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
                                         </td>
 
