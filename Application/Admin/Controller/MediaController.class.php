@@ -37,7 +37,7 @@ class MediaController extends AdminBaseController
     public function superFileAjaxSize()
     {
         $path = I('get.path', WEB_ROOT, 'base64_decode');
-       return File::realSize($path);
+        return File::realSize($path);
     }
 
 
@@ -52,18 +52,17 @@ class MediaController extends AdminBaseController
     public function superFileEditText()
     {
         $path = I('get.path', WEB_ROOT, 'base64_decode');
-        $file=File::readFile($path);
+        $file = File::readFile($path);
 
 
         $this->assign('current_path', $path);
 
         $this->assign('father_path', U("Admin/Media/superFile",
-            array("path"=>base64_encode(dirname($path))        )));
+            array("path" => base64_encode(dirname($path)))));
 
-        $this->assign("file",$file);
+        $this->assign("file", $file);
         $this->display("superFileEdit");
     }
-
 
 
     public function superFile()
@@ -72,11 +71,10 @@ class MediaController extends AdminBaseController
         $this->assign('action', '文件管理');
 
 
-
         $path = I('get.path', WEB_ROOT, 'base64_decode');
 
-        $path=str_replace('//','/',$path);
-        $path=str_replace('\\','/',$path);
+        $path = str_replace('//', '/', $path);
+        $path = str_replace('\\', '/', $path);
 
 
 //        $paths=explode('/',$path);
@@ -88,9 +86,9 @@ class MediaController extends AdminBaseController
 
         $all = File::scanDir($path, true);
         $folders = File::scanDir($path, false);
-        $files =array();
-        foreach($all as $t){
-            if(!in_array($t,$folders)){
+        $files = array();
+        foreach ($all as $t) {
+            if (!in_array($t, $folders)) {
                 array_push($files, $t);
             }
         }
@@ -114,37 +112,35 @@ class MediaController extends AdminBaseController
 //        }
 
 
-
-
         foreach ($folders as $value) {
-            $path_full=$path .'/'. $value;
+            $path_full = $path . '/' . $value;
 
             $root_info_temp = array();
             $root_info_temp['name'] = $value;
             $root_info_temp['path'] = $path_full;
             $root_info_temp['link'] = U("Admin/Media/superFile",
-                array("path"=>base64_encode($path_full)));
+                array("path" => base64_encode($path_full)));
             $root_info_temp['size'] = "点击显示大小";
 
-            $root_info_temp['mtime'] =  File::filemtime($path_full,true);
+            $root_info_temp['mtime'] = File::filemtime($path_full, true);
 
             array_push($root_info, $root_info_temp);
         }
 
         foreach ($files as $value) {
-            $path_full=$path.'/'. $value;
+            $path_full = $path . '/' . $value;
 
-            $path_full=str_replace('//','/',$path_full);
+            $path_full = str_replace('//', '/', $path_full);
 
             $root_info_temp = array();
             $root_info_temp['name'] = $value;
             $root_info_temp['path'] = $path_full;
             $root_info_temp['link'] = U("Admin/Media/superFileEdit",
-                array("path"=>base64_encode($path_full)));
+                array("path" => base64_encode($path_full)));
 
             $root_info_temp['size'] = File::realSize($path_full);
 
-            $root_info_temp['mtime'] =  File::filemtime($path_full,true);
+            $root_info_temp['mtime'] = File::filemtime($path_full, true);
 
 
             array_push($root_info, $root_info_temp);
@@ -152,7 +148,7 @@ class MediaController extends AdminBaseController
 
         // dump($root_info);
         $this->assign('father_path', U("Admin/Media/superFile",
-            array("path"=>base64_encode(realpath($path  .'/../'))        )));
+            array("path" => base64_encode(realpath($path . '/../')))));
         $this->assign('current_path', $path);
         $this->assign('root_info', $root_info);
 

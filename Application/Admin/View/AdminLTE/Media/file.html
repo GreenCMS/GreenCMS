@@ -7,7 +7,6 @@
     <include file="Public:head"/>
 
 
-
     <style>
 
 
@@ -44,19 +43,14 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
+                        <!-- Element where elFinder will be created (REQUIRED) -->
+                        <div style=" height: 600px;" id="elfinder"></div>
 
-                            <!-- Element where elFinder will be created (REQUIRED) -->
-                            <div style=" height: 600px;" id="elfinder"></div>
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -99,20 +93,19 @@
     });
 
 
-
-    $('#elfinder').mousedown(function(e){
-        if(3 == e.which){
+    $('#elfinder').mousedown(function (e) {
+        if (3 == e.which) {
             //alert('这 是右键单击事件');
 
 //            alert(event.pageX);
 //            alert(event.pageY);
 
-         //   console.log("X:"+event.pageX+" Y:"+event.pageY);
+            //   console.log("X:"+event.pageX+" Y:"+event.pageY);
 
-            $(".elfinder-contextmenu").css("left",event.pageX+"px","top",event.pageY+"px");
-          //  $(".elfinder-contextmenu").css("top",event.pageY+"px");
+            $(".elfinder-contextmenu").css("left", event.pageX + "px", "top", event.pageY + "px");
+            //  $(".elfinder-contextmenu").css("top",event.pageY+"px");
 
-        }else if(1 == e.which){
+        } else if (1 == e.which) {
             //alert('这 是左键单击事件');
 
         }

@@ -1500,7 +1500,7 @@ str;
 
         if ($res == true) {
             PHPZip::folderToZip($plugin_path, $zip);
-             $zip->close();
+            $zip->close();
         }
 
 
@@ -1512,7 +1512,6 @@ str;
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header("Content-Length: " . filesize($file_path));
         readfile($file_path);
-
 
 
     }

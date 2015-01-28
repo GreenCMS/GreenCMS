@@ -36,62 +36,58 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <form method="post" action="{:U('Admin/Media/backupFileHandle')}">
-                                <table
-                                        class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th style="width: 8px;">选择</th>
-                                        <th>文件夹名</th>
-                                        <th class="hidden-240">路径</th>
+                        <form method="post" action="{:U('Admin/Media/backupFileHandle')}">
+                            <table
+                                    class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 8px;">选择</th>
+                                    <th>文件夹名</th>
+                                    <th class="hidden-240">路径</th>
 
-                                        <th class="">文件夹大小</th>
+                                    <th class="">文件夹大小</th>
+                                </tr>
+                                </thead>
+                                <tbody id="cache_table">
+                                <volist name="root_info" id="dir">
+                                    <tr align="center">
+                                        <td><input type="checkbox" class='groupclass' name="file[]"
+                                                   value="{$dir.name}"/>
+                                        </td>
+                                        <td align="left">{$dir.name}</td>
+                                        <th class="hidden-240">{$dir.path}</th>
+
+                                        <td>{$dir.size}</td>
                                     </tr>
-                                    </thead>
-                                    <tbody id="cache_table">
-                                    <volist name="root_info" id="dir">
-                                        <tr align="center">
-                                            <td><input type="checkbox" class='groupclass' name="file[]"
-                                                       value="{$dir.name}"/>
-                                            </td>
-                                            <td align="left">{$dir.name}</td>
-                                            <th class="hidden-240">{$dir.path}</th>
+                                </volist>
+                                </tbody>
 
-                                            <td>{$dir.size}</td>
-                                        </tr>
-                                    </volist>
-                                    </tbody>
+                            </table>
+                            <div class="form-actions margin ">
+                                <div class="row margin">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="m-icon-swapright m-icon-white"></i>开始备份
+                                    </button>
 
-                                </table>
-                                <div class="form-actions margin " >
-                                    <div class="row margin">
-                                         <button type="submit" class="btn btn-success">
-                                            <i class="m-icon-swapright m-icon-white"></i>开始备份
-                                        </button>
+                                    <button type="button" class="btn btn-primary" id="checkall">全选</button>
 
-                                        <button type="button" class="btn btn-primary" id="checkall">全选</button>
-
-                                        <button type="button" class="btn btn-danger" id="check_cancel">取消</button>
+                                    <button type="button" class="btn btn-danger" id="check_cancel">取消</button>
 
 
                                     <!--<div class="span2">-->
                                     <!--<button type="button" class="btn btn-info" id="check_reverse">反选</button>-->
                                     <!--</div>-->
                                 </div>
-                                </div>
+                            </div>
 
 
-                            </form>
+                        </form>
 
-                        </div>
                     </div>
                 </div>
             </div>

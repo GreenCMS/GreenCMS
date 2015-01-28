@@ -60,6 +60,17 @@ class PostsController extends AdminBaseController
             }
             $this->success($num . '篇文章批量删除到回收站成功' . $res_info);
         }
+        if (I('post.emptyAll') == 1) {
+            $post_ids = I('post.posts');
+            is_string($post_ids) == true ? $num = 0 : $num = count($post_ids);
+
+            $res_info = '';
+            foreach ($post_ids as $post_id) {
+                $res = $PostsLogic->del($post_id);
+                if ($res == false) $res_info = $res_info . ' 文章ID：' . $post_id . '批量彻底删除失败';
+            }
+            $this->success($num . '篇文章批量彻底删除成功' . $res_info);
+        }
         if (I('post.verifyAll') == 1) {
             $post_ids = I('post.posts');
             is_string($post_ids) == true ? $num = 0 : $num = count($post_ids);

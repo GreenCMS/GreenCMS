@@ -15,8 +15,8 @@
 
 
     <style>
-        .CodeMirror{
-            height:100%
+        .CodeMirror {
+            height: 100%
 
         }
     </style>
@@ -59,11 +59,11 @@
 
                             当前路径: {$current_path}
                             <a href="{$father_path}">返回</a>
-                            <div id="preview_window"  >
-                                <textarea id="code" >{$file}</textarea>
+
+                            <div id="preview_window">
+                                <textarea id="code">{$file}</textarea>
 
                             </div>
-
 
 
                         </div>
@@ -83,8 +83,8 @@
 
 
 <script type="text/javascript">
-    function bindShow(radio_bind, selectors){
-        $(radio_bind).click(function(){
+    function bindShow(radio_bind, selectors) {
+        $(radio_bind).click(function () {
             $(selectors).toggleClass('hidden');
         })
     }
@@ -93,24 +93,24 @@
     $(window).bind('scrollstop');
 
 
-//    //配置的动态
-//    bindShow('#has_config','.has_config');
-//    bindShow('#has_adminlist','.has_adminlist');
+    //    //配置的动态
+    //    bindShow('#has_config','.has_config');
+    //    bindShow('#has_adminlist','.has_adminlist');
 
     var codemirror_option = {
-        lineNumbers   :true,
+        lineNumbers: true,
         styleActiveLine: true,
-        matchBrackets :true,
-        mode          :"application/x-httpd-php",
-        indentUnit    :4,
-        gutter        :true,
-        fixedGutter   :true,
-        indentWithTabs:true,
-        readOnly      :false,
-        lineWrapping  :true,
+        matchBrackets: true,
+        mode: "application/x-httpd-php",
+        indentUnit: 4,
+        gutter: true,
+        fixedGutter: true,
+        indentWithTabs: true,
+        readOnly: false,
+        lineWrapping: true,
 //        height        : "900px",
-        enterMode     :"keep",
-        tabMode       :"shift",
+        enterMode: "keep",
+        tabMode: "shift",
         theme: "solarized dark"
     };
 

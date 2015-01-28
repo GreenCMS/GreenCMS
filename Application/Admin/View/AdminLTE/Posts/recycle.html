@@ -46,13 +46,9 @@
 
                                 <div class="col-md-5">
                                     <div class="btn-group">
-
-                                        <a href="{:U('Admin/Posts/emptyRecycleHandle')}"
-                                           onclick="javascript:return a_confirm()">
-                                            <button type="submit" class="btn btn-danger" name="delAll" value='1'> 清空回收站
+                                            <button type="submit" class="btn btn-danger" name="emptyAll" value='1'> 清空回收站
                                             </button>
-                                        </a>
-                                    </div>
+                                     </div>
 
 
                                 </div>
@@ -69,7 +65,6 @@
 
 
 
-                            </div>
 
                             <div class="clearfix">
 
@@ -101,7 +96,7 @@
                                                            name="posts[]"/>
                                                 </td>
                                                 <td><a
-                                                        href="{:U('Admin/Posts/posts', array('id' => $v[post_id]))}"
+                                                        href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}"
                                                         title="{$v.post_title}">{$v.post_title}</a></td>
                                                 <td><a
                                                         href="{:U('Admin/access/edituser', array('aid' => $v['post_user']['user_id']))}">{$v.post_user.user_nicename}</a>
@@ -144,6 +139,7 @@
 
                             </form>
 
+                            </div>
 
                         </div>
 
