@@ -2,25 +2,31 @@
 /Data/Cache/
 /Data/DBbackup/
 /Data/Log
-/Data/Install/install.lock
+/Data/Install.lock
 
 
-/Upload/Data
+/Upload/File
+/Upload/Links
+/Upload/remote
 /Upload/Img
 /Upload/.quarantine
 /Upload/.tmb
 
-/Addons/joinUs
+
 /Application/Zel
 
 /Application/Weixin/View/Metronic
 /Application/Home/View/2011college
-#/Application/Home/View/Xsc
 /Public/2011college
+
+
+#/Application/Home/View/Xsc
 #/Public/Xsc
 
 /Addons/Join2011
 /Addons/GreenRadius
+/Addons/Vpngreenradius
+/Addons/Joinus
 
 
 Temp
