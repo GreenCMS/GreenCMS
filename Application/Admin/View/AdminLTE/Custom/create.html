@@ -6,11 +6,11 @@
 
     <include file="Public:head"/>
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/share/jquery.confirm/jquery.confirm/jquery.confirm.css" />
-    <script src="__PUBLIC__/share/codemirror-4.0/lib/codemirror.js"></script>
-    <link rel="stylesheet" href="__PUBLIC__/share/codemirror-4.0/lib/codemirror.css">
-    <link rel="stylesheet" href="__PUBLIC__/share/codemirror-4.0/theme/solarized.css">
-    <script src="__PUBLIC__/share/codemirror-4.0/mode/javascript/javascript.js"></script>
-    <script src="__PUBLIC__/share/codemirror-4.0/addon/edit/matchbrackets.js"></script>
+    <!--<script src="__PUBLIC__/share/codemirror-4.0/lib/codemirror.js"></script>-->
+    <!--<link rel="stylesheet" href="__PUBLIC__/share/codemirror-4.0/lib/codemirror.css">-->
+    <!--<link rel="stylesheet" href="__PUBLIC__/share/codemirror-4.0/theme/solarized.css">-->
+    <!--<script src="__PUBLIC__/share/codemirror-4.0/mode/javascript/javascript.js"></script>-->
+    <!--<script src="__PUBLIC__/share/codemirror-4.0/addon/edit/matchbrackets.js"></script>-->
 
 </head>
 <body class="skin-blue">
@@ -216,37 +216,37 @@
     bindShow('#has_config','.has_config');
     bindShow('#has_adminlist','.has_adminlist');
 
-    var codemirror_option = {
-        lineNumbers   :true,
-        styleActiveLine: true,
-        matchBrackets :true,
-        mode          :"application/x-httpd-php",
-        indentUnit    :4,
-        gutter        :true,
-        fixedGutter   :true,
-        indentWithTabs:true,
-        readOnly      :true,
-        lineWrapping  :true,
-        height        :500,
-        enterMode     :"keep",
-        tabMode       :"shift",
-        theme: "solarized dark"
-    };
-    var preview_window = $("#preview_window").find("textarea");
-    var editor = CodeMirror.fromTextArea(preview_window[0], codemirror_option);
-
-    $('#preview').click(function(){
-        var preview_url = '{:U("Admin/Custom/preview")}';
-        console.log($('#form').serialize());
-        $.post(preview_url, $('#form').serialize(),function(data){
-            $("#preview_window").fadeIn();
-            editor.setValue(data);
-            $("#reset").fadeIn();
-            $("#preview").fadeOut();
-            $("html,body").animate({scrollTop:$("#preview_window").offset().top},1000);
-        });
-        return false;
-    });
+//    var codemirror_option = {
+//        lineNumbers   :true,
+//        styleActiveLine: true,
+//        matchBrackets :true,
+//        mode          :"application/x-httpd-php",
+//        indentUnit    :4,
+//        gutter        :true,
+//        fixedGutter   :true,
+//        indentWithTabs:true,
+//        readOnly      :true,
+//        lineWrapping  :true,
+//        height        :500,
+//        enterMode     :"keep",
+//        tabMode       :"shift",
+//        theme: "solarized dark"
+//    };
+//    var preview_window = $("#preview_window").find("textarea");
+//    var editor = CodeMirror.fromTextArea(preview_window[0], codemirror_option);
+//
+//    $('#preview').click(function(){
+//        var preview_url = '{:U("Admin/Custom/preview")}';
+//        console.log($('#form').serialize());
+//        $.post(preview_url, $('#form').serialize(),function(data){
+//            $("#preview_window").fadeIn();
+//            editor.setValue(data);
+//            $("#reset").fadeIn();
+//            $("#preview").fadeOut();
+//            $("html,body").animate({scrollTop:$("#preview_window").offset().top},1000);
+//        });
+//        return false;
+//    });
     $('#reset').click(function(){
         $("#preview_window").fadeOut();
         $("#reset").fadeOut();
