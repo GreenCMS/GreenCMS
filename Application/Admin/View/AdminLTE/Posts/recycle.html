@@ -38,17 +38,17 @@
                 <div class="col-md-12">
 
 
-                        <!-- /.box-header -->
-                        <div class="box-body">
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
-                            <div class="row">
-                                <form method="POST" action="{:U('Admin/Posts/indexHandle')}" id="posts">
+                        <div class="row">
+                            <form method="POST" action="{:U('Admin/Posts/indexHandle')}" id="posts">
 
                                 <div class="col-md-5">
                                     <div class="btn-group">
-                                            <button type="submit" class="btn btn-danger" name="emptyAll" value='1'> 清空回收站
-                                            </button>
-                                     </div>
+                                        <button type="submit" class="btn btn-danger" name="emptyAll" value='1'> 清空回收站
+                                        </button>
+                                    </div>
 
 
                                 </div>
@@ -63,12 +63,9 @@
                                 </div>
 
 
+                                <div class="clearfix">
 
-
-
-                            <div class="clearfix">
-
-                            </div>
+                                </div>
 
                                 <div class="portlet-body">
 
@@ -107,15 +104,15 @@
                                                     分类:
                                                     <volist name="v['post_cat']" id="v_pcs" empty="无分类" offset="0"
                                                             length='5'>
-                                                        <a class="btn btn-default btn-sm"
-                                                           href="{:U('Admin/Posts/category', array('id' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
+                                                        <a
+                                                                href="{:U('Admin/Posts/category', array('id' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
                                                     </volist>
 
                                                     标签:
                                                     <volist name="v['post_tag']" id="v_pts" empty="无标签" offset="0"
                                                             length='5'>
-                                                        <a class="btn btn-default btn-sm"
-                                                           href="{:U('Admin/Posts/tag', array('id' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
+                                                        <a
+                                                                href="{:U('Admin/Posts/tag', array('id' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
                                                     </volist>
 
                                                 </td>
@@ -139,9 +136,9 @@
 
                             </form>
 
-                            </div>
-
                         </div>
+
+                    </div>
 
                 </div>
             </div>

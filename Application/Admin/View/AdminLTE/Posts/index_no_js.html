@@ -111,14 +111,14 @@
                                                 分类:
                                                 <volist name="v['post_cat']" id="v_pcs" offset="0" length="5"
                                                         empty="无分类">
-                                                    <a class="btn btn-default btn-sm"
-                                                       href="{:U('Admin/Posts/index', array('cat' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
+                                                    <a
+                                                            href="{:U('Admin/Posts/index', array('cat' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
                                                 </volist>
                                                 标签:
                                                 <volist name="v['post_tag']" id="v_pts" offset="0" length="5"
                                                         empty="无标签">
-                                                    <a class="btn btn-default btn-sm"
-                                                       href="{:U('Admin/Posts/index', array('tag' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
+                                                    <a
+                                                            href="{:U('Admin/Posts/index', array('tag' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
                                                 </volist>
                                             </td>
                                             <td>{:getTimestamp($v['post_date'],'Y-m-d H:i') }</td>
