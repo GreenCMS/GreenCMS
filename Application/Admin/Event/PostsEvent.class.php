@@ -23,7 +23,7 @@ class PostsEvent
     public function getTplList()
     {
 
-        if(S("post_tpl")){
+        if (S("post_tpl")) {
             return S("post_tpl");
         }
 
@@ -36,7 +36,7 @@ class PostsEvent
             $tpl_type_list = get_opinion('post_tpl');
         }
 
-        S("post_tpl",$tpl_type_list,600);
+        S("post_tpl", $tpl_type_list, 600);
 
         return $tpl_type_list;
     }
@@ -63,12 +63,16 @@ class PostsEvent
 
     }
 
+    /**
+     * 插入空文章
+     * @return mixed
+     */
     public function insertEmpty()
     {
 
-        $post_data['post_type'] =  'single';
+        $post_data['post_type'] = 'single';
         $post_data['post_title'] = 'title';
-        $post_data['post_content'] =  'content';
+        $post_data['post_content'] = 'content';
         $post_data['post_template'] = 'single';
         $post_data['post_name'] = 'title';
 
@@ -76,7 +80,7 @@ class PostsEvent
 
 
         $post_data['post_date'] = date("Y-m-d H:m:s", time());
-        $post_data['post_modified'] =date("Y-m-d H:m:s", time());
+        $post_data['post_modified'] = date("Y-m-d H:m:s", time());
 
         $post_data['user_id'] = $_SESSION [get_opinion('USER_AUTH_KEY')];
 
@@ -88,36 +92,6 @@ class PostsEvent
         return $post_id;
 
     }
-
-    /**
-     * 检查是否有Post
-     * @param $post_id
-     * @return bool
-     */
-    public function hasPost($post_id){
-        $post_detail = D('Posts', 'Logic')->relation(false)->where(array("post_id" => $post_id))->find();
-
-        if (empty($post_detail)) {
-           return false;
-        }else{
-            return $post_detail;
-        }
-    }
-
-    /**
-     * 修改文章状态
-     * @param $post_id
-     * @param $post_status
-     * @return mixed
-     */
-    public function changePostStatue($post_id,$post_status){
-        return D('Posts', 'Logic')->where(array('post_id' => $post_id))->setField(array("post_status"=>$post_status));
-    }
-
-
-
-
-
 
 
 }

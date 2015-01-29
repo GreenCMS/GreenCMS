@@ -17,7 +17,7 @@ class PHPZip
 {
     /**
      * @param $folder
-     * @param $zipFile
+     * @param \ZipArchive $zipFile
      * @param null $subfolder
      * @return bool
      */

@@ -76,18 +76,30 @@
 
     </style>
 
+
 </head>
 <body>
+{:hook('userHeader', "")}
+
+
+<?php
+
+
+?>
 
 <php>
-    $xgxw = D('Cats', 'Logic')->getPostsByCat(64, 10);
+    $CatsLogic=new Common\Logic\CatsLogic();
 
-    $ggtz = D('Cats', 'Logic')->getPostsByCat(3, 10);
-    $xyfc = D('Cats', 'Logic')->getPostsByCat(24, 8);
-    $llqy = D('Cats', 'Logic')->getPostsByCat(53, 8);
-    $xjdx = D('Cats', 'Logic')->getPostsByCat(34, 8);
+    $xgxw = $CatsLogic->getPostsByCat(64, 10 ,0 ,false );
 
-    $slider = D('Tags', 'Logic')->getPostsByTag(3, 10);
+
+    $ggtz = $CatsLogic->getPostsByCat(3, 10  ,0 ,false );
+    $xyfc = $CatsLogic->getPostsByCat(24, 8 ,0 ,false  );
+
+    $llqy = $CatsLogic->getPostsByCat(53, 8 ,0 ,false );
+    $xjdx = $CatsLogic->getPostsByCat(34, 8 ,0 ,false );
+
+    $slider = D('Tags', 'Logic')->getPostsByTag(3, 10 ,0 ,false  );
 
 
 </php>
@@ -99,7 +111,7 @@
 
     <div class="head_box" style="margin-left: 1%;width: 71%;">
 
-        <div class="header"><a href="{:getCatURLByID(64)}"
+        <div class="header"><a href="{:get_cat_url(64)}"
                                class="more">更多</a><span>校园文化</span></div>
         <div class="body">
 
@@ -122,7 +134,7 @@
 
 
                         <li>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
                                                     <span>
@@ -145,7 +157,7 @@
 
     <div class="head_box" style="margin-left: 1%;width: 25%;">
 
-        <div class="header"><a href="{:getCatURLByID(3)}"
+        <div class="header"><a href="{:get_cat_url(3)}"
                                class="more">更多</a><span>公告通知</span></div>
         <div class="body">
 
@@ -159,7 +171,7 @@
 
 
                         <li>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,11,"UTF-8"}</a>
                             &nbsp;&nbsp;
@@ -188,7 +200,7 @@
 
     <div class="left_half">
         <div class="header" style="border-top: solid 7px #3686be;">
-            <a href="{:getCatURLByID(3)}">更多+</a>
+            <a href="{:get_cat_url(3)}">更多+</a>
 
             <div class="header_info">新闻栏目</div>
         </div>
@@ -226,7 +238,7 @@
 
             <span>
               {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
 
@@ -244,7 +256,7 @@
 
     <div class="left_half">
         <div class="header" style="border-top: solid 7px #008287;">
-            <a href="{:getCatURLByID(10)}">更多+</a>
+            <a href="{:get_cat_url(10)}">更多+</a>
 
             <div class="header_info">新闻栏目</div>
         </div>
@@ -276,7 +288,7 @@
                         <else/>
                         <li>
                             <span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
                         </li>
@@ -292,7 +304,7 @@
 
     <div class="left_half">
         <div class="header" style="border-top: solid 7px #F4B300;">
-            <a href="{:getCatURLByID(10)}">更多+</a>
+            <a href="{:get_cat_url(10)}">更多+</a>
 
             <div class="header_info">新闻栏目</div>
         </div>
@@ -325,7 +337,7 @@
                         <li>
             <span>
               {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
                                 <i>·&nbsp;&nbsp;</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
                         </li>
@@ -349,14 +361,14 @@
     <!--background: url('http://xgw.njut.asia/images/logo.jpg') no-repeat;background-size:100% 100%;-->
 
     <!--<div class="box" style="position: absolute;left: 60%;margin-top: 30px;">-->
-        <!--<span class="text1">一切为了学生</span>-->
-        <!--<span class="text2">为了一切学生</span>-->
-        <!--<span class="text3">为了学生一切</span>-->
+    <!--<span class="text1">一切为了学生</span>-->
+    <!--<span class="text2">为了一切学生</span>-->
+    <!--<span class="text3">为了学生一切</span>-->
     <!--</div>-->
     <!--<div class="box" style="position: absolute;left: 50%;margin-top: 90px;">-->
-        <!--<span class="text4">一切为了学生</span>-->
-        <!--<span class="text5">为了一切学生</span>-->
-        <!--<span class="text6">为了学生一切</span>-->
+    <!--<span class="text4">一切为了学生</span>-->
+    <!--<span class="text5">为了一切学生</span>-->
+    <!--<span class="text6">为了学生一切</span>-->
     <!--</div>-->
 
 
@@ -431,202 +443,202 @@
 
 <div class="center_middle" style="">
 
-<div class="left_half" style="width: 47%;padding-bottom: 30px">
-    <div class="header" style="border-top: solid 7px #1FAEFF;">
-        <a href="{:getCatURLByID(3)}">更多+</a>
+    <div class="left_half" style="width: 47%;padding-bottom: 30px">
+        <div class="header" style="border-top: solid 7px #1FAEFF;">
+            <a href="{:get_cat_url(3)}">更多+</a>
 
-        <div class="header_info">新闻栏目</div>
+            <div class="header_info">新闻栏目</div>
+        </div>
+        <div class="body">
+
+
+            <div class="wrap">
+                <div class="body-top">
+                    <div class="bt-imgbox">
+                        <img
+                                src="{:get_post_img($xyfc[0])}"
+                                class="bt-img">
+                    </div>
+                    <div class="bt-text">
+                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+
+                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+
+
+            <!--<table border="0" cellspacing="0" cellpadding="0"-->
+            <!--style="margin:8px 10px;border-bottom:1px dashed #686868;">-->
+            <!--<tbody>-->
+            <!--<tr>-->
+            <!--<td width="110" style="padding-bottom:8px;"><img-->
+            <!--src="{:get_post_img($xyfc[0])}"-->
+            <!--border="0" width="97"-->
+            <!--height="64"></td>-->
+            <!--<td valign="top" style="padding-bottom:8px;">-->
+            <!--<p class="bc14"><a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
+            <!--{$xyfc[0]['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}-->
+            <!--</a></p>-->
+
+            <!--<p class="be12">　　-->
+            <!--<a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
+            <!--{$xyfc[0]['post_content']|strip_tags|mb_substr=0,100,"UTF-8"}-->
+            <!--</a>-->
+            <!--</p></td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+            <!--</table>-->
+
+
+            <div class="wrap">
+                <div class="body-top">
+                    <div class="bt-imgbox">
+                        <img
+                                src="{:get_post_img($xyfc[0])}"
+                                class="bt-img">
+                    </div>
+                    <div class="bt-text">
+                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+
+                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+
+
+            <div class="wrap">
+                <div class="body-top">
+                    <div class="bt-imgbox">
+                        <img
+                                src="{:get_post_img($xyfc[0])}"
+                                class="bt-img">
+                    </div>
+                    <div class="bt-text">
+                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+
+                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+
+
+            <!--<ul>-->
+
+
+            <!--<volist name="ggtz"  id="v" key="k">-->
+            <!--<li>-->
+            <!--<span>-->
+            <!--{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
+            <!--<a href="{$v|get_post_url}" title="{$v['post_title']}">-->
+            <!--<i>·&nbsp;&nbsp;</i>-->
+            <!--{$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>-->
+
+            <!--</li>-->
+            <!--</volist>-->
+
+
+            <!--</ul>-->
+        </div>
     </div>
-    <div class="body">
 
 
-        <div class="wrap">
-            <div class="body-top">
-                <div class="bt-imgbox">
-                    <img
-                            src="{:get_post_img($xyfc[0])}"
-                            class="bt-img">
-                </div>
-                <div class="bt-text">
-                    <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+    <div class="left_half" style="width: 25%;padding-bottom: 0px" id="c4_right_2">
+        <div class="header" style="border-top: solid 7px #78BA00;">
+            <a href="{:get_cat_url(10)}">更多+</a>
 
-                    <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
-                </div>
-                <div class="clr"></div>
+            <div class="header_info">专题链接</div>
+        </div>
+        <div class="body" style="">
+
+
+            <div style="text-align: center;padding-top: 20px;padding-bottom: 20px">
+
+
+                <ul>
+
+                    <li><a href="#"> 奥蓝系统管理版</a></li>
+
+                    <li><a href="#"> 奥蓝系统学生版</a></li>
+
+                    <li><a href="#"> 下载专区</a></li>
+                    <li><a href="#"> 学生手册</a></li>
+                    <li><a href="#"> 入学指南</a></li>
+
+
+                </ul>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="left_half" style="width: 21%;">
+        <div class="header" style="border-top: solid 7px #252525;">
+            <a href="{:get_cat_url(10)}">更多+</a>
+
+            <div class="header_info">服务链接</div>
+        </div>
+        <div class="body" style="padding-bottom: 30px">
+
+
+            <div style="text-align: center;" id="links">
+
+
+                <ul>
+
+                    <li><a href="#"> 测试链接</a></li>
+                    <li><a href="#"> 测试链接</a></li>
+                    <li><a href="#"> 测试链接</a></li>
+                    <li><a href="#"> 测试链接</a></li>
+
+                    <li><a href="#"> 测试链接</a></li>
+
+                    <li><a href="#"> 奥蓝系统管理版</a></li>
+
+                    <li><a href="#"> 奥蓝系统学生版</a></li>
+
+                    <li><a href="#"> 下载专区</a></li>
+                    <li><a href="#"> 学生手册</a></li>
+                    <li><a href="#"> 入学指南</a></li>
+
+
+                </ul>
+
+            </div>
+
+            <div style="text-align: center">
+                <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                        size="1"
+                        name="mlink">
+                    <option>---|校内链接|---</option>
+
+
+                    <optionfriendlist link_group_id="1"></optionfriendlist>
+
+
+                </select>
+
+                <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
+                        size="1"
+                        name="mlink2">
+                    <option>---|校外链接|---</option>
+
+
+                    <optionfriendlist link_group_id="3"></optionfriendlist>
+
+
+                </select>
+
             </div>
         </div>
-
-
-        <!--<table border="0" cellspacing="0" cellpadding="0"-->
-        <!--style="margin:8px 10px;border-bottom:1px dashed #686868;">-->
-        <!--<tbody>-->
-        <!--<tr>-->
-        <!--<td width="110" style="padding-bottom:8px;"><img-->
-        <!--src="{:get_post_img($xyfc[0])}"-->
-        <!--border="0" width="97"-->
-        <!--height="64"></td>-->
-        <!--<td valign="top" style="padding-bottom:8px;">-->
-        <!--<p class="bc14"><a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
-        <!--{$xyfc[0]['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}-->
-        <!--</a></p>-->
-
-        <!--<p class="be12">　　-->
-        <!--<a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
-        <!--{$xyfc[0]['post_content']|strip_tags|mb_substr=0,100,"UTF-8"}-->
-        <!--</a>-->
-        <!--</p></td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-        <!--</table>-->
-
-
-        <div class="wrap">
-            <div class="body-top">
-                <div class="bt-imgbox">
-                    <img
-                            src="{:get_post_img($xyfc[0])}"
-                            class="bt-img">
-                </div>
-                <div class="bt-text">
-                    <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
-
-                    <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
-                </div>
-                <div class="clr"></div>
-            </div>
-        </div>
-
-
-        <div class="wrap">
-            <div class="body-top">
-                <div class="bt-imgbox">
-                    <img
-                            src="{:get_post_img($xyfc[0])}"
-                            class="bt-img">
-                </div>
-                <div class="bt-text">
-                    <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
-
-                    <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
-                </div>
-                <div class="clr"></div>
-            </div>
-        </div>
-
-
-        <!--<ul>-->
-
-
-        <!--<volist name="ggtz"  id="v" key="k">-->
-        <!--<li>-->
-        <!--<span>-->
-        <!--{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
-        <!--<a href="{$v['post_id']|getSingleURLByID}" title="{$v['post_title']}">-->
-        <!--<i>·&nbsp;&nbsp;</i>-->
-        <!--{$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>-->
-
-        <!--</li>-->
-        <!--</volist>-->
-
-
-        <!--</ul>-->
     </div>
-</div>
-
-
-<div class="left_half" style="width: 25%;padding-bottom: 0px" id="c4_right_2">
-    <div class="header" style="border-top: solid 7px #78BA00;">
-        <a href="{:getCatURLByID(10)}">更多+</a>
-
-        <div class="header_info">专题链接</div>
-    </div>
-    <div class="body" style="">
-
-
-        <div style="text-align: center;padding-top: 20px;padding-bottom: 20px">
-
-
-            <ul>
-
-                <li><a href="#"> 奥蓝系统管理版</a></li>
-
-                <li><a href="#"> 奥蓝系统学生版</a></li>
-
-                <li><a href="#"> 下载专区</a></li>
-                <li><a href="#"> 学生手册</a></li>
-                <li><a href="#"> 入学指南</a></li>
-
-
-            </ul>
-
-
-        </div>
-
-
-    </div>
-</div>
-
-
-<div class="left_half" style="width: 21%;">
-    <div class="header" style="border-top: solid 7px #252525;">
-        <a href="{:getCatURLByID(10)}">更多+</a>
-
-        <div class="header_info">服务链接</div>
-    </div>
-    <div class="body" style="padding-bottom: 30px">
-
-
-        <div style="text-align: center;" id="links">
-
-
-            <ul>
-
-                <li><a href="#"> 测试链接</a></li>
-                <li><a href="#"> 测试链接</a></li>
-                <li><a href="#"> 测试链接</a></li>
-                <li><a href="#"> 测试链接</a></li>
-
-                <li><a href="#"> 测试链接</a></li>
-
-                <li><a href="#"> 奥蓝系统管理版</a></li>
-
-                <li><a href="#"> 奥蓝系统学生版</a></li>
-
-                <li><a href="#"> 下载专区</a></li>
-                <li><a href="#"> 学生手册</a></li>
-                <li><a href="#"> 入学指南</a></li>
-
-
-            </ul>
-
-        </div>
-
-        <div style="text-align: center">
-            <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
-                    size="1"
-                    name="mlink">
-                <option>---|校内链接|---</option>
-
-
-                <optionfriendlist link_group_id="1"></optionfriendlist>
-
-
-            </select>
-
-            <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
-                    size="1"
-                    name="mlink2">
-                <option>---|校外链接|---</option>
-
-
-                <optionfriendlist link_group_id="3"></optionfriendlist>
-
-
-            </select>
-
-        </div>
-    </div>
-</div>
 
 
 </div>
@@ -639,88 +651,87 @@
 <include file="Public:footer"/>
 
 
-
-
 <script type="application/javascript">
 
 
+    $(function () { //头部nav部分； $('.indexnav-content div.menu1').hover(function(){$(this).addClass('focuse');},function(){$(this).removeClass('focuse');}) //
+        $('#indexbanner .bannerchoose').each(function () {
+            var href = $(this).attr('href');
+            if (href != "") {
+                (new Image()).src = href;
+            }
+        })
+        var bannerfadetime = 2000;
+        var onbanner = false;
+        if ($('#indexbanner .bannerinner a.hrefbanner').length > 1) {
+            window.indexp = {};
+            (function () {
+                indexp.num = $('#indexbanner .lights a').length;
+                indexp.index = 0;
+                indexscroll();
+            }())
+            $('#indexbanner .right').bind('click', function () {
+                if ($('#indexbanner').is(":animated")) {
+                    return false;
+                }
+                clearInterval(bannerinterval);
+                indexp.index = (++indexp.index >= indexp.num ? 0 : indexp.index);
+                //console.log(indexp.index);
+                $('.ground').hide().eq(indexp.index).css('display', 'block').css('opacity', 0).animate({'opacity': 1}, bannerfadetime);
+                $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+                $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+                indexscroll();
+            })
+            $('#indexbanner .left').bind('click', function () {
+                if ($('#indexbanner').is(":animated")) {
+                    return false;
+                }
+                clearInterval(bannerinterval);
+                indexp.index = (indexp.index == 0 ? indexp.num - 1 : --indexp.index);
+                $('.ground').hide().eq(indexp.index).css('display', 'block').css('opacity', 0).animate({'opacity': 1}, bannerfadetime);
+                $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+                $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+                indexscroll();
+            })
+            $('#indexbanner .lights a').bind('click', function () {
+                indexp.index = $(this).index();
+                clearInterval(bannerinterval);
+                $('.ground').hide().eq(indexp.index).css('display', 'block').css('opacity', 0).animate({'opacity': 1}, bannerfadetime);
+                $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+                $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+                indexscroll();
+            })
 
-$(function(){ //头部nav部分； $('.indexnav-content div.menu1').hover(function(){$(this).addClass('focuse');},function(){$(this).removeClass('focuse');}) //
-    $('#indexbanner .bannerchoose').each(function(){
-        var href=$(this).attr('href');
-        if(href!=""){(new Image()).src=href;}
-    })
-    var bannerfadetime=2000;
-    var onbanner=false;
-    if($('#indexbanner .bannerinner a.hrefbanner').length>1){
-        window.indexp={};
-        (function(){
-            indexp.num=$('#indexbanner .lights a').length;
-            indexp.index=0;
-            indexscroll();
-        }())
-        $('#indexbanner .right').bind('click',function(){
-            if($('#indexbanner').is(":animated")){return false;}
-            clearInterval(bannerinterval);
-            indexp.index=(++indexp.index>=indexp.num?0:indexp.index);
-            //console.log(indexp.index);
-            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
-            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
-            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
-            indexscroll();
-        })
-        $('#indexbanner .left').bind('click',function(){
-            if($('#indexbanner').is(":animated")){return false;}
-            clearInterval(bannerinterval);
-            indexp.index=(indexp.index==0?indexp.num-1:--indexp.index);
-            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
-            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
-            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
-            indexscroll();
-        })
-        $('#indexbanner .lights a').bind('click',function(){
-            indexp.index=$(this).index();
-            clearInterval(bannerinterval);
-            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
-            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
-            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
-            indexscroll();
-        })
-
-        $('.index-colum .li-1 .news .tit').hover(
-                function(){
-                    $(this).addClass('bordernone');
-                    $(this).parents('.news').eq(0).siblings('.news').find('.con').stop().hide().end().find('.tit').removeClass('bordernone');
-                    $(this).next('.con').fadeIn();
-                },
-                function(){}
-        )
-    }
-    function indexscroll(){
-        bannerinterval=setInterval(function(){
-            if(onbanner)return;
-            indexp.index=(++indexp.index>=indexp.num?0:indexp.index);
-            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
-           // $('#indexbanner .bannerinner .describ').eq(indexp.index).show().siblings('.describ').hide();
-            //console.log($('#indexbanner .bannerchoose').eq(indexp.index).attr('style'));
-            $('.ground').hide().eq(indexp.index).css('display','block').css('opacity',0).animate({'opacity':1},bannerfadetime);
-            $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
-            console.log("indexp.index:"+indexp.index);
-            console.log("indexp.num:"+indexp.num);
-            $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
-        },3500)
-    }
+            $('.index-colum .li-1 .news .tit').hover(
+                    function () {
+                        $(this).addClass('bordernone');
+                        $(this).parents('.news').eq(0).siblings('.news').find('.con').stop().hide().end().find('.tit').removeClass('bordernone');
+                        $(this).next('.con').fadeIn();
+                    },
+                    function () {
+                    }
+            )
+        }
+        function indexscroll() {
+            bannerinterval = setInterval(function () {
+                if (onbanner)return;
+                indexp.index = (++indexp.index >= indexp.num ? 0 : indexp.index);
+                $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+                // $('#indexbanner .bannerinner .describ').eq(indexp.index).show().siblings('.describ').hide();
+                //console.log($('#indexbanner .bannerchoose').eq(indexp.index).attr('style'));
+                $('.ground').hide().eq(indexp.index).css('display', 'block').css('opacity', 0).animate({'opacity': 1}, bannerfadetime);
+                $('#indexbanner .lights a').eq(indexp.index).addClass('focused').siblings('a').removeClass('focused');
+                console.log("indexp.index:" + indexp.index);
+                console.log("indexp.num:" + indexp.num);
+                $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
+            }, 3500)
+        }
 
 //    $("#indexbanner").mouseover(function(){onbanner=true});
 //    $("#indexbanner").mouseout(function(){onbanner=false})
 
 
-
-})
-
-
-
-
+    })
 
 
 </script>

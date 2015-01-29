@@ -47,4 +47,10 @@ return array(
     'MODULE_ALLOW_LIST'    => array('Home', 'Admin', 'Weixin', 'Install','Api','Zel','Oauth'), //配置你原来的分组列表
     'MODULE_DENY_LIST'     => array('Common'),
 
+
+//    'DATA_CACHE_TYPE' => 'Memcache', // 数据缓存类型,支持:File||Memcache|Xcache
+//    'MEMCACHE_HOST'   =>  '127.0.0.1',
+//    'MEMCACHE_PORT'   =>  '11211',
+//    'DATA_CACHE_TIMEOUT'   =>  '180',
+
 );

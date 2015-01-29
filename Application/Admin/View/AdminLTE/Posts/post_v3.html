@@ -12,29 +12,29 @@
     <script type="text/javascript">
         window.UEDITOR_HOME_URL = "__ROOT__/Extend/Ueditor/";
 
-        var post_id ='{$post_id}';
+        var post_id = '{$post_id}';
 
         var URL_upload = "{$URL_upload}";
         var URL_fileUp = "{$URL_fileUp}";
-        var URL_scrawlUp =  "{$URL_scrawlUp}";
+        var URL_scrawlUp = "{$URL_scrawlUp}";
         var URL_getRemoteImage = "{$URL_getRemoteImage}";
         var URL_imageManager = "{$URL_imageManager}";
         var URL_imageUp = "{$URL_imageUp}";
-        var URL_getMovie =  "{$URL_getMovie}";
+        var URL_getMovie = "{$URL_getMovie}";
         var URL_home = "{$URL_home}";
 
     </script>
 
     <style>
 
-        .form-group .controls{
+        .form-group .controls {
 
-            margin-left: 100px;
+            margin-left: 80px;
         }
 
-        .form-group .control-label{
+        .form-group .control-label {
 
-            width: 80px;
+            width: 60px;
 
         }
 
@@ -72,10 +72,7 @@
 
 <div class="row">
 <div class="col-md-12">
-<div class="box box-warning">
-<div class="box-header">
-    <h3 class="box-title">{$action}</h3>
-</div>
+
 <!-- /.box-header -->
 <div class="box-body">
 
@@ -117,7 +114,8 @@
                 选择分类 <i class="icon-angle-down"></i>
             </a>
 
-            <div class="dropdown-menu hold-on-click dropdown-checkboxes" style="width: 400px;height: 300px;overflow: scroll">
+            <div class="dropdown-menu hold-on-click dropdown-checkboxes"
+                 style="width: 400px;height: 300px;overflow: scroll">
                 <foreach name="cats" item="vCats">
                     <div><label><input
                             type="checkbox" value="{$vCats.cat_id}" name="cats[]"
@@ -139,7 +137,6 @@
 </div>
 
 
-
 <div class="form-group">
 
     <label class="control-label">标签</label>
@@ -151,7 +148,8 @@
                 选择标签 <i class="icon-angle-down"></i>
             </a>
 
-            <div class="dropdown-menu hold-on-click dropdown-checkboxes" style="width: 500px;height: 300px;overflow: scroll">
+            <div class="dropdown-menu hold-on-click dropdown-checkboxes"
+                 style="width: 500px;height: 300px;overflow: scroll">
 
                 <foreach name="tags" item="vTags" key="k"><input
                         type="checkbox" value="{$vTags.tag_id}" name="tags[]"
@@ -176,7 +174,6 @@
         </div>
     </div>
 </div>
-
 
 
 <div class="form-group">
@@ -309,14 +306,13 @@
     </div>
 
 
-
 </div>
 
 
 <input type="hidden" name="post_id" value="{$post_id}"/>
 
 <div class="form-actions">
-	<span style="font-size: 18px; color: red; font-weight: bold;"   id="success"></span>
+    <span style="font-size: 18px; color: red; font-weight: bold;" id="success"></span>
 
     <button type="button" id="post_advance_ctl" class="btn btn-warning">
         <i class="icon-ok"></i> 高级选项
@@ -337,7 +333,6 @@
 
 </div>
 </div>
-</div>
 
 
 </section>
@@ -354,6 +349,7 @@
 
 
 <script type="text/javascript" src="__PUBLIC__/share/js/jquery-ui-1.10.4.min.js"></script>
+<!--<script type="text/javascript" src="__PUBLIC__/share/js/jquery-ui-1.8.18.min.js"></script>-->
 
 <script type="text/javascript"
         src="__PUBLIC__/AdminLTE/js/plugins/timepicker/jquery-ui-timepicker-addon.js"></script>
@@ -371,19 +367,18 @@
     $(window).bind('beforeunload', leave_confirm);
 
 
-    $(document).ready(function(){
+    $(document).ready(function () {
 
-        $("#post_advance_ctl").click(function(){
+        $("#post_advance_ctl").click(function () {
 
-            var post_advance=  $("#post_advance");
+            var post_advance = $("#post_advance");
 
             post_advance.slideToggle(200);
 
 
-
         });
 
-     });
+    });
 
     $(function () {
 
@@ -393,7 +388,7 @@
         var options = {
             zIndex: 1,
 
-            initialFrameWidth: 800, //初化宽度
+            initialFrameWidth: 900, //初化宽度
             initialFrameHeight: 400, //初化高度
             focus: false, //初始化时，是否让编辑器获得焦点true或false
             maximumWords: 99999, //允许的最大字符数 'fullscreen',

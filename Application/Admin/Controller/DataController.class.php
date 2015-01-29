@@ -57,12 +57,10 @@ class DataController extends AdminBaseController
 
         $type = "手动自动备份";
         $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
-        $tables = empty($_POST['table']) ? array() : $_POST['table'];
+        $tables = I('POST.table', array());
 
         $System = new SystemEvent();
         $res = $System->backupDB($type, $tables, $path);
-        //不支持分卷
-
 
         if ($res['status'] == 1)
             $this->success($res['info'], $res['url']);
@@ -89,7 +87,7 @@ class DataController extends AdminBaseController
      */
     public function restoreData()
     {
-        //TODO 需要测试
+
 //        ini_set("memory_limit", "256M");
         function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
 //取得需要导入的sql文件

@@ -8,6 +8,7 @@
  */
 
 namespace Common\Logic;
+
 use Think\Model\RelationModel;
 
 /**
@@ -60,9 +61,9 @@ class UserLogic extends RelationModel
         return $session_code;
     }
 
-    public function selectWithPostsCount($limit = 0, $relation = false,$where=array(),$order = '')
+    public function selectWithPostsCount($limit = 0, $relation = false, $where = array(), $order = '')
     {
-        return D('User')->where($where)->limit($limit)->field(GreenCMS_DB_PREFIX .'user.*,count( ' . GreenCMS_DB_PREFIX . 'posts.post_id) as post_count')
+        return D('User')->where($where)->limit($limit)->field(GreenCMS_DB_PREFIX . 'user.*,count( ' . GreenCMS_DB_PREFIX . 'posts.post_id) as post_count')
             ->join('LEFT JOIN  ' . GreenCMS_DB_PREFIX . 'posts ON ' . GreenCMS_DB_PREFIX .
                 'posts.user_id = ' . GreenCMS_DB_PREFIX . 'user.user_id')
             ->group(GreenCMS_DB_PREFIX . 'user.user_id')->relation($relation)->select();
@@ -71,8 +72,9 @@ class UserLogic extends RelationModel
 
 
     //TODO 使用原生SQL提高效率
-    public function getCatAccess($uid){
-        $user =$this->detail($uid);
+    public function getCatAccess($uid)
+    {
+        $user = $this->detail($uid);
         $role_id = $user["user_role"] ["role_id"];
         $role = D('Role')->where(array('id' => $role_id))->find();
         $where['cat_id'] = array('in', json_decode($role ["cataccess"]));

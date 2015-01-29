@@ -36,21 +36,21 @@
                 <div class="ab-sub-wrapper">
                     <ul id="gcs-admin-bar-site-name-default" class="ab-submenu">
                         <li id="gcs-admin-bar-dashboard">
-                            <a class="ab-item" href="{:U('Admin/Index/index')}">仪表盘</a>
+                            <a class="ab-item" target="_blank" href="{:U('Admin/Index/index')}">仪表盘</a>
                         </li>
                     </ul>
                     <ul id="gcs-admin-bar-appearance" class="ab-submenu">
                         <li id="gcs-admin-bar-customize" class="hide-if-no-customize">
-                            <a class="ab-item" href="{:U('Admin/System/index')}">系统设置</a>
+                            <a class="ab-item" target="_blank" href="{:U('Admin/System/index')}">系统设置</a>
                         </li>
                         <li id="gcs-admin-bar-themes">
-                            <a class="ab-item" href="{:U('Admin/Custom/theme')}">主题</a>
+                            <a class="ab-item" target="_blank"  href="{:U('Admin/Custom/theme')}">主题</a>
                         </li>
                         <li id="gcs-admin-bar-widgets">
-                            <a class="ab-item" href="{:U('Admin/Posts/add')}">投稿</a>
+                            <a class="ab-item" target="_blank"  href="{:U('Admin/Posts/add')}">投稿</a>
                         </li>
                         <li id="gcs-admin-bar-menus">
-                            <a class="ab-item" href="{:U('Admin/Custom/menu')}">菜单</a>
+                            <a class="ab-item" target="_blank"  href="{:U('Admin/Custom/menu')}">菜单</a>
                         </li>
                     </ul>
                 </div>
@@ -64,19 +64,15 @@
                 <div class="ab-sub-wrapper">
                     <ul id="gcs-admin-bar-new-content-default" class="ab-submenu">
                         <li id="gcs-admin-bar-new-post"><a class="ab-item"
-                                                           href="#">文章</a>
+                                                           href="{:U('Admin/Posts/add')}">文章</a>
                         </li>
-                        <li id="gcs-admin-bar-new-media"><a class="ab-item"
-                                                            href="#">媒体</a>
-                        </li>
+
                         <li id="gcs-admin-bar-new-page"><a class="ab-item"
-                                                           href="#">页面</a>
+                                                           href="{:U('Admin/Posts/add')}">页面</a>
                         </li>
-                        <li id="gcs-admin-bar-new-tie_slider"><a class="ab-item"
-                                                                 href="#">Slider</a>
-                        </li>
+
                         <li id="gcs-admin-bar-new-user"><a class="ab-item"
-                                                           href="#">用户</a>
+                                                           href="{:U('Admin/Access/adduser')}">用户</a>
                         </li>
                     </ul>
                 </div>

@@ -93,7 +93,7 @@
                                             <eq name="vo.status" value="1">
                                                 <a class="btn btn-sm btn-warning"
                                                    href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>
-                                                &nbsp; &nbsp;
+                                               
                                                 <else/>
 
                                             </eq>
@@ -103,9 +103,10 @@
                                                 <a class="btn btn-sm btn-success"
                                                    href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
 
-                                                &nbsp; &nbsp;
+                                               
                                                 <a class="btn btn-sm  btn-danger"
-                                                   onclick="javascript:return a_confirm()"      href="{:U('Admin/Custom/pluginDelHandle',array('plugin_name'=>$vo['name']) )}">删除</a>
+                                                   onclick="javascript:return a_confirm()"
+                                                   href="{:U('Admin/Custom/pluginDelHandle',array('plugin_name'=>$vo['name']) )}">删除</a>
 
                                                 <else/>
 
@@ -113,19 +114,20 @@
                                                 <eq name="vo.status" value="1">
 
                                                     <a class="btn btn-sm bg-purple" href='javascript:;'
-                                                       onclick="off({$vo.id})">禁用</a> &nbsp; &nbsp;
+                                                       onclick="off({$vo.id})">禁用</a>
 
                                                     <else/>
                                                     <a class="btn btn-sm btn-primary" href='javascript:;'
-                                                       onclick="on({$vo.id})">启用</a> &nbsp; &nbsp;
+                                                       onclick="on({$vo.id})">启用</a>
                                                 </eq>
 
-                                                                <br />    <br />
-                                                   <a class="btn btn-sm btn-danger"
+                                                    <a class="btn btn-sm btn-danger"
                                                    href="{:U('Admin/Custom/uninstall',array('id'=>$vo['id']) )}">卸载</a>
 
 
                                             </eq>
+                                          <a class="btn btn-sm bg-blue" href="{:U('Admin/Custom/pluginExportHandle', array('plugin_name' => $vo['name']))}">导出</a>
+
                                         </td>
                                     </tr>
                                 </volist>

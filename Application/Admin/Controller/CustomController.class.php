@@ -21,6 +21,7 @@ use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
 
+use Common\Util\PHPZip;
 use Think\Upload;
 
 /**
@@ -180,7 +181,6 @@ class CustomController extends AdminBaseController
             $res = $Menu->where(array('menu_pid' => $id))->setField($data);
         }
         //TODO 判断
-
 
 
         $this->success('删除成功', U('Admin/Custom/menu'));
@@ -1418,7 +1418,7 @@ str;
 
         $res = set_kv('home_theme', $theme_name);
 
-        set_kv($theme_name.'_theme_config', null);
+        set_kv($theme_name . '_theme_config', null);
 
         if ($res) {
             $cache_control = new SystemEvent();
@@ -1445,4 +1445,74 @@ str;
     }
 
 
+    /**
+     * @param string $theme_name
+     */
+    public function themeExportHandle($theme_name = '')
+    {
+        $tpl_view_path = 'Application/Home/View/' . $theme_name . '/';
+        $tpl_static_path = 'Public/' . $theme_name . '/';
+
+        $temp_path = WEB_CACHE_PATH;
+
+        File::delDir(WEB_CACHE_PATH);
+        File::mkDir(WEB_CACHE_PATH);
+
+        $file_path = $temp_path . "\\" . 'GCS_Theme-' . $theme_name . '-' . md5(time()) . '.zip';
+
+        $zip = new \ZipArchive; //新建一个ZipArchive的对象
+        $res = $zip->open($file_path, \ZipArchive::CREATE);
+
+        if ($res == true) {
+            PHPZip::folderToZip($tpl_view_path, $zip);
+            PHPZip::folderToZip($tpl_static_path, $zip);
+            $zip->close();
+        }
+
+
+        if (!File::file_exists($file_path)) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($file_path);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($file_path));
+        readfile($file_path);
+
+
+    }
+
+    /**
+     */
+    public function pluginExportHandle($plugin_name = '')
+    {
+        $plugin_path = 'Addons/' . $plugin_name . '/';
+
+        $temp_path = WEB_CACHE_PATH;
+
+        File::delDir(WEB_CACHE_PATH);
+        File::mkDir(WEB_CACHE_PATH);
+
+        $file_path = $temp_path . "\\" . 'GCS_Plugin-' . $plugin_name . '-' . md5(time()) . '.zip';
+
+        $zip = new \ZipArchive; //新建一个ZipArchive的对象
+        $res = $zip->open($file_path, \ZipArchive::CREATE);
+
+        if ($res == true) {
+            PHPZip::folderToZip($plugin_path, $zip);
+            $zip->close();
+        }
+
+
+        if (!File::file_exists($file_path)) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($file_path);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($file_path));
+        readfile($file_path);
+
+
+    }
 }

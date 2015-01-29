@@ -93,7 +93,7 @@ function get_opinion($key, $realtime = false, $default = '')
         }
 
     } else {
-        $res = D('Options')->where(array('option_name' => $key))->find();
+        $res = D('Options')->cache(true,2)->where(array('option_name' => $key))->find();
         if (empty($res)) {
             $res = TP_C($key);
             if ($res) {

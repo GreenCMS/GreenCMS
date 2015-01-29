@@ -36,147 +36,123 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <form method="POST" action="{:U('Admin/Posts/indexHandle')}" id="posts">
-                                <div class="portlet-body">
-                                    <div class="row">
+                        <form method="POST" action="{:U('Admin/Posts/indexHandle')}" id="posts">
+                            <div class="portlet-body">
+                                <div class="row">
 
-                                        <div class="col-md-5 margin">
-                                            <div class="btn-group">
-                                                <a href="{:U('Admin/Posts/add')}">
-                                                    <button type="submit" class="btn btn-success" name="postAdd"
-                                                            value='1'>
-                                                        <i class="icon-plus"></i> 发布文章
-                                                    </button>
-                                                </a>
-
-                                            </div>
-
-                                            <div class="btn-group">
-                                                <button type="submit" class="btn btn-info" name="verifyAll" value='1'><i
-                                                        class="icon-user icon-white"></i> 批量审核
+                                    <div class="col-md-5">
+                                        <div class="btn-group">
+                                            <a href="{:U('Admin/Posts/add')}">
+                                                <button type="submit" class="btn btn-success" name="postAdd"
+                                                        value='1'>
+                                                    <i class="icon-plus"></i> 发布文章
                                                 </button>
-                                            </div>
-
-                                            <div class="btn-group">
-                                                <button type="submit" class="btn btn-danger" name="delAll" value='1'><i
-                                                        class="icon-remove icon-white">
-                                                </i> 批量删除
-                                                </button>
-                                            </div>
-
-
-
+                                            </a>
 
                                         </div>
 
-                                        <div class="col-md-3 margin">
-
-                                            <label>分页:</label>
-                                            <select style="width:200px"
-                                                    onchange="self.location.href=options[selectedIndex].value"
-                                                    size="1"
-                                                    name="mlink2">
-                                                <option value="__SELF__&page={:get_opinion('PAGER')}">选择分页</option>
-
-                                                <option value="__SELF__&page=5">5</option>
-                                                <option value="__SELF__&page=10">10</option>
-                                                <option value="__SELF__&page=20">20</option>
-                                                <option value="__SELF__&page=100">100</option>
-                                            </select>
-
-
+                                        <div class="btn-group">
+                                            <button type="submit" class="btn btn-info" name="verifyAll" value='1'><i
+                                                    class="icon-user icon-white"></i> 批量审核
+                                            </button>
                                         </div>
 
-                                        <div class="col-md-3 margin">
-                                            <label>搜索:</label>
-
-                                                <input type="text" name="keyword" class=" large"
-                                                       placeholder="输入关键字,回车搜索" value="{:I('get.keyword')}">
-                                            <input type="hidden" name="post_type" value="{$post_type}">
+                                        <div class="btn-group">
+                                            <button type="submit" class="btn btn-danger" name="delAll" value='1'><i
+                                                    class="icon-remove icon-white">
+                                            </i> 批量删除
+                                            </button>
                                         </div>
+
 
                                     </div>
-                                    <table class="table table-striped table-bordered table-hover"
-                                           id="post_table">
-                                        <thead>
-                                        <tr>
-                                            <th style="width: 8px;"><input type="checkbox" class="group-checkable"
-                                                                           id="check-all"
-                                                                           data-set="#post_table .checkboxes"/></th>
-                                            <th class="col-md-3">标题</th>
-                                            <th class="col-md-1">作者</th>
-                                            <th>分类 与 标签 (最多显示5个)</th>
-                                            <th class="col-md-2">发布日期</th>
-                                            <th class="col-md-3">操作</th>
+
+                                    <div class="col-md-3">
+                                        <include file="Public:page"/>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <include file="Public:search"/>
+                                    </div>
+
+                                </div>
+                                <table class="table table-striped table-bordered table-hover"
+                                       id="post_table">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 8px;"><input type="checkbox" class="group-checkable"
+                                                                       id="check-all"
+                                                                       data-set="#post_table .checkboxes"/></th>
+                                        <th class="col-md-3">标题</th>
+                                        <th class="col-md-1" style="width: 70px">作者</th>
+                                        <th>分类 与 标签 (最多显示5个)</th>
+                                        <th class="col-md-1" style="width: 150px">发布日期</th>
+                                        <th class="col-md-3">操作</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody id="cache_table">
+                                    <foreach name="posts" item="v">
+                                        <tr class="odd gradeX">
+                                            <td><input type="checkbox" class="checkboxes" value="{$v['post_id']}"
+                                                       name="posts[]"/>
+                                            </td>
+                                            <td><a href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}"
+                                                   title="{$v.post_title}">{$v.post_title}</a></td>
+                                            <td>
+                                                <a href="{:U('Admin/access/editUser', array('aid' => $v['post_user']['user_id']))}">{$v.post_user.user_nicename}</a>
+                                            </td>
+                                            <td>
+                                                分类:
+                                                <volist name="v['post_cat']" id="v_pcs" offset="0" length="5"
+                                                        empty="无分类">
+                                                    <a
+                                                            href="{:U('Admin/Posts/index', array('cat' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
+                                                </volist>
+                                                标签:
+                                                <volist name="v['post_tag']" id="v_pts" offset="0" length="5"
+                                                        empty="无标签">
+                                                    <a
+                                                            href="{:U('Admin/Posts/index', array('tag' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
+                                                </volist>
+                                            </td>
+                                            <td>{:getTimestamp($v['post_date'],'Y-m-d H:i') }</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary"
+                                                   href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}">编辑</a>
+
+                                                <a class="btn btn-sm btn-info"
+                                                   href="{:U('Home/Post/'.$v['post_type'], array('info' => $v['post_id']))}"
+                                                   target="_blank">查看</a>
+
+                                                <a class="btn btn-sm btn-warning"
+                                                   href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v['post_id'],'post_status' => 'unverified'))}">审核</a>
+
+                                                <a class="btn btn-sm btn-danger"
+                                                   onclick="javascript:return a_confirm()"
+                                                   href="{:U('Admin/Posts/preDel', array('id' => $v['post_id']))}">删除</a>
+                                            </td>
+
 
                                         </tr>
-                                        </thead>
-                                        <tbody id="cache_table">
-                                        <foreach name="posts" item="v">
-                                            <tr class="odd gradeX">
-                                                <td><input type="checkbox" class="checkboxes" value="{$v['post_id']}"
-                                                           name="posts[]"/>
-                                                </td>
-                                                <td><a href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}"
-                                                       title="{$v.post_title}">{$v.post_title}</a></td>
-                                                <td>
-                                                    <a href="{:U('Admin/access/editUser', array('aid' => $v['post_user']['user_id']))}">{$v.post_user.user_nicename}</a>
-                                                </td>
-                                                <td>
-                                                    分类:
-                                                    <volist name="v['post_cat']" id="v_pcs" offset="0" length="5"
-                                                            empty="无分类">
-                                                        <a class="btn btn-default btn-sm"
-                                                           href="{:U('Admin/Posts/index', array('cat' => $v_pcs['cat_id']))}">{$v_pcs['cat_name']}</a>&nbsp;&nbsp;
-                                                    </volist>
-                                                    标签:
-                                                    <volist name="v['post_tag']" id="v_pts" offset="0" length="5"
-                                                            empty="无标签">
-                                                        <a class="btn btn-default btn-sm"
-                                                           href="{:U('Admin/Posts/index', array('tag' => $v_pts['tag_id']))}">{$v_pts['tag_name']}</a>&nbsp;&nbsp;
-                                                    </volist>
-                                                </td>
-                                                <td>{:getTimestamp($v['post_date'],'Y-m-d H:i') }</td>
-                                                <td>
-                                                    <a class="btn btn-sm btn-primary"
-                                                       href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}">编辑</a>
-                                                    &nbsp; &nbsp;
-
-                                                    <a class="btn btn-sm btn-info"
-                                                       href="{:U('Home/Post/'.$v['post_type'], array('info' => $v['post_id']))}"
-                                                       target="_blank">查看</a>
-                                                    &nbsp; &nbsp;
-                                                     <a class="btn btn-sm btn-warning"
-                                                       href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v['post_id'],'post_status' => 'unverified'))}">审核</a>
-                                                    &nbsp; &nbsp;
-                                                    <a class="btn btn-sm btn-danger"
-                                                       onclick="javascript:return a_confirm()"
-                                                       href="{:U('Admin/Posts/preDel', array('id' => $v['post_id']))}">删除</a>
-                                                </td>
-
-
-                                            </tr>
-                                        </foreach>
-                                        </tbody>
-                                    </table>
-                                    <div>
-                                        <ul class="pagination"> {$pager}</ul>
-                                    </div>
+                                    </foreach>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <ul class="pagination"> {$pager}</ul>
                                 </div>
-                            </form>
+                            </div>
+                        </form>
 
 
-                        </div>
                     </div>
                 </div>
+
             </div>
 
 
