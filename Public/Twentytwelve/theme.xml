@@ -5,7 +5,7 @@
     <description>Twentytwelve from wordpress</description>
     <author>ZTS</author>
     <preview>/Twentytwelve/preview.jpg</preview>
-    <preview_big>/Twentytwelve/preview_big.jpg</preview_big>
+    <preview_big>/Twentytwelve/preview.jpg</preview_big>
     <copyright>GreenStudio 2011</copyright>
     <tpl_view>Apllication/Home/View/Twentytwelve</tpl_view>
     <tpl_static>Public/Twentytwelve</tpl_static>

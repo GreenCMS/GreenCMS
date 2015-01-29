@@ -897,7 +897,7 @@ INSERT INTO "public"."green_theme" VALUES ('13', 'NovaGreenStudio', 'Nova Theme 
     <description>Nova Theme For GreenStudio</description>
     <author>ZTS</author>
     <preview>/NovaGreenStudio/preview.jpg</preview>
-    <preview_big>/NovaGreenStudio/preview_big.jpg</preview_big>
+    <preview_big>/NovaGreenStudio/preview.jpg</preview_big>
     <copyright>GreenStudio 2014</copyright>
     <tpl_view>Application/Home/View/NovaGreenStudio</tpl_view>
     <tpl_static>Public/NovaGreenStudio</tpl_static>
@@ -953,7 +953,7 @@ INSERT INTO "public"."green_theme" VALUES ('15', 'Xsc', '南工大学生处学�
     <description>南工大学生处学院网站</description>
     <author>GreenStudio</author>
     <preview>/Xsc/preview.jpg</preview>
-    <preview_big>/Xsc/preview_big.jpg</preview_big>
+    <preview_big>/Xsc/preview.jpg</preview_big>
     <copyright>GreenStudio 2014</copyright>
     <tpl_view>Apllication/Home/View/Xsc</tpl_view>
     <tpl_static>Public/Xsc</tpl_static>
@@ -999,7 +999,7 @@ INSERT INTO "public"."green_theme" VALUES ('16', 'RootStrap', 'RootStrap from wo
     <description>RootStrap from wordpress</description>
     <author>ZTS</author>
     <preview>/RootStrap/preview.jpg</preview>
-    <preview_big>/RootStrap/preview_big.jpg</preview_big>
+    <preview_big>/RootStrap/preview.jpg</preview_big>
     <copyright>GreenStudio 2011</copyright>
     <tpl_view>Apllication/Home/View/RootStrap</tpl_view>
     <tpl_static>Public/RootStrap</tpl_static>
