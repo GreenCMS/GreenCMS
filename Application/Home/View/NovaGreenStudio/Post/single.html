@@ -45,9 +45,6 @@
 <section class="container">
 
 
-
-
-
     <section id="about-us" class="container main">
         <div class="row-fluid">
             <div class="span8">
@@ -55,7 +52,7 @@
 
 
                     <div class="blog-item well">
-                        <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                        <a href="{$post|get_post_url}">
                             <h2>{$post.post_top|is_top}{$post.post_title}</h2></a>
 
                         <div class="blog-meta clearfix">
@@ -63,7 +60,7 @@
                                 <i class="icon-user"></i> 作者: <a href="#">{$post.post_user.user_nicename}</a> |
                                 <i class="icon-folder-close"></i> 分类:
                                 <volist name="post.post_cat" id="cat"><a
-                                        href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
+                                        href="{$cat|get_cat_url}">{$cat.cat_name}</a>,
                                 </volist>
                                 |
 
@@ -71,24 +68,26 @@
                             </p>
 
                             <p class="pull-right"><i class="icon-comment pull"></i>
-                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments">{$post.post_comment_count}
+                                <a href="{$post|get_post_url}#comments">{$post.post_comment_count}
                                     Comments</a></p>
 
+                            <p>
 
-                            <control access="Admin/Posts/posts">
-                                <a href="{:U('Admin/Posts/posts',array('id'=>$post['post_id']))}">  | 编辑</a>
-                            </control>
+                                <control access="Admin/Posts/posts">
+                                    <a href="{:U('Admin/Posts/posts',array('id'=>$post['post_id']))}"> | 编辑</a>
+                                </control>
+                            </p>
 
                         </div>
                         <!--<p> {$post|get_post_thumbnail}</p>-->
 
-                        <p>{$post.post_content}</p>
+                        <p id="post_content">{$post.post_content}</p>
 
 
                         <div class="tag">
                             标签 :
                             <volist name="post.post_tag" id="tag"><a
-                                    href="{$tag.tag_id|getTagURLByID}">
+                                    href="{$tag|get_tag_url}">
                                 <span class="label label-success">{$tag.tag_name}</span></a>,
                             </volist>
 
@@ -97,7 +96,6 @@
 
                         <!-- About Author -->
                         <article class="post-author">
-
 
 
                             <h4>
@@ -109,7 +107,7 @@
                                 下一篇: {$post['post_id']|get_next_post=$post['post_cat']|is_empty='没有了'}
                             </h4>
 
-                         </article>
+                        </article>
 
                         {:hook('documentDetailAfter', $post)}
 

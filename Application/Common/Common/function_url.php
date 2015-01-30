@@ -250,3 +250,34 @@ function get_addon_url($url, $param = array(), $group = 'Home') {
 
     return $url;
 }
+
+
+
+/**
+ * 获取带时间链接的 年月日
+ * @param $Timestamp
+ * @param string $type
+ * @return string
+ */
+function get_time_url($Timestamp, $type = 'single')
+{
+	$array = explode("-", $Timestamp);
+	$year = $array [0];
+	$month = $array [1];
+
+	$array = explode(":", $array [2]);
+	$minute = $array [1];
+	$second = $array [2];
+
+	$array = explode(" ", $array [0]);
+	$day = $array [0];
+	$hour = $array [1];
+
+	$url = '';
+	$url .= '<a href="' . getURL('Archive/' . $type, array('year' => $year)) . '">' . $year . '</a>';
+	$url .= '-<a href="' . getURL('Archive/' . $type, array('year' => $year, 'month' => $month)) . '">' . $month . '</a>';
+	$url .= '-<a href="' . getURL('Archive/' . $type, array('year' => $year, 'month' => $month, 'day' => $day)) . '">' . $day . '</a>';
+
+	return $url;
+
+}

@@ -55,7 +55,7 @@ class TagController extends HomeBaseController
             $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
         }
 
-        $this->assign('title', $tag['tag_name']); // 赋值数据集
+        $this->assign('title', '标签 '.$tag['tag_name']. ' 所有文章'); // 赋值数据集
         $this->assign('res404', $res404);
         $this->assign('postslist', $posts_list); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出

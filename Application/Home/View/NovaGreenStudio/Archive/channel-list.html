@@ -51,7 +51,34 @@
 
     <section id="about-us" class="container main">
         <div class="row-fluid">
-            <div class="span8">
+            <aside class="span3">
+
+
+                <div class="widget">
+                    <h3>子分类</h3>
+
+                    <div>
+                        <div class="row-fluid">
+
+                            <ul class="">
+                                <volist name="children['cat_children']" id="vo">
+                                    <li><h4><a href="{$vo.cat_children|get_cat_url}"> {$vo.cat_children.cat_name} </a>
+                                    </h4></li>
+                                </volist>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                {:W('Widget/tag')}
+
+                {:W('Widget/recentPost')}
+                {:W('Widget/aboutUs')}
+
+
+            </aside>
+
+            <div class="span9">
                 <div class="blog">
                     <volist name="postslist" id="post" empty="没有相关文章..">
                         <div class="blog-item well">
@@ -83,8 +110,7 @@
 
                             <p>{$post.post_content|strip_tags|mb_substr=0,400,"UTF-8"}</p>
                             <a class="btn btn-link" href="{$post|get_post_url}">阅读详细
-                                <i
-                                        class="icon-angle-right"></i></a>
+                                <i class="icon-angle-right"></i></a>
                         </div>
 
                     </volist>
@@ -109,21 +135,6 @@
 
                 </div>
             </div>
-            <aside class="span4">
-
-                <!-- /.search -->
-
-
-                {:W('Widget/search')}
-                {:W('Widget/recentPost')}
-                {:W('Widget/tag')}
-                {:W('Widget/categories')}
-                {:W('Widget/aboutUs')}
-
-
-                <!-- End Archive Widget -->
-
-            </aside>
         </div>
 
     </section>
