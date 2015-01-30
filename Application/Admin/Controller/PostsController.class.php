@@ -493,7 +493,7 @@ class PostsController extends AdminBaseController
     {
         $PostsLogic = new PostsLogic();
 
-        if (empty($PostsLogic->has($id))) {
+        if ($PostsLogic->has($id)) {
             $this->error("不存在该记录");
         }
 
