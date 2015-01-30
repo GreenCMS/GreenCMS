@@ -1,10 +1,13 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.3.0202 build 20150202
+修复bug
+精简不用的文件
+
 version v2.3.0201 build 20150201
 增加导出主题和插件
 增强性能
 增强文章管理能力
-
 
 version v2.3.0101 build 20150101
 widget缓存，增加CacheManager
