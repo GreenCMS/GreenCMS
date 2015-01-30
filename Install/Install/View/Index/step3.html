@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <title>安装程序 -- GreenCMS</title>
 
+
     <include file="Public:head"/>
 
+    <style>
+        .caption{
+            font-size: 20px;
+            line-height: 30px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body class="skin-blue">
 
 <include file="Widget:header"/>
+
+
 
 <div class="wrapper row-offcanvas row-offcanvas-left">
 
@@ -66,10 +76,7 @@
 
 <div class="row">
 <div class="col-md-12">
-<div class="box box-warning">
-<div class="box-header">
-    <h3 class="box-title">安装</h3>
-</div>
+
 <!-- /.box-header -->
 <div class="box-body">
 
@@ -137,13 +144,13 @@
                                                name="db_prefix" value="green_">
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td><strong>数据库编码：</strong></td>
-                                    <td>
-                                        <input type="radio" name="dblang" id="dblang_utf8" value="utf8"
-                                               checked="checked"/>&nbsp;<label>UTF8</label>
-                                    </td>
-                                </tr>
+                                <!--<tr>-->
+                                    <!--<td><strong>数据库编码：</strong></td>-->
+                                    <!--<td>-->
+                                        <!--<input type="radio" name="dblang" id="dblang_utf8" value="utf8"-->
+                                               <!--checked="checked"/>&nbsp;<label>UTF8</label>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
                                 </tbody>
                             </table>
 
@@ -235,14 +242,14 @@
                                                        value="{$cfg_cmspath}">
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><strong>安装测试体验数据</strong></td>
-                                            <td>
-                                                <input name="demo" type="checkbox" id="installdemo"
-                                                       value="1"
-                                                       checked/>&nbsp;&nbsp;体验数据将含带GreenCMS大部分功能的应用操作示例
-                                            </td>
-                                        </tr>
+                                        <!--<tr>-->
+                                            <!--<td><strong>安装测试体验数据</strong></td>-->
+                                            <!--<td>-->
+                                                <!--<input name="demo" type="checkbox" id="installdemo"-->
+                                                       <!--value="1"-->
+                                                       <!--checked/>&nbsp;&nbsp;体验数据将含带GreenCMS大部分功能的应用操作示例-->
+                                            <!--</td>-->
+                                        <!--</tr>-->
                                         </tbody>
                                     </table>
                                     <div class="form-actions row margin" >
@@ -278,8 +285,7 @@
 
 </div>
 </div>
-</div>
-</div>
+ </div>
 
 
 </section>
