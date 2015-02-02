@@ -1,5 +1,9 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.3.0215 build 20150215
+邮件发送增加mail函数支持
+修正bugs
+
 version v2.3.0202 build 20150202
 修复bug
 精简不用的文件

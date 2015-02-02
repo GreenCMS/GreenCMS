@@ -134,7 +134,7 @@ class SystemController extends AdminBaseController
             $subject = "GreenCMS测试邮件";
             $body = "测试邮件通过" . get_opinion('mail_method') . '模式发送';
             $Mail = new GreenMail();
-            $res = $Mail->send_mail($send_to, "GreenCMS Test Team" , $subject, $body);
+            $res = $Mail->send_mail($send_to, "GreenCMS Test Team", $subject, $body);
 
             $this->assign("config", $Mail->config);
             $this->assign("res", $res);
@@ -143,15 +143,6 @@ class SystemController extends AdminBaseController
         } else {
             $this->display('emailTest');
         }
-
-    }
-
-
-    /**
-     * 邮箱链接测试
-     */
-    public function emailConnTest()
-    {
 
     }
 
@@ -294,6 +285,7 @@ class SystemController extends AdminBaseController
 
             set_opinion('software_version', $target_version_info['version_to']);
             set_opinion('software_build', $target_version_info['build_to']);
+            set_opinion('db_build', $target_version_info['build_to']);
 
             if (File::file_exists(Upgrade_PATH . 'init.php')) {
                 include(Upgrade_PATH . 'init.php');
