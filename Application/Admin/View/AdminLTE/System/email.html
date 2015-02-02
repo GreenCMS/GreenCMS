@@ -46,82 +46,103 @@
 
                             <form action="{:U('Admin/System/saveHandle')}" name="change_System"
                                   class="form-horizontal" method="post">
-                                <div class="form-group">
+                                <div class="form-group" >
                                     <label class="control-label">邮件发送模式</label>
 
                                     <div class="controls">
                                         <label class="radio">
 
-                                            <switch name="send_mail">
-                                                <case value="1"><input type="radio" name="send_mail" checked="checked"
-                                                                       value="1"/></case>
-                                                <case value="0"><input type="radio" name="send_mail" value="1"/></case>
+                                            <switch name="mail_method">
+                                                <case value="smtp">
+                                                    <input type="radio"  name="mail_method" checked="checked"
+                                                           value="smtp"/>
+                                                </case>
+                                                <case value="mail">
+                                                    <input type="radio"  name="mail_method" value="smtp"/>
+                                                </case>
                                                 <default/>
-                                                <input type="radio" name="send_mail" checked="checked" value="1"/>
+                                                <input type="radio" name="mail_method"  checked="checked" value="smtp"/>
                                             </switch>
                                             SMTP函数发送
                                         </label>
                                         <label class="radio">
 
-                                            <switch name="send_mail">
-                                                <case value="1"><input type="radio" name="send_mail" value="0"/></case>
-                                                <case value="0"><input type="radio" name="send_mail" checked="checked"
-                                                                       value="0"/></case>
+                                            <switch name="mail_method">
+                                                <case value="smtp">
+                                                    <input type="radio"  name="mail_method" value="mail"/>
+                                                </case>
+                                                <case value="mail">
+                                                    <input type="radio"  name="mail_method" checked="checked"
+                                                           value="mail"/>
+                                                </case>
                                                 <default/>
                                             </switch>
-                                            mail模块发送(尚不支持)
+                                            Mail 函数发送(需要主机支持)
                                         </label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">邮件服务器</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="smtp_host"
-                                               value="{:get_opinion('smtp_host')}"/>
-                                        <span class="help-inline">smtp.domain.com</span>
+                                <div id="smtp">
+
+                                    <div class="form-group">
+                                        <label class="control-label">邮件服务器</label>
+
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="form-control large"
+                                                   name="smtp_host"
+                                                   value="{:get_opinion('smtp_host')}"/>
+                                            <span class="help-inline">smtp.domain.com</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">邮件发送端口</label>
+
+                                        <div class="controls">
+                                            <input type="number" placeholder="" class="form-control large"
+                                                   name="smtp_port"
+                                                   value="{:get_opinion('smtp_port')}"/>
+                                            <span class="help-inline">默认为25</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">发件人地址</label>
+
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="form-control large"
+                                                   name="smtp_user"
+                                                   value="{:get_opinion('smtp_user')}"/>
+                                            <span class="help-inline">你的邮箱帐号</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">验证用户名</label>
+
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="form-control large"
+                                                   name="from_email"
+                                                   value="{:get_opinion('from_email')}"/>
+                                            <span class="help-inline">与发件人地址相同</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">验证密码</label>
+
+                                        <div class="controls">
+                                            <input type="password" placeholder="" class="form-control large"
+                                                   name="smtp_pass"
+                                                   value="{:get_opinion('smtp_pass')}"/>
+                                            <span class="help-inline">你的邮箱密码</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">邮件发送端口</label>
 
-                                    <div class="controls">
-                                        <input type="number" placeholder="" class="form-control large" name="smtp_port"
-                                               value="{:get_opinion('smtp_port')}"/>
-                                        <span class="help-inline">默认为25</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">发件人地址</label>
-
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="smtp_user"
-                                               value="{:get_opinion('smtp_user')}"/>
-                                        <span class="help-inline">你的邮箱帐号</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">验证用户名</label>
-
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="from_email"
-                                               value="{:get_opinion('from_email')}"/>
-                                        <span class="help-inline">与发件人地址相同</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">验证密码</label>
-
-                                    <div class="controls">
-                                        <input type="password" placeholder="" class="form-control large"
-                                               name="smtp_pass"
-                                               value="{:get_opinion('smtp_pass')}"/>
-                                        <span class="help-inline">你的邮箱密码</span>
-                                    </div>
-                                </div>
 
                                 <div class="form-actions">
                                     <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
+
+                                    <a class="btn btn-primary" href="{:U('Admin/System/emailSendTest')}"><i
+                                            class="icon-ok"></i> 测试邮件发送</a>
+
                                 </div>
                             </form>
 
@@ -140,6 +161,16 @@
 <!-- ./wrapper -->
 
 <include file="Public:foot"/>
+
+<script>
+    jQuery(document).ready(function () {
+
+
+    });
+
+
+</script>
+
 
 </body>
 </html>
