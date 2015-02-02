@@ -142,7 +142,7 @@ class CustomController extends AdminBaseController
 
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInget_opinion('menu_sort');
+        $res = $Menu->where($map)->setInc('menu_sort');
 
 
         $menu_item['menu_sort'] = $menu_item_target['menu_sort'] + 1;
@@ -246,7 +246,7 @@ class CustomController extends AdminBaseController
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInget_opinion('menu_sort');
+        $res = $Menu->where($map)->setInc('menu_sort');
 
         $result = $Menu->data($post_data)->add();
         if ($result) {
@@ -334,7 +334,7 @@ class CustomController extends AdminBaseController
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
 
         $Menu = D('Menu');
-        $res = $Menu->where($map)->setInget_opinion('menu_sort');
+        $res = $Menu->where($map)->setInc('menu_sort');
 
 
         if ($post_data['menu_pid'] == $post_data['menu_id']) {

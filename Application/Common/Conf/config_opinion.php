@@ -10,11 +10,12 @@
 return array(
 
     "url_function" => array(
-        'native' => '直链',
-        'get_post_url' => '文章',
-        'get_cat_url' => '分类',
-        'get_tag_url' => '标签',
-        'U' => 'TP原生函数',
+        'native' => '直链http://xxxx',
+        'get_post_url' => '文章Post',
+        'get_cat_url' => '分类Cat',
+        'get_tag_url' => '标签Tag',
+        'get_channel_url' => '频道Cannel',
+        'U' => 'TP原生U函数',
         'get_addon_url' => '插件链接生成函数'
     ),
 

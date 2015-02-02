@@ -230,6 +230,8 @@ class IndexController extends Controller
         if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
         $cquery = "Update `{$db_prefix}options` set option_value='{$software_build}' where option_name='software_build';";
         if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
+        $cquery = "Update `{$db_prefix}options` set option_value='{$software_build}' where option_name='db_build';";
+        if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
 
         //TODO              写不下去了

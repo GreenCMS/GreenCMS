@@ -62,6 +62,14 @@ class ArchiveController extends HomeBaseController
 
     }
 
+
+    public function index()
+    {
+        $this->single();
+        die();
+    }
+
+
     /**
      * 文章归档 支持年月日参数传递 和用户id
      * @param null 文章归档
@@ -69,16 +77,15 @@ class ArchiveController extends HomeBaseController
     public function single()
     {
         $where['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
-      //  if (I('get.year')== ''&&I('get.month')== ''&&I('get.day')== ''){unset($where);}
+        //  if (I('get.year')== ''&&I('get.month')== ''&&I('get.day')== ''){unset($where);}
 
         if (I('get.uid') != '') $where['user_id'] = I('get.uid');
 
-            $title_prefix = (I('get.year', '') ? I('get.year', '') . '年' : '') .
+        $title_prefix = (I('get.year', '') ? I('get.year', '') . '年' : '') .
             (I('get.month', '') ? I('get.month', '') . '月' : '') . (I('get.day', '') ? I('get.day', '') . '日' : '');
 
 
         $PostsLogic = new PostsLogic();
-        // $PostsLogic->hp_cache=true;  10w以上记录开启
         $count = $PostsLogic->countAll('single', $where); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;

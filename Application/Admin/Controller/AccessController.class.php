@@ -447,7 +447,7 @@ class AccessController extends AdminBaseController
 
             $this->action = '指定分类';
             $this->action_name = "setrolecat";
-            $this->assign("handle", "setrolecat?id=" . $id);
+            $this->assign("handle", U("Admin/Access/setrolecat", array('id' => $id)));
             $this->cats = D('Cats', 'Logic')->category();
             $this->display();
         }

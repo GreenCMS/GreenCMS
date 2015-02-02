@@ -52,7 +52,8 @@ class PostsLogic extends RelationModel
     {
         $info['post_id|post_name'] = urlencode($id);
         $post_res = $this->where($info)->relation(false)->find();
-        return $post_res;
+		if($post_res) return true;
+        return false;
     }
 
 

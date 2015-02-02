@@ -6,7 +6,7 @@
 
             <ul class="unstyled">
                 <volist name="list" id="vo">
-                    <li><h4><a href="{$vo.cat_id|getCatURLByID}"> {$vo.cat_slug} </a></h4></li>
+                    <li><h4><a href="{$vo|get_cat_url}"> {$vo.cat_slug} </a></h4></li>
                 </volist>
             </ul>
         </div>

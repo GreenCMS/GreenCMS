@@ -204,6 +204,7 @@ CREATE TABLE `{$db_prefix}role` (
   `pid` smallint(6) DEFAULT NULL,
   `status` tinyint(1) unsigned DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
+  `cataccess` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pid` (`pid`),
   KEY `status` (`status`)

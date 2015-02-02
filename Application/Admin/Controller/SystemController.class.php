@@ -12,6 +12,7 @@ namespace Admin\Controller;
 use Common\Event\SystemEvent;
 use Common\Event\UpdateEvent;
 use Common\Util\File;
+use Common\Util\GreenMail;
 use Think\Storage;
 
 /**
@@ -20,8 +21,6 @@ use Think\Storage;
  */
 class SystemController extends AdminBaseController
 {
-
-    //TODO Email mail()
 
     /**
      *
@@ -113,12 +112,38 @@ class SystemController extends AdminBaseController
 
 
     /**
-     *
+     * 邮箱配置
      */
     public function email()
     {
-        $this->assign('send_mail', get_opinion('send_mail'));
+        $this->assign('mail_method', get_opinion('mail_method'));
         $this->display();
+    }
+
+    /**
+     * 邮箱发送测试
+     */
+    public function emailSendTest()
+    {
+        $this->assign('action', '邮件发送测试');
+
+        if (IS_POST) {
+
+            $send_to = I('post.to_mail');
+
+            $subject = "GreenCMS测试邮件";
+            $body = "测试邮件通过" . get_opinion('mail_method') . '模式发送';
+            $Mail = new GreenMail();
+            $res = $Mail->send_mail($send_to, "GreenCMS Test Team", $subject, $body);
+
+            $this->assign("config", $Mail->config);
+            $this->assign("res", $res);
+            $this->display('emailRes');
+
+        } else {
+            $this->display('emailTest');
+        }
+
     }
 
 
@@ -260,6 +285,7 @@ class SystemController extends AdminBaseController
 
             set_opinion('software_version', $target_version_info['version_to']);
             set_opinion('software_build', $target_version_info['build_to']);
+            set_opinion('db_build', $target_version_info['build_to']);
 
             if (File::file_exists(Upgrade_PATH . 'init.php')) {
                 include(Upgrade_PATH . 'init.php');

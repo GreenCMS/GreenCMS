@@ -9,6 +9,7 @@
 
 namespace Home\Widget;
 
+use Common\Util\Category;
 use Home\Logic\MenuLogic;
 
 use Common\Logic\CatsLogic;
@@ -138,7 +139,7 @@ class WidgetWidget extends Controller
 
             $CatList = new CatsLogic();
 
-            $Cat = new \Common\Util\Category ('Cats', array('cat_id', 'cat_father', 'cat_name', 'cat_name'));
+            $Cat = new Category ('Cats', array('cat_id', 'cat_father', 'cat_name', 'cat_name'));
 
             $children['cat_children'] = $Cat->getList();
             foreach ($children['cat_children'] as $key => $value) {

@@ -63,9 +63,9 @@ INSERT INTO `{$db_prefix}links` VALUES (null, '124', 'http://www.zts1993.com/', 
 -- Records of {$db_prefix}menu
 -- ----------------------------
 INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '10000', '测试分类', '_self', 'getCatURLByID', 'head', '1');
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '空链接', '_self', 'none', 'head', null);
+INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '100', '空链接', '_self', 'none', 'head', null);
 INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '测试页面', '_self', 'getSingleURLByID', 'head', '[\"2\",\"page\"]');
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '测试文章', '_self', 'getSingleURLByID', 'head', '[\"1\",\"single\"]');
+INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '98', '所有文章', '_self', 'U', 'head', 'Home/Archive/Single');
 
 -- ----------------------------
 -- Records of {$db_prefix}options
@@ -75,7 +75,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('2', 'title', 'GreenCMS 2014', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('3', 'keywords', 'GreenCMS v2 based on ThinkPHP 3.2.1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('4', 'description', 'GreenCMS created by GreenStudio ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('5', 'foot', '', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('6', 'ip_geo', '1', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('6', 'db_build', '20140306', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('7', 'software_author', 'GreenStudio', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('8', 'widget_about_us', '关于我们', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('9', 'software_homepage', 'http://www.greencms.net', 'yes');
