@@ -254,6 +254,7 @@ __如果你需要升级ThinkPHP框架请注意上面文件区别__
 ####PHP7
 > - 性能提升100%
 > - 首页RPS在50以上
+> - 演示地址:[http://php7.greencms.net/](http://php7.greencms.net/)
 
 
 2015/2/5
