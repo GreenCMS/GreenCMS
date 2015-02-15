@@ -20,19 +20,6 @@ class UserLogic extends RelationModel
 {
 
     /**
-     * 获取指定用户信息
-     * @param $uid 用户UID
-     * @param bool $relation 是否关联查询
-     *
-     * @return mixed 找到返回数组
-     */
-    public function detail($uid, $relation = true)
-    {
-        $user = D('User')->where(array('user_id' => $uid))->relation($relation)->find();
-        return $user;
-    }
-
-    /**
      * 获取list
      * @param bool $limit sql limit
      * @param bool $relation 是否关联
@@ -44,6 +31,60 @@ class UserLogic extends RelationModel
         return D('User')->limit($limit)->relation($relation)->select();
     }
 
+    /**
+     * 改变用户信息
+     * @param int $uid
+     * @param array $data
+     * @return array
+     */
+    public function update($uid = 0, $data = array())
+    {
+        $db_res= D('User')->where(array("user_id" => $uid))->data($data)->save();
+        if($db_res){
+            return arrayRes(1, "用户信息修改成功");
+        }else{
+            return arrayRes(0, "用户信息修改失败");
+        }
+    }
+
+    /**
+     * 改变用户密码
+     * @param $uid
+     * @param $oldPassword
+     * @param $newPassword
+     * @return string
+     */
+    public function changePassword($uid, $oldPassword, $newPassword)
+    {
+
+        $user = $this->detail($uid);
+        if ($user['user_pass'] != encrypt($oldPassword)) {
+            return arrayRes(0, "原用户密码不正确");
+        }
+
+        $data['user_id'] = $uid;
+        $data['user_pass'] = encrypt($newPassword);
+
+        if (D('User')->where(array("user_id" => $uid))->data($data)->save()) {
+            return arrayRes(1, "密码修改成功",U("Admin/login/logout"));
+        } else {
+            return arrayRes(0, "密码修改失败");
+        }
+
+    }
+
+    /**
+     * 获取指定用户信息
+     * @param $uid int 用户UID
+     * @param bool $relation 是否关联查询
+     *
+     * @return mixed 找到返回数组
+     */
+    public function detail($uid, $relation = true)
+    {
+        $user = D('User')->where(array('user_id' => $uid))->relation($relation)->find();
+        return $user;
+    }
 
     /**
      * 生成新的Hash

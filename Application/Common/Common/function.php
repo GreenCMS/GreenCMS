@@ -821,3 +821,12 @@ function get_server_info(){
 }
 
 
+/**
+ * 返回状态和信息
+ * @param $status
+ * @param $info
+ * @return array
+ */
+function arrayRes($status,$info,$url="") {
+    return array("status" => $status, "info" => $info, "url" => $url);
+}
