@@ -413,6 +413,10 @@ class File
 
         if ($res == true) {
             foreach ($files as $file) {
+
+                if(empty($file)){
+                    continue;
+                }
                 if ($t = $zip->addFile($path . $file, str_replace('/', '', $file))) {
                     $t = $zip->addFile($path . $file, str_replace('/', '', $file));
                 }

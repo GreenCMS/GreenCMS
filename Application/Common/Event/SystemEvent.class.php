@@ -101,28 +101,31 @@ class SystemEvent
      */
     public function clearCacheAll()
     {
-
-
-        if (get_opinion('DATA_CACHE_TYPE') == 'File') {
-
-            $caches = array(
-                RUNTIME_PATH . "HTML",
-                RUNTIME_PATH . "Cache",
-                RUNTIME_PATH . "Data",
-                RUNTIME_PATH . "Temp",
-                RUNTIME_PATH . "~runtime.php",
-            );
-            foreach ($caches as $value) {
-                $this->clearCache($value);
-            }
-        } else {
-            $Cache = new Cache();
-            $caches = $Cache->connect();
-            $caches->clear();
+        $caches = array(
+            RUNTIME_PATH . "HTML",
+            RUNTIME_PATH . "Cache",
+            RUNTIME_PATH . "Data",
+            RUNTIME_PATH . "Temp",
+            RUNTIME_PATH . "~runtime.php",
+        );
+        foreach ($caches as $value) {
+            $this->clearCache($value);
         }
-
+        $Cache = new Cache();
+        $caches = $Cache->connect();
+        $caches->clear();
 
         return true;
+    }
+
+    /**
+     * 清空缓存
+     * @param $cache_path
+     * @return bool
+     */
+    public function clearCache($cache_path)
+    {
+        return File::delAll($cache_path, true);
     }
 
     /**
@@ -135,13 +138,17 @@ class SystemEvent
     }
 
     /**
-     * 清空缓存
-     * @param $cache_path
-     * @return bool
+     * 备份所有数据看
+     * @return array
      */
-    public function clearCache($cache_path)
+    public function backupDBAll()
     {
-        return File::delAll($cache_path, true);
+        $type = "系统自动备份";
+        $path = DB_Backup_PATH . "/SYSTEM_" . date("Ymd");
+
+        $MySQLLogic = new \Common\Util\MySQLUtil();
+        $tables = $MySQLLogic->getAllTableName();
+        return $this->backupDB($type, $tables, $path);
     }
 
     /**
@@ -238,20 +245,6 @@ class SystemEvent
         $res = array("status" => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) .
             "个SQL文件。耗时：" . G('Backup_start', 'Backup_end') . "秒", "url" => U('Admin/Data/restore'));
         return $res;
-    }
-
-    /**
-     * 备份所有数据看
-     * @return array
-     */
-    public function backupDBAll()
-    {
-        $type = "系统自动备份";
-        $path = DB_Backup_PATH . "/SYSTEM_" . date("Ymd");
-
-        $MySQLLogic = new \Common\Util\MySQLUtil();
-        $tables = $MySQLLogic->getAllTableName();
-        return $this->backupDB($type, $tables, $path);
     }
 
 

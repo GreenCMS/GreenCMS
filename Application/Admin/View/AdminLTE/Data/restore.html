@@ -285,16 +285,21 @@ jQuery(document).ready(function () {
 
     //刷新操作
     var repeat = function (url, type) {
+
         $.post(url, function (json) {
-//                    var json = eval("(" + json + ")");
+
+             json = eval("(" + json + ")");
+
             if (json.status == 1) {
                 if (json.url) {
                     $("#success").fadeIn().html(json.info);
                     repeat(json.url, type);
                 } else {
                     $("#success").fadeIn().html(json.info);
+                    $(".restore").attr("disabledSubmit", false).html("导入完成...");
                 }
             } else {
+                $(".restore").attr("disabledSubmit", false).html("导入失败...");
                 $("#success").html(json.info);
             }
         });

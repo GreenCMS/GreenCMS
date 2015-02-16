@@ -195,6 +195,10 @@ class PostsController extends AdminBaseController
 
     /**
      * 页面列表
+     * @param string $post_type
+     * @param string $post_status
+     * @param string $order
+     * @param string $keyword
      */
     public function page($post_type = 'page', $post_status = 'publish', $order = 'post_date desc', $keyword = '')
     {
@@ -203,6 +207,10 @@ class PostsController extends AdminBaseController
 
     /**
      * 回收站列表
+     * @param string $post_type
+     * @param string $post_status
+     * @param string $order
+     * @param string $keyword
      */
     public function recycle($post_type = "all", $post_status = 'preDel', $order = 'post_date desc', $keyword = '')
     {
@@ -212,6 +220,10 @@ class PostsController extends AdminBaseController
 
     /**
      * 未通过文章列表
+     * @param string $post_type
+     * @param string $post_status
+     * @param string $order
+     * @param string $keyword
      */
     public function reverify($post_type = "all", $post_status = 'reverify', $order = 'post_date desc', $keyword = '')
     {
@@ -221,6 +233,10 @@ class PostsController extends AdminBaseController
 
     /**
      * 草稿箱列表
+     * @param string $post_type
+     * @param string $post_status
+     * @param string $order
+     * @param string $keyword
      */
     public function draft($post_type = "all", $post_status = 'draft', $order = 'post_date desc', $keyword = '')
     {
@@ -231,6 +247,10 @@ class PostsController extends AdminBaseController
 
     /**
      * 待审核列表
+     * @param string $post_type
+     * @param string $post_status
+     * @param string $order
+     * @param string $keyword
      */
     public function unverified($post_type = "all", $post_status = 'unverified', $order = 'post_date desc', $keyword = '')
     {
@@ -441,7 +461,7 @@ class PostsController extends AdminBaseController
             } elseif ($post_data['post_type'] == 'page') {
                 $this->jsonReturn(1, "发布成功", U('Admin/Posts/page'));
             } else {
-                //TODO hook here to process the unknown post type
+                $this->jsonReturn(1, "发布成功", U('Admin/Posts/'.$post_data['post_type']));
             }
 
         } else {
@@ -705,9 +725,9 @@ class PostsController extends AdminBaseController
 
                 $data['cat_id'] = '1';
                 if (D('Post_cat')->where(array("cat_id" => $id))->find()) {
-                    $post = M('Post_cat')->where(array("cat_id" => $id))->select();
+                    $post = D('Post_cat')->where(array("cat_id" => $id))->select();
                     foreach ($post as $v) {
-                        M('Post_cat')->where(array("pc_id" => $v['pc_id']))->data($data)->save();
+                        D('Post_cat')->where(array("pc_id" => $v['pc_id']))->data($data)->save();
                     }
                 }
 

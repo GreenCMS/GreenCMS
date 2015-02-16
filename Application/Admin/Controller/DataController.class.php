@@ -13,6 +13,8 @@ use Common\Event\MySQLInfoEvent;
 use Common\Event\MySQLMaintainEvent;
 use Common\Util\File;
 use Common\Event\SystemEvent;
+use Common\Util\GreenMail;
+use Common\Util\GreenMailContent;
 
 /**
  * Class DataController
@@ -52,6 +54,8 @@ class DataController extends AdminBaseController
      */
     public function backupHandle()
     {
+        function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
+        @ini_set("memory_limit", '-1');
 
         if (!IS_POST) $this->error("访问出错啦");
 
@@ -62,8 +66,7 @@ class DataController extends AdminBaseController
         $System = new SystemEvent();
         $res = $System->backupDB($type, $tables, $path);
 
-        if ($res['status'] == 1)
-            $this->success($res['info'], $res['url']);
+        $this->array2Response($res);
 
     }
 
@@ -90,6 +93,8 @@ class DataController extends AdminBaseController
 
 //        ini_set("memory_limit", "256M");
         function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
+        @ini_set("memory_limit", '-1');
+
 //取得需要导入的sql文件
         $files = isset($_SESSION['cacheRestore']) ? $_SESSION['cacheRestore']['files'] : self::getRestoreFiles();
 //取得上次文件导入到sql的句柄位置
@@ -122,8 +127,9 @@ class DataController extends AdminBaseController
                         $imported = isset($_SESSION['cacheRestore']['imported']) ? $_SESSION['cacheRestore']['imported'] : 0;
                         $imported += $execute;
                         $_SESSION['cacheRestore']['imported'] = $imported;
-                        echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>',
-                            "url" => U('Admin/Data/restoreData')));
+//                        echo json_encode(array("status" => 1, "info" =>,
+//                            "url" => U('Admin/Data/restoreData')));
+                        $this->jsonReturn(1, '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>', U('Admin/Data/restoreData'));
                         //, array(randCode() => randCode())
                         exit;
                     }
@@ -137,7 +143,8 @@ class DataController extends AdminBaseController
         }
         $time = time() - $_SESSION['cacheRestore']['time'];
         unset($_SESSION['cacheRestore']);
-        echo json_encode(array("status" => 1, "info" => "导入成功，耗时：{$time} 秒钟"));
+//        echo json_encode(array("status" => 1, "info" => "导入成功，耗时：{$time} 秒钟"));
+        $this->jsonReturn(1, "导入成功，耗时：{$time} 秒钟");
         // $this->success('导入成功', 'restore');
     }
 
@@ -209,6 +216,9 @@ class DataController extends AdminBaseController
             header('Content-Type:application/json; charset=utf-8');
             $sqlFiles = explode(',', $_POST['sqlFiles']);
 
+            if (empty($sqlFiles) || count($sqlFiles) == 0 || $_POST['sqlFiles'] == "")
+                $this->jsonReturn(0, "请选择要打包的sql文件");
+
 
             $files = isset($_SESSION['cacheSendSql']['files']) ? $_SESSION['cacheSendSql']['files'] : self::getSqlFilesGroups();
             $to = $_SESSION['cacheSendSql']['to'];
@@ -216,10 +226,23 @@ class DataController extends AdminBaseController
 
 
             $zipOut = "sqlBackup.zip";
-            if (File::zip($sqlFiles, $zipOut)) {
-                //TODO send_mail
-                $res = send_mail($to, "", "数据库备份", "网站：<b>" . get_opinion('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
+            if ($zip_res = File::zip($sqlFiles, $zipOut, WEB_CACHE_PATH)) {
 
+                //$res = send_mail($to, "", "数据库备份", "网站：<b>" . get_opinion('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
+
+                $GreenMailContent = new GreenMailContent();
+                $GreenMailContent->to = $to;
+                $GreenMailContent->subject = get_opinion('title') . date("Y-m-d") . "数据库备份";
+                $GreenMailContent->body = "网站：<b>" . get_opinion('title') . "</b> 数据文件备份.生成时间:" . date("Y-m-d");
+                $GreenMailContent->attachment = WEB_CACHE_PATH . $zipOut;
+
+                $GreenMail = new GreenMail();
+                $res = $GreenMail->send($GreenMailContent);
+
+
+            } else {
+
+                $this->jsonReturn(0, "发送失败");
             }
 
 
@@ -228,10 +251,10 @@ class DataController extends AdminBaseController
             $time = time() - $_SESSION['cacheSendSql']['time'];
             unset($_SESSION['cacheSendSql']);
 
-            if (is_bool($res) && $res == true) {
+            if ($res['statue'] == true) {
                 $this->jsonReturn(1, "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒");
             } else {
-                $this->jsonReturn(1, "$res");
+                $this->jsonReturn(0, $res['info']);
             }
         }
         $this->display();
@@ -563,17 +586,14 @@ class DataController extends AdminBaseController
         // p($_POST['cache']);die;
         if (IS_POST) {
 
-            if (get_opinion('DATA_CACHE_TYPE') == 'File') {
-                $paths = $_POST ['cache'];
-                foreach ($paths as $path) {
-                    if (isset ($caches [$path])) {
-                        $res = File::delAll($caches [$path] ['path'], true);
-                    }
+            $paths = $_POST ['cache'];
+            foreach ($paths as $path) {
+                if (isset ($caches [$path])) {
+                    $res = File::delAll($caches [$path] ['path'], true);
                 }
-            } else {
-                $SystemEvent = new SystemEvent;
-                $SystemEvent->clearCacheAll();
             }
+            $SystemEvent = new SystemEvent;
+            $SystemEvent->clearCacheAll();
 
 
             $this->success("清除成功");
