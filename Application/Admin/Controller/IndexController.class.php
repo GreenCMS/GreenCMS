@@ -67,6 +67,10 @@ class IndexController extends AdminBaseController
                 $check_res .= '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 发现新的可升级版本</a></li>';
             }
 
+            if (!$UpdateEvent->checkVersion()) {
+                $check_res .= '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 数据库中版本号与代码中不一致</a></li>';
+            }
+
 
             if (!$AccessEvent->checkAccess()) {
                 $check_res .= '<li><a href="' . U("Admin/Access/rolelist") . '"><i class="fa fa-laptop"></i> 需要重建角色权限！</a></li>';
@@ -95,6 +99,13 @@ class IndexController extends AdminBaseController
 
         }
     }
+
+
+    public function checkTodoCacheClear()
+    {
+        S("checkTodo", "");
+    }
+
 
     /**
      * ajax定时计划触发

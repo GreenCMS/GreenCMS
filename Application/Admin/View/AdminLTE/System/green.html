@@ -53,7 +53,11 @@
                                         <input type="text" placeholder="" class="form-control large"
                                                name="software_build"
                                                value="{:get_opinion('software_build',true)}"/>
-                                        <span class="help-inline">请勿随意修改,会影响自动升级</span>
+                                        <span class="help-inline">请勿随意修改,会影响自动升级
+                                        <br/>
+                                           verion_config中系统build {$GreenCMS_Build}
+                                        </span>
+
                                     </div>
                                 </div>
 
@@ -64,7 +68,11 @@
                                         <input type="text" placeholder="" class="form-control large"
                                                name="software_version"
                                                value="{:get_opinion('software_version',true)}"/>
-                                        <span class="help-inline">请勿修改</span>
+                                        <span class="help-inline">请勿修改
+                                        <br/>
+                                           verion_config中系统版本 {$GreenCMS_Version}
+
+                                        </span>
                                     </div>
                                 </div>
 

@@ -402,6 +402,8 @@ class SystemController extends AdminBaseController
 
         $this->assign('DEFAULT_ADMIN_THEME', gen_opinion_list($DEFAULT_ADMIN_THEME, get_opinion('DEFAULT_ADMIN_THEME', true, "Metronic")));
 
+        $this->assign('GreenCMS_Version', GreenCMS_Version);
+        $this->assign('GreenCMS_Build', GreenCMS_Build);
 
         $this->display();
 
