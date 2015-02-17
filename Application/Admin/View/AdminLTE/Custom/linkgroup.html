@@ -36,73 +36,68 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <div class="margin">
-                                <div class="btn-group">
-                                    <a href="{:U('Admin/Custom/addlinkgroup')}">
-                                        <button class="btn btn-success">
-                                            添加链接分组
-                                        </button>
-                                    </a>
+                        <div class="margin">
+                            <div class="btn-group">
+                                <a href="{:U('Admin/Custom/addlinkgroup')}">
+                                    <button class="btn btn-success">
+                                        添加链接分组
+                                    </button>
+                                </a>
 
-                                    <a href="{:U('Admin/Custom/links')}">
-                                        <button class="btn btn-warning">
-                                            未分类链接
-                                        </button>
-                                    </a>
+                                <a href="{:U('Admin/Custom/links')}">
+                                    <button class="btn btn-warning">
+                                        未分类链接
+                                    </button>
+                                </a>
 
 
-                                </div>
                             </div>
-                            <table class="table table-striped table-bordered table-hover"
-                                   id="sample_1">
-                                <thead>
-                                <tr>
-                                    <th style="width: 8px;"><input type="checkbox"
-                                                                   class="group-checkable"
-                                                                   data-set="#sample_1 .checkboxes"/></th>
-                                    <th>ID名称</th>
-                                    <th>分组名称</th>
-                                    <th>操作</th>
+                        </div>
+                        <table class="table table-striped table-bordered table-hover"
+                               id="sample_1">
+                            <thead>
+                            <tr>
+                                <th style="width: 8px;"><input type="checkbox"
+                                                               class="group-checkable"
+                                                               data-set="#sample_1 .checkboxes"/></th>
+                                <th>ID名称</th>
+                                <th>分组名称</th>
+                                <th>操作</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            <foreach name="link_group_list" item="v">
+                                <tr class="odd gradeX">
+                                    <td><input type="checkbox" class="checkboxes" value="1"/></td>
+                                    <td> {$v.link_group_id}</td>
+                                    <td>
+                                        <a href="{:U('Admin/Custom/links', array('id' => $v['link_group_id']))}">{$v.link_group_name}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{:U('Admin/Custom/editlinkgroup', array('id' => $v['link_group_id']))}">编辑</a>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <a onclick="javascript:return a_confirm()"
+                                           href="{:U('Admin/Custom/dellinkgroupHandle', array('id' => $v['link_group_id']))}">删除</a>
+                                    </td>
+
 
                                 </tr>
-                                </thead>
-                                <tbody>
+                            </foreach>
+                            </tbody>
+                        </table>
 
 
-                                <foreach name="link_group_list" item="v">
-                                    <tr class="odd gradeX">
-                                        <td><input type="checkbox" class="checkboxes" value="1"/></td>
-                                        <td> {$v.link_group_id}</td>
-                                        <td>
-                                            <a href="{:U('Admin/Custom/links', array('id' => $v['link_group_id']))}">{$v.link_group_name}</a>
-                                        </td>
-                                        <td>
-                                            <a href="{:U('Admin/Custom/editlinkgroup', array('id' => $v['link_group_id']))}">编辑</a>
-                                            &nbsp;&nbsp;&nbsp;
-                                            <a onclick="javascript:return a_confirm()"
-                                               href="{:U('Admin/Custom/dellinkgroupHandle', array('id' => $v['link_group_id']))}">删除</a>
-                                        </td>
-
-
-                                    </tr>
-                                </foreach>
-                                </tbody>
-                            </table>
-
-
-                        </div>
                     </div>
                 </div>
             </div>
-
 
         </section>
         <!-- /.content -->

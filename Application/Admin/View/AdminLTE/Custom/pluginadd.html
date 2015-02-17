@@ -36,53 +36,46 @@
 
             <div class="row">
                 <div class="col-md-8">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">本地上传</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
+                        <form role="form" action="{:U('Admin/Custom/pluginAddLocal')}" name="change_System"
 
-                            <form role="form"  action="{:U('Admin/Custom/pluginAddLocal')}" name="change_System"
-
-                                  method="post"
-                                  enctype="multipart/form-data">
+                              method="post"
+                              enctype="multipart/form-data">
 
 
-                                <div class="form-group">
-                                    <label class="control-label">上传插件文件
-                                    </label>
+                            <div class="form-group">
+                                <label class="control-label">上传插件文件
+                                </label>
 
-                                    <div class="controls">
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                <div class="controls">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
 
-                                            <input type="file" class="default" name="file"/>
-
-                                        </div>
-
-                                        <span>注意! 可能会覆盖已有插件文件</span>
+                                        <input type="file" class="default" name="file"/>
 
                                     </div>
+
+                                    <span>注意! 可能会覆盖已有插件文件</span>
+
                                 </div>
+                            </div>
 
 
-                                <div class="form-actions">
-                                    <button  onclick="javascript:return a_confirm()" type="submit" class="btn btn-info"><i class="icon-ok"></i>提交</button>
-                                </div>
+                            <div class="form-actions">
+                                <button onclick="javascript:return a_confirm()" type="submit" class="btn btn-info"><i
+                                        class="icon-ok"></i>提交
+                                </button>
+                            </div>
 
 
-                            </form>
+                        </form>
 
 
-
-
-
-                        </div>
                     </div>
                 </div>
-
             </div>
 
 
