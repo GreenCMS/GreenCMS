@@ -200,6 +200,14 @@ function exist_kv($key)
     }
 }
 
+
+function get_theme_opinion($key, $default = '')
+{
+    return C("theme_config.".$key);
+}
+
+
+
 /**
  * 数组降维
  * to del
