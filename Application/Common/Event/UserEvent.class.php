@@ -53,33 +53,7 @@ class UserEvent extends BaseController
         }
     }
 
-    /**
-     * 改变用户密码
-     * @param $uid
-     * @param $oldPassword
-     * @param $newPassword
-     * @return string
-     */
-    public function changePassword($uid, $oldPassword, $newPassword)
-    {
 
-        $User = new UserLogic();
-
-        $user = $User->detail($uid);
-        if ($user['user_pass'] != encrypt($oldPassword)) {
-            return $this->jsonResult(0, "原用户密码不正确");
-        }
-
-        $User->user_id = $uid;
-        $User->user_pass = encrypt($newPassword);
-
-        if ($User->save()) {
-            return $this->jsonResult(1, "密码修改成功", U("Admin/Login/logout"));
-        } else {
-            return $this->jsonResult(0, "密码修改失败");
-        }
-
-    }
 
 
     /**

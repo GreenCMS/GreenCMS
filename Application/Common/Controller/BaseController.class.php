@@ -79,34 +79,6 @@ abstract class BaseController extends Controller {
 		}
 	}
 
-	/**
-	 * 简化tp json返回
-	 * @param int $status
-	 * @param string $info
-	 * @param string $url
-	 */
-	function jsonReturn($status = 1, $info = '', $url = '') {
-		die(json_encode(array("status" => $status, "info" => $info, "url" => $url)));
-	}
-
-	function jsonResult($status = 1, $info = '', $url = '') {
-		return json_encode(array("status" => $status, "info" => $info, "url" => $url));
-	}
-
-	function json2Response($json) {
-		$resArray = json_decode($json, true);
-
-		if ($resArray['status'] == 1) {
-			if ($resArray['url'] != '') {
-				$this->success($resArray['info'], $resArray['url'], false);
-			} else {
-				$this->success($resArray['info']);
-
-			}
-		} else {
-			$this->error($resArray['info']);
-		}
-	}
 
 
 
@@ -160,13 +132,99 @@ abstract class BaseController extends Controller {
 
 
     /**
-     *
+     * 获取当前用户信息
      */
     protected function _currentUser()
     {
         $user_id = ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
-        $user = D('User', 'Logic')->cache(true)->detail($user_id);
+        $user = D('User', 'Logic')->cache(true,10)->detail($user_id);
         $this->assign('user', $user);
     }
+
+
+    /**
+     * 检查当前用户id和传递id是否相同
+     * @param $uid
+     */
+    protected function _checkCurrentUser($uid)
+    {
+        if ($uid != get_current_user_id()) {
+            $this->error("不合法的操作");
+        }
+    }
+
+   /**
+    * 获取当前用户id
+     */
+    protected function _currenUserId()
+    {
+        return get_current_user_id();
+    }
+
+
+    //================================================
+    //=============跳转控制============================
+    //================================================
+
+
+    /**
+     * 简化tp json返回
+     * @param int $status
+     * @param string $info
+     * @param string $url
+     */
+    function jsonReturn($status = 1, $info = '', $url = '') {
+        die(json_encode(array("status" => $status, "info" => $info, "url" => $url)));
+    }
+
+    function jsonResult($status = 1, $info = '', $url = '') {
+        return json_encode(array("status" => $status, "info" => $info, "url" => $url));
+    }
+
+    function json2Response($json) {
+        $resArray = json_decode($json, true);
+
+        if ($resArray['status'] == 1) {
+            if ($resArray['url'] != '') {
+                $this->success($resArray['info'], $resArray['url'], false);
+            } else {
+                $this->success($resArray['info']);
+
+            }
+        } else {
+            $this->error($resArray['info']);
+        }
+    }
+
+   function array2Response($resArray) {
+        if ($resArray['status'] == 1) {
+            if ($resArray['url'] != '') {
+                $this->success($resArray['info'], $resArray['url'], false);
+            } else {
+                $this->success($resArray['info']);
+
+            }
+        } else {
+            $this->error($resArray['info']);
+        }
+    }
+
+
+
+    /**
+     * 通过$res判断结果返回success或者error
+     * @param mixed $res 结果集
+     * @param string $message 信息前面附加信息
+     */
+    protected function _jumpByRes($res, $message = "")
+    {
+        if ($res) {
+            $this->success($message . "更新成功");
+        } else {
+            $this->error($message . "更新失败");
+        }
+    }
+
+
 
 }

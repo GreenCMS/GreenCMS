@@ -1,5 +1,12 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.3.0218 build 20150218
+修正邮件发送类Bug
+修正导入SQL语句超过500行错误
+增加对PHP7支持
+增加修改用户信息
+优化性能修复bugs
+
 version v2.3.0215 build 20150215
 邮件发送增加mail函数支持
 修正bugs

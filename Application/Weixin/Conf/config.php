@@ -22,7 +22,6 @@ $menu_arr = array(
     'admin_sub_menu' => array(
         'Home'    => array(
             'Home/index'      => '微信仪表盘',
-            'Home/changePass' => '修改密码',
         ),
 
         'Reply'   => array(

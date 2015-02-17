@@ -200,6 +200,14 @@ function exist_kv($key)
     }
 }
 
+
+function get_theme_opinion($key, $default = '')
+{
+    return C("theme_config.".$key);
+}
+
+
+
 /**
  * 数组降维
  * to del
@@ -821,3 +829,12 @@ function get_server_info(){
 }
 
 
+/**
+ * 返回状态和信息
+ * @param $status
+ * @param $info
+ * @return array
+ */
+function arrayRes($status,$info,$url="") {
+    return array("status" => $status, "info" => $info, "url" => $url);
+}

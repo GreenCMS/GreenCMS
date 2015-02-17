@@ -88,7 +88,7 @@ class GreenMail
 
     public function send(GreenMailContent $greenEmail)
     {
-        $this->send($greenEmail->to, "", $greenEmail->subject, $greenEmail->body, $greenEmail->attachment);
+        return $this->send_mail($greenEmail->to, "", $greenEmail->subject, $greenEmail->body, $greenEmail->attachment);
     }
 
 

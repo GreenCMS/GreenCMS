@@ -53,7 +53,7 @@
 
 <control access="Admin/Index/checkTodo">
     <script>
-        $(document).ready(function () {
+        function fetchWarningList() {
             var url = '{:U("Admin/Index/checkTodo")}';
             $.get(url, function (data) {
                 if (data != 'none') {
@@ -62,6 +62,23 @@
                 } else {
                 }
             });
+        }
+        function clearWarningList() {
+            var url = '{:U("Admin/Index/checkTodoCacheClear")}';
+            $.get(url, function (data) {
+
+            });
+        }
+        $(document).ready(function () {
+
+            fetchWarningList();
+
+            $('.notifications-menu').click(function(){
+                clearWarningList();
+            });
+
+
         });
+
     </script>
 </control>

@@ -13,6 +13,7 @@ use Common\Event\AccessEvent;
 use Common\Event\CountEvent;
 use Common\Event\UpdateEvent;
 use Common\Event\UserEvent;
+use Common\Logic\UserLogic;
 use Think\Storage;
 
 /**
@@ -66,6 +67,10 @@ class IndexController extends AdminBaseController
                 $check_res .= '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 发现新的可升级版本</a></li>';
             }
 
+            if (!$UpdateEvent->checkVersion()) {
+                $check_res .= '<li><a href="' . U("Admin/System/update") . '"><i class="fa fa-laptop"></i> 数据库中版本号与代码中不一致</a></li>';
+            }
+
 
             if (!$AccessEvent->checkAccess()) {
                 $check_res .= '<li><a href="' . U("Admin/Access/rolelist") . '"><i class="fa fa-laptop"></i> 需要重建角色权限！</a></li>';
@@ -95,6 +100,13 @@ class IndexController extends AdminBaseController
         }
     }
 
+
+    public function checkTodoCacheClear()
+    {
+        S("checkTodo", "");
+    }
+
+
     /**
      * ajax定时计划触发
      */
@@ -123,12 +135,13 @@ class IndexController extends AdminBaseController
             $this->error('两次密码不同');
         }
 
-        $uid = get_current_user_id();
+        $uid = $this->_currenUserId();
 
-        $UserEvent = new UserEvent();
-        $changePasswordRes = $UserEvent->changePassword($uid, I('post.opassword'), I('post.password'));
+        $UserLogic = new UserLogic();
 
-        $this->json2Response($changePasswordRes);
+        $res = $UserLogic->changePassword($uid, I('post.opassword'), I('post.password'));
+
+        $this->array2Response($res);
 
     }
 
@@ -141,7 +154,7 @@ class IndexController extends AdminBaseController
         $CountEvent = new CountEvent();
 
 
-        $uid = get_current_user_id();
+        $uid = $this->_currenUserId();
         $user = D('User', 'Logic')->detail($uid);
 
         $this->assign("PostCount", $CountEvent->getPostCount(array("user_id" => $uid)));
@@ -154,6 +167,22 @@ class IndexController extends AdminBaseController
 
     }
 
+    /**
+     * 用户信息信息保存
+     */
+    public function profileHandle($uid)
+    {
+        $this->_checkCurrentUser($uid);
+
+        $UserLogic = new UserLogic();
+
+        $post_data = I('post.');
+
+        $res = $UserLogic->update($uid, $post_data);
+
+        $this->array2Response($res);
+
+    }
 
     /**
      * 社交账号绑定

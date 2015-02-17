@@ -32,12 +32,9 @@
 <php>
     $CatsLogic=new Common\Logic\CatsLogic();
 
-    $cat71 = $CatsLogic->getPostsByCat(71, 10 ,0 ,false );
-    $cat73 = $CatsLogic->getPostsByCat(73, 10 ,0 ,false );
-    $cat13 = $CatsLogic->getPostsByCat(13, 10 ,0 ,false );
-
-    $slider = D('Tags', 'Logic')->getPostsByTag(1, 10 ,0 ,false  );
-
+    $cat71 = $CatsLogic->getPostsByCat(get_theme_opinion("id1"), 10 ,0 ,false );
+    $cat73 = $CatsLogic->getPostsByCat(get_theme_opinion("id2"), 10 ,0 ,false );
+    $cat13 = $CatsLogic->getPostsByCat(get_theme_opinion("id3"), 10 ,0 ,false );
 
 </php>
 
@@ -146,7 +143,7 @@
 
             <!--Archives-->
             <div  class="span4">
-                <h4>Code & SQL </h4>
+                <h4>{:get_theme_opinion("text1")} </h4>
 
                 <div>
 
@@ -179,7 +176,7 @@
 
             <!--Archives-->
             <div  class="span4">
-                <h4>手机,移动,数码,电脑 </h4>
+                <h4>{:get_theme_opinion("text2")} </h4>
 
                 <div>
 
@@ -211,7 +208,7 @@
 
             <!--Archives-->
             <div  class="span4">
-                <h4>杂谈 </h4>
+                <h4>{:get_theme_opinion("text3")} </h4>
 
                 <div>
 

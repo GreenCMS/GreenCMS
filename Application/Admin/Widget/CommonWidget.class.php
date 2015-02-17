@@ -31,6 +31,7 @@ class CommonWidget extends Controller
 
     /**
      * @FBI Warning ！除非你有空闲时间，否则不要没事读这段丧心病狂的代码。。
+     * AdminLTE主题使用的侧边栏版本~
      * @return string
      */
     public function sideMenu()

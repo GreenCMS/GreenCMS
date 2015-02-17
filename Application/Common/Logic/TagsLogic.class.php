@@ -38,8 +38,6 @@ class TagsLogic extends RelationModel
     /**
      * @param array $info_with
      * @param array $ids 需要限制的id
-     *
-     * @internal param string $type
      * @return int
      */
     public function countAll($info_with = array(), $ids = array())
@@ -60,7 +58,6 @@ class TagsLogic extends RelationModel
      * @param int $start
      * @param bool $relation
      * @param string $except_field
-     * @internal param $cat_id 分类id
      * @return mixed
      */
     public function getPostsByTag($tag_id, $num = 5, $start = 0 , $relation = true, $except_field = '')
@@ -79,7 +76,6 @@ class TagsLogic extends RelationModel
      * @param $info string tag_id|tag_slug
      * @param string $post_status
      * @param int $limit
-     * @internal param int $num
      * @return mixed 找到的话返回post_id数组集合
      */
     public function getPostsId($info, $post_status = 'publish', $limit = 99999999)

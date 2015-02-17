@@ -39,6 +39,24 @@ class UpdateEvent extends BaseController
 
     }
 
+
+    /**
+     *
+     */
+    public function checkVersion()
+    {
+        $software_build_db = get_opinion('software_build');
+        $software_build_const = GreenCMS_Build;
+
+        if($software_build_db==$software_build_const){
+            return true;
+        }else{
+            return false;
+        }
+
+
+    }
+
     public function applyPatch($filename)
     {
         $System = new SystemEvent();

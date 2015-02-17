@@ -23,6 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
+                <small>-Beta</small>
                 <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
@@ -36,26 +37,73 @@
 
             <div class="row">
                 <div class="col-md-8">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>Beta
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="well" style="padding-left: 50px;line-height: 30px;font-size: 20px">
+
+                            UID: {$user.user_id} <br/>
+                            用户名: {$user.user_login} <br/>
+                               加入时间: {$user.user_registered} <br/>
+                             用户角色: {$user['role_info'][0]["name"]} <br/>
+                            文章数量: {$PostCount} 篇<br/>
+
                         </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="well" style="padding-left: 50px;line-height: 30px;font-size: 20px">
+                        <div class="well" style="padding-left: 50px;line-height: 30px;font-size: 20px">
 
-                                UID: {$user.user_id} <br/>
-                                用户名: {$user.user_nicename} <br/>
-                                电子邮箱: {$user.user_email} <br/>
-                                个人主页: {$user.user_url} <br/>
-                                加入时间: {$user.user_registered} <br/>
-                                自我介绍: {$user.user_intro} <br/>
-                                用户角色: {$user['role_info'][0]["name"]} <br/>
-                                文章数量: {$PostCount} 篇<br/>
 
+                        <form role="form" action="{:U('Admin/Index/profileHandle',array('uid'=>get_current_user_id()))}" name="change_System"
+                              method="post">
+
+
+                            <div class="form-group">
+                                <label class="control-label">昵称</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="user_nicename"
+                                           value="{$user.user_nicename}"/>
+                                    <span class="help-inline"></span>
+                                </div>
                             </div>
 
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label">电子邮箱</label>
+
+                                <div class="controls">
+                                    <input type="email" placeholder="" class="form-control large" name="user_email"
+                                           value="{$user.user_email}"/>
+                                    <span class="help-inline"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">个人主页</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="user_url"
+                                           value="{$user.user_url}"/>
+                                    <span class="help-inline"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">自我介绍</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="user_intro"
+                                           value="{$user.user_intro}"/>
+                                    <span class="help-inline"></span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
+                            </div>
+                        </form>
+
+
+                    </div>
                     </div>
                 </div>
             </div>
