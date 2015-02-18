@@ -85,10 +85,10 @@ class UserEvent extends BaseController
             //记住我
             if (I('post.remember') == 1) {
                 if ($authInfo['user_session'] != '') {
-                    cookie('user_session', $authInfo['user_session'], 3600000);
+                    cookie('user_session', $authInfo['user_session'], 3600*24*30);
                 } else if ($authInfo['user_session'] == '') {
                     $user_session = D('User', 'Logic')->genHash($authInfo);
-                    cookie('user_session', $user_session, 3600000);
+                    cookie('user_session', $user_session, 3600*24*30);
                 }
             }
             // 缓存访问权限

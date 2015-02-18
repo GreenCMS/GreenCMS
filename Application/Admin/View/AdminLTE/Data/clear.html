@@ -36,68 +36,63 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <form method="POST" action="{:U('Admin/Data/clear')}">
-                                <table
-                                        class="table table-striped table-bordered table-hover">
+                        <form method="POST" action="{:U('Admin/Data/clear')}">
+                            <table
+                                    class="table table-striped table-bordered table-hover">
 
-                                    <thead>
+                                <thead>
+                                <tr>
+                                    <th style="width: 8px;">选择
+
+
+                                    </th>
+                                    <th class="hidden-240">名称</th>
+                                    <th class="hidden-480">路径</th>
+                                    <th class="">缓存大小</th>
+                                </tr>
+                                </thead>
+                                <tbody id="cache_table">
+                                <volist name="caches" id="cache" key="k">
                                     <tr>
-                                        <th style="width: 8px;">选择
-
-
-                                        </th>
-                                        <th class="hidden-240">名称</th>
-                                        <th class="hidden-480">路径</th>
-                                        <th class="">缓存大小</th>
+                                        <td width="30" align="center"><input
+                                                class='groupclass' type="checkbox" name="cache[]"
+                                                value="{$key}"/></td>
+                                        <td>{$cache.name}</td>
+                                        <td>({$cache.path})</td>
+                                        <td>{$cache.size}</td>
                                     </tr>
-                                    </thead>
-                                    <tbody id="cache_table">
-                                    <volist name="caches" id="cache" key="k">
-                                        <tr>
-                                            <td width="30" align="center"><input
-                                                    class='groupclass' type="checkbox" name="cache[]"
-                                                    value="{$key}"/></td>
-                                            <td>{$cache.name}</td>
-                                            <td>({$cache.path})</td>
-                                            <td>{$cache.size}</td>
-                                        </tr>
-                                    </volist>
+                                </volist>
 
-                                    </tbody>
+                                </tbody>
 
 
-                                </table>
+                            </table>
 
 
-                                <div class="form-actions margin " >
-                                    <div class="row margin">
-                                        <button type="submit" class="btn btn-success">
-                                            <i class="m-icon-swapright m-icon-white"></i>开始清理
-                                        </button>
+                            <div class="form-actions margin ">
+                                <div class="row margin">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="m-icon-swapright m-icon-white"></i>开始清理
+                                    </button>
 
-                                        <button type="button" class="btn btn-primary" id="checkall">全选</button>
+                                    <button type="button" class="btn btn-primary" id="checkall">全选</button>
 
-                                        <button type="button" class="btn btn-danger" id="check_cancel">取消
-                                        </button>
+                                    <button type="button" class="btn btn-danger" id="check_cancel">取消
+                                    </button>
 
-                                        <!--<button type="button" class="btn btn-info" id="check_reverse">反选-->
-                                        <!--</button>-->
-                                    </div>
+                                    <!--<button type="button" class="btn btn-info" id="check_reverse">反选-->
+                                    <!--</button>-->
                                 </div>
+                            </div>
 
-                            </form>
+                        </form>
 
 
-
-                        </div>
                     </div>
                 </div>
             </div>

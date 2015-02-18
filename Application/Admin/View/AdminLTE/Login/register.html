@@ -2,7 +2,7 @@
 <html class="bg-black">
 <head>
     <meta charset="UTF-8">
-    <title>GreenCMS | 注册新用户</title>
+    <title>{:get_opinion('title')} | 注册新用户</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
     <link href="__PUBLIC__/AdminLTE/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -17,6 +17,36 @@
     <script src="__PUBLIC__/share/js/html5.js"></script>
     <script src="__PUBLIC__/share/js/respond.min.js"></script>
     <![endif]-->
+
+
+    <style>
+
+        .form-box {
+            width: 400px;
+            margin: 90px auto 0 auto;
+        }
+
+        .control-label {
+            float: left;
+            width: 60px;
+            margin-left: 15px;
+            padding-top: 5px;
+            text-align: right;
+        }
+
+        .form-control{
+            margin-left: 15px;
+            display: inline;
+            width: 250px;
+        }
+
+        #imgVerify{
+            margin: 0 auto;
+            text-align: center;
+            display: block;
+        }
+
+    </style>
 </head>
 <body class="bg-black">
 
@@ -24,36 +54,40 @@
     <div class="header">GreenCMS 注册新用户</div>
     <form action="{:U('Admin/Login/registerHandle')}" method="post">
         <div class="body bg-gray">
+
             <div class="form-group">
-                <input type="text" name="nickname" class="form-control" placeholder="Full name"/>
+                <label class="control-label">用户名</label>
+                <input type="text" name="username" class="form-control" placeholder="用户名"/>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label">密码</label>
+                <input type="password" name="password" class="form-control" placeholder="输入密码"/>
             </div>
             <div class="form-group">
-                <input type="text" name="username" class="form-control" placeholder="Username"/>
+                <label class="control-label">重复密码</label>
+                <input type="password" name="password2" class="form-control" placeholder="重复输入的密码"/>
             </div>
 
             <div class="form-group">
+                <label class="control-label">电子邮箱</label>
                 <input type="text" name="email" class="form-control" placeholder="Email"/>
             </div>
 
-
             <div class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="Password"/>
+                <label class="control-label">昵称</label>
+                <input type="text" name="nickname" class="form-control" placeholder="仅作为显示使用"/>
             </div>
-            <div class="form-group">
-                <input type="password" name="password2" class="form-control" placeholder="Retype password"/>
-            </div>
-
 
             <opinioncontrol realtime="true" opinion_name="vertify_code" default="true">
 
                 <div class="form-group">
+                    <label class="control-label">验证码</label>
                     <input  type="text" name="vertify" class="form-control" placeholder="输入下方验证码"/>
-
                 </div>
 
-
                 <div class="form-group">
-
                     <img id="imgVerify" src="{:U('Admin/Login/vertify')}" onclick="fleshVerify();"/>
                 </div>
 
@@ -62,9 +96,18 @@
         </div>
         <div class="footer">
 
-            <button type="submit" class="btn bg-olive btn-block">立即注册</button>
+            <button type="submit" class="btn bg-orange btn-block" style=" height: 50px">立即注册</button>
 
-            <a href="{:U('Admin/Login/index')}" class="text-center">已有帐号</a>
+            <hr/>
+
+            <p style="text-align: center">
+                <a href="{:U('Admin/Login/index')}"  class="btn bg-olive">已有帐号</a>
+                或者
+                <a href="{:U('Admin/Login/forgetpassword')}"  class="btn bg-aqua">找回密码?</a>
+            </p>
+
+
+
         </div>
     </form>
 
@@ -72,7 +115,8 @@
         <div class="copyright">
             2003-{:date('Y')} &copy; <a href="http://www.greencms.net">GreenCMS {:get_opinion('software_version')}</a>
             <br/> Admin Dashboard.
-            <br/>绿荫工作室 出品
+            <br/>
+            <a href="http://green.njtech.edu.cn">绿荫工作室</a>出品
         </div>
 
 
