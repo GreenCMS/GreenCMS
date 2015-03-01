@@ -15,6 +15,7 @@ use Common\Util\File;
 use Common\Event\SystemEvent;
 use Common\Util\GreenMail;
 use Common\Util\GreenMailContent;
+use Think\Upload;
 
 /**
  * Class DataController
@@ -83,6 +84,50 @@ class DataController extends AdminBaseController
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
         $this->display();
+    }
+
+    /**
+     * 上传本地数据库内容
+     * For MySQL
+     */
+    public function restorelocal()
+    {
+
+        $this->assign('action', '本地数据库恢复');
+        $this->assign('action_name', 'restorelocal');
+
+        $this->display();
+    }
+
+   public function restorelocalhandle()
+    {
+
+        $config = array(
+            'rootPath' => DB_Backup_PATH ,
+            "savePath" => '',
+            "maxSize" => 100000000, // 单位B
+            "exts" => array('sql'),
+            "subName" => array(),
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
+
+            $file_path_full = $info['file']['fullpath'];
+
+            //dump($info);die($file_path_full);
+            if (File::file_exists($file_path_full)) {
+              $this->success("上传成功", U('Admin/Data/restore'));
+
+            } else {
+                $this->error('文件不存在');
+
+            }
+        }
+
     }
 
     /**
