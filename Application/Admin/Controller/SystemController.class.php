@@ -153,6 +153,7 @@ class SystemController extends AdminBaseController
     public function safe()
     {
 
+        $this->assign('speed_info', get_opinion('speed_info', true));
         $this->assign('vertify_code', get_opinion('vertify_code', true));
         $this->assign('db_fieldtype_check', get_opinion('db_fieldtype_check'));
         $this->assign('LOG_RECORD', get_opinion('LOG_RECORD'));

@@ -1,6 +1,24 @@
 <footer id="colophon" role="contentinfo">
     <div class="site-info">
         <a href="http://www.greencms.net/" title="优雅的个人发布平台">自豪地采用 GreenCMS</a>
+
+        <p>
+            <opinioncontrol realtime="false" opinion_name="speed_info" default="false">
+
+                <php>
+                    G('beginTime',$GLOBALS['_beginTime']);
+                    G('viewEndTime');
+                    echo "Load in ".G('beginTime','viewEndTime').'s with '. N('db_query').' db queries  and '.N('cache_read').' cache hits' ;
+
+
+                </php>
+
+            </opinioncontrol>
+
+
+        </p>
+
+
     </div>
     <!-- .site-info -->
     {:hook('pageFooter', 'widget')}
