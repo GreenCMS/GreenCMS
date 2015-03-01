@@ -52,11 +52,6 @@ class SystemController extends AdminBaseController
      */
     public function post()
     {
-
-
-        $this->assign('auto_channel', get_opinion('auto_channel'));
-        $this->assign('api_open', get_opinion('api_open'));
-        $this->assign('feed_open', get_opinion('feed_open'));
         $this->display();
     }
 
@@ -152,14 +147,6 @@ class SystemController extends AdminBaseController
      */
     public function safe()
     {
-
-        $this->assign('speed_info', get_opinion('speed_info', true));
-        $this->assign('vertify_code', get_opinion('vertify_code', true));
-        $this->assign('db_fieldtype_check', get_opinion('db_fieldtype_check'));
-        $this->assign('LOG_RECORD', get_opinion('LOG_RECORD'));
-        $this->assign('SHOW_CHROME_TRACE', get_opinion('SHOW_CHROME_TRACE'));
-        $this->assign('SHOW_PAGE_TRACE', get_opinion('SHOW_PAGE_TRACE'));
-
         $this->display();
     }
 
@@ -170,8 +157,6 @@ class SystemController extends AdminBaseController
     {
         $Update = new UpdateEvent();
         $Update->check();
-
-
     }
 
     /**
@@ -202,8 +187,6 @@ class SystemController extends AdminBaseController
 
         } else {
             $this->display();
-
-
         }
     }
 

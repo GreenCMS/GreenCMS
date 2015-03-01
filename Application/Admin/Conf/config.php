@@ -135,8 +135,8 @@ $menu_arr = array(
             'System/email' => '邮箱配置',
 //            'System/kvset'  => '其他设置',
             'System/sns' => '社交登录设置',
-            'System/green' => '强制设置',
-            'System/update' => '系统升级',
+            'System/green' => '开发者选项置',
+            'System/update' => '在线更新',
             'System/info' => '系统信息',
             'System/bugs' => 'Bug反馈',
 

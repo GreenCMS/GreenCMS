@@ -32,71 +32,97 @@
         </section>
 
         <!-- Main content -->
-        <section class="content" style="color: #FF0000">
+        <section class="content" style="background-color: #fffdbd">
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title" style="color: #FF0000">{$action}-如果你不了解这里的用处,请勿随意更改</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
 
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <h3 class="box-title" style="color: #FF0000">&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;如果你不了解这里的用处,请勿随意更改</h3>
 
-                            <form action="{:U('Admin/System/saveHandle')}" name="change_System" role="form"
-                                  method="post">
-                                <div class="form-group">
-                                    <label class="control-label">系统build</label>
+                        <hr/>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large"
-                                               name="software_build"
-                                               value="{:get_opinion('software_build',true)}"/>
+                        <form action="{:U('Admin/System/saveHandle')}" name="change_System" role="form"
+                              method="post">
+                            <div class="form-group">
+                                <label class="control-label">系统build</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large"
+                                           name="software_build"
+                                           value="{:get_opinion('software_build',true)}"/>
                                         <span class="help-inline">请勿随意修改,会影响自动升级
                                         <br/>
                                            verion_config中系统build {$GreenCMS_Build}
                                         </span>
 
-                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="control-label">系统版本</label>
+                            <div class="form-group">
+                                <label class="control-label">系统版本</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large"
-                                               name="software_version"
-                                               value="{:get_opinion('software_version',true)}"/>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large"
+                                           name="software_version"
+                                           value="{:get_opinion('software_version',true)}"/>
                                         <span class="help-inline">请勿修改
                                         <br/>
                                            verion_config中系统版本 {$GreenCMS_Version}
 
                                         </span>
-                                    </div>
                                 </div>
+                            </div>
 
 
-                                <!--<div class="form-group">-->
-                                <!--<label class="control-label">后台主题</label>-->
+                            <div class="form-group">
+                                <label class="control-label">开启Testing功能</label>
 
-                                <!--<div class="controls">-->
-                                <!--<select class="form-control large"   tabindex="1" name="DEFAULT_ADMIN_THEME" id="DEFAULT_ADMIN_THEME">-->
-                                <!--{$DEFAULT_ADMIN_THEME}-->
+                                <div class="controls">
 
-                                <!--</select>-->
-                                <!--<span class="help-inline">AdminLTE bug较多，仅支持ie9以上</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
+                                    <switchopinioncontrol opinion_name="preopr_function">
 
 
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
+                                    </switchopinioncontrol>
+
+
                                 </div>
-                            </form>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">开启Testing更新</label>
+
+                                <div class="controls">
+
+                                    <switchopinioncontrol opinion_name="preopr_update">
 
 
-                        </div>
+                                    </switchopinioncontrol>
+
+
+                                </div>
+                            </div>
+
+                            <!--<div class="form-group">-->
+                            <!--<label class="control-label">后台主题</label>-->
+
+                            <!--<div class="controls">-->
+                            <!--<select class="form-control large"   tabindex="1" name="DEFAULT_ADMIN_THEME" id="DEFAULT_ADMIN_THEME">-->
+                            <!--{$DEFAULT_ADMIN_THEME}-->
+
+                            <!--</select>-->
+                            <!--<span class="help-inline">AdminLTE bug较多，仅支持ie9以上</span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
+                            </div>
+                        </form>
+
+
                     </div>
                 </div>
             </div>
