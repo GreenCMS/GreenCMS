@@ -72,8 +72,11 @@
                                         <td>{$vo.post_count}</td>
                                         <td>{$vo.user_registered}</td>
 
-                                        <td>[ <a href="{:U('Admin/Access/editUser',array('aid'=>$vo['user_id']))}">编辑</a> ][ <a
-                                                href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a> ]
+                                        <td>[ <a
+                                                href="{:U('Admin/Access/editUser',array('aid'=>$vo['user_id']))}">编辑</a>
+                                            ][ <a
+                                                    href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a>
+                                            ]
                                         </td>
                                     </tr>
                                 </volist>
@@ -101,7 +104,6 @@
 <script>
     jQuery(document).ready(function () {
         $("#cache_table :checkbox").attr("checked", true);
-
 
 
         $("#checkall").click(function () { //":checked"匹配所有的复选框

@@ -11,13 +11,14 @@ namespace Weixin\Util;
 
 use Common\Util\Curl;
 
-class Media {
+class Media
+{
 
     private $accessToken;
 
-    private $uploadMediaURL='http://file.api.weixin.qq.com/cgi-bin/media/upload';
+    private $uploadMediaURL = 'http://file.api.weixin.qq.com/cgi-bin/media/upload';
 
-    private $downloadMediaURL='http://file.api.weixin.qq.com/cgi-bin/media/get';
+    private $downloadMediaURL = 'http://file.api.weixin.qq.com/cgi-bin/media/get';
 
 
     /**
@@ -25,8 +26,8 @@ class Media {
      */
     public function __construct()
     {
-        $AccessToken=new AccessToken();
-        $this->accessToken=$AccessToken->getAccessToken();
+        $AccessToken = new AccessToken();
+        $this->accessToken = $AccessToken->getAccessToken();
     }
 
 
@@ -43,22 +44,22 @@ class Media {
      * @param $type , 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）
      * @return bool|mixed|string {"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
      */
-    public function upload($filename, $type){
+    public function upload($filename, $type)
+    {
 
         $Curl = new Curl();
 
-        $params['access_token'] =$this->accessToken;
+        $params['access_token'] = $this->accessToken;
         $params['type'] = $type;
 
-        $data['media'] =  '@' . $filename;
+        $data['media'] = '@' . $filename;
 
-        $url=$this->uploadMediaURL;
-        $url.= (strpos($url, '?') === false) ? '?' : '&';
-        $url.= is_array($params) ? http_build_query($params) : $params;
+        $url = $this->uploadMediaURL;
+        $url .= (strpos($url, '?') === false) ? '?' : '&';
+        $url .= is_array($params) ? http_build_query($params) : $params;
 
 
-
-        $res = $Curl->callApi($url, $data, 'POST',true,false);
+        $res = $Curl->callApi($url, $data, 'POST', true, false);
 
         return $res;
     }
@@ -77,14 +78,15 @@ class Media {
      * Content-Length: 339721
      * curl -G "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID"
      */
-    public function download($mediaId){
+    public function download($mediaId)
+    {
 
         $Curl = new Curl();
 
-        $params['access_token'] =$this->accessToken;
+        $params['access_token'] = $this->accessToken;
         $params['media_id'] = $mediaId;
         $res = $Curl->callApi($this->downloadMediaURL, $params, 'GET');
 
         return $res;
     }
- }
+}

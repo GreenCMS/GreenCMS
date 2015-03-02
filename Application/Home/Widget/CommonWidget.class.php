@@ -33,23 +33,22 @@ class CommonWidget extends Controller
     {
 
 
-        if( S("Widget_mainMenu")==null ){
+        if (S("Widget_mainMenu") == null) {
 
             $Menu = new MenuLogic();
             $home_menu = $Menu->genMenu($position, $ul_attr, $li_attr, $ul_attr2, $li_attr2, $split);
 
-            $this->assign('home_menu',$home_menu );
+            $this->assign('home_menu', $home_menu);
             $menu = $this->fetch('Widget:mainMenu');
 
-            S("Widget_mainMenu",$menu,DEFAULT_EXPIRES_TIME);
+            S("Widget_mainMenu", $menu, DEFAULT_EXPIRES_TIME);
             echo $menu;
 
-        }else{
+        } else {
 
             echo S("Widget_mainMenu");
 
         }
-
 
 
     }

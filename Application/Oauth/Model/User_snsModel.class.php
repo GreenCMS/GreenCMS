@@ -21,15 +21,14 @@ class User_snsModel extends RelationModel
 
             'mapping_type' => self::BELONGS_TO,
 
-            'class_name'   => 'User',
+            'class_name' => 'User',
 
-            'foreign_key'  => 'user_id',
+            'foreign_key' => 'user_id',
 
             'mapping_name' => 'User',
 
-            'parent_key'   => 'user_id'
+            'parent_key' => 'user_id'
         )
-
 
 
     );

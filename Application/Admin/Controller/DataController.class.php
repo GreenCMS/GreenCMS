@@ -99,11 +99,11 @@ class DataController extends AdminBaseController
         $this->display();
     }
 
-   public function restorelocalhandle()
+    public function restorelocalhandle()
     {
 
         $config = array(
-            'rootPath' => DB_Backup_PATH ,
+            'rootPath' => DB_Backup_PATH,
             "savePath" => '',
             "maxSize" => 100000000, // 单位B
             "exts" => array('sql'),
@@ -120,7 +120,7 @@ class DataController extends AdminBaseController
 
             //dump($info);die($file_path_full);
             if (File::file_exists($file_path_full)) {
-              $this->success("上传成功", U('Admin/Data/restore'));
+                $this->success("上传成功", U('Admin/Data/restore'));
 
             } else {
                 $this->error('文件不存在');

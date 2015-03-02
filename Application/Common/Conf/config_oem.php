@@ -11,14 +11,10 @@ return array(
 
 
     $menu_black_list = array(
-        'System'=> array(
+        'System' => array(
             'System/bugs' => 'Bug反馈',
         )
     )
-
-
-
-
 
 
 );

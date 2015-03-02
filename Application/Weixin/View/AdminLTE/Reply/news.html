@@ -5,7 +5,8 @@
     <title> {$action} | {:get_opinion('title')}</title>
 
     <include file="Public:head"/>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/share/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+    <link rel="stylesheet" type="text/css"
+          href="__PUBLIC__/share/plugins/bootstrap-fileupload/bootstrap-fileupload.css"/>
 
 </head>
 <body class="skin-black">
@@ -45,87 +46,90 @@
                         <div class="box-body">
 
 
-                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                    <form action="{$form_action}" name="change_System"
-                          method="post"  enctype="multipart/form-data">
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <form action="{$form_action}" name="change_System"
+                                  method="post" enctype="multipart/form-data">
 
-                        <div class="form-group">
-                            <label class="control-label">标题</label>
+                                <div class="form-group">
+                                    <label class="control-label">标题</label>
 
-                            <div class="controls">
-                                <input type="text" placeholder="图文消息标题" class="form-control large" name="title" value="{$item.title}">
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="form-group">
-                            <label class="control-label">图片上传</label>
-
-                            <div class="controls">
-                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                    <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                        <img src="{$imgurl}" alt=""/>
+                                    <div class="controls">
+                                        <input type="text" placeholder="图文消息标题" class="form-control large" name="title"
+                                               value="{$item.title}">
                                     </div>
-                                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                    <div>
-                                        <div class="btn btn-file btn-info">
+                                </div>
 
-                                        <span class="fileupload-new">选择图片</span>
-                                        <span class="fileupload-exists">改变</span>
-                                                <input type="file"  name="img" style="position: relative; left: 200px;"/>
+
+                                <div class="form-group">
+                                    <label class="control-label">图片上传</label>
+
+                                    <div class="controls">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                                <img src="{$imgurl}" alt=""/>
+                                            </div>
+                                            <div class="fileupload-preview fileupload-exists thumbnail"
+                                                 style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                            <div>
+                                                <div class="btn btn-file btn-info">
+
+                                                    <span class="fileupload-new">选择图片</span>
+                                                    <span class="fileupload-exists">改变</span>
+                                                    <input type="file" name="img"
+                                                           style="position: relative; left: 200px;"/>
+
+                                                </div>
+
+                                            </div>
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
 
                                         </div>
 
-                                    </div>
-                                    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-
-                                </div>
-
-                                <span class="label label-important">注意!</span>
+                                        <span class="label label-important">注意!</span>
 											<span>
 											实时预览支持最新版Firefox, Chrome, Opera,
 											Safari 和 Internet Explorer 10 以上版本。
 
 											</span>
-                            </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">网页链接</label>
+
+                                    <div class="controls">
+                                        <input type="text" placeholder="点击图文消息跳转链接" class="form-control large"
+                                               name="url" value="{$item.url}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">图文消息描述</label>
+
+                                    <div class="controls">
+                                        <textarea style="height: 200px;" class="large form-control" rows="3"
+                                                  name="description">{$item.description}</textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn  bg-blue"><i class="icon-ok"></i>{$action_name}
+                                    </button>
+                                </div>
+
+                            </form>
+
+
                         </div>
-
-
-
-                        <div class="form-group">
-                            <label class="control-label">网页链接</label>
-
-                            <div class="controls">
-                                <input type="text" placeholder="点击图文消息跳转链接" class="form-control large"  name="url" value="{$item.url}">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label">图文消息描述</label>
-
-                            <div class="controls">
-                                <textarea style="height: 200px;" class="large form-control" rows="3" name="description">{$item.description}</textarea>
-                            </div>
-                        </div>
-
-
-                        <div class="form-actions">
-                            <button type="submit" class="btn  bg-blue"><i class="icon-ok"></i>{$action_name}</button>
-                        </div>
-
-                    </form>
-
-
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 
-    </section>
-    <!-- /.content -->
+        </section>
+        <!-- /.content -->
     </aside>
     <!-- /.right-side -->
 </div>

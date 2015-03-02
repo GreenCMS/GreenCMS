@@ -55,8 +55,6 @@ function getMenuButtons()
 }
 
 
-
-
 /**
  *
  * @package 二维数组排序
@@ -128,8 +126,9 @@ function array_insert(&$array, $position, $insert_array)
     $array = array_merge($first_array, $array);
 }
 
-function get_alink($url){
+function get_alink($url)
+{
 
-    if(empty($url))return '';
-    else return '<a href="'.$url.'">点击查看</a>';
+    if (empty($url)) return '';
+    else return '<a href="' . $url . '">点击查看</a>';
 }

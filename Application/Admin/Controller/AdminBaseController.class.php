@@ -121,7 +121,7 @@ class AdminBaseController extends BaseController
 
     private function _recordCurrentPage()
     {
-        if(!IS_AJAX){
+        if (!IS_AJAX) {
             cookie("last_visit_page", base64_encode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']), 3600 * 24 * 30);
         }
     }

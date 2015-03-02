@@ -17,7 +17,7 @@ return array(
 
 
     'admin_level_2' => array(
-        'Addons'=>'插件',
+        'Addons' => '插件',
         'Index' => '仪表盘',
         'Posts' => '文章页面',
         'Data' => '数据缓存',
@@ -33,7 +33,7 @@ return array(
     'admin_level_3' => array(
 
 
-        'Addons'=>array(
+        'Addons' => array(
             'execute' => '执行插件',
 
         ),

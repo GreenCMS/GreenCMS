@@ -9,18 +9,18 @@
 
 namespace Weixin\Controller;
 
- use Org\Util\Rbac;
+use Org\Util\Rbac;
 
- /**
-  * Class WeixinBaseController
-  * @package Weixin\Controller
-  */
- class WeixinBaseController extends WeixinCoreController
+/**
+ * Class WeixinBaseController
+ * @package Weixin\Controller
+ */
+class WeixinBaseController extends WeixinCoreController
 {
-     /**
-      *
-      */
-     public function __construct()
+    /**
+     *
+     */
+    public function __construct()
     {
         parent::__construct();
         $this->_initialize();
@@ -32,10 +32,10 @@ namespace Weixin\Controller;
 
     }
 
-     /**
-      *
-      */
-     protected function _initialize()
+    /**
+     *
+     */
+    protected function _initialize()
     {
         if (!RBAC::AccessDecision('Weixin')) // AccessDecision中间使用分组名
         {
@@ -49,10 +49,10 @@ namespace Weixin\Controller;
     }
 
 
-     /**
-      *
-      */
-     private function _currentPostion()
+    /**
+     *
+     */
+    private function _currentPostion()
     {
 
         //  echo CONTROLLER_NAME;
@@ -88,17 +88,16 @@ namespace Weixin\Controller;
     }
 
 
-
-     /**
-      *
-      */
-     public function saveConfig()
-     {
-         $post_data = I('post.');
-         foreach ($post_data as $name => $value) {
-             set_opinion($name, $value);
-         }
-     }
+    /**
+     *
+     */
+    public function saveConfig()
+    {
+        $post_data = I('post.');
+        foreach ($post_data as $name => $value) {
+            set_opinion($name, $value);
+        }
+    }
 
 
 }

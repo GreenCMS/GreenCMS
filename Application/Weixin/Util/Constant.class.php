@@ -9,6 +9,7 @@
 namespace Weixin\Util;
 
 
-class Constant {
+class Constant
+{
 
 } 

@@ -87,7 +87,7 @@ class MediaController extends AdminBaseController
         $root = File::scanDir(WEB_ROOT, true);
         $root_info = array();
 
-        $filter_array = array("Data", "Install","README.md","UpdateLOG","composer.json");
+        $filter_array = array("Data", "Install", "README.md", "UpdateLOG", "composer.json");
 
         foreach ($root as $value) {
 

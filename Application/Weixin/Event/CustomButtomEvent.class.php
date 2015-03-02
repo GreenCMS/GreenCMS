@@ -9,6 +9,7 @@
 namespace Weixin\Event;
 
 
-class CustomButtomEvent {
+class CustomButtomEvent
+{
 
 } 

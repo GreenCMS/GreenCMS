@@ -73,9 +73,12 @@
                                             <if condition="$vo.pid eq 0">
                                                 <else/>
                                                 [ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>]
-                                                [ <a href="{:U('Admin/Access/editRole',array('id'=>$vo['id']))}" class="edit">编辑</a> ]
-                                                [ <a href="{:U('Admin/Access/changeRole',array('id'=>$vo['id']))}" class="edit">权限分配</a> ]
-                                                [ <a href="{:U('Admin/Access/setrolecat',array('id'=>$vo['id']))}" class="edit">投稿分类</a> ]
+                                                [ <a href="{:U('Admin/Access/editRole',array('id'=>$vo['id']))}"
+                                                     class="edit">编辑</a> ]
+                                                [ <a href="{:U('Admin/Access/changeRole',array('id'=>$vo['id']))}"
+                                                     class="edit">权限分配</a> ]
+                                                [ <a href="{:U('Admin/Access/setrolecat',array('id'=>$vo['id']))}"
+                                                     class="edit">投稿分类</a> ]
 
 
                                             </if>
@@ -83,7 +86,6 @@
                                     </tr>
                                 </volist>
                             </table>
-
 
 
                         </div>
@@ -103,14 +105,14 @@
 <script>
     jQuery(document).ready(function () {
 
-         //快捷启用禁用操作
+        //快捷启用禁用操作
         $(".opStatus").click(function () {
             var obj = $(this);
             var id = $(this).parents("tr").attr("id");
             var status = $(this).attr("val");
             var div = $(".success");
             var url = "{:U('Admin/Access/opRoleStatus')}";
-            $.getJSON(url, { id: id, status: status }, function (json) {
+            $.getJSON(url, {id: id, status: status}, function (json) {
                 if (json.status == 1) {
                     div.fadeIn().html(json.info);
                     div.fadeOut(3000);

@@ -93,16 +93,15 @@ function get_opinion($key, $realtime = false, $default = '')
         }
 
     } else {
-        $res = D('Options')->cache(true,2)->where(array('option_name' => $key))->find();
+        $res = D('Options')->cache(true, 2)->where(array('option_name' => $key))->find();
         if (empty($res)) {
             $res = TP_C($key);
             if ($res) {
-                S('option_' . $key, $res ,DEFAULT_EXPIRES_TIME);
+                S('option_' . $key, $res, DEFAULT_EXPIRES_TIME);
                 return $res;
-            }
-            else return $default;
+            } else return $default;
         } else {
-            S('option_' . $key, $res['option_value'],DEFAULT_EXPIRES_TIME);
+            S('option_' . $key, $res['option_value'], DEFAULT_EXPIRES_TIME);
             return $res['option_value'];
         }
 
@@ -130,7 +129,7 @@ function set_opinion($key, $value)
         $data ['option_id'] = $find [0] ['option_id'];
         $options->save($data);
     }
-    S('option_'.$key,$value,DEFAULT_EXPIRES_TIME);
+    S('option_' . $key, $value, DEFAULT_EXPIRES_TIME);
 
 }
 
@@ -144,7 +143,7 @@ function set_opinion($key, $value)
 function get_kv($key, $realtime = false, $default = '')
 {
     if (!$realtime) {
-        $res = S('kv_'.$key);
+        $res = S('kv_' . $key);
         if ($res != null) {
             return $res;
         } else {
@@ -155,7 +154,7 @@ function get_kv($key, $realtime = false, $default = '')
         if ($options['kv_value'] == '') {
             return $default;
         } else {
-            S('kv_'.$key, $options['kv_value'],DEFAULT_EXPIRES_TIME);
+            S('kv_' . $key, $options['kv_value'], DEFAULT_EXPIRES_TIME);
             return $options['kv_value'];
         }
     }
@@ -171,7 +170,7 @@ function get_kv($key, $realtime = false, $default = '')
  */
 function set_kv($key, $value)
 {
-    if($value==null)S('kv_'.$key, null);
+    if ($value == null) S('kv_' . $key, null);
 
     $data['kv_value'] = $value;
     if (exist_kv($key)) {
@@ -180,7 +179,7 @@ function set_kv($key, $value)
         $data['kv_key'] = $key;
         $res = D('Kv')->data($data)->add();
     }
-    S('kv_'.$key, $value,DEFAULT_EXPIRES_TIME);
+    S('kv_' . $key, $value, DEFAULT_EXPIRES_TIME);
     return $res;
 }
 
@@ -203,9 +202,8 @@ function exist_kv($key)
 
 function get_theme_opinion($key, $default = '')
 {
-    return C("theme_config.".$key);
+    return C("theme_config." . $key);
 }
-
 
 
 /**
@@ -391,8 +389,8 @@ function get_addon_config($name)
 function addons_url($url, $param = array())
 {
 
-   $URL_HTML_SUFFIX= get_opinion('URL_HTML_SUFFIX');
-    C('URL_HTML_SUFFIX','');
+    $URL_HTML_SUFFIX = get_opinion('URL_HTML_SUFFIX');
+    C('URL_HTML_SUFFIX', '');
 
     $url = parse_url($url);
 
@@ -433,7 +431,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
     if (is_array($list)) {
         $refer = $resultSet = array();
         foreach ($list as $i => $data)
-            $refer[$i] = & $data[$field];
+            $refer[$i] = &$data[$field];
         switch ($sortby) {
             case 'asc': // 正向排序
                 asort($refer);
@@ -446,7 +444,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
                 break;
         }
         foreach ($refer as $key => $val)
-            $resultSet[] = & $list[$key];
+            $resultSet[] = &$list[$key];
         return $resultSet;
     }
     return false;
@@ -730,7 +728,7 @@ function check_access($access = "")
     $path = explode('/', strtoupper($access));
     $accessList = \Org\Util\Rbac::getAccessList($_SESSION[get_opinion('USER_AUTH_KEY')]);
 
-    if ((( int )$_SESSION [get_opinion('USER_AUTH_KEY')] == 1)|| $accessList[$path[0]][$path[1]][$path[2]] != '' ) {
+    if ((( int )$_SESSION [get_opinion('USER_AUTH_KEY')] == 1) || $accessList[$path[0]][$path[1]][$path[2]] != '') {
         return true;
     } else {
         return false;
@@ -816,13 +814,13 @@ function array_column_5($array, $col_value, $col_key)
 }
 
 
-function get_server_info(){
+function get_server_info()
+{
 
-    $server_info=$_SERVER;
+    $server_info = $_SERVER;
 
     //去除敏感信息
     unset($server_info['HTTP_COOKIE']);
-
 
 
     return $server_info;
@@ -835,6 +833,7 @@ function get_server_info(){
  * @param $info
  * @return array
  */
-function arrayRes($status,$info,$url="") {
+function arrayRes($status, $info, $url = "")
+{
     return array("status" => $status, "info" => $info, "url" => $url);
 }

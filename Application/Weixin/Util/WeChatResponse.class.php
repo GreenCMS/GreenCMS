@@ -9,6 +9,7 @@
 namespace Weixin\Util;
 
 
-class WeChatResponse {
+class WeChatResponse
+{
 
 } 

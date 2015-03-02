@@ -45,9 +45,6 @@
 <section class="container">
 
 
-
-
-
     <section id="about-us" class="container main">
         <div class="row-fluid">
             <div class="span12">
@@ -71,9 +68,9 @@
                                     Comments</a></p>
 
                             <p>
-                            <control access="Admin/Posts/posts">
-                                <a href="{:U('Admin/Posts/posts',array('id'=>$post['post_id']))}">  | 编辑</a>
-                            </control>
+                                <control access="Admin/Posts/posts">
+                                    <a href="{:U('Admin/Posts/posts',array('id'=>$post['post_id']))}"> | 编辑</a>
+                                </control>
                             </p>
                         </div>
                         <!--<p> {$post|get_post_thumbnail}</p>-->
@@ -81,12 +78,8 @@
                         <p id="post_content">{$post.post_content}</p>
 
 
-
-
-
                         <!-- About Author -->
                         <article class="post-author">
-
 
 
                             <h4>

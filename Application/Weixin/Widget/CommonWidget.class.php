@@ -28,6 +28,7 @@ class CommonWidget extends Controller
         $this->display('Widget:header');
 
     }
+
     /**
      * @FBI Warning ！除非你有空闲时间，否则不要没事读这段丧心病狂的代码。。
      * @return string
@@ -158,7 +159,7 @@ class CommonWidget extends Controller
         return $menu;
     }
 
-    
+
     /**
      *
      */

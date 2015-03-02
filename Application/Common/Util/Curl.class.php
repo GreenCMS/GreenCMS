@@ -84,7 +84,6 @@ class Curl
     }
 
 
-
     private function _httpGet($url, $query = array())
     {
 

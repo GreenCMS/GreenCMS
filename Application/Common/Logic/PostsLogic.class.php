@@ -52,7 +52,7 @@ class PostsLogic extends RelationModel
     {
         $info['post_id|post_name'] = urlencode($id);
         $post_res = $this->where($info)->relation(false)->find();
-		if($post_res) return true;
+        if ($post_res) return true;
         return false;
     }
 
@@ -150,7 +150,6 @@ class PostsLogic extends RelationModel
         CacheManager::clearPostCacheById($post_id);
         return $this->where(array('post_id' => $post_id))->setField(array("post_status" => $post_status));
     }
-
 
 
     /**

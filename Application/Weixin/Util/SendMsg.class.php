@@ -27,13 +27,12 @@ class SendMsg
         $this->accessToken = $AccessToken->getAccessToken();
 
         $params['access_token'] = $this->accessToken;
-        
+
         $this->msgUrl .= (strpos($this->msgUrl, '?') === false) ? '?' : '&';
         $this->msgUrl .= is_array($params) ? http_build_query($params) : $params;
 
 
     }
-
 
 
     /**

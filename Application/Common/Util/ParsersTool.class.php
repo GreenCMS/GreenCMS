@@ -15,13 +15,13 @@ class ParsersTool
             $parser = new WXR_Parser_SimpleXML;
             $result = $parser->parse($file);
             // If SimpleXML succeeds or this is an invalid WXR file then return the results
-                return $result;
+            return $result;
         } else if (extension_loaded('xml')) {
             $parser = new WXR_Parser_XML;
             $result = $parser->parse($file);
 
             // If XMLParser succeeds or this is an invalid WXR file then return the results
-                return $result;
+            return $result;
         }
 
         // use regular expressions if nothing else available or this is bad XML

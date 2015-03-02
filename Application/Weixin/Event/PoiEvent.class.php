@@ -53,9 +53,9 @@ class PoiEvent extends WeixinCoreController
         //    $city = mb_substr($city,            0, $length, 'UTF8');
 
         if ('OK' == $poiInfo['status']) {
-            $contentStr="您的位置: ".$poiInfo['result']['formatted_address'];
+            $contentStr = "您的位置: " . $poiInfo['result']['formatted_address'];
         } else {
-            $contentStr='解析地址失败';
+            $contentStr = '解析地址失败';
         }
 
         return $contentStr;

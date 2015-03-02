@@ -44,51 +44,51 @@
                         <div class="box-body">
 
 
-                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                    <form action="{$form_action}" name="change_System"
-                          method="post">
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <form action="{$form_action}" name="change_System"
+                                  method="post">
 
 
-                        <div class="form-group" id='key'>
-                            <label class="control-label">用户</label>
+                                <div class="form-group" id='key'>
+                                    <label class="control-label">用户</label>
 
-                            <div class="controls">
+                                    <div class="controls">
 
-                                <select class="small form-control" tabindex="1" name="openid">
-                                     {$user_option}
-                                </select>
+                                        <select class="small form-control" tabindex="1" name="openid">
+                                            {$user_option}
+                                        </select>
 
 
-                            </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">回复内容</label>
+
+                                    <div class="controls">
+                                        <textarea style="height: 300px;" class="large form-control" rows="3"
+                                                  name="content"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn blue"><i class="icon-ok"></i>{$action_name}
+                                    </button>
+                                </div>
+
+                            </form>
+
+
                         </div>
-
-
-
-
-                        <div class="form-group">
-                            <label class="control-label">回复内容</label>
-
-                            <div class="controls">
-                                <textarea style="height: 300px;" class="large form-control" rows="3" name="content"></textarea>
-                            </div>
-                        </div>
-
-
-                        <div class="form-actions">
-                            <button type="submit" class="btn blue"><i class="icon-ok"></i>{$action_name}</button>
-                        </div>
-
-                    </form>
-
-
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 
-    </section>
-    <!-- /.content -->
+        </section>
+        <!-- /.content -->
     </aside>
     <!-- /.right-side -->
 </div>

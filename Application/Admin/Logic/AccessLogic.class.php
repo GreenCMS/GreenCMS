@@ -70,20 +70,18 @@ class AccessLogic extends RelationModel
         ));
         $temp = $cat->getList(); // 获取分类结构
 
-        foreach ($temp as $key=>$value) {
+        foreach ($temp as $key => $value) {
 
-            if($value['level']=1&&array_key_exists($value['name'],get_opinion('group_level_1'))){
-                $group_level_1=get_opinion('group_level_1');
-              $temp[$key]["remark"]=$group_level_1[$value['name']];
-            }else if($value['level']=2&&array_key_exists($value['name'],get_opinion('admin_level_2'))){
-                $admin_level_2=get_opinion('admin_level_2');
-                $temp[$key]["remark"]=$admin_level_2[$value['name']];
+            if ($value['level'] = 1 && array_key_exists($value['name'], get_opinion('group_level_1'))) {
+                $group_level_1 = get_opinion('group_level_1');
+                $temp[$key]["remark"] = $group_level_1[$value['name']];
+            } else if ($value['level'] = 2 && array_key_exists($value['name'], get_opinion('admin_level_2'))) {
+                $admin_level_2 = get_opinion('admin_level_2');
+                $temp[$key]["remark"] = $admin_level_2[$value['name']];
 
             }
 
         }
-
-
 
 
         $level = array(
@@ -262,9 +260,7 @@ class AccessLogic extends RelationModel
         ));
 
 
-
         $data ['user_level'] = $_POST ['role_id'];
-
 
 
         if ($User->where(array('user_id' => $user_id))->save($data)) {
