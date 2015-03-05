@@ -52,9 +52,12 @@ class LoginController extends BaseController
 
                 D('login_log')->data($log)->add();
 
-                redirect(base64_decode(cookie("last_visit_page")));
+                if(cookie("last_visit_page")){
+                    redirect(base64_decode(cookie("last_visit_page")));
 
-                //$this->redirect('Admin/Index/index');
+                }else{
+                    $this->redirect('Admin/Index/index');
+                }
 
 
             }
