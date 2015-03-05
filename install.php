@@ -21,10 +21,6 @@ error_reporting(E_ERROR | E_WARNING);
  */
 define('APP_DEBUG', true);
 
-/**
- * 正式稳定运行后，改成true，开启后会影响设置的即使生效
- */
-define('APP_Cache', true);
 
 /**
  * 定义网站根目录
