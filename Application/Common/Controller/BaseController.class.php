@@ -18,62 +18,11 @@ use Think\Hook;
  */
 abstract class BaseController extends Controller
 {
-    /**
-     *
-     */
+
     function __construct()
     {
         parent::__construct();
 
-    }
-
-    /**
-     * 获取kv
-     * @return array|mixed
-     */
-    function getKvs()
-    {
-        $kv_array = S('kv_array');
-
-        if ($kv_array && APP_Cache) {
-            $res_array = $kv_array;
-        } else {
-
-            $Kvs = D('Kv')->where(1)->select();
-
-            $res_array = array();
-            foreach ($Kvs as $kv) {
-                $res_array[$kv['kv_key']] = $kv['kv_value'];
-            }
-
-            if (APP_Cache) {
-                S('kv_array', $res_array);
-            }
-        }
-
-        C('kv', $res_array);
-        return $res_array;
-    }
-
-    /**
-     * 用户存放在数据库中的配置，覆盖config中的
-     */
-    function customConfig()
-    {
-        $customConfig = S('customConfig');
-        if ($customConfig && APP_Cache) {
-            $options = $customConfig;
-        } else {
-            $options = D('Options')->select();
-
-            if (APP_Cache) {
-                S('customConfig', $options);
-            }
-        }
-
-        foreach ($options as $config) {
-            C($config['option_name'], $config['option_value']);
-        }
     }
 
     /**
@@ -86,7 +35,10 @@ abstract class BaseController extends Controller
         }
     }
 
-
+    /**
+     * 获取主题个性设置
+     * 缓存key ： $theme_name . '_theme_config'
+     */
     protected function themeConfig()
     {
         $theme_name = get_kv('home_theme');
@@ -111,6 +63,13 @@ abstract class BaseController extends Controller
     }
 
 
+    /**
+     * 自动访问插件
+     * @param null $_addons 插件
+     * @param null $_controller 控制器
+     * @param null $_action 操作
+     * @return bool
+     */
     protected function anonymousPlugin($_addons = null, $_controller = null, $_action = null)
     {
 

@@ -129,7 +129,7 @@ class SystemController extends AdminBaseController
             $subject = "GreenCMS测试邮件";
             $body = "测试邮件通过" . get_opinion('mail_method') . '模式发送';
             $Mail = new GreenMail();
-            $res = $Mail->send_mail($send_to, "GreenCMS Test Team", $subject, $body);
+            $res = $Mail->sendMail($send_to, "GreenCMS Test Team", $subject, $body);
 
             $this->assign("config", $Mail->config);
             $this->assign("res", $res);

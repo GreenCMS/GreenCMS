@@ -178,52 +178,7 @@ class AccessLogic extends RelationModel
      */
     public function addAdmin()
     {
-        if (!is_email($_POST ['email'])) {
-            return array(
-                'status' => 0,
-                'info' => "邮件地址错误"
-            );
-        }
-        $datas = array();
-        $M = M("User");
-        $datas ['user_email'] = trim($_POST ['email']);
-        if ($M->where("`user_email`='" . $datas ['user_email'] . "'")->count() > 0) {
-            return array(
-                'status' => 0,
-                'info' => "已经存在该账号"
-            );
-        }
 
-        $datas ['user_pass'] = encrypt(trim($_POST ['password']));
-        $datas ['user_registered'] = date("Y-m-d H:m:s");
-        $datas ['user_intro'] = trim($_POST ['user_intro']);
-        $datas ['user_status'] = ( int )($_POST ['user_status']);
-        if (!isset ($_POST ['display_name'])) {
-            $datas ['user_login'] = $_POST ['email'];
-            $datas ['display_name'] = $_POST ['email'];
-        }
-        if ($M->add($datas)) {
-            M("role_users")->add(array(
-                'user_id' => $M->getLastInsID(),
-                'role_id' => ( int )$_POST ['role_id']
-            ));
-            if (get_opinion("SYSTEM_EMAIL")) {
-                $body = "你的账号已开通，登录地址：" . get_opinion('WEB_ROOT') . U("Admin/Login/index") . "<br/>登录账号是：" . $datas ["user_email"] . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录密码是：" . $_POST ['password'];
-                $info = send_mail($datas ["user_email"], "", "开通账号", $body) ? "添加新账号成功并已发送账号开通通知邮件" : "添加新账号成功但发送账号开通通知邮件失败";
-            } else {
-                $info = "账号已开通，请通知相关人员";
-            }
-            return array(
-                'status' => 1,
-                'info' => $info,
-                'url' => U("Admin/Access/index")
-            );
-        } else {
-            return array(
-                'status' => 0,
-                'info' => "添加新账号失败，请重试"
-            );
-        }
     }
 
     /**

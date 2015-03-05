@@ -33,10 +33,21 @@ class GreenMail
     }
 
 
-    public function send_mail($to, $name, $subject = '', $body = '', $attachment = null, $config = '')
+    /**
+     * 邮件发送函数
+     * @param string $to 接收邮件者邮箱
+     * @param string $name 接收邮件者名称
+     * @param string $subject 邮件主题
+     * @param string $body 邮件内容
+     * @param string $attachment 附件列表
+     *
+     * @param string $config
+     *
+     * @return boolean
+     */
+    public function sendMail($to, $name, $subject = '', $body = '', $attachment = null, $config = '')
     {
         $config = is_array($config) ? $config : $this->config; //从数据库读取smtp配置
-//        dump($config);
 
         $mail = new \PHPMailer(); //PHPMailer对象
         $mail->CharSet = 'UTF-8'; //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
@@ -88,7 +99,7 @@ class GreenMail
 
     public function send(GreenMailContent $greenEmail)
     {
-        return $this->send_mail($greenEmail->to, "", $greenEmail->subject, $greenEmail->body, $greenEmail->attachment);
+        return $this->sendMail($greenEmail->to, "", $greenEmail->subject, $greenEmail->body, $greenEmail->attachment);
     }
 
 
