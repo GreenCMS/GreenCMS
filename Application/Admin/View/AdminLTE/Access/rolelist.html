@@ -36,15 +36,19 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
+
                         <!-- /.box-header -->
                         <div class="box-body">
 
-
-                            <h4>{$action}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="col-md-3">
+                                <div class="btn-group">
+                                    <a href="{:U('Admin/Access/addrole')}">
+                                        <button id="sample_editable_1_new" class="btn btn-success">
+                                            <i class="icon-plus"></i>添加角色
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
 
                         <span class="control-group success"
                               style="font-size:16px;color: red;text-align: left; display:none;"></span>
@@ -91,8 +95,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
 
         </section>
         <!-- /.content -->

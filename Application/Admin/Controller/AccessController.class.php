@@ -211,11 +211,11 @@ class AccessController extends AdminBaseController
      */
     public function addUserHandle()
     {
-        $w = htmlspecialchars(trim($_POST ['user_login']));
-        $i = D('user')->where(array(
-            'user_login' => $w
-        ))->select();
-        if ($i != '') {
+        $UserLogic = new UserLogic();
+
+        $user_login = htmlspecialchars(trim($_POST ['user_login']));
+        $userDetail = $UserLogic->detailByUserlogin($user_login);
+        if ($userDetail != '') {
             $this->error('用户名已存在！');
         } else {
             // 组合用户信息并添加
@@ -228,31 +228,14 @@ class AccessController extends AdminBaseController
                 'user_url' => I('post.user_url'),
                 'user_intro' => I('post.user_intro'),
                 'user_status' => I('post.user_status'),
+                'user_level' => I('post.role_id'),
 
-                // 'logintime'=>time(),
-                // 'loginip'=>get_client_ip(),
-                // 'lock'=>$_POST['lock']
             );
             // 添加用户与角色关系
 
-            $user ['user_level'] = I('post.role_id');
+            $res = $UserLogic->addUser($user);
+            $this->array2Response($res);
 
-            $User = D('User');
-            $Role_users = D('Role_users');
-            if ($new_id = $User->add($user)) {
-
-                $role = array(
-                    'role_id' => $_POST ['role_id'],
-                    'user_id' => $new_id
-                );
-                if ($Role_users->add($role)) {
-                    $this->success('添加成功！', U('Admin/Access/index'));
-                } else {
-                    $this->error('添加用户权限失败！', U('Admin/Access/index'));
-                }
-            } else {
-                $this->error('添加用户失败！', U('Admin/Access/index'));
-            }
         }
     }
 
@@ -656,7 +639,6 @@ class AccessController extends AdminBaseController
         unset($user['user_pass']);
         unset($user['user_session']);
         unset($user['user_activation_key']);
-//        unset($user['user_url']);
         $this->assign('user', $user);
         $this->assign('action', '用户档案');
 
