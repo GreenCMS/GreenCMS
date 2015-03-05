@@ -372,14 +372,12 @@
 
 
     $(document).ready(function () {
+        $(".sidebar-toggle").trigger("click");
+
 
         $("#post_advance_ctl").click(function () {
-
             var post_advance = $("#post_advance");
-
             post_advance.slideToggle(200);
-
-
         });
 
     });
