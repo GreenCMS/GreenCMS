@@ -88,6 +88,9 @@
                                     <input type="text" id="post_title"
                                            class="form-control large" name="post_title"
                                            value="{$info.post_title}"/>
+                                    <span class="help-inline" style="color: #d73726">
+                                      当前类型:{:C("post_status")[$info['post_status']]}
+                                    </span>
 
                                 </div>
                             </div>
@@ -318,7 +321,11 @@
                             <div class="form-actions">
                                 <span style="font-size: 18px; color: red; font-weight: bold;" id="success"></span>
 
-                                <button type="button" id="post_advance_ctl" class="btn btn-warning">
+                                <button type="button" id="post_width_ctl" class="btn btn-warning">
+                                    <i class="icon-ok"></i> 沉浸模式
+                                </button>
+
+                                <button type="button" id="post_advance_ctl" class="btn btn-primary">
                                     <i class="icon-ok"></i> 高级选项
                                 </button>
 
@@ -372,12 +379,17 @@
 
 
     $(document).ready(function () {
-        $(".sidebar-toggle").trigger("click");
+
+
 
 
         $("#post_advance_ctl").click(function () {
             var post_advance = $("#post_advance");
             post_advance.slideToggle(200);
+        });
+
+        $("#post_width_ctl").click(function () {
+            $(".sidebar-toggle").trigger("click");
         });
 
     });
@@ -390,7 +402,7 @@
         var options = {
             zIndex: 1,
 
-            initialFrameWidth: 900, //初化宽度
+            initialFrameWidth: "95%" , //初化宽度
             initialFrameHeight: 400, //初化高度
             focus: false, //初始化时，是否让编辑器获得焦点true或false
             maximumWords: 99999, //允许的最大字符数 'fullscreen',
