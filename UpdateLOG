@@ -1,5 +1,18 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.3.0308 build 20150308
+修正回收站页面大小问题
+更新UI
+cookie 认证自动跳转修正
+增加快速生成option 模板标签
+更新System节点页面
+增加上传SQL备份
+修正邮件发送
+取消APP_Cache
+修复无last visit page cookie时自动跳转问题
+Admin/Access模块 用户体验增强
+修复清空草稿箱
+
 version v2.3.0218 build 20150218
 修正邮件发送类Bug
 修正导入SQL语句超过500行错误
