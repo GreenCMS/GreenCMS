@@ -101,7 +101,7 @@ class LoginController extends BaseController
         if (get_opinion('vertify_code', true, true)) {
             $verify = new Verify();
 
-            if (!$verify->check(I('post.vertify', "AdminLogin"))) {
+            if (!$verify->check(I('post.vertify'), "AdminLogin")) {
                 $this->error("验证码错误");
             }
         }
