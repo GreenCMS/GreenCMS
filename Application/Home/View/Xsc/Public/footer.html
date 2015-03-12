@@ -1,6 +1,6 @@
 <div style="text-align: center;color: #000;width: 100%;margin: 0 auto;background: #FFFFFF;" class="footer">
     <br/>
-    <hr color="#2957a2" style="margin:0 auto;width: 99%;filter:alpha(opacity=0,finishopacity=100,style=1);height:1px"/>
+    <hr color="#2957a2" style="margin:0 auto;width: 99%;filter:alpha(opacity=0,finishopacity=100,style=1);height:1px" />
     <br/>
 
     南京工业大学 <a target="_blank" href="http://green.njtech.edu.cn">GreenStduio</a> 版权所有 ©{:date('Y')}
@@ -11,8 +11,7 @@
     <php>
         G('beginTime',$GLOBALS['_beginTime']);
         G('viewEndTime');
-        echo "Load in ".G('beginTime','viewEndTime').'s with '. N('db_query').' db queries and '.N('cache_read').' cache
-        hits' ;
+        echo "Load in ".G('beginTime','viewEndTime').'s with '. N('db_query').' db queries  and '.N('cache_read').' cache hits' ;
 
 
     </php>
@@ -23,4 +22,19 @@
 </div>
 
 
-{:hook('pageFooter', "")}
+<div id="greencms" class="greencms admin"
+     style="height: 30px; float:left ; text-align: right; overflow: hidden;
+     position: fixed; bottom: 0px; left: 0px;
+     line-height: 30px; cursor: pointer; display: block;  ">
+
+    <control access="Admin/Index/index">
+
+
+        <a target="_blank" href="{:U('Admin/Index/index')}">
+            <img style=" height:100%;"
+                 src="__PUBLIC__/share/img/logo.png"/></a>
+    </control>
+
+
+
+</div>

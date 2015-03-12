@@ -137,7 +137,7 @@ class GreenCMSTemplate extends TagLib
     /**
      * @param $tag
      * @param $content
-     * @usage <friendlist link_tag="标签" num="数量" order="排序"  length="字长度" li_attr='li属性' ul_attr="ul属性"></friendlist>
+     * @usage <friendlist link_group_id="link_group_id" num="数量" order="排序"  length="字长度" li_attr='li属性' ul_attr="ul属性"></friendlist>
      * @return string
      */
     public function _friendlist($tag, $content)

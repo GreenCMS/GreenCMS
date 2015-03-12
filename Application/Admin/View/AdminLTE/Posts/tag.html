@@ -62,6 +62,7 @@
                                                                class="group-checkable"
                                                                id="check-all" data-set="#sample_1 .checkboxes"/>
                                 </th>
+                                <th>标签ID</th>
                                 <th>名称</th>
                                 <th class="hidden-480">别名</th>
                                 <th>文章数量</th>
@@ -74,6 +75,7 @@
 
                                 <tr class="odd gradeX">
                                     <td><input type="checkbox" class="checkboxes" value="1"/></td>
+                                    <td>{$v.tag_id}</td>
                                     <td class=""><a
                                             href="{:U('Admin/Posts/editTag', array('id' => $v['tag_id']))}"
                                             title="{$v.tag_name}">{$v.tag_name|mb_substr=0,30,"UTF-8"}</a></td>

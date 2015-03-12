@@ -52,12 +52,13 @@ class IndexController extends HomeBaseController
     function test()
     {
 
-        dump(TP_C());
+        header("Content-type: text/html; charset=utf-8");
 
-        //echo get_addon_url("Join2011/Join2011/index");
-        //        include(Upgrade_PATH . 'init.php');
-        //
-        //        upgrade_20140620_to_20140625();
+        $CatsLogic=new \Common\Logic\CatsLogic();
+
+        $res= $CatsLogic->getPostsByCatWithChildren(2,10);
+
+         dump($res);
     }
 
 }

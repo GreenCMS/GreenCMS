@@ -34,7 +34,7 @@ class GuestbookHomeController extends AddonsController{
             $result = D('guestbook')->add($data);
 
             if ($result) {
-                $this->success('留言成功', U('Home/Post/' . $post_type, array('info' => $post_id)));
+                $this->success('留言成功', get_post_url($post_id));
             } else {
                 $this->error('留言失败');
             }

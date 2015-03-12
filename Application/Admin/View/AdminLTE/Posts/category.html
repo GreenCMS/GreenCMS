@@ -59,6 +59,7 @@
                                 <th style="width:8px;"><input type="checkbox"
                                                               class="group-checkable"
                                                               id="check-all" data-set="#sample_1 .checkboxes"/></th>
+                                <th>分类ID</th>
                                 <th style="width: 20%">名称</th>
                                 <th style="width: 30%">结构</th>
                                 <th>文章数量</th>
@@ -72,6 +73,7 @@
                                 <tr class="odd gradeX">
                                     <td style="width:8px;"><input type="checkbox" class="checkboxes" value="1"/>
                                     </td>
+                                    <td>{$v.cat_id}</td>
                                     <td><a href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}"
                                            title="{$v.cat_name}">{$v.cat_name}</a></td>
                                     <td class="hidden-480"><a
