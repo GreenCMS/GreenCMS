@@ -43,7 +43,6 @@ class UserManagemant
         $Curl = new Curl();
 
 
-
         $queryUrl = 'https://api.weixin.qq.com/cgi-bin/groups/create?access_token=' . $this->accessToken;
         $data = '{"group":{"name":"' . $groupName . '"}}';
         return $Curl->callApi($queryUrl, $data, 'POST');
@@ -58,7 +57,6 @@ class UserManagemant
     {
 
         $Curl = new Curl();
-
 
 
         $queryUrl = 'https://api.weixin.qq.com/cgi-bin/groups/get?access_token=' . $this->accessToken;
@@ -76,7 +74,6 @@ class UserManagemant
     {
 
         $Curl = new Curl();
-
 
 
         $queryUrl = 'https://api.weixin.qq.com/cgi-bin/groups/getid?access_token=' . $this->accessToken;
@@ -97,7 +94,6 @@ class UserManagemant
         $Curl = new Curl();
 
 
-
         $queryUrl = 'https://api.weixin.qq.com/cgi-bin/groups/update?access_token=' . $this->accessToken;
         $data = '{"group":{"id":' . $groupId . ',"name":"' . $groupName . '"}}';
         return $Curl->callApi($queryUrl, $data, 'POST');
@@ -114,7 +110,6 @@ class UserManagemant
     {
 
         $Curl = new Curl();
-
 
 
         $queryUrl = 'https://api.weixin.qq.com/cgi-bin/groups/members/update?access_token=' . $this->accessToken;
@@ -147,7 +142,6 @@ class UserManagemant
         $Curl = new Curl();
 
 
-
         $queryUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' . $this->accessToken . '&openid=' . $openId;
         $data = '';
         return $Curl->callApi($queryUrl, $data, 'GET');
@@ -162,7 +156,6 @@ class UserManagemant
     {
 
         $Curl = new Curl();
-
 
 
         if (empty($next_openid)) {
@@ -184,13 +177,10 @@ class UserManagemant
     {
 
 
-
     }
 
 
-
-
-        /**
+    /**
      * 获取网络状态
      * @return String network_type:wifi wifi网络。network_type:edge 非wifi,包含3G/2G。network_type:fail 网络断开连接
      */

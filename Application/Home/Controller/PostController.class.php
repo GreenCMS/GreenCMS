@@ -31,12 +31,12 @@ class PostController extends HomeBaseController
         $where['post_type'] = 'single';
 
         $Posts = new PostsLogic();
-        $post_detail = $Posts->detail($info, true, $where,true);
+        $post_detail = $Posts->detail($info, true, $where, true);
 
         $Posts->viewInc($post_detail['post_id']); //浏览计数
         $this->if404($post_detail, "非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
 
-        $this->assign('breadcrumbs', get_breadcrumbs('post',$post_detail));
+        $this->assign('breadcrumbs', get_breadcrumbs('post', $post_detail));
         $this->assign('post', $post_detail); // 赋值数据集
 
         if (File::file_exists(T('Home@Post/' . $post_detail['post_template']))) {

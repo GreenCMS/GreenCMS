@@ -8,11 +8,13 @@
  */
 
 namespace Weixin\Controller;
+
 use Common\Controller\BaseController;
 use Org\Util\Rbac;
 
 
-class LoginController extends BaseController{
+class LoginController extends BaseController
+{
 
     public function __construct()
     {
@@ -52,7 +54,6 @@ class LoginController extends BaseController{
     {
         // $ipLocation = new IpLocation();
         // $ip_info = $ipLocation->getIpInfo();
-
 
 
         $verify = new \Think\Verify();

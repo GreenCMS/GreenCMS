@@ -37,31 +37,32 @@
             <div class="row">
                 <div class="col-md-12">
 
-                        <!-- /.box-header -->
-                        <div class="box-body">
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
+                        <h4>发送配置</h4>
 
-                            <h4>发送配置</h4>
-                            <div class="well well-large">
-                                <php>
-                                    dump($config);
-                                </php>
-
-                            </div>
-
-
-                            <h4>发送结果1表示成功</h4>
-                            <div class="well well-large">
-                                <php>
-                                    dump($res);
-                                </php>
-                            </div>
-
-                            <a href="{:U('Admin/System/email')}">返回</a>
+                        <div class="well well-large">
+                            <php>
+                                dump($config);
+                            </php>
 
                         </div>
-                 </div>
+
+
+                        <h4>发送结果1表示成功</h4>
+
+                        <div class="well well-large">
+                            <php>
+                                dump($res);
+                            </php>
+                        </div>
+
+                        <a href="{:U('Admin/System/email')}">返回</a>
+
+                    </div>
+                </div>
             </div>
 
 

@@ -15,20 +15,20 @@ class MessageController extends WeixinBaseController
 
     /**
      *  [0] => array(13) {
-    ["log_id"] => string(2) "40"
-    ["MsgId"] => string(10) "5214124766"
-    ["FromUserName"] => string(28) "oLXjgjiWeAS1gfe4ECchYewwoyTc"
-    ["ToUserName"] => string(15) "gh_bea8cf2a04fd"
-    ["CreateTime"] => string(10) "1392724755"
-    ["Content"] => string(4) "test"
-    ["MsgType"] => string(4) "text"
-    ["Location_X"] => string(0) ""
-    ["Location_Y"] => string(0) ""
-    ["Scale"] => string(0) ""
-    ["Label"] => string(0) ""
-    ["PicUrl"] => string(0) ""
-    ["user"] => NULL
-    }
+     * ["log_id"] => string(2) "40"
+     * ["MsgId"] => string(10) "5214124766"
+     * ["FromUserName"] => string(28) "oLXjgjiWeAS1gfe4ECchYewwoyTc"
+     * ["ToUserName"] => string(15) "gh_bea8cf2a04fd"
+     * ["CreateTime"] => string(10) "1392724755"
+     * ["Content"] => string(4) "test"
+     * ["MsgType"] => string(4) "text"
+     * ["Location_X"] => string(0) ""
+     * ["Location_Y"] => string(0) ""
+     * ["Scale"] => string(0) ""
+     * ["Label"] => string(0) ""
+     * ["PicUrl"] => string(0) ""
+     * ["user"] => NULL
+     * }
      */
     public function index()
     {
@@ -91,7 +91,7 @@ class MessageController extends WeixinBaseController
         $Users = D('Weixinuser');
         $user_list = $Users->relation(true)->select();
 
-        $openid=I('get.openid');
+        $openid = I('get.openid');
 
         $user_option = '<option value="all">所有人</option>';
 
@@ -116,15 +116,15 @@ class MessageController extends WeixinBaseController
 
         $this->assign('user_option', $user_option);
 
-        $this->assign('form_action', U('Weixin/Message/sendHandle', array('msgid' => I('get.MsgId', '0'),'msgtype'=>I('get.msgtype', 'text'))));
+        $this->assign('form_action', U('Weixin/Message/sendHandle', array('msgid' => I('get.MsgId', '0'), 'msgtype' => I('get.msgtype', 'text'))));
         $this->assign('action_name', '发送');
 
-        if(I('get.msgtype', 'text')=='text'){
-          $this->display('sendtext');
-        } elseif(I('get.msgtype')=='image'){
+        if (I('get.msgtype', 'text') == 'text') {
+            $this->display('sendtext');
+        } elseif (I('get.msgtype') == 'image') {
             $this->display('sendimage');
 
-        } elseif(I('get.msgtype')=='news'){
+        } elseif (I('get.msgtype') == 'news') {
             $this->display('sendnews');
 
         }

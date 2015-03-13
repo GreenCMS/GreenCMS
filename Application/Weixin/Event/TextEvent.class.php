@@ -53,6 +53,4 @@ class TextEvent extends WeixinCoreController
     }
 
 
-
-
 }

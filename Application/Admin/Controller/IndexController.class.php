@@ -103,7 +103,7 @@ class IndexController extends AdminBaseController
 
     public function checkTodoCacheClear()
     {
-        S("checkTodo", "");
+        S("checkTodo", null);
     }
 
 

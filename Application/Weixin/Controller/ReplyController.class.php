@@ -22,8 +22,7 @@ class ReplyController extends WeixinBaseController
         $page = I('get.page', get_opinion('PAGER'));
 
 
-
-        $count= D('Weixinre')->count();
+        $count = D('Weixinre')->count();
         $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
         $pager_bar = $Page->show();
         $limit = $Page->firstRow . ',' . $Page->listRows;
@@ -102,7 +101,7 @@ class ReplyController extends WeixinBaseController
         $config = array(
             "savePath" => 'Weixin/',
             "maxSize" => 1000000, // 单位B
-            "exts" => array('jpg' , 'jpeg'),
+            "exts" => array('jpg', 'jpeg'),
             "subName" => array('date', 'Y/m-d'),
         );
         $upload = new Upload($config);
@@ -112,7 +111,7 @@ class ReplyController extends WeixinBaseController
             $this->error($upload->getError());
         } else { // 上传成功 获取上传文件信息
 
-         //   $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
+            //   $file_path_full = Upload_PATH . $info['img']['savepath'] . $info['img']['savename'];
             $file_path_full = $info['img']['fullpath'];
 
             if (!defined('SAE_TMP_PATH')) {
@@ -127,8 +126,8 @@ class ReplyController extends WeixinBaseController
             }
 
 
-            $Media=new Media();
-            $res = $Media->upload($file_path_full,"image");
+            $Media = new Media();
+            $res = $Media->upload($file_path_full, "image");
 
 
             $data['type'] = $res['type'];
@@ -140,8 +139,6 @@ class ReplyController extends WeixinBaseController
                 $this->success('上传成功！', U('Weixin/Reply/index'));
             }
         };
-
-
 
 
     }
@@ -193,7 +190,7 @@ class ReplyController extends WeixinBaseController
                 $this->error($upload->getError());
             } else { // 上传成功 获取上传文件信息
 
-                $file_path_full =  $info['img']['fullpath'];
+                $file_path_full = $info['img']['fullpath'];
 
 
                 $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
@@ -234,7 +231,7 @@ class ReplyController extends WeixinBaseController
             $this->error($upload->getError());
         } else { // 上传成功 获取上传文件信息
 
-            $file_path_full =  $info['img']['fullpath'];
+            $file_path_full = $info['img']['fullpath'];
 
 
             $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;

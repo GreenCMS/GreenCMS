@@ -22,25 +22,26 @@ namespace Home\Controller;
  * @package Home\Controller
  */
 
-class EmptyController extends HomeBaseController {
-	/**
-	 * 空控制器实现
-	 * @param $method
-	 * @param $args
-	 * @return mixed|void
-	 * @internal param $null
-	 */
-	public function __call($method, $args) {
+class EmptyController extends HomeBaseController
+{
+    /**
+     * 空控制器实现
+     * @param $method
+     * @param $args
+     * @return mixed|void
+     * @internal param $null
+     */
+    public function __call($method, $args)
+    {
 
-		$pluginRes = $this->anonymousPlugin(CONTROLLER_NAME, ACTION_NAME, I('get.action'));
+        $pluginRes = $this->anonymousPlugin(CONTROLLER_NAME, ACTION_NAME, I('get.action'));
 
-		if ($pluginRes) {
-		} else {
-			$this->error404();
-		}
+        if ($pluginRes) {
+        } else {
+            $this->error404();
+        }
 
-	}
-
+    }
 
 
 }

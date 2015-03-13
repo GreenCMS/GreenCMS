@@ -68,23 +68,22 @@ class UserController extends WeixinBaseController
         $Weixinsend = D('Weixinsend');
 
         $receive = $Weixinlog->field('MsgId,FromUserName as openid,CreateTime as time,Content as content')->
-            where(array('FromUserName' => $openid))->select();
+        where(array('FromUserName' => $openid))->select();
         foreach ($receive as $key => $value) {
             $receive[$key]['direction'] = 'in';
             $receive[$key]['headimgurl'] = $user_detail['headimgurl'];
-            $receive[$key]['nickname'] =$user_detail['nickname'];
+            $receive[$key]['nickname'] = $user_detail['nickname'];
 
         }
 //        dump($receive);
         $send = $Weixinsend->field('MsgId_to as MsgId,openid as openid,UNIX_TIMESTAMP(CreateTime) as time,Content as content')->
-            where(array('openid' => $openid))->select();
+        where(array('openid' => $openid))->select();
         foreach ($send as $key => $value) {
             $send[$key]['direction'] = 'out';
             $send[$key]['headimgurl'] = __ROOT__ . '/Public/admin/assets/img/avatar1.jpg';
-            $send[$key]['nickname'] ='我';
+            $send[$key]['nickname'] = '我';
 
         }
-
 
 
         $chat = (sysSortArray(array_merge($receive, $send), 'time', "SORT_ASC"));
@@ -106,7 +105,7 @@ class UserController extends WeixinBaseController
         $res = $User->sendMessage(I('get.openid'), I('post.chat_content'));
 
         if ($res['errcode'] == 0) {
-            $this->jsonReturn(1, '发送成功'. $res['errmsg']);
+            $this->jsonReturn(1, '发送成功' . $res['errmsg']);
         } else {
             $this->jsonReturn(0, '发送失败' . $res['errmsg']);
         }

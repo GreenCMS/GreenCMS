@@ -8,6 +8,7 @@
  */
 
 namespace Common\Model;
+
 use Think\Model;
 
 

@@ -18,6 +18,24 @@ use Think\Model\RelationModel;
  */
 class UserLogic extends RelationModel
 {
+    /**
+     * 获取指定用户信息
+     * @param $uid int 用户UID
+     * @param bool $relation 是否关联查询
+     *
+     * @return mixed 找到返回数组
+     */
+    public function detail($uid, $relation = true)
+    {
+        $user = D('User')->where(array('user_id' => $uid))->relation($relation)->find();
+        return $user;
+    }
+
+    public function detailByUserlogin($user_login, $relation = true)
+    {
+        $user = D('User')->where(array('user_login' => $user_login))->relation($relation)->find();
+        return $user;
+    }
 
     /**
      * 获取list
@@ -39,13 +57,37 @@ class UserLogic extends RelationModel
      */
     public function update($uid = 0, $data = array())
     {
-        $db_res= D('User')->where(array("user_id" => $uid))->data($data)->save();
-        if($db_res){
+        $db_res = D('User')->where(array("user_id" => $uid))->data($data)->save();
+        if ($db_res) {
             return arrayRes(1, "用户信息修改成功");
-        }else{
+        } else {
             return arrayRes(0, "用户信息修改失败");
         }
     }
+
+    /**
+     * 添加用户
+     * @param $user
+     * @return array
+     */
+    public function addUser($user)
+    {
+        if ($new_user_id = D('User')->add($user)) {
+
+            $role = array(
+                'role_id' => $user['user_level'],
+                'user_id' => $new_user_id
+            );
+            if (D('Role_users')->add($role)) {
+                return arrayRes(1, '添加成功！', U('Admin/Access/index'));
+            } else {
+                return arrayRes(0, '添加用户权限失败！', U('Admin/Access/index'));
+            }
+        } else {
+            return arrayRes(0, '添加用户失败！', U('Admin/Access/index'));
+        }
+    }
+
 
     /**
      * 改变用户密码
@@ -66,25 +108,14 @@ class UserLogic extends RelationModel
         $data['user_pass'] = encrypt($newPassword);
 
         if (D('User')->where(array("user_id" => $uid))->data($data)->save()) {
-            return arrayRes(1, "密码修改成功",U("Admin/login/logout"));
+            return arrayRes(1, "密码修改成功", U("Admin/login/logout"));
         } else {
             return arrayRes(0, "密码修改失败");
         }
 
     }
 
-    /**
-     * 获取指定用户信息
-     * @param $uid int 用户UID
-     * @param bool $relation 是否关联查询
-     *
-     * @return mixed 找到返回数组
-     */
-    public function detail($uid, $relation = true)
-    {
-        $user = D('User')->where(array('user_id' => $uid))->relation($relation)->find();
-        return $user;
-    }
+
 
     /**
      * 生成新的Hash

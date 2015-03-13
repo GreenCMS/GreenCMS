@@ -60,7 +60,7 @@ class TagsLogic extends RelationModel
      * @param string $except_field
      * @return mixed
      */
-    public function getPostsByTag($tag_id, $num = 5, $start = 0 , $relation = true, $except_field = '')
+    public function getPostsByTag($tag_id, $num = 5, $start = 0, $relation = true, $except_field = '')
     {
         $tag = $this->getPostsId($tag_id, 'publish', $start . ',' . $num);
         if ($tag != null) {

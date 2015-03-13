@@ -104,7 +104,7 @@ function getURL($url = '', $vars = '')
  */
 function getRealURL($menu_item = array(), $is_home = false)
 {
-     if ($menu_item['menu_function'] == 'direct'|| $menu_item['menu_function'] == 'native'  ) {
+    if ($menu_item['menu_function'] == 'direct' || $menu_item['menu_function'] == 'native') {
         $real_url = $menu_item['menu_url'];
     } elseif ($menu_item['menu_function'] == 'none') {
         $real_url = '#';
@@ -179,7 +179,7 @@ function getSingleURLByID($ID, $type = 'single')
             if ($URL == '') {
                 $URL = get_url("Post/" . $post['post_type'], array('info' => $post['post_id']));
             }
-        }else {
+        } else {
             $URL = $url_base . '/' . $ID;
         }
         $URL = $URL . $URL_HTML_SUFFIX;
@@ -276,7 +276,7 @@ function getChannelURLByID($ID)
 {
     //$home_cat_model = get_opinion('home_cat_model');
 
-     $URL = getURL('Cat/channel', array("info" => $ID));
+    $URL = getURL('Cat/channel', array("info" => $ID));
 
 
     return $URL;

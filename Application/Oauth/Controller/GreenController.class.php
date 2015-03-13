@@ -14,7 +14,8 @@ namespace Oauth\Controller;
  * Class GreenController
  * @package Oauth\Controller
  */
-class GreenController extends OauthBaseController{
+class GreenController extends OauthBaseController
+{
 
     //TODO provide Oauth2.0 login
 

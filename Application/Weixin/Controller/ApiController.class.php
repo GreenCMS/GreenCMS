@@ -40,7 +40,7 @@ class ApiController extends WeixinCoreController
         /* 响应当前请求 */
         $weixin->response($content, $type);
 
-       Log::record('发送消息' . date('Ymd H:m:s'));
+        Log::record('发送消息' . date('Ymd H:m:s'));
 
     }
 
@@ -95,7 +95,7 @@ class ApiController extends WeixinCoreController
 
         } elseif ('event' == $data ['MsgType']) {
 
-            $event=$data ['Event'];
+            $event = $data ['Event'];
 
             $EveEvent = new EveEvent();
             $reply = $EveEvent->$event($data);

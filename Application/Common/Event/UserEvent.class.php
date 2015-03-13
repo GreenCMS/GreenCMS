@@ -11,6 +11,7 @@ namespace Common\Event;
 
 use Common\Controller\BaseController;
 use Common\Logic\UserLogic;
+use Common\Util\GreenMail;
 use Org\Util\Rbac;
 
 /**
@@ -23,37 +24,34 @@ class UserEvent extends BaseController
 
     /**
      * 用户忘记密码找回
-     * @param $email
+     * @param $username
      * @return string
      */
-    public function forgetPassword($email)
+    public function forgetPassword($username)
     {
 
-
         $User = new UserLogic();
+        $GreenMail =new GreenMail();
 
-        $userDetail = $User->where(array('user_email' => $email))->find();
+        $userDetail = $User->where(array('user_login' => $username))->find();
 
         if (!$userDetail) {
             return $this->jsonResult(0, "不存在用户");
         }
 
         $new_pass = encrypt($userDetail['user_session']);
-        $User->where(array('user_email' => $email))->data(array('user_pass' => $new_pass))->save();
+        $User->where(array('user_email' => $userDetail['user_email']))->data(array('user_pass' => $new_pass))->save();
 
+        $res =  $GreenMail->sendMail( $userDetail['user_email'], "", "用户密码重置", "新密码: " . $userDetail['user_session']);
 
-        $res = send_mail($email, "", "用户密码重置", "新密码: " . $userDetail['user_session']); //
-
-        if ($res) {
+        if ($res['statue']) {
             return $this->jsonResult(1, "新密码的邮件已经发送到注册邮箱");
 
         } else {
-            return $this->jsonResult(0, "请检查邮件发送设置");
+            return $this->jsonResult(0, "请检查邮件发送设置".$res['info'] );
 
         }
     }
-
-
 
 
     /**
@@ -85,10 +83,10 @@ class UserEvent extends BaseController
             //记住我
             if (I('post.remember') == 1) {
                 if ($authInfo['user_session'] != '') {
-                    cookie('user_session', $authInfo['user_session'], 3600*24*30);
+                    cookie('user_session', $authInfo['user_session'], 3600 * 24 * 30);
                 } else if ($authInfo['user_session'] == '') {
                     $user_session = D('User', 'Logic')->genHash($authInfo);
-                    cookie('user_session', $user_session, 3600*24*30);
+                    cookie('user_session', $user_session, 3600 * 24 * 30);
                 }
             }
             // 缓存访问权限

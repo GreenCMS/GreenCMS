@@ -14,7 +14,7 @@ class SystemController extends WeixinBaseController
 {
     public function index()
     {
-         $this->display();
+        $this->display();
     }
 
 

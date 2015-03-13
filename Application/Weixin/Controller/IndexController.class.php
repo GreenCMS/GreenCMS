@@ -10,9 +10,11 @@
 namespace Weixin\Controller;
 
 
-class IndexController extends \Think\Controller{
+class IndexController extends \Think\Controller
+{
 
-    public function index(){
+    public function index()
+    {
         $this->redirect('Weixin/Home/index');
     }
 

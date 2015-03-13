@@ -102,7 +102,7 @@ class WordpressEvent
                         $tag_id = (int)$nicename['tag_id'];
                         array_push($post_tag_temp, $tag_id);
                     } else {
-                         Log::record('No match ');
+                        Log::record('No match ');
                     }
 
                 }

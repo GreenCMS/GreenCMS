@@ -7,6 +7,7 @@
  * Time: 下午1:40
  */
 namespace Home\Controller;
+
 use Think\Hook;
 
 /**
@@ -14,45 +15,50 @@ use Think\Hook;
  * Class IndexController
  * @package Home\Controller
  */
+class IndexController extends HomeBaseController
+{
 
-class IndexController extends HomeBaseController {
+    /**
+     * 构造函数
+     */
+    function __construct()
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * 构造函数
-	 */
-	function __construct() {
-		parent::__construct();
-	}
+    /**
+     * 显示首页
+     */
+    public function index()
+    {
 
-	/**
-	 * 显示首页
-	 */
-	public function index() {
+        $this->display('index');
+    }
 
-       $this->display('index');
-	}
+    /**
+     * 显示首页为空时
+     * @param $method
+     * @param $args
+     */
+    public function _empty($method, $args)
+    {
+        Hook::listen('home_index_empty');
 
-	/**
-	 * 显示首页为空时
-	 * @param $method
-	 * @param $args
-	 */
-	public function _empty($method, $args) {
-		Hook::listen('home_index_empty');
+    }
 
-	}
+    /**
+     * 测试使用
+     */
+    function test()
+    {
 
-	/**
-	 * 测试使用
-	 */
-	function test() {
+        header("Content-type: text/html; charset=utf-8");
 
-        dump(TP_C());
+        $CatsLogic=new \Common\Logic\CatsLogic();
 
-        //echo get_addon_url("Join2011/Join2011/index");
-		//        include(Upgrade_PATH . 'init.php');
-		//
-		//        upgrade_20140620_to_20140625();
-	}
+        $res= $CatsLogic->getPostsByCatWithChildren(2,10);
+
+         dump($res);
+    }
 
 }

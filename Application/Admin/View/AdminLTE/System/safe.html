@@ -12,241 +12,198 @@
 {:W('Common/header')}
 
 <div class="wrapper row-offcanvas row-offcanvas-left">
-{:W('Common/sideMenu')}
+    {:W('Common/sideMenu')}
 
 
-<!-- Right side column. Contains the navbar and content of the page -->
-<aside class="right-side">
-<!-- Content Header (Page header) -->
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
 
 
-<section class="content-header">
-    <h1>
-        {$action}
-        <small>{:get_opinion('title')}</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
-        <li class="active">{$action}</li>
-    </ol>
-</section>
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{:get_opinion('title')}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
 
-<!-- Main content -->
-<section class="content">
+        <!-- Main content -->
+        <section class="content">
 
-<div class="row">
-<div class="col-md-10">
-<div class="box box-warning">
-<div class="box-header">
-    <h3 class="box-title">{$action}</h3>
-</div>
-<!-- /.box-header -->
-<div class="box-body">
+            <div class="row">
+                <div class="col-md-10">
+
+                    <div class="box-body">
 
 
-<form action="{:U('Admin/System/saveHandle')}" name="change_System"
-      method="post">
+                        <form action="{:U('Admin/System/saveHandle')}" name="change_System"
+                              method="post">
+                            <hr/>
 
-<h3 class="form-section">Cookie设置</h3>
+                            <h3 class="form-section">Cookie设置</h3>
 
+                            <hr/>
 
-<div class="form-group">
-    <label class="control-label">Cookie前缀</label>
+                            <div class="form-group">
+                                <label class="control-label">Cookie前缀</label>
 
-    <div class="controls">
-        <input type="text" placeholder="" class="form-control large" name="COOKIE_PREFIX"
-               value="{:get_opinion('COOKIE_PREFIX')}"/>
-        <span class="help-inline">默认greencms_</span>
-    </div>
-</div>
-
-
-<div class="form-group">
-    <label class="control-label">Cookie到期时间</label>
-
-    <div class="controls">
-        <input type="number" placeholder="" class="form-control large" name="COOKIE_EXPIRE"
-               value="{:get_opinion('COOKIE_EXPIRE')}"/>
-        <span class="help-inline">默认3600 (单位-秒)</span>
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label">Cookie域名</label>
-
-    <div class="controls">
-        <input type="text" placeholder="" class="form-control large" name="COOKIE_DOMAIN"
-               value="{:get_opinion('COOKIE_DOMAIN')}"/>
-        <span class="help-inline">默认为空</span>
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label">Cookie路径</label>
-
-    <div class="controls">
-        <input type="text" placeholder="" class="form-control large" name="COOKIE_PATH"
-               value="{:get_opinion('COOKIE_PATH')}"/>
-        <span class="help-inline">默认为 / </span>
-    </div>
-</div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large"
+                                           name="COOKIE_PREFIX"
+                                           value="{:get_opinion('COOKIE_PREFIX')}"/>
+                                    <span class="help-inline">默认greencms_</span>
+                                </div>
+                            </div>
 
 
-<h3 class="form-section">调试记录设置</h3>
+                            <div class="form-group">
+                                <label class="control-label">Cookie到期时间</label>
+
+                                <div class="controls">
+                                    <input type="number" placeholder="" class="form-control large"
+                                           name="COOKIE_EXPIRE"
+                                           value="{:get_opinion('COOKIE_EXPIRE')}"/>
+                                    <span class="help-inline">默认3600 (单位-秒)</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Cookie域名</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large"
+                                           name="COOKIE_DOMAIN"
+                                           value="{:get_opinion('COOKIE_DOMAIN')}"/>
+                                    <span class="help-inline">默认为空</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Cookie路径</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="COOKIE_PATH"
+                                           value="{:get_opinion('COOKIE_PATH')}"/>
+                                    <span class="help-inline">默认为 / </span>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <h3 class="form-section">调试记录设置</h3>
+                            <hr/>
+
+                            <div class="form-group">
+                                <label class="control-label">是否开启验证码</label>
+
+                                <div class="controls">
+
+                                    <switchopinioncontrol opinion_name="vertify_code">
 
 
+                                    </switchopinioncontrol>
 
-<div class="form-group">
-    <label class="control-label">是否开启验证码</label>
-
-    <div class="controls">
-
-        <label class="radio">
-
-            <switch name="vertify_code">
-                <case value="1"><input type="radio" name="vertify_code"
-                                       checked="checked" value="1"/></case>
-                <case value="0"><input type="radio" name="vertify_code" value="1"/></case>
-
-                <default/>
-                <input type="radio" name="vertify_code"
-                       checked="checked" value="1"/>
-            </switch>
-            开
-
-        </label>
+                                </div>
 
 
-        <label class="radio">
-            <switch name="vertify_code">
-                <case value="1"><input type="radio" name="vertify_code" value="0"/></case>
-                <case value="0"><input type="radio" name="vertify_code" checked="checked"
-                                       value="0"/></case>
-
-                <default/>
-                <input type="radio" name="vertify_code"
-                       value="0"/>
-            </switch>
-            关
-        </label>
+                            </div>
 
 
-    </div>
+                            <div class="form-group">
+                                <label class="control-label">是否开启底部速度信息</label>
+
+                                <div class="controls">
+
+                                    <switchopinioncontrol opinion_name="speed_info">
 
 
-</div>
+                                    </switchopinioncontrol>
 
 
-<div class="form-group">
-    <label class="control-label">页面TRACE调试</label>
-
-    <div class="controls">
-
-        <label class="radio">
-
-            <switch name="SHOW_PAGE_TRACE">
-                <case value="1"><input type="radio" name="SHOW_PAGE_TRACE"
-                                       checked="checked" value="1"/></case>
-                <case value="0"><input type="radio" name="SHOW_PAGE_TRACE" value="1"/></case>
-
-                <default/>
-                <input type="radio" name="SHOW_PAGE_TRACE"
-                       checked="checked" value="1"/>
-            </switch>
-            开
-
-        </label>
+                                </div>
 
 
-        <label class="radio">
-            <switch name="SHOW_PAGE_TRACE">
-                <case value="1"><input type="radio" name="SHOW_PAGE_TRACE" value="0"/></case>
-                <case value="0"><input type="radio" name="SHOW_PAGE_TRACE" checked="checked"
-                                       value="0"/></case>
+                            </div>
 
-                <default/>
-                <input type="radio" name="SHOW_PAGE_TRACE"
-                       value="0"/>
-            </switch>
-            关
-        </label>
+                            <div class="form-group">
+                                <label class="control-label">页面TRACE调试</label>
+
+                                <div class="controls">
+
+                                    <switchopinioncontrol opinion_name="SHOW_PAGE_TRACE">
 
 
-    </div>
+                                    </switchopinioncontrol>
 
 
-</div>
+                                </div>
 
 
-<div class="form-group">
-    <label class="control-label">开启调试记录</label>
+                            </div>
 
-    <div class="controls">
-        <label class="radio">
 
-            <switch name="LOG_RECORD">
-                <case value="1"><input type="radio" name="LOG_RECORD" checked="checked"
-                                       value="1"/></case>
-                <case value="0"><input type="radio" name=LOG_RECORD value="1"/></case>
-                <default/>
-                <input type="radio" name="LOG_RECORD" checked="checked" value="1"/>
-            </switch>
-            开
-        </label>
-        <label class="radio">
+                            <div class="form-group">
+                                <label class="control-label">开启调试记录</label>
 
-            <switch name="LOG_RECORD">
-                <case value="1"><input type="radio" name="LOG_RECORD" value="0"/></case>
-                <case value="0"><input type="radio" name="LOG_RECORD" checked="checked"
-                                       value="0"/></case>
-                <default/>
-                <input type="radio" name="LOG_RECORD" value="0"/>
-            </switch>
-            关
-        </label>
-    </div>
-</div>
+                                <div class="controls">
 
-<div class="form-group">
-    <label class="control-label">日志记录等级</label>
 
-    <div class="controls">
-        <input type="text" placeholder="" class="form-control large" name="LOG_LEVEL"
-               value="{:get_opinion('LOG_LEVEL')}" style="width: 500px !important;
+                                    <switchopinioncontrol opinion_name="LOG_RECORD">
+
+
+                                    </switchopinioncontrol>
+
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">日志记录等级</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="LOG_LEVEL"
+                                           value="{:get_opinion('LOG_LEVEL')}" style="width: 500px !important;
 "/>
-        <span class="help-inline">可选SQL,DEBUG,EMERG,ALERT,CRIT,ERR,WARN,INFO</span>
-    </div>
-</div>
+                                    <span class="help-inline">可选SQL,DEBUG,EMERG,ALERT,CRIT,ERR,WARN,INFO</span>
+                                </div>
+                            </div>
 
-<h3 class="form-section">安全过滤设置</h3>
+                            <hr/>
 
-<div class="form-group">
-    <label class="control-label">默认安全过滤</label>
+                            <h3 class="form-section">安全过滤设置</h3>
+                            <hr/>
 
-    <div class="controls">
-        <input type="text" placeholder="" class="form-control large" name="DEFAULT_FILTER"
-               value="{:get_opinion('DEFAULT_FILTER')}"/>
-        <span class="help-inline">默认htmlspecialchars</span>
-    </div>
-</div>
+                            <div class="form-group">
+                                <label class="control-label">默认安全过滤</label>
 
-
-<div class="form-actions">
-    <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
-</div>
-</form>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large"
+                                           name="DEFAULT_FILTER"
+                                           value="{:get_opinion('DEFAULT_FILTER')}"/>
+                                    <span class="help-inline">默认htmlspecialchars</span>
+                                </div>
+                            </div>
 
 
-</div>
-</div>
-</div>
-</div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
+                            </div>
+                        </form>
 
 
-</section>
-<!-- /.content -->
-</aside>
-<!-- /.right-side -->
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
 </div>
 <!-- ./wrapper -->
 

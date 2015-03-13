@@ -83,8 +83,7 @@ __如果你需要升级ThinkPHP框架请注意上面文件区别__
 > 更多信息参考ThinkPHP3.2.1手册  
   
 ####index.php 选项:  
-> APP_CACHE : 控制系统高速缓存(不建议关闭)  
-> APP_DEBUG : 系统调试设置,项目正式部署后请设置为 false   
+> APP_DEBUG : 系统调试设置,项目正式部署后请设置为 false
   
   
   

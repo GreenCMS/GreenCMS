@@ -7,13 +7,15 @@
  */
 
 namespace Oauth\Logic;
+
 use Think\Model\RelationModel;
 use Oauth\Model\User_snsModel;
 
-class User_snsLogic extends RelationModel{
+class User_snsLogic extends RelationModel
+{
 
 
-    public function detailByOID($id, $type,$relation = true, $info_with = array())
+    public function detailByOID($id, $type, $relation = true, $info_with = array())
     {
         $info = $info_with;
         $info['openid'] = ($id);
@@ -24,7 +26,7 @@ class User_snsLogic extends RelationModel{
         return $open_user_info;
     }
 
-    public function detailByUID($id,$type, $relation = true, $info_with = array())
+    public function detailByUID($id, $type, $relation = true, $info_with = array())
     {
         $info = $info_with;
         $info['user_id'] = ($id);

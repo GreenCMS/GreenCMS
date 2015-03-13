@@ -69,6 +69,4 @@ abstract class HomeBaseController extends BaseController
     }
 
 
-
-
 }

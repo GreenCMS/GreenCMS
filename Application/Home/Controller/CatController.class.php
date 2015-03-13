@@ -68,7 +68,7 @@ class CatController extends HomeBaseController
         }
 
 
-        $this->assign('title', '分类 '.$cat['cat_name']. ' 所有文章'); // 赋值数据集
+        $this->assign('title', '分类 ' . $cat['cat_name'] . ' 所有文章'); // 赋值数据集
         $this->assign('res404', $res404);
         $this->assign('postslist', $posts_list); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出

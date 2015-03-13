@@ -11,7 +11,7 @@ namespace Admin\Controller;
 
 use Common\Controller\BaseController;
 use Common\Event\UserEvent;
-use Org\Util\Rbac;
+use Think\Verify;
 
 /**
  * Class LoginController
@@ -20,34 +20,15 @@ use Org\Util\Rbac;
 class LoginController extends BaseController
 {
 
-    /**
-     *
-     */
+
     public function __construct()
     {
         parent::__construct();
 
-//        $this->customConfig();
-
-    }
-
-    public function vertify()
-    {
-
-        $config = array(
-            'fontSize' => 20,
-            'length' => 4,
-            'useCurve' => true,
-            'useNoise' => true,
-        );
-
-
-        $Verify = new \Think\Verify($config);
-        $Verify->entry();
     }
 
     /**
-     *
+     * 自动登陆处理
      */
     public function _before_index()
     {
@@ -71,8 +52,12 @@ class LoginController extends BaseController
 
                 D('login_log')->data($log)->add();
 
+                if(cookie("last_visit_page")){
+                    redirect(base64_decode(cookie("last_visit_page")));
 
-                $this->redirect('Admin/Index/index');
+                }else{
+                    $this->redirect('Admin/Index/index');
+                }
 
 
             }
@@ -83,7 +68,7 @@ class LoginController extends BaseController
     }
 
     /**
-     *
+     * 首页
      */
     public function index()
     {
@@ -91,12 +76,10 @@ class LoginController extends BaseController
     }
 
     /**
-     *
+     * 登陆
      */
     public function login()
     {
-        // $ipLocation = new IpLocation();
-        // $ip_info = $ipLocation->getIpInfo();
         $this->vertifyHandle();
 
         $map = array();
@@ -110,18 +93,24 @@ class LoginController extends BaseController
 
     }
 
+    /**
+     * 验证码
+     */
     public function vertifyHandle()
     {
         if (get_opinion('vertify_code', true, true)) {
-            $verify = new \Think\Verify();
+            $verify = new Verify();
 
-            if (!$verify->check(I('post.vertify'))) {
+            if (!$verify->check(I('post.vertify'), "AdminLogin")) {
                 $this->error("验证码错误");
             }
         }
 
     }
 
+    /**
+     * 注册
+     */
     public function register()
     {
         $this->registerJudge();
@@ -129,6 +118,9 @@ class LoginController extends BaseController
 
     }
 
+    /**
+     * 判断是否注册
+     */
     public function registerJudge()
     {
         $user_can_regist = get_opinion('user_can_regist', true, 1);
@@ -138,6 +130,9 @@ class LoginController extends BaseController
         }
     }
 
+    /**
+     * 注册用户处理
+     */
     public function registerHandle()
     {
         $this->registerJudge();
@@ -158,9 +153,8 @@ class LoginController extends BaseController
 
     }
 
-
     /**
-     *
+     * 找回密码
      */
     public function forgetpassword()
     {
@@ -168,22 +162,22 @@ class LoginController extends BaseController
     }
 
     /**
-     *
+     * 找回密码处理
      */
     public function forgetpasswordHandle()
     {
         $this->vertifyHandle();
 
         if (IS_POST) {
-            $email = I('post.email');
+            $username = I('post.username');
             $UserEvent = new UserEvent();
-            $forgetPasswordRes = $UserEvent->forgetPassword($email);
+            $forgetPasswordRes = $UserEvent->forgetPassword($username);
             $this->json2Response($forgetPasswordRes);
         }
     }
 
     /**
-     *
+     * 注销
      */
     public function logout()
     {
@@ -191,4 +185,23 @@ class LoginController extends BaseController
         $logoutRes = $UserEvent->logout();
         $this->json2Response($logoutRes);
     }
+
+    /**
+     * 验证码
+     */
+    public function vertify()
+    {
+
+        $config = array(
+            'fontSize' => 20,
+            'length' => 4,
+            'useCurve' => true,
+            'useNoise' => true,
+        );
+
+
+        $Verify = new Verify($config);
+        $Verify->entry("AdminLogin");
+    }
+
 }

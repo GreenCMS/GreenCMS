@@ -25,11 +25,11 @@ class UserEvent extends WeixinCoreController
      */
     public function renew()
     {
-        $UserManagemant=new UserManagemant();
+        $UserManagemant = new UserManagemant();
 
-        $res =$UserManagemant->getFansList();
+        $res = $UserManagemant->getFansList();
 
-       // $res = $this->getUserList();
+        // $res = $this->getUserList();
 
         foreach ($res["data"]["openid"] as $openid) {
             $ifuser = D('Weixinuser')->where(array('openid' => $openid))->find();
@@ -49,15 +49,15 @@ class UserEvent extends WeixinCoreController
     public function update()
     {
 
-        $UserManagemant=new UserManagemant();
+        $UserManagemant = new UserManagemant();
 
-        $res =$UserManagemant->getFansList();
+        $res = $UserManagemant->getFansList();
 
         foreach ($res["data"]["openid"] as $openid) {
             $ifuser = D('Weixinuser')->where(array('openid' => $openid))->find();
 
             if (!$ifuser) {
-                $data =$UserManagemant->getUserInfo($openid);
+                $data = $UserManagemant->getUserInfo($openid);
                 unset($data['remark']);
                 D('Weixinuser')->data($data)->add();
             }
@@ -118,7 +118,7 @@ class UserEvent extends WeixinCoreController
         $ACCESS_TOKEN = $this->getAccess();
 
 
-        if($ACCESS_TOKEN==false ) return false;
+        if ($ACCESS_TOKEN == false) return false;
 
         $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=$ACCESS_TOKEN";
 
@@ -143,13 +143,13 @@ class UserEvent extends WeixinCoreController
 
     /**
      * {
-    "touser":"OPENID",
-    "msgtype":"text",
-    "text":
-    {
-    "content":"Hello World"
-    }
-    }
+     * "touser":"OPENID",
+     * "msgtype":"text",
+     * "text":
+     * {
+     * "content":"Hello World"
+     * }
+     * }
      */
     public function sendMessage($openid, $content = '', $msgtype = 'text')
     {

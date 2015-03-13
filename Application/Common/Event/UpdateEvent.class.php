@@ -48,9 +48,9 @@ class UpdateEvent extends BaseController
         $software_build_db = get_opinion('software_build');
         $software_build_const = GreenCMS_Build;
 
-        if($software_build_db==$software_build_const){
+        if ($software_build_db == $software_build_const) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -74,13 +74,11 @@ class UpdateEvent extends BaseController
         }
 
 
-
     }
 
 
-    public function copyAndBackup($file_path1,$file_path2)
+    public function copyAndBackup($file_path1, $file_path2)
     {
-
 
 
     }

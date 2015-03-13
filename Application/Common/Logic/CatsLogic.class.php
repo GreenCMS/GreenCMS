@@ -140,6 +140,37 @@ class CatsLogic extends RelationModel
 
     }
 
+
+    /**
+     * @param $cat_id
+     * @param int $num
+     * @param int $start
+     * @param bool $relation
+     * @param string $except_field
+     * @return bool
+     */
+    public function getPostsByCatWithChildren($cat_id, $num = 5, $start = 0, $relation = true, $except_field = '')
+    {
+        $getChild = $this->getChild($cat_id, 'publish', $start . ',' . $num);
+
+        $cat_id_list = '';
+        foreach ($getChild as $value) {
+            $cat_id_list .= $value['cat_id'];
+            $cat_id_list .= "',";
+        }
+
+        $cat = $this->getPostsId($cat_id_list, 'publish', $start . ',' . $num);
+
+        if ($cat != null) {
+            $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', $relation, array(), $cat, $except_field);
+            return $posts;
+        } else {
+            return false;
+        }
+
+    }
+
+
     /**
      * 获取指定分类的post id
      * 使用原生SQL
@@ -158,7 +189,7 @@ class CatsLogic extends RelationModel
         $res = D('Post_cat')
             ->table(GreenCMS_DB_PREFIX . 'post_cat as pc,' . GreenCMS_DB_PREFIX . 'posts as ps')
             ->field('ps.post_id')
-            ->where("cat_id ='%s' and pc.post_id=ps.post_id and ps.post_status ='%s'", $cat_info ['cat_id'], $post_status)
+            ->where("cat_id IN ('%s') and pc.post_id=ps.post_id and ps.post_status ='%s'", $cat_info ['cat_id'], $post_status)
             ->limit($limit)
             ->order('ps.post_top desc,ps.post_date desc')
             ->select();
@@ -167,7 +198,6 @@ class CatsLogic extends RelationModel
             $ids[] = $res[$key]['post_id'];
 
         }
-
         return $ids;
     }
 

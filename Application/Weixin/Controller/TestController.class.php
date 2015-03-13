@@ -28,8 +28,7 @@ class TestController extends WeixinCoreController
         dump($res);
 
 
-
-        $res =$Media->download($res['media_id']);
+        $res = $Media->download($res['media_id']);
         dump($res);
 
     }

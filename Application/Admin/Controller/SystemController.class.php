@@ -52,11 +52,6 @@ class SystemController extends AdminBaseController
      */
     public function post()
     {
-
-
-        $this->assign('auto_channel', get_opinion('auto_channel'));
-        $this->assign('api_open', get_opinion('api_open'));
-        $this->assign('feed_open', get_opinion('feed_open'));
         $this->display();
     }
 
@@ -134,7 +129,7 @@ class SystemController extends AdminBaseController
             $subject = "GreenCMS测试邮件";
             $body = "测试邮件通过" . get_opinion('mail_method') . '模式发送';
             $Mail = new GreenMail();
-            $res = $Mail->send_mail($send_to, "GreenCMS Test Team", $subject, $body);
+            $res = $Mail->sendMail($send_to, "GreenCMS Test Team", $subject, $body);
 
             $this->assign("config", $Mail->config);
             $this->assign("res", $res);
@@ -152,13 +147,6 @@ class SystemController extends AdminBaseController
      */
     public function safe()
     {
-
-        $this->assign('vertify_code', get_opinion('vertify_code', true));
-        $this->assign('db_fieldtype_check', get_opinion('db_fieldtype_check'));
-        $this->assign('LOG_RECORD', get_opinion('LOG_RECORD'));
-        $this->assign('SHOW_CHROME_TRACE', get_opinion('SHOW_CHROME_TRACE'));
-        $this->assign('SHOW_PAGE_TRACE', get_opinion('SHOW_PAGE_TRACE'));
-
         $this->display();
     }
 
@@ -169,8 +157,6 @@ class SystemController extends AdminBaseController
     {
         $Update = new UpdateEvent();
         $Update->check();
-
-
     }
 
     /**
@@ -201,8 +187,6 @@ class SystemController extends AdminBaseController
 
         } else {
             $this->display();
-
-
         }
     }
 

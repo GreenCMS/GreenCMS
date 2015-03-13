@@ -16,7 +16,7 @@ class MenuController extends WeixinBaseController
     public function index()
     {
         $Menu = new MenuEvent();
-        $Weixin_menu = json_decode(trim(get_opinion('Weixin_menu',true)), true);
+        $Weixin_menu = json_decode(trim(get_opinion('Weixin_menu', true)), true);
         $Weixin_menu = $Weixin_menu['button'];
 
         $this->assign('weixin_menu', $Weixin_menu);
@@ -32,7 +32,7 @@ class MenuController extends WeixinBaseController
         $this->assign('action_name', '编辑');
         $this->assign('action_url', U('Weixin/Menu/edit', array('level' => $level, 'pid' => $pid, 'id' => $id, 'type' => $type)));
 
-        $Weixin_menu = json_decode(get_opinion(get_opinion('Weixin_menu',true)), true);
+        $Weixin_menu = json_decode(get_opinion(get_opinion('Weixin_menu', true)), true);
         $Weixin_menu = $Weixin_menu['button'];
 
         $this->assign('weixin_menu', $Weixin_menu);
@@ -50,7 +50,7 @@ class MenuController extends WeixinBaseController
     public function editHandle($level = 1, $pid = 0, $id = 0, $type = 'empty')
     {
 
-        $Weixin_menu = json_decode(trim(get_opinion('Weixin_menu',true)), true);
+        $Weixin_menu = json_decode(trim(get_opinion('Weixin_menu', true)), true);
 
         if ($level == 1 && $pid == $id && $type = 'empty') {
             $Weixin_menu["button"][$pid]['name'] = I('post.name');

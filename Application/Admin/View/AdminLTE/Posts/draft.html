@@ -47,18 +47,17 @@
                                     <div class="col-md-5">
                                         <div class="btn-group">
 
-                                            <a href="{:U('Admin/Posts/emptyDraftHandle')}"
+                                            <a class="btn btn-info" href="{:U('Admin/Posts/emptyDraftHandle')}"
                                                onclick="javascript:return a_confirm()">
-                                                <button type="submit" class="btn btn-info" name="delAll" value='1'>
-                                                    清空草稿箱
-                                                </button>
+                                                清空草稿箱
                                             </a>
                                         </div>
 
 
                                         <div class="btn-group">
                                             <button type="submit" class="btn btn-danger" name="delAll" value='1'><i
-                                                    class="icon-remove icon-white">
+                                                    class="icon-remove icon-white"
+                                                    onclick="javascript:return a_confirm()">
                                             </i> 批量删除
                                             </button>
                                         </div>

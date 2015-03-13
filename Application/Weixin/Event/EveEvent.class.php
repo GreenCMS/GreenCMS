@@ -53,7 +53,7 @@ class EveEvent extends WeixinCoreController
     public function CLICK($data)
     {
         $Buttom = new ButtomEvent();
-       // $reply = $Buttom->$data ['EventKey']();
+        // $reply = $Buttom->$data ['EventKey']();
 
         $reply = array(
             "CLICK",
@@ -71,7 +71,7 @@ class EveEvent extends WeixinCoreController
         );
 
 
-      //  return $reply;
+        //  return $reply;
 
     }
 

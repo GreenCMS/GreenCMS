@@ -70,15 +70,15 @@ class WidgetWidget extends Controller
      */
     public function categories()
     {
-        if( S("Widget_categories")==null ){
+        if (S("Widget_categories") == null) {
             $CatList = new CatsLogic();
             $this->assign('list', $CatList->category());
-            $categories=$this->fetch('Widget:categories');
+            $categories = $this->fetch('Widget:categories');
 
-            S("Widget_categories",$categories,DEFAULT_EXPIRES_TIME);
+            S("Widget_categories", $categories, DEFAULT_EXPIRES_TIME);
             echo $categories;
 
-        }else{
+        } else {
 
             echo S("Widget_categories");
 
@@ -93,24 +93,23 @@ class WidgetWidget extends Controller
      */
     public function tag()
     {
-        if( S("Widget_tag")==null ){
+        if (S("Widget_tag") == null) {
             $TagList = new TagsLogic();
 
             $tag_res = $TagList->getList(50, false, true);
 
             $this->assign('tagClouds', $tag_res);
 
-            $tag=$this->fetch('Widget:tag');
+            $tag = $this->fetch('Widget:tag');
 
-            S("Widget_tag",$tag,DEFAULT_EXPIRES_TIME);
+            S("Widget_tag", $tag, DEFAULT_EXPIRES_TIME);
             echo $tag;
 
-        }else{
+        } else {
 
             echo S("Widget_tag");
 
         }
-
 
 
     }

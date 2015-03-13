@@ -68,7 +68,7 @@ class Category
                 $this->error = $model . "模型不存在！";
         }
         if (is_object($model))
-            $this->model = & $model;
+            $this->model = &$model;
 
         $this->fields['cat_id'] = $fields['0'] ? $fields['0'] : 'cat_id';
         $this->fields['cat_father'] = $fields['1'] ? $fields['1'] : 'cat_father';
@@ -78,8 +78,8 @@ class Category
 
     /**
      * 获取分类信息数据
-     * @param array,string  $condition  查询条件
-     * @param string $orderby    排序
+     * @param array ,string  $condition  查询条件
+     * @param string $orderby 排序
      */
     private function _findAllCat($condition, $orderby = null)
     {
@@ -88,7 +88,7 @@ class Category
 
     /**
      * 返回给定上级分类$cat_father的所有同一级子分类
-     * @param   int $cat_father    传入要查询的cat_father
+     * @param   int $cat_father 传入要查询的cat_father
      *
      * @return  array           返回结构信息
      */
@@ -104,7 +104,7 @@ class Category
 
     /**
      * 递归格式化分类前的字符
-     * @param   int $cat_id    分类cat_id
+     * @param   int $cat_id 分类cat_id
      * @param   string $space
      */
     private function _searchList($cat_id = 0, $space = "")
@@ -133,10 +133,9 @@ class Category
     }
 
 
-
     /**
      * 递归格式化分类前的字符
-     * @param   int $cat_id    分类cat_id
+     * @param   int $cat_id 分类cat_id
      * @param   string $space
      */
     private function _searchListWithCount($cat_id = 0, $space = "")
@@ -159,7 +158,7 @@ class Category
             }
 
             $childs[$i][$this->fields['cat_name']] = ($space ? $space . $pre : "") . $childs[$i][$this->fields['cat_slug']];
-            $childs[$i]['post_count']=D("Post_cat")->where(array("cat_id"=>$childs[$i]["cat_id"]))->cache(true)->count();
+            $childs[$i]['post_count'] = D("Post_cat")->where(array("cat_id" => $childs[$i]["cat_id"]))->cache(true)->count();
             $this->formatList[] = $childs[$i];
             $this->_searchListWithCount($childs[$i][$this->fields['cat_id']], $space . $pad . "&nbsp;"); //递归下一级分类 &nbsp;
             $m++;
@@ -168,9 +167,9 @@ class Category
 
     /**
      * 不采用数据模型时，可以从外部传递数据，得到递归格式化分类
-     * @param   array,string     $condition    条件
-     * @param   int $cat_id          起始分类
-     * @param   string $orderby      排序
+     * @param   array ,string     $condition    条件
+     * @param   int $cat_id 起始分类
+     * @param   string $orderby 排序
      *
      * @return  array           返回结构信息
      */
@@ -185,9 +184,9 @@ class Category
 
     /**
      * 不采用数据模型时，可以从外部传递数据，得到递归格式化分类
-     * @param   array,string     $condition    条件
-     * @param   int $cat_id          起始分类
-     * @param   string $orderby      排序
+     * @param   array ,string     $condition    条件
+     * @param   int $cat_id 起始分类
+     * @param   string $orderby 排序
      *
      * @return  array           返回结构信息
      */
@@ -202,8 +201,8 @@ class Category
 
     /**
      * 获取结构
-     * @param   array $data         二维数组数据
-     * @param   int $cat_id          起始分类
+     * @param   array $data 二维数组数据
+     * @param   int $cat_id 起始分类
      *
      * @return  array           递归格式化分类数组
      */
@@ -226,7 +225,7 @@ class Category
 
     /**
      * 检查分类参数$cat_id,是否为空
-     * @param   int $cat_id          起始分类
+     * @param   int $cat_id 起始分类
      *
      * @return  boolean           递归格式化分类数组
      */
@@ -242,7 +241,7 @@ class Category
 
     /**
      * 检查分类参数$cat_id,是否为空
-     * @param   int $cat_id        分类cat_id
+     * @param   int $cat_id 分类cat_id
      * @return bool
      */
     private function _searchPath($cat_id)
@@ -258,7 +257,7 @@ class Category
     /**
      * 查询给定分类cat_id的路径
      *
-     * @param   int $cat_id        分类cat_id
+     * @param   int $cat_id 分类cat_id
      *
      * @return  array                   数组
      */
@@ -271,7 +270,7 @@ class Category
 
     /**
      * 添加分类
-     * @param   array $data        一维数组，要添加的数据，$data需要包含上级分类ID。
+     * @param   array $data 一维数组，要添加的数据，$data需要包含上级分类ID。
      *
      * @return  boolean                    添加成功，返回相应的分类ID,添加失败，返回FALSE；
      */
@@ -284,7 +283,7 @@ class Category
 
     /**
      * 修改分类
-     * @param   array $data     一维数组，$data需要包含要修改的分类cat_id。
+     * @param   array $data 一维数组，$data需要包含要修改的分类cat_id。
      *
      * @return  boolean                 组修改成功，返回相应的分类ID,修改失败，返回FALSE；
      */
@@ -297,7 +296,7 @@ class Category
 
     /**
      * 删除分类
-     * @param   int $cat_id        分类cat_id
+     * @param   int $cat_id 分类cat_id
      *
      * @return  boolean                 删除成功，返回相应的分类ID,删除失败，返回FALSE
      */

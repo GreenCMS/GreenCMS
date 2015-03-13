@@ -35,20 +35,20 @@ class MenuLogic extends Model
             $home_menu[$menu_item_key]['menu_abs_url'] = get_url_by_menu($menu_item_value);
 
             if ($menu_item_value['menu_pid'] == 0) {
-                $home_menu_res[$menu_item_value['menu_id']] =  $home_menu[$menu_item_key];
+                $home_menu_res[$menu_item_value['menu_id']] = $home_menu[$menu_item_key];
             }
 
         }
         //二级菜单
         foreach ($home_menu as $menu_item_key => $menu_item_value) {
-            if (empty($home_menu_res[$menu_item_value['menu_pid']]['menu_children'])&&!empty($home_menu_res[$menu_item_value['menu_pid']])) {
+            if (empty($home_menu_res[$menu_item_value['menu_pid']]['menu_children']) && !empty($home_menu_res[$menu_item_value['menu_pid']])) {
                 $home_menu_res[$home_menu[$menu_item_key]['menu_pid']]['menu_children'] = array();
             }
             if ($home_menu[$menu_item_key]['menu_pid'] != 0) {
                 array_push($home_menu_res[$home_menu[$menu_item_key]['menu_pid']]['menu_children'], $home_menu[$menu_item_key]);
             }
         }
-          return array_sort($home_menu_res, 'menu_sort');
+        return array_sort($home_menu_res, 'menu_sort');
     }
 
     /**

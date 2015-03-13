@@ -5,7 +5,7 @@
     <description>南工大学生处学院网站</description>
     <author>GreenStudio</author>
     <preview>/Xsc/preview.jpg</preview>
-    <preview_big>/Xsc/preview.jpg</preview_big>
+    <preview_big>/Xsc/preview_big.jpg</preview_big>
     <copyright>GreenStudio 2014</copyright>
     <tpl_view>Apllication/Home/View/Xsc</tpl_view>
     <tpl_static>Public/Xsc</tpl_static>
@@ -28,19 +28,87 @@
 
     <config>
         <kv>
-            <zt1>
-                <title>专题一</title>
-                <type>text</type>
-                <value>周恩来版</value>
-            </zt1>
 
-            <zt1url>
-                <title>专题一链接</title>
+
+
+            <text_1_1>
+                <title>第一排左侧分类文字</title>
                 <type>text</type>
-                <value>周恩来版</value>
-            </zt1url>
+                <value>校园文化</value>
+            </text_1_1>
+
+            <id_1_1>
+                <title>第一排左侧分类ID</title>
+                <type>text</type>
+                <value>64</value>
+            </id_1_1>
+
+            <text_1_2>
+                <title>第一排右侧分类文字</title>
+                <type>text</type>
+                <value>公共通知</value>
+            </text_1_2>
+
+            <id_1_2>
+                <title>第一排右侧分类ID</title>
+                <type>text</type>
+                <value>3</value>
+            </id_1_2>
+
+            <text_2_1>
+                <title>第二排左侧分类文字</title>
+                <type>text</type>
+                <value>赢在起跑线</value>
+            </text_2_1>
+
+            <id_2_1>
+                <title>第二排左侧分类ID</title>
+                <type>text</type>
+                <value>38</value>
+            </id_2_1>
+
+            <text_2_2>
+                <title>第二排中间分类文字</title>
+                <type>text</type>
+                <value>教育管理</value>
+            </text_2_2>
+
+            <id_2_2>
+                <title>第二排中间分类ID</title>
+                <type>text</type>
+                <value>7</value>
+            </id_2_2>
+
+            <text_2_3>
+                <title>第二排右侧分类文字</title>
+                <type>text</type>
+                <value>计划总结</value>
+            </text_2_3>
+
+            <id_2_3>
+                <title>第二排右侧分类ID</title>
+                <type>text</type>
+                <value>71</value>
+            </id_2_3>
+
+
+
+            <text_3_1>
+                <title>第三排左侧分类文字</title>
+                <type>text</type>
+                <value>教育管理</value>
+            </text_3_1>
+
+
+            <id_3_1>
+                <title>第三排左侧分类ID</title>
+                <type>text</type>
+                <value>4</value>
+            </id_3_1>
+
 
         </kv>
-    </config>
 
+
+    </config>
 </theme>

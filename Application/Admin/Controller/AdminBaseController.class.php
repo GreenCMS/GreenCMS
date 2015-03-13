@@ -40,6 +40,8 @@ class AdminBaseController extends BaseController
 
         $this->_currentUser();
 
+        $this->_recordCurrentPage();
+
 //        $this->customConfig();
 
     }
@@ -117,6 +119,12 @@ class AdminBaseController extends BaseController
 
     }
 
+    private function _recordCurrentPage()
+    {
+        if (!IS_AJAX) {
+            cookie("last_visit_page", base64_encode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']), 3600 * 24 * 30);
+        }
+    }
 
     /**
      *
@@ -129,13 +137,6 @@ class AdminBaseController extends BaseController
         }
     }
 
-
-    public function isSuperAdmin()
-    {
-        $uid = ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
-        if ($uid == 1) return true;
-        else return false;
-    }
     /*
         public function __destruct()
         {
@@ -178,6 +179,14 @@ class AdminBaseController extends BaseController
 
         }
     */
+
+    public function isSuperAdmin()
+    {
+        $uid = ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
+        if ($uid == 1) return true;
+        else return false;
+    }
+
     /**
      *
      */

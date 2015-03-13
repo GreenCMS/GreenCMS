@@ -76,10 +76,8 @@
 
     </style>
 
-
 </head>
 <body>
-{:hook('userHeader', "")}
 
 
 <?php
@@ -88,16 +86,19 @@
 ?>
 
 <php>
+    //get_theme_opinion("id_1_1")
+
     $CatsLogic=new Common\Logic\CatsLogic();
 
-    $xgxw = $CatsLogic->getPostsByCat(64, 10 ,0 ,false );
+    $id_1_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_1"), 10 ,0 ,false );
+    $id_1_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_2"), 10 ,0 ,false );
+    $id_2_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_1"), 8 ,0 ,false );
+    $id_2_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_2"), 8 ,0 ,false );
+    $id_2_3 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_3"), 8 ,0 ,false );
+    $id_3_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_3_1"), 3 ,0 ,false );
 
 
-    $ggtz = $CatsLogic->getPostsByCat(3, 10  ,0 ,false );
-    $xyfc = $CatsLogic->getPostsByCat(24, 8 ,0 ,false  );
 
-    $llqy = $CatsLogic->getPostsByCat(53, 8 ,0 ,false );
-    $xjdx = $CatsLogic->getPostsByCat(34, 8 ,0 ,false );
 
     $slider = D('Tags', 'Logic')->getPostsByTag(3, 10 ,0 ,false  );
 
@@ -111,8 +112,8 @@
 
     <div class="head_box" style="margin-left: 1%;width: 71%;">
 
-        <div class="header"><a href="{:get_cat_url(64)}"
-                               class="more">更多</a><span>校园文化</span></div>
+        <div class="header"><a href="{:get_cat_url(get_theme_opinion('id_1_1'))}"
+                               class="more">更多</a><span>{:get_theme_opinion('text_1_1')}</span></div>
         <div class="body">
 
 
@@ -130,7 +131,7 @@
 
                 <ul class="list1">
 
-                    <volist name="xgxw" id="v" key="k">
+                    <volist name="id_1_1" id="v" key="k">
 
 
                         <li>
@@ -157,8 +158,8 @@
 
     <div class="head_box" style="margin-left: 1%;width: 25%;">
 
-        <div class="header"><a href="{:get_cat_url(3)}"
-                               class="more">更多</a><span>公告通知</span></div>
+        <div class="header"><a href="{:get_cat_url(get_theme_opinion('id_1_2'))}"
+                               class="more">更多</a><span>{:get_theme_opinion('text_1_2')}</span></div>
         <div class="body">
 
 
@@ -167,7 +168,7 @@
 
                 <ul class="list1">
 
-                    <volist name="ggtz" id="v" key="k">
+                    <volist name="id_1_2" id="v" key="k">
 
 
                         <li>
@@ -200,9 +201,9 @@
 
     <div class="left_half">
         <div class="header" style="border-top: solid 7px #3686be;">
-            <a href="{:get_cat_url(3)}">更多+</a>
+            <a href="{:get_cat_url(get_theme_opinion('id_2_1'))}">更多+</a>
 
-            <div class="header_info">新闻栏目</div>
+            <div class="header_info">{:get_theme_opinion('text_2_1')}</div>
         </div>
         <div class="body">
 
@@ -211,13 +212,13 @@
                 <div class="body-top">
                     <div class="bt-imgbox">
                         <img
-                                src="{:get_post_img($xyfc[0])}"
+                                src="{:get_post_img($id_2_1[0])}"
                                 class="bt-img">
                     </div>
                     <div class="bt-text">
-                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+                        <h3 class="bt-title"> {$id_2_1[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
 
-                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                        <p class="bt-cont"> {$id_2_1[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
                     </div>
                     <div class="clr"></div>
                 </div>
@@ -227,7 +228,7 @@
             <ul>
 
 
-                <volist name="xyfc" id="v" key="k">
+                <volist name="id_2_1" id="v" key="k">
 
 
                     <eq name="k" value="1">
@@ -256,9 +257,9 @@
 
     <div class="left_half">
         <div class="header" style="border-top: solid 7px #008287;">
-            <a href="{:get_cat_url(10)}">更多+</a>
+            <a href="{:get_cat_url(get_theme_opinion('id_2_2'))}">更多+</a>
 
-            <div class="header_info">新闻栏目</div>
+            <div class="header_info">{:get_theme_opinion('text_2_2')}</div>
         </div>
         <div class="body">
 
@@ -267,13 +268,13 @@
                 <div class="body-top">
                     <div class="bt-imgbox">
                         <img
-                                src="{:get_post_img($xyfc[0])}"
+                                src="{:get_post_img($id_2_2[0])}"
                                 class="bt-img">
                     </div>
                     <div class="bt-text">
-                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+                        <h3 class="bt-title"> {$id_2_2[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
 
-                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,200,"UTF-8"}</p>
+                        <p class="bt-cont"> {$id_2_2[0]['post_content']|strip_tags|mb_substr=0,200,"UTF-8"}</p>
                     </div>
                     <div class="clr"></div>
                 </div>
@@ -281,7 +282,7 @@
 
 
             <ul>
-                <volist name="xyfc" id="v" key="k">
+                <volist name="id_2_2" id="v" key="k">
 
                     <eq name="k" value="1">
 
@@ -304,22 +305,22 @@
 
     <div class="left_half">
         <div class="header" style="border-top: solid 7px #F4B300;">
-            <a href="{:get_cat_url(10)}">更多+</a>
+            <a href="{:get_cat_url(get_theme_opinion('id_2_3'))}">更多+</a>
 
-            <div class="header_info">新闻栏目</div>
+            <div class="header_info">{:get_theme_opinion('text_2_3')}</div>
         </div>
         <div class="body">
             <div class="wrap">
                 <div class="body-top">
                     <div class="bt-imgbox">
                         <img
-                                src="{:get_post_img($xyfc[0])}"
+                                src="{:get_post_img($id_2_3[0])}"
                                 class="bt-img">
                     </div>
                     <div class="bt-text">
-                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+                        <h3 class="bt-title"> {$id_2_3[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
 
-                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                        <p class="bt-cont"> {$id_2_3[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
                     </div>
                     <div class="clr"></div>
                 </div>
@@ -327,7 +328,7 @@
 
 
             <ul>
-                <volist name="xyfc" id="v" key="k">
+                <volist name="id_2_3" id="v" key="k">
 
                     <eq name="k" value="1">
 
@@ -445,135 +446,70 @@
 
     <div class="left_half" style="width: 47%;padding-bottom: 30px">
         <div class="header" style="border-top: solid 7px #1FAEFF;">
-            <a href="{:get_cat_url(3)}">更多+</a>
+            <a href="{:get_cat_url(get_theme_opinion('id_3_1'))}">更多+</a>
 
-            <div class="header_info">新闻栏目</div>
+            <div class="header_info">{:get_theme_opinion('text_3_1')}</div>
         </div>
         <div class="body">
 
+            <!--<volist name="id_2_2" id="v" key="k">-->
 
-            <div class="wrap">
-                <div class="body-top">
-                    <div class="bt-imgbox">
-                        <img
-                                src="{:get_post_img($xyfc[0])}"
-                                class="bt-img">
-                    </div>
-                    <div class="bt-text">
-                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+                <!--<eq name="k" value="1">-->
 
-                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-            </div>
+                    <!--<else/>-->
+                    <!--<li>-->
+                        <!--<span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
+                        <!--<a href="{$v|get_post_url}" title="{$v['post_title']}">-->
+                            <!--<i>·&nbsp;&nbsp;</i>-->
+                            <!--{$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>-->
+                    <!--</li>-->
+                <!--</eq>-->
 
 
-            <!--<table border="0" cellspacing="0" cellpadding="0"-->
-            <!--style="margin:8px 10px;border-bottom:1px dashed #686868;">-->
-            <!--<tbody>-->
-            <!--<tr>-->
-            <!--<td width="110" style="padding-bottom:8px;"><img-->
-            <!--src="{:get_post_img($xyfc[0])}"-->
-            <!--border="0" width="97"-->
-            <!--height="64"></td>-->
-            <!--<td valign="top" style="padding-bottom:8px;">-->
-            <!--<p class="bc14"><a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
-            <!--{$xyfc[0]['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}-->
-            <!--</a></p>-->
-
-            <!--<p class="be12">　　-->
-            <!--<a href="xxfz/2014-09/23/content_284997.htm" target="_blank">-->
-            <!--{$xyfc[0]['post_content']|strip_tags|mb_substr=0,100,"UTF-8"}-->
-            <!--</a>-->
-            <!--</p></td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-            <!--</table>-->
-
-
-            <div class="wrap">
-                <div class="body-top">
-                    <div class="bt-imgbox">
-                        <img
-                                src="{:get_post_img($xyfc[0])}"
-                                class="bt-img">
-                    </div>
-                    <div class="bt-text">
-                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
-
-                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-            </div>
-
-
-            <div class="wrap">
-                <div class="body-top">
-                    <div class="bt-imgbox">
-                        <img
-                                src="{:get_post_img($xyfc[0])}"
-                                class="bt-img">
-                    </div>
-                    <div class="bt-text">
-                        <h3 class="bt-title"> {$xyfc[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
-
-                        <p class="bt-cont"> {$xyfc[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-            </div>
-
-
-            <!--<ul>-->
-
-
-            <!--<volist name="ggtz"  id="v" key="k">-->
-            <!--<li>-->
-            <!--<span>-->
-            <!--{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
-            <!--<a href="{$v|get_post_url}" title="{$v['post_title']}">-->
-            <!--<i>·&nbsp;&nbsp;</i>-->
-            <!--{$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>-->
-
-            <!--</li>-->
             <!--</volist>-->
+            <volist name="id_3_1" id="v" key="k">
+
+                <div class="wrap">
+                    <div class="body-top">
+                        <div class="bt-imgbox">
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                 <img src="{:get_post_img($v)}" class="bt-img" />
+                            </a>
+                        </div>
+                        <div class="bt-text">
+
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                <h3 class="bt-title"> {$v['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+                            </a>
+
+                            <p class="bt-cont">
+                                <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                    {$v['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}
+                                </a>
+                            </p>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </div>
+
+            </volist>
 
 
-            <!--</ul>-->
         </div>
     </div>
 
 
     <div class="left_half" style="width: 25%;padding-bottom: 0px" id="c4_right_2">
         <div class="header" style="border-top: solid 7px #78BA00;">
-            <a href="{:get_cat_url(10)}">更多+</a>
+
 
             <div class="header_info">专题链接</div>
         </div>
         <div class="body" style="">
 
-
             <div style="text-align: center;padding-top: 20px;padding-bottom: 20px">
-
-
-                <ul>
-
-                    <li><a href="#"> 奥蓝系统管理版</a></li>
-
-                    <li><a href="#"> 奥蓝系统学生版</a></li>
-
-                    <li><a href="#"> 下载专区</a></li>
-                    <li><a href="#"> 学生手册</a></li>
-                    <li><a href="#"> 入学指南</a></li>
-
-
-                </ul>
-
-
+                <friendlist link_group_id="4" num="6" ></friendlist>
             </div>
-
 
         </div>
     </div>
@@ -581,7 +517,7 @@
 
     <div class="left_half" style="width: 21%;">
         <div class="header" style="border-top: solid 7px #252525;">
-            <a href="{:get_cat_url(10)}">更多+</a>
+
 
             <div class="header_info">服务链接</div>
         </div>
@@ -590,27 +526,7 @@
 
             <div style="text-align: center;" id="links">
 
-
-                <ul>
-
-                    <li><a href="#"> 测试链接</a></li>
-                    <li><a href="#"> 测试链接</a></li>
-                    <li><a href="#"> 测试链接</a></li>
-                    <li><a href="#"> 测试链接</a></li>
-
-                    <li><a href="#"> 测试链接</a></li>
-
-                    <li><a href="#"> 奥蓝系统管理版</a></li>
-
-                    <li><a href="#"> 奥蓝系统学生版</a></li>
-
-                    <li><a href="#"> 下载专区</a></li>
-                    <li><a href="#"> 学生手册</a></li>
-                    <li><a href="#"> 入学指南</a></li>
-
-
-                </ul>
-
+                <friendlist link_group_id="5" num="10" ></friendlist>
             </div>
 
             <div style="text-align: center">

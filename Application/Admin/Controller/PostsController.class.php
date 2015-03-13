@@ -461,7 +461,7 @@ class PostsController extends AdminBaseController
             } elseif ($post_data['post_type'] == 'page') {
                 $this->jsonReturn(1, "发布成功", U('Admin/Posts/page'));
             } else {
-                $this->jsonReturn(1, "发布成功", U('Admin/Posts/'.$post_data['post_type']));
+                $this->jsonReturn(1, "发布成功", U('Admin/Posts/' . $post_data['post_type']));
             }
 
         } else {
