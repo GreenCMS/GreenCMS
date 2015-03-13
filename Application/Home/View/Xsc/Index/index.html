@@ -472,14 +472,21 @@
                 <div class="wrap">
                     <div class="body-top">
                         <div class="bt-imgbox">
-                            <img
-                                    src="{:get_post_img($v)}"
-                                    class="bt-img">
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                 <img src="{:get_post_img($v)}" class="bt-img" />
+                            </a>
                         </div>
                         <div class="bt-text">
-                            <h3 class="bt-title"> {$v['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
 
-                            <p class="bt-cont"> {$v['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
+                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                <h3 class="bt-title"> {$v['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
+                            </a>
+
+                            <p class="bt-cont">
+                                <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                    {$v['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}
+                                </a>
+                            </p>
                         </div>
                         <div class="clr"></div>
                     </div>
