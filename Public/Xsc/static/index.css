@@ -363,6 +363,11 @@ img {
 }
 
 
+#c4_right_2 ul:hover {
+    color: #ffffff;
+}
+
+
 #c4_right_2 ul li:hover {
 
     background-color: #266bae;
