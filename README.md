@@ -1,5 +1,7 @@
 GreenCMS - 基于ThinkPHP 3.2.x的CMS系统
 ================================
+
+[![Join the chat at https://gitter.im/zts1993/GreenCMS](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/zts1993/GreenCMS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://secure.travis-ci.org/zts1993/GreenCMS.svg?branch=beta)](http://travis-ci.org/zts1993/GreenCMS)
 
 
