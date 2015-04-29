@@ -1,6 +1,6 @@
 
 html {
-    background: url(./images/bg.gif) repeat;
+    /*background: url(./images/bg.gif) repeat;*/
     /*background-color: #f2f2f2;*/
     margin: 0;
     padding: 0;
@@ -43,9 +43,9 @@ img {
 
 .green_nav {
     /*background-image: url(../images/1/indexnav.png);*/
-    background: #22427f;
+    background: #379be9;
 
-    width: 100%;
+    width: 80%;
     /*width: 1140px;*/
     margin: 0 auto;
 }
@@ -57,7 +57,7 @@ img {
 .head-nav {
 
     /*width: 1050px;*/
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -383,26 +383,27 @@ img {
 }
 
 .headerwrap {
-    width: 100%;
+    width: 80%;
 
     /*width: 1140px;*/
     margin: 0 auto;
 
-    height: 180px;
+    height: 160px;
     overflow: hidden;
     /*background: RGB(25, 103, 175) url(../images/1/headerbg.png) no-repeat center top;*/
     /*background: RGB(25, 103, 175) url(../images/1/headerbg.png) no-repeat center top;*/
-    /*background: #416CAF  url(../images/1/headbg-3.jpg) no-repeat center top;;*/
-    background: #22427f;
+    /*background: #56abee  url(../images/1/headbg-3.jpg) no-repeat center top;;*/
+    /*background: #22427f;*/
 }
 
 .headerwrap .header {
     /*width: 940px;*/
-    width: 75%;
     margin: 0 auto;
     height: 35px;
     line-height: 35px;
-    color: #ced7ce;
+    /*color: #ced7ce;*/
+
+    background: #e6e6e6;
 
 }
 
@@ -415,12 +416,14 @@ img {
     float: left;
     display: inline;;
     font-size: 13px;
+    margin-left: 10px;
 }
 
 .header .right {
     float: right;
     display: inline;;
     font-size: 13px;
+    margin-right: 10px;
 }
 
 .header .right .userarea {
@@ -437,7 +440,7 @@ img {
 }
 
 .header .right a {
-    color: #ced7ce;
+    /*color: #ced7ce;*/
     margin: 0 5px;
 }
 
@@ -456,10 +459,10 @@ img {
 }
 
 .headerwrap .logoarea .logo {
-    width: 400px;
+    /*width: 400px;*/
     /*float: left;*/
     display: block;
-    margin: 20px auto 0;
+    margin: 5px auto 0;
 
 }
 
@@ -708,20 +711,20 @@ img {
 .news-slide {
     /*width: 325px;*/
     width: 50%;
-    height: 250px;
+    height: 200px;
     overflow: hidden;
     position: relative;
 }
 
 .news-slide a img {
-    width: 325px;
+    width: 280px;
     /*width: 50%;*/
-    height: 250px;
+    height: 200px;
 }
 
 .slide {
-    width: 300px;
-    height: 250px;
+    width: 280px;
+    height: 210px;
     float: left;
     background: #ccc;
     margin-bottom: 20px;
@@ -750,9 +753,9 @@ img {
 }
 
 .head_box {
-    border: 2px solid #1b68af;
+    /*border: 2px solid #1b68af;*/
 
-    height: 310px;
+    /*height: 310px;*/
     float: left;
     margin-top: 25px;
 
@@ -760,16 +763,21 @@ img {
 
 .head_box .header {
 
+    border-top: solid 2px #3686be;
+
+    width: 98%;
+    margin: 0 auto;
     /*background: url(../pictures/title.png) 0 repeat-x;*/
-    background-color: #416CAF;
+    background-color: #ECECEC;
 
     height: 40px;
-    font-size: 20px;
-    color: #FFFFFF;
+    color: #1b58b8;
     line-height: 40px;
 }
 
 .head_box .header span {
+    font-size: 20px;
+
     background: url(./images/titleIcon.png) 0 5px no-repeat;
     padding-left: 28px;
     margin-left: 10px;
@@ -777,7 +785,7 @@ img {
 }
 
 .head_box .header a {
-    color: #FFFFFF;
+    color: #1b58b8;
     display: block;
     float: right;
     margin-right: 10px;
@@ -791,7 +799,7 @@ img {
 
 .head_box .body {
     /*margin-top: 8px;*/
-    padding: 0px 15px;
+    padding: 8px 10px;
 }
 
 .head_box .body .box {
@@ -799,12 +807,12 @@ img {
 
     /* width: 10%; */
 
-    height: 250px;
+    /*height: 250px;*/
     overflow: hidden;
 
     border: none;
-    padding-bottom: 14px;
-    margin-bottom: 12px;
+    /*padding-bottom: 14px;*/
+    /*margin-bottom: 12px;*/
     display: block;
 }
 
@@ -834,22 +842,22 @@ img {
     /*width: 95%;*/
 
     /*height: 100px;*/
-    margin: 10px 0 0 0;
+    /*margin: 10px 0 0 0;*/
     /*border-bottom: 1px dashed #d8d8d8;*/
 
 }
 
 #content {
-    width: 86%;
+    width: 80%;
     min-width: 900px;
     /* width: 1140px; */
     /* background: #F8F8F8; */
     background: url(./images/bg.gif) repeat;
     margin: 0 auto;
     padding-bottom: 10px;
-    border: 1px solid #e7eaed;
-    padding-left: 2%;
-    padding-right: 2%;
+    /*border: 1px solid #e7eaed;*/
+    /*padding-left: 1%;*/
+    /*padding-right: 1%;*/
 }
 
 .preBtn {

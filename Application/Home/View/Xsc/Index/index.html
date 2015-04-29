@@ -90,8 +90,8 @@
 
     $CatsLogic=new Common\Logic\CatsLogic();
 
-    $id_1_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_1"), 10 ,0 ,false );
-    $id_1_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_2"), 10 ,0 ,false );
+    $id_1_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_1"), 8 ,0 ,false );
+    $id_1_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_2"), 8 ,0 ,false );
     $id_2_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_1"), 8 ,0 ,false );
     $id_2_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_2"), 8 ,0 ,false );
     $id_2_3 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_3"), 8 ,0 ,false );
@@ -110,14 +110,14 @@
 
 <div style="margin: 0 auto;">
 
-    <div class="head_box" style="margin-left: 1%;width: 71%;">
+    <div class="head_box" style="width: 65%;">
 
         <div class="header"><a href="{:get_cat_url(get_theme_opinion('id_1_1'))}"
                                class="more">更多</a><span>{:get_theme_opinion('text_1_1')}</span></div>
         <div class="body">
 
 
-            <div id="slide" class="news-slide fl" style="margin-top:1%;margin-right: 1%; width: 50%;">
+            <div id="slide" class="news-slide fl" style="margin-right: 1%; width: 40%;">
                 <volist name="slider" id="v" key="k">
                     {:get_post_thumbnail($v)}
                 </volist>
@@ -126,7 +126,7 @@
             <!--<div style="clear:both;"></div>-->
 
 
-            <div class="box" style="margin-left: 340px;">
+            <div class="box" style="margin-left: 280px;">
 
 
                 <ul class="list1">
@@ -136,11 +136,11 @@
 
                         <li>
                             <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
+                                <i>·</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
                                                     <span>
 
-                            &nbsp;&nbsp; {$v['post_date']|mb_substr=0,10,"UTF-8"}
+                          {$v['post_date']|mb_substr=5,5,"UTF-8"}
 
                         </span>
 
@@ -156,7 +156,7 @@
 
     </div>
 
-    <div class="head_box" style="margin-left: 1%;width: 25%;">
+    <div class="head_box" style="width: 35%;">
 
         <div class="header"><a href="{:get_cat_url(get_theme_opinion('id_1_2'))}"
                                class="more">更多</a><span>{:get_theme_opinion('text_1_2')}</span></div>
@@ -173,8 +173,8 @@
 
                         <li>
                             <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,11,"UTF-8"}</a>
+                                <i>·</i>
+                                {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
                             &nbsp;&nbsp;
                         <span>
                         {$v['post_date']|mb_substr=2,8,"UTF-8"}
@@ -240,7 +240,7 @@
             <span>
               {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
                             <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
+                                <i>·</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
 
                         </li>
@@ -255,7 +255,7 @@
     </div>
 
 
-    <div class="left_half">
+    <div class="left_half" style="width: 41%;">
         <div class="header" style="border-top: solid 7px #008287;">
             <a href="{:get_cat_url(get_theme_opinion('id_2_2'))}">更多+</a>
 
@@ -290,7 +290,7 @@
                         <li>
                             <span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
                             <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
+                                <i>·</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
                         </li>
                     </eq>
@@ -303,7 +303,7 @@
     </div>
 
 
-    <div class="left_half">
+    <div class="left_half" style="width: 21%;">
         <div class="header" style="border-top: solid 7px #F4B300;">
             <a href="{:get_cat_url(get_theme_opinion('id_2_3'))}">更多+</a>
 
@@ -339,7 +339,7 @@
             <span>
               {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
                             <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
+                                <i>·</i>
                                 {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
                         </li>
 
@@ -348,92 +348,6 @@
 
             </ul>
         </div>
-    </div>
-
-
-</div>
-
-<div style="clear:both;"></div>
-<div class="center_middle" style="height: 150px;margin-right: 1.5%;margin-left: 1%;">
-
-
-    <!--http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg-->
-    <!--background:url('http://2011college.njtech.edu.cn/Public/2011college/images/slide.jpg') no-repeat #000000 ;background-size:100% 100%;-->
-    <!--background: url('http://xgw.njut.asia/images/logo.jpg') no-repeat;background-size:100% 100%;-->
-
-    <!--<div class="box" style="position: absolute;left: 60%;margin-top: 30px;">-->
-    <!--<span class="text1">一切为了学生</span>-->
-    <!--<span class="text2">为了一切学生</span>-->
-    <!--<span class="text3">为了学生一切</span>-->
-    <!--</div>-->
-    <!--<div class="box" style="position: absolute;left: 50%;margin-top: 90px;">-->
-    <!--<span class="text4">一切为了学生</span>-->
-    <!--<span class="text5">为了一切学生</span>-->
-    <!--<span class="text6">为了学生一切</span>-->
-    <!--</div>-->
-
-
-    <div class="banner" id="indexbanner">
-        <div class="ground"
-             style="display:block; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide.jpg') no-repeat no-repeat 100% 100%;;"></div>
-        <div class="ground"
-             style="display: none; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg') no-repeat no-repeat 100% 100%;;"></div>
-        <div class="ground"
-             style="display: none; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide3.jpg') no-repeat no-repeat 100% 100%;;"></div>
-
-
-        <div class="bannerinner">
-            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner1" style="display:block;">
-                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
-
-                    <h3 class="tit">一切为了学生</h3>
-                    <span class="content"></span>
-                </div>
-            </a>
-            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner2" style="display:none;">
-
-                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
-
-                    <h3 class="tit">一切为了学生</h3>
-                    <span class="content"></span>
-                </div>
-                <div class="describ" style=left:35%;top:40px;"><span class="tpbg"></span>
-
-                    <h3 class="tit">为了一切学生</h3>
-                    <span class="content"></span>
-                </div>
-
-
-            </a>
-            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner3" style="display: none;">
-
-                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
-
-                    <h3 class="tit">一切为了学生</h3>
-                    <span class="content"></span>
-                </div>
-                <div class="describ" style=left:35%;top:40px;"><span class="tpbg"></span>
-
-                    <h3 class="tit">为了一切学生</h3>
-                    <span class="content"></span>
-                </div>
-                <div class="describ" style="left:65%;top:20px"><span class="tpbg"></span>
-
-                    <h3 class="tit">为了学生一切</h3>
-                    <span class="content"></span>
-                </div>
-
-            </a>
-
-
-            <a class="left"></a>
-            <a class="right"></a>
-              <span class="lights">
-                  <a class="focused"></a>
-                  <a></a>
-                  <a></a>
-
- </span></div>
     </div>
 
 
@@ -460,7 +374,7 @@
                     <!--<li>-->
                         <!--<span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
                         <!--<a href="{$v|get_post_url}" title="{$v['post_title']}">-->
-                            <!--<i>·&nbsp;&nbsp;</i>-->
+                            <!--<i>·</i>-->
                             <!--{$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>-->
                     <!--</li>-->
                 <!--</eq>-->
