@@ -4,14 +4,14 @@ html {
     /*background-color: #f2f2f2;*/
     margin: 0;
     padding: 0;
-    min-width: 900px;
     /*max-width: 1366px;*/
 
 }
 
 body {
     margin: 0 auto;
-    min-height: 900px;
+    min-height: 800px;
+    width: 1050px;
 
     /*	background-color:#FFFFFF;*/
     font-size: 12px;
@@ -45,14 +45,11 @@ img {
     /*background-image: url(../images/1/indexnav.png);*/
     background: #379be9;
 
-    width: 80%;
+    /*width: 1050px*/
     /*width: 1140px;*/
     margin: 0 auto;
 }
 
-.green_top {
-    border-top: 5px solid #4599c7;
-}
 
 .head-nav {
 
@@ -160,7 +157,7 @@ img {
 }
 
 .center_middle {
-    /*width: 1080px;*/
+    /*width: 1050px;*/
     /*height: 255px;*/
     /*width: 92%;*/
     margin-top: 15px;
@@ -171,32 +168,32 @@ img {
 }
 
 .center_middle .left_half {
-    margin-right: 1%;
-    margin-left: 1%;
+    padding-right: 2%;
+    /*padding-left: 1%;*/
     margin-bottom: 2px;
-    width: 31%;
+    width: 33%;
     /*height: 255px;*/
     float: left;
-    border-left: 1px solid #e5e5e5;
+/*    border-left: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;*/
 
 }
 
 .left_half .header {
     width: 100%;
-    height: 55px;
+    height: 40px;
     float: left;
-    border-top: solid #3686be;
-    background-color: #ECECEC;
+    /*border-top: solid #3686be;*/
+    background-color: #eaeaea;
 
 }
 
 .left_half .header .header_info {
     padding-left: 24px;
 
-    margin-top: 10px;
-    font-size: 24px;
+    margin-top: 4px;
+    font-size: 22px;
 
     color: #1b58b8;
 }
@@ -219,20 +216,20 @@ img {
 }
 
 .left_half .body ul {
-    padding-left: 10px;
-    margin: 16px 3px;
+    /*padding-left: 10px;*/
+    margin: 0 auto;
 }
 
 .left_half .body ul li {
 
-    height: 26px;
+    height: 30px;
     border-bottom: 1px dashed #d8d8d8;
-    line-height: 26px;
+    line-height: 30px;
     color: #676767;
     font-size: 12px;
     list-style: none;
 
-    width: 97%;
+    /*width: 97%;*/
     overflow: hidden;
 }
 
@@ -256,7 +253,7 @@ img {
     float: right;
     margin-right: 2px;
     border-top: solid #2957a2;
-    background-color: #ECECEC;
+    background-color: #f4f4f4;
 
     border-left: 1px solid #e4e4e4;
     border-bottom: 1px solid #e4e4e4;
@@ -327,7 +324,7 @@ img {
 
 
 
-    width: 90%;
+    width: 25%;
     text-align: center;
 
     /*background-color: #1967ae;*/
@@ -336,7 +333,7 @@ img {
 
     display: inline-block;
 
-    margin: 8px 0 8px 0;
+    margin: 8px 10px 8px 10px;
 
     padding: 10px;
 
@@ -383,7 +380,7 @@ img {
 }
 
 .headerwrap {
-    width: 80%;
+    /*width: 1050px*/
 
     /*width: 1140px;*/
     margin: 0 auto;
@@ -399,8 +396,8 @@ img {
 .headerwrap .header {
     /*width: 940px;*/
     margin: 0 auto;
-    height: 35px;
-    line-height: 35px;
+    height: 30px;
+    line-height: 30px;
     /*color: #ced7ce;*/
 
     background: #e6e6e6;
@@ -525,7 +522,7 @@ img {
     width: 28px;
     position: absolute;
     height: 28px;
-    background: url(../images/1/indexbg.png) no-repeat 4px -43px;
+    /*background: url(../images/1/indexbg.png) no-repeat 4px -43px;*/
     top: 0px;
     right: 0px;
     border: none;
@@ -535,7 +532,7 @@ img {
     padding-right: 10px;
     line-height: 30px;
     color: #fff;
-    background: url(../images/1/indexbg.png) no-repeat 53px -103px;
+    /*background: url(../images/1/indexbg.png) no-repeat 53px -103px;*/
     float: left;
     display: inline;
     margin-left: 12px;
@@ -630,7 +627,7 @@ img {
 
 
 #indexbanner .left, #indexbanner .center_middle, #indexbanner .right {
-    background: url(../images/1/indexbg.png) no-repeat;
+    /*background: url(../images/1/indexbg.png) no-repeat;*/
     position: absolute;
     z-index: 6;
     background-position: -56px -104px;
@@ -711,15 +708,15 @@ img {
 .news-slide {
     /*width: 325px;*/
     width: 50%;
-    height: 200px;
+    /*height: 200px;*/
     overflow: hidden;
     position: relative;
 }
 
 .news-slide a img {
-    width: 280px;
+    width: 500px;
     /*width: 50%;*/
-    height: 200px;
+    height: 300px;
 }
 
 .slide {
@@ -757,7 +754,7 @@ img {
 
     /*height: 310px;*/
     float: left;
-    margin-top: 25px;
+    margin-top: 20px;
 
 }
 
@@ -768,7 +765,7 @@ img {
     width: 98%;
     margin: 0 auto;
     /*background: url(../pictures/title.png) 0 repeat-x;*/
-    background-color: #ECECEC;
+    background-color: #f4f4f4;
 
     height: 40px;
     color: #1b58b8;
@@ -848,8 +845,7 @@ img {
 }
 
 #content {
-    width: 80%;
-    min-width: 900px;
+    /*width: 1050px;*/
     /* width: 1140px; */
     /* background: #F8F8F8; */
     background: url(./images/bg.gif) repeat;

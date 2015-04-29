@@ -1,11 +1,31 @@
 .menu {
-    height: 40px;
+    height: 50px;
     /*width: 1050px;*/
     width: 95%;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
+
+
+.menu li {
+
+    -webkit-transition-duration: .3s;
+    -moz-transition-duration: .3s;
+    -o-transition-duration: .3s;
+    transition-duration: .3s;
+    -ms-transition-duration: 0s;
+
+    width: 10%;
+
+    position: relative;
+    list-style: none;
+    float: left;
+    display: block;
+    height: 50px;
+    text-transform: capitalize;
+}
+
 
 .menu li:hover {
 
@@ -17,44 +37,18 @@
 .menu li:hover a{
     color: #000000;
 }
-
-.menu li {
-
-
-
-    -webkit-transition-duration: .3s;
-    -moz-transition-duration: .3s;
-    -o-transition-duration: .3s;
-    transition-duration: .3s;
-    -ms-transition-duration: 0s;
-
-
-
-    width: 11%;
-
-
-    position: relative;
-    list-style: none;
-    float: left;
-    display: block;
-    height: 40px;
-    text-transform: capitalize;
-}
-
 /* Links */
 
 .menu li a {
 
-
-
     display: block;
     /*padding: 0 14px;*/
-    margin:6px 5px 0 5px;
-    line-height: 32px;
+    margin:5px 3px 0 3px;
+    line-height: 42px;
     text-decoration: none;
     font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif;
     /*font-weight: bold;*/
-    font-size: 16px;
+    font-size: 18px;
     color: #FFF;
     text-align: center;
 
@@ -93,7 +87,7 @@
 
 .menu ul {
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 0;
     opacity: 0;
     background: #FFF;
