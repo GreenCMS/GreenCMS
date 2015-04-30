@@ -8,6 +8,7 @@ html {
 
 }
 
+
 body {
     margin: 0 auto;
     min-height: 800px;
@@ -184,8 +185,9 @@ img {
     width: 100%;
     height: 40px;
     float: left;
-    /*border-top: solid #3686be;*/
-    background-color: #eaeaea;
+    border-top: solid #3686be;
+    border-bottom: solid 1px #3686be;
+    /*background-color: #eaeaea;*/
 
 }
 
@@ -385,7 +387,7 @@ img {
     /*width: 1140px;*/
     margin: 0 auto;
 
-    height: 160px;
+    /*height: 140px;*/
     overflow: hidden;
     /*background: RGB(25, 103, 175) url(../images/1/headerbg.png) no-repeat center top;*/
     /*background: RGB(25, 103, 175) url(../images/1/headerbg.png) no-repeat center top;*/
@@ -451,15 +453,16 @@ img {
     /*width: 80%;*/
     width: 100%;
 
+    /*background-color: #379be9;*/
     margin: 0 auto;
     /*overflow: hidden;*/
 }
 
 .headerwrap .logoarea .logo {
-    /*width: 400px;*/
-    /*float: left;*/
+    width: 300px;
+    float: left;
     display: block;
-    margin: 5px auto 0;
+    /*margin: 5px auto 0;*/
 
 }
 
@@ -707,20 +710,22 @@ img {
 
 .news-slide {
     /*width: 325px;*/
-    width: 50%;
+    /*width: 50%;*/
+    width: 400px;
+
     /*height: 200px;*/
     overflow: hidden;
     position: relative;
 }
 
 .news-slide a img {
-    width: 500px;
+    width: 400px;
     /*width: 50%;*/
-    height: 300px;
+    height: 250px;
 }
 
 .slide {
-    width: 280px;
+    width: 400px;
     height: 210px;
     float: left;
     background: #ccc;
@@ -760,12 +765,13 @@ img {
 
 .head_box .header {
 
-    border-top: solid 2px #3686be;
+    border-top: solid 3px #3686be;
+    border-bottom: solid 1px #3686be;
 
-    width: 98%;
+    /*width: 98%;*/
     margin: 0 auto;
     /*background: url(../pictures/title.png) 0 repeat-x;*/
-    background-color: #f4f4f4;
+    /*background-color: #f4f4f4;*/
 
     height: 40px;
     color: #1b58b8;
@@ -775,8 +781,7 @@ img {
 .head_box .header span {
     font-size: 20px;
 
-    background: url(./images/titleIcon.png) 0 5px no-repeat;
-    padding-left: 28px;
+    /*padding-left: 28px;*/
     margin-left: 10px;
 
 }
@@ -811,6 +816,14 @@ img {
     /*padding-bottom: 14px;*/
     /*margin-bottom: 12px;*/
     display: block;
+}
+
+.head_box .body .box a {
+
+}
+.head_box .body .box a img{
+    width: 150px;
+    margin-bottom: 15px;
 }
 
 .head_box .body ul li {
@@ -913,10 +926,6 @@ img {
 .w3 {
     width: 1100px;
     margin-top: 25px;
-}
-
-.fl {
-    float: left;
 }
 
 .fr {

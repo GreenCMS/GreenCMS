@@ -522,7 +522,7 @@ function get_post_thumbnail($post)
         $content = $post['post_content'];
         preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
         $n = count($strResult[1]);
-        $random = mt_rand(1, 20);
+        $random = mt_rand(1, 10);
         if ($n > 0) {
             echo '<a class="thumbnail" href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="' . $strResult[1][0] . '" alt="' . $post['post_title'] . '" title="' . $post['post_title'] . '"/></a>';
         } else {
@@ -541,7 +541,7 @@ function get_post_img($post)
         $content = $post['post_content'];
         preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
         $n = count($strResult[1]);
-        $random = mt_rand(1, 20);
+        $random = mt_rand(1, 10);
         if ($n > 0) {
 
             if (!strstr($strResult[1][0], "http://")) {

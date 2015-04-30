@@ -1,5 +1,5 @@
 .menu {
-    height: 50px;
+    height: 40px;
     /*width: 1050px;*/
     width: 95%;
     -webkit-border-radius: 5px;
@@ -22,7 +22,7 @@
     list-style: none;
     float: left;
     display: block;
-    height: 50px;
+    height: 40px;
     text-transform: capitalize;
 }
 
@@ -43,8 +43,8 @@
 
     display: block;
     /*padding: 0 14px;*/
-    margin:5px 3px 0 3px;
-    line-height: 42px;
+    margin:0px 8px;
+    line-height: 40px;
     text-decoration: none;
     font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif;
     /*font-weight: bold;*/
@@ -87,7 +87,7 @@
 
 .menu ul {
     position: absolute;
-    top: 50px;
+    top: 40px;
     left: 0;
     opacity: 0;
     background: #FFF;
