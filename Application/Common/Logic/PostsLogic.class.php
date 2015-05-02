@@ -66,9 +66,6 @@ class PostsLogic extends RelationModel
      *
      * @param array $ids 需要限制的id
      * @param string $except_field
-     * @internal param string $field
-     * @internal param string $fields
-     * @internal param string $fileds
      * @return mixed 返回文章列表
      */
     public function getList($limit = 20, $type = 'single', $order = 'post_date desc',

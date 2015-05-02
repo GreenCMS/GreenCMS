@@ -12,3 +12,20 @@ function hello_world()
 }
 
 
+function get_post_icon($post)
+{
+
+    $now_date = strtotime(date("y-m-d h:i:s"));
+    $post_date = strtotime( $post['post_date']);
+
+    $days=ceil(($now_date-$post_date)/86400);
+
+    if($days>3){
+        return "<i> · </i>&nbsp;";
+    }else{
+        return  '<img src="' . get_opinion('site_url') . '/Public/Xsc/images/new.png"  style="width:14px;height:14px;float:left; padding-top:5px;">&nbsp;';
+    }
+
+}
+
+

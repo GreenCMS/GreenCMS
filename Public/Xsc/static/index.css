@@ -822,8 +822,9 @@ img {
 
 }
 .head_box .body .box a img{
-    width: 150px;
-    margin-bottom: 15px;
+    width: 130px;
+    height: 40px;
+    margin-bottom: 10px;
 }
 
 .head_box .body ul li {
