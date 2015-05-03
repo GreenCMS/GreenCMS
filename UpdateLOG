@@ -1,5 +1,11 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.3.0503 build 20150503
+修正文章默认发布状态
+修正文章状态修改逻辑错误
+修复PHP版本小于 5.4 错误
+
+
 version v2.3.0308 build 20150308
 修正回收站页面大小问题
 更新UI
