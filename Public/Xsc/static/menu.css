@@ -65,7 +65,7 @@
     font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif;
     /*font-weight: bold;*/
 
-    text-align: center;
+    text-align: left;
     font-size: 16px;
     color: #fff;
 
@@ -121,14 +121,19 @@
     margin-left: 0;
     background: #FFF;
     border-left: 1px solid #b7b7b7;
-    border-top: 1px solid #b7b7b7;
+    border-bottom: 1px solid #b7b7b7;
     border-right: 1px solid #b7b7b7;
 }
 
 .menu li:hover > ul li:hover{
-    background: #FFF;
+    background: #e3e3e3;
+    color: #fff;
 
- }
+}
+
+/*.menu li:hover > ul li a:hover{*/
+    /*color: #fff;*/
+ /*}*/
 
 .menu ul li a {
     width: 100px;
