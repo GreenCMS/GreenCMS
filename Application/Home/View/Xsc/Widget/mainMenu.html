@@ -35,32 +35,30 @@
 
             <div style="  margin-right: 5px;  font-size: 15px;">
 
-            <script language="JavaScript">
-                var enabled = 0;
-                today = new Date();
-                var day;
-                var date;
-                if (today.getDay() == 0) day = "星期日"
-                if (today.getDay() == 1) day = "星期一"
-                if (today.getDay() == 2) day = "星期二"
-                if (today.getDay() == 3) day = "星期三"
-                if (today.getDay() == 4) day = "星期四"
-                if (today.getDay() == 5) day = "星期五"
-                if (today.getDay() == 6) day = "星期六"
-                date1 = (today.getFullYear()) + "年" + (today.getMonth() + 1 ) + "月" + today.getDate() + "日 ";
-                date2 = day;
-                document.write(date1);//.fontsize为定义字号
-                document.write(date2);
-            </script>
+                <script language="JavaScript">
+                    var enabled = 0;
+                    today = new Date();
+                    var day;
+                    var date;
+                    if (today.getDay() == 0) day = "星期日"
+                    if (today.getDay() == 1) day = "星期一"
+                    if (today.getDay() == 2) day = "星期二"
+                    if (today.getDay() == 3) day = "星期三"
+                    if (today.getDay() == 4) day = "星期四"
+                    if (today.getDay() == 5) day = "星期五"
+                    if (today.getDay() == 6) day = "星期六"
+                    date1 = (today.getFullYear()) + "年" + (today.getMonth() + 1 ) + "月" + today.getDate() + "日 ";
+                    date2 = day;
+                    document.write(date1);//.fontsize为定义字号
+                    document.write(date2);
+                </script>
 
             </div>
 
             <form name="fr" id="fr" action="{:U('Home/Archive/search')}" method="get">
                 <div style="width:207px;  height:26px; overflow:hidden; padding: 5px 2px 0px;float:right;">
-                    <input name="keyword" type="text" value="请输入关键字" style="   border: 1px solid #ccc;
- width:166px; height:13px; padding:5px 0 6px 0; line-height:13px; color:#666; outline:none;  text-indent:6px; font-family:'微软雅黑'; font-size:12px;float:left; background:0px;"
-                           onfocus="if(this.value=='请输入关键字'){this.value='';}"
-                           onblur="if(this.value==''){this.value='请输入关键字';}">
+                    <input name="keyword" type="text" value="" style="   border: 1px solid #ccc;
+ width:166px; height:13px; padding:5px 0 6px 0; line-height:13px; color:#666; outline:none;  text-indent:6px; font-family:'微软雅黑'; font-size:12px;float:left; background:0px;" />
                     <input name="" type="submit" value="搜索" style="  border: 1px solid #ccc;
 ; background:0px;  width:35px; cursor:pointer; height:26px; display:block; outline:none;">搜索</input>
                 </div>
