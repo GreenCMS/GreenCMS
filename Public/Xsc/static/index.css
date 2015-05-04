@@ -8,7 +8,6 @@ html {
 
 }
 
-
 body {
     margin: 0 auto;
     min-height: 800px;
@@ -50,7 +49,6 @@ img {
     /*width: 1140px;*/
     margin: 0 auto;
 }
-
 
 .head-nav {
 
@@ -175,20 +173,18 @@ img {
     width: 33%;
     /*height: 255px;*/
     float: left;
-/*    border-left: 1px solid #e5e5e5;
-    border-right: 1px solid #e5e5e5;
-    border-bottom: 1px solid #e5e5e5;*/
+    /*    border-left: 1px solid #e5e5e5;
+        border-right: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;*/
 
 }
-
-
 
 .left_half:hover > .header .header_info {
     color: #066400;
 
 }
 
-.left_half:hover > .body{
+.left_half:hover > .body {
     background-color: #fefefe;
 }
 
@@ -204,11 +200,16 @@ img {
 
 .left_half .header .header_info {
     padding-left: 24px;
-
     margin-top: 4px;
     font-size: 22px;
-
     color: #1b58b8;
+}
+
+.left_half .header img {
+    width: 30px;
+    float: left;
+    height: 30px;
+    margin: 5px;
 }
 
 .left_half .header a {
@@ -327,9 +328,6 @@ img {
     /*_margin: 8px 5px;*/
 }
 
-
-
-
 #c4_right_2 ul li {
 
     -webkit-transition-duration: .3s;
@@ -339,7 +337,6 @@ img {
     -ms-transition-duration: 0s;
 
     height: 60px;
-
 
     width: 240px;
     text-align: center;
@@ -361,32 +358,27 @@ img {
 
 #c4_right_2 ul li a {
 
-
-
     font-size: 18px;
     line-height: 30px;
 
-    display:block;
+    display: block;
     color: #383838;
 
-/*
-    color: #1967ae;
-*/
+    /*
+        color: #1967ae;
+    */
     text-decoration: none;
 }
-
 
 #c4_right_2 ul:hover {
     color: #ffffff;
 }
-
 
 #c4_right_2 ul li:hover {
 
     background-color: #266bae;
     color: #ffffff;
 }
-
 
 #c4_right_2 ul li a:hover {
     /*color: #d3d1c0;*/
@@ -643,7 +635,6 @@ img {
     left: 0;
 }
 
-
 #indexbanner .left, #indexbanner .center_middle, #indexbanner .right {
     /*background: url(../images/1/indexbg.png) no-repeat;*/
     position: absolute;
@@ -655,9 +646,6 @@ img {
     top: 40px;
 }
 
-
-
-
 #indexbanner .center_middle {
     background-position: -50px -93px;
     left: 0px;
@@ -668,12 +656,10 @@ img {
     left: 0px;
 }
 
-
 #indexbanner .right {
     background-position: -102px -93px;
     right: 0px;
 }
-
 
 #indexbanner .center_middle:hover, #indexbanner .right:hover {
     background-color: #000;
@@ -797,7 +783,7 @@ img {
     font-size: 20px;
 
     /*padding-left: 28px;*/
-    margin-left: 10px;
+    margin-left: 5px;
 
 }
 
@@ -836,7 +822,8 @@ img {
 .head_box .body .box a {
 
 }
-.head_box .body .box a img{
+
+.head_box .body .box a img {
     width: 140px;
     height: 40px;
     margin-bottom: 12px;
@@ -967,9 +954,9 @@ img {
 
 }
 
-#links ul li{
+#links ul li {
 
     line-height: 30px;
-    height:  30px;
+    height: 30px;
 
 }
