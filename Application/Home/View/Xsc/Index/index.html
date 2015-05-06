@@ -135,15 +135,34 @@
                 <a class="" href="#">
                     <img src="__PUBLIC__/Xsc/images/xsbd.png" alt="">
                 </a>
-                <a class="" href="http://202.119.248.129:886/">
-                    <img src="__PUBLIC__/Xsc/images/alxs.png" alt="">
+                <a class="" href="" id="al">
+                    <img src="__PUBLIC__/Xsc/images/alst.png" alt="">
                 </a>
-                <a class="" href="http://202.119.248.129/login.aspx">
-                    <img src="__PUBLIC__/Xsc/images/aljs.png" alt="">
-                </a>
+
+                <div id="alst" style="display: none;  position: absolute; z-index: 80;  width: 1px;">
+                    <a class="" href="http://202.119.248.129:886/">
+                        <img src="__PUBLIC__/Xsc/images/alxs.png" alt="">
+                    </a>
+                    <a class="" href="http://202.119.248.129/login.aspx">
+                        <img src="__PUBLIC__/Xsc/images/aljs.png" alt="">
+                    </a>
+                </div>
+
                 <a class="" href="{:U('Admin/Index/index')}">
                     <img src="__PUBLIC__/Xsc/images/gldl.png" alt="">
                 </a>
+
+
+                <form name="fr" id="fr" action="{:U('Home/Archive/search')}" method="get">
+                    <div style="width:140px;  height:26px; overflow:hidden; padding: 5px 2px 0px;float:left;">
+                        <input name="keyword" type="text" value="" style="   border: 1px solid #ccc;
+ width:100px; height:13px; padding:5px 0 6px 0; line-height:13px; color:#666; outline:none;  text-indent:6px; font-family:'微软雅黑'; font-size:12px;float:left; background:0px;"/>
+                        <input name="" type="submit" value="搜索" style="  border: 1px solid #ccc;
+; background:0px;  width:35px; cursor:pointer; height:26px; display:block; outline:none;">搜索</input>
+                    </div>
+                </form>
+
+
             </div>
         </div>
     </div>
@@ -378,7 +397,73 @@
                 }).find("li:first").appendTo($self);
             })
         }
-    })
+    });
+
+
+    $(document).ready(function () {
+
+
+//        $('#al').hover(
+//                function () {
+//                    $("#alst").show();
+//                },
+//                function () {
+////                    sleep(3000);
+//                    $("#alst").hide();
+//                }
+//        )
+//
+
+
+        (function ($) {
+            $.fn.hoverDelay = function (options) {
+                var defaults = {
+                    hoverDuring: 10,
+                    outDuring: 5000,
+                    hoverEvent: function () {
+                        $.noop();
+                    },
+                    outEvent: function () {
+                        $.noop();
+                    }
+                };
+                var sets = $.extend(defaults, options || {});
+                var hoverTimer, outTimer;
+                return $(this).each(function () {
+                    $(this).hover(function () {
+                        clearTimeout(outTimer);
+                        hoverTimer = setTimeout(sets.hoverEvent, sets.hoverDuring);
+                    }, function () {
+                        clearTimeout(hoverTimer);
+                        outTimer = setTimeout(sets.outEvent, sets.outDuring);
+                    });
+                });
+            }
+        })(jQuery);
+
+
+
+
+
+        $('#al').each(function () {
+            var that = $(this);
+
+            that.hoverDelay({
+                outDuring: 5000,
+                hoverEvent: function () {
+                    $("#alst").show();
+                },
+                outEvent: function () {
+                    $("#alst").hide();
+                }
+            });
+
+
+        });
+
+    });
+
+
 </script>
 </body>
 </html>

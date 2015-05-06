@@ -43,7 +43,7 @@ img {
 
 .green_nav {
     /*background-image: url(../images/1/indexnav.png);*/
-    background: #379be9;
+    background: #206EAB;
 
     /*width: 1050px*/
     /*width: 1140px;*/
@@ -253,9 +253,6 @@ img {
     line-height: 35px;
 }
 
-.left_half .body ul li a {
-    color: #676767;
-}
 
 .left_half .body ul li a:hover {
     color: #0a5ab3;
@@ -863,8 +860,8 @@ img {
 #content {
     /*width: 1050px;*/
     /* width: 1140px; */
-    /* background: #F8F8F8; */
-    background: url(./images/bg.gif) repeat;
+     background: #f4f4f4;
+    /*background: url(./images/bg.gif) repeat;*/
     margin: 0 auto;
     padding-bottom: 10px;
     /*border: 1px solid #e7eaed;*/
