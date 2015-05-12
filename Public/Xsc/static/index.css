@@ -206,10 +206,12 @@ img {
 }
 
 .left_half .header img {
-    width: 30px;
+    width: 35px;
     float: left;
     height: 30px;
-    margin: 5px;
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-left: 5px;
 }
 
 .left_half .header a {
@@ -451,7 +453,7 @@ img {
 }
 
 .headerwrap .logoarea {
-    height: 100%;
+    height: 135px;
     /*width: 940px;*/
     /*width: 80%;*/
     width: 100%;
@@ -459,6 +461,7 @@ img {
     /*background-color: #379be9;*/
     margin: 0 auto;
     /*overflow: hidden;*/
+    background-image: url('../images/banner3.png');
 }
 
 .headerwrap .logoarea .logo {
@@ -470,8 +473,9 @@ img {
 }
 
 .headerwrap .logoarea .logo img {
-    padding-top: 10px;
-    /*height: 110px;*/
+    padding-left: 10px;
+    padding-top: 20px;
+    /* height: 110px; */
 }
 
 .headerwrap .logoarea .searcharea {
