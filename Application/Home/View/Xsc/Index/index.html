@@ -64,7 +64,7 @@
 </php>
 {:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
 <div style="clear:both;"></div>
-<div id="content">
+<div id="content" style="border:none">
     <div style="margin: 0 auto;">
         <div class="head_box" style="width:400px;">
             <div id="slide" class="news-slide " style="">
@@ -195,7 +195,7 @@
             </ul>
         </div>
     </div>
-    <div class="left_half" style="width: 41%;">
+    <div class="left_half" style=" ">
         <div class="header" style="border-top: solid 5px #008287;">
             <a href="{:get_cat_url(get_theme_opinion('id_2_2'))}">More</a>
             <img src="__PUBLIC__/Xsc/images/icon/edit_page.png" alt="" style="">
@@ -215,8 +215,8 @@
             </ul>
         </div>
     </div>
-    <div class="left_half" style="width: 22%;   padding-right: 0%;">
-        <div class="header" style="border-top: solid 5px #F4B300;">
+    <div class="left_half" style="width: 250px;   padding-right: 0px;">
+        <div class="header" style="border-top: solid 5px #40445E;">
             <a href="{:get_cat_url(get_theme_opinion('id_2_3'))}">More</a>
             <img src="__PUBLIC__/Xsc/images/icon/books.png" alt="" style="">
 
@@ -238,14 +238,14 @@
 </div>
 <div style="clear:both;"></div>
 <div class="center_middle" style="">
-    <div class="left_half" style="width: 76%;" id="c4_right_2">
+    <div class="left_half" style="  width: 780px;" id="c4_right_2">
         <!--<div class="header" style="border-top: solid 5px #78BA00;">-->
         <!--<div class="header_info">友情链接</div>-->
         <!--</div>-->
         <div class="body" style="border-top: solid 5px #78BA00;">
             <div style="text-align: center;margin-top: 5px">
                 <!--<friendlist link_group_id="4" num="6"></friendlist>-->
-                <ul>
+                <ul class="left_half_ul">
                     <li><a href="http://www.zts1993.com" title="理论学习">
                         <img src="__PUBLIC__/Xsc/images/llxx.png" alt="理论学习"/>
                     </a></li>
@@ -422,7 +422,7 @@
             $.fn.hoverDelay = function (options) {
                 var defaults = {
                     hoverDuring: 10,
-                    outDuring: 5000,
+                    outDuring: 2000,
                     hoverEvent: function () {
                         $.noop();
                     },
@@ -452,10 +452,25 @@
             var that = $(this);
 
             that.hoverDelay({
-                outDuring: 5000,
+//                outDuring: 105000,
                 hoverEvent: function () {
                     $("#alst").show();
-                },
+                }
+//                ,
+//                outEvent: function () {
+//                    $("#alst").hide();
+//                }
+            });
+
+
+        });
+
+
+        $('.head_box .body .box').each(function () {
+            var that = $(this);
+
+            that.hoverDelay({
+                outDuring: 100,
                 outEvent: function () {
                     $("#alst").hide();
                 }

@@ -153,7 +153,7 @@ class CatsLogic extends RelationModel
     {
         $getChild = $this->getChild($cat_id, 'publish', $start . ',' . $num);
 
-        $cat_id_list = '';
+        $cat_id_list = $cat_id."','";
         foreach ($getChild as $value) {
             $cat_id_list .= $value['cat_id'];
             $cat_id_list .= "',";
@@ -198,6 +198,45 @@ class CatsLogic extends RelationModel
             $ids[] = $res[$key]['post_id'];
 
         }
+        return $ids;
+    }
+    /**
+     * 获取指定分类的post id
+     * 使用原生SQL
+     * @param $info int 分类info
+     * @param string $post_status
+     *
+     * @param $limit
+     * @return mixed 找到的话返回post_id数组集合
+     */
+    public function getPostsIdWithChildren($info, $post_status = 'publish', $limit = 99999999)
+    {
+
+        $getChild = $this->getChild($info);
+
+        $cat_id_list = "'".$info."'";
+        foreach ($getChild as $value) {
+            $cat_id_list.=",'";
+            $cat_id_list .= $value['cat_id'];
+            $cat_id_list .= "'";
+        }
+
+        $ids = array();
+
+        $res = D('Post_cat')
+            ->table(GreenCMS_DB_PREFIX . 'post_cat as pc,' . GreenCMS_DB_PREFIX . 'posts as ps')
+            ->field('ps.post_id')
+            ->where("cat_id IN (".$cat_id_list.") and pc.post_id=ps.post_id and ps.post_status ='%s'", $post_status)
+            ->limit($limit)
+            ->order('ps.post_top desc,ps.post_date desc')
+            ->select();
+
+        foreach ($res as $key => $value) {
+            $ids[] = $res[$key]['post_id'];
+
+        }
+
+
         return $ids;
     }
 

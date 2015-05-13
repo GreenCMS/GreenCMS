@@ -38,6 +38,10 @@
 
         }
 
+        p {
+            text-indent: 28px;
+        }
+
     </style>
 
     <load href="__ROOT__/Extend/Ueditor/ueditor.config.js"/>
@@ -381,8 +385,6 @@
     $(document).ready(function () {
 
 
-
-
         $("#post_advance_ctl").click(function () {
             var post_advance = $("#post_advance");
             post_advance.slideToggle(200);
@@ -402,7 +404,7 @@
         var options = {
             zIndex: 1,
 
-            initialFrameWidth: "95%" , //初化宽度
+            initialFrameWidth: "95%", //初化宽度
             initialFrameHeight: 400, //初化高度
             focus: false, //初始化时，是否让编辑器获得焦点true或false
             maximumWords: 99999, //允许的最大字符数 'fullscreen',

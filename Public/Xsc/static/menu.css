@@ -1,7 +1,7 @@
 .menu {
     height: 40px;
     /*width: 1050px;*/
-    width: 95%;
+    /*width: 95%;*/
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -16,7 +16,7 @@
     transition-duration: .3s;
     -ms-transition-duration: 0s;
 
-    width: 10%;
+    width: 103px;
 
     position: relative;
     list-style: none;
@@ -32,6 +32,11 @@
     color: #000000;
     /*background-color: #234c89;*/
     background-color: #ffffff;
+
+    /*border-top: 1px solid #b7b7b7;*/
+    /*border-bottom: 1px solid #b7b7b7;*/
+    /*height: 38px;*/
+
 }
 
 .menu li:hover a{
