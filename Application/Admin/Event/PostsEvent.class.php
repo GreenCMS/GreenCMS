@@ -72,7 +72,7 @@ class PostsEvent
 
         $post_data['post_type'] = 'single';
         $post_data['post_title'] = '未命名';
-        $post_data['post_content'] = '空';
+        $post_data['post_content'] = '&nbsp;';
         $post_data['post_template'] = 'single';
         $post_data['post_name'] = 'title';
 

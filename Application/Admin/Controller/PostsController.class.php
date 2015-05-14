@@ -170,6 +170,15 @@ class PostsController extends AdminBaseController
             $posts_list = $PostsLogic->getList($limit, $post_type, $order, true, $where, $post_ids);
         }
 
+
+        $cats =$CatsLogic->category();
+        $tags =$TagsLogic->select();
+
+
+        $this->assign("cats", $cats);
+        $this->assign("tags", $tags);
+
+
         $this->assign('post_type', $post_type);
         $this->assign('action', $name . $key . $cat . $tag . get_real_string($post_type) . '列表');
         $this->assign('posts', $posts_list);
