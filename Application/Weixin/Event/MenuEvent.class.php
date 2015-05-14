@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: MenuEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-18
  * Time: 下午7:07
  */

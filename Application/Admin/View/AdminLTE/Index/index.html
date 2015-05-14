@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
     <meta charset="UTF-8">
     <title> {$action} | {:get_opinion('title')}</title>
@@ -23,7 +22,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -45,32 +44,24 @@
 
 
                             <div class="well">
-                                <h4>系统发布</h4>
 
-                                <p> 当前版本: GreenCMS {:get_opinion('software_version')} &nbsp; 发布时间:
-                                    {:get_opinion('software_build')} &nbsp;
+                                <h4>版本信息</h4>
 
-
-                                <div style="display: none" id="sys_up">
-
-                                <h3>
-                                    <a href="{:U('Admin/System/update')}" style="color: red;">发现新版本，立即更新</a>
+                                当前版本: GreenCMS {:get_opinion('software_version')} &nbsp; 发布时间:
+                                {:get_opinion('software_build')} &nbsp;
 
 
-                                </h3>
-
-                                </div>
-
-                                </p>
-
+                                <a href="{:U('Admin/System/update')}">检查更新</a>
 
                             </div>
-                            <div class="well well-large">
+
+                            <div class="well">
+
                                 <h4>QQ讨论</h4>
                                 群号：123085170
 
-                                <h4>服务支持</h4>
-                                Email：zts1993@gmail.com
+                                <h4>信息反馈</h4>
+                                Email：greencms@zts1993.com
 
                             </div>
 
@@ -80,28 +71,26 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="box box-warning">
+                    <div class="box box-danger">
                         <div class="box-header">
-                            <h3 class="box-title">用户信息</h3>
+                            <h3 class="box-title">用户系统信息</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
 
-                            <div class="row">
+
+                            <div class="row ">
 
 
-                                <div class="col-md-4 wel">
-
+                                <div class="col-md-3">
 
                                     <img style="width: 100%" src="__PUBLIC__/baracktocat.jpg" alt=""/>
-
                                 </div>
 
-                                <div class="col-md-5 wel">
+
+                                <div class="col-md-6  ">
 
                                     <h1>{$user.user_name}</h1>
-
-                                    <p>用户介绍: {$user.user_intro}</p>
 
                                     <p><a href="{$user_url}" target="_blank">{$user.user_url}</a>
                                     </p>
@@ -116,7 +105,76 @@
 
 
                                 </div>
+
                             </div>
+
+                            <div class="row ">
+
+                                <br/>
+
+                            </div>
+
+
+                            <div class="row">
+
+                                <control access="Admin/Posts/index">
+
+
+                                    <div class=" col-xs-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-green">
+                                            <div class="inner">
+                                                <h3>
+                                                    {$PostCount}篇
+                                                </h3>
+
+                                                <p>
+                                                    文章
+                                                </p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="ion ion-stats-bars"></i>
+                                            </div>
+                                            <a href="{:U('Admin/Posts/index')}" class="small-box-footer">
+                                                所有文章 <i class="fa fa-arrow-circle-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+
+                                </control>
+
+                                <control access="Admin/Access/index">
+
+
+                                    <div class=" col-xs-6">
+                                        <!-- small box -->
+                                        <div class="small-box bg-yellow">
+                                            <div class="inner">
+                                                <h3>
+                                                    {$UserCount}名
+                                                </h3>
+
+                                                <p>
+                                                    注册用户
+                                                </p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="ion ion-person-add"></i>
+                                            </div>
+                                            <a href="{:U('Admin/Access/index')}" class="small-box-footer">
+                                                用户管理 <i class="fa fa-arrow-circle-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+
+
+                                </control>
+
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -126,7 +184,7 @@
 
 
                 <div class="col-md-6">
-                    <div class="box box-warning">
+                    <div class="box box-success">
                         <div class="box-header">
                             <h3 class="box-title">关于我们</h3>
                         </div>
@@ -135,7 +193,7 @@
 
 
                             <div class="well">
-                                <h4>GreenStudio团队</h4>
+                                <h4>GreenStudio GCS团队</h4>
                                 <a href="http://green.njtech.edu.cn">绿荫工作室主页</a>
                                 <h4>核心开发人员</h4>
                                 <a href="http://weibo.com/zts1993">OCTOCAT_Z</a>&nbsp;&nbsp;&nbsp;
@@ -159,7 +217,7 @@
 
 
                 <div class="col-md-6">
-                    <div class="box box-warning">
+                    <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">其他信息</h3>
                         </div>
@@ -167,8 +225,14 @@
                         <div class="box-body">
 
                             <div class="well">
-                                <h4>Github</h4>
-                                Github：<a href="https://github.com/GreenCMS/greencms">https://github.com/zts1993/greencms</a>
+                                <h4>Notice</h4>
+                                微信模块入口现在加入插件中显示
+                            </div>
+
+                            <div class="well">
+                                <h4>获取最新源码</h4>
+                                Github:<a
+                                    href="https://github.com/zts1993/greencms">https://github.com/zts1993/greencms</a>
                             </div>
                             <div class="well">
 
@@ -189,29 +253,5 @@
 
 <include file="Public:foot"/>
 
-<script>
-
-    $(document).ready(function () {
-
-        var url = '{:U("Admin/Index/checkVersion")}';
-
-        $.get(url, function (data) {
-            if (data != 'none') {
-                //发现新版本
-                $('#sys_up').show();
-
-            } else {
-                $('#sys_up').show();
-                $('#sys_up').html("当前为最新版本");
-            }
-        });
-
-    });
-
-
-
-
-
-</script>
 </body>
 </html>

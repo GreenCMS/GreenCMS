@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: CustomController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 下午5:26
  */
@@ -16,10 +16,12 @@ use Common\Event\UpdateEvent;
 use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
+use Common\Util\CacheManager;
 use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
 
+use Common\Util\PHPZip;
 use Think\Upload;
 
 /**
@@ -29,6 +31,18 @@ use Think\Upload;
  */
 class CustomController extends AdminBaseController
 {
+
+    public function __construct()
+    {
+
+        parent::__construct();
+
+        CacheManager::clearLink();
+        CacheManager::clearMenu();
+
+
+    }
+
 
     /**
      *
@@ -104,7 +118,7 @@ class CustomController extends AdminBaseController
     {
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
 
-        $menu_list = $Menu->getList(null, 0, 'menu_sort'); // 获取分类结构
+        $menu_list = $Menu->getList(null, 0, 'menu_sort desc'); // 获取分类结构
         $this->assign('menu', $menu_list);
 
         $this->display();
@@ -167,7 +181,9 @@ class CustomController extends AdminBaseController
             $res = $Menu->where(array('menu_pid' => $id))->setField($data);
         }
         //TODO 判断
-        $this->success('删除成功', 'Admin/Custom/menu');
+
+
+        $this->success('删除成功', U('Admin/Custom/menu'));
 
     }
 
@@ -197,10 +213,10 @@ class CustomController extends AdminBaseController
         $menu_list = $Menu->getList(); // 获取分类结构
 
 
-        $url_function = C('url_function');
+        $url_function = get_opinion('url_function');
         $this->assign('url_function', gen_opinion_list($url_function));
 
-        $url_open = C('url_open');
+        $url_open = get_opinion('url_open');
         $this->assign('url_open', gen_opinion_list($url_open));
 
 
@@ -223,6 +239,8 @@ class CustomController extends AdminBaseController
      */
     public function menuAddHandle()
     {
+
+
         $post_data = I('post.');
 
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
@@ -244,6 +262,7 @@ class CustomController extends AdminBaseController
      */
     public function menuEdit($id)
     {
+
         $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
         if (!$menu_item) {
             $this->error('不存在这个菜单项');
@@ -279,10 +298,10 @@ class CustomController extends AdminBaseController
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
         $menu_list = $Menu->getList(); // 获取分类结构
 
-        $url_function = C('url_function');
+        $url_function = get_opinion('url_function');
         $this->assign('url_function', gen_opinion_list($url_function, $menu_item["menu_function"]));
 
-        $url_open = C('url_open');
+        $url_open = get_opinion('url_open');
         $this->assign('url_open', gen_opinion_list($url_open, $menu_item["menu_action"]));
 
         //父级节点
@@ -309,6 +328,7 @@ class CustomController extends AdminBaseController
      */
     public function menuEditHandle($id)
     {
+
         $post_data = I('post.');
 
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
@@ -335,7 +355,7 @@ class CustomController extends AdminBaseController
      */
     public function plugin()
     {
-        //$page = I('get.page', C('PAGER'));
+        //$page = I('get.page', get_opinion('PAGER'));
 
         $Addons = new AddonsModel();
 
@@ -835,7 +855,7 @@ str;
 
         $count = D("Hooks")->count();
         if ($count != 0) {
-            $page = I('get.page', C('PAGER'));
+            $page = I('get.page', get_opinion('PAGER'));
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
@@ -917,7 +937,7 @@ str;
      */
     public function execute($_addons = null, $_controller = null, $_action = null)
     {
-        if (C('URL_CASE_INSENSITIVE')) {
+        if (get_opinion('URL_CASE_INSENSITIVE')) {
             $_addons = ucfirst(parse_name($_addons, 1));
             $_controller = parse_name($_controller, 1);
         }
@@ -1043,7 +1063,7 @@ str;
                 $config = array(
                     "savePath" => 'Links/',
                     "maxSize" => 1000000, // 单位B
-                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "exts" => array('jpg', 'bmp', 'png', 'jpeg'),
                     "subName" => array('date', 'Y/m-d'),
                 );
                 $upload = new Upload($config);
@@ -1105,7 +1125,7 @@ str;
                 $config = array(
                     "savePath" => 'Links/',
                     "maxSize" => 1000000, // 单位B
-                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "exts" => array('jpg', 'bmp', 'png', 'jpeg'),
                     "subName" => array('date', 'Y/m-d'),
                 );
                 $upload = new Upload($config);
@@ -1120,6 +1140,7 @@ str;
                     $image = new \Think\Image();
                     $image->open($file_path_full);
                     $image->thumb(200, 150)->save($file_path_full);
+
                     $img_url = $info['img']['urlpath'];
 
                     // $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
@@ -1169,49 +1190,6 @@ str;
         }
     }
 
-    /**
-     * //todo not used yet
-     * 轮播说明
-     * post_img->幻灯图片 url
-     * post_top->顺序
-     * post_template->分组
-     * post_name->链接URL
-     * post_content->文字
-     * */
-    public function slider()
-    {
-        $PostsList = new PostsLogic();
-        $slider = $PostsList->getList(0, 'slider', 'post_top', false);
-
-        $this->assign('slider', $slider);
-
-        $this->display();
-    }
-
-    /**
-     * //todo not used yet
-     * 添加幻灯
-     */
-    public function addslider()
-    {
-
-        $this->display();
-    }
-
-    /**
-     * //todo not used yet
-     * @param $id
-     */
-    public function delslider($id)
-    {
-
-        if (D("Posts", 'Logic')->where(array('post_type' => 'slider', 'post_id' => $id))->delete()) {
-            $this->success('永久删除成功');
-        } else {
-            $this->error('永久删除失败');
-        }
-
-    }
 
     public function themeInstallHandle($theme_name)
     {
@@ -1439,6 +1417,9 @@ str;
 
 
         $res = set_kv('home_theme', $theme_name);
+
+        set_kv($theme_name . '_theme_config', null);
+
         if ($res) {
             $cache_control = new SystemEvent();
             $cache_control->clearCacheAll();
@@ -1464,4 +1445,74 @@ str;
     }
 
 
+    /**
+     * @param string $theme_name
+     */
+    public function themeExportHandle($theme_name = '')
+    {
+        $tpl_view_path = 'Application/Home/View/' . $theme_name . '/';
+        $tpl_static_path = 'Public/' . $theme_name . '/';
+
+        $temp_path = WEB_CACHE_PATH;
+
+        File::delDir(WEB_CACHE_PATH);
+        File::mkDir(WEB_CACHE_PATH);
+
+        $file_path = $temp_path . "\\" . 'GCS_Theme-' . $theme_name . '-' . md5(time()) . '.zip';
+
+        $zip = new \ZipArchive; //新建一个ZipArchive的对象
+        $res = $zip->open($file_path, \ZipArchive::CREATE);
+
+        if ($res == true) {
+            PHPZip::folderToZip($tpl_view_path, $zip);
+            PHPZip::folderToZip($tpl_static_path, $zip);
+            $zip->close();
+        }
+
+
+        if (!File::file_exists($file_path)) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($file_path);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($file_path));
+        readfile($file_path);
+
+
+    }
+
+    /**
+     */
+    public function pluginExportHandle($plugin_name = '')
+    {
+        $plugin_path = 'Addons/' . $plugin_name . '/';
+
+        $temp_path = WEB_CACHE_PATH;
+
+        File::delDir(WEB_CACHE_PATH);
+        File::mkDir(WEB_CACHE_PATH);
+
+        $file_path = $temp_path . "\\" . 'GCS_Plugin-' . $plugin_name . '-' . md5(time()) . '.zip';
+
+        $zip = new \ZipArchive; //新建一个ZipArchive的对象
+        $res = $zip->open($file_path, \ZipArchive::CREATE);
+
+        if ($res == true) {
+            PHPZip::folderToZip($plugin_path, $zip);
+            $zip->close();
+        }
+
+
+        if (!File::file_exists($file_path)) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($file_path);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($file_path));
+        readfile($file_path);
+
+
+    }
 }

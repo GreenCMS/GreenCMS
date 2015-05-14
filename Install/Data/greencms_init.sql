@@ -63,9 +63,9 @@ INSERT INTO `{$db_prefix}links` VALUES (null, '124', 'http://www.zts1993.com/', 
 -- Records of {$db_prefix}menu
 -- ----------------------------
 INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '10000', '测试分类', '_self', 'getCatURLByID', 'head', '1');
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '空链接', '_self', 'none', 'head', null);
+INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '100', '空链接', '_self', 'none', 'head', null);
 INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '测试页面', '_self', 'getSingleURLByID', 'head', '[\"2\",\"page\"]');
-INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '99', '测试文章', '_self', 'getSingleURLByID', 'head', '[\"1\",\"single\"]');
+INSERT INTO `{$db_prefix}menu` VALUES (null, '0', '98', '所有文章', '_self', 'U', 'head', 'Home/Archive/Single');
 
 -- ----------------------------
 -- Records of {$db_prefix}options
@@ -75,7 +75,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('2', 'title', 'GreenCMS 2014', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('3', 'keywords', 'GreenCMS v2 based on ThinkPHP 3.2.1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('4', 'description', 'GreenCMS created by GreenStudio ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('5', 'foot', '', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('6', 'ip_geo', '1', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('6', 'db_build', '20140306', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('7', 'software_author', 'GreenStudio', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('8', 'widget_about_us', '关于我们', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('9', 'software_homepage', 'http://www.greencms.net', 'yes');
@@ -92,7 +92,7 @@ INSERT INTO `{$db_prefix}options` VALUES ('19', 'smtp_user', 'test@njut.edu.cn',
 INSERT INTO `{$db_prefix}options` VALUES ('20', 'from_email', 'test@njut.edu.cn', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('21', 'smtp_pass', ' ', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('22', 'PAGER', '20', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('23', 'ome_info', 'original', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('23', 'oem_info', 'original', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('24', 'db_fieldtype_check', '0', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('25', 'DEFAULT_FILTER', 'htmlspecialchars', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('26', 'COOKIE_PREFIX', 'greencms_', 'yes');
@@ -156,6 +156,6 @@ INSERT INTO `{$db_prefix}post_cat` VALUES (null,'1','1');
 INSERT INTO `{$db_prefix}post_tag` VALUES (null,'1','1');
 
 
-INSERT INTO `{$db_prefix}theme` VALUES ('13', 'NovaGreenStudio', 'Nova Theme For GreenStudio', '20140527', '2', '/NovaGreenStudio/preview.jpg', 'GreenStudio 2014', '<theme>\r\n    <name>NovaGreenStudio</name>\r\n    <version>2</version>\r\n    <build>20140527</build>\r\n    <description>Nova Theme For GreenStudio</description>\r\n    <author>ZTS</author>\r\n    <preview>/NovaGreenStudio/preview.jpg</preview>\r\n    <preview_big>/NovaGreenStudio/preview_big.jpg</preview_big>\r\n    <copyright>GreenStudio 2014</copyright>\r\n    <tpl_view>Application/Home/View/NovaGreenStudio</tpl_view>\r\n    <tpl_static>Public/NovaGreenStudio</tpl_static>\r\n    <introduction>GreenStudio 2015主题</introduction>\r\n    <post>\r\n        <single>\r\n            <name>文章</name>\r\n            <tpl>single</tpl>\r\n        </single>\r\n        <page>\r\n            <name>无侧栏</name>\r\n            <tpl>page</tpl>\r\n        </page>\r\n        <guestbook>\r\n            <name>留言板</name>\r\n            <tpl>guestbook</tpl>\r\n        </guestbook>\r\n        <joinus>\r\n            <name>加入我们</name>\r\n            <tpl>joinus</tpl>\r\n        </joinus>\r\n    </post>\r\n    <config>\r\n        <kv>\r\n            <title>\r\n                <title>显示标题</title>\r\n                <type>text</type>\r\n                <value>天气预报</value>\r\n\r\n            </title>\r\n\r\n            <showplace>\r\n                <title>显示</title>\r\n                <type>checkbox</type>\r\n                <options>\r\n                    <true>显示</true>\r\n                    <false>不显示</false>\r\n                </options>\r\n                <value>true</value>\r\n\r\n            </showplace>\r\n\r\n\r\n        </kv>\r\n\r\n\r\n    </config>\r\n</theme>', '{\"kv\":{\"title\":{\"title\":\"\\u663e\\u793a\\u6807\\u9898\",\"type\":\"text\",\"value\":\"\\u5929\\u6c14\\u9884\\u62a5\"},\"showplace\":{\"title\":\"\\u663e\\u793a\",\"type\":\"checkbox\",\"options\":{\"true\":\"\\u663e\\u793a\",\"false\":\"\\u4e0d\\u663e\\u793a\"},\"value\":\"true\"}},\"post_type\":{\"single\":{\"name\":\"\\u6587\\u7ae0\",\"tpl\":\"single\"},\"page\":{\"name\":\"\\u65e0\\u4fa7\\u680f\",\"tpl\":\"page\"},\"guestbook\":{\"name\":\"\\u7559\\u8a00\\u677f\",\"tpl\":\"guestbook\"},\"joinus\":{\"name\":\"\\u52a0\\u5165\\u6211\\u4eec\",\"tpl\":\"joinus\"}}}');
+INSERT INTO `{$db_prefix}theme` VALUES ('13', 'NovaGreenStudio', 'Nova Theme For GreenStudio', '20140527', '2', '/NovaGreenStudio/preview.jpg', 'GreenStudio 2014', '<theme>\r\n    <name>NovaGreenStudio</name>\r\n    <version>2</version>\r\n    <build>20140527</build>\r\n    <description>Nova Theme For GreenStudio</description>\r\n    <author>ZTS</author>\r\n    <preview>/NovaGreenStudio/preview.jpg</preview>\r\n    <preview_big>/NovaGreenStudio/preview.jpg</preview_big>\r\n    <copyright>GreenStudio 2014</copyright>\r\n    <tpl_view>Application/Home/View/NovaGreenStudio</tpl_view>\r\n    <tpl_static>Public/NovaGreenStudio</tpl_static>\r\n    <introduction>GreenStudio 2015主题</introduction>\r\n    <post>\r\n        <single>\r\n            <name>文章</name>\r\n            <tpl>single</tpl>\r\n        </single>\r\n        <page>\r\n            <name>无侧栏</name>\r\n            <tpl>page</tpl>\r\n        </page>\r\n        <guestbook>\r\n            <name>留言板</name>\r\n            <tpl>guestbook</tpl>\r\n        </guestbook>\r\n        <joinus>\r\n            <name>加入我们</name>\r\n            <tpl>joinus</tpl>\r\n        </joinus>\r\n    </post>\r\n    <config>\r\n        <kv>\r\n            <title>\r\n                <title>显示标题</title>\r\n                <type>text</type>\r\n                <value>天气预报</value>\r\n\r\n            </title>\r\n\r\n            <showplace>\r\n                <title>显示</title>\r\n                <type>checkbox</type>\r\n                <options>\r\n                    <true>显示</true>\r\n                    <false>不显示</false>\r\n                </options>\r\n                <value>true</value>\r\n\r\n            </showplace>\r\n\r\n\r\n        </kv>\r\n\r\n\r\n    </config>\r\n</theme>', '{\"kv\":{\"title\":{\"title\":\"\\u663e\\u793a\\u6807\\u9898\",\"type\":\"text\",\"value\":\"\\u5929\\u6c14\\u9884\\u62a5\"},\"showplace\":{\"title\":\"\\u663e\\u793a\",\"type\":\"checkbox\",\"options\":{\"true\":\"\\u663e\\u793a\",\"false\":\"\\u4e0d\\u663e\\u793a\"},\"value\":\"true\"}},\"post_type\":{\"single\":{\"name\":\"\\u6587\\u7ae0\",\"tpl\":\"single\"},\"page\":{\"name\":\"\\u65e0\\u4fa7\\u680f\",\"tpl\":\"page\"},\"guestbook\":{\"name\":\"\\u7559\\u8a00\\u677f\",\"tpl\":\"guestbook\"},\"joinus\":{\"name\":\"\\u52a0\\u5165\\u6211\\u4eec\",\"tpl\":\"joinus\"}}}');
 
 

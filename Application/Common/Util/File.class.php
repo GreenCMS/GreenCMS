@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: File.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-31
  * Time: 下午2:53
  */
@@ -106,7 +106,7 @@ class File
                 return rmdir($path);
         } else {
             if (file_exists($path)) {
-                return unlink($path);
+                return self::delFile($path);
             } else {
                 return false;
             }
@@ -206,9 +206,9 @@ class File
         $handle = opendir($path);
         while (false !== ($file = readdir($handle))) {
             if ($file != '.' && $file != '..') {
-                $path2 = $path .'/' . $file; //'/' .
+                $path2 = $path . '/' . $file; //'/' .
 
-             //   dump($path2);
+                //   dump($path2);
 
                 if (is_dir($path2)) {
                     self::getFiles($path2, $files);
@@ -413,6 +413,10 @@ class File
 
         if ($res == true) {
             foreach ($files as $file) {
+
+                if (empty($file)) {
+                    continue;
+                }
                 if ($t = $zip->addFile($path . $file, str_replace('/', '', $file))) {
                     $t = $zip->addFile($path . $file, str_replace('/', '', $file));
                 }
@@ -443,25 +447,42 @@ class File
     }
 
 
-    public static function filemtime($file)
+    public static function filemtime($file, $ifstr = false)
     {
-        return filemtime($file);
+
+        $time = filemtime($file);
+        if ($ifstr) {
+            return date('Y-m-d H:i:s', $time);
+        } else {
+            return $time;
+        }
+
 
     }
 
 
-    public static function filectime($file)
+    public static function filectime($file, $ifstr = false)
     {
-        return filectime($file);
+        $time = filectime($file);
+        if ($ifstr) {
+            return date('Y-m-d H:i:s', $time);
+        } else {
+            return $time;
+        }
 
 
     }
 
 
-    public static function fileatime($file)
+    public static function fileatime($file, $ifstr = false)
     {
-        return fileatime($file);
+        $time = fileatime($file);
 
+        if ($ifstr) {
+            return date('Y-m-d H:i:s', $time);
+        } else {
+            return $time;
+        }
 
     }
 

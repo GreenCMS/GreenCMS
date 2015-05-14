@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: index.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-23
  * Time: 上午11:57
  */
@@ -24,15 +24,14 @@ error_reporting(0);
  */
 define('APP_DEBUG', true);
 
-/**
- * 正式稳定运行后，改成true，开启后会影响设置的即使生效
- */
-define('APP_Cache', true);
+
 
 /**
  * 定义网站根目录
  */
 define("WEB_ROOT", './');  //dirname(__FILE__) .'/'
+
+define("WEB_ROOT_Real", __DIR__);  //dirname(__FILE__) .'/'
 
 /**
  * 应用目录设置

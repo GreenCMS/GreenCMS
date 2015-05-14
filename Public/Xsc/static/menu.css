@@ -1,0 +1,158 @@
+.menu {
+    height: 40px;
+    /*width: 1050px;*/
+    width: 95%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+.menu li {
+
+    -webkit-transition-duration: .3s;
+    -moz-transition-duration: .3s;
+    -o-transition-duration: .3s;
+    transition-duration: .3s;
+    -ms-transition-duration: 0s;
+
+    width: 10%;
+
+    position: relative;
+    list-style: none;
+    float: left;
+    display: block;
+    height: 40px;
+    text-transform: capitalize;
+}
+
+
+.menu li:hover {
+
+    color: #000000;
+    /*background-color: #234c89;*/
+    background-color: #ffffff;
+}
+
+.menu li:hover a{
+    color: #000000;
+}
+/* Links */
+
+.menu li a {
+
+    display: block;
+    /*padding: 0 14px;*/
+    margin:0px 8px;
+    line-height: 40px;
+    text-decoration: none;
+    font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif;
+    /*font-weight: bold;*/
+    font-size: 18px;
+    color: #FFF;
+    text-align: center;
+
+}
+
+
+.menu>li>ul>li>a {
+    display: block;
+    /*padding: 0 14px 0 25px;*/
+    padding: 0 0 0 0;
+    margin:6px 11px 0 11px;
+    line-height: 32px;
+    text-decoration: none;
+    font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif;
+    /*font-weight: bold;*/
+
+    text-align: left;
+    font-size: 16px;
+    color: #fff;
+
+}
+
+
+
+.menu li:first-child a {
+    border-left: none;
+
+}
+
+.menu li:last-child a {
+    border-right: none;
+
+}
+
+/* Sub Menu */
+
+.menu ul {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    opacity: 0;
+    background: #FFF;
+    -webkit-transition: opacity .25s ease .1s;
+    -moz-transition: opacity .25s ease .1s;
+    -o-transition: opacity .25s ease .1s;
+    -ms-transition: opacity .25s ease .1s;
+    transition: opacity .25s ease .1s;
+}
+
+.menu li:hover > ul {
+    opacity: 1;
+}
+
+.menu ul li {
+    width: 200px;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    -webkit-transition: height .25s ease .1s;
+    -moz-transition: height .25s ease .1s;
+    -o-transition: height .25s ease .1s;
+    -ms-transition: height .25s ease .1s;
+    transition: height .25s ease .1s;
+}
+
+.menu li:hover > ul li {
+    height: 42px;
+    overflow: visible;
+    padding: 0;
+    margin-left: 0;
+    background: #FFF;
+    border-left: 1px solid #b7b7b7;
+    border-bottom: 1px solid #b7b7b7;
+    border-right: 1px solid #b7b7b7;
+}
+
+.menu li:hover > ul li:hover{
+    background: #e3e3e3;
+    color: #fff;
+
+}
+
+/*.menu li:hover > ul li a:hover{*/
+    /*color: #fff;*/
+ /*}*/
+
+.menu ul li a {
+    width: 100px;
+    /*padding: 4px 0 4px 40px;*/
+    margin: 0;
+}
+
+.menu ul li:last-child a {
+    border: none;
+}
+
+.head-nav > * {
+    z-index: 10;
+}
+
+.head-nav > * > * {
+    z-index: 10;
+}
+
+.head-nav > * > * > * {
+    z-index: 10;
+}

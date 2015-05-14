@@ -5,7 +5,7 @@
     <description>Nova Theme For GreenStudio</description>
     <author>ZTS</author>
     <preview>/NovaGreenStudio/preview.jpg</preview>
-    <preview_big>/NovaGreenStudio/preview_big.jpg</preview_big>
+    <preview_big>/NovaGreenStudio/preview.jpg</preview_big>
     <copyright>GreenStudio 2014</copyright>
     <tpl_view>Application/Home/View/NovaGreenStudio</tpl_view>
     <tpl_static>Public/NovaGreenStudio</tpl_static>
@@ -30,25 +30,41 @@
     </post>
     <config>
         <kv>
-            <title>
-                <title>显示标题</title>
+            <text1>
+                <title>第一栏分类文字</title>
                 <type>text</type>
-                <value>天气预报</value>
+                <value>作品发布</value>
+            </text1>
 
-            </title>
+            <id1>
+                <title>第一栏分类ID</title>
+                <type>text</type>
+                <value>17</value>
+            </id1>
 
-            <showplace>
-                <title>显示</title>
-                <type>checkbox</type>
-                <options>
-                    <true>显示</true>
-                    <false>不显示</false>
-                </options>
-                <value>true</value>
+            <text2>
+                <title>第二栏分类文字</title>
+                <type>text</type>
+                <value>活动发布</value>
+            </text2>
 
-            </showplace>
+            <id2>
+                <title>第二栏分类ID</title>
+                <type>text</type>
+                <value>20</value>
+            </id2>
 
+            <text3>
+                <title>第三栏分类文字</title>
+                <type>text</type>
+                <value>科技新闻</value>
+            </text3>
 
+            <id3>
+                <title>第三栏分类ID</title>
+                <type>text</type>
+                <value>15</value>
+            </id3>
         </kv>
 
 

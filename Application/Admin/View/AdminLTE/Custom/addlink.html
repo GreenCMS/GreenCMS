@@ -5,7 +5,8 @@
     <title> {$action} | {:get_opinion('title')}</title>
 
     <include file="Public:head"/>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/share/plugins/bootstrap-fileupload/bootstrap-fileupload.css" />
+    <link rel="stylesheet" type="text/css"
+          href="__PUBLIC__/share/plugins/bootstrap-fileupload/bootstrap-fileupload.css"/>
 
 </head>
 <body class="skin-blue">
@@ -24,7 +25,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -37,162 +38,156 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <form action="{$form_url}" name="change_System" method="post"
-                                  enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label class="control-label">链接地址</label>
+                        <form action="{$form_url}" name="change_System" method="post"
+                              enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="control-label">链接地址</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="link_url"
-                                               value="{$link.link_url}"/>
-                                        <span class="help-inline"></span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="link_url"
+                                           value="{$link.link_url}"/>
+                                    <span class="help-inline"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">链接名称</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">链接名称</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="link_name"
-                                               value="{$link.link_name}"/>
-                                        <span class="help-inline"></span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="link_name"
+                                           value="{$link.link_name}"/>
+                                    <span class="help-inline"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">链接顺序</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">链接顺序</label>
 
-                                    <div class="controls">
-                                        <input type="number" placeholder="" class="form-control large" name="link_sort"
-                                               value="{$link.link_sort}"/>
-                                        <span class="help-inline">输入数字</span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="number" placeholder="" class="form-control large" name="link_sort"
+                                           value="{$link.link_sort}"/>
+                                    <span class="help-inline">输入数字</span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">链接标签</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">链接标签</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="link_tag"
-                                               value="{$link.link_tag}"/>
-                                        <span class="help-inline">可选</span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="link_tag"
+                                           value="{$link.link_tag}"/>
+                                    <span class="help-inline">可选</span>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="control-label">链接描述</label>
+                            <div class="form-group">
+                                <label class="control-label">链接描述</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large"
-                                               name="link_description"
-                                               value="{$link.link_description}"/>
-                                        <span class="help-inline">可选</span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large"
+                                           name="link_description"
+                                           value="{$link.link_description}"/>
+                                    <span class="help-inline">可选</span>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="control-label">是否可见</label>
+                            <div class="form-group">
+                                <label class="control-label">是否可见</label>
 
-                                    <div class="controls">
+                                <div class="controls">
 
-                                        <label class="radio">
+                                    <label class="radio">
 
-                                            <switch name="link['link_visible']">
-                                                <case value="1"><input type="radio" name="link_visible"
-                                                                       checked="checked"
-                                                                       value="1"/></case>
-                                                <case value="0"><input type="radio" name="link_visible" value="1"/>
-                                                </case>
-                                                <default/>
-                                                <input type="radio" name="link_visible" checked="checked" value="1"/>
-                                            </switch>
-                                            是
-
-
-                                        </label>
+                                        <switch name="link['link_visible']">
+                                            <case value="1"><input type="radio" name="link_visible"
+                                                                   checked="checked"
+                                                                   value="1"/></case>
+                                            <case value="0"><input type="radio" name="link_visible" value="1"/>
+                                            </case>
+                                            <default/>
+                                            <input type="radio" name="link_visible" checked="checked" value="1"/>
+                                        </switch>
+                                        是
 
 
-                                        <label class="radio">
+                                    </label>
 
-                                            <switch name="link['link_visible']">
-                                                <case value="1"><input type="radio" name="link_visible" value="0"/>
-                                                </case>
-                                                <case value="0"><input type="radio" name="link_visible"
-                                                                       checked="checked"
-                                                                       value="0"/></case>
-                                                <default/>
-                                                <input type="radio" name="link_visible" value="0"/>
-                                            </switch>
-                                            否
-                                        </label>
-                                    </div>
+
+                                    <label class="radio">
+
+                                        <switch name="link['link_visible']">
+                                            <case value="1"><input type="radio" name="link_visible" value="0"/>
+                                            </case>
+                                            <case value="0"><input type="radio" name="link_visible"
+                                                                   checked="checked"
+                                                                   value="0"/></case>
+                                            <default/>
+                                            <input type="radio" name="link_visible" value="0"/>
+                                        </switch>
+                                        否
+                                    </label>
                                 </div>
+                            </div>
 
 
+                            <div class="form-group">
+                                <label class="control-label">链接分组</label>
 
-                                <div class="form-group">
-                                    <label class="control-label">链接分组</label>
+                                <div class="controls">
+                                    <select class="form-control large"
 
-                                    <div class="controls">
-                                        <select class="form-control large"
+                                            tabindex="1" name="link_group_id" id="link_group_id">
+                                        <option value="0">无</option>
 
-                                                tabindex="1" name="link_group_id" id="link_group_id">
-                                            <option value="0">无</option>
+                                        {$link_group}
 
-                                            {$link_group}
-
-                                        </select>
-                                     </div>
+                                    </select>
                                 </div>
+                            </div>
 
 
+                            <div class="form-group">
+                                <label class="control-label">预览图片</label>
 
-
-
-                                <div class="form-group">
-                                    <label class="control-label">预览图片</label>
-
-                                    <div class="controls">
-                                        <div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                                <img src="{$imgurl}" alt=""/>
-                                            </div>
-                                            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-                                            <div>
-													<span class="btn btn-file btn-info">
-
-                                                        <span class="fileupload-new">选择图片</span>
-													<span class="fileupload-exists">改变</span>
-													<input type="file" class="default"  name="img"/>
-
-                                                    </span>
-                                                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
-                                            </div>
+                                <div class="controls">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                            <img src="{$imgurl}" alt=""/>
                                         </div>
+                                        <div class="fileupload-preview fileupload-exists thumbnail"
+                                             style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                        <div>
+                                            <div class="btn btn-file btn-info">
 
-                                        <span class="label label-important">注意!</span>
+                                                <span class="fileupload-new">选择图片</span>
+                                                <span class="fileupload-exists">改变</span>
+                                                <input type="file" name="img" style="position: relative; left: 200px;"/>
+
+                                            </div>
+
+
+                                            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                        </div>
+                                    </div>
+
+                                    <span class="label label-important">注意!</span>
 											<span>
 											实时预览支持最新版Firefox, Chrome, Opera,
 											Safari 和 Internet Explorer 10 以上版本。
 
 											</span>
-                                    </div>
                                 </div>
+                            </div>
 
 
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-info"><i class="icon-ok"></i> {$buttom}</button>
+                            </div>
+                        </form>
 
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-info"><i class="icon-ok"></i> {$buttom}</button>
-                                </div>
-                            </form>
 
-
-                        </div>
                     </div>
                 </div>
             </div>

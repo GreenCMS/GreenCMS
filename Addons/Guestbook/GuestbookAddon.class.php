@@ -43,7 +43,7 @@ class GuestbookAddon extends Addon
     {
 
         $sql = "
-                    CREATE TABLE IF NOT EXISTS `" . C('DB_PREFIX') . "guestbook` (
+                    CREATE TABLE IF NOT EXISTS `" . get_opinion('DB_PREFIX') . "guestbook` (
                       `id` int(11) NOT NULL AUTO_INCREMENT,
                       `name` tinytext NOT NULL,
                       `email` varchar(100) NOT NULL,
@@ -67,9 +67,9 @@ class GuestbookAddon extends Addon
 
         }
 
-        $adminMenu = $Hooks->where(array('name' => 'adminMenu'))->find();
+        $adminMenu = $Hooks->where(array('name' => 'adminSideBar'))->find();
         if (!$adminMenu) {
-            $data = array('name' => 'adminMenu', 'description' => 'adminMenu', 'type' => 1);
+            $data = array('name' => 'adminSideBar', 'description' => 'adminSideBar', 'type' => 1);
             $Hooks->data($data)->add();
         }
 
@@ -79,7 +79,7 @@ class GuestbookAddon extends Addon
 
     public function uninstall()
     {
-        $sql = "DROP TABLE IF EXISTS `" . C('DB_PREFIX') . "guestbook` ";
+        $sql = "DROP TABLE IF EXISTS `" . get_opinion('DB_PREFIX') . "guestbook` ";
 
         M()->query($sql);
 
@@ -134,17 +134,10 @@ class GuestbookAddon extends Addon
     //实现的adminSideBar钩子方法
     public function adminSideBar($param)
     {
-        echo '<li><a href="'. addons_url('Guestbook://Guestbook/manage') .'">
+        echo '<li><a href="'. get_addon_url("Guestbook/Guestbook/manage",array(),"Admin").'">
         <i class="fa fa-angle-double-right"></i>留言板</a></li>';
-    }
-
-
-    public function adminMenu($param)
-    {
-
-        echo "<li><a href='" . addons_url('Guestbook://Guestbook/manage') . "'><h4>留言板</h4></a></li>
-            ";
 
     }
+
 
 }

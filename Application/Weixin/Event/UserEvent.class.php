@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: UserEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-20
  * Time: 下午10:33
  */
@@ -11,6 +11,7 @@ namespace Weixin\Event;
 
 
 use Weixin\Controller\WeixinCoreController;
+use Weixin\Util\UserManagemant;
 
 /**
  * Class UserEvent
@@ -24,12 +25,15 @@ class UserEvent extends WeixinCoreController
      */
     public function renew()
     {
+        $UserManagemant = new UserManagemant();
 
-        $res = $this->getUserList();
+        $res = $UserManagemant->getFansList();
 
-        foreach ($res as $openid) {
+        // $res = $this->getUserList();
 
+        foreach ($res["data"]["openid"] as $openid) {
             $ifuser = D('Weixinuser')->where(array('openid' => $openid))->find();
+
             if ($ifuser) {
                 $data = $this->getUserDetail($openid);
                 unset($data['openid']);
@@ -45,12 +49,16 @@ class UserEvent extends WeixinCoreController
     public function update()
     {
 
-        $res = $this->getUserList();
+        $UserManagemant = new UserManagemant();
 
-        foreach ($res as $openid) {
+        $res = $UserManagemant->getFansList();
+
+        foreach ($res["data"]["openid"] as $openid) {
             $ifuser = D('Weixinuser')->where(array('openid' => $openid))->find();
+
             if (!$ifuser) {
-                $data = $this->getUserDetail($openid);
+                $data = $UserManagemant->getUserInfo($openid);
+                unset($data['remark']);
                 D('Weixinuser')->data($data)->add();
             }
         }
@@ -110,7 +118,7 @@ class UserEvent extends WeixinCoreController
         $ACCESS_TOKEN = $this->getAccess();
 
 
-        if($ACCESS_TOKEN==false ) return false;
+        if ($ACCESS_TOKEN == false) return false;
 
         $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=$ACCESS_TOKEN";
 
@@ -135,13 +143,13 @@ class UserEvent extends WeixinCoreController
 
     /**
      * {
-    "touser":"OPENID",
-    "msgtype":"text",
-    "text":
-    {
-    "content":"Hello World"
-    }
-    }
+     * "touser":"OPENID",
+     * "msgtype":"text",
+     * "text":
+     * {
+     * "content":"Hello World"
+     * }
+     * }
      */
     public function sendMessage($openid, $content = '', $msgtype = 'text')
     {

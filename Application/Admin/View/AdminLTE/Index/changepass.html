@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -35,60 +35,58 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-10">
-
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+                <div class="col-md-8">
 
 
-                            <form role="form" action="{:U('Admin/Index/changePassHandle')}"  method="post" >
+                    <!-- /.box-header -->
+                    <div class="box-body well">
 
 
-                                <div class="form-group">
-                                    <label class="control-label">原密码</label>
+                        <form role="form" action="{:U('Admin/Index/changePassHandle')}" method="post">
 
-                                    <div class="controls">
-                                        <input type="password" placeholder="" class="form-control large" name="opassword"
-                                               id="opassword"/>
-                                        <span class="help-inline"></span>
-                                    </div>
+
+                            <div class="form-group">
+                                <label class="control-label">原密码</label>
+
+                                <div class="controls">
+                                    <input type="password" placeholder="" class="form-control large"
+                                           name="opassword"
+                                           id="opassword"/>
+                                    <span class="help-inline"></span>
                                 </div>
+                            </div>
 
 
-                                <div class="form-group">
-                                    <label class="control-label">新密码</label>
+                            <div class="form-group">
+                                <label class="control-label">新密码</label>
 
-                                    <div class="controls">
-                                        <input type="password" placeholder="" class="form-control large" name="password"
-                                               id="password"/>
-                                        <span class="help-inline"></span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="password" placeholder="" class="form-control large" name="password"
+                                           id="password"/>
+                                    <span class="help-inline"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">确认新密码</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">确认新密码</label>
 
-                                    <div class="controls">
-                                        <input type="password" placeholder="" class="form-control large" name="rpassword"
-                                               id="rpassword"/>
-                                        <span class="help-inline"></span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="password" placeholder="" class="form-control large"
+                                           name="rpassword"
+                                           id="rpassword"/>
+                                    <span class="help-inline"></span>
                                 </div>
-                                <div class="form-actions">
+                            </div>
+                            <div class="form-actions">
 
-                                    <button type="submit" class="btn btn-primary">修改</button>
-
-
-                                </div>
-                            </form>
+                                <button type="submit" class="btn btn-primary">修改</button>
 
 
-                        </div>
-                        <!-- /.box-body -->
+                            </div>
+                        </form>
+
+
                     </div>
+                    <!-- /.box-body -->
 
 
                 </div>

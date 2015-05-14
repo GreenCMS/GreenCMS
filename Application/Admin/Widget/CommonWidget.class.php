@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: CommonWidget.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-25
  * Time: 上午10:41
  */
@@ -31,6 +31,7 @@ class CommonWidget extends Controller
 
     /**
      * @FBI Warning ！除非你有空闲时间，否则不要没事读这段丧心病狂的代码。。
+     * AdminLTE主题使用的侧边栏版本~
      * @return string
      */
     public function sideMenu()
@@ -48,9 +49,10 @@ class CommonWidget extends Controller
     {
         C('admin_sub_menu', array_change_key_case(C('admin_sub_menu')));
         C('admin_big_menu', array_change_key_case(C('admin_big_menu')));
+        C('admin_black_list_menu', array_change_key_case(C('menu_black_list')));
         C('admin_big_menu_icon', array_change_key_case(C('admin_big_menu_icon')));
 
-        $accessList = RBAC::getAccessList($_SESSION [C('USER_AUTH_KEY')]);
+        $accessList = RBAC::getAccessList($_SESSION [get_opinion('USER_AUTH_KEY')]);
         $cache_access = array_change_key_case($accessList [strtoupper(MODULE_NAME)]);
 
         $cache = C('admin_big_menu');
@@ -58,7 +60,7 @@ class CommonWidget extends Controller
         $icon = C('admin_big_menu_icon');
 
 
-        if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
+        if ($_SESSION [get_opinion('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache as $cache_key => $cache_each) {
                 if (!array_key_exists($cache_key, $cache_access)) {
                     unset ($cache [$cache_key]);
@@ -67,7 +69,7 @@ class CommonWidget extends Controller
             }
         }
 
-        if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
+        if ($_SESSION [get_opinion('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache_access as $cache2_key => $cache2_each) {
                 foreach ($cache2_each as $key => $value) {
                     $cache2_each [$key] = strtolower($cache2_key) . '/' . strtolower($key);
@@ -141,7 +143,7 @@ class CommonWidget extends Controller
                         }
                 }
 
-                 //hook('adminSideBar','menu');
+                //hook('adminSideBar','menu');
                 //$menu .= '</ul></li>';
             } else {
 

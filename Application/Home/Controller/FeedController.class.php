@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: FeedController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-23
  * Time: 下午6:52
  */
@@ -56,7 +56,6 @@ class FeedController extends HomeBaseController
         foreach ($post_list as $list) {
             $RSS->addItem(
                 $list ['post_title'],
-                //               $list ['post_id'],
                 'http://' . $_SERVER["SERVER_NAME"] . get_post_url($list),
                 $list ['post_content'],
                 $list ['post_date']);

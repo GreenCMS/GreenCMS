@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: AccessEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-3-2
  * Time: 上午9:45
  */

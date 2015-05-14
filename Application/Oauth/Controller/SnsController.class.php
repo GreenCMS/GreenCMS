@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-6-1
  * Time: 下午10:05
  */
@@ -100,7 +100,7 @@ class SnsController extends OauthBaseController
 //            echo("当前登录用户信息为：<br>");
 //            dump($user_info);
 
-            $user_id = (int)$_SESSION [C('USER_AUTH_KEY')];
+            $user_id = (int)$_SESSION [get_opinion('USER_AUTH_KEY')];
 
             if ($user_info ['type'] == 'SINA') {
 

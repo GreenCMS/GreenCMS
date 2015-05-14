@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: Zip.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-8
  * Time: 下午9:47
  */
@@ -17,7 +17,7 @@ class PHPZip
 {
     /**
      * @param $folder
-     * @param $zipFile
+     * @param \ZipArchive $zipFile
      * @param null $subfolder
      * @return bool
      */
@@ -38,7 +38,7 @@ class PHPZip
         $handle = opendir($folder);
         while ($f = readdir($handle)) {
             if ($f[0] != ".") {
-                 if (is_file($folder . $f)) {
+                if (is_file($folder . $f)) {
                     // if we find a file, store it
                     // if we have a subfolder, store it there
                     if ($subfolder != null) {

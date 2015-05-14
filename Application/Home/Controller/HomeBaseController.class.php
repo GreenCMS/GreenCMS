@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: HomeBaseController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-11
  * Time: 下午1:48
  */
@@ -28,7 +28,7 @@ abstract class HomeBaseController extends BaseController
     {
         parent::__construct();
 
-        $this->customConfig();
+//        $this->customConfig();
         $this->themeConfig();
 
     }
@@ -67,8 +67,6 @@ abstract class HomeBaseController extends BaseController
         Hook::listen('app_end');
         die();
     }
-
-
 
 
 }

@@ -1,5 +1,90 @@
 File Name : UpdateLog - GreenCMS 升级日志
 
+version v2.3.0503 build 20150503
+修正文章默认发布状态
+修正文章状态修改逻辑错误
+修复PHP版本小于 5.4 错误
+
+
+version v2.3.0308 build 20150308
+修正回收站页面大小问题
+更新UI
+cookie 认证自动跳转修正
+增加快速生成option 模板标签
+更新System节点页面
+增加上传SQL备份
+修正邮件发送
+取消APP_Cache
+修复无last visit page cookie时自动跳转问题
+Admin/Access模块 用户体验增强
+修复清空草稿箱
+
+version v2.3.0218 build 20150218
+修正邮件发送类Bug
+修正导入SQL语句超过500行错误
+增加对PHP7支持
+增加修改用户信息
+优化性能修复bugs
+
+version v2.3.0215 build 20150215
+邮件发送增加mail函数支持
+修正bugs
+
+version v2.3.0202 build 20150202
+修复bug
+精简不用的文件
+
+version v2.3.0201 build 20150201
+增加导出主题和插件
+增强性能
+增强文章管理能力
+
+version v2.3.0101 build 20150101
+widget缓存，增加CacheManager
+fix OAuth bugs
+取消链接图片gif支持
+修正option cache设计缺陷
+性能提升，加载时间减少50%以上
+
+version v2.1.1213 build 20141213
+修复ThinkPHP 3注入漏洞
+修复文件管理右键菜单位置
+修正错误密码导致的验证码不刷新的问题
+修复安装过程
+移除MysqlLogic
+移除未使用文件
+优化性能
+优化后台菜单
+更新学生处页面，修复IE8问题
+OEM首页
+后台分类增加统计
+增加API get_server_info()
+文章附件功能增强 新增文章逻辑改变
+增加草稿箱
+
+version v2.1.1107 build 20141107
+文章列表增强
+修复微信模块Bug
+Weixin Enhance
+优化后台菜单
+OEM首页
+GreenTag更新，支持链接图片前台显示
+
+
+version v2.1.1001 build 20141001
+细节优化
+删除无用文件
+Addon 添加新方法，简化开发
+修复主题安装问题
+
+version v2.1.0901 build 20140901
+禁用日志系统，修复Nginx下面ajax bug
+修复微信模块的一些bug
+增加用户登录顶部导航插件，GreenStudio主题升级
+修复插件链接在html suffix设置时候的bug
+增加插件匿名访问
+其他细节优化
+
 
 version v2.1.0822 build 20140822
 插件安装修正

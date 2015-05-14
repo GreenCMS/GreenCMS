@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-6-21
  * Time: 下午6:24
  */
@@ -17,7 +17,7 @@ return array(
 
 
     'admin_level_2' => array(
-        'Addons'=>'插件',
+        'Addons' => '插件',
         'Index' => '仪表盘',
         'Posts' => '文章页面',
         'Data' => '数据缓存',
@@ -33,7 +33,7 @@ return array(
     'admin_level_3' => array(
 
 
-        'Addons'=>array(
+        'Addons' => array(
             'execute' => '执行插件',
 
         ),
@@ -47,6 +47,7 @@ return array(
             'changepass' => '修改密码',
             'changepasshandle' => '修改密码处理',
             'updatecomplete' => '升级完成',
+            'checkTodo' => '检查',
         ),
 
         'Posts' => array(

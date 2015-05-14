@@ -23,11 +23,11 @@
     $count = $PostsList->countAll('single'); // 查询满足要求的总记录数
     ($count == 0) ? $res404 = 0 : $res404 = 1;
     if ($count != 0) {
-        $Page = new Common\Util\GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
-        $pager = $Page->show();
-        $limit = $Page->firstRow . ',' . $Page->listRows;
+    $Page = new Common\Util\GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
+    $pager = $Page->show();
+    $limit = $Page->firstRow . ',' . $Page->listRows;
 
-        $postslist= $PostsList->getList($limit, 'single', 'post_date desc', true);
+    $postslist= $PostsList->getList($limit, 'single', 'post_date desc', true);
     }
 </php>
 
@@ -68,10 +68,12 @@
                 <volist name="postslist" id="post" empty="没有相关文章.."> <!-- Post Start -->
 
 
-                    <article id="post-{$post.post_id}" class="post-{$post.post_id} post type-post status-publish format-standard">
+                    <article id="post-{$post.post_id}"
+                             class="post-{$post.post_id} post type-post status-publish format-standard">
                         <header class="entry-header">
                             <h1 class="entry-title">
-                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" title=" {$post.post_top|is_top}{$post.post_title}" rel="bookmark">
+                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}"
+                                   title=" {$post.post_top|is_top}{$post.post_title}" rel="bookmark">
                                     {$post.post_top|is_top}{$post.post_title}</a>
                             </h1>
 
@@ -84,7 +86,8 @@
                         <!-- .entry-content -->
                         <footer class="entry-meta">
                             本条目发布于
-                            <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" title="上午 4:23" rel="bookmark">
+                            <a href="{$post.post_id|getSingleURLByID=$post['post_type']}" title="上午 4:23"
+                               rel="bookmark">
                                 <time class="entry-date" datetime="{$post['post_date']}">
                                     {$post['post_date']|getTimeURL=$post['post_type']}
                                 </time>
@@ -116,7 +119,6 @@
                     </ul>
                 </div>
             </nav>
-
 
 
             <!-- #content -->

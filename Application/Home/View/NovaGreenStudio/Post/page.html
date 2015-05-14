@@ -45,9 +45,6 @@
 <section class="container">
 
 
-
-
-
     <section id="about-us" class="container main">
         <div class="row-fluid">
             <div class="span12">
@@ -67,35 +64,31 @@
                             </p>
 
                             <p class="pull-right"><i class="icon-comment pull"></i>
-                                <a href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments">{$post.post_comment_count}
+                                <a href="{$post|get_post_url}#comments">{$post.post_comment_count}
                                     Comments</a></p>
 
-
-                            <control access="Admin/Posts/posts">
-                                <a href="{:U('Admin/Posts/posts',array('id'=>$post['post_id']))}">  | 编辑</a>
-                            </control>
-
+                            <p>
+                                <control access="Admin/Posts/posts">
+                                    <a href="{:U('Admin/Posts/posts',array('id'=>$post['post_id']))}"> | 编辑</a>
+                                </control>
+                            </p>
                         </div>
                         <!--<p> {$post|get_post_thumbnail}</p>-->
 
-                        <p>{$post.post_content}</p>
-
-
-
+                        <p id="post_content">{$post.post_content}</p>
 
 
                         <!-- About Author -->
                         <article class="post-author">
 
 
-
                             <h4>
 
                                 <br/>
-                                上一篇:{$post['post_id']|get_previous_post=$post['post_cat']|is_empty=没有了}
+                                上一篇:{$post['post_id']|get_previous_post=$post['post_cat']|is_empty='没有了'}
                                 <br/>
 
-                                下一篇: {$post['post_id']|get_next_post=$post['post_cat']|is_empty=没有了}
+                                下一篇: {$post['post_id']|get_next_post=$post['post_cat']|is_empty='没有了'}
                             </h4>
 
                         </article>

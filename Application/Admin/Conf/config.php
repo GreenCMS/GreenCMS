@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: config.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-15
  * Time: 下午11:23
  */
@@ -53,6 +53,9 @@ $menu_arr = array(
             'Posts/category' => '分类管理',
             'Posts/tag' => '标签管理',
             'Posts/add' => '添加文章',
+
+
+            'Posts/draft' => '草稿箱',
             'Posts/reverify' => '未通过',
             'Posts/unverified' => '待审核',
             'Posts/recycle' => '回收站',
@@ -69,12 +72,10 @@ $menu_arr = array(
 
 
         'Data' => array(
-            'Data/db' => '数据库设置',
             'Data/index' => '数据库备份',
             'Data/restore' => '数据库导入',
             'Data/zipList' => '数据库压缩',
             'Data/repair' => '数据库优化',
-            'Data/cache' => '缓存设置',
             'Data/clear' => '缓存清理',
 
 
@@ -106,13 +107,15 @@ $menu_arr = array(
             'Access/addRole' => '添加角色',
 
             'Access/loginlog' => '登陆记录',
-            'Access/log' => '操作记录',
+            //  'Access/log' => '操作记录',
 
         ),
 
         'Tools' => array(
+            'Tools/count' => '统计工具',
             'Tools/index' => '可用工具',
-            'Tools/wordpress' => '从wordpress导入',
+            'Tools/log' => '日志工具',
+            'Tools/wordpress' => '从WordPress导入',
             // 'Tools/rss'    => '从rss导入',
             // 'Tools/export'    => '导出',
 
@@ -124,20 +127,23 @@ $menu_arr = array(
             'System/user' => '用户设置',
 
             'System/post' => '文章设置',
+            'System/attach' => '附件设置',
             'System/url' => '链接设置',
             'System/safe' => '安全选项',
+            'System/db' => '数据库设置',
+            'System/cache' => '缓存设置',
+
             'System/email' => '邮箱配置',
 //            'System/kvset'  => '其他设置',
             'System/sns' => '社交登录设置',
-            'System/green' => '强制设置',
-            'System/update' => '系统升级',
+            'System/green' => '开发者选项置',
+            'System/update' => '在线更新',
             'System/info' => '系统信息',
+            'System/bugs' => 'Bug反馈',
+
 
         )
     ),
-
-
-
 
 
 );
@@ -146,7 +152,21 @@ $config_admin = array(
 
     'URL_MODEL' => 0,
 
+    'DATA_CACHE_TYPE' => get_opinion('DATA_CACHE_TYPE', false, 'File'), // 数据缓存类型,支持:File||Memcache|Xcache
+    'DATA_CACHE_TIME' => get_opinion("DATA_CACHE_TIME", false, 10),
+    'DEFAULT_FILTER' => get_opinion('DEFAULT_FILTER', false, 'htmlspecialchars'),
+    'SHOW_PAGE_TRACE' => get_opinion('SHOW_PAGE_TRACE', false, false),
+    'SHOW_CHROME_TRACE' => get_opinion('SHOW_CHROME_TRACE', false, false),
 
+
+    'COOKIE_PREFIX' => get_opinion('COOKIE_PREFIX', false, 'greencms_'),
+    'COOKIE_EXPIRE' => get_opinion('COOKIE_EXPIRE', false, 3600),
+    'COOKIE_DOMAIN' => get_opinion('COOKIE_DOMAIN', false),
+    'COOKIE_PATH' => get_opinion('COOKIE_PATH', false),
+
+
+    'LOG_LEVEL' => get_opinion('LOG_LEVEL', false),
+    'LOG_RECORD' => (bool)get_opinion('LOG_RECORD', false),
 
     /*
      * RBAC认证配置信息

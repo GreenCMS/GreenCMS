@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: function.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-14
  * Time: 下午11:09
  */
@@ -44,7 +44,7 @@ function object_to_array($obj)
 function encrypt($data)
 {
     //return md5($data);
-    return md5(C("AUTH_CODE") . md5($data));
+    return md5(get_opinion("AUTH_CODE") . md5($data));
 }
 
 
@@ -84,23 +84,24 @@ function is_empty($test, $string = '空')
  */
 function get_opinion($key, $realtime = false, $default = '')
 {
-
     if (!$realtime) {
-        $res = C($key);
+        $res = S('option_' . $key);
         if ($res != null) {
             return $res;
         } else {
-            $res = S('option_' . $key);
-            if ($res) return $res;
-            else return get_opinion($key, true, $default = '');
+            return get_opinion($key, true, $default);
         }
-    } else {
-        $res = D('Options')->where(array('option_name' => $key))->find();
 
+    } else {
+        $res = D('Options')->cache(true, 2)->where(array('option_name' => $key))->find();
         if (empty($res)) {
-            return $default;
+            $res = TP_C($key);
+            if ($res) {
+                S('option_' . $key, $res, DEFAULT_EXPIRES_TIME);
+                return $res;
+            } else return $default;
         } else {
-            S('option_' . $key, $res['option_value']);
+            S('option_' . $key, $res['option_value'], DEFAULT_EXPIRES_TIME);
             return $res['option_value'];
         }
 
@@ -128,6 +129,7 @@ function set_opinion($key, $value)
         $data ['option_id'] = $find [0] ['option_id'];
         $options->save($data);
     }
+    S('option_' . $key, $value, DEFAULT_EXPIRES_TIME);
 
 }
 
@@ -141,15 +143,18 @@ function set_opinion($key, $value)
 function get_kv($key, $realtime = false, $default = '')
 {
     if (!$realtime) {
-
-        return S($key);
-
+        $res = S('kv_' . $key);
+        if ($res != null) {
+            return $res;
+        } else {
+            return get_kv($key, true, $default);
+        }
     } else {
         $options = D('Kv')->field('kv_value')->where(array('kv_key' => $key))->find();
         if ($options['kv_value'] == '') {
             return $default;
         } else {
-            S($key, $options['kv_value']);
+            S('kv_' . $key, $options['kv_value'], DEFAULT_EXPIRES_TIME);
             return $options['kv_value'];
         }
     }
@@ -165,6 +170,8 @@ function get_kv($key, $realtime = false, $default = '')
  */
 function set_kv($key, $value)
 {
+    if ($value == null) S('kv_' . $key, null);
+
     $data['kv_value'] = $value;
     if (exist_kv($key)) {
         $res = D('Kv')->where(array('kv_key' => $key))->data($data)->save();
@@ -172,6 +179,7 @@ function set_kv($key, $value)
         $data['kv_key'] = $key;
         $res = D('Kv')->data($data)->add();
     }
+    S('kv_' . $key, $value, DEFAULT_EXPIRES_TIME);
     return $res;
 }
 
@@ -190,6 +198,13 @@ function exist_kv($key)
         return true;
     }
 }
+
+
+function get_theme_opinion($key, $default = '')
+{
+    return C("theme_config." . $key);
+}
+
 
 /**
  * 数组降维
@@ -374,12 +389,12 @@ function get_addon_config($name)
 function addons_url($url, $param = array())
 {
 
-   $URL_HTML_SUFFIX= C( 'URL_HTML_SUFFIX');
-    C( 'URL_HTML_SUFFIX','');
+    $URL_HTML_SUFFIX = get_opinion('URL_HTML_SUFFIX');
+    C('URL_HTML_SUFFIX', '');
 
     $url = parse_url($url);
 
-    $case = C('URL_CASE_INSENSITIVE');
+    $case = get_opinion('URL_CASE_INSENSITIVE');
     $addons = $case ? parse_name($url['scheme']) : $url['scheme'];
     $controller = $case ? parse_name($url['host']) : $url['host'];
     $action = trim($case ? strtolower($url['path']) : $url['path'], '/');
@@ -416,7 +431,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
     if (is_array($list)) {
         $refer = $resultSet = array();
         foreach ($list as $i => $data)
-            $refer[$i] = & $data[$field];
+            $refer[$i] = &$data[$field];
         switch ($sortby) {
             case 'asc': // 正向排序
                 asort($refer);
@@ -429,7 +444,7 @@ function list_sort_by($list, $field, $sortby = 'asc')
                 break;
         }
         foreach ($refer as $key => $val)
-            $resultSet[] = & $list[$key];
+            $resultSet[] = &$list[$key];
         return $resultSet;
     }
     return false;
@@ -507,7 +522,7 @@ function get_post_thumbnail($post)
         $content = $post['post_content'];
         preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
         $n = count($strResult[1]);
-        $random = mt_rand(1, 20);
+        $random = mt_rand(1, 10);
         if ($n > 0) {
             echo '<a class="thumbnail" href="' . getSingleURLByID($post['post_id'], $post['post_type']) . '" class="pic"><img src="' . $strResult[1][0] . '" alt="' . $post['post_title'] . '" title="' . $post['post_title'] . '"/></a>';
         } else {
@@ -526,7 +541,7 @@ function get_post_img($post)
         $content = $post['post_content'];
         preg_match_all('/<img.*?(?: |\\t|\\r|\\n)?src=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
         $n = count($strResult[1]);
-        $random = mt_rand(1, 20);
+        $random = mt_rand(1, 10);
         if ($n > 0) {
 
             if (!strstr($strResult[1][0], "http://")) {
@@ -711,9 +726,9 @@ function check_access($access = "")
 {
 
     $path = explode('/', strtoupper($access));
-    $accessList = \Org\Util\Rbac::getAccessList($_SESSION[C('USER_AUTH_KEY')]);
+    $accessList = \Org\Util\Rbac::getAccessList($_SESSION[get_opinion('USER_AUTH_KEY')]);
 
-    if ((( int )$_SESSION [C('USER_AUTH_KEY')] == 1)|| $accessList[$path[0]][$path[1]][$path[2]] != '' ) {
+    if ((( int )$_SESSION [get_opinion('USER_AUTH_KEY')] == 1) || $accessList[$path[0]][$path[1]][$path[2]] != '') {
         return true;
     } else {
         return false;
@@ -758,7 +773,7 @@ function simple_post($url, $data)
  */
 function get_current_user_id()
 {
-    return ( int )$_SESSION [C('USER_AUTH_KEY')];
+    return ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
 }
 
 
@@ -799,4 +814,26 @@ function array_column_5($array, $col_value, $col_key)
 }
 
 
+function get_server_info()
+{
 
+    $server_info = $_SERVER;
+
+    //去除敏感信息
+    unset($server_info['HTTP_COOKIE']);
+
+
+    return $server_info;
+}
+
+
+/**
+ * 返回状态和信息
+ * @param $status
+ * @param $info
+ * @return array
+ */
+function arrayRes($status, $info, $url = "")
+{
+    return array("status" => $status, "info" => $info, "url" => $url);
+}

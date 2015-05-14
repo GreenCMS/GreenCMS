@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="media-body">
-                    <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                    <a href="{$post|get_post_url}">
                         <h5>{$post.post_top|is_top}{$post.post_title}</h5></a>
                 </div>
             </div>

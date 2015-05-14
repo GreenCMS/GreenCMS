@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: function.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-18
  * Time: 下午1:58
  */
@@ -33,7 +33,7 @@ function getRealText($keyword)
 
 function getMenuButtons()
 {
-    $menu = trim(C('Weixin_menu'));
+    $menu = trim(get_opinion('Weixin_menu'));
 
     $menu = json_decode($menu, true);
     $array = $menu['button'];
@@ -53,8 +53,6 @@ function getMenuButtons()
     }
     return $result_array;
 }
-
-
 
 
 /**
@@ -128,8 +126,9 @@ function array_insert(&$array, $position, $insert_array)
     $array = array_merge($first_array, $array);
 }
 
-function get_alink($url){
+function get_alink($url)
+{
 
-    if(empty($url))return '';
-    else return '<a href="'.$url.'">点击查看</a>';
+    if (empty($url)) return '';
+    else return '<a href="' . $url . '">点击查看</a>';
 }

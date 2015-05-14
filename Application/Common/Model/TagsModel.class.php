@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: TagsModel.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 上午12:36
  */

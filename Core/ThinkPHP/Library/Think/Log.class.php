@@ -24,6 +24,7 @@ class Log {
     const INFO      = 'INFO';  // 信息: 程序输出信息
     const DEBUG     = 'DEBUG';  // 调试: 调试信息
     const SQL       = 'SQL';  // SQL：SQL语句 注意只在调试模式开启时有效
+    const FILE       = 'FILE';  // FILE：FILE
 
     // 日志信息
     static protected $log       =  array();
@@ -33,6 +34,7 @@ class Log {
 
     // 日志初始化
     static public function init($config=array()){
+
         $type   =   isset($config['type'])?$config['type']:'File';
         $class  =   strpos($type,'\\')? $type: 'Think\\Log\\Driver\\'. ucwords(strtolower($type));           
         unset($config['type']);
@@ -63,8 +65,8 @@ class Log {
      * @return void
      */
     static function save($type='',$destination='') {
-        if(empty(self::$log)) return ;
 
+        if(empty(self::$log)) return ;
         if(empty($destination))
             $destination = C('LOG_PATH').date('y_m_d').'.log';
         if(!self::$storage){

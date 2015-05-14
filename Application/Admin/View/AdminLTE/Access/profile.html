@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -35,23 +35,108 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-10">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
+                <div class="col-md-12">
+
                         <!-- /.box-header -->
                         <div class="box-body">
 
 
-                            <dump>$user</dump>
+                            <table class="table table-bordered table-hover" class="tab">
+
+                                <thead>
+                                <tr>
+
+                                    <th class="col-md-2">名称</th>
+                                    <th class="col-md-4">值</th>
+                                    <th class="col-md-2">名称</th>
+                                    <th class="col-md-4">值</th>
+                                </tr>
+                                </thead>
+
+                                <volist name="user" id="vo" key="k">
+                                    <php> if($k%2==1) echo "
+                                        <tr>";
+                                    </php>
+                                    <td width="120" align="right">{$key}：</td>
+                                    <td>
+                                        <php>
+
+                                            if(is_array($vo)){
+
+                                            if(sizeof($vo)==1){
+                                            $vo=$vo[0];
+                                            }
+
+                                        </php>
+
+
+                                        <table class="table table-bordered table-hover" class="tab">
+
+                                            <thead>
+                                            <tr>
+
+                                                <th class="col-md-2">名称</th>
+                                                <th class="col-md-4">值</th>
+                                                <th class="col-md-2">名称</th>
+                                                <th class="col-md-4">值</th>
+                                            </tr>
+                                            </thead>
+
+                                            <volist name="vo" id="vo" key="k">
+                                                <php> if($k%2==1) echo "
+                                                    <tr>";
+                                                </php>
+                                                <td width="120" align="right">{$key}：</td>
+                                                <td>
+                                                    <php>
+
+                                                        if(is_array($vo)){
+
+
+                                                        }else{
+                                                        echo $vo;
+                                                        }
+
+
+                                                    </php>
+
+
+                                                </td>
+                                                <php> if($k%2==0) echo "</tr>";</php>
+                                            </volist>
+                                            <php>if(count($caches)%2==1) echo '
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                </tr>';
+                                            </php>
+                                        </table>
+
+
+                                        <php>
+
+
+                                            }else{
+                                            echo $vo;
+                                            }
+
+
+                                        </php>
+
+
+                                    </td>
+                                    <php> if($k%2==0) echo "</tr>";</php>
+                                </volist>
+                                <php>if(count($caches)%2==1) echo '
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    </tr>';
+                                </php>
+                            </table>
 
 
                         </div>
                     </div>
                 </div>
-            </div>
-
 
         </section>
         <!-- /.content -->

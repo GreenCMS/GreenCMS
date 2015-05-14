@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -80,8 +80,6 @@
                                 </div>
 
 
-
-
                             </div>
                         </div>
 
@@ -99,7 +97,7 @@
                             <div class="box-body">
 
 
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label class="control-label">APP_KEY</label>
 
                                     <div class="controls">

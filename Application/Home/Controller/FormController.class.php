@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: FormController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-23
  * Time: 下午7:23
  */
@@ -45,8 +45,6 @@ class FormController extends HomeBaseController
         } else
             $this->display();
     }
-
-
 
 
 }

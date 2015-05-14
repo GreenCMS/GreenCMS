@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: const_config.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-25
  * Time: 下午12:25
  */
@@ -35,13 +35,13 @@ define('WEB_CACHE_PATH', WEB_ROOT . "Data/Cache/");
  * 系统备份数据库文件存放目录
  * 此目录必须可写，建议移动到非WEB目录
  */
-define("DB_Backup_PATH", WEB_ROOT . "Data/DBbackup/");
+define("DB_Backup_PATH", WEB_ROOT . "Data/DBbackup_5732896fc3/");
 
 /**
  * 系统备份文件存放目录
  * 此目录必须可写，建议移动到非WEB目录
  */
-define("System_Backup_PATH", WEB_ROOT . "Data/Backup/");
+define("System_Backup_PATH", WEB_ROOT . "Data/Backup_5732896fc3/");
 
 /**
  * 系统升级文件存放目录

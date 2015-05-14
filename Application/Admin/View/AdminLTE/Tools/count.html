@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {:$action}
+                <small>{:get_opinion('title')}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                    	<form method="post" action="{:U("Admin/Tools/countHandle")}">
+	                    	<table class="table table-striped table-bordered table-hover">
+	                    		<tr>
+	                    			<td>
+	                    				文章统计检索
+	                    			</td>
+	                    			<td>
+	                    				年份：<input type="text" name="year" />
+	                    			</td>
+	                    			<td>
+	                    				月份：<select name="month">
+										        <option value="0" selected>请选择月份</option>
+										        <option value="1">一月</option>
+										        <option value="2">二月</option>
+										        <option value="3">三月</option>
+										        <option value="4">四月</option>
+										        <option value="5">五月</option>
+										        <option value="6">六月</option>
+										        <option value="7">七月</option>
+										        <option value="8">八月</option>
+										        <option value="9">九月</option>
+										        <option value="10">十月</option>
+										        <option value="11">十一月</option>
+										        <option value="12">十二月</option>
+										      </select>
+	                    			</td>
+	                    			<td>
+	                    				<input type="submit" name="submit" value="检索">
+	                    			</td>
+	                    		</tr>
+	                    	</table>
+                    	</form>
+                        <table
+                                class="table table-striped table-bordered table-hover">
+                            <thead>
+                           
+                            <tr>
+                                <!-- <th style="width: 8px;">选择</th> -->
+                                <th>用户名</th>
+                                <th>用户组</th>
+                                <th>统计时段</th>
+                                <th>此段文章数量</th>                              
+                            </tr>
+                            </thead>
+                            <tbody id="cache_table">
+                            <foreach name="r" item="v" key='k'>
+                                <tr id="{$backup.name}" align="center"><!--|del_sql=###-->
+                                    <!-- <td><input type="checkbox" name="backupFiles" value="{$v.post_id}"/>
+                                    </td> -->
+                                    <td style="width: 25%">
+                                        <a href="">{$v.user_login}</a>
+
+                                    </td>
+                                    <td>{$v.user_name}</td>
+                                    <td>{$v.date}</td>
+                                    <td>{$v.$k}篇</td>
+
+                                </tr>
+                            </foreach>
+                            </tbody>
+
+                        </table>
+
+<!-- 
+                        <div class="form-actions margin ">
+                            <div class="row margin">
+                                <button type="submit" class="btn">
+                                    <a onclick="javascript:return a_confirm()"
+                                       href="{:U('Admin/Tools/logClearHandle')}"> <i
+                                            class="m-icon-swapright m-icon-white"></i>
+
+                                        复制
+                                    </a>
+                                </button>
+
+
+                            </div>
+
+
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

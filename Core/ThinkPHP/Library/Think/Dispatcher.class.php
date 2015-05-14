@@ -34,65 +34,67 @@ class Dispatcher {
         }
 
         // 开启子域名部署
-        if(C('APP_SUB_DOMAIN_DEPLOY')) {
-            $rules      = C('APP_SUB_DOMAIN_RULES');
-            if(isset($rules[$_SERVER['HTTP_HOST']])) { // 完整域名或者IP配置
-                define('APP_DOMAIN',$_SERVER['HTTP_HOST']); // 当前完整域名
-                $rule = $rules[APP_DOMAIN];
-            }else{
-                if(strpos(C('APP_DOMAIN_SUFFIX'),'.')){ // com.cn net.cn 
-                    $domain = array_slice(explode('.', $_SERVER['HTTP_HOST']), 0, -3);
-                }else{
-                    $domain = array_slice(explode('.', $_SERVER['HTTP_HOST']), 0, -2);                    
-                }
-                if(!empty($domain)) {
-                    $subDomain = implode('.', $domain);
-                    define('SUB_DOMAIN',$subDomain); // 当前完整子域名
-                    $domain2   = array_pop($domain); // 二级域名
-                    if($domain) { // 存在三级域名
-                        $domain3 = array_pop($domain);
-                    }
-                    if(isset($rules[$subDomain])) { // 子域名
-                        $rule = $rules[$subDomain];
-                    }elseif(isset($rules['*.' . $domain2]) && !empty($domain3)){ // 泛三级域名
-                        $rule = $rules['*.' . $domain2];
-                        $panDomain = $domain3;
-                    }elseif(isset($rules['*']) && !empty($domain2) && 'www' != $domain2 ){ // 泛二级域名
-                        $rule      = $rules['*'];
-                        $panDomain = $domain2;
-                    }
-                }                
-            }
+//        if(C('APP_SUB_DOMAIN_DEPLOY')) {
+//            $rules      = C('APP_SUB_DOMAIN_RULES');
+//            if(isset($rules[$_SERVER['HTTP_HOST']])) { // 完整域名或者IP配置
+//                define('APP_DOMAIN',$_SERVER['HTTP_HOST']); // 当前完整域名
+//                $rule = $rules[APP_DOMAIN];
+//            }else{
+//                if(strpos(C('APP_DOMAIN_SUFFIX'),'.')){ // com.cn net.cn
+//                    $domain = array_slice(explode('.', $_SERVER['HTTP_HOST']), 0, -3);
+//                }else{
+//                    $domain = array_slice(explode('.', $_SERVER['HTTP_HOST']), 0, -2);
+//                }
+//                if(!empty($domain)) {
+//                    $subDomain = implode('.', $domain);
+//                    define('SUB_DOMAIN',$subDomain); // 当前完整子域名
+//                    $domain2   = array_pop($domain); // 二级域名
+//                    if($domain) { // 存在三级域名
+//                        $domain3 = array_pop($domain);
+//                    }
+//                    if(isset($rules[$subDomain])) { // 子域名
+//                        $rule = $rules[$subDomain];
+//                    }elseif(isset($rules['*.' . $domain2]) && !empty($domain3)){ // 泛三级域名
+//                        $rule = $rules['*.' . $domain2];
+//                        $panDomain = $domain3;
+//                    }elseif(isset($rules['*']) && !empty($domain2) && 'www' != $domain2 ){ // 泛二级域名
+//                        $rule      = $rules['*'];
+//                        $panDomain = $domain2;
+//                    }
+//                }
+//            }
+//
+//            if(!empty($rule)) {
+//                // 子域名部署规则 '子域名'=>array('模块名[/控制器名]','var1=a&var2=b');
+//                if(is_array($rule)){
+//                    list($rule,$vars) = $rule;
+//                }
+//                $array      =   explode('/',$rule);
+//                // 模块绑定
+//                define('BIND_MODULE',array_shift($array));
+//                // 控制器绑定
+//                if(!empty($array)) {
+//                    $controller  =   array_shift($array);
+//                    if($controller){
+//                        define('BIND_CONTROLLER',$controller);
+//                    }
+//
+//                }
+//                if(isset($vars)) { // 传入参数
+//                    parse_str($vars,$parms);
+//                    if(isset($panDomain)){
+//                        $pos = array_search('*', $parms);
+//                        if(false !== $pos) {
+//                            // 泛域名作为参数
+//                            $parms[$pos] = $panDomain;
+//                        }
+//                    }
+//                    $_GET   =  array_merge($_GET,$parms);
+//                }
+//            }
+//        }
+//
 
-            if(!empty($rule)) {
-                // 子域名部署规则 '子域名'=>array('模块名[/控制器名]','var1=a&var2=b');
-                if(is_array($rule)){
-                    list($rule,$vars) = $rule;
-                }
-                $array      =   explode('/',$rule);
-                // 模块绑定
-                define('BIND_MODULE',array_shift($array));
-                // 控制器绑定         
-                if(!empty($array)) {
-                    $controller  =   array_shift($array);
-                    if($controller){
-                        define('BIND_CONTROLLER',$controller);
-                    }
-                    
-                }
-                if(isset($vars)) { // 传入参数
-                    parse_str($vars,$parms);
-                    if(isset($panDomain)){
-                        $pos = array_search('*', $parms);
-                        if(false !== $pos) {
-                            // 泛域名作为参数
-                            $parms[$pos] = $panDomain;
-                        }                         
-                    }                   
-                    $_GET   =  array_merge($_GET,$parms);
-                }
-            }
-        }
         // 分析PATHINFO信息
         if(!isset($_SERVER['PATH_INFO'])) {
             $types   =  explode(',',C('URL_PATHINFO_FETCH'));

@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,90 +36,83 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <h4>系统数据库备份目录下共有{$files}个SQL备份文件，共计{$total}&nbsp;&nbsp;&nbsp;&nbsp;<span
-                                    style="color:red;font-weight:bold;" id="success"></span></span></h4>
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <form id="myForm">
-                                <table
-                                        class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th style="width: 8px;">选择</th>
-                                        <th>SQL文件名</th>
-                                        <th>备份时间</th>
-                                        <th class="hidden-240">类型</th>
-                                        <th class="">文件大小</th>
-                                        <th class="">文件备注</th>
-                                        <th class="">导入</th>
+                        <h4>系统数据库备份目录下共有{$files}个SQL备份文件，共计{$total}&nbsp;&nbsp;&nbsp;&nbsp;<span
+                                style="color:red;font-weight:bold;" id="success"></span></span></h4>
+                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                        <form id="myForm">
+                            <table
+                                    class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 8px;">选择</th>
+                                    <th>SQL文件名</th>
+                                    <th>备份时间</th>
+                                    <th class="hidden-240">类型</th>
+                                    <th class="">文件大小</th>
+                                    <th class="">文件备注</th>
+                                    <th class="">导入</th>
+                                </tr>
+                                </thead>
+                                <tbody id="cache_table">
+                                <volist name="list" id="sql">
+                                    <tr id="{$sql.name}" align="center"><!--|del_sql=###-->
+                                        <td><input pre="{$sql.pre}" type="checkbox" name="sqlFiles"
+                                                   value="{$sql.name}"/>
+                                        </td>
+                                        <td align="left"><a
+                                                href="{:U('Admin/Data/downFile',array('file'=>$sql['name'],'type'=>'sql'))}"
+                                                target="_blank">{$sql.name}</a></td>
+                                        <td>{$sql.time}</td>
+                                        <td>{$sql.type}</td>
+                                        <td>{$sql.size}</td>
+                                        <td class="description" title="{$sql.description}">查看备注信息</td>
+                                        <td>
+                                            <button type="button" class="btn restore" sqlPre="{$sql.pre}">导入</button>
+                                        </td>
                                     </tr>
-                                    </thead>
-                                    <tbody id="cache_table">
-                                    <volist name="list" id="sql">
-                                        <tr id="{$sql.name}" align="center"><!--|del_sql=###-->
-                                            <td><input pre="{$sql.pre}" type="checkbox" name="sqlFiles" value="{$sql.name}"/>
-                                            </td>
-                                            <td align="left"><a
-                                                    href="{:U('Admin/Data/downFile',array('file'=>$sql['name'],'type'=>'sql'))}"
-                                                    target="_blank">{$sql.name}</a></td>
-                                            <td>{$sql.time}</td>
-                                            <td>{$sql.type}</td>
-                                            <td>{$sql.size}</td>
-                                            <td class="description" title="{$sql.description}">查看备注信息</td>
-                                            <td>
-                                                <button type="button" class="btn restore" sqlPre="{$sql.pre}">导入</button>
-                                            </td>
-                                        </tr>
-                                    </volist>
-                                    </tbody>
+                                </volist>
+                                </tbody>
 
-                                </table>
+                            </table>
+
+                            <div class="control-group send_box" style="text-align: center; display:none;">
+                                <div class="controls">
+                                    <span id="input_email">请输入邮箱：&nbsp;&nbsp;</span>
+                                    <input type="text" placeholder="邮箱" class="m-wrap medium" name="to" id="to"
+                                           value="{:get_opinion('sql_mail')}"/>
+                                    <span class="help-inline"></span>
+                                    <button type="button" class="btn send_email red">发送</button>
+                                </div>
+                            </div>
+                            <div class="margin">
+                                <div class="row  margin">
+                                    <button type="button" class="btn btn-primary" id="checkall">全选</button>
+                                    &nbsp;&nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger" id="check_cancel">取消</button>
+                                </div>
+
                                 <br/>
 
-                                <div class="control-group send_box" style="text-align: center; display:none;">
-                                    <div class="controls">
-                                        <span id="input_email">请输入邮箱：&nbsp;&nbsp;</span>
-                                        <input type="text" placeholder="邮箱" class="m-wrap medium" name="to" id="to" value="{:C('sql_mail')}"/>
-                                        <span class="help-inline"></span>
-                                        <button type="button" class="btn send_email red">发送</button>
-                                    </div>
+                                <div class="row margin">
+                                    <button type="button" class="btn btn-danger delSqlFiles">
+                                        <i class="m-icon-swapright m-icon-white"></i>删除所选
+                                    </button>
+
+                                    <button type="button" class="btn btn-info sendSql" id="sendSql">发送SQL到邮箱</button>
+
+                                    <button type="button" class="btn btn-warning zip" id="zip">压缩SQL为ZIP</button>
+
+                                    <a href="{:U('Admin/Data/restorelocal')}" class="btn btn-primary">本地上传</a>
                                 </div>
-                                <div class="form-actions margin " >
-                                    <div class="row margin">
-                                        <button type="button" class="btn btn-primary" id="checkall">全选</button>
-                                        &nbsp;&nbsp;
-                                        <!--<button type="button" class="btn btn-info" id="check_reverse">反选-->
-                                        <!--</button>-->
-                                        &nbsp;&nbsp;
-                                        <button type="button" class="btn btn-danger" id="check_cancel">取消</button>
-                                    </div>
+                            </div>
 
-<br />
-                                    <div class="row">
-                                        <button type="button" class="btn btn-danger delSqlFiles">
-                                            <i class="m-icon-swapright m-icon-white"></i>删除所选
-                                        </button>
+                        </form>
 
-                                        <button type="button" class="btn btn-info sendSql" id="sendSql">发送SQL到邮箱</button>
-
-                                        <button type="button" class="btn btn-info zip" id="zip">压缩SQL为ZIP</button>
-                                    </div>
-                                </div>
-
-                            </form>
-
-
-
-
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -134,218 +127,234 @@
 
 <include file="Public:foot"/>
 <script>
-jQuery(document).ready(function () {
+    jQuery(document).ready(function () {
 
-    $("#cache_table :checkbox").attr("checked", true);
-    $("div").addClass("checked");
-
-
-    $("#checkall").click(function () { //":checked"匹配所有的复选框
-        $("#cache_table :checkbox").attr("checked", true); //"#div1 :checked"之间必须有空格checked是设置选中状态。如果为true则是选中fo否则false为不选中
+        $("#cache_table :checkbox").attr("checked", true);
         $("div").addClass("checked");
-    });
-    $("#check_cancel").click(function () {
-        $("#cache_table :checkbox").attr("checked", false);
-        $("div").removeClass("checked");
-    });
-//        //理解用迭代原理each（function(){}）
-    $("#check_reverse").click(function () {
-        $("#cache_table :checkbox").each(function () {
 
-            $(this).attr("checked", !$(this).attr("checked"));
-            $(this).parentsUntil('div').attr("checked", !$(this).attr("checked"));
 
-            //!$(this).attr("checked")判断复选框的状态：如果选中则取反
+        $("#checkall").click(function () { //":checked"匹配所有的复选框
+            $("#cache_table :checkbox").attr("checked", true); //"#div1 :checked"之间必须有空格checked是设置选中状态。如果为true则是选中fo否则false为不选中
+            $("div").addClass("checked");
         });
-    });
+        $("#check_cancel").click(function () {
+            $("#cache_table :checkbox").attr("checked", false);
+            $("div").removeClass("checked");
+        });
+//        //理解用迭代原理each（function(){}）
+        $("#check_reverse").click(function () {
+            $("#cache_table :checkbox").each(function () {
+
+                $(this).attr("checked", !$(this).attr("checked"));
+                $(this).parentsUntil('div').attr("checked", !$(this).attr("checked"));
+
+                //!$(this).attr("checked")判断复选框的状态：如果选中则取反
+            });
+        });
 
 
+        //delSqlFiles
+        $(".delSqlFiles").click(function () {
+            var obj = document.getElementsByName('sqlFiles');
+            // var file = [];
+            var sqlFiles = '';
+            for (var i = 0; i < obj.length; i++) {
+                if (obj[i].checked) {
+                    // file.push({sqlFiles:obj[i].value});
+                    if (i != obj.length - 1) {
+                        sqlFiles = sqlFiles + (obj[i].value) + ',';
+                    }
+                    else {
+                        sqlFiles += obj[i].value;
+                    }
+                }
+            }
+            var url = "{:U('Admin/Data/delSqlFiles')}";
+            $.post(url, {sqlFiles: sqlFiles}, function (data) {
 
-    //delSqlFiles
-    $(".delSqlFiles").click(function () {
-        var obj = document.getElementsByName('sqlFiles');
-        // var file = [];
-        var sqlFiles = '';
-        for (var i = 0; i < obj.length; i++) {
-            if (obj[i].checked) {
-                // file.push({sqlFiles:obj[i].value});
-                if (i != obj.length - 1) {
-                    sqlFiles = sqlFiles + (obj[i].value) + ',';
+                //删除成功
+                if (data.status == 1) {
+                    $("#success").fadeIn().html(data.info);
+                    $("#success").fadeOut(3000);
+
+                    setTimeout(function () {
+                        top.window.location.reload();
+                    }, 1000);
+
                 }
                 else {
-                    sqlFiles += obj[i].value;
+                    $("#success").fadeIn().html(data.info);
+                    $("#success").fadeOut(3000);
+                }
+            }, "json");
+
+        });
+
+        //zip
+        $(".zip").click(function () {
+
+            $("#zip").attr("disabledSubmit", true).html("已提交，系统在处理中...");
+
+            var obj2 = document.getElementsByName('sqlFiles');
+            // var file = [];
+            var sqlFiles2 = '';
+            for (var i = 0; i < obj2.length; i++) {
+                if (obj2[i].checked) {
+                    // file.push({sqlFiles:obj[i].value});
+                    if (i != obj2.length - 1) {
+                        sqlFiles2 = sqlFiles2 + (obj2[i].value) + ',';
+                    }
+                    else {
+                        sqlFiles2 += obj2[i].value;
+                    }
                 }
             }
-        }
-        var url = "{:U('Admin/Data/delSqlFiles')}";
-        $.post(url, {sqlFiles: sqlFiles}, function (data) {
+            var url2 = "{:U('Admin/Data/zipSql')}";
+            $.post(url2, {sqlFiles: sqlFiles2}, function (data) {
 
-            //删除成功
-            if (data.status == 1) {
-                $("#success").fadeIn().html(data.info);
-                $("#success").fadeOut(3000);
 
-                setTimeout(function () {
-                    top.window.location.reload();
-                }, 1000);
+                //打包成功
+                if (data.status == 1) {
+                    $("#success").fadeIn().html(data.info);
+                    $("#success").fadeOut(3000);
 
-            }
-            else {
-                $("#success").fadeIn().html(data.info);
-                $("#success").fadeOut(3000);
-            }
-        }, "json");
+                    if (data.url) {
+                        location.href = data.url;
+                    }
 
-    });
-
-    //zip
-    $(".zip").click(function () {
-        var obj2 = document.getElementsByName('sqlFiles');
-        // var file = [];
-        var sqlFiles2 = '';
-        for (var i = 0; i < obj2.length; i++) {
-            if (obj2[i].checked) {
-                // file.push({sqlFiles:obj[i].value});
-                if (i != obj2.length - 1) {
-                    sqlFiles2 = sqlFiles2 + (obj2[i].value) + ',';
                 }
                 else {
-                    sqlFiles2 += obj2[i].value;
+                    $("#success").fadeIn().html(data.info);
+                    $("#success").fadeOut(3000);
+
                 }
+
+                $("#zip").attr("disabledSubmit", false).html("压缩SQL为Zip...");
+
+            }, "json");
+
+
+        });
+
+        //sendSql
+        $(".sendSql").click(function () {
+            $(".send_box").fadeIn();
+            if ($(this).attr("disabledSubmit")) {
+
+                $("#success").fadeIn().html("已提交，系统在处理中...");
+                return false;
             }
-        }
-        var url2 = "{:U('Admin/Data/zipSql')}";
-        $.post(url2, {sqlFiles: sqlFiles2}, function (data) {
+        });
 
 
-            //打包成功
-            if (data.status == 1) {
-                $("#success").fadeIn().html(data.info);
-                $("#success").fadeOut(3000);
-
-                if (data.url) {
-                    location.href = data.url;
-                }
+        //提交数据恢复操作
+        $(".restore").click(function () {
+            if ($(this).attr("disabledSubmit")) {
+                $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("已提交，系统在处理中...");
+                return false;
             }
-            else {
-                $("#success").fadeIn().html(data.info);
-                $("#success").fadeOut(3000);
-            }
-        }, "json");
-
-    });
-
-    //sendSql
-    $(".sendSql").click(function () {
-        $(".send_box").fadeIn();
-        if ($(this).attr("disabledSubmit")) {
-
-            $("#success").fadeIn().html("已提交，系统在处理中...");
-            return false;
-        }
-    });
-    //提交数据恢复操作
-    $(".restore").click(function () {
-        if ($(this).attr("disabledSubmit")) {
-            $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("已提交，系统在处理中...");
-            return false;
-        }
-        var sqlPre = $(this).attr("sqlPre");
-        $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("导入中...");
-        $(".btn").attr("disabledSubmit", true);
-        var url_restore = "{:U('Admin/Data/restoreData')}";
-        $.getJSON(url_restore, {sqlPre: sqlPre}, function (json) {
-            if (json.status == 1) {
-                if (json.url) {
-                    $("#opStatus").show().html(json.info);
-                    repeat(json.url, "restore");
+            var sqlPre = $(this).attr("sqlPre");
+            $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("导入中...");
+            $(".btn").attr("disabledSubmit", true);
+            var url_restore = "{:U('Admin/Data/restoreData')}";
+            $.getJSON(url_restore, {sqlPre: sqlPre}, function (json) {
+                if (json.status == 1) {
+                    if (json.url) {
+                        $("#opStatus").show().html(json.info);
+                        repeat(json.url, "restore");
+                    } else {
+                        $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html(json.info);
+                    }
+                    $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html(json.info);
                 } else {
                     $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html(json.info);
                 }
-                $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html(json.info);
-            } else {
-                $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html(json.info);
-            }
+            });
+            $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("系统处理中请稍候....<br />可能需要较长时间");
+            return false;
         });
-        $(".restore[sqlPre='" + sqlPre + "']").attr("disabledSubmit", true).html("系统处理中请稍候....<br />可能需要较长时间");
-        return false;
-    });
-    //刷新操作
-    var repeat = function (url, type) {
-        $.post(url, function (json) {
-//                    var json = eval("(" + json + ")");
-            if (json.status == 1) {
-                if (json.url) {
-                    $("#success").fadeIn().html(json.info);
-                    repeat(json.url, type);
+
+        //刷新操作
+        var repeat = function (url, type) {
+
+            $.post(url, function (json) {
+
+                json = eval("(" + json + ")");
+
+                if (json.status == 1) {
+                    if (json.url) {
+                        $("#success").fadeIn().html(json.info);
+                        repeat(json.url, type);
+                    } else {
+                        $("#success").fadeIn().html(json.info);
+                        $(".restore").attr("disabledSubmit", false).html("导入完成...");
+                    }
                 } else {
-                    $("#success").fadeIn().html(json.info);
+                    $(".restore").attr("disabledSubmit", false).html("导入失败...");
+                    $("#success").html(json.info);
                 }
-            } else {
-                $("#success").html(json.info);
+            });
+        };
+
+        $(".send_email").click(function () {
+            if ($("tbody input[type='checkbox']:checked").size() == 0) {
+                $("#success").fadeIn().html("请选择要发送到邮件中的数据库");
+                $("#success").fadeOut(3000);
+                return false;
             }
-        });
-    };
+            if ($("#to").val() == '') {
+                $("#input_email").css("color", "red");
+                $("#to").css("border-color", "red");
+                return false;
+            }
+            var url3 = "{:U('Admin/Data/sendSql')}";
+            var obj3 = document.getElementsByName('sqlFiles');
 
-    $(".send_email").click(function () {
-        if ($("tbody input[type='checkbox']:checked").size() == 0) {
-            $("#success").fadeIn().html("请选择要发送到邮件中的数据库");
-            $("#success").fadeOut(3000);
-            return false;
-        }
-        if ($("#to").val() == '') {
-            $("#input_email").css("color", "red");
-            $("#to").css("border-color", "red");
-            return false;
-        }
-        var url3 = "{:U('Admin/Data/sendSql')}";
-        var obj3 = document.getElementsByName('sqlFiles');
+            // var file = [];
+            var sqlFiles3 = '';
+            for (var i = 0; i < obj3.length; i++) {
+                if (obj3[i].checked) {
+                    // file.push({sqlFiles:obj[i].value});
+                    if (i != obj3.length - 1) {
+                        sqlFiles3 = sqlFiles3 + (obj3[i].value) + ',';
+                    }
+                    else {
+                        sqlFiles3 += obj3[i].value;
+                    }
+                }
+            }
 
-        // var file = [];
-        var sqlFiles3 = '';
-        for (var i = 0; i < obj3.length; i++) {
-            if (obj3[i].checked) {
-                // file.push({sqlFiles:obj[i].value});
-                if (i != obj3.length - 1) {
-                    sqlFiles3 = sqlFiles3 + (obj3[i].value) + ',';
+            //alert(sqlFiles3);
+            var div = $("#success");
+            var to = $("#to").val();
+            $.post(url3, {"sqlFiles": sqlFiles3, "to": to}, function (data) {
+                var i = 0;
+                //var data = eval("(" + data + ")");
+
+                //发送成功
+                if (data.status == 1) {
+                    if (data.url) {
+
+                        location.href = data.url;
+
+                        i++;
+                    }
+                    else {
+                        div.fadeIn().html(data.info);
+                        div.fadeOut(3000);
+                    }
                 }
                 else {
-                    sqlFiles3 += obj3[i].value;
-                }
-            }
-        }
-
-        //alert(sqlFiles3);
-        var div = $("#success");
-        var to = $("#to").val();
-        $.post(url3, {"sqlFiles": sqlFiles3, "to": to}, function (data) {
-            var i = 0;
-            //var data = eval("(" + data + ")");
-
-            //发送成功
-            if (data.status == 1) {
-                if (data.url) {
-
-                    location.href = data.url;
-
-                    i++;
-                }
-                else {
+                    //alert(data.info);
                     div.fadeIn().html(data.info);
-                    div.fadeOut(3000);
+                    div.fadeOut(5000);
                 }
-            }
-            else {
-                //alert(data.info);
-                div.fadeIn().html(data.info);
-                div.fadeOut(5000);
-            }
-            //alert(i);
-        }, "json");
+                //alert(i);
+            }, "json");
 
 
+        });
     });
-});
 </script>
 </body>
 </html>

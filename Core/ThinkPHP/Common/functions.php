@@ -15,12 +15,26 @@
 
 /**
  * 获取和设置配置参数 支持批量定义
+ * @param string|array $key 配置变量
+ * @param mixed $value 配置值
+ * @param mixed $default 默认值
+ * @return mixed
+ */
+function C($key = null, $value = null, $default = null)
+{
+    return TP_C($key, $value, $default);
+}
+
+
+/**
+ * ThinkPHP原版C函数
+ * 获取和设置配置参数 支持批量定义
  * @param string|array $name 配置变量
  * @param mixed $value 配置值
  * @param mixed $default 默认值
  * @return mixed
  */
-function C($name = null, $value = null, $default = null)
+function TP_C($name = null, $value = null, $default = null)
 {
     static $_config = array();
     // 无参数时获取所有
@@ -782,7 +796,7 @@ function layout($layout)
  * URL组装 支持不同URL模式
  * @param string $url URL表达式，格式：'[模块/控制器/操作#锚点@域名]?参数1=值1&参数2=值2...'
  * @param string|array $vars 传入的参数，支持数组和字符串
- * @param string $suffix 伪静态后缀，默认为true表示获取配置值
+ * @param bool|string $suffix 伪静态后缀，默认为true表示获取配置值
  * @param boolean $domain 是否显示域名
  * @return string
  */
@@ -807,18 +821,18 @@ function U($url = '', $vars = '', $suffix = true, $domain = false)
         $domain = $host . (strpos($host, '.') ? '' : strstr($_SERVER['HTTP_HOST'], '.'));
     } elseif ($domain === true) {
         $domain = $_SERVER['HTTP_HOST'];
-        if (C('APP_SUB_DOMAIN_DEPLOY')) { // 开启子域名部署
-            $domain = $domain == 'localhost' ? 'localhost' : 'www' . strstr($_SERVER['HTTP_HOST'], '.');
-            // '子域名'=>array('模块[/控制器]');
-            foreach (C('APP_SUB_DOMAIN_RULES') as $key => $rule) {
-                $rule = is_array($rule) ? $rule[0] : $rule;
-                if (false === strpos($key, '*') && 0 === strpos($url, $rule)) {
-                    $domain = $key . strstr($domain, '.'); // 生成对应子域名
-                    $url = substr_replace($url, '', 0, strlen($rule));
-                    break;
-                }
-            }
-        }
+//        if (C('APP_SUB_DOMAIN_DEPLOY')) { // 开启子域名部署
+//            $domain = $domain == 'localhost' ? 'localhost' : 'www' . strstr($_SERVER['HTTP_HOST'], '.');
+//            // '子域名'=>array('模块[/控制器]');
+//            foreach (C('APP_SUB_DOMAIN_RULES') as $key => $rule) {
+//                $rule = is_array($rule) ? $rule[0] : $rule;
+//                if (false === strpos($key, '*') && 0 === strpos($url, $rule)) {
+//                    $domain = $key . strstr($domain, '.'); // 生成对应子域名
+//                    $url = substr_replace($url, '', 0, strlen($rule));
+//                    break;
+//                }
+//            }
+//        }
     }
 
     // 解析参数

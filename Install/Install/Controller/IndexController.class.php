@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: IndexController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-6
  * Time: 上午10:07
  */
@@ -10,13 +10,14 @@
 namespace Install\Controller;
 
 use Common\Util\File;
+use Think\Controller;
 
 
 /**
  * Class IndexController
  * @package Install\Controller
  */
-class IndexController extends \Think\Controller
+class IndexController extends Controller
 {
     /**
      *
@@ -30,7 +31,8 @@ class IndexController extends \Think\Controller
         $lockFile = WEB_ROOT . 'Data/Install.lock';
 
         if (File::file_exists($lockFile)) {
-            $this->error(" 你已经安装过GreenCMS，如果想重新安装，请先删除站点Data目录下的 install.lock 文件，然后再安装。");
+            $this->error(" 你已经安装过GreenCMS，如果想重新安装，
+            请先删除站点Data目录下的 install.lock 文件，然后再安装。");
         }
 
 
@@ -130,7 +132,6 @@ class IndexController extends \Think\Controller
         $db_name = $_POST["db_name"];
         $db_prefix = $_POST["db_prefix"];
 
- 
 
         if ($_POST['admin_password'] != $_POST['admin_password2'] || trim($_POST['admin_password']) == '' || trim($_POST['admin_password2']) == '')
             $this->error("两次输入的密码不一致，请重新设定！，或者密码为空");
@@ -161,8 +162,6 @@ class IndexController extends \Think\Controller
 
         $file = WEB_ROOT . 'Install/Data/db_config_sample.php';
 
-
-
         if (!File::file_exists($file))
             $this->error('Install/Data/db_config_sample.php文件不存在,请检查');
         $content = File::readFile($file);
@@ -176,9 +175,21 @@ class IndexController extends \Think\Controller
 
         if (!File::writeFile(WEB_ROOT . 'db_config.php', $content, 'w+')) {
             $this->error("数据库配置文件写入失败，请您手动根据Install/Data/db_config_sample.php文件在根目录创建文件");
-        }else{
-            
         }
+
+
+        $file = WEB_ROOT . 'Install/Data/const_config_sample.php.bak';
+
+        if (!File::file_exists($file))
+            $this->error('Install/Data/const_config_sample.php文件不存在,请检查');
+        $content = File::readFile($file);
+
+        $content = str_replace("xxxxxxxxxx", substr(md5(time()), 0, 10), $content);
+
+        if (!File::writeFile(WEB_ROOT . 'const_config.php', $content, 'w+')) {
+            $this->error("常量配置文件写入失败");
+        }
+
 
         File::makeDir(WEB_ROOT . 'Data/Cache');
 
@@ -219,6 +230,8 @@ class IndexController extends \Think\Controller
         if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
         $cquery = "Update `{$db_prefix}options` set option_value='{$software_build}' where option_name='software_build';";
         if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
+        $cquery = "Update `{$db_prefix}options` set option_value='{$software_build}' where option_name='db_build';";
+        if (!mysql_query($cquery, $conn)) $this->error(' 更新配置数据出错');
 
 
         //TODO              写不下去了
@@ -238,20 +251,35 @@ class IndexController extends \Think\Controller
         File::delAll(WEB_ROOT . 'Data/Temp');
 
 
+//        $dirs = array();
+//
+//        array_push($dirs, WEB_ROOT . 'Extend');
+//        array_push($dirs, WEB_ROOT . 'Public');
+//        array_push($dirs, WEB_ROOT . 'Upload');
+//        array_push($dirs, WEB_ROOT . 'Data/Cache');
+//        array_push($dirs, WEB_ROOT . 'Data/Temp');
+//        array_push($dirs, LOG_PATH);
+//        array_push($dirs, RUNTIME_PATH);
+//        array_push($dirs, WEB_CACHE_PATH);
+//        array_push($dirs, DB_Backup_PATH);
+//        array_push($dirs, System_Backup_PATH);
+//        array_push($dirs, Upgrade_PATH);
+
+
+        //build_dir_secure($dirs);
         //A('Install/Test')->init($key = 'zts');
-        
-        
-       // $Access = new AccessEvent();
-      //   $Access->initAdmin();
-       //  $Access->initWeixin();
 
 
-       $site_url= get_opinion("site_url");
-       // File::delAll(WEB_ROOT . 'Install/Data');
+        // $Access = new AccessEvent();
+        //   $Access->initAdmin();
+        //  $Access->initWeixin();
+
+
+        // File::delAll(WEB_ROOT . 'Install/Data');
 
         if (File::writeFile(WEB_ROOT . 'Data/Install.lock', 'installed', 'w+')) {
-            C('URL_MODEL',3);
-            $this->success('GreenCMS安装成功,5秒钟返回首页', $site_url , 5);
+            C('URL_MODEL', 3);
+            $this->success('GreenCMS安装成功,5秒钟返回首页', get_opinion("site_url"), 5);
         }
 
     }

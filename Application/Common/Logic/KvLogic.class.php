@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: KvLogic.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-3-11
  * Time: 下午8:54
  */
@@ -23,9 +23,9 @@ class KvLogic extends Model
      */
     public function getAll()
     {
-        $kvs = $this->cache(APP_Cache,2)->where(1)->select();
+        $kvs = $this->where(1)->select();
 
-         return $kvs;
+        return $kvs;
     }
 
 

@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: MediaController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-25
  * Time: 下午7:54
  */
@@ -11,6 +11,7 @@ namespace Admin\Controller;
 
 use Common\Event\SystemEvent;
 use Common\Util\File;
+use Think\Storage;
 use Think\Think;
 
 /**
@@ -26,8 +27,9 @@ class MediaController extends AdminBaseController
     public function __construct()
     {
         parent::__construct();
-
+        //gc_disable();
     }
+
 
     /**
      *
@@ -47,7 +49,7 @@ class MediaController extends AdminBaseController
 
         define('GreenCMS', 'GreenCMS');
 
-        include WEB_ROOT . 'Extend/GreenFinder/php/connector.php'; //包含elfinder自带php接口的入口文件
+        include WEB_ROOT . 'Extend/Elfinder/php/connector.php'; //包含elfinder自带php接口的入口文件
     }
 
     /**
@@ -85,7 +87,13 @@ class MediaController extends AdminBaseController
         $root = File::scanDir(WEB_ROOT, true);
         $root_info = array();
 
+        $filter_array = array("Data", "Install", "README.md", "UpdateLOG", "composer.json");
+
         foreach ($root as $value) {
+
+            if (in_array($value, $filter_array)) continue;
+
+
             $root_info_temp = array();
             $root_info_temp['name'] = $value;
             $root_info_temp['path'] = WEB_ROOT . $value;
@@ -118,9 +126,10 @@ class MediaController extends AdminBaseController
     {
         $handle = opendir(System_Backup_PATH);
 
+        $file_list = array();
+
         File::getFiles(System_Backup_PATH, $file_list, '#\.zip$#i');
 
-        $files_list = array();
         foreach ($file_list as $key => $value) {
             $files_list_temp = array();
             $files_list_temp['id'] = base64_encode($value);
@@ -188,7 +197,7 @@ class MediaController extends AdminBaseController
 
         $filePath = $filename;
 
-          if (!file_exists($filePath)) {
+        if (!file_exists($filePath)) {
             $this->error("该文件不存在，可能是被删除");
         }
         $filename = basename($filePath);

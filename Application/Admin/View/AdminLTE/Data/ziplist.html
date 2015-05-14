@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,68 +36,64 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <h4>共有{$files}个压缩包文件，共计{$total}&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red;font-weight:bold;"
-                                                                                         id="success"></span></h4>
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <form method="post">
-                                <table
-                                        class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th style="width: 8px;">选择</th>
-                                        <th>压缩包名称</th>
-                                        <th class="hidden-240">打包时间</th>
-                                        <th class="hidden-480">文件大小</th>
-                                        <th class="">解压</th>
+                        <h4>共有{$files}个压缩包文件，共计{$total}&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red;font-weight:bold;"
+                                                                                     id="success"></span></h4>
+                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                        <form method="post">
+                            <table
+                                    class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 8px;">选择</th>
+                                    <th>压缩包名称</th>
+                                    <th class="hidden-240">打包时间</th>
+                                    <th class="hidden-480">文件大小</th>
+                                    <th class="">解压</th>
+                                </tr>
+                                </thead>
+                                <tbody id="cache_table">
+                                <volist name="list" id="zip">
+                                    <tr id="{$zip.file}" align="center">
+                                        <td><input type="checkbox" name="zipFiles" value="{$zip.file}"/></td>
+                                        <td align="left"><a
+                                                href="{:U('Admin/Data/downFile',array('file'=>$zip['file'],'type'=>'zip'))}"
+                                                target="_blank">{$zip.file}</a></td>
+                                        <td>{$zip.time}</td>
+                                        <td>{$zip.size}</td>
+                                        <td>
+                                            <button class="btn unzip" file="{$zip.file}">解压</button>
+                                        </td>
                                     </tr>
-                                    </thead>
-                                    <tbody id="cache_table">
-                                    <volist name="list" id="zip">
-                                        <tr id="{$zip.file}" align="center">
-                                            <td><input type="checkbox" name="zipFiles" value="{$zip.file}"/></td>
-                                            <td align="left"><a
-                                                    href="{:U('Admin/Data/downFile',array('file'=>$zip['file'],'type'=>'zip'))}"
-                                                    target="_blank">{$zip.file}</a></td>
-                                            <td>{$zip.time}</td>
-                                            <td>{$zip.size}</td>
-                                            <td>
-                                                <button class="btn unzip" file="{$zip.file}">解压</button>
-                                            </td>
-                                        </tr>
-                                    </volist>
-                                    </tbody>
+                                </volist>
+                                </tbody>
 
-                                </table>
-                                <div class="form-actions margin " >
-                                    <div class="row margin">
-                                        <button type="button" class="btn btn-success delZipFiles">
-                                            <i class="m-icon-swapright m-icon-white"></i>删除所选
-                                        </button>
+                            </table>
+                            <div class="form-actions margin ">
+                                <div class="row margin">
+                                    <button type="button" class="btn btn-success delZipFiles">
+                                        <i class="m-icon-swapright m-icon-white"></i>删除所选
+                                    </button>
 
-                                        <button type="button" class="btn btn-success unzipSelect">
-                                            <i class="m-icon-swapright m-icon-white"></i>解压缩所选
-                                        </button>
+                                    <button type="button" class="btn btn-success unzipSelect">
+                                        <i class="m-icon-swapright m-icon-white"></i>解压缩所选
+                                    </button>
 
-                                        <button type="button" class="btn btn-primary" id="checkall">全选</button>
+                                    <button type="button" class="btn btn-primary" id="checkall">全选</button>
 
-                                        <button type="button" class="btn btn-danger" id="check_cancel">取消</button>
+                                    <button type="button" class="btn btn-danger" id="check_cancel">取消</button>
 
-                                        <!--<button type="button" class="btn btn-info" id="check_reverse">反选</button>-->
-                                    </div>
+                                    <!--<button type="button" class="btn btn-info" id="check_reverse">反选</button>-->
                                 </div>
+                            </div>
 
-                            </form>
+                        </form>
 
 
-                        </div>
                     </div>
                 </div>
             </div>

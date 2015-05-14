@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-8-16
  * Time: 上午7:54
  */
@@ -9,7 +9,8 @@
 namespace Weixin\Event;
 
 
-class CustomTextEvent {
+class CustomTextEvent
+{
 
 
     /**
@@ -36,8 +37,6 @@ class CustomTextEvent {
     }
 
 
-
-
     /**
      * @param $keyword
      * @return string
@@ -45,12 +44,10 @@ class CustomTextEvent {
     public function record($keyword)
     {
 
-        $contentStr = '您的留言: '.$keyword.' 我们已经收到';
+        $contentStr = '您的留言: ' . $keyword . ' 我们已经收到';
         return $contentStr;
 
     }
 
 
-
-
-} 
+}

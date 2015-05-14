@@ -1,13 +1,13 @@
 <?php
 
 namespace Admin\Model;
+
 use Common\Util\File;
 use Think\Model;
 
 /**
  * 插件模型
  */
-
 class AddonsModel extends Model
 {
 
@@ -45,7 +45,7 @@ class AddonsModel extends Model
      * @param int $limit
      * @return array|bool
      */
-    public function getList($addon_dir = '',$limit=0)
+    public function getList($addon_dir = '', $limit = 0)
     {
         if (!$addon_dir) $addon_dir = Addon_PATH;
         $dirs = array_map('basename', glob($addon_dir . '*', GLOB_ONLYDIR));
@@ -59,7 +59,7 @@ class AddonsModel extends Model
         $addons = array();
         $where['name'] = array('in', $dirs);
         $list = $this->where($where)->field(true)->limit($limit)->select();
-         foreach ($list as $addon) {
+        foreach ($list as $addon) {
             $addon['uninstall'] = 0;
             $addons[$addon['name']] = $addon;
         }
@@ -77,7 +77,7 @@ class AddonsModel extends Model
 
                 if ($addons[$value]) {
                     $addons[$value]['uninstall'] = 1;
-                     $addons[$value]['status']=99;
+                    $addons[$value]['status'] = 99;
                 }
             } else {
                 //todo 已安装的
@@ -86,7 +86,7 @@ class AddonsModel extends Model
         int_to_string($addons, array('status' => array(-1 => '损坏', 0 => '禁用', 1 => '启用', 99 => '未安装')));
         $addons = list_sort_by($addons, 'uninstall', 'desc');
 
-         return $addons;
+        return $addons;
     }
 
     /**

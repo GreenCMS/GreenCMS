@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: AdminBaseController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-25
  * Time: 上午10:39
  */
@@ -12,6 +12,7 @@ namespace Admin\Controller;
 use Common\Controller\BaseController;
 use Common\Logic\LogLogic;
 use Org\Util\Rbac;
+use Think\Log;
 
 /**
  * Class AdminBaseController
@@ -36,10 +37,12 @@ class AdminBaseController extends BaseController
         $this->_initialize();
 
         $this->_currentPostion();
+
         $this->_currentUser();
 
-        $this->customConfig();
+        $this->_recordCurrentPage();
 
+//        $this->customConfig();
 
     }
 
@@ -86,7 +89,7 @@ class AdminBaseController extends BaseController
         //  echo CONTROLLER_NAME;
         //  echo ACTION_NAME;
 
-        $cache = C('admin_big_menu');
+        $cache = get_opinion('admin_big_menu');
         foreach ($cache as $big_url => $big_name) {
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 $module = $big_name;
@@ -95,7 +98,7 @@ class AdminBaseController extends BaseController
             }
         }
 
-        $cache = C('admin_sub_menu');
+        $cache = get_opinion('admin_sub_menu');
         foreach ($cache as $big_url => $big_name) {
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 foreach ($big_name as $sub_url => $sub_name) {
@@ -116,70 +119,72 @@ class AdminBaseController extends BaseController
 
     }
 
-
+    private function _recordCurrentPage()
+    {
+        if (!IS_AJAX) {
+            cookie("last_visit_page", base64_encode('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']), 3600 * 24 * 30);
+        }
+    }
 
     /**
      *
      */
     public function saveConfig()
     {
-        S('customConfig', null); //清空缓存
-
-        $options = D('Options');
-        $data = array();
-        foreach ($_POST as $name => $value) {
-            unset ($data ['option_id']); // 删除上次保存配置时产生的option_id，否则无法插入下一条数据
-            $data ['option_name'] = $name;
-            $data ['option_value'] = $value;
-
-            $find = $options->where(array(
-                'option_name' => $name
-            ))->select();
-            if (!$find) {
-                $options->data($data)->add();
-            } else {
-                $data ['option_id'] = $find [0] ['option_id'];
-                $options->save($data);
-            }
+        $post_data = I('post.');
+        foreach ($post_data as $name => $value) {
+            set_opinion($name, $value);
         }
     }
 
+    /*
+        public function __destruct()
+        {
+
+            $user_id = get_current_user_id();
+
+
+
+                $group_level_1 = get_opinion('group_level_1');
+                $admin_level_2 = get_opinion('admin_level_2');
+                $admin_level_3 = get_opinion('admin_level_3');
+
+
+                $this->group_name = $group_level_1[MODULE_NAME] ? $group_level_1[MODULE_NAME] : "Admin";
+                $this->module_name = $admin_level_2[CONTROLLER_NAME] ? $admin_level_2[CONTROLLER_NAME] : CONTROLLER_NAME;
+                $this->action_name = $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] ?
+                    $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] : CONTROLLER_NAME . '/' . ACTION_NAME;
+
+            if($user_id){
+
+                $LogLogic = D('Log');
+
+                $log_data['user_id'] = $user_id;
+                $log_data['group_name'] = $this->group_name;
+                $log_data['module_name'] = $this->module_name;
+                $log_data['action_name'] = $this->action_name;
+                $log_data['message'] = '';
+                $log_data['log_type'] = 1;
+                $log_data['user_ip'] = get_client_ip();
+
+
+                //Log::write( arr2str($log_data));
+                $LogLogic->data($log_data)->add();
+                //Log::write( $LogLogic->getlastsql());
+
+            }
+
+
+            parent::__destruct();
+
+        }
+    */
+
     public function isSuperAdmin()
     {
-        $uid = ( int )$_SESSION [C('USER_AUTH_KEY')];
+        $uid = ( int )$_SESSION [get_opinion('USER_AUTH_KEY')];
         if ($uid == 1) return true;
         else return false;
-    }
-
-    public function __destruct()
-    {
-
-        $group_level_1 = C('group_level_1');
-        $admin_level_2 = C('admin_level_2');
-        $admin_level_3 = C('admin_level_3');
-
-
-        $this->group_name = $group_level_1[MODULE_NAME] ? $group_level_1[MODULE_NAME] : "Admin";
-        $this->module_name = $admin_level_2[CONTROLLER_NAME] ? $admin_level_2[CONTROLLER_NAME] : CONTROLLER_NAME;
-        $this->action_name = $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] ? $admin_level_3[CONTROLLER_NAME] [ACTION_NAME] : CONTROLLER_NAME . '/' . ACTION_NAME;
-
-        $LogLogic = D('Log');
-
-        $log_data['user_id'] = get_current_user_id();
-
-
-        $log_data['group_name'] = $this->group_name;
-        $log_data['module_name'] = $this->module_name;
-        $log_data['action_name'] = $this->action_name;
-        $log_data['message'] = '';
-        $log_data['log_type'] = 1;
-        $log_data['user_ip'] = get_client_ip();
-//        dump($log_data);
-        $LogLogic->data($log_data)->add();
-//        dump($LogLogic->getlastsql());
-
-        parent::__destruct();
-
     }
 
     /**

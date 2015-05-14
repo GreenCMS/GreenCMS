@@ -55,7 +55,7 @@
                 <div class="blog">
                     <volist name="postslist" id="post" empty="没有相关文章..">
                         <div class="blog-item well">
-                            <a href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                            <a href="{$post|get_post_url}">
                                 <h2>{$post.post_top|is_top}{$post.post_title}</h2></a>
 
                             <div class="blog-meta clearfix">
@@ -63,28 +63,26 @@
                                     <i class="icon-user"></i> 作者: <a href="#">{$post.post_user.user_nicename}</a> |
                                     <i class="icon-folder-close"></i> 分类:
                                     <volist name="post.post_cat" id="cat"><a
-                                            href="{$cat.cat_id|getCatURLByID}">{$cat.cat_name}</a>,
+                                            href="{$cat|get_cat_url}">{$cat.cat_name}</a>,
                                     </volist>
-
                                     |
                                     <i class="icon-folder-close"></i> 标签:
                                     <volist
                                             name="post.post_tag" id="tag"><a
-                                            href="{$tag.tag_id|getTagURLByID}">{$tag.tag_name}</a>,
+                                            href="{$tag|get_tag_url}">{$tag.tag_name}</a>,
                                     </volist>
-
                                     |
                                     <i class="icon-calendar"></i> {$post['post_date']|getTimeURL=$post['post_type']}
                                 </p>
 
                                 <p class="pull-right"><i class="icon-comment pull"></i>
-                                    <a href="{$post.post_id|getSingleURLByID=$post['post_type']}#comments">{$post.post_comment_count}
+                                    <a href="{$post|get_post_url}#comments">{$post.post_comment_count}
                                         Comments</a></p>
                             </div>
                             <!--<p> {$post|get_post_thumbnail}</p>-->
 
-                            <p>{$post.post_content|strip_tags|mb_substr=0,200,"UTF-8"}</p>
-                            <a class="btn btn-link" href="{$post.post_id|getSingleURLByID=$post['post_type']}">Read More
+                            <p>{$post.post_content|strip_tags|mb_substr=0,400,"UTF-8"}</p>
+                            <a class="btn btn-link" href="{$post|get_post_url}">阅读详细
                                 <i
                                         class="icon-angle-right"></i></a>
                         </div>

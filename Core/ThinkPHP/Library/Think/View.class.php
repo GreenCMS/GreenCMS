@@ -85,7 +85,7 @@ class View {
      * @return mixed
      */
     private function render($content,$charset='',$contentType=''){
-        if(empty($charset))  $charset = C('DEFAULT_CHARSET');
+//        if(empty($charset))  $charset = C('DEFAULT_CHARSET');
         if(empty($contentType)) $contentType = C('TMPL_CONTENT_TYPE');
         // 网页字符编码
         header('Content-Type:'.$contentType.'; charset='.$charset);

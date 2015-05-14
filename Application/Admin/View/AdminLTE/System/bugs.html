@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{:get_opinion('title')}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+
+                        <form role="form" action="{:U('Admin/System/bugsHandle')}"
+                              method="post">
+
+                            <input type="hidden" name="site_url" value="{:get_opinion('site_url')}"/>
+
+                            <input type="hidden" name="title" value="{:get_opinion('title')}"/>
+
+                            <input type="hidden" name="track_id" value="{:gen_uuid()}"/>
+
+
+                            <div class="form-group">
+                                <label class="control-label">Bug信息描述</label>请勿使用
+
+                                <div class="controls">
+
+                                    <textarea class="form-control large" name="description" rows="6"></textarea>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label">通知邮箱</label>
+
+                                <div class="controls">
+                                    <input type="email" placeholder="" class="form-control large" name="notify_mail"
+                                           value="{:get_opinion('sql_mail')}"/>
+                                    <span class="help-inline">通知处理结果</span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 提交</button>
+                            </div>
+
+                        </form>
+
+                        <div style="margin-top: 50px" class=" col-md-8">
+
+
+                            <div class="well">
+
+                                在线提交Issue ：
+                                <a href="https://github.com/GreenCMS/GreenCMS/issues">
+                                    https://github.com/GreenCMS/GreenCMS/issues
+                                </a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

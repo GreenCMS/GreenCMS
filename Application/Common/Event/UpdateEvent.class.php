@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: UpdateEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-3-17
  * Time: 下午9:18
  */
@@ -39,6 +39,24 @@ class UpdateEvent extends BaseController
 
     }
 
+
+    /**
+     *
+     */
+    public function checkVersion()
+    {
+        $software_build_db = get_opinion('software_build');
+        $software_build_const = GreenCMS_Build;
+
+        if ($software_build_db == $software_build_const) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
     public function applyPatch($filename)
     {
         $System = new SystemEvent();
@@ -55,6 +73,12 @@ class UpdateEvent extends BaseController
             return $this->jsonResult(0, "文件损坏");
         }
 
+
+    }
+
+
+    public function copyAndBackup($file_path1, $file_path2)
+    {
 
 
     }

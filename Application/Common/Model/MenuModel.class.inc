@@ -1,13 +1,14 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: MenuModel.class.inc
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 下午4:45
  */
 
 namespace Common\Model;
+
 use Think\Model;
 
 

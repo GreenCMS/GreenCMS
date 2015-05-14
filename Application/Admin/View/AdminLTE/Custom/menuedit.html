@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,115 +36,112 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <form method="post" action="{$form_url}">
+                        <form method="post" action="{$form_url}">
 
-                                <div class="form-group">
-                                    <label class="control-label">链接模式：</label>
+                            <div class="form-group">
+                                <label class="control-label">链接模式：</label>
 
-                                    <div class="controls">
+                                <div class="controls">
 
-                                        <select name="menu_function" id="menu_function" class="large form-control"
-                                                tabindex="1">
-                                            {$url_function}
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">打开方式：</label>
-
-                                    <div class="controls">
-
-
-                                        <select name="menu_action" class="large form-control" tabindex="1">
-                                            {$url_open}
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">父级节点：</label>
-
-                                    <div class="controls">
-
-                                        <select name="menu_pid" class="large form-control" tabindex="1">
-                                            <option value="0">无</option>
-                                            {$menu_list2}
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">显示排序：</label>
-
-                                    <div class="controls">
-
-                                        <select name="menu_sort" class="large form-control" tabindex="1">
-                                            <option value="0">无</option>
-
-                                            {$menu_list3}
-
-
-                                        </select>
-
-                                        <span class="help-inline"> 位置在选中项目之后</span>
-                                    </div>
-
+                                    <select name="menu_function" id="menu_function" class="large form-control"
+                                            tabindex="1">
+                                        {$url_function}
+                                    </select>
 
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">链接参数：</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">打开方式：</label>
 
-                                    <div class="controls">
-                                        <input class="form-control large" name="menu_url"
-                                               id="menu_url" type="text" size="40"
-                                               value='{$info.menu_url}'
-                                        />
+                                <div class="controls">
 
-                                        <select class="large form-control" id="menu_url_select" tabindex="1"
-                                                style="display: none">
 
-                                        </select>
-
-                                    </div>
-
+                                    <select name="menu_action" class="large form-control" tabindex="1">
+                                        {$url_open}
+                                    </select>
 
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">父级节点：</label>
 
-                                <div class="form-group">
-                                    <label class="control-label">显示名称：</label>
+                                <div class="controls">
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" id="menu_name" class="form-control large" name="menu_name"
-                                value="{$info.menu_name}"        />
-                                        <span class="help-inline">显示名称</span>
-                                    </div>
+                                    <select name="menu_pid" class="large form-control" tabindex="1">
+                                        <option value="0">无</option>
+                                        {$menu_list2}
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">显示排序：</label>
+
+                                <div class="controls">
+
+                                    <select name="menu_sort" class="large form-control" tabindex="1">
+                                        <option value="0">无</option>
+
+                                        {$menu_list3}
+
+
+                                    </select>
+
+                                    <span class="help-inline"> 位置在选中项目之后</span>
                                 </div>
 
 
-                                <!--<input type="hidden" name="id" value="{$info.id}"/>-->
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">链接参数：</label>
 
-                                <div class="form-group success"
-                                     style="font-size:16px;color: red;text-align: left; display:none;">
+                                <div class="controls">
+                                    <input class="form-control large" name="menu_url"
+                                           id="menu_url" type="text" size="40"
+                                           value='{$info.menu_url}'
+                                            />
+
+                                    <select class="large form-control" id="menu_url_select" tabindex="1"
+                                            style="display: none">
+
+                                    </select>
+
                                 </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-info submit" id="submit"><i
-                                            class="icon-ok"></i>
-                                        编辑
-                                    </button>
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">显示名称：</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" id="menu_name" class="form-control large"
+                                           name="menu_name"
+                                           value="{$info.menu_name}"/>
+                                    <span class="help-inline">显示名称</span>
                                 </div>
-                            </form>
+                            </div>
 
 
-                        </div>
+                            <!--<input type="hidden" name="id" value="{$info.id}"/>-->
+
+                            <div class="form-group success"
+                                 style="font-size:16px;color: red;text-align: left; display:none;">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-info submit" id="submit"><i
+                                        class="icon-ok"></i>
+                                    编辑
+                                </button>
+                            </div>
+                        </form>
+
+
                     </div>
                 </div>
             </div>
@@ -174,20 +171,19 @@
 
         if (menu_function == 'get_post_url') {
             $('#menu_url_select').show();
-            var post_list  =$('#post_list').html();
+            var post_list = $('#post_list').html();
             menu_url_select.html(post_list);
         } else if (menu_function == 'get_cat_url') {
             $('#menu_url_select').show();
-            var cat_list  =$('#cat_list').html();
+            var cat_list = $('#cat_list').html();
             menu_url_select.html(cat_list);
         } else if (menu_function == 'get_tag_url') {
             $('#menu_url_select').show();
-            var tag_list  =$('#tag_list').html();
+            var tag_list = $('#tag_list').html();
             menu_url_select.html(tag_list);
-        }else{
+        } else {
             $('#menu_url_select').hide();
         }
-
 
 
         $('#menu_function').change(function () {
@@ -197,22 +193,21 @@
 
             if (menu_function == 'get_post_url') {
                 $('#menu_url_select').show();
-                var post_list  =$('#post_list').html();
+                var post_list = $('#post_list').html();
                 menu_url_select.html(post_list);
             } else if (menu_function == 'get_cat_url') {
                 $('#menu_url_select').show();
-                var cat_list  =$('#cat_list').html();
+                var cat_list = $('#cat_list').html();
                 menu_url_select.html(cat_list);
             } else if (menu_function == 'get_tag_url') {
                 $('#menu_url_select').show();
-                var tag_list  =$('#tag_list').html();
+                var tag_list = $('#tag_list').html();
                 menu_url_select.html(tag_list);
-            }else{
+            } else {
                 $('#menu_url_select').hide();
             }
 
         });
-
 
 
         $('#menu_url_select').change(function () {
@@ -222,8 +217,6 @@
 
 
         });
-
-
 
 
     });

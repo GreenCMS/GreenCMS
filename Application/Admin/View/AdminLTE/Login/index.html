@@ -7,7 +7,7 @@
     <!-- bootstrap 3.0.2 -->
     <link href="__PUBLIC__/AdminLTE/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- font Awesome -->
-    <link href="__PUBLIC__/AdminLTE/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="__PUBLIC__/AdminLTE/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>-->
     <!-- Theme style -->
     <link href="__PUBLIC__/AdminLTE/css/AdminLTE.css" rel="stylesheet" type="text/css"/>
 
@@ -17,6 +17,36 @@
     <script src="__PUBLIC__/share/js/html5.js"></script>
     <script src="__PUBLIC__/share/js/respond.min.js"></script>
     <![endif]-->
+
+
+    <style>
+
+        .form-box {
+            width: 400px;
+            margin: 40px auto 0 auto;
+        }
+
+        .control-label {
+            float: left;
+            width: 60px;
+            margin-left: 15px;
+            padding-top: 5px;
+            text-align: right;
+        }
+
+        .form-control {
+            margin-left: 15px;
+            display: inline;
+            width: 250px;
+        }
+
+        #imgVerify {
+            margin: 0 auto;
+            text-align: center;
+            display: block;
+        }
+
+    </style>
 </head>
 <body class="bg-black">
 
@@ -24,59 +54,72 @@
     <div class="header">GreenCMS 管理登陆</div>
     <form action="{:U('Admin/Login/login')}" method="POST">
         <div class="body bg-gray">
+
+
             <div class="form-group">
-                <input type="text" name="username" class="form-control" placeholder="用户名"/>
+                <label class="control-label">用户名</label>
+                <input type="text" name="username" class="form-control" placeholder="输入用户名"/>
             </div>
+
             <div class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="密码"/>
+                <label class="control-label">密码</label>
+                <input type="password" name="password" class="form-control" placeholder="输入密码"/>
             </div>
+
             <opinioncontrol realtime="true" opinion_name="vertify_code" default="true">
 
                 <div class="form-group">
-                    <input  type="text" name="vertify" class="form-control" placeholder="输入下方验证码"/>
-
+                    <label class="control-label">验证码</label>
+                    <input type="text" name="vertify" class="form-control" placeholder="输入下方验证码"/>
                 </div>
 
-
-                <div class="form-group">
-
+                <div class="form-group" style="margin: 0 0">
                     <img id="imgVerify" src="{:U('Admin/Login/vertify')}" onclick="fleshVerify();"/>
                 </div>
 
             </opinioncontrol>
 
             <div class="form-group">
-                <input type="checkbox" name="remember" value="1"/> 记住我
+                <label class="control-label">记住我</label>
+
+                <input type="checkbox" name="remember" style=" margin-left: 15px;height: 20px" value="1"/>
             </div>
         </div>
+
         <div class="footer">
-            <button type="submit" class="btn bg-olive btn-block">立即登录</button>
+            <button type="submit" class="btn bg-olive btn-block" style=" height: 50px">立即登录</button>
 
-            <p><a href="{:U('Admin/Login/forgetpassword')}">忘记密码?</a></p>
+            <hr/>
 
-            <a href="{:U('Admin/Login/register')}" class="text-center">注册</a>
+            <p style="text-align: center"><a href="{:U('Admin/Login/register')}" class="btn bg-orange">注册</a> 或者
+
+                <a href="{:U('Admin/Login/forgetpassword')}" class="btn bg-aqua">找回密码?</a></p>
+
+
         </div>
+
     </form>
 
     <div class="margin text-center">
         <!--<span>Sign in using social networks</span>-->
         <!--<br/>-->
         <!--<button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>-->
+
+        <!--<button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>-->
         <div class="margin text-center">
 
             <a href="{:U('Oauth/Sns/login',array('type'=>'sina'))}"><img
                     src="__PUBLIC__/share/img/icon/weibo/weibo_login_24.png"/></a>
 
 
-            <a href="{:U('Oauth/Sns/login',array('type'=>'greencms'))}">GreenOAuth账号登陆</a>
+            <!--<a href="{:U('Oauth/Sns/login',array('type'=>'greencms'))}">GreenOAuth账号登陆</a>-->
         </div>
 
-        <!--<button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>-->
-
         <div class="copyright">
-            2003-{:date('Y')} &copy; <a href="http://www.greencms.net">GreenCMS {:C('software_version')}</a>
+            2003-{:date('Y')} &copy; <a href="http://www.greencms.net">GreenCMS {:get_opinion('software_version')}</a>
             <br/> Admin Dashboard.
-            <br/>绿荫工作室 出品
+            <br/>
+            <a href="http://green.njtech.edu.cn">绿荫工作室</a>出品
         </div>
 
 
@@ -85,7 +128,9 @@
 
 
 <!-- jQuery 2.0.2 -->
-<script type="text/javascript" src="__PUBLIC__/share/js/jquery-2.0.2.min.js"></script>
+<!--<script type="text/javascript" src="__PUBLIC__/share/js/jquery-2.0.2.min.js"></script>-->
+<script type="text/javascript" src="__PUBLIC__/share/js/jquery-1.9.0.min.js"></script>
+
 <!-- Bootstrap -->
 <script src="__PUBLIC__/AdminLTE/js/bootstrap.min.js" type="text/javascript"></script>
 
@@ -98,17 +143,21 @@
     ;
 </script>
 <script>
-    jQuery(document).ready(function () {
+    $(document).ready(function () {
 
-        fleshVerify();
+        setTimeout(fleshVerify, 1000);
 
     });
 </script>
 
-<script type="text/javascript">
-    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F48659a4ab85f1bcebb11d3dd3ecb6760' type='text/javascript'%3E%3C/script%3E"));
-</script>
+<div style="display: none">
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F48659a4ab85f1bcebb11d3dd3ecb6760' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+</div>
+
 
 </body>
 </html>

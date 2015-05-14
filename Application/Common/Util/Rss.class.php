@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: Rss.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 上午1:02
  */
@@ -205,7 +205,7 @@ class Rss
 
             $rss .= "<title><![CDATA[{$this->items[$i]['title']}]]></title>\r\n";
 
-            $rss .= "<link>{$this->items[$i]['link']}</link>\r\n";
+            $rss .= "<link><![CDATA[{$this->items[$i]['link']}]]></link>\r\n";
 
             $rss .= "<description><![CDATA[{$this->items[$i]['description']}]]></description>\r\n";
 

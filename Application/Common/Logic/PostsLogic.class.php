@@ -1,14 +1,15 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: PostsLogic.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-15
  * Time: 下午11:59
  */
 
 namespace Common\Logic;
 
+use Common\Util\CacheManager;
 use Think\Model\RelationModel;
 
 /**
@@ -19,9 +20,9 @@ use Think\Model\RelationModel;
 class PostsLogic extends RelationModel
 {
 
-    public $hp_cache=false;
     /**
-     * @param $id 文章id或者其他识别符
+     * 获取文章详细
+     * @param $id int 文章id或者其他识别符
      * @param bool $relation 是否关联其他信息
      * @param array $info_with 强制传入的判断条件
      *
@@ -37,8 +38,24 @@ class PostsLogic extends RelationModel
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
 
         $post_res = D('Posts')->cache($cache, 10)->where($info)->relation($relation)->find();
+
+
         return $post_res;
     }
+
+    /**
+     * 判断文章是否存在
+     * @param $id int 文章id或者其他识别符
+     * @return mixed 如果找到返回true
+     */
+    public function has($id)
+    {
+        $info['post_id|post_name'] = urlencode($id);
+        $post_res = $this->where($info)->relation(false)->find();
+        if ($post_res) return true;
+        return false;
+    }
+
 
     /**
      * @param int $limit 数量限制 默认20 一般我们会传入(string)limit用于分页
@@ -48,26 +65,25 @@ class PostsLogic extends RelationModel
      * @param array $info_with 强制传入的判断条件
      *
      * @param array $ids 需要限制的id
-     * @internal param string $field
-     * @internal param string $fields
-     * @internal param string $fileds
+     * @param string $except_field
      * @return mixed 返回文章列表
      */
     public function getList($limit = 20, $type = 'single', $order = 'post_date desc',
-                            $relation = true, $info_with = array(), $ids = array())
+                            $relation = true, $info_with = array(), $ids = array(), $except_field = '')
     {
         $info = $info_with;
-         if ($type != 'all') $info['post_type'] = $type;
+        if ($type != 'all') $info['post_type'] = $type;
         //if ($type != 'all') $info['post_type|post_template'] = $type;
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
-        $post_list = D('Posts')->cache($this->hp_cache)->where($info)->order('post_top desc ,' . $order)
+        $post_list = D('Posts')->field($except_field, true)->where($info)->order('post_top desc ,' . $order)
             ->limit($limit)->relation($relation)->select();
         return $post_list;
     }
 
     /**
+     * 统计数量
      * @param string $type
      * @param array $info_with
      * @param array $ids 需要限制的id
@@ -78,39 +94,27 @@ class PostsLogic extends RelationModel
     {
 
         $info = $info_with;
-        if ($type != 'all') $info['post_type'] = $type;//post_template
+        if ($type != 'all') $info['post_type'] = $type; //post_template
         if (!array_key_exists('post_status', $info)) $info['post_status'] = 'publish';
 
         if (!empty($ids)) $info['post_id'] = array('in', $ids);
 
-        $count = $this->cache($this->hp_cache)->where($info)->count();
+        $count = $this->where($info)->count();
         return $count;
     }
 
-    /**
-     * @param $id 需要预删除的id
-     *
-     * @return bool 是否删除成功
-     */
-    public function preDel($id)
-    {
-        $info['post_id'] = $id;
-
-        $data = array('post_status' => 'preDel');
-        if ($this->where($info)->setField($data))
-            return true;
-        else
-            return false;
-    }
 
     /**
-     * @param $id 需要预删除的id
+     * 删除文章
+     * @param $id int 需要预删除的id
      * @param string $relation 是否删除关联(脑残才不删除关联呢。。。。)
      *
      * @return bool 是否删除成功
      */
     public function del($id, $relation = 'true')
     {
+        CacheManager::clearPostCacheById($id);
+
         $info['post_id'] = $id;
 
         if ($this->where($info)->relation($relation)->delete())
@@ -120,14 +124,54 @@ class PostsLogic extends RelationModel
     }
 
     /**
-     * @param $id
+     * 预删除文章
+     * @param $post_id int 需要预删除的id
+     * @return bool 是否删除成功
+     */
+    public function preDel($post_id)
+    {
+        if ($this->changePostStatue($post_id, 'preDel'))
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * 修改文章状态
+     * @param $post_id
+     * @param $post_status
+     * @return mixed
+     */
+    public function changePostStatue($post_id, $post_status)
+    {
+        CacheManager::clearPostCacheById($post_id);
+        return $this->where(array('post_id' => $post_id))->setField(array("post_status" => $post_status));
+    }
+
+
+    /**
+     * 修改为publish
+     * @param $post_id
      * @return bool
      */
-    public function verify($id)
+    public function restore($post_id)
     {
-        $info['post_id'] = $id;
-        $data = array('post_status' => 'unverified');
-        if ($this->where($info)->setField($data))
+        if ($this->changePostStatue($post_id, 'publish'))
+            return true;
+        else
+            return false;
+
+    }
+
+
+    /**
+     * 修改为unverified
+     * @param $post_id
+     * @return bool
+     */
+    public function verify($post_id)
+    {
+        if ($this->changePostStatue($post_id, 'unverified'))
             return true;
         else
             return false;
@@ -135,32 +179,29 @@ class PostsLogic extends RelationModel
     }
 
     /**
-     * @param $id
-     * @return bool
-     */
-    public function unverify($id)
-    {
-        $info['post_id'] = $id;
-        $data = array('post_status' => 'publish');
-        if ($this->where($info)->setField($data))
-            return true;
-        else
-            return false;
-
-    }
-
-    /**
-     * @param $id 需要计数的id
-     *
+     * 文章计数+1
+     * @param $post_id int 需要计数的id
      * @return bool 返回是否成功
      */
-    public function viewInc($id)
+    public function viewInc($post_id)
     {
-        $info['post_id'] = $id;
+        $info['post_id'] = $post_id;
 
         if ($this->where($info)->setInc('post_view_count'))
             return true;
         else
             return false;
     }
+
+    /**
+     * 清空指定状态文章
+     * @param $post_status
+     * @return mixed
+     */
+    public function emptyPostHandleByStatus($post_status)
+    {
+        return $this->where(array('post_status' => $post_status))->relation(true)->delete();
+    }
+
+
 }

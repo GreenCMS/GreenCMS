@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: AccessModel.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 下午7:26
  */

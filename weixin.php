@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: weixin.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-3-9
  * Time: 上午9:55
  */

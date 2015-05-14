@@ -7,7 +7,10 @@
     <include file="Public:head"/>
 
 
+    <style>
 
+
+    </style>
 
 
 </head>
@@ -27,7 +30,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -40,19 +43,14 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
+                        <!-- Element where elFinder will be created (REQUIRED) -->
+                        <div style=" height: 600px;" id="elfinder"></div>
 
-                            <!-- Element where elFinder will be created (REQUIRED) -->
-                            <div style=" height: 600px;" id="elfinder"></div>
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -71,17 +69,19 @@
 <link rel="stylesheet" type="text/css" media="screen"
       href="__PUBLIC__/share/js/jqueryui/themes/smoothness/jquery-ui.css">
 
-<script type="text/javascript" src="__PUBLIC__/share/js/jquery-ui-1.8.18.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/share/js/jquery-ui-1.10.4.min.js"></script>
+<!--<script type="text/javascript" src="__PUBLIC__/share/js/jquery-ui-1.8.18.min.js"></script>-->
+
 
 <!-- elFinder CSS (REQUIRED) -->
-<link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/GreenFinder/css/elfinder.min.css">
-<link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/GreenFinder/css/theme.css">
+<link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/Elfinder/css/elfinder.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="__ROOT__/Extend/Elfinder/css/theme.css">
 
 <!-- elFinder JS (REQUIRED) -->
-<script type="text/javascript" src="__ROOT__/Extend/GreenFinder/js/elfinder.min.js"></script>
+<script type="text/javascript" src="__ROOT__/Extend/Elfinder/js/elfinder.min.js"></script>
 
 <!-- elFinder translation (OPTIONAL) -->
-<script type="text/javascript" src="__ROOT__/Extend/GreenFinder/js/i18n/elfinder.zh_CN.js"></script>
+<script type="text/javascript" src="__ROOT__/Extend/Elfinder/js/i18n/elfinder.zh_CN.js"></script>
 
 
 <!-- elFinder initialization (REQUIRED) -->
@@ -92,6 +92,27 @@
             lang: 'zh_CN'            // language (OPTIONAL)
         }).elfinder('instance');
     });
+
+
+    $('#elfinder').mousedown(function (e) {
+        if (3 == e.which) {
+            //alert('这 是右键单击事件');
+
+//            alert(event.pageX);
+//            alert(event.pageY);
+
+            //   console.log("X:"+event.pageX+" Y:"+event.pageY);
+
+            $(".elfinder-contextmenu").css("left", event.pageX + "px", "top", event.pageY + "px");
+            //  $(".elfinder-contextmenu").css("top",event.pageY+"px");
+
+        } else if (1 == e.which) {
+            //alert('这 是左键单击事件');
+
+        }
+    })
+
+
 </script>
 </body>
 </html>

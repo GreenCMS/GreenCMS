@@ -1,16 +1,21 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: DataController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 下午5:25
  */
 
 namespace Admin\Controller;
 
+use Common\Event\MySQLInfoEvent;
+use Common\Event\MySQLMaintainEvent;
 use Common\Util\File;
 use Common\Event\SystemEvent;
+use Common\Util\GreenMail;
+use Common\Util\GreenMailContent;
+use Think\Upload;
 
 /**
  * Class DataController
@@ -30,45 +35,17 @@ class DataController extends AdminBaseController
 
 
     /**
-     *
-     */
-    public function db()
-    {
-
-        $this->assign('db_path', DB_Backup_PATH);
-        $this->display();
-
-
-    }
-
-    /**
-     *
-     */
-    public function dbHandle()
-    {
-        $this->saveConfig();
-        $this->success('配置成功');
-
-    }
-
-
-    /**
      * 列出系统中所有数据库表信息
      * For MySQL
      */
     public function index()
     {
-        $tabs = M()->query('SHOW TABLE STATUS');
-        $total_length = 0;
-        foreach ($tabs as $key => $value) {
-            $tabs[$key]['size'] = File::byteFormat($value['Data_length'] + $value['Index_length']);
-            $total_length += $value['Data_length'] + $value['Index_length'];
-        }
+        $MySQLEvent = new MySQLInfoEvent();
 
         $this->assign("formUrl", U('Admin/Data/backupHandle'));
-        $this->assign("list", $tabs);
-        $this->assign("total", File::byteFormat($total_length));
-        $this->assign("tables", count($tabs));
+        $this->assign("list", $MySQLEvent->getTabs());
+        $this->assign("total", $MySQLEvent->getTotalLengthFormated());
+        $this->assign("tables", $MySQLEvent->countTabs());
         $this->display();
     }
 
@@ -78,17 +55,19 @@ class DataController extends AdminBaseController
      */
     public function backupHandle()
     {
+        function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
+        @ini_set("memory_limit", '-1');
 
         if (!IS_POST) $this->error("访问出错啦");
+
         $type = "手动自动备份";
         $path = DB_Backup_PATH . "/CUSTOM_" . date("Ymd") . "_" . md5(rand(0, 255) . md5(rand(128, 200)) . rand(100, 768));
-        $tables = empty($_POST['table']) ? array() : $_POST['table'];
+        $tables = I('POST.table', array());
+
         $System = new SystemEvent();
-        //$System->backupFile(); //test ok~
         $res = $System->backupDB($type, $tables, $path);
 
-        if ($res['status'] == 1)
-            $this->success($res['info'], $res['url']);
+        $this->array2Response($res);
 
     }
 
@@ -98,9 +77,9 @@ class DataController extends AdminBaseController
      */
     public function restore()
     {
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
+        $MySQLMaintainEvent = new MySQLMaintainEvent();
 
-        $data = $MySQLLogic->getSqlFilesList();
+        $data = $MySQLMaintainEvent->getSqlFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
@@ -108,9 +87,112 @@ class DataController extends AdminBaseController
     }
 
     /**
-     * 读取要导入的sql文件列表并排序后插入SESSION中
+     * 上传本地数据库内容
+     * For MySQL
      */
-    /*static*/
+    public function restorelocal()
+    {
+
+        $this->assign('action', '本地数据库恢复');
+        $this->assign('action_name', 'restorelocal');
+
+        $this->display();
+    }
+
+    public function restorelocalhandle()
+    {
+
+        $config = array(
+            'rootPath' => DB_Backup_PATH,
+            "savePath" => '',
+            "maxSize" => 100000000, // 单位B
+            "exts" => array('sql'),
+            "subName" => array(),
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
+
+            $file_path_full = $info['file']['fullpath'];
+
+            //dump($info);die($file_path_full);
+            if (File::file_exists($file_path_full)) {
+                $this->success("上传成功", U('Admin/Data/restore'));
+
+            } else {
+                $this->error('文件不存在');
+
+            }
+        }
+
+    }
+
+    /**
+     * 执行还原数据库操作
+     */
+    public function restoreData()
+    {
+
+//        ini_set("memory_limit", "256M");
+        function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
+        @ini_set("memory_limit", '-1');
+
+//取得需要导入的sql文件
+        $files = isset($_SESSION['cacheRestore']) ? $_SESSION['cacheRestore']['files'] : self::getRestoreFiles();
+//取得上次文件导入到sql的句柄位置
+        $position = isset($_SESSION['cacheRestore']['position']) ? $_SESSION['cacheRestore']['position'] : 0;
+        $M = M('User');
+        $execute = 0;
+        foreach ($files as $fileKey => $sqlFile) {
+            $file = DB_Backup_PATH . $sqlFile;
+            if (!file_exists($file))
+                continue;
+            $file = fopen($file, "r");
+            $sql = "";
+            fseek($file, $position); //将文件指针指向上次位置
+            while (!feof($file)) {
+                $tem = trim(fgets($file));
+//过滤掉空行、以#号注释掉的行、以--注释掉的行
+                if (empty($tem) || $tem[0] == '#' || ($tem[0] == '-' && $tem[1] == '-'))
+                    continue;
+//统计一行字符串的长度
+                $end = (int)(strlen($tem) - 1);
+//检测一行字符串最后有个字符是否是分号，是分号则一条sql语句结束，否则sql还有一部分在下一行中
+                if ($tem[$end] == ";") {
+                    $sql .= $tem;
+                    // $sql = str_replace("`", "", $sql);
+                    $M->query($sql);
+                    $sql = "";
+                    $execute++;
+                    if ($execute > 500) {
+                        $_SESSION['cacheRestore']['position'] = ftell($file);
+                        $imported = isset($_SESSION['cacheRestore']['imported']) ? $_SESSION['cacheRestore']['imported'] : 0;
+                        $imported += $execute;
+                        $_SESSION['cacheRestore']['imported'] = $imported;
+//                        echo json_encode(array("status" => 1, "info" =>,
+//                            "url" => U('Admin/Data/restoreData')));
+                        $this->jsonReturn(1, '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>', U('Admin/Data/restoreData'));
+                        //, array(randCode() => randCode())
+                        exit;
+                    }
+                } else {
+                    $sql .= $tem;
+                }
+            }
+            fclose($file);
+            unset($_SESSION['cacheRestore']['files'][$fileKey]);
+            $position = 0;
+        }
+        $time = time() - $_SESSION['cacheRestore']['time'];
+        unset($_SESSION['cacheRestore']);
+//        echo json_encode(array("status" => 1, "info" => "导入成功，耗时：{$time} 秒钟"));
+        $this->jsonReturn(1, "导入成功，耗时：{$time} 秒钟");
+        // $this->success('导入成功', 'restore');
+    }
+
     /**
      * @return array
      */
@@ -147,65 +229,6 @@ class DataController extends AdminBaseController
     }
 
     /**
-     * 执行还原数据库操作
-     */
-    public function restoreData()
-    {
-        //TODO 需要测试
-//        ini_set("memory_limit", "256M");
-        function_exists('set_time_limit') && set_time_limit(0); //防止备份数据过程超时
-//取得需要导入的sql文件
-        $files = isset($_SESSION['cacheRestore']) ? $_SESSION['cacheRestore']['files'] : self::getRestoreFiles();
-//取得上次文件导入到sql的句柄位置
-        $position = isset($_SESSION['cacheRestore']['position']) ? $_SESSION['cacheRestore']['position'] : 0;
-        $M = M('User');
-        $execute = 0;
-        foreach ($files as $fileKey => $sqlFile) {
-            $file = DB_Backup_PATH . $sqlFile;
-            if (!file_exists($file))
-                continue;
-            $file = fopen($file, "r");
-            $sql = "";
-            fseek($file, $position); //将文件指针指向上次位置
-            while (!feof($file)) {
-                $tem = trim(fgets($file));
-//过滤掉空行、以#号注释掉的行、以--注释掉的行
-                if (empty($tem) || $tem[0] == '#' || ($tem[0] == '-' && $tem[1] == '-'))
-                    continue;
-//统计一行字符串的长度
-                $end = (int)(strlen($tem) - 1);
-//检测一行字符串最后有个字符是否是分号，是分号则一条sql语句结束，否则sql还有一部分在下一行中
-                if ($tem[$end] == ";") {
-                    $sql .= $tem;
-                    // $sql = str_replace("`", "", $sql);
-                    $M->query($sql);
-                    $sql = "";
-                    $execute++;
-                    if ($execute > 500) {
-                        $_SESSION['cacheRestore']['position'] = ftell($file);
-                        $imported = isset($_SESSION['cacheRestore']['imported']) ? $_SESSION['cacheRestore']['imported'] : 0;
-                        $imported += $execute;
-                        $_SESSION['cacheRestore']['imported'] = $imported;
-                        echo json_encode(array("status" => 1, "info" => '如果导入SQL文件卷较大(多)导入时间可能需要几分钟甚至更久，请耐心等待导入完成，导入期间请勿刷新本页，当前导入进度：<font color="red">已经导入' . $imported . '条Sql</font>',
-                            "url" => U('Admin/Data/restoreData')));
-                        //, array(randCode() => randCode())
-                        exit;
-                    }
-                } else {
-                    $sql .= $tem;
-                }
-            }
-            fclose($file);
-            unset($_SESSION['cacheRestore']['files'][$fileKey]);
-            $position = 0;
-        }
-        $time = time() - $_SESSION['cacheRestore']['time'];
-        unset($_SESSION['cacheRestore']);
-        echo json_encode(array("status" => 1, "info" => "导入成功，耗时：{$time} 秒钟"));
-        // $this->success('导入成功', 'restore');
-    }
-
-    /**
      * 删除已备份数据库文件
      */
     public function delSqlFiles()
@@ -226,6 +249,60 @@ class DataController extends AdminBaseController
             $this->jsonReturn(1, "已删除：" . implode("、", $files), __URL__);
 
         }
+    }
+
+    /**
+     * 将已备份数据库文件通过系统邮箱发送到指定邮箱中
+     */
+    public function sendSql()
+    {
+        set_time_limit(0);
+        if (IS_POST) {
+            header('Content-Type:application/json; charset=utf-8');
+            $sqlFiles = explode(',', $_POST['sqlFiles']);
+
+            if (empty($sqlFiles) || count($sqlFiles) == 0 || $_POST['sqlFiles'] == "")
+                $this->jsonReturn(0, "请选择要打包的sql文件");
+
+
+            $files = isset($_SESSION['cacheSendSql']['files']) ? $_SESSION['cacheSendSql']['files'] : self::getSqlFilesGroups();
+            $to = $_SESSION['cacheSendSql']['to'];
+            $sum = $_SESSION['cacheSendSql']['count'];
+
+
+            $zipOut = "sqlBackup.zip";
+            if ($zip_res = File::zip($sqlFiles, $zipOut, WEB_CACHE_PATH)) {
+
+                //$res = send_mail($to, "", "数据库备份", "网站：<b>" . get_opinion('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
+
+                $GreenMailContent = new GreenMailContent();
+                $GreenMailContent->to = $to;
+                $GreenMailContent->subject = get_opinion('title') . date("Y-m-d") . "数据库备份";
+                $GreenMailContent->body = "网站：<b>" . get_opinion('title') . "</b> 数据文件备份.生成时间:" . date("Y-m-d");
+                $GreenMailContent->attachment = WEB_CACHE_PATH . $zipOut;
+
+                $GreenMail = new GreenMail();
+                $res = $GreenMail->send($GreenMailContent);
+
+
+            } else {
+
+                $this->jsonReturn(0, "发送失败");
+            }
+
+
+            File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
+
+            $time = time() - $_SESSION['cacheSendSql']['time'];
+            unset($_SESSION['cacheSendSql']);
+
+            if ($res['statue'] == true) {
+                $this->jsonReturn(1, "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒");
+            } else {
+                $this->jsonReturn(0, $res['info']);
+            }
+        }
+        $this->display();
     }
 
     /**
@@ -291,44 +368,6 @@ class DataController extends AdminBaseController
     }
 
     /**
-     * 将已备份数据库文件通过系统邮箱发送到指定邮箱中
-     */
-    public function sendSql()
-    {
-        set_time_limit(0);
-        if (IS_POST) {
-            header('Content-Type:application/json; charset=utf-8');
-            $sqlFiles = explode(',', $_POST['sqlFiles']);
-
-
-            $files = isset($_SESSION['cacheSendSql']['files']) ? $_SESSION['cacheSendSql']['files'] : self::getSqlFilesGroups();
-            $to = $_SESSION['cacheSendSql']['to'];
-            $sum = $_SESSION['cacheSendSql']['count'];
-
-
-            $zipOut = "sqlBackup.zip";
-            if (File::zip($sqlFiles, $zipOut)) {
-                //TODO send_mail
-                $res = send_mail($to, "", "数据库备份", "网站：<b>" . C('title') . "</b> 数据文件备份", WEB_CACHE_PATH . $zipOut); //
-
-            }
-
-
-            File::delAll(WEB_CACHE_PATH . $zipOut); //删除已发送附件
-
-            $time = time() - $_SESSION['cacheSendSql']['time'];
-            unset($_SESSION['cacheSendSql']);
-
-            if (is_bool($res) && $res == true) {
-                $this->jsonReturn(1, "sql文件已发送到你的邮件，请注意查收<br/>耗时：$time 秒");
-            } else {
-                $this->jsonReturn(1, "$res");
-            }
-        }
-        $this->display();
-    }
-
-    /**
      * 打包sql文件
      */
     public function zipSql()
@@ -365,14 +404,37 @@ class DataController extends AdminBaseController
      */
     public function zipList()
     {
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
-
-        $data = $MySQLLogic->getZipFilesList();
+        $data = $this->getZipFilesList();
         $this->assign("list", $data['list']);
         $this->assign("total", $data['size']);
         $this->assign("files", count($data['list']));
         $this->display();
     }
+
+
+    /**
+     * @return array
+     */
+    private function getZipFilesList()
+    {
+        $list = array();
+        $size = 0;
+        $handle = opendir(DB_Backup_PATH . "Zip/");
+
+        while ($file = readdir($handle)) {
+            if ($file != "." && $file != "..") {
+                $tem = array();
+                $tem['file'] = $file;
+                $_size = filesize(DB_Backup_PATH . "Zip/$file");
+                $tem['size'] = File::byteFormat($_size);
+                $tem['time'] = date("Y-m-d H:i:s", filectime(DB_Backup_PATH . "Zip/$file"));
+                $size += $_size;
+                $list[] = $tem;
+            }
+        }
+        return array("list" => $list, "size" => File::byteFormat($size));
+    }
+
 
     /**
      * @return bool
@@ -471,7 +533,7 @@ class DataController extends AdminBaseController
      */
     public function repair()
     {
-        if (C('DB_TYPE') != 'mysql' && C('DB_TYPE') != 'mysqli') {
+        if (get_opinion('DB_TYPE') != 'mysql' && get_opinion('DB_TYPE') != 'mysqli') {
             $this->error('当前数据库类型不被支持');
         }
 
@@ -528,31 +590,6 @@ class DataController extends AdminBaseController
     /**
      *
      */
-    public function cache()
-    {
-        $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
-        $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
-        $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
-        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(C("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
-
-
-        $this->display();
-    }
-
-    /**
-     *
-     */
-    public function cacheHandle()
-    {
-        $this->saveConfig();
-        $this->success('配置成功');
-
-    }
-
-
-    /**
-     *
-     */
     public function clear()
     {
         $caches = array(
@@ -594,17 +631,14 @@ class DataController extends AdminBaseController
         // p($_POST['cache']);die;
         if (IS_POST) {
 
-            if (C('DATA_CACHE_TYPE') == 'File') {
-                $paths = $_POST ['cache'];
-                foreach ($paths as $path) {
-                    if (isset ($caches [$path])) {
-                        $res = File::delAll($caches [$path] ['path'], true);
-                    }
+            $paths = $_POST ['cache'];
+            foreach ($paths as $path) {
+                if (isset ($caches [$path])) {
+                    $res = File::delAll($caches [$path] ['path'], true);
                 }
-            } else {
-                $SystemEvent = new SystemEvent;
-                $SystemEvent->clearCacheAll();
             }
+            $SystemEvent = new SystemEvent;
+            $SystemEvent->clearCacheAll();
 
 
             $this->success("清除成功");

@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,87 +36,81 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <form role="form" action="{:U('Admin/System/saveHandle')}" name="change_System"
-                                  method="post">
-                                <div class="form-group">
-                                    <label class="control-label">网站地址</label>
+                        <form role="form" action="{:U('Admin/System/saveHandle')}" name="change_System"
+                              method="post">
+                            <div class="form-group">
+                                <label class="control-label">网站地址</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="site_url"
-                                               value="{:get_opinion('site_url')}"/>
-                                        <span class="help-inline"></span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="site_url"
+                                           value="{:get_opinion('site_url')}"/>
+                                    <span class="help-inline"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">网站标题</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">网站标题</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="title"
-                                               value="{:get_opinion('title')}"/>
-                                        <span class="help-inline"></span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="title"
+                                           value="{:get_opinion('title')}"/>
+                                    <span class="help-inline"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">网站关键词</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">网站关键词</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="keywords"
-                                               value="{:get_opinion('keywords')}"/>
-                                        <span class="help-inline">多个关键词用英文逗号,分隔</span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="keywords"
+                                           value="{:get_opinion('keywords')}"/>
+                                    <span class="help-inline">多个关键词用英文逗号,分隔</span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">网站描述信息</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">网站描述信息</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="description"
-                                               value="{:get_opinion('description')}"/>
-                                        <span class="help-inline">一般是一句话描述你的网站</span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large" name="description"
+                                           value="{:get_opinion('description')}"/>
+                                    <span class="help-inline">一般是一句话描述你的网站</span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">网站底部信息</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">网站底部信息</label>
 
-                                    <div class="controls">
+                                <div class="controls">
 
-                                        <textarea class="form-control large"   name="foot"
+                                        <textarea class="form-control large" name="foot"
 
                                                   rows="6">{:get_opinion('foot')}</textarea>
-                                        <span class="help-inline">版权信息、统计代码</span>
-                                    </div>
-
+                                    <span class="help-inline">版权信息、统计代码</span>
                                 </div>
 
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="control-label">关于我们</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large"
-                                               name="widget_about_us"
-                                               value="{:get_opinion('widget_about_us')}"/>
-                                        <span class="help-inline">首页右侧</span>
-                                    </div>
+                            <div class="form-group">
+                                <label class="control-label">关于我们</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="" class="form-control large"
+                                           name="widget_about_us"
+                                           value="{:get_opinion('widget_about_us')}"/>
+                                    <span class="help-inline">首页右侧</span>
                                 </div>
+                            </div>
 
 
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
+                            </div>
+                        </form>
 
 
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-info"><i class="icon-ok"></i> 修改</button>
-                                </div>
-                            </form>
-
-
-                        </div>
                     </div>
                 </div>
             </div>

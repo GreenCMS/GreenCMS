@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: AccessController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 下午5:26
  */
@@ -38,7 +38,7 @@ class AccessController extends AdminBaseController
      */
     public function index()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
 
         $UserLogic = new UserLogic();
 
@@ -65,7 +65,7 @@ class AccessController extends AdminBaseController
      */
     public function guest()
     {
-        $page = I('get.page', C('PAGER'));
+        $page = I('get.page', get_opinion('PAGER'));
 
         $UserLogic = new UserLogic();
 
@@ -177,16 +177,45 @@ class AccessController extends AdminBaseController
     }
 
     // 添加用户表单接受
+
+    /**
+     * @param array $info
+     * @return array
+     */
+    private function getRoleListOption($info = array())
+    {
+        // $cat = new Category('Role', array('id', 'pid', 'name', 'remark'));
+        // $list = $cat->getList(); //获取分类结构
+        $Role = M('Role');
+        $list = $Role->select();
+
+        if (!empty ($info)) {
+            $info ['roleOption'] = "";
+            foreach ($list as $v) {
+
+                $disabled = $v ['id'] == 1 ? ' disabled="disabled"' : "";
+                $selected = $v ['id'] == $info ['user_role'] ['role_id'] ? ' selected="selected"' : "";
+                $info ['roleOption'] .= '<option value="' . $v ['id'] . '"' . $selected . $disabled . '>' . $v ['name'] . '</option>';
+            }
+        } else {
+            foreach ($list as $v) {
+                $info ['roleOption'] .= '<option value="' . $v ['id'] . '">' . $v ['name'] . '</option>';
+            }
+        }
+
+        return $info;
+    }
+
     /**
      *
      */
     public function addUserHandle()
     {
-        $w = htmlspecialchars(trim($_POST ['user_login']));
-        $i = D('user')->where(array(
-            'user_login' => $w
-        ))->select();
-        if ($i != '') {
+        $UserLogic = new UserLogic();
+
+        $user_login = htmlspecialchars(trim($_POST ['user_login']));
+        $userDetail = $UserLogic->detailByUserlogin($user_login);
+        if ($userDetail != '') {
             $this->error('用户名已存在！');
         } else {
             // 组合用户信息并添加
@@ -199,31 +228,14 @@ class AccessController extends AdminBaseController
                 'user_url' => I('post.user_url'),
                 'user_intro' => I('post.user_intro'),
                 'user_status' => I('post.user_status'),
+                'user_level' => I('post.role_id'),
 
-                // 'logintime'=>time(),
-                // 'loginip'=>get_client_ip(),
-                // 'lock'=>$_POST['lock']
             );
             // 添加用户与角色关系
 
-            $user ['user_level'] = I('post.role_id');
+            $res = $UserLogic->addUser($user);
+            $this->array2Response($res);
 
-            $User = D('User');
-            $Role_users = D('Role_users');
-            if ($new_id = $User->add($user)) {
-
-                $role = array(
-                    'role_id' => $_POST ['role_id'],
-                    'user_id' => $new_id
-                );
-                if ($Role_users->add($role)) {
-                    $this->success('添加成功！', U('Admin/Access/index'));
-                } else {
-                    $this->error('添加用户权限失败！', U('Admin/Access/index'));
-                }
-            } else {
-                $this->error('添加用户失败！', U('Admin/Access/index'));
-            }
         }
     }
 
@@ -266,6 +278,8 @@ class AccessController extends AdminBaseController
         }
     }
 
+    // 添加角色
+
     /**
      * @param $aid
      */
@@ -295,7 +309,6 @@ class AccessController extends AdminBaseController
         }
     }
 
-    // 添加角色
     /**
      *
      */
@@ -310,6 +323,25 @@ class AccessController extends AdminBaseController
             $this->assign("handle", "addRole");
             $this->display();
         }
+    }
+
+    /**
+     * @param array $info
+     * @return array
+     */
+    private function getRole($info = array())
+    {
+        // $cat = new Category('Role', array('id', 'pid', 'name', 'remark'));
+        // $list = $cat->getList(); //获取分类结构
+        $Role = M('Role');
+        $list = $Role->select();
+
+        foreach ($list as $k => $v) {
+            $disabled = $v ['id'] == $info ['id'] ? ' disabled="disabled"' : "";
+            $selected = $v ['id'] == $info ['pid'] ? ' selected="selected"' : "";
+            $info ['pidOption'] .= '<option value="' . $v ['id'] . '"' . $selected . $disabled . '>' . $v ['name'] . '</option>';
+        }
+        return $info;
     }
 
     /**
@@ -398,13 +430,12 @@ class AccessController extends AdminBaseController
 
             $this->action = '指定分类';
             $this->action_name = "setrolecat";
-            $this->assign("handle", "setrolecat?id=" . $id);
+            $this->assign("handle", U("Admin/Access/setrolecat", array('id' => $id)));
             $this->cats = D('Cats', 'Logic')->category();
             $this->display();
         }
 
     }
-
 
     /**
      *
@@ -415,6 +446,8 @@ class AccessController extends AdminBaseController
         echo json_encode(D('Access', 'Logic')->opStatus("Node"));
     }
 
+    // 添加角色接受表单
+
     /**
      *
      */
@@ -423,6 +456,8 @@ class AccessController extends AdminBaseController
         header('Content-Type:application/json; charset=utf-8');
         echo json_encode(D('Access', 'Logic')->opStatus("Role"));
     }
+
+    // 添加节点
 
     /**
      *
@@ -440,7 +475,8 @@ class AccessController extends AdminBaseController
         }
     }
 
-    // 添加角色接受表单
+    // 编辑节点
+
     /**
      *
      */
@@ -453,7 +489,8 @@ class AccessController extends AdminBaseController
         }
     }
 
-    // 添加节点
+    // 添加节点接受表单
+
     /**
      *
      */
@@ -473,93 +510,9 @@ class AccessController extends AdminBaseController
         }
     }
 
-    // 编辑节点
-    /**
-     *
-     */
-    public function editNode()
-    {
-        if (IS_POST) {
-
-            header('Content-Type:application/json; charset=utf-8');
-            echo json_encode(D('Access', 'Logic')->editNode());
-        } else {
-            $M = M("Node");
-            $info = $M->where("id=" . ( int )$_GET ['id'])->find();
-            if (empty ($info ['id'])) {
-                $this->error("不存在该节点", U('Admin/Access/nodeList'));
-            }
-            $this->assign("info", $this->getPid($info));
-            $this->assign('action', '编辑节点');
-            $this->assign('action_name', 'editNode');
-            $this->assign("handle", "editNode");
-            $this->display('addnode');
-        }
-    }
-
-    // 添加节点接受表单
-    /**
-     *
-     */
-    public function addNodeHandle()
-    {
-        // print_r($_POST);
-        if (M('Node')->add($_POST)) {
-            $this->success('-_- yes！', U('node'));
-        } else {
-            $this->error('-_-。sorry！');
-        }
-    }
-
     /*
      * // 配置权限 public function access() { $rid = $_GET ['rid']; // 读取有用字段 $field = array ( 'id', 'name', 'title', 'pid' ); $node = M ( 'node' )->order ( 'sort' )->field ( $field )->select (); // 读取用户原有权限 $access = M ( 'access' )->where ( array ( 'role_id' => $rid ) )->getField ( 'node_id', true ); $node = node_merge ( $node, $access ); $this->assign ( 'rid', $rid ); $this->assign ( 'node', $node ); $this->display (); } // 配置权限接受表单 public function setAccess() { $rid = $_POST ['rid']; $db = M ( 'access' ); // 删除原权限 $db->where ( array ( 'role_id' => $rid ) )->delete (); // 组合新权限 $data = array (); foreach ( $_POST ['access'] as $v ) { $tmp = explode ( '_', $v ); $data [] = array ( 'role_id' => $rid, 'node_id' => $tmp [0], 'level' => $tmp [1] ); } // 插入新权限 if ($db->addAll ( $data )) { $this->success ( '修改成功！', U ( 'relo' ) ); } else { $this->error ( '修改失败！' ); } }
      */
-    /**
-     * @param array $info
-     * @return array
-     */
-    private function getRole($info = array())
-    {
-        // $cat = new Category('Role', array('id', 'pid', 'name', 'remark'));
-        // $list = $cat->getList(); //获取分类结构
-        $Role = M('Role');
-        $list = $Role->select();
-
-        foreach ($list as $k => $v) {
-            $disabled = $v ['id'] == $info ['id'] ? ' disabled="disabled"' : "";
-            $selected = $v ['id'] == $info ['pid'] ? ' selected="selected"' : "";
-            $info ['pidOption'] .= '<option value="' . $v ['id'] . '"' . $selected . $disabled . '>' . $v ['name'] . '</option>';
-        }
-        return $info;
-    }
-
-    /**
-     * @param array $info
-     * @return array
-     */
-    private function getRoleListOption($info = array())
-    {
-        // $cat = new Category('Role', array('id', 'pid', 'name', 'remark'));
-        // $list = $cat->getList(); //获取分类结构
-        $Role = M('Role');
-        $list = $Role->select();
-
-        if (!empty ($info)) {
-            $info ['roleOption'] = "";
-            foreach ($list as $v) {
-
-                $disabled = $v ['id'] == 1 ? ' disabled="disabled"' : "";
-                $selected = $v ['id'] == $info ['user_role'] ['role_id'] ? ' selected="selected"' : "";
-                $info ['roleOption'] .= '<option value="' . $v ['id'] . '"' . $selected . $disabled . '>' . $v ['name'] . '</option>';
-            }
-        } else {
-            foreach ($list as $v) {
-                $info ['roleOption'] .= '<option value="' . $v ['id'] . '">' . $v ['name'] . '</option>';
-            }
-        }
-
-        return $info;
-    }
 
     /**
      * @param $info
@@ -595,6 +548,41 @@ class AccessController extends AdminBaseController
         return $info;
     }
 
+    /**
+     *
+     */
+    public function editNode()
+    {
+        if (IS_POST) {
+
+            header('Content-Type:application/json; charset=utf-8');
+            echo json_encode(D('Access', 'Logic')->editNode());
+        } else {
+            $M = M("Node");
+            $info = $M->where("id=" . ( int )$_GET ['id'])->find();
+            if (empty ($info ['id'])) {
+                $this->error("不存在该节点", U('Admin/Access/nodeList'));
+            }
+            $this->assign("info", $this->getPid($info));
+            $this->assign('action', '编辑节点');
+            $this->assign('action_name', 'editNode');
+            $this->assign("handle", "editNode");
+            $this->display('addnode');
+        }
+    }
+
+    /**
+     *
+     */
+    public function addNodeHandle()
+    {
+        // print_r($_POST);
+        if (M('Node')->add($_POST)) {
+            $this->success('-_- yes！', U('node'));
+        } else {
+            $this->error('-_-。sorry！');
+        }
+    }
 
     public function loginlogclearHandle()
     {
@@ -633,15 +621,28 @@ class AccessController extends AdminBaseController
 
     }
 
-
     public function profile($uid)
     {
 
+        if ($uid != get_current_user_id()) {
+            $this->error("只能浏览自己的档案");
+        }
+
+        $this->profileAll($uid);
+
+    }
+
+    public function profileAll($uid)
+    {
+
         $user = D('User', 'Logic')->cache(true)->detail($uid);
+        unset($user['user_pass']);
+        unset($user['user_session']);
+        unset($user['user_activation_key']);
         $this->assign('user', $user);
         $this->assign('action', '用户档案');
 
-        $this->display();
+        $this->display("profile");
 
 
     }
@@ -663,7 +664,7 @@ class AccessController extends AdminBaseController
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $log_list = $LogLogic->getList($limit,$where);
+            $log_list = $LogLogic->getList($limit, $where);
 
         }
 

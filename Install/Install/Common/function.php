@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: functions.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-6
  * Time: 下午9:50
  */

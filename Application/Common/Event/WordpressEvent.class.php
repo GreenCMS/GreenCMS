@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: WordpressEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-20
  * Time: 上午11:23
  */
@@ -102,7 +102,7 @@ class WordpressEvent
                         $tag_id = (int)$nicename['tag_id'];
                         array_push($post_tag_temp, $tag_id);
                     } else {
-                         Log::record('No match ');
+                        Log::record('No match ');
                     }
 
                 }
