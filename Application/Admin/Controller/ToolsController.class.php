@@ -150,7 +150,12 @@ class ToolsController extends AdminBaseController
         $year=I('year');
         $month=I('month');
         
-        $m['post_date']=array('between',"{$_POST['year']}-{$_POST['month']}-0,{$_POST['year']}-{$_POST['month']}-31");
+        if ($month!=0) {
+            $m['post_date']=array('between',"{$_POST['year']}-{$_POST['month']}-0,{$_POST['year']}-{$_POST['month']}-31");
+        }else{
+            $m['post_date']=array('between',"{$_POST['year']}-0-0,{$_POST['year']}-12-31");
+        }
+        
         $field=array('post_id','user_id','post_date','post_title');
         $data=M('posts')->field($field)->where($m)->select();
         $r=arr_merge($data);
