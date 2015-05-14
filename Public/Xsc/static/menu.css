@@ -1,26 +1,16 @@
 .menu {
+    /*behavior: url("http://git.oschina.net/bianweiall/jquery/raw/master/html/jd/css/csshover.htc");*/
+
     height: 40px;
     /*width: 1050px;*/
-    width: 95%;
+    /*width: 95%;*/
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
 
-.menu li:hover {
-
-    color: #000000;
-    /*background-color: #234c89;*/
-    background-color: #ffffff;
-}
-
-.menu li:hover a{
-    color: #000000;
-}
 
 .menu li {
-
-
 
     -webkit-transition-duration: .3s;
     -moz-transition-duration: .3s;
@@ -28,10 +18,7 @@
     transition-duration: .3s;
     -ms-transition-duration: 0s;
 
-
-
-    width: 11%;
-
+    width: 103px;
 
     position: relative;
     list-style: none;
@@ -41,20 +28,34 @@
     text-transform: capitalize;
 }
 
+
+.menu li:hover {
+
+    color: #000000;
+    /*background-color: #234c89;*/
+    background-color: #ffffff;
+
+    /*border-top: 1px solid #b7b7b7;*/
+    /*border-bottom: 1px solid #b7b7b7;*/
+    /*height: 38px;*/
+
+}
+
+.menu li:hover a{
+    color: #000000;
+}
 /* Links */
 
 .menu li a {
 
-
-
     display: block;
     /*padding: 0 14px;*/
-    margin:6px 5px 0 5px;
-    line-height: 32px;
+    margin:0px 8px;
+    line-height: 40px;
     text-decoration: none;
     font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif;
     /*font-weight: bold;*/
-    font-size: 16px;
+    font-size: 18px;
     color: #FFF;
     text-align: center;
 
@@ -71,7 +72,7 @@
     font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif;
     /*font-weight: bold;*/
 
-    text-align: center;
+    text-align: left;
     font-size: 16px;
     color: #fff;
 
@@ -126,15 +127,20 @@
     padding: 0;
     margin-left: 0;
     background: #FFF;
-    border-left: 1px solid #A2A2A2;
-    border-bottom: 1px solid #A2A2A2;
-    border-right: 1px solid #A2A2A2;
+    border-left: 1px solid #b7b7b7;
+    border-bottom: 1px solid #b7b7b7;
+    border-right: 1px solid #b7b7b7;
 }
 
 .menu li:hover > ul li:hover{
-    background: #FFF;
+    background: #e3e3e3;
+    color: #fff;
 
- }
+}
+
+/*.menu li:hover > ul li a:hover{*/
+    /*color: #fff;*/
+ /*}*/
 
 .menu ul li a {
     width: 100px;

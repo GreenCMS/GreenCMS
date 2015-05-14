@@ -277,14 +277,14 @@ class PostsController extends AdminBaseController
 //      $this->redirect(U("Admin/Posts/posts",array("id"=>$post_id)));
 //      $post_restored = $PostEvent->restoreFromCookie();
 
-        $this->posts($post_id);
+        $this->posts($post_id,true);
         die();
     }
 
     /**
      * @param $id
      */
-    public function posts($id = -1)
+    public function posts($id = -1,$new_post=false)
     {
         $PostEvent = new PostsEvent();
 
@@ -334,6 +334,7 @@ class PostsController extends AdminBaseController
             }
         } else {
 
+
             $this->initEditor($id);
             //投稿员只能看到自己的
             if (!$this->noVerify()) {
@@ -346,6 +347,11 @@ class PostsController extends AdminBaseController
             $post = D('Posts')->relation(true)->where($where)->find();
             if (empty($post)) {
                 $this->error("不存在该记录");
+            }
+
+
+            if($new_post){
+                $post['post_status']='publish';
             }
 
             $tpl_type_list = $PostEvent->getTplList();
@@ -374,7 +380,7 @@ class PostsController extends AdminBaseController
 
 
             $this->assign("info", $post);
-            $this->assign("handle", U('Admin/Posts/posts', array('id' => $id), true, false));
+            $this->assign("handle", U('Admin/Posts/posts', array('id' => $id,'new_post'=>$new_post), true, false));
 
             $this->assign("action", '编辑文章');
             $this->assign("action_name", 'posts');

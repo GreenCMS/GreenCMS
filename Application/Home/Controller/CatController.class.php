@@ -11,6 +11,7 @@ namespace Home\Controller;
 
 use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
+use Common\Util\File;
 use Common\Util\GreenPage;
 use Think\Hook;
 
@@ -39,15 +40,19 @@ class CatController extends HomeBaseController
         $CatsLogic = new CatsLogic();
         $PostsLogic = new PostsLogic();
         $cat = $CatsLogic->detail($info);
-//        $children = ($Cat->getChildren($cat['cat_id']));
+//
         $this->assign('cat_id', $cat['cat_id']); // 赋值数据集
 
-//
-//        if (get_opinion("auto_channel", false, false) && $children['cat_children']) {
-//            $this->channel($info);
-//            Hook::listen('app_end');
-//            die();
-//        }
+
+        if (get_opinion("auto_channel", false, false)) {
+//            $children = ($CatsLogic->getChildren($cat['cat_id']));
+
+//            if ($children['cat_children']) {
+                $this->channel($info);
+                Hook::listen('app_end');
+                die();
+//            }
+        }
 
         $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了"); //优雅的404
 
@@ -86,17 +91,22 @@ class CatController extends HomeBaseController
     public function channel($info)
     {
         //TODO 兼容旧式CMS深目录结构的二级cat结构
-        $Cat = new CatsLogic();
-        $cat = $Cat->detail($info);
-        $children = $Cat->getChildren($cat['cat_id']);
+        $CatsLogic = new CatsLogic();
+        $cat = $CatsLogic->detail($info);
+        $children = $CatsLogic->getChildren($cat['cat_id']);
 
-        $Cat = new CatsLogic();
+        if (empty($children['cat_children'])) {
+            $children = ($CatsLogic->getChildren($children['cat_father']));
+        }
+
+
+        $CatsLogic = new CatsLogic();
         $Posts = new PostsLogic();
-        $cat = $Cat->detail($info);
+        $cat = $CatsLogic->detail($info);
 
         $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了"); //优雅的404
 
-        $posts_id = $Cat->getPostsId($cat['cat_id']);
+        $posts_id = $CatsLogic->getPostsIdWithChildren($cat['cat_id']);
         $count = sizeof($posts_id);
         ($count == 0) ? $res404 = 0 : $res404 = 1;
 
@@ -118,8 +128,16 @@ class CatController extends HomeBaseController
         $this->assign('pager', $pager_bar); // 赋值分页输出
         $this->assign('breadcrumbs', get_breadcrumbs('cats', $cat['cat_id']));
 
-        $this->display('Archive/channel-list');
 
+        if (File::file_exists(T('Home@Archive/channel-list'))) {
+
+            $this->display('Archive/channel-list');
+        } else {
+
+            //TODO   这里怎么处理却决于你自己了。
+//            $this->error404('缺少对应的模版而不能显示');
+            $this->display('Archive/single-list');
+        }
 
     }
 

@@ -2,574 +2,305 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
     <title>{:get_opinion('title')} </title>
     <meta name="description" content="{:get_opinion('keywords')}"/>
-
     <include file="Public:head"/>
-
     <style>
         * {
             margin: 0;
             padding: 0;
         }
 
-        .wrap {
-            /*width: 320px;*/
-            width: 95%;
-            margin: 10px auto 0;
-            border-bottom: 1px dashed #686868;
+        .sel_wrap {
+            height: 20px;
+            color: #a1a1a1;
+            font-size: 16px;
+            border: 1px solid #E4E4E4;
+            cursor: pointer;
+            position: relative;
+            _filter: alpha(opacity=0);
+
         }
 
-        .body-top {
+        .sel_wrap label {
+            padding-left: 5px;
+            font-size: 16px;
+            z-index: 2;
+            color: #606060;
+            line-height: 20px;
+            height: 20px;
+            display: block;
+        }
+
+        .sel_wrap .select {
             width: 100%;
-            max-height: 120px;
-
-            /*height: 100px;*/
-            margin-bottom: 10px;
+            height: 20px;
+            line-height: 20px;
+            z-index: 4;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            /**margin-top: 12px;*/
+            filter: alpha(opacity=0);
+            cursor: pointer;
+            font-size: 16px;
         }
-
-        .bt-imgbox {
-            width: 40%;
-            float: left;
-        }
-
-        .bt-img {
-            width: 90%;
-            height: 100px;
-        }
-
-        .bt-text {
-            width: 60%;
-            float: right;
-        }
-
-        .bt-title {
-            color: #000000;
-            height: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .bt-cont {
-            height: 70px;
-            overflow: hidden;
-        }
-
-        .clr {
-            clear: both;
-        }
-
-        .box {
-
-            /* background-color: #ffffff;*/
-        }
-
-        .text1, .text2, .text3, .text4, .text5, .text6 {
-            font-family: '华文细黑';
-            color: #FFFFFF;
-            font-size: 35px;
-            display: none;
-        }
-
-
     </style>
-
 </head>
 <body>
 
-
-<?php
-
-
-?>
-
 <php>
     //get_theme_opinion("id_1_1")
-
     $CatsLogic=new Common\Logic\CatsLogic();
-
-    $id_1_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_1"), 10 ,0 ,false );
-    $id_1_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_2"), 10 ,0 ,false );
+    $id_1_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_1"), 1 ,0 ,false );
+    $id_1_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_2"), 15 ,0 ,false );
     $id_2_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_1"), 8 ,0 ,false );
-    $id_2_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_2"), 8 ,0 ,false );
+    $id_2_2 = $CatsLogic->getPostsByCatWithChildren(get_theme_opinion("id_2_2"), 8 ,0 ,false );
     $id_2_3 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_3"), 8 ,0 ,false );
-    $id_3_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_3_1"), 3 ,0 ,false );
-
-
-
-
-    $slider = D('Tags', 'Logic')->getPostsByTag(3, 10 ,0 ,false  );
-
-
+    $slider = D('Tags', 'Logic')->getPostsByTag(3, 10 ,0 ,false );
 </php>
-
 {:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
-<div id="content" class="clearfix">
-
-<div style="margin: 0 auto;">
-
-    <div class="head_box" style="margin-left: 1%;width: 71%;">
-
-        <div class="header"><a href="{:get_cat_url(get_theme_opinion('id_1_1'))}"
-                               class="more">更多</a><span>{:get_theme_opinion('text_1_1')}</span></div>
-        <div class="body">
-
-
-            <div id="slide" class="news-slide fl" style="margin-top:1%;margin-right: 1%; width: 50%;">
+<div style="clear:both;"></div>
+<div id="content" style="border:none">
+    <div style="margin: 0 auto;">
+        <div class="head_box" style="width:400px;">
+            <div id="slide" class="news-slide " style="">
                 <volist name="slider" id="v" key="k">
                     {:get_post_thumbnail($v)}
                 </volist>
             </div>
-
-            <!--<div style="clear:both;"></div>-->
-
-
-            <div class="box" style="margin-left: 340px;">
-
-
-                <ul class="list1">
-
-                    <volist name="id_1_1" id="v" key="k">
-
-
-                        <li>
-                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
-                                                    <span>
-
-                            &nbsp;&nbsp; {$v['post_date']|mb_substr=0,10,"UTF-8"}
-
-                        </span>
-
-                        </li>
-
-
-                    </volist>
-
-
-                </ul>
-            </div>
         </div>
+        <!--<div class="head_box" style="width:  300px;">-->
+        <!--<div class="header"><a href="{:get_cat_url(get_theme_opinion('id_1_1'))}"-->
+        <!--class="more">更多</a><span>{:get_theme_opinion('text_1_1')}</span></div>-->
+        <!--<div class="body">-->
+        <!--&lt;!&ndash;<div style="clear:both;"></div>&ndash;&gt;-->
+        <!--<div class="box" style="">-->
+        <!--<ul class="list1">-->
+        <!--<volist name="id_1_1" id="v" key="k">-->
+        <!--<li>-->
+        <!--<a href="{$v|get_post_url}" title="{$v['post_title']}">-->
+        <!-- {$v|get_post_icon}-->
+        <!--{$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>-->
+        <!--<span>-->
+        <!--{$v['post_date']|mb_substr=5,5,"UTF-8"}-->
+        <!--</span>-->
+        <!--</li>-->
+        <!--</volist>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="head_box" style="width:  480px; margin-left: 10px;margin-left: 0px\9;">
+            <div class="header">
+                <a href="{:get_cat_url(get_theme_opinion('id_1_2'))}"
+                   class="more">更多</a>
+                <img src="__PUBLIC__/Xsc/images/icon/news.png" alt="" style="width: 30px;
+    float: left;
+    height: 30px;
+    margin: 5px;
+    ">
+                <span>{:get_theme_opinion('text_1_2')}</span>
 
-    </div>
-
-    <div class="head_box" style="margin-left: 1%;width: 25%;">
-
-        <div class="header"><a href="{:get_cat_url(get_theme_opinion('id_1_2'))}"
-                               class="more">更多</a><span>{:get_theme_opinion('text_1_2')}</span></div>
-        <div class="body">
-
-
-            <div class="box">
-
-
-                <ul class="list1">
-
-                    <volist name="id_1_2" id="v" key="k">
-
-
-                        <li>
-                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,11,"UTF-8"}</a>
-                            &nbsp;&nbsp;
+            </div>
+            <div class="body">
+                <div class="box" id="quotation" style="  height: 200px;">
+                    <ul class="list1">
+                        <volist name="id_1_2" id="v" key="k">
+                            <li>
+                                <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                    {$v|get_post_icon}
+                                    {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}
+                                </a>
+                                &nbsp;&nbsp;
                         <span>
                         {$v['post_date']|mb_substr=2,8,"UTF-8"}
                         </span>
-
-                        </li>
-
-
-                    </volist>
-
-
-                </ul>
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
-<div style="clear:both;"></div>
-
-
-<div class="center_middle" style="">
-
-    <div class="left_half">
-        <div class="header" style="border-top: solid 7px #3686be;">
-            <a href="{:get_cat_url(get_theme_opinion('id_2_1'))}">更多+</a>
-
-            <div class="header_info">{:get_theme_opinion('text_2_1')}</div>
-        </div>
-        <div class="body">
-
-
-            <div class="wrap">
-                <div class="body-top">
-                    <div class="bt-imgbox">
-                        <img
-                                src="{:get_post_img($id_2_1[0])}"
-                                class="bt-img">
-                    </div>
-                    <div class="bt-text">
-                        <h3 class="bt-title"> {$id_2_1[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
-
-                        <p class="bt-cont"> {$id_2_1[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
-                    </div>
-                    <div class="clr"></div>
+                            </li>
+                        </volist>
+                    </ul>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="head_box" style="width:  140px; margin-left: 20px;">
+        <div class="header">
+            快捷入口
+        </div>
+        <div class="body" style="  padding: 8px 0px;text-align: center">
+            <div class="box">
+                <a class="" href="#">
+                    <img src="__PUBLIC__/Xsc/images/xsbd.png" alt="">
+                </a>
+                <a class="" href="" id="al">
+                    <img src="__PUBLIC__/Xsc/images/alst.png" alt="">
+                </a>
+
+                <div id="alst" style="display: none;  position: absolute; z-index: 80;  width: 1px;">
+
+                    <a class="" href="http://202.119.248.129/login.aspx">
+                        <img src="__PUBLIC__/Xsc/images/aljs.png" alt="">
+                    </a>
+
+                    <a class="" href="http://202.119.248.129:866/">
+                        <img src="__PUBLIC__/Xsc/images/alxs.png" alt="">
+                    </a>
+
+                </div>
+
+                <a class="" href="{:U('Admin/Index/index')}">
+                    <img src="__PUBLIC__/Xsc/images/gldl.png" alt="">
+                </a>
 
 
+                <form name="fr" id="fr" action="{:U('Home/Archive/search')}" method="get">
+                    <div style="width:140px;  height:26px; overflow:hidden; padding: 5px 2px 0px;float:left;">
+                        <input name="keyword" type="text" value="" style="   border: 1px solid #ccc;
+ width:100px; height:13px; padding:5px 0 6px 0; line-height:13px; color:#666; outline:none;  text-indent:6px; font-family:'微软雅黑'; font-size:12px;float:left; background:0px;"/>
+                        <input name="" type="submit" value="搜索" style="  border: 1px solid #ccc;
+; background:0px;  width:35px; cursor:pointer; height:26px; display:block; outline:none;">搜索</input>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear:both;"></div>
+<div class="center_middle" style="">
+    <div class="left_half">
+        <div class="header" style="border-top: solid 5px #3686be;">
+            <a href="{:get_cat_url(get_theme_opinion('id_2_1'))}">更多</a>
+            <img src="__PUBLIC__/Xsc/images/icon/notification.png" alt="" style="">
+
+            <div class="header_info">
+                {:get_theme_opinion('text_2_1')}
+            </div>
+        </div>
+        <div class="body">
             <ul>
-
-
                 <volist name="id_2_1" id="v" key="k">
-
-
-                    <eq name="k" value="1">
-
-                        <else/>
-
-                        <li>
-
+                    <li>
             <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-
-                        </li>
-                    </eq>
-
-
+              {$v['post_date']|mb_substr=2,5,"UTF-8"}</span>
+                        <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                            {$v|get_post_icon}
+                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                    </li>
                 </volist>
-
-
             </ul>
         </div>
     </div>
-
-
-    <div class="left_half">
-        <div class="header" style="border-top: solid 7px #008287;">
-            <a href="{:get_cat_url(get_theme_opinion('id_2_2'))}">更多+</a>
+    <div class="left_half" style=" ">
+        <div class="header" style="border-top: solid 5px #008287;">
+            <a href="{:get_cat_url(get_theme_opinion('id_2_2'))}">更多</a>
+            <img src="__PUBLIC__/Xsc/images/icon/edit_page.png" alt="" style="">
 
             <div class="header_info">{:get_theme_opinion('text_2_2')}</div>
         </div>
         <div class="body">
-
-
-            <div class="wrap">
-                <div class="body-top">
-                    <div class="bt-imgbox">
-                        <img
-                                src="{:get_post_img($id_2_2[0])}"
-                                class="bt-img">
-                    </div>
-                    <div class="bt-text">
-                        <h3 class="bt-title"> {$id_2_2[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
-
-                        <p class="bt-cont"> {$id_2_2[0]['post_content']|strip_tags|mb_substr=0,200,"UTF-8"}</p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-            </div>
-
-
             <ul>
                 <volist name="id_2_2" id="v" key="k">
-
-                    <eq name="k" value="1">
-
-                        <else/>
-                        <li>
-                            <span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-                        </li>
-                    </eq>
-
-
+                    <li>
+                        <span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+                        <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                            {$v|get_post_icon}
+                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                    </li>
                 </volist>
-
             </ul>
         </div>
     </div>
-
-
-    <div class="left_half">
-        <div class="header" style="border-top: solid 7px #F4B300;">
-            <a href="{:get_cat_url(get_theme_opinion('id_2_3'))}">更多+</a>
+    <div class="left_half" style="width: 250px;   padding-right: 0px;">
+        <div class="header" style="border-top: solid 5px #40445E;">
+            <a href="{:get_cat_url(get_theme_opinion('id_2_3'))}">更多</a>
+            <img src="__PUBLIC__/Xsc/images/icon/books.png" alt="" style="">
 
             <div class="header_info">{:get_theme_opinion('text_2_3')}</div>
         </div>
         <div class="body">
-            <div class="wrap">
-                <div class="body-top">
-                    <div class="bt-imgbox">
-                        <img
-                                src="{:get_post_img($id_2_3[0])}"
-                                class="bt-img">
-                    </div>
-                    <div class="bt-text">
-                        <h3 class="bt-title"> {$id_2_3[0]['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
-
-                        <p class="bt-cont"> {$id_2_3[0]['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}</p>
-                    </div>
-                    <div class="clr"></div>
-                </div>
-            </div>
-
-
             <ul>
                 <volist name="id_2_3" id="v" key="k">
-
-                    <eq name="k" value="1">
-
-                        <else/>
-
-
-                        <li>
-            <span>
-              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
-                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <i>·&nbsp;&nbsp;</i>
-                                {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
-                        </li>
-
-                    </eq>
+                    <li>
+                        <!--<span>              {$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
+                        <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                            {$v|get_post_icon}
+                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
+                    </li>
                 </volist>
-
             </ul>
         </div>
     </div>
-
-
 </div>
-
 <div style="clear:both;"></div>
-<div class="center_middle" style="height: 150px;margin-right: 1.5%;margin-left: 1%;">
-
-
-    <!--http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg-->
-    <!--background:url('http://2011college.njtech.edu.cn/Public/2011college/images/slide.jpg') no-repeat #000000 ;background-size:100% 100%;-->
-    <!--background: url('http://xgw.njut.asia/images/logo.jpg') no-repeat;background-size:100% 100%;-->
-
-    <!--<div class="box" style="position: absolute;left: 60%;margin-top: 30px;">-->
-    <!--<span class="text1">一切为了学生</span>-->
-    <!--<span class="text2">为了一切学生</span>-->
-    <!--<span class="text3">为了学生一切</span>-->
-    <!--</div>-->
-    <!--<div class="box" style="position: absolute;left: 50%;margin-top: 90px;">-->
-    <!--<span class="text4">一切为了学生</span>-->
-    <!--<span class="text5">为了一切学生</span>-->
-    <!--<span class="text6">为了学生一切</span>-->
-    <!--</div>-->
-
-
-    <div class="banner" id="indexbanner">
-        <div class="ground"
-             style="display:block; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide.jpg') no-repeat no-repeat 100% 100%;;"></div>
-        <div class="ground"
-             style="display: none; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide2.jpg') no-repeat no-repeat 100% 100%;;"></div>
-        <div class="ground"
-             style="display: none; background: url('http://2011college.njtech.edu.cn/Public/2011college/images/slide3.jpg') no-repeat no-repeat 100% 100%;;"></div>
-
-
-        <div class="bannerinner">
-            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner1" style="display:block;">
-                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
-
-                    <h3 class="tit">一切为了学生</h3>
-                    <span class="content"></span>
-                </div>
-            </a>
-            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner2" style="display:none;">
-
-                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
-
-                    <h3 class="tit">一切为了学生</h3>
-                    <span class="content"></span>
-                </div>
-                <div class="describ" style=left:35%;top:40px;"><span class="tpbg"></span>
-
-                    <h3 class="tit">为了一切学生</h3>
-                    <span class="content"></span>
-                </div>
-
-
-            </a>
-            <a target="_blank" href="#" class="hrefbanner" id="hrefbanner3" style="display: none;">
-
-                <div class="describ" style="left:5%;top:60px"><span class="tpbg"></span>
-
-                    <h3 class="tit">一切为了学生</h3>
-                    <span class="content"></span>
-                </div>
-                <div class="describ" style=left:35%;top:40px;"><span class="tpbg"></span>
-
-                    <h3 class="tit">为了一切学生</h3>
-                    <span class="content"></span>
-                </div>
-                <div class="describ" style="left:65%;top:20px"><span class="tpbg"></span>
-
-                    <h3 class="tit">为了学生一切</h3>
-                    <span class="content"></span>
-                </div>
-
-            </a>
-
-
-            <a class="left"></a>
-            <a class="right"></a>
-              <span class="lights">
-                  <a class="focused"></a>
-                  <a></a>
-                  <a></a>
-
- </span></div>
-    </div>
-
-
-</div>
-
-<div style="clear:both;"></div>
-
-
 <div class="center_middle" style="">
+    <div class="left_half" style="  width: 780px;" id="c4_right_2">
+        <!--<div class="header" style="border-top: solid 5px #78BA00;">-->
+        <!--<div class="header_info">友情链接</div>-->
+        <!--</div>-->
+        <div class="body" style="border-top: solid 5px #78BA00;">
+            <div style="text-align: center;margin-top: 5px">
+                <!--<friendlist link_group_id="4" num="6"></friendlist>-->
+                <ul class="left_half_ul">
+                    <li><a href="http://www.zts1993.com" title="理论学习">
+                        <img src="__PUBLIC__/Xsc/images/llxx.png" alt="理论学习"/>
+                    </a></li>
 
-    <div class="left_half" style="width: 47%;padding-bottom: 30px">
-        <div class="header" style="border-top: solid 7px #1FAEFF;">
-            <a href="{:get_cat_url(get_theme_opinion('id_3_1'))}">更多+</a>
+                    <li><a href="http://www.zts1993.com" title="先进典型">
+                        <img src="__PUBLIC__/Xsc/images/xjdx.png" alt="先进典型"/>
 
-            <div class="header_info">{:get_theme_opinion('text_3_1')}</div>
+                    </a></li>
+
+                    <li><a href="http://www.zts1993.com" title="周恩来班">
+                        <img src="__PUBLIC__/Xsc/images/zelb.png" alt="周恩来班"/>
+                    </a></li>
+                </ul>
+
+            </div>
         </div>
-        <div class="body">
+    </div>
+    <div class="left_half" style="width: 22%;padding-right: 0%;">
 
-            <!--<volist name="id_2_2" id="v" key="k">-->
-
-                <!--<eq name="k" value="1">-->
-
-                    <!--<else/>-->
-                    <!--<li>-->
-                        <!--<span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>-->
-                        <!--<a href="{$v|get_post_url}" title="{$v['post_title']}">-->
-                            <!--<i>·&nbsp;&nbsp;</i>-->
-                            <!--{$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>-->
-                    <!--</li>-->
-                <!--</eq>-->
+        <div class="body" style="padding:5px 10px 0 0;border-top: solid 5px #252525;">
 
 
-            <!--</volist>-->
-            <volist name="id_3_1" id="v" key="k">
+            <div style="text-align: center;font-size: 22px;  color: #1b58b8;  width: 50px; float: left;padding-left: 20px">
+                服务链接
+            </div>
 
-                <div class="wrap">
-                    <div class="body-top">
-                        <div class="bt-imgbox">
-                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                 <img src="{:get_post_img($v)}" class="bt-img" />
-                            </a>
-                        </div>
-                        <div class="bt-text">
+            <div style="text-align: left; float: right;width: 140px">
+                <div class="sel_wrap" style=" margin-top: 5px;">
+                    <label>----|校内链接|----</label>
+                    <select class="select" style="width:120px"
+                            onchange="window.open(this.options[this.selectedIndex].value)"
+                            size="1"
+                            name="mlink">
+                        <optionfriendlist link_group_id="1"></optionfriendlist>
+                    </select>
+                </div>
+                <div class="sel_wrap" style="  margin-top: 10px;">
+                    <label>----|校外链接|----</label>
 
-                            <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                <h3 class="bt-title"> {$v['post_title']|strip_tags|mb_substr=0,100,"UTF-8"}</h3>
-                            </a>
-
-                            <p class="bt-cont">
-                                <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                    {$v['post_content']|strip_tags|mb_substr=0,150,"UTF-8"}
-                                </a>
-                            </p>
-                        </div>
-                        <div class="clr"></div>
-                    </div>
+                    <select class="select" style="width:120px"
+                            onchange="window.open(this.options[this.selectedIndex].value)"
+                            size="1"
+                            name="mlink2">
+                        <optionfriendlist link_group_id="3"></optionfriendlist>
+                    </select>
                 </div>
 
-            </volist>
-
-
-        </div>
-    </div>
-
-
-    <div class="left_half" style="width: 25%;padding-bottom: 0px" id="c4_right_2">
-        <div class="header" style="border-top: solid 7px #78BA00;">
-
-
-            <div class="header_info">专题链接</div>
-        </div>
-        <div class="body" style="">
-
-            <div style="text-align: center;padding-top: 20px;padding-bottom: 20px">
-                <friendlist link_group_id="4" num="6" ></friendlist>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="left_half" style="width: 21%;">
-        <div class="header" style="border-top: solid 7px #252525;">
-
-
-            <div class="header_info">服务链接</div>
-        </div>
-        <div class="body" style="padding-bottom: 30px">
-
-
-            <div style="text-align: center;" id="links">
-
-                <friendlist link_group_id="5" num="10" ></friendlist>
-            </div>
-
-            <div style="text-align: center">
-                <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
-                        size="1"
-                        name="mlink">
-                    <option>---|校内链接|---</option>
-
-
-                    <optionfriendlist link_group_id="1"></optionfriendlist>
-
-
-                </select>
-
-                <select style="width:100px" onchange="window.open(this.options[this.selectedIndex].value)"
-                        size="1"
-                        name="mlink2">
-                    <option>---|校外链接|---</option>
-
-
-                    <optionfriendlist link_group_id="3"></optionfriendlist>
-
-
-                </select>
-
             </div>
         </div>
     </div>
-
-
 </div>
-
 <div style="clear:both;"></div>
-
-
 </div>
-
 <include file="Public:footer"/>
-
-
 <script type="application/javascript">
-
-
     $(function () { //头部nav部分； $('.indexnav-content div.menu1').hover(function(){$(this).addClass('focuse');},function(){$(this).removeClass('focuse');}) //
         $('#indexbanner .bannerchoose').each(function () {
             var href = $(this).attr('href');
@@ -617,7 +348,6 @@
                 $('#indexbanner .bannerinner .hrefbanner').eq(indexp.index).show().siblings('.hrefbanner').hide();
                 indexscroll();
             })
-
             $('.index-colum .li-1 .news .tit').hover(
                     function () {
                         $(this).addClass('bordernone');
@@ -645,12 +375,113 @@
 
 //    $("#indexbanner").mouseover(function(){onbanner=true});
 //    $("#indexbanner").mouseout(function(){onbanner=false})
-
-
     })
+</script>
+<script type="text/javascript">
+    //文字纵向滚动
+    $(function () {
+        var $this = $("#quotation");
+        var scrollTimer;
+        $this.hover(function () {
+            clearInterval(scrollTimer);
+        }, function () {
+            scrollTimer = setInterval(function () {
+                scrollNews($this);
+            }, 3000);
+        }).trigger("mouseleave");
+        function scrollNews(obj) {
+            var $self = obj.find("ul");
+            var lineHeight = $self.find("li:first").height();
+            $self.animate({
+                "marginTop": -lineHeight + "px"
+            }, 500, function () {
+                $self.css({
+                    marginTop: 0
+                }).find("li:first").appendTo($self);
+            })
+        }
+    });
+
+
+    $(document).ready(function () {
+
+
+//        $('#al').hover(
+//                function () {
+//                    $("#alst").show();
+//                },
+//                function () {
+////                    sleep(3000);
+//                    $("#alst").hide();
+//                }
+//        )
+//
+
+
+        (function ($) {
+            $.fn.hoverDelay = function (options) {
+                var defaults = {
+                    hoverDuring: 10,
+                    outDuring: 2000,
+                    hoverEvent: function () {
+                        $.noop();
+                    },
+                    outEvent: function () {
+                        $.noop();
+                    }
+                };
+                var sets = $.extend(defaults, options || {});
+                var hoverTimer, outTimer;
+                return $(this).each(function () {
+                    $(this).hover(function () {
+                        clearTimeout(outTimer);
+                        hoverTimer = setTimeout(sets.hoverEvent, sets.hoverDuring);
+                    }, function () {
+                        clearTimeout(hoverTimer);
+                        outTimer = setTimeout(sets.outEvent, sets.outDuring);
+                    });
+                });
+            }
+        })(jQuery);
+
+
+
+
+
+        $('#al').each(function () {
+            var that = $(this);
+
+            that.hoverDelay({
+//                outDuring: 105000,
+                hoverEvent: function () {
+                    $("#alst").show();
+                }
+//                ,
+//                outEvent: function () {
+//                    $("#alst").hide();
+//                }
+            });
+
+
+        });
+
+
+        $('.head_box .body .box').each(function () {
+            var that = $(this);
+
+            that.hoverDelay({
+                outDuring: 100,
+                outEvent: function () {
+                    $("#alst").hide();
+                }
+            });
+
+
+        });
+
+    });
 
 
 </script>
-
 </body>
 </html>

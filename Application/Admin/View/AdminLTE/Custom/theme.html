@@ -94,7 +94,10 @@
                                             <a class="btn bg-blue"
                                                href="{:U('Admin/Custom/themeDetail', array('theme_name' => $vo['theme_name']))}">详细</a>
 
-                                            <a class="btn btn-warning" onclick="javascript:return a_confirm()"
+                                            <a class="btn btn-warning"
+                                                           href="{:U('Admin/Custom/themeExportHandle', array('theme_name' => $vo['theme_name']))}">导出</a>
+
+                                            <a class="btn btn-danger" onclick="javascript:return a_confirm()"
                                                href="{:U('Admin/Custom/themeUninstallHandle', array('theme_name' => $vo['theme_name']))}">卸载</a>
 
                                             <!--<a class="btn btn-info" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
