@@ -104,8 +104,7 @@ function getURL($url = '', $vars = '')
  */
 function getRealURL($menu_item = array(), $is_home = false)
 {
-
-    if ($menu_item['menu_function'] == 'direct') {
+    if ($menu_item['menu_function'] == 'direct' || $menu_item['menu_function'] == 'native') {
         $real_url = $menu_item['menu_url'];
     } elseif ($menu_item['menu_function'] == 'none') {
         $real_url = '#';
@@ -174,6 +173,12 @@ function getSingleURLByID($ID, $type = 'single')
         } else if ($home_post_model === 'year/month/day/post_name') {
             $posts = $Posts->cache(true)->detail($ID);
             $URL = $url_base . '/' . getTimestamp($posts ['post_date'], 'year') . '/' . getTimestamp($posts ['post_date'], 'month') . '/' . getTimestamp($posts ['post_date'], 'day') . '/' . $posts ['post_name'];
+        } elseif ($home_post_model == 'absolute') {
+            $post = $Posts->cache(true)->detail($ID);
+            $URL = $post['post_url'];
+            if ($URL == '') {
+                $URL = get_url("Post/" . $post['post_type'], array('info' => $post['post_id']));
+            }
         } else {
             $URL = $url_base . '/' . $ID;
         }
@@ -269,9 +274,9 @@ function getCatURLByID($ID)
  */
 function getChannelURLByID($ID)
 {
-    $home_cat_model = get_opinion('home_cat_model');
+    //$home_cat_model = get_opinion('home_cat_model');
 
-     $URL = getURL('Cat/channel', array("info" => $ID));
+    $URL = getURL('Cat/channel', array("info" => $ID));
 
 
     return $URL;

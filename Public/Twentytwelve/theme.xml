@@ -5,7 +5,7 @@
     <description>Twentytwelve from wordpress</description>
     <author>ZTS</author>
     <preview>/Twentytwelve/preview.jpg</preview>
-    <preview_big>/Twentytwelve/preview_big.jpg</preview_big>
+    <preview_big>/Twentytwelve/preview.jpg</preview_big>
     <copyright>GreenStudio 2011</copyright>
     <tpl_view>Apllication/Home/View/Twentytwelve</tpl_view>
     <tpl_static>Public/Twentytwelve</tpl_static>
@@ -21,4 +21,29 @@
         </page>
 
     </post>
+    <config>
+        <kv>
+            <title>
+                <title>显示标题</title>
+                <type>text</type>
+                <value>GreenCMS</value>
+
+            </title>
+
+            <showplace>
+                <title>显示</title>
+                <type>checkbox</type>
+                <options>
+                    <true>显示</true>
+                    <false>不显示</false>
+                </options>
+                <value>true</value>
+
+            </showplace>
+
+
+        </kv>
+
+
+    </config>
 </theme>

@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-6-1
  * Time: 下午10:05
  */
@@ -14,7 +14,8 @@ namespace Oauth\Controller;
  * Class GreenController
  * @package Oauth\Controller
  */
-class GreenController extends OauthBaseController{
+class GreenController extends OauthBaseController
+{
 
     //TODO provide Oauth2.0 login
 

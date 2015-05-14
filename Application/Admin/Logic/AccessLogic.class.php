@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: AccessLogic.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 下午7:27
  */
@@ -69,6 +69,21 @@ class AccessLogic extends RelationModel
             'fullname'
         ));
         $temp = $cat->getList(); // 获取分类结构
+
+        foreach ($temp as $key => $value) {
+
+            if ($value['level'] = 1 && array_key_exists($value['name'], get_opinion('group_level_1'))) {
+                $group_level_1 = get_opinion('group_level_1');
+                $temp[$key]["remark"] = $group_level_1[$value['name']];
+            } else if ($value['level'] = 2 && array_key_exists($value['name'], get_opinion('admin_level_2'))) {
+                $admin_level_2 = get_opinion('admin_level_2');
+                $temp[$key]["remark"] = $admin_level_2[$value['name']];
+
+            }
+
+        }
+
+
         $level = array(
             "1" => "项目（GROUP_NAME）",
             "2" => "模块(MODEL_NAME)",
@@ -163,52 +178,7 @@ class AccessLogic extends RelationModel
      */
     public function addAdmin()
     {
-        if (!is_email($_POST ['email'])) {
-            return array(
-                'status' => 0,
-                'info' => "邮件地址错误"
-            );
-        }
-        $datas = array();
-        $M = M("User");
-        $datas ['user_email'] = trim($_POST ['email']);
-        if ($M->where("`user_email`='" . $datas ['user_email'] . "'")->count() > 0) {
-            return array(
-                'status' => 0,
-                'info' => "已经存在该账号"
-            );
-        }
 
-        $datas ['user_pass'] = encrypt(trim($_POST ['password']));
-        $datas ['user_registered'] = date("Y-m-d H:m:s");
-        $datas ['user_intro'] = trim($_POST ['user_intro']);
-        $datas ['user_status'] = ( int )($_POST ['user_status']);
-        if (!isset ($_POST ['display_name'])) {
-            $datas ['user_login'] = $_POST ['email'];
-            $datas ['display_name'] = $_POST ['email'];
-        }
-        if ($M->add($datas)) {
-            M("role_users")->add(array(
-                'user_id' => $M->getLastInsID(),
-                'role_id' => ( int )$_POST ['role_id']
-            ));
-            if (C("SYSTEM_EMAIL")) {
-                $body = "你的账号已开通，登录地址：" . C('WEB_ROOT') . U("Admin/Login/index") . "<br/>登录账号是：" . $datas ["user_email"] . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;登录密码是：" . $_POST ['password'];
-                $info = send_mail($datas ["user_email"], "", "开通账号", $body) ? "添加新账号成功并已发送账号开通通知邮件" : "添加新账号成功但发送账号开通通知邮件失败";
-            } else {
-                $info = "账号已开通，请通知相关人员";
-            }
-            return array(
-                'status' => 1,
-                'info' => $info,
-                'url' => U("Admin/Access/index")
-            );
-        } else {
-            return array(
-                'status' => 0,
-                'info' => "添加新账号失败，请重试"
-            );
-        }
     }
 
     /**
@@ -226,10 +196,9 @@ class AccessLogic extends RelationModel
             unset ($_POST ['password']);
         }
 
-        // print_array($_POST);
 
         $user_id = $_POST ['user_id0'];
-        $role_id = ( int )$_POST ['role_id'];
+        $role_id = (int )$_POST ['role_id'];
         // $data['user_id'] = (int) $_POST['user_id0'];
         $data ['user_login'] = $_POST ['user_login'];
 
@@ -239,6 +208,7 @@ class AccessLogic extends RelationModel
         $data ['user_nicename'] = $_POST ['user_nicename'];
         $data ['user_status'] = $_POST ['user_status'];
         $data ['user_intro'] = $_POST ['user_intro'];
+
 
         $roleStatus = M("Role_users")->where("`user_id`=" . $user_id)->save(array(
             'role_id' => $role_id

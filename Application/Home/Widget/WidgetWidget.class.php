@@ -1,14 +1,15 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: WidgetWidget.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-24
  * Time: 上午9:50
  */
 
 namespace Home\Widget;
 
+use Common\Util\Category;
 use Home\Logic\MenuLogic;
 
 use Common\Logic\CatsLogic;
@@ -31,9 +32,7 @@ class WidgetWidget extends Controller
     public function recentPost()
     {
 
-
-        $post_list = D('Posts', 'Logic')->getList(3, 'single', 'post_date desc', false);
-
+        $post_list = D('Posts')->cache(true)->order('post_id')->limit(4)->relation(false)->select();
 
         $this->assign('list', $post_list);
 
@@ -71,11 +70,21 @@ class WidgetWidget extends Controller
      */
     public function categories()
     {
-        $CatList = new CatsLogic();
+        if (S("Widget_categories") == null) {
+            $CatList = new CatsLogic();
+            $this->assign('list', $CatList->category());
+            $categories = $this->fetch('Widget:categories');
 
-        $this->assign('list', $CatList->category());
+            S("Widget_categories", $categories, DEFAULT_EXPIRES_TIME);
+            echo $categories;
 
-        $this->display('Widget:categories');
+        } else {
+
+            echo S("Widget_categories");
+
+        }
+
+
     }
 
     /**
@@ -84,14 +93,24 @@ class WidgetWidget extends Controller
      */
     public function tag()
     {
+        if (S("Widget_tag") == null) {
+            $TagList = new TagsLogic();
 
-        $TagList = new TagsLogic();
+            $tag_res = $TagList->getList(50, false, true);
 
-        $tag_res = $TagList->getList(50, false);
+            $this->assign('tagClouds', $tag_res);
 
-        $this->assign('tagClouds', $tag_res);
+            $tag = $this->fetch('Widget:tag');
 
-        $this->display('Widget:tag');
+            S("Widget_tag", $tag, DEFAULT_EXPIRES_TIME);
+            echo $tag;
+
+        } else {
+
+            echo S("Widget_tag");
+
+        }
+
 
     }
 
@@ -119,7 +138,7 @@ class WidgetWidget extends Controller
 
             $CatList = new CatsLogic();
 
-            $Cat = new \Common\Util\Category ('Cats', array('cat_id', 'cat_father', 'cat_name', 'cat_name'));
+            $Cat = new Category ('Cats', array('cat_id', 'cat_father', 'cat_name', 'cat_name'));
 
             $children['cat_children'] = $Cat->getList();
             foreach ($children['cat_children'] as $key => $value) {

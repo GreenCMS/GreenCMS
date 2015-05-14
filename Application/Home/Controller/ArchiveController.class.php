@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: ArchiveController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-21
  * Time: 下午9:33
  */
@@ -45,11 +45,11 @@ class ArchiveController extends HomeBaseController
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
-            $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
+            $Page = new GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
 
-            $posts_list = $PostsLogic->getList($limit, 'all', 'post_id desc', true, $where);
+            $posts_list = $PostsLogic->getList($limit, 'all', 'post_date desc', true, $where);
         }
         $this->assign('title', '关于"' . $keyword . '"文章搜索结果');
         $this->assign('res404', $res404);
@@ -62,6 +62,14 @@ class ArchiveController extends HomeBaseController
 
     }
 
+
+    public function index()
+    {
+        $this->single();
+        die();
+    }
+
+
     /**
      * 文章归档 支持年月日参数传递 和用户id
      * @param null 文章归档
@@ -69,23 +77,23 @@ class ArchiveController extends HomeBaseController
     public function single()
     {
         $where['post_date'] = array('like', I('get.year', '%') . '-' . I('get.month', '%') . '-' . I('get.day', '%') . '%');
-        if (I('get.uid') != '') $where['user_id'] = I('get.uid');
+        //  if (I('get.year')== ''&&I('get.month')== ''&&I('get.day')== ''){unset($where);}
 
+        if (I('get.uid') != '') $where['user_id'] = I('get.uid');
 
         $title_prefix = (I('get.year', '') ? I('get.year', '') . '年' : '') .
             (I('get.month', '') ? I('get.month', '') . '月' : '') . (I('get.day', '') ? I('get.day', '') . '日' : '');
 
 
         $PostsLogic = new PostsLogic();
-
         $count = $PostsLogic->countAll('single', $where); // 查询满足要求的总记录数
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
-            $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
+            $Page = new GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
-            $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true, $where);
+            $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true, $where);
         }
         $this->assign('title', $title_prefix . '所有文章');
         $this->assign('res404', $res404); // 赋值数据集
@@ -114,11 +122,11 @@ class ArchiveController extends HomeBaseController
         $count = $PostsLogic->countAll('page', $where); // 查询满足要求的总记录数
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
-            $Page = new GreenPage($count, C('PAGER')); // 实例化分页类 传入总记录数
+            $Page = new GreenPage($count, get_opinion('PAGER')); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows; //获取分页信息
 
-            $posts_list = $PostsLogic->getList($limit, 'page', 'post_id desc', true, $where);
+            $posts_list = $PostsLogic->getList($limit, 'page', 'post_date desc', true, $where);
         }
         $this->assign('title', $title_prefix . '所有页面');
         $this->assign('res404', $res404); // 赋值数据集
@@ -157,10 +165,10 @@ class ArchiveController extends HomeBaseController
 
         ($count == 0) ? $res404 = 0 : $res404 = 1;
         if ($count != 0) {
-            $Page = new GreenPage($count, C('PAGER'));
+            $Page = new GreenPage($count, get_opinion('PAGER'));
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
-            $posts_list = $PostsLogic->getList($limit, $post_type, 'post_id desc', true, $map);
+            $posts_list = $PostsLogic->getList($limit, $post_type, 'post_date desc', true, $map);
         }
         $this->assign('title', $title_prefix . '所有' . $post_type);
         $this->assign('res404', $res404); // 赋值数据集

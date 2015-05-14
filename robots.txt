@@ -10,5 +10,6 @@ Disallow: /Extend/
 Disallow: /Data/
 Disallow: /Public/
 Disallow: /Core/
+Disallow: /Upload/
 Disallow: /admin.php
 Disallow: /install.php

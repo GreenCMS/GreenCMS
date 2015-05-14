@@ -43,17 +43,11 @@
                         <!-- /.box-header -->
                         <div class="box-body">
 
+                            <div class="portlet-body">
+                                <div class="row">
 
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet box light-grey">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="icon-globe"></i>{$action}
-                                    </div>
-                                </div>
 
-                                <div class="portlet-body">
-                                    <div class="clearfix">
+                                    <div class="col-md-5 margin">
                                         <div class="btn-group">
                                             <a href="{:U('Weixin/Reply/text')}">
                                                 <button type="submit" class="btn bg-green" name="postAdd" value='1'>
@@ -73,7 +67,8 @@
                                         &nbsp; &nbsp;
                                         <div class="btn-group">
                                             <a href="{:U('Weixin/Reply/news')}">
-                                                <button type="submit" class="btn  bg-purple" name="postAdd" value='1'>
+                                                <button type="submit" class="btn  bg-purple" name="postAdd"
+                                                        value='1'>
                                                     <i class="icon-plus"></i> 添加图文回复
                                                 </button>
                                             </a>
@@ -81,49 +76,51 @@
                                         </div>
 
                                     </div>
-                                    <table class="table table-striped table-bordered table-hover"
-                                           id="sample_1">
-                                        <thead>
-                                        <tr>
-                                            <th style="width: 8px;">ID</th>
-                                            <th>类型</th>
-                                            <th>预览</th>
-                                            <th style="width:50px;">预览</th>
-                                            <th style="width:130px;">发布日期</th>
-                                            <th style="width:150px;">操作</th>
+                                </div>
+                                <table class="table table-striped table-bordered table-hover"
+                                       id="sample_1">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 8px;">ID</th>
+                                        <th>类型</th>
+                                        <th>预览</th>
+                                        <th style="width:50px;">预览</th>
+                                        <th style="width:130px;">发布日期</th>
+                                        <th style="width:150px;">操作</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <foreach name="weixinre" item="v">
+                                        <tr class="odd gradeX">
+                                            <td> {$v.wx_re_id}
+                                            </td>
+                                            <td>{$v.type|getRealText}</td>
+                                            <td>{$v['content']|is_empty|mb_substr=0,10,"UTF-8"}
+                                                {$v['title']|mb_substr=0,10,"UTF-8"}
+
+                                            </td>
+                                            <td><img style="width: 100px" src="{$v['picurl']}"/></td>
+                                            <td>{:getTimestamp($v['time'],'Y-m-d H:i') }</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary"
+                                                   href="{:U('Weixin/Reply/'.$v['type'].'Edit', array('id' => $v['wx_re_id']))}">编辑</a>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <a class="btn btn-sm btn-danger"
+                                                   href="{:U('Weixin/Reply/del', array('id' => $v['wx_re_id']))}">删除</a>
+                                            </td>
+
 
                                         </tr>
-                                        </thead>
-                                        <tbody>
-                                        <foreach name="weixinre" item="v">
-                                            <tr class="odd gradeX">
-                                                <td> {$v.wx_re_id}
-                                                </td>
-                                                <td>{$v.type|getRealText}</td>
-                                                <td>{$v['content']|is_empty|mb_substr=0,10,"UTF-8"}
-                                                    {$v['title']|mb_substr=0,10,"UTF-8"}
+                                    </foreach>
+                                    </tbody>
+                                </table>
 
-                                                </td>
-                                                <td><img src="{$v['picurl']}"/></td>
-                                                <td>{:getTimestamp($v['time'],'Y-m-d H:i') }</td>
-                                                <td>
-                                                    <a class="btn mini"
-                                                       href="{:U('Weixin/Reply/'.$v['type'].'Edit', array('id' => $v['wx_re_id']))}">编辑</a>
-                                                    &nbsp;&nbsp;&nbsp;
-                                                    <a class="btn mini red"
-                                                       href="{:U('Weixin/Reply/del', array('id' => $v['wx_re_id']))}">删除</a>
-                                                </td>
-
-
-                                            </tr>
-                                        </foreach>
-                                        </tbody>
-                                    </table>
-
+                                <div>
+                                    <ul class="pagination"> {$pager}</ul>
                                 </div>
-                            </div>
-                            <!-- END EXAMPLE TABLE PORTLET-->
 
+                            </div>
 
                         </div>
                     </div>

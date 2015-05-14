@@ -1,13 +1,14 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: CatsModel.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 上午12:34
  */
 
 namespace Common\Model;
+
 use Common\Model;
 use Think\Model\RelationModel;
 
@@ -27,13 +28,13 @@ class CatsModel extends RelationModel
 
             'mapping_type' => self::HAS_MANY,
 
-            'class_name'   => 'Post_cat',
+            'class_name' => 'Post_cat',
 
             'mapping_name' => 'cat_post',
 
-            'foreign_key'  => 'cat_id',
+            'foreign_key' => 'cat_id',
 
-            'parent_key'   => 'cat_id',
+            'parent_key' => 'cat_id',
 
             'mapping_order' => 'cat_id',
 

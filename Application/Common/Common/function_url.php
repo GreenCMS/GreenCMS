@@ -2,7 +2,7 @@
 /**
  * 全新链接函数
  * Created by PhpStorm.
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-6-11
  * Time: 下午10:45
  */
@@ -29,12 +29,13 @@ function get_url($url = '', $vars = '', $suffix = true, $domain = false, $group 
         $url_return = U($url, $vars, $suffix, $domain);
     }
 
-    if ($URL_MODEL_TEMP == 2 && $group == 'Home/') $url_return = str_replace('/home', '', $url_return);
+    if ($URL_MODEL_TEMP == 2 && $group == 'Home/') {
+        $url_return = str_replace('/home', '', $url_return);
+    }
 
     return $url_return;
 
 }
-
 
 /**
  *  从Menu得到真实的URL 可以替换 U方法
@@ -45,7 +46,7 @@ function get_url($url = '', $vars = '', $suffix = true, $domain = false, $group 
 function get_url_by_menu($menu_item = array(), $is_home = false)
 {
 
-    if ($menu_item['menu_function'] == 'direct') {
+    if ($menu_item['menu_function'] == 'direct' || $menu_item['menu_function'] == 'native') {
         $real_url = $menu_item['menu_url'];
     } elseif ($menu_item['menu_function'] == 'none') {
         $real_url = '#';
@@ -71,7 +72,6 @@ function get_url_by_menu($menu_item = array(), $is_home = false)
     return $real_url;
 }
 
-
 /**
  * 新版采用传递post 方式而不是使用by id方式，提高非native模式下性能
  * @param array $post
@@ -81,7 +81,6 @@ function get_url_by_menu($menu_item = array(), $is_home = false)
 function get_post_url($post, $group = '')
 {
     $home_post_model = get_opinion('home_post_model');
-
 
     if (!is_array($post)) {
         $post = D('Posts', 'Logic')->detail($post, false, array(), true);
@@ -100,30 +99,33 @@ function get_post_url($post, $group = '')
         if ($home_post_model === 'post_id') {
             $URL = $url_base . '/' . $post['post_id'];
         } else if ($home_post_model === 'post_name') {
-            $URL = $url_base . '/' . $post ['post_name'];
+            $URL = $url_base . '/' . $post['post_name'];
         } else if ($home_post_model === 'year/month/post_name') {
-            $URL = $url_base . '/' . getTimestamp($post ['post_date'], 'year') . '/' . getTimestamp($post ['post_date'], 'month') . '/' . $post ['post_name'];
+            $URL = $url_base . '/' . getTimestamp($post['post_date'], 'year') . '/' . getTimestamp($post['post_date'], 'month') . '/' . $post['post_name'];
         } else if ($home_post_model === 'year/month/post_id') {
-            $URL = $url_base . '/' . getTimestamp($post ['post_date'], 'year') . '/' . getTimestamp($post ['post_date'], 'month') . '/' . $post['post_id'];
+            $URL = $url_base . '/' . getTimestamp($post['post_date'], 'year') . '/' . getTimestamp($post['post_date'], 'month') . '/' . $post['post_id'];
         } else if ($home_post_model === 'year/post_id') {
-            $URL = $url_base . '/' . getTimestamp($post ['post_date'], 'year') . '/' . $post['post_id'];
+            $URL = $url_base . '/' . getTimestamp($post['post_date'], 'year') . '/' . $post['post_id'];
         } else if ($home_post_model === 'year/post_name') {
-            $URL = $url_base . '/' . getTimestamp($post ['post_date'], 'year') . '/' . $post ['post_name'];
+            $URL = $url_base . '/' . getTimestamp($post['post_date'], 'year') . '/' . $post['post_name'];
         } else if ($home_post_model === 'year/month/day/post_id') {
-            $URL = $url_base . '/' . getTimestamp($post ['post_date'], 'year') . '/' . getTimestamp($post ['post_date'], 'month') . '/' . getTimestamp($post ['post_date'], 'day') . '/' . $post['post_id'];
+            $URL = $url_base . '/' . getTimestamp($post['post_date'], 'year') . '/' . getTimestamp($post['post_date'], 'month') . '/' . getTimestamp($post['post_date'], 'day') . '/' . $post['post_id'];
         } else if ($home_post_model === 'year/month/day/post_name') {
-            $URL = $url_base . '/' . getTimestamp($post ['post_date'], 'year') . '/' . getTimestamp($post ['post_date'], 'month') . '/' . getTimestamp($post ['post_date'], 'day') . '/' . $post ['post_name'];
+            $URL = $url_base . '/' . getTimestamp($post['post_date'], 'year') . '/' . getTimestamp($post['post_date'], 'month') . '/' . getTimestamp($post['post_date'], 'day') . '/' . $post['post_name'];
+        } elseif ($home_post_model == 'absolute') {
+            $URL = $post['post_url'];
+            if ($URL == '') {
+                $URL = get_url($group . "Post/" . $post['post_type'], array('info' => $post['post_id']));
+            }
         } else {
             $URL = $url_base . '/' . $post['post_id'];
         }
         $URL = $URL . $URL_HTML_SUFFIX;
 
-
     }
 
     return $URL;
 }
-
 
 /**
  * 获取标签链接
@@ -137,7 +139,6 @@ function get_tag_url($tag, $group = '')
     $home_tag_model = get_opinion('home_tag_model');
     $Tags = D('Tags', 'Logic');
 
-
     if (!is_array($tag)) {
 
         if ($home_tag_model == 'native') {
@@ -148,7 +149,6 @@ function get_tag_url($tag, $group = '')
             $tag = $Tags->cache(true)->detail($tag);
         }
 
-
     }
 
     if ($home_tag_model === 'native') {
@@ -157,12 +157,11 @@ function get_tag_url($tag, $group = '')
         $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
         C('URL_HTML_SUFFIX', '');
 
-
         if ($home_tag_model == 'ID') {
             $URL = get_url($group . '/Tag') . '/' . $tag['tag_id'];
         } else if ($home_tag_model === 'slug') {
             $tag = $Tags->detail($tag['tag_id']);
-            $URL = get_url($group . '/Tag') . '/' . $tag ['tag_slug'];
+            $URL = get_url($group . '/Tag') . '/' . $tag['tag_slug'];
         } else {
             $URL = get_url($group . 'Tag/detail', array("info" => $tag['tag_id']));
         }
@@ -173,7 +172,6 @@ function get_tag_url($tag, $group = '')
     return $URL;
 
 }
-
 
 /**
  * 获取分类链接
@@ -203,15 +201,13 @@ function get_cat_url($cat, $group = '')
         $URL_HTML_SUFFIX = '.' . get_opinion('URL_HTML_SUFFIX');
         C('URL_HTML_SUFFIX', '');
 
-
         if ($home_cat_model == 'ID') {
             $URL = get_url($group . '/Cat') . '/' . $cat['cat_id'];
         } else if ($home_cat_model == 'slug') {
-            $URL = get_url($group . '/Cat') . '/' . $cat ['cat_slug'];
+            $URL = get_url($group . '/Cat') . '/' . $cat['cat_slug'];
         } else {
             $URL = get_url($group . 'Cat/detail', array("info" => $cat['cat_id']));
         }
-
 
         $URL = str_replace('//', '/', $URL) . $URL_HTML_SUFFIX;
 
@@ -236,5 +232,59 @@ function get_channel_url($cat, $group = '')
 
     return $URL;
 
+}
+
+/**
+ * 获取插件链接
+ * @param $url
+ * @param array $param
+ * @param string $group
+ * @internal param $cat
+ * @return mixed|string
+ */
+function get_addon_url($url, $param = array(), $group = 'Home')
+{
+
+    $URL_HTML_SUFFIX = get_opinion('URL_HTML_SUFFIX');
+    C('URL_HTML_SUFFIX', '');
+
+    $url_arr = preg_split('/\//', $url);
+
+    $param['action'] = $url_arr[2];
+
+    $url = U($group . '/' . $url_arr[0] . '/' . $url_arr[1], $param);
+
+    C('URL_HTML_SUFFIX', $URL_HTML_SUFFIX);
+
+    return $url;
+}
+
+
+/**
+ * 获取带时间链接的 年月日
+ * @param $Timestamp
+ * @param string $type
+ * @return string
+ */
+function get_time_url($Timestamp, $type = 'single')
+{
+    $array = explode("-", $Timestamp);
+    $year = $array [0];
+    $month = $array [1];
+
+    $array = explode(":", $array [2]);
+    $minute = $array [1];
+    $second = $array [2];
+
+    $array = explode(" ", $array [0]);
+    $day = $array [0];
+    $hour = $array [1];
+
+    $url = '';
+    $url .= '<a href="' . getURL('Archive/' . $type, array('year' => $year)) . '">' . $year . '</a>';
+    $url .= '-<a href="' . getURL('Archive/' . $type, array('year' => $year, 'month' => $month)) . '">' . $month . '</a>';
+    $url .= '-<a href="' . getURL('Archive/' . $type, array('year' => $year, 'month' => $month, 'day' => $day)) . '">' . $day . '</a>';
+
+    return $url;
 
 }

@@ -10,10 +10,10 @@
 // +----------------------------------------------------------------------
 namespace Common\Util;
 
-/**
- * Class GreenPage
- * @package Common\Util
- */
+    /**
+     * Class GreenPage
+     * @package Common\Util
+     */
 /**
  * Class GreenPage
  * @package Common\Util
@@ -81,8 +81,8 @@ class GreenPage
      */
     protected $config =
         array('header' => '条记录', 'prev' => '« 上一页', 'next' => '下一页 »',
-              'first'  => '第一页', 'last' => '最后一页',
-              'theme'  => ' %first%  %prePage%  %upPage% %linkPage% %downPage%   %nextPage% %end%');
+            'first' => '第一页', 'last' => '最后一页',
+            'theme' => ' %first%  %prePage%  %upPage% %linkPage% %downPage%   %nextPage% %end%');
 
     /**
      *  默认分页变量名
@@ -94,7 +94,7 @@ class GreenPage
      * 架构函数
      * @access public
      *
-     * @param int $totalRows  总的记录数
+     * @param int $totalRows 总的记录数
      * @param array|string $listRows 每页显示记录数
      * @param array|string $parameter 分页跳转的参数
      * @param string $url

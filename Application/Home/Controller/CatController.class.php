@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: CatController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-23
  * Time: 下午8:00
  */
@@ -63,12 +63,12 @@ class CatController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
 
         }
 
 
-        $this->assign('title', $cat['cat_name']); // 赋值数据集
+        $this->assign('title', '分类 ' . $cat['cat_name'] . ' 所有文章'); // 赋值数据集
         $this->assign('res404', $res404);
         $this->assign('postslist', $posts_list); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
@@ -88,10 +88,7 @@ class CatController extends HomeBaseController
         //TODO 兼容旧式CMS深目录结构的二级cat结构
         $Cat = new CatsLogic();
         $cat = $Cat->detail($info);
-
-
-        $children = ($Cat->getChildren($cat['cat_id']));
-
+        $children = $Cat->getChildren($cat['cat_id']);
 
         $Cat = new CatsLogic();
         $Posts = new PostsLogic();
@@ -109,7 +106,7 @@ class CatController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $posts_list = $Posts->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
 
         }
 

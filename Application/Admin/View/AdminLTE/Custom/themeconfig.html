@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{:get_opinion('title')}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li>{$action}</li>
+                <li class="active">{$theme.theme_name}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        <form action="{$handle}" class="form-horizontal row margin" method="POST">
+                            <foreach name="config['kv']" item="form" key="o_key">
+                                <div class="form-item cf">
+
+
+                                    <div class="form-group">
+                                        <label class="control-label">{$form.title|default=''}
+                                            <present name="form.tip">
+                                                <span class="check-tips">{$form.tip}</span>
+                                            </present>
+                                        </label>
+
+
+                                        <switch name="form.type">
+                                            <case value="text">
+
+                                                <div class="controls">
+                                                    <input type="text" placeholder="" class="form-control large"
+                                                           name="config[{$o_key}]" value="{$form.value}"/>
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </case>
+                                            <case value="password">
+
+                                                <div class="controls">
+                                                    <input type="password" placeholder="" class="form-control large"
+                                                           name="config[{$o_key}]" value="{$form.value}"/>
+                                                    <span class="help-inline"></span>
+                                                </div>
+                                            </case>
+                                            <case value="hidden">
+
+                                                <div class="controls">
+                                                    <input type="hidden" name="config[{$o_key}]" value="{$form.value}"/>
+                                                </div>
+                                            </case>
+                                            <case value="radio">
+                                                <div class="controls">
+                                                    <foreach name="form.options" item="opt" key="opt_k">
+                                                        <label class="radio">
+                                                            <input type="radio" name="config[{$o_key}]" value="{$opt_k}"
+                                                            <eq name="form.value" value="$opt_k"> checked</eq>
+                                                            >{$opt}
+                                                        </label>
+                                                    </foreach>
+                                                </div>
+
+                                            </case>
+                                            <case value="checkbox">
+
+                                                <div class="controls">
+                                                    <foreach name="form.options" item="opt" key="opt_k">
+                                                        <label class="checkbox">
+                                                            <php>
+                                                                is_null($form["value"]) && $form["value"] = array();
+                                                            </php>
+                                                            <input type="checkbox" name="config[{$o_key}][]"
+                                                                   value="{$opt_k}"
+                                                            <in name="opt_k" value="$form.value"> checked</in>
+                                                            >{$opt}
+                                                        </label>
+                                                    </foreach>
+                                                </div>
+                                            </case>
+                                            <case value="select">
+
+                                                <div class="controls">
+                                                    <select name="config[{$o_key}]" class="span6 form-control">
+                                                        <foreach name="form.options" item="opt" key="opt_k">
+                                                            <option value="{$opt_k}"
+                                                            <eq name="form.value" value="$opt_k"> selected</eq>
+                                                            >{$opt}</option>
+                                                        </foreach>
+                                                    </select>
+                                                </div>
+                                            </case>
+                                            <case value="textarea">
+
+                                                <div class="controls">
+                                                    <textarea name="config[{$o_key}]" class="large form-control"
+                                                              rows="3">{$form.value}</textarea>
+                                                </div>
+                                            </case>
+                                            <case value="group">
+                                                <ul class="tab-nav nav">
+                                                    <volist name="form.options" id="li">
+                                                        <li style="display:inline;" data-tab="tab{$i}"
+                                                        <eq name="i" value="1">class="current"</eq>
+                                                        ><a style="display:inline;" href="javascript:void(0);">{$li.title}</a></li>
+                                                    </volist>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <volist name="form.options" id="tab">
+                                                        <div id="tab{$i}"
+                                                             class="tab-pane <eq name='i' value='1'>in</eq> tab{$i}">
+                                                            <foreach name="tab['options']" item="tab_form"
+                                                                     key="o_tab_key">
+
+
+                                                                <div class="form-group">
+
+                                                                    <label class="control-label">
+                                                                        {$tab_form.title|default=''}
+                                                                    </label>
+
+                                                                    <div class="controls">
+                                                                        <switch name="tab_form.type">
+                                                                            <case value="text">
+                                                                                <input type="text"
+                                                                                       name="config[{$o_tab_key}]"
+                                                                                       class="text input-large"
+                                                                                       value="{$tab_form.value}">
+                                                                            </case>
+                                                                            <case value="password">
+                                                                                <input type="password"
+                                                                                       name="config[{$o_tab_key}]"
+                                                                                       class="text input-large"
+                                                                                       value="{$tab_form.value}">
+                                                                            </case>
+                                                                            <case value="hidden">
+                                                                                <input type="hidden"
+                                                                                       name="config[{$o_tab_key}]"
+                                                                                       value="{$tab_form.value}">
+                                                                            </case>
+                                                                            <case value="radio">
+                                                                                <foreach name="tab_form.options"
+                                                                                         item="opt" key="opt_k">
+                                                                                    <label class="radio">
+                                                                                        <input type="radio"
+                                                                                               name="config[{$o_tab_key}]"
+                                                                                               value="{$opt_k}"
+                                                                                        <eq name="tab_form.value"
+                                                                                            value="$opt_k"> checked
+                                                                                        </eq>
+                                                                                        >{$opt}
+                                                                                    </label>
+                                                                                </foreach>
+                                                                            </case>
+                                                                            <case value="checkbox">
+                                                                                <foreach name="tab_form.options"
+                                                                                         item="opt" key="opt_k">
+                                                                                    <label class="checkbox">
+                                                                                        <php>
+                                                                                            is_null($tab_form["value"])
+                                                                                            && $tab_form["value"] =
+                                                                                            array();
+                                                                                        </php>
+                                                                                        <input type="checkbox"
+                                                                                               name="config[{$o_tab_key}][]"
+                                                                                               value="{$opt_k}"
+                                                                                        <in name="opt_k"
+                                                                                            value="$tab_form.value">
+                                                                                            checked
+                                                                                        </in>
+                                                                                        >{$opt}
+                                                                                    </label>
+                                                                                </foreach>
+                                                                            </case>
+                                                                            <case value="select">
+                                                                                <select name="config[{$o_tab_key}]">
+                                                                                    <foreach name="tab_form.options"
+                                                                                             item="opt" key="opt_k">
+                                                                                        <option value="{$opt_k}"
+                                                                                        <eq name="tab_form.value"
+                                                                                            value="$opt_k"> selected
+                                                                                        </eq>
+                                                                                        >{$opt}</option>
+                                                                                    </foreach>
+                                                                                </select>
+                                                                            </case>
+                                                                            <case value="textarea">
+                                                                                <label class="textarea input-large">
+                                                                                    <textarea
+                                                                                            name="config[{$o_tab_key}]">{$tab_form.value}</textarea>
+                                                                                </label>
+                                                                            </case>
+                                                                        </switch>
+                                                                        <span class="help-inline">{$tab_form.tip}</span>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </foreach>
+
+                                                        </div>
+                                                    </volist>
+                                                </div>
+                                            </case>
+                                        </switch>
+                                    </div>
+
+                                </div>
+                            </foreach>
+
+
+                            <div class="form-actions row margin">
+                                <button class="btn btn-success submit-btn" type="submit">确 定</button>
+                                <button class="btn btn-danger btn-return"
+                                        onclick="javascript:history.back(-1);return false;">返 回
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

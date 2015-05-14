@@ -1,57 +1,171 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: CustomController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-26
  * Time: 下午5:26
  */
 
 namespace Admin\Controller;
 
+use Admin\Model\AddonsModel;
 use Common\Event\SystemEvent;
+use Common\Event\ThemeEvent;
 use Common\Event\UpdateEvent;
 use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
+use Common\Util\CacheManager;
 use Common\Util\Category;
 use Common\Util\File;
 use Common\Util\GreenPage;
 
+use Common\Util\PHPZip;
 use Think\Upload;
 
 /**
+ * 用户自定义模块
  * Class CustomController
  * @package Admin\Controller
  */
 class CustomController extends AdminBaseController
 {
 
+    public function __construct()
+    {
+
+        parent::__construct();
+
+        CacheManager::clearLink();
+        CacheManager::clearMenu();
+
+
+    }
+
+
     /**
      *
      */
     public function index()
     {
-        $this->display();
+        $this->theme();
     }
 
     //TODO menu
+
+    public function theme()
+    {
+
+        $ThemeEvent = new ThemeEvent();
+        $theme_exist = $ThemeEvent->getThemeNameList();
+        $theme_not_installed = $ThemeEvent->getThemeNotInstalledNameList();
+        $theme_installed = $ThemeEvent->getThemeInstalledNameList();
+
+
+        $theme_list_installed = $ThemeEvent->getThemeInstalledList();
+        foreach ($theme_list_installed as $key => $theme_list_installed_value) {
+            if ($theme_list_installed_value['theme_name'] == get_kv('home_theme', true)) {
+                $theme_list_installed[$key]['using_color'] = ' bg-green';
+                $theme_list_installed[$key]['status_name'] = '正在使用';
+                $theme_list_installed[$key]['status_url'] = "#";
+
+            } else {
+                $theme_list_installed[$key]['using_color'] = ' btn-warning';
+                $theme_list_installed[$key]['status_name'] = '准备就绪';
+                $theme_list_installed[$key]['status_url'] = U('Admin/Custom/themeChangeHandle',
+                    array('theme_name' => $theme_list_installed_value['theme_name']));
+
+            }
+        }
+        $this->assign('theme_list_installed', $theme_list_installed);
+
+
+        $theme_list = array();
+        foreach ($theme_not_installed as $value) {
+            $tpl_static_path = WEB_ROOT . 'Public/' . $value . '/';
+            $theme_temp = array();
+            if (file_exists($tpl_static_path . 'theme.xml')) {
+                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
+
+                $theme_temp = (array)$theme;
+                if ($theme_temp['name'] == get_kv('home_theme', true)) {
+                    $theme_temp['using_color'] = ' bg-green';
+                    $theme_temp['status_name'] = '正在使用';
+
+                } else {
+                    $theme_temp['using_color'] = ' btn-warning';
+                    $theme_temp['status_name'] = '待安装';
+
+                }
+
+                array_push($theme_list, $theme_temp);
+            }
+
+        }
+        $this->assign('theme_list_not_installed', $theme_list);
+
+
+        $this->display();
+
+
+    }
+
     /**
-     *
+     * 首页菜单显示
      */
     public function menu()
     {
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
 
-        $menu_list = $Menu->getList(); // 获取分类结构
-
-
+        $menu_list = $Menu->getList(null, 0, 'menu_sort desc'); // 获取分类结构
         $this->assign('menu', $menu_list);
 
         $this->display();
     }
 
+    //todo
+    public function menuInc($id)
+    {
+        $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
+        if (!$menu_item) {
+            $this->error('不存在这个菜单项');
+        }
+
+
+        $map['menu_sort'] = array('GT', $menu_item['menu_sort']);
+        $menu_item_target = D('Menu')->where($map)->order("menu_sort")->find();
+        duMP($menu_item_target);
+
+
+        $map['menu_sort'] = array('GT', $menu_item_target['menu_sort']);
+
+
+        $Menu = D('Menu');
+        $res = $Menu->where($map)->setInc('menu_sort');
+
+
+        $menu_item['menu_sort'] = $menu_item_target['menu_sort'] + 1;
+
+        $res = D('Menu')->data($menu_item)->save();
+
+
+        dump($res);
+    }
+
+    //todo
+    public function menuDec($id)
+    {
+        $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
+        if (!$menu_item) {
+            $this->error('不存在这个菜单项');
+        }
+
+
+    }
+
     /**
+     * 菜单删除
      * @param $id
      * @param bool $child
      */
@@ -67,12 +181,14 @@ class CustomController extends AdminBaseController
             $res = $Menu->where(array('menu_pid' => $id))->setField($data);
         }
         //TODO 判断
-        $this->success('删除成功', 'Admin/Custom/menu');
+
+
+        $this->success('删除成功', U('Admin/Custom/menu'));
 
     }
 
     /**
-     *
+     * 添加菜单
      */
     public function menuAdd()
     {
@@ -97,10 +213,10 @@ class CustomController extends AdminBaseController
         $menu_list = $Menu->getList(); // 获取分类结构
 
 
-        $url_function = C('url_function');
+        $url_function = get_opinion('url_function');
         $this->assign('url_function', gen_opinion_list($url_function));
 
-        $url_open = C('url_open');
+        $url_open = get_opinion('url_open');
         $this->assign('url_open', gen_opinion_list($url_open));
 
 
@@ -119,10 +235,12 @@ class CustomController extends AdminBaseController
     }
 
     /**
-     *
+     * 添加菜单处理
      */
     public function menuAddHandle()
     {
+
+
         $post_data = I('post.');
 
         $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
@@ -139,10 +257,40 @@ class CustomController extends AdminBaseController
     }
 
     /**
+     * 编辑菜单
      * @param $id
      */
     public function menuEdit($id)
     {
+
+        $menu_item = D('Menu')->where(array('menu_id' => $id))->find();
+        if (!$menu_item) {
+            $this->error('不存在这个菜单项');
+        }
+
+        $this->assign('info', $menu_item);
+
+
+        $CatsLogic = new CatsLogic();
+        $TagsLogic = new TagsLogic();
+        $PostsLogic = new PostsLogic();
+
+        /**
+         *  文章分类标签 start
+         */
+        $cat_list = $CatsLogic->category();
+        $tag_list = $TagsLogic->field('tag_id,tag_name')->select();
+        $post_list = $PostsLogic->field('post_id,post_title')->select();
+        $cat_list = array_column_5($cat_list, 'cat_slug', 'cat_id');
+        $tag_list = array_column_5($tag_list, 'tag_name', 'tag_id');
+        $post_list = array_column_5($post_list, 'post_title', 'post_id');
+        $this->assign('cat_list', gen_opinion_list($cat_list));
+        $this->assign('tag_list', gen_opinion_list($tag_list));
+        $this->assign('post_list', gen_opinion_list($post_list));
+        /**
+         *  文章分类标签 end
+         */
+
         $action = '编辑菜单';
         $action_url = U('Admin/Custom/menuEdit', array('id' => $id));
         $form_url = U('Admin/Custom/menuEditHandle', array('id' => $id));
@@ -150,8 +298,19 @@ class CustomController extends AdminBaseController
         $Menu = new Category ('Menu', array('menu_id', 'menu_pid', 'menu_name', 'menu_construct'));
         $menu_list = $Menu->getList(); // 获取分类结构
 
-        $m = D('Menu')->where(array('menu_id' => $id))->find();
-        $this->assign('info', $m);
+        $url_function = get_opinion('url_function');
+        $this->assign('url_function', gen_opinion_list($url_function, $menu_item["menu_function"]));
+
+        $url_open = get_opinion('url_open');
+        $this->assign('url_open', gen_opinion_list($url_open, $menu_item["menu_action"]));
+
+        //父级节点
+        $menu_list2 = array_column_5($menu_list, 'menu_construct', 'menu_id');
+        $this->assign('menu_list2', gen_opinion_list($menu_list2, $menu_item['menu_pid']));
+
+        //显示排序
+        $menu_list3 = array_column_5($menu_list, 'menu_construct', 'menu_sort');
+        $this->assign('menu_list3', gen_opinion_list($menu_list3, $menu_item['menu_sort']));
 
 
         $this->assign('menu', $menu_list);
@@ -164,17 +323,25 @@ class CustomController extends AdminBaseController
     }
 
     /**
+     * 菜单编辑处理
      * @param $id
      */
     public function menuEditHandle($id)
     {
-        $data = $_POST;
 
-        if ($data['menu_pid'] == $data['menu_id']) {
+        $post_data = I('post.');
+
+        $map['menu_sort'] = array('EGT', $post_data['menu_sort']);
+
+        $Menu = D('Menu');
+        $res = $Menu->where($map)->setInc('menu_sort');
+
+
+        if ($post_data['menu_pid'] == $post_data['menu_id']) {
             $this->error('父类不能是自己');
         }
         $Menu = D('Menu');
-        $result = $Menu->where(array('menu_id' => $id))->data($data)->save();
+        $result = $Menu->where(array('menu_id' => $id))->data($post_data)->save();
         if ($result) {
             $this->success('编辑成功', U('Admin/Custom/menu'));
         } else {
@@ -183,89 +350,44 @@ class CustomController extends AdminBaseController
         }
     }
 
-
     /**
-     * @param string $theme_name
-     * @return mixed|string
+     * 插件页面
      */
-    private function themeStatus($theme_name = 'Vena')
+    public function plugin()
     {
-        $res = get_kv('theme_' . $theme_name, true);
-        if ($res == null) {
-            set_kv('theme_' . $theme_name, 'disabled');
-            return 'disabled';
-        }
+        //$page = I('get.page', get_opinion('PAGER'));
 
-        return $res;
-    }
+        $Addons = new AddonsModel();
+
+        $list = $Addons->getList(); //这里得到是未安装的
+//        $count = count($list);
 
 
-    /**
-     *
-     */
-    public function theme()
-    {
-        $tpl_view = File::scanDir(WEB_ROOT . 'Application/Home/View');
-        $tpl_static = File::scanDir(WEB_ROOT . 'Public');
-        $tpl = array_intersect($tpl_view, $tpl_static);
-
-        $theme_list = array();
-        foreach ($tpl as $value) {
-            $tpl_static_path = WEB_ROOT . 'Public/' . $value . '/';
-            $theme_temp = array();
-            if (file_exists($tpl_static_path . 'theme.xml')) {
-                $theme = simplexml_load_file($tpl_static_path . '/theme.xml');
-
-                $theme_temp = (array)$theme;
-                if ($theme_temp['name'] == get_kv('home_theme', true)) {
-                    $theme_temp['status_name'] = '正在使用';
-                    $theme_temp['status_url'] = '#';
-                    $theme_temp['using_color'] = ' bg-green';
-                    $theme_temp['action_name2'] = '使用中';
-                    $theme_temp['action_url2'] = '#';
-                } elseif ($this->themeStatus($theme_temp['name']) == 'enabled') {
-                    $theme_temp['using_color'] = ' bg-olive';
-
-                    $theme_temp['status_name'] = '立即使用';
-                    $theme_temp['status_url'] = U('Admin/Custom/themeChangeHandle', array('theme_name' => $theme_temp['name']));
-
-                    $theme_temp['action_name2'] = '禁用';
-                    $theme_temp['action_url2'] = U('Admin/Custom/themeDisableHandle', array('theme_name' => $theme_temp['name']));
-
-                } else {
-                    $theme_temp['status_name'] = '禁用中';
-                    $theme_temp['status_url'] = '#';
-
-                    $theme_temp['action_name2'] = '启用';
-                    $theme_temp['action_url2'] = U('Admin/Custom/themeEnableHandle', array('theme_name' => $theme_temp['name']));
-
-                }
+        // $p = new GreenPage ($count, $page);
+        //这里得到是已安装的  =_=+++++
 
 
-                array_push($theme_list, $theme_temp);
-            }
-
-        }
-        $this->assign('theme_list', $theme_list);
-
+        //$this->assign('page', $p->show());
+        $this->assign('list', $list);
         $this->display();
+
     }
 
 
-    /**
-     *
-     */
-    public function themeAdd()
+    public function pluginAdd()
     {
 
-        $this->assign('action', '主题添加');
-        $this->assign('action_name', 'themeAdd');
+        $this->assign('action', '插件添加');
+        $this->assign('action_name', 'pluginAdd');
 
-        $this->display();
+
+        $this->display("pluginadd");
     }
 
-    public function themeAddLocal()
+
+    public function pluginAddLocal()
     {
+
         File::mkDir(WEB_CACHE_PATH);
 
 
@@ -293,7 +415,7 @@ class CustomController extends AdminBaseController
                 $applyInfo = json_decode($applyRes, true);
 
                 if ($applyInfo['status']) {
-                    $this->success($applyInfo['info'], U('Admin/Custom/theme'));
+                    $this->success($applyInfo['info'], U('Admin/Custom/plugin'));
                 } else {
                     $this->error($applyInfo['info']);
                 }
@@ -303,97 +425,27 @@ class CustomController extends AdminBaseController
 
             }
         }
+
+
     }
 
 
-
-    //todo 需要检查是否真的成功
-    /**
-     * @param string $theme_name
-     */
-    public function themeDisableHandle($theme_name = 'NovaGreenStudio')
-    {
-        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
-        set_kv('theme_' . $theme_name, 'disabled');
-        $this->success('禁用成功');
-    }
-
-    /**
-     * @param string $theme_name
-     */
-    public function themeEnableHandle($theme_name = 'NovaGreenStudio')
+    public function pluginDelHandle($plugin_name = '')
     {
 
-        set_kv('theme_' . $theme_name, 'enabled');
-        $this->success('启用成功');
-    }
+        $plugin_path = Addon_PATH . $plugin_name . '/';
 
-
-    /**
-     * @param string $theme_name
-     */
-    public function themeChangeHandle($theme_name = 'NovaGreenStudio')
-    {
-        if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
-
-        if ($this->themeStatus($theme_name) == 'disabled') {
-            $this->error('请先启用主题');
-        }
-
-
-        $res = set_kv('home_theme', $theme_name);
-        if ($res) {
-            $cache_control = new SystemEvent();
-            $cache_control->clearCacheAll();
-            $this->success('切换成功');
+        if (File::delAll($plugin_path, true)) {
+            $this->success('删除成功');
         } else {
-            $this->error('切换失败');
-        }
-    }
-
-    /**
-     * @param string $theme_name
-     */
-    public function themeDelHandle($theme_name = '')
-    {
-        if ($this->themeStatus($theme_name) == 'enabled') {
-            $this->error('请先禁用主题');
+            $this->error("删除失败");
         }
 
-        $tpl_view_path = WEB_ROOT . 'Application/Home/View/' . $theme_name . '/';
-        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
-        File::delAll($tpl_view_path, true);
-        File::delAll($tpl_static_path, true);
-        $this->success('删除成功');
     }
 
 
     /**
-     *
-     */
-    public function plugin()
-    {
-        $page = I('get.page', C('PAGER'));
-
-        $Addons = M('Addons');
-
-        $list = D('Addons')->getList(); //这里得到是未安装的
-        $count = count($list);
-
-
-        $p = new GreenPage ($count, $page);
-        //这里得到是已安装的  =_=+++++
-
-
-        //$this->assign('page', $p->show());
-        $this->assign('list', $list);
-        $this->display();
-
-    }
-
-    //创建向导首页
-    /**
-     *
+     * 创建向导首页
      */
     public function create()
     {
@@ -408,8 +460,97 @@ class CustomController extends AdminBaseController
         $this->display();
     }
 
-    //预览
     /**
+     * 检查form
+     */
+    public function checkForm()
+    {
+        $data = $_POST;
+        $data['info']['name'] = trim($data['info']['name']);
+        if (!$data['info']['name'])
+            $this->error('插件标识必须');
+        //检测插件名是否合法
+        $addons_dir = Addon_PATH;
+        if (file_exists("{$addons_dir}{$data['info']['name']}")) {
+            $this->error('插件已存在');
+        }
+        $this->success('可以创建');
+    }
+
+    /**
+     * 创建插件
+     */
+    public function build()
+    {
+        $data = $_POST;
+        $data['info']['name'] = trim($data['info']['name']);
+        $addonFile = $this->preview(false);
+        $addons_dir = Addon_PATH;
+        //创建目录结构
+        $files = array();
+        $addon_dir = "$addons_dir{$data['info']['name']}/";
+        $files[] = $addon_dir;
+        $addon_name = "{$data['info']['name']}Addon.class.php";
+        $files[] = "{$addon_dir}{$addon_name}";
+        if ($data['has_config'] == 1) ; //如果有配置文件
+        $files[] = $addon_dir . 'config.php';
+
+        if ($data['has_outurl']) {
+            $files[] = "{$addon_dir}Controller/";
+            $files[] = "{$addon_dir}Controller/{$data['info']['name']}Controller.class.php";
+            $files[] = "{$addon_dir}Model/";
+            $files[] = "{$addon_dir}Model/{$data['info']['name']}Model.class.php";
+        }
+        $custom_config = trim($data['custom_config']);
+        if ($custom_config)
+            $data[] = "{$addon_dir}{$custom_config}";
+
+        $custom_adminlist = trim($data['custom_adminlist']);
+        if ($custom_adminlist)
+            $data[] = "{$addon_dir}{$custom_adminlist}";
+
+        create_dir_or_files($files);
+
+        //写文件
+        file_put_contents("{$addon_dir}{$addon_name}", $addonFile);
+        if ($data['has_outurl']) {
+            $addonController = <<<str
+<?php
+
+namespace Addons\\{$data['info']['name']}\Controller;
+use Home\Controller\AddonsController;
+
+class {$data['info']['name']}Controller extends AddonsController{
+
+        }
+
+str;
+            file_put_contents("{$addon_dir}Controller/{$data['info']['name']}Controller.class.php", $addonController);
+            $addonModel = <<<str
+<?php
+
+namespace Addons\\{$data['info']['name']}\Model;
+use Think\Model;
+
+/**
+ * {$data['info']['name']}模型
+ */
+class {$data['info']['name']}Model extends Model{
+
+    }
+
+str;
+            file_put_contents("{$addon_dir}Model/{$data['info']['name']}Model.class.php", $addonModel);
+        }
+
+        if ($data['has_config'] == 1)
+            file_put_contents("{$addon_dir}config.php", $data['config']);
+
+        $this->success('创建成功', U('Admin/Custom/plugin'));
+    }
+
+    /**
+     * 插件预览
      * @param bool $output
      * @return string
      */
@@ -421,8 +562,6 @@ class CustomController extends AdminBaseController
         $custom_config = trim($data['custom_config']);
         if ($data['has_config'] && $custom_config) {
             $custom_config = <<<str
-
-
         public \$custom_config = '{$custom_config}';
 str;
             $extend[] = $custom_config;
@@ -503,94 +642,6 @@ str;
 
     /**
      *
-     */
-    public function checkForm()
-    {
-        $data = $_POST;
-        $data['info']['name'] = trim($data['info']['name']);
-        if (!$data['info']['name'])
-            $this->error('插件标识必须');
-        //检测插件名是否合法
-        $addons_dir = Addon_PATH;
-        if (file_exists("{$addons_dir}{$data['info']['name']}")) {
-            $this->error('插件已存在');
-        }
-        $this->success('可以创建');
-    }
-
-    /**
-     *
-     */
-    public function build()
-    {
-        $data = $_POST;
-        $data['info']['name'] = trim($data['info']['name']);
-        $addonFile = $this->preview(false);
-        $addons_dir = Addon_PATH;
-        //创建目录结构
-        $files = array();
-        $addon_dir = "$addons_dir{$data['info']['name']}/";
-        $files[] = $addon_dir;
-        $addon_name = "{$data['info']['name']}Addon.class.php";
-        $files[] = "{$addon_dir}{$addon_name}";
-        if ($data['has_config'] == 1) ; //如果有配置文件
-        $files[] = $addon_dir . 'config.php';
-
-        if ($data['has_outurl']) {
-            $files[] = "{$addon_dir}Controller/";
-            $files[] = "{$addon_dir}Controller/{$data['info']['name']}Controller.class.php";
-            $files[] = "{$addon_dir}Model/";
-            $files[] = "{$addon_dir}Model/{$data['info']['name']}Model.class.php";
-        }
-        $custom_config = trim($data['custom_config']);
-        if ($custom_config)
-            $data[] = "{$addon_dir}{$custom_config}";
-
-        $custom_adminlist = trim($data['custom_adminlist']);
-        if ($custom_adminlist)
-            $data[] = "{$addon_dir}{$custom_adminlist}";
-
-        create_dir_or_files($files);
-
-        //写文件
-        file_put_contents("{$addon_dir}{$addon_name}", $addonFile);
-        if ($data['has_outurl']) {
-            $addonController = <<<str
-<?php
-
-namespace Addons\\{$data['info']['name']}\Controller;
-use Home\Controller\AddonsController;
-
-class {$data['info']['name']}Controller extends AddonsController{
-
-        }
-
-str;
-            file_put_contents("{$addon_dir}Controller/{$data['info']['name']}Controller.class.php", $addonController);
-            $addonModel = <<<str
-<?php
-
-namespace Addons\\{$data['info']['name']}\Model;
-use Think\Model;
-
-/**
- * {$data['info']['name']}模型
- */
-class {$data['info']['name']}Model extends Model{
-
-    }
-
-str;
-            file_put_contents("{$addon_dir}Model/{$data['info']['name']}Model.class.php", $addonModel);
-        }
-
-        if ($data['has_config'] == 1)
-            file_put_contents("{$addon_dir}config.php", $data['config']);
-
-        $this->success('创建成功', U('Admin/Custom/plugin'));
-    }
-
-    /**
      * 插件后台显示页面
      * @param string $name 插件名
      */
@@ -628,10 +679,10 @@ str;
     /**
      * 启用插件
      */
-    public function enable()
+    public function pluginEnable()
     {
-        $id = I('id');
-        M('Addons')->where(array('id' => $id))->setField('status', 1);
+        $id = I('post.id');
+        D('Addons')->where(array('id' => $id))->setField('status', 1);
         S('hooks', null);
         $this->jsonReturn(1, "启用成功", U('Admin/Custom/plugin'));
 
@@ -640,10 +691,10 @@ str;
     /**
      * 禁用插件
      */
-    public function disable()
+    public function pluginDisable()
     {
-        $id = I('id');
-        M('Addons')->where(array('id' => $id))->setField('status', 0);
+        $id = I('post.id');
+        D('Addons')->where(array('id' => $id))->setField('status', 0);
         S('hooks', null);
         $this->jsonReturn(1, "禁用成功", U('Admin/Custom/plugin'));
     }
@@ -701,7 +752,6 @@ str;
         }
     }
 
-
     /**
      * 保存插件设置
      */
@@ -711,7 +761,7 @@ str;
         $config = I('config');
         $flag = M('Addons')->where("id={$id}")->setField('config', json_encode($config));
         if ($flag !== false) {
-            $this->success('保存成功', Cookie('__forward__'));
+            $this->success('保存成功', U("Admin/Custom/plugin"));
         } else {
             $this->error('保存失败');
         }
@@ -735,24 +785,24 @@ str;
         if (!$install_flag) {
             $this->error('执行插件预安装操作失败' . session('addons_install_error'), U('Admin/Custom/plugin'));
         }
-        $addonsModel = D('Addons');
-        $data = $addonsModel->create($info);
+        $Addons = D('Addons');
+        $data = $Addons->create($info);
         if (is_array($addons->admin_list) && $addons->admin_list !== array()) {
             $data['has_adminlist'] = 1;
         } else {
             $data['has_adminlist'] = 0;
         }
         if (!$data)
-            $this->error($addonsModel->getError());
-        if ($addonsModel->add($data)) {
+            $this->error($Addons->getError());
+        if ($Addons->add($data)) {
             $config = array('config' => json_encode($addons->getConfig()));
-            $addonsModel->where("name='{$addon_name}'")->save($config);
+            $Addons->where("name='{$addon_name}'")->save($config);
             $hooks_update = D('Hooks')->updateHooks($addon_name);
             if ($hooks_update) {
                 S('hooks', null);
                 $this->success('安装成功', U('Admin/Custom/plugin'));
             } else {
-                $addonsModel->where("name='{$addon_name}'")->delete();
+                $Addons->where("name='{$addon_name}'")->delete();
                 $this->error('更新钩子处插件失败,请卸载后尝试重新安装', U('Admin/Custom/plugin'));
             }
 
@@ -796,6 +846,7 @@ str;
      */
     public function hooks()
     {
+
         $this->meta_title = '钩子列表';
         $map = $fields = array();
 
@@ -804,7 +855,7 @@ str;
 
         $count = D("Hooks")->count();
         if ($count != 0) {
-            $page = I('get.page', C('PAGER'));
+            $page = I('get.page', get_opinion('PAGER'));
             $Page = new GreenPage($count, $page); // 实例化分页类 传入总记录数
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
@@ -814,12 +865,11 @@ str;
 
         $this->assign('page', $pager_bar);
         $this->assign('list', $list);
-        $this->assign('action', '钩子管理');
         $this->display();
     }
 
     /**
-     *
+     * 添加钩子
      */
     public function addhook()
     {
@@ -828,8 +878,8 @@ str;
         $this->display('edithook');
     }
 
-    //钩子出编辑挂载插件页面
     /**
+     * 钩子出编辑挂载插件页面
      * @param $id
      */
     public function edithook($id)
@@ -840,8 +890,8 @@ str;
         $this->display('edithook');
     }
 
-    //超级管理员删除钩子
     /**
+     * 删除钩子
      * @param $id
      */
     public function delhook($id)
@@ -854,7 +904,7 @@ str;
     }
 
     /**
-     *
+     * 更新钩子
      */
     public function updateHook()
     {
@@ -880,13 +930,14 @@ str;
     }
 
     /**
+     * 执行
      * @param null $_addons
      * @param null $_controller
      * @param null $_action
      */
     public function execute($_addons = null, $_controller = null, $_action = null)
     {
-        if (C('URL_CASE_INSENSITIVE')) {
+        if (get_opinion('URL_CASE_INSENSITIVE')) {
             $_addons = ucfirst(parse_name($_addons, 1));
             $_controller = parse_name($_controller, 1);
         }
@@ -898,7 +949,9 @@ str;
         }
     }
 
-
+    /**
+     * link 分组
+     */
     public function linkgroup()
     {
 
@@ -908,6 +961,9 @@ str;
         $this->display();
     }
 
+    /**
+     * 添加友情链接分组
+     */
     public function addlinkgroup()
     {
         $this->assign('action', '添加链接分组');
@@ -917,6 +973,9 @@ str;
         $this->display();
     }
 
+    /**
+     * 添加友情链接分组处理
+     */
     public function addlinkgroupHandle()
     {
         $data['link_group_name'] = I('post.link_group_name');
@@ -927,6 +986,10 @@ str;
         }
     }
 
+    /**
+     * 删除链接分组处理
+     * @param $id
+     */
     public function dellinkgroupHandle($id)
     {
 
@@ -937,6 +1000,10 @@ str;
         }
     }
 
+    /**
+     * 编辑链接分组
+     * @param $id
+     */
     public function editlinkgroup($id)
     {
         $this->assign('form_url', U('Admin/Custom/editlinkgroupHandle', array('id' => $id)));
@@ -951,6 +1018,10 @@ str;
         $this->display('addlinkgroup');
     }
 
+    /**
+     * 编辑链接分组处理
+     * @param $id
+     */
     public function editlinkgroupHandle($id)
     {
         $data['link_group_name'] = I('post.link_group_name');
@@ -979,9 +1050,8 @@ str;
         $this->display();
     }
 
-
     /**
-     *
+     * 添加链接
      */
     public function addlink()
     {
@@ -993,7 +1063,7 @@ str;
                 $config = array(
                     "savePath" => 'Links/',
                     "maxSize" => 1000000, // 单位B
-                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "exts" => array('jpg', 'bmp', 'png', 'jpeg'),
                     "subName" => array('date', 'Y/m-d'),
                 );
                 $upload = new Upload($config);
@@ -1042,6 +1112,7 @@ str;
     }
 
     /**
+     * 编辑链接
      * @param $id
      */
     public function editlink($id)
@@ -1054,7 +1125,7 @@ str;
                 $config = array(
                     "savePath" => 'Links/',
                     "maxSize" => 1000000, // 单位B
-                    "exts" => array('jpg', 'gif', 'png', 'jpeg'),
+                    "exts" => array('jpg', 'bmp', 'png', 'jpeg'),
                     "subName" => array('date', 'Y/m-d'),
                 );
                 $upload = new Upload($config);
@@ -1069,6 +1140,7 @@ str;
                     $image = new \Think\Image();
                     $image->open($file_path_full);
                     $image->thumb(200, 150)->save($file_path_full);
+
                     $img_url = $info['img']['urlpath'];
 
                     // $img_url = "http://" . $_SERVER['SERVER_NAME'] . str_replace('index.php', '', __APP__) . $file_path_full;
@@ -1106,6 +1178,7 @@ str;
     }
 
     /**
+     * 删除链接
      * @param $id
      */
     public function dellink($id)
@@ -1117,45 +1190,329 @@ str;
         }
     }
 
-    /**
-     * 轮播说明
-     * post_img->幻灯图片 url
-     * post_top->顺序
-     * post_template->分组
-     * post_name->链接URL
-     * post_content->文字
-     * */
-    public function slider()
+
+    public function themeInstallHandle($theme_name)
     {
-        $PostsList = new PostsLogic();
-        $slider = $PostsList->getList(0, 'slider', 'post_top', false);
+        $res = D("Theme")->where(array("theme_name" => $theme_name))->find();
+        if ($res) $this->error("主题已经安装");
 
-        $this->assign('slider', $slider);
 
-        $this->display();
-    }
+        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
+        $theme_temp = array();
 
-    /**
-     *
-     */
-    public function addslider()
-    {
+        $theme_xml_path = $tpl_static_path . 'theme.xml';
+        if (file_exists($theme_xml_path)) {
 
-        $this->display();
-    }
+            $theme_xml = File::readFile($theme_xml_path);
 
-    /**
-     * @param $id
-     */
-    public function delslider($id)
-    {
+            $theme = simplexml_load_string($theme_xml);
+            $theme_temp["theme_name"] = (string)$theme->name;
+            $theme_temp["theme_description"] = (string)$theme->description;
+            $theme_temp["theme_build"] = (string)$theme->build;
+            $theme_temp["theme_versioin"] = (string)$theme->version;
+            $theme_temp["theme_preview"] = (string)$theme->preview;
+            $theme_temp["theme_copyright"] = (string)$theme->copyright;
+            $theme_temp["theme_xml"] = $theme_xml;
 
-        if (D("Posts", 'Logic')->where(array('post_type' => 'slider', 'post_id' => $id))->delete()) {
-            $this->success('永久删除成功');
+
+            $config = object_to_array($theme->config);
+            $config['post_type'] = object_to_array($theme->post);
+
+
+            $theme_temp["theme_config"] = (string)json_encode($config);
+
+
+            $res = D("Theme")->data($theme_temp)->add();
+            if ($res) {
+                $this->success("主题安装成功");
+            } else {
+                $this->error("主题安装失败");
+
+            }
+
         } else {
-            $this->error('永久删除失败');
+            $this->error("主题描述文件缺失");
+
         }
 
     }
 
+
+    public function themeUninstallHandle($theme_name)
+    {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以删除');
+
+
+        $res = D("Theme")->where(array("theme_name" => $theme_name))->delete();
+
+        if ($res) {
+            $this->success("卸载成功");
+
+        } else {
+            $this->error("卸载失败");
+        }
+
+
+    }
+
+
+    public function themeDetail($theme_name)
+    {
+        $theme = D("Theme")->where(array("theme_name" => $theme_name))->find();
+        if (!$theme) $this->error("主题尚未安装");
+        $config = json_decode($theme['theme_config'], true);
+
+        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
+        $theme_xml_path = $tpl_static_path . 'theme.xml';
+        if (file_exists($theme_xml_path)) {
+            $theme_xml = File::readFile($theme_xml_path);
+            $theme_obj = simplexml_load_string($theme_xml);
+            $theme_temp = object_to_array($theme_obj);
+            $this->assign("theme_xml", $theme_temp);
+        }
+
+
+        $this->assign("config", $config);
+        $this->assign("theme", $theme);
+        $this->assign("action", $theme['theme_name'] . "主题详细");
+        $this->display("themedetail");
+
+    }
+
+
+    public function themeConfig($theme_name)
+    {
+        $theme = D("Theme")->where(array("theme_name" => $theme_name))->find();
+        if (!$theme) $this->error("主题尚未安装");
+
+
+        $config = json_decode($theme['theme_config'], true);
+
+        $this->assign("handle", U("Admin/Custom/themeConfigHandle", array('theme_name' => $theme_name)));
+
+        $this->assign("theme", $theme);
+        $this->assign("config", $config);
+        $this->assign("action", "主题配置");
+        $this->display("themeconfig");
+
+    }
+
+    public function themeConfigHandle($theme_name)
+    {
+        $theme = D("Theme")->where(array("theme_name" => $theme_name))->find();
+        if (!$theme) $this->error("主题尚未安装");
+
+        $config = json_decode($theme['theme_config'], true);
+
+        $new_config = I('post.config');
+        foreach ($new_config as $config_key => $config_value) {
+            $config['kv'][$config_key]["value"] = $config_value;
+        }
+
+
+        $theme['theme_config'] = json_encode($config);
+
+        $res = D("Theme")->where(array("theme_name" => $theme_name))->data($theme)->save();
+
+
+        if ($res) {
+            $this->success("主题配置保存成功", U("Admin/Custom/theme"));
+        } else {
+            $this->error("主题配置保存失败或者未更改");
+        }
+
+    }
+
+
+    /**
+     * 主题添加
+     */
+    public function themeAdd()
+    {
+
+        $this->assign('action', '主题添加');
+        $this->assign('action_name', 'themeAdd');
+
+        $this->display();
+    }
+
+    /**
+     * 添加本地上传主题
+     */
+    public function themeAddLocal()
+    {
+        File::mkDir(WEB_CACHE_PATH);
+
+
+        $config = array(
+            'rootPath' => WEB_CACHE_PATH,
+            "savePath" => '',
+            "maxSize" => 100000000, // 单位B
+            "exts" => array('zip'),
+            "subName" => array(),
+        );
+
+        $upload = new Upload($config);
+        $info = $upload->upload();
+        if (!$info) { // 上传错误提示错误信息
+            $this->error($upload->getError());
+        } else { // 上传成功 获取上传文件信息
+
+            $file_path_full = $info['file']['fullpath'];
+
+            //dump($info);die($file_path_full);
+            if (File::file_exists($file_path_full)) {
+
+                $Update = new UpdateEvent();
+                $applyRes = $Update->applyPatch($file_path_full);
+                $applyInfo = json_decode($applyRes, true);
+
+                if ($applyInfo['status']) {
+                    $this->success($applyInfo['info'], U('Admin/Custom/theme'));
+                } else {
+                    $this->error($applyInfo['info']);
+                }
+
+            } else {
+                $this->error('文件不存在');
+
+            }
+        }
+    }
+
+
+
+    //todo 需要检查是否真的成功
+    /**
+     * @param string $theme_name
+     */
+    public function themeDisableHandle($theme_name = 'NovaGreenStudio')
+    {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以禁用');
+        set_kv('theme_' . $theme_name, 'disabled');
+        $this->success('禁用成功');
+    }
+
+    /**
+     * @param string $theme_name
+     */
+    public function themeEnableHandle($theme_name = 'NovaGreenStudio')
+    {
+
+        set_kv('theme_' . $theme_name, 'enabled');
+
+        S('theme_config', null);
+
+        $this->success('启用成功');
+    }
+
+
+    /**
+     * @param string $theme_name
+     */
+    public function themeChangeHandle($theme_name = 'NovaGreenStudio')
+    {
+        if (get_kv('home_theme') == $theme_name) $this->error('无需切换');
+        S('theme_config', null);
+
+
+        $res = set_kv('home_theme', $theme_name);
+
+        set_kv($theme_name . '_theme_config', null);
+
+        if ($res) {
+            $cache_control = new SystemEvent();
+            $cache_control->clearCacheAll();
+            $this->success('切换成功');
+        } else {
+            $this->error('切换失败');
+        }
+    }
+
+    /**
+     * @param string $theme_name
+     */
+    public function themeDelHandle($theme_name = '')
+    {
+        if (get_kv('home_theme') == $theme_name) $this->error('正在使用的主题不可以删除');
+
+
+        $tpl_view_path = WEB_ROOT . 'Application/Home/View/' . $theme_name . '/';
+        $tpl_static_path = WEB_ROOT . 'Public/' . $theme_name . '/';
+        File::delAll($tpl_view_path, true);
+        File::delAll($tpl_static_path, true);
+        $this->success('删除成功');
+    }
+
+
+    /**
+     * @param string $theme_name
+     */
+    public function themeExportHandle($theme_name = '')
+    {
+        $tpl_view_path = 'Application/Home/View/' . $theme_name . '/';
+        $tpl_static_path = 'Public/' . $theme_name . '/';
+
+        $temp_path = WEB_CACHE_PATH;
+
+        File::delDir(WEB_CACHE_PATH);
+        File::mkDir(WEB_CACHE_PATH);
+
+        $file_path = $temp_path . "\\" . 'GCS_Theme-' . $theme_name . '-' . md5(time()) . '.zip';
+
+        $zip = new \ZipArchive; //新建一个ZipArchive的对象
+        $res = $zip->open($file_path, \ZipArchive::CREATE);
+
+        if ($res == true) {
+            PHPZip::folderToZip($tpl_view_path, $zip);
+            PHPZip::folderToZip($tpl_static_path, $zip);
+            $zip->close();
+        }
+
+
+        if (!File::file_exists($file_path)) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($file_path);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($file_path));
+        readfile($file_path);
+
+
+    }
+
+    /**
+     */
+    public function pluginExportHandle($plugin_name = '')
+    {
+        $plugin_path = 'Addons/' . $plugin_name . '/';
+
+        $temp_path = WEB_CACHE_PATH;
+
+        File::delDir(WEB_CACHE_PATH);
+        File::mkDir(WEB_CACHE_PATH);
+
+        $file_path = $temp_path . "\\" . 'GCS_Plugin-' . $plugin_name . '-' . md5(time()) . '.zip';
+
+        $zip = new \ZipArchive; //新建一个ZipArchive的对象
+        $res = $zip->open($file_path, \ZipArchive::CREATE);
+
+        if ($res == true) {
+            PHPZip::folderToZip($plugin_path, $zip);
+            $zip->close();
+        }
+
+
+        if (!File::file_exists($file_path)) {
+            $this->error("该文件不存在，可能是被删除");
+        }
+        $filename = basename($file_path);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header("Content-Length: " . filesize($file_path));
+        readfile($file_path);
+
+
+    }
 }

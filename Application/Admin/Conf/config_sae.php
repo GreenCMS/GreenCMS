@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: config.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-15
  * Time: 下午11:23
  */
@@ -13,7 +13,7 @@ $menu_arr = array(
     'admin_big_menu_icon' => array(
         'Posts' => 'fa-book',
         'Data' => 'fa-bar-chart-o',
-     //   'Media' => 'fa-camera',
+        //   'Media' => 'fa-camera',
         'Custom' => 'fa-desktop',
         'Comments' => 'fa-comment',
         'Access' => 'fa-lock',
@@ -27,7 +27,7 @@ $menu_arr = array(
         'Posts' => '文章页面',
         'Data' => '数据缓存',
         //  'Comments'=>'留言评论',
-      //  'Media' => '文件附件',
+        //  'Media' => '文件附件',
         'Custom' => '定制中心',
         'Access' => '用户管理',
         'Tools' => '小工具',
@@ -62,7 +62,7 @@ $menu_arr = array(
 
 
         'Data' => array(
-             'Data/repair' => '数据库优化',
+            'Data/repair' => '数据库优化',
             'Data/cache' => '缓存设置',
             'Data/clear' => '缓存清理',
 
@@ -81,7 +81,7 @@ $menu_arr = array(
 
 
         'Media' => array(
-             'Media/file' => '文件管理',
+            'Media/file' => '文件管理',
             'Media/backupFile' => '文件备份',
             'Media/restoreFile' => '文件恢复',
         ),
@@ -119,7 +119,7 @@ $menu_arr = array(
 //            'System/kvset'  => '其他设置',
             'System/sns' => '社交登录设置',
             'System/green' => '强制设置',
-     //       'System/update' => '系统升级',
+            //       'System/update' => '系统升级',
             'System/info' => '系统信息',
 
         )

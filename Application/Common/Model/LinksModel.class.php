@@ -1,13 +1,14 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: LinksModel.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 上午12:27
  */
 
 namespace Common\Model;
+
 use Think\Model\RelationModel;
 
 /**
@@ -28,15 +29,15 @@ class LinksModel extends RelationModel
 
             'mapping_type' => self::BELONGS_TO,
 
-            'class_name'   => 'Link_group',
+            'class_name' => 'Link_group',
 
             'mapping_name' => 'link_group',
 
-            'mapping_key'  => 'link_group_id',
+            'mapping_key' => 'link_group_id',
 
-            'foreign_key'  => 'link_group_id',
+            'foreign_key' => 'link_group_id',
 
-            'parent_key'   => 'link_group_id',
+            'parent_key' => 'link_group_id',
 
             'mapping_order' => 'link_group_id',
 

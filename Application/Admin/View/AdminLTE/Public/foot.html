@@ -22,7 +22,20 @@
 
 
 <script>
+
+
+    function refreshWarningNum(selector1) {
+        var num = $(selector1).find("li").length;
+        $("#warning_box_num").html(num);
+        $("#warning_box_num2").html(num);
+
+    }
+
+
+    //require iCheck
     $(document).ready(function () {
+
+
         $("input[type='checkbox'], input[type='radio']").iCheck({
             checkboxClass: 'icheckbox_minimal',
             radioClass: 'iradio_minimal'
@@ -38,3 +51,38 @@
     });
 </script>
 
+
+<control access="Admin/Index/checkTodo">
+    <script>
+        function fetchWarningList() {
+            var url = '{:U("Admin/Index/checkTodo")}';
+            $.get(url, function (data) {
+                if (data != 'none') {
+                    $('#warning_box').html(data);
+                    refreshWarningNum('#warning_box');
+                } else {
+                    $('#warning_box').html("");
+                    refreshWarningNum('#warning_box');
+                }
+            });
+        }
+        function clearWarningList() {
+            var url = '{:U("Admin/Index/checkTodoCacheClear")}';
+            $.get(url, function (data) {
+            });
+            fetchWarningList();
+        }
+
+        $(document).ready(function () {
+
+            fetchWarningList();
+
+            $('.notifications-menu').click(function () {
+                clearWarningList();
+            });
+
+
+        });
+
+    </script>
+</control>

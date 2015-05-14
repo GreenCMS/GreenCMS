@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -44,7 +44,7 @@
                         <div class="box-body">
 
 
-                            <form action="{:U('Admin/Posts/addTagHandle')}"  method="post">
+                            <form action="{:U('Admin/Posts/addTagHandle')}" method="post">
                                 <div class="form-group">
                                     <label class="control-label">名称</label>
 

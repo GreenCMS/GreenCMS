@@ -35,17 +35,98 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
+                            <h3 class="box-title">信息通知</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
 
 
-                            部分功能尚不完善。如需完整版，请使用20140520版本
-                            用/Public/admin和/Application/Weixin替换这个版本
+                            <div class="well">
+
+                                部分功能尚不完善。如需完整版，请使用20140520版本
+                                用/Public/admin和/Application/Weixin替换这个版本
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">站点信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+                            <div class="well">
+                                站点API: {:U("Weixin/Api/index",array(),true,true)}
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">关于我们</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <div class="well">
+                                <h4>GreenStudio团队</h4>
+                                <a href="http://green.njtech.edu.cn">绿荫工作室主页</a>
+                                <h4>核心开发人员</h4>
+                                <a href="http://weibo.com/zts1993">OCTOCAT_Z</a>&nbsp;&nbsp;&nbsp;
+                                <a href="http://weibo.com/541019086love">看什么看没看过程序猿啊</a>&nbsp;&nbsp;&nbsp;
+                                <h4>特别鸣谢</h4>
+                                <a href="http://weibo.com/zhanghao1989">张昊_BigData</a>&nbsp;&nbsp;&nbsp;
+                                <a href="http://weibo.com/u/2428963323">ayys_php</a>&nbsp;&nbsp;&nbsp;
+                                <a href="http://weibo.com/mixj93">mixj93</a>&nbsp;&nbsp;&nbsp;
+
+
+                            </div>
+                            <div class="well">
+                                <h4>联系方式</h4>
+                                邮箱：<a href="mailto:admin@njut.asia">admin@njut.asia</a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">其他信息</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+                            <div class="well">
+                                <h4>Github</h4>
+                                Github：<a href="https://github.com/GreenCMS/greencms">https://github.com/zts1993/greencms</a>
+                            </div>
+                            <div class="well">
+
+                                {:hook('WeixinAdminIndex', 'Widget')}
+                            </div>
 
                         </div>
                     </div>

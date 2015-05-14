@@ -1,13 +1,13 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: IndexController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-11
  * Time: 下午1:40
  */
 namespace Home\Controller;
-use Common\Util\File;
+
 use Think\Hook;
 
 /**
@@ -31,9 +31,9 @@ class IndexController extends HomeBaseController
      */
     public function index()
     {
+
         $this->display('index');
     }
-
 
     /**
      * 显示首页为空时
@@ -44,7 +44,6 @@ class IndexController extends HomeBaseController
     {
         Hook::listen('home_index_empty');
 
-
     }
 
     /**
@@ -53,6 +52,13 @@ class IndexController extends HomeBaseController
     function test()
     {
 
+        header("Content-type: text/html; charset=utf-8");
+
+        $CatsLogic=new \Common\Logic\CatsLogic();
+
+        $res= $CatsLogic->getPostsByCatWithChildren(2,10);
+
+         dump($res);
     }
 
 }

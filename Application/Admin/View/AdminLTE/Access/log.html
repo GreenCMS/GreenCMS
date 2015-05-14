@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{:get_opinion('title')}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+                            <table class="table table-bordered table-striped"
+                                   id="post_table">
+                                <thead>
+                                <tr>
+                                    <th>操作时间</th>
+                                    <th>用户名</th>
+                                    <th>分组名</th>
+                                    <th>模块名</th>
+                                    <th>操作名</th>
+                                    <th>其他信息</th>
+                                    <th>ip</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <foreach name="log_list" item="v">
+                                    <tr class="odd gradeX">
+                                        <td>
+                                            {$v.log_time}
+
+                                        </td>
+
+                                        <td>
+                                            <a href="{:U('Admin/Access/log',array('user_id'=>$v['user_id']))}">{$v.log_user.user_nicename}</a>
+
+                                        </td>
+
+                                        <td>
+
+                                            <a href="{:U('Admin/Access/log',array('group_name'=>$v['group_name']))}">{$v.group_name}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{:U('Admin/Access/log',array('module_name'=>$v['module_name']))}">{$v.module_name}</a>
+
+
+                                        </td>
+
+                                        <td>
+                                            <a href="{:U('Admin/Access/log',array('action_name'=>$v['action_name']))}">{$v.action_name}</a>
+                                        </td>
+
+                                        <td>
+
+                                            {$v.message}
+
+                                        </td>
+                                        <td>
+                                            <a href="{:U('Admin/Access/log',array('user_ip'=>$v['user_ip']))}">{$v.user_ip}</a>
+                                        </td>
+
+
+                                    </tr>
+                                </foreach>
+                                </tbody>
+                            </table>
+
+                            <div class="pagination">
+                                <ul class="pagination inline"> {$pager_bar}</ul>
+                                &nbsp; &nbsp; &nbsp; &nbsp;
+                                <a class="btn btn-danger" href="{:U('Admin/Access/logclearHandle')}"> 清空日志 </a>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

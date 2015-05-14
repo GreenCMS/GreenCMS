@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: Rss.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-16
  * Time: 上午1:02
  */
@@ -10,10 +10,10 @@
 namespace Common\Util;
 
 
-/**
- * Class Rss
- * @package Common\Util
- */
+    /**
+     * Class Rss
+     * @package Common\Util
+     */
 /**
  * Class Rss
  * @package Common\Util
@@ -93,10 +93,10 @@ class Rss
      * 构造函数
      * @access public
      *
-     * @param string $title  RSS频道名
-     * @param string $link  RSS频道链接
-     * @param string $description  RSS频道描述
-     * @param string $imgurl  RSS频道图标
+     * @param string $title RSS频道名
+     * @param string $link RSS频道链接
+     * @param string $description RSS频道描述
+     * @param string $imgurl RSS频道图标
      */
 
     public function __construct($title, $link, $description, $imgurl = '')
@@ -121,11 +121,11 @@ class Rss
      * 设置私有变量
      * @access public
      *
-     * @param string $key  变量名
-     * @param string $value  变量的值
+     * @param string $key 变量名
+     * @param string $value 变量的值
      */
 
-    public function Config($key, $value)
+    public function config($key, $value)
     {
         $this->{$key} = $value;
     }
@@ -135,13 +135,13 @@ class Rss
      * 添加RSS项
      * @access public
      *
-     * @param string $title  日志的标题
-     * @param string $link  日志的链接
-     * @param string $description  日志的摘要
-     * @param string $pubDate  日志的发布日期
+     * @param string $title 日志的标题
+     * @param string $link 日志的链接
+     * @param string $description 日志的摘要
+     * @param string $pubDate 日志的发布日期
      */
 
-    function AddItem($title, $link, $description, $pubDate)
+    public function addItem($title, $link, $description, $pubDate)
     {
         $this->items[] = array('title' => $title, 'link' => $link, 'description' => $description, 'pubDate' => $pubDate);
     }
@@ -152,7 +152,7 @@ class Rss
      * @return string
      */
 
-    public function Fetch()
+    public function fetch()
     {
 
         $rss = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\r\n";
@@ -205,7 +205,7 @@ class Rss
 
             $rss .= "<title><![CDATA[{$this->items[$i]['title']}]]></title>\r\n";
 
-            $rss .= "<link>{$this->items[$i]['link']}</link>\r\n";
+            $rss .= "<link><![CDATA[{$this->items[$i]['link']}]]></link>\r\n";
 
             $rss .= "<description><![CDATA[{$this->items[$i]['description']}]]></description>\r\n";
 
@@ -228,10 +228,10 @@ class Rss
      * @access public
      * @return void
      */
-    public function Display()
+    public function display()
     {
         header("Content-Type: text/xml; charset=utf-8");
-        echo $this->Fetch();
+        echo $this->fetch();
         exit;
     }
 

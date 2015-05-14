@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: TagController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-23
  * Time: 下午7:30
  */
@@ -52,10 +52,10 @@ class TagController extends HomeBaseController
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
 
-            $posts_list = $PostsLogic->getList($limit, 'single', 'post_id desc', true, array(), $posts_id);
+            $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
         }
 
-        $this->assign('title', $tag['tag_name']); // 赋值数据集
+        $this->assign('title', '标签 ' . $tag['tag_name'] . ' 所有文章'); // 赋值数据集
         $this->assign('res404', $res404);
         $this->assign('postslist', $posts_list); // 赋值数据集
         $this->assign('pager', $pager_bar); // 赋值分页输出
@@ -66,4 +66,14 @@ class TagController extends HomeBaseController
     }
 
 
+    /**
+     * //TODO 未知类型TAG显示
+     * @param $method 魔术方法名称 即Tag模板类型
+     * @param $args
+     */
+    public function _empty($method, $args)
+    {
+
+
+    }
 }

@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,97 +36,92 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <h4>数据库中共有{$list|count}张表，共计{$totalsize.table}&nbsp;&nbsp;&nbsp;&nbsp;
-                            </h4>
-                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <form id="form">
-                                <table
-                                        class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th style="width: 8px;">选择</th>
-                                        <th>表名</th>
-                                        <th class="hidden-240">表用途</th>
-                                        <th class="hidden-480">记录行数</th>
-                                        <th class="">引擎类型</th>
-                                        <th class="">字符集</th>
-                                        <th class="">碎片</th>
-                                        <th class="">表大小</th>
-                                        <th class="">数据</th>
-                                        <th class="">索引</th>
+                        <h4>数据库中共有{$list|count}张表，共计{$totalsize.table}&nbsp;&nbsp;&nbsp;&nbsp;
+                        </h4>
+                        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                        <form id="form">
+                            <table
+                                    class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 8px;">选择</th>
+                                    <th>表名</th>
+                                    <th class="hidden-240">表用途</th>
+                                    <th class="hidden-480">记录行数</th>
+                                    <th class="">引擎类型</th>
+                                    <th class="">字符集</th>
+                                    <th class="">碎片</th>
+                                    <th class="">表大小</th>
+                                    <th class="">数据</th>
+                                    <th class="">索引</th>
+                                </tr>
+                                </thead>
+                                <tbody id="cache_table">
+                                <volist name="list" id="tab">
+                                    <tr align="center">
+                                        <td><input type="checkbox" class='groupclass' name="table[]"
+                                                   value="{$tab.Name}"/>
+                                        </td>
+                                        <td align="left">{$tab.Name}</td>
+                                        <td>{$tab.Comment}</td>
+                                        <td>{$tab.Rows}</td>
+                                        <td>{$tab.Engine}</td>
+                                        <td>{$tab.Collation}</td>
+                                        <td>{$tab.Data_free}</td>
+                                        <td>{$tab.size}</td>
+                                        <td>{$tab.Data_length}</td>
+                                        <td>{$tab.Index_length}</td>
                                     </tr>
-                                    </thead>
-                                    <tbody id="cache_table">
-                                    <volist name="list" id="tab">
-                                        <tr align="center">
-                                            <td><input type="checkbox" class='groupclass' name="table[]" value="{$tab.Name}"/>
-                                            </td>
-                                            <td align="left">{$tab.Name}</td>
-                                            <td>{$tab.Comment}</td>
-                                            <td>{$tab.Rows}</td>
-                                            <td>{$tab.Engine}</td>
-                                            <td>{$tab.Collation}</td>
-                                            <td>{$tab.Data_free}</td>
-                                            <td>{$tab.size}</td>
-                                            <td>{$tab.Data_length}</td>
-                                            <td>{$tab.Index_length}</td>
-                                        </tr>
-                                    </volist>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th style="width: 8px;">总计</th>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><b>{$totalsize.free}</b></td>
-                                        <td><b>{$totalsize.table}</b></td>
-                                        <td><b>{$totalsize.data}</b></td>
-                                        <td><b>{$totalsize.index}</b></td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                                <div class="form-actions margin " >
-                                    <div class="row margin">
-                                        <button type="button" class="btn btn-success optimize">
-                                            <i class="m-icon-swapright m-icon-white"></i>优化所选表
-                                        </button>
+                                </volist>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th style="width: 8px;">总计</th>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>{$totalsize.free}</b></td>
+                                    <td><b>{$totalsize.table}</b></td>
+                                    <td><b>{$totalsize.data}</b></td>
+                                    <td><b>{$totalsize.index}</b></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <div class="form-actions margin ">
+                                <div class="row margin">
+                                    <button type="button" class="btn btn-success optimize">
+                                        <i class="m-icon-swapright m-icon-white"></i>优化所选表
+                                    </button>
 
-                                        <button type="button" class="btn btn-success repair">
-                                            <i class="m-icon-swapright m-icon-white"></i>修复所选表
-                                        </button>
+                                    <button type="button" class="btn btn-success repair">
+                                        <i class="m-icon-swapright m-icon-white"></i>修复所选表
+                                    </button>
 
-                                        <button type="button" class="btn btn-primary" id="checkall">全选</button>
+                                    <button type="button" class="btn btn-primary" id="checkall">全选</button>
 
 
-                                        <button type="button" class="btn btn-danger" id="check_cancel">取消</button>
+                                    <button type="button" class="btn btn-danger" id="check_cancel">取消</button>
 
 
-                                        <!--<button type="button" class="btn btn-info" id="check_reverse">反选</button>-->
+                                    <!--<button type="button" class="btn btn-info" id="check_reverse">反选</button>-->
 
 
-                                        <span style="font-size:18px;color:red;font-weight:bold;" id="success"></span>
-                                    </div>
+                                    <span style="font-size:18px;color:red;font-weight:bold;" id="success"></span>
                                 </div>
-                                <input type="hidden" name="act" id="act"/>
-                            </form>
+                            </div>
+                            <input type="hidden" name="act" id="act"/>
+                        </form>
 
-
-                        </div>
                     </div>
                 </div>
             </div>
-
 
         </section>
         <!-- /.content -->
@@ -211,9 +206,13 @@
             });
         }
         $(".optimize").click(function () {
+            $(".optimize").attr("disabledSubmit", false).html("处理中，请稍后...");
+
             handle("optimize");
         });
         $(".repair").click(function () {
+            $(".repair").attr("disabledSubmit", false).html("处理中，请稍后...");
+
             handle("repair");
         });
     });

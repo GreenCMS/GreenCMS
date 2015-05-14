@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: Weixinlog.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-25
  * Time: 上午11:10
  */
@@ -25,15 +25,15 @@ class WeixinlogModel extends RelationModel
 
         'user' => array(
 
-            'mapping_type'        => self::BELONGS_TO,
+            'mapping_type' => self::BELONGS_TO,
 
-            'class_name'          => 'Weixinuser',
+            'class_name' => 'Weixinuser',
 
-            'mapping_name'        => 'user',
+            'mapping_name' => 'user',
 
-            'foreign_key'         => 'FromUserName', //当前表字段
+            'foreign_key' => 'FromUserName', //当前表字段
 
-            'mapping_key'         => 'openid',
+            'mapping_key' => 'openid',
 
             'mapping_foreign_key' => 'openid',
         )

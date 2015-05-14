@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace Think\Model;
 
+use Common\Util\CacheManager;
 use Think\Model;
 
 /**
@@ -54,20 +55,34 @@ class RelationModel extends Model
     }
 
     /**
-     * 得到关联的数据表名
+     * 进行关联查询
      * @access public
-     * @param $relation
-     * @return string
+     * @param mixed $name 关联名称
+     * @return Model
      */
-    public function getRelationTableName($relation)
+    public function relation($name)
     {
-        $relationTable = !empty($this->tablePrefix) ? $this->tablePrefix : '';
-        $relationTable .= $this->tableName ? $this->tableName : $this->name;
-        $relationTable .= '_' . $relation->getModelName();
-        return strtolower($relationTable);
+        $this->options['link'] = $name;
+        return $this;
     }
 
     // 查询成功后的回调方法
+
+    /**
+     * 关联数据获取 仅用于查询后
+     * @access public
+     * @param string $name 关联名称
+     * @return array
+     */
+    public function relationGet($name)
+    {
+        if (empty($this->data))
+            return false;
+        return $this->getRelation($this->data, $name, true);
+    }
+
+    // 查询数据集成功后的回调方法
+
     protected function _after_find(&$result, $options)
     {
         // 获取关联数据 并附加到结果中
@@ -75,66 +90,7 @@ class RelationModel extends Model
             $this->getRelation($result, $options['link']);
     }
 
-    // 查询数据集成功后的回调方法
-    protected function _after_select(&$result, $options)
-    {
-        // 获取关联数据 并附加到结果中
-        if (!empty($options['link']))
-            $this->getRelations($result, $options['link']);
-    }
-
     // 写入成功后的回调方法
-    protected function _after_insert($data, $options)
-    {
-        // 关联写入
-        if (!empty($options['link']))
-            $this->opRelation('ADD', $data, $options['link']);
-    }
-
-    // 更新成功后的回调方法
-    protected function _after_update($data, $options)
-    {
-        // 关联更新
-        if (!empty($options['link']))
-            $this->opRelation('SAVE', $data, $options['link']);
-    }
-
-    // 删除成功后的回调方法
-    protected function _after_delete($data, $options)
-    {
-        // 关联删除
-        if (!empty($options['link']))
-            $this->opRelation('DEL', $data, $options['link']);
-    }
-
-    /**
-     * 对保存到数据库的数据进行处理
-     * @access protected
-     * @param mixed $data 要操作的数据
-     * @return boolean
-     */
-    protected function _facade($data)
-    {
-        $this->_before_write($data);
-        return $data;
-    }
-
-    /**
-     * 获取返回数据集的关联记录
-     * @access protected
-     * @param array $resultSet 返回数据
-     * @param string|array $name 关联名称
-     * @return array
-     */
-    protected function getRelations(&$resultSet, $name = '')
-    {
-        // 获取记录集的主键列表
-        foreach ($resultSet as $key => $val) {
-            $val = $this->getRelation($val, $name);
-            $resultSet[$key] = $val;
-        }
-        return $resultSet;
-    }
 
     /**
      * 获取返回数据的关联记录
@@ -212,7 +168,7 @@ class RelationModel extends Model
                             $prefix = $this->tablePrefix;
                             $mappingCondition = " {$mappingFk}='{$pk}'";
                             $mappingOrder = $val['mapping_order'];
-                            $mappingLimit =  $val['mapping_limit'];
+                            $mappingLimit = $val['mapping_limit'];
                             $mappingRelationFk = $val['relation_foreign_key'] ? $val['relation_foreign_key'] : $model->getModelName() . '_id';
                             if (isset($val['relation_table'])) {
                                 $mappingRelationTable = preg_replace_callback("/__([A-Z_-]+)__/sU", function ($match) use ($prefix) {
@@ -232,13 +188,87 @@ class RelationModel extends Model
                             if (!empty($mappingLimit)) {
                                 $sql .= ' LIMIT ' . $mappingLimit;
                             }
-                            //缓存
-                            if (S($sql)) {
-                                $relationData = S($sql);
+
+                            //缓存key
+//                            $cache_key=md5($sql);
+//
+//                            if (S($cache_key)) {
+//                                // echo "cache hit $cache_key : $sql <br />";
+//                                $relationData = S($sql);
+//                                if($relationData=="none"){
+//                                    $relationData=array();
+//                                }else{
+//                                    $relationData= S($cache_key);
+//                                }
+//
+//                            } else {
+//                               // echo "cache miss $cache_key : $sql <br />";
+//
+//                                $relationData = $this->query($sql);
+//
+//                                if(empty($relationData)){
+//                                    S($cache_key, "none", array('expire'=>get_opinion("DATA_CACHE_TIME")));
+//                                }else{
+//                                    S($cache_key, $relationData, array('expire'=>get_opinion("DATA_CACHE_TIME")));
+//                                }
+//                            }
+
+                            if ($key == 'Cat') {
+                                //key: relation_post_cat_$post_id
+//                                dump($mappingFk);
+//                                dump($pk);
+                                $relationData = CacheManager::getPostCatRelation($pk);
+
+
+                                if ($relationData == 'none') {
+//                                    echo "Cat cache none {$pk} <br />";
+                                    $relationData = array();
+                                } else if ($relationData) {
+//                                   echo "Cat cache hit {$pk}<br />";
+                                } else {
+                                    $relationData = $this->query($sql);
+                                    if (empty($relationData)) {
+//                                        echo "Cat is  empty {$pk} <br />";
+                                        CacheManager::setPostCatRelation($pk, 'none');
+
+                                    } else {
+//                                        echo "Cat cache missed {$pk} <br />";
+                                        CacheManager::setPostCatRelation($pk, $relationData);
+                                    }
+
+
+                                }
+
+
+                            } else if ($key == 'Tag') {
+                                //key: relation_post_tag_$post_id
+                                $relationData = CacheManager::getPostTagRelation($pk);
+                                if ($relationData == 'none') {
+//                                    echo "Tag cache none {$pk} <br />";
+                                    $relationData = array();
+                                } else if ($relationData) {
+//                                   echo "Tag cache hit {$pk}<br />";
+                                } else {
+                                    $relationData = $this->query($sql);
+                                    if (empty($relationData)) {
+//                                        echo "Tag is  empty {$pk} <br />";
+                                        CacheManager::setPostTagRelation($pk, 'none');
+
+                                    } else {
+//                                        echo "Tag cache missed {$pk} <br />";
+                                        CacheManager::setPostTagRelation($pk, $relationData);
+                                    }
+
+
+                                }
+
                             } else {
+//                                echo "no cache cover";
+
+                                //todo improve performance
                                 $relationData = $this->query($sql);
-                                S($sql, $relationData, 3);
                             }
+
 
                             if (!empty($val['relation_deep'])) {
                                 foreach ($relationData as $key => $data) {
@@ -272,6 +302,55 @@ class RelationModel extends Model
             }
         }
         return $result;
+    }
+
+    // 更新成功后的回调方法
+
+    /**
+     * 得到关联的数据表名
+     * @access public
+     * @param $relation
+     * @return string
+     */
+    public function getRelationTableName($relation)
+    {
+        $relationTable = !empty($this->tablePrefix) ? $this->tablePrefix : '';
+        $relationTable .= $this->tableName ? $this->tableName : $this->name;
+        $relationTable .= '_' . $relation->getModelName();
+        return strtolower($relationTable);
+    }
+
+    // 删除成功后的回调方法
+
+    protected function _after_select(&$result, $options)
+    {
+        // 获取关联数据 并附加到结果中
+        if (!empty($options['link']))
+            $this->getRelations($result, $options['link']);
+    }
+
+    /**
+     * 获取返回数据集的关联记录
+     * @access protected
+     * @param array $resultSet 返回数据
+     * @param string|array $name 关联名称
+     * @return array
+     */
+    protected function getRelations(&$resultSet, $name = '')
+    {
+        // 获取记录集的主键列表
+        foreach ($resultSet as $key => $val) {
+            $val = $this->getRelation($val, $name);
+            $resultSet[$key] = $val;
+        }
+        return $resultSet;
+    }
+
+    protected function _after_insert($data, $options)
+    {
+        // 关联写入
+        if (!empty($options['link']))
+            $this->opRelation('ADD', $data, $options['link']);
     }
 
     /**
@@ -424,28 +503,29 @@ class RelationModel extends Model
         return $result;
     }
 
-    /**
-     * 进行关联查询
-     * @access public
-     * @param mixed $name 关联名称
-     * @return Model
-     */
-    public function relation($name)
+    protected function _after_update($data, $options)
     {
-        $this->options['link'] = $name;
-        return $this;
+        // 关联更新
+        if (!empty($options['link']))
+            $this->opRelation('SAVE', $data, $options['link']);
+    }
+
+    protected function _after_delete($data, $options)
+    {
+        // 关联删除
+        if (!empty($options['link']))
+            $this->opRelation('DEL', $data, $options['link']);
     }
 
     /**
-     * 关联数据获取 仅用于查询后
-     * @access public
-     * @param string $name 关联名称
-     * @return array
+     * 对保存到数据库的数据进行处理
+     * @access protected
+     * @param mixed $data 要操作的数据
+     * @return boolean
      */
-    public function relationGet($name)
+    protected function _facade($data)
     {
-        if (empty($this->data))
-            return false;
-        return $this->getRelation($this->data, $name, true);
+        $this->_before_write($data);
+        return $data;
     }
 }

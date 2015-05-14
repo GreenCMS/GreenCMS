@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: WeixinBaseController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-18
  * Time: 下午2:01
  */
@@ -27,7 +27,7 @@ abstract class WeixinCoreController extends BaseController
         parent::__construct();
 
 
-        $this->customConfig();
+//        $this->customConfig();
 
     }
 
@@ -40,8 +40,8 @@ abstract class WeixinCoreController extends BaseController
 
         //使用缓存保存access_token , access_token有效时间是7200秒
         if (S('access_token') == '' || S('access_token') == false) {
-            $appid = C('Weixin_appid');
-            $secret = C('Weixin_secret');
+            $appid = get_opinion('Weixin_appid');
+            $secret = get_opinion('Weixin_secret');
 
             $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret";
 

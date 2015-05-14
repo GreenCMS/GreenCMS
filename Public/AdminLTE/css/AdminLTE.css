@@ -58,12 +58,12 @@ body > .header {
 /*right side - contins main content*/
 .right-side {
   background-color: #f9f9f9;
-  margin-left: 220px;
+  margin-left: 200px;
 }
 /*left side - contains sidebar*/
 .left-side {
   position: absolute;
-  width: 220px;
+  width: 200px;
   top: 0;
 }
 @media screen and (min-width: 992px) {
@@ -79,7 +79,7 @@ body > .header {
   }
   /* Left side collapse */
   .left-side.collapse-left {
-    left: -220px;
+    left: -200px;
   }
 }
 /*Give content full width on xs screens*/
@@ -338,7 +338,7 @@ body > .header {
 body > .header .navbar {
   height: 50px;
   margin-bottom: 0;
-  margin-left: 220px;
+  margin-left: 200px;
 }
 body > .header .navbar .sidebar-toggle {
   float: left;
@@ -400,7 +400,7 @@ body > .header .logo {
   line-height: 50px;
   text-align: center;
   padding: 0 10px;
-  width: 220px;
+  width: 200px;
   font-family: 'Microsoft Yahei', cursive;
   font-weight: 500;
   height: 50px;

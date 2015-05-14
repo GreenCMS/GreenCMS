@@ -2,7 +2,7 @@
 namespace Home\Controller;
 
 use Think\Controller;
-use Zel\Controller\HomeBaseController;
+use Home\Controller\HomeBaseController;
 
 /**
  * 扩展控制器
@@ -25,7 +25,7 @@ class AddonsController extends HomeBaseController
      */
     public function execute($_addons = null, $_controller = null, $_action = null)
     {
-        if (C('URL_CASE_INSENSITIVE')) {
+        if (get_opinion('URL_CASE_INSENSITIVE')) {
             $_addons = ucfirst(parse_name($_addons, 1));
             $_controller = parse_name($_controller, 1);
         }

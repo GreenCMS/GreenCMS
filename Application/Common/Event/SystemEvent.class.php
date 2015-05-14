@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: SystemEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-17
  * Time: 上午11:50
  */
@@ -101,28 +101,31 @@ class SystemEvent
      */
     public function clearCacheAll()
     {
-
-
-        if (C('DATA_CACHE_TYPE') == 'File') {
-
-            $caches = array(
-                RUNTIME_PATH . "HTML",
-                RUNTIME_PATH . "Cache",
-                RUNTIME_PATH . "Data",
-                RUNTIME_PATH . "Temp",
-                RUNTIME_PATH . "~runtime.php",
-            );
-            foreach ($caches as $value) {
-                $this->clearCache($value);
-            }
-        } else {
-            $Cache = new Cache();
-            $caches = $Cache->connect();
-            $caches->clear();
+        $caches = array(
+            RUNTIME_PATH . "HTML",
+            RUNTIME_PATH . "Cache",
+            RUNTIME_PATH . "Data",
+            RUNTIME_PATH . "Temp",
+            RUNTIME_PATH . "~runtime.php",
+        );
+        foreach ($caches as $value) {
+            $this->clearCache($value);
         }
-
+        $Cache = new Cache();
+        $caches = $Cache->connect();
+        $caches->clear();
 
         return true;
+    }
+
+    /**
+     * 清空缓存
+     * @param $cache_path
+     * @return bool
+     */
+    public function clearCache($cache_path)
+    {
+        return File::delAll($cache_path, true);
     }
 
     /**
@@ -135,13 +138,17 @@ class SystemEvent
     }
 
     /**
-     * 清空缓存
-     * @param $cache_path
-     * @return bool
+     * 备份所有数据看
+     * @return array
      */
-    public function clearCache($cache_path)
+    public function backupDBAll()
     {
-        return File::delAll($cache_path, true);
+        $type = "系统自动备份";
+        $path = DB_Backup_PATH . "/SYSTEM_" . date("Ymd");
+
+        $MySQLLogic = new \Common\Util\MySQLUtil();
+        $tables = $MySQLLogic->getAllTableName();
+        return $this->backupDB($type, $tables, $path);
     }
 
     /**
@@ -171,7 +178,7 @@ class SystemEvent
             "# " . get_opinion('title') . " database backup files\n" .
             "# URL: " . get_opinion('site_url') . "\n" .
             "# Type: {$type}\n";
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
+        $MySQLLogic = new \Common\Util\MySQLUtil();
         $bdTable = $MySQLLogic->backupTable($tables); //取得表结构信息
         $outPut = "";
         $file_n = 1;
@@ -202,7 +209,7 @@ class SystemEvent
                     } else {
                         $sqlNo = "# Description:当前SQL文件包含了表：" . implode("、", $backedTable) . "的数据" . $sqlNo;
                     }
-                    if (strlen($pre) + strlen($sqlNo) + strlen($bdTable) + strlen($outPut) + strlen($temSql) > C("sqlFileSize")) {
+                    if (strlen($pre) + strlen($sqlNo) + strlen($bdTable) + strlen($outPut) + strlen($temSql) > get_opinion("sqlFileSize")) {
                         $file_name = $path . "_" . $file_n . ".sql";
                         $outPut = $file_n == 1 ? $pre . $sqlNo . $bdTable . $outPut : $pre . $sqlNo . $outPut;
                         //file_put_contents($file, $outPut, FILE_APPEND);
@@ -238,20 +245,6 @@ class SystemEvent
         $res = array("status" => 1, "info" => "成功备份所选数据库表结构和数据，本次备份共生成了" . ($file_n - 1) .
             "个SQL文件。耗时：" . G('Backup_start', 'Backup_end') . "秒", "url" => U('Admin/Data/restore'));
         return $res;
-    }
-
-    /**
-     * 备份所有数据看
-     * @return array
-     */
-    public function backupDBAll()
-    {
-        $type = "系统自动备份";
-        $path = DB_Backup_PATH . "/SYSTEM_" . date("Ymd");
-
-        $MySQLLogic = new \Admin\Logic\MySQLLogic();
-        $tables = $MySQLLogic->getAllTableName();
-        return $this->backupDB($type, $tables, $path);
     }
 
 

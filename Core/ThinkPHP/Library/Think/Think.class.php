@@ -37,6 +37,7 @@ class Think {
       // 初始化文件存储方式
       Storage::connect(STORAGE_TYPE);
 
+
       $runtimefile  = RUNTIME_PATH.APP_MODE.'~runtime.php';
       if(!APP_DEBUG && Storage::has($runtimefile)){
           Storage::load($runtimefile);
@@ -50,7 +51,8 @@ class Think {
           foreach ($mode['core'] as $file){
               if(is_file($file)) {
                 include $file;
-                if(!APP_DEBUG) $content   .= compile($file);
+                if(!APP_DEBUG)
+                    $content   .= compile($file);
               }
           }
 
@@ -83,7 +85,8 @@ class Think {
               Hook::import(include CONF_PATH.'tags.php');   
 
           // 加载框架底层语言包
-          L(include THINK_PATH.'Lang/'.strtolower(C('DEFAULT_LANG')).'.php');
+          //L(include THINK_PATH.'Lang/'.strtolower(C('DEFAULT_LANG')).'.php');
+          L(include THINK_PATH.'Lang/zh-cn.php');
 
           if(!APP_DEBUG){
               $content  .=  "\nnamespace { Think\Think::addMap(".var_export(self::$_map,true).");";
@@ -99,20 +102,21 @@ class Think {
       }
 
       // 读取当前应用状态对应的配置文件
-      if(APP_STATUS && is_file(CONF_PATH.APP_STATUS.'.php'))
-          C(include CONF_PATH.APP_STATUS.'.php');   
+//      if(APP_STATUS && is_file(CONF_PATH.APP_STATUS.'.php'))
+//          C(include CONF_PATH.APP_STATUS.'.php');
 
       // 设置系统时区
       date_default_timezone_set(C('DEFAULT_TIMEZONE'));
 
       // 检查应用目录结构 如果不存在则自动创建
-      if(C('CHECK_APP_DIR') && !is_dir(LOG_PATH)) {
-          // 创建应用目录结构
-          require THINK_PATH.'Common/build.php';
-      }
+        //REMOVE BY GreenCMS
+//      if(C('CHECK_APP_DIR') && !is_dir(LOG_PATH)) {
+//          // 创建应用目录结构
+//          require THINK_PATH.'Common/build.php';
+//      }
 
       // 记录加载文件时间
-      G('loadTime');
+        G('loadTime');
       // 运行应用
       App::run();
     }
@@ -245,7 +249,7 @@ class Think {
           case E_COMPILE_ERROR:
           case E_USER_ERROR:
             ob_end_clean();
-            $errorStr = "$errstr ".$errfile." 第 $errline 行.";
+          $errorStr = "$errstr ".$errfile." 第 $errline 行.";
             if(C('LOG_RECORD')) Log::write("[$errno] ".$errorStr,Log::ERR);
             self::halt($errorStr);
             break;
@@ -325,6 +329,7 @@ class Think {
         if('[think]' === $value){ // 获取trace信息
             return $_trace;
         }else{
+
             $info   =   ($label?$label.':':'').print_r($value,true);
             $level  =   strtoupper($level);
             

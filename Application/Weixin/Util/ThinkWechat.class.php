@@ -58,7 +58,7 @@ class ThinkWechat
     /**
      * * 响应微信发送的信息（自动回复）
      * @param  array $content 回复信息，文本信息为string类型
-     * @param  string $type    消息类型
+     * @param  string $type 消息类型
      * @param int|string $flag 是否新标刚接受到的信息
      * @internal param string $to 接收用户名
      * @internal param string $from 发送者用户名
@@ -68,10 +68,10 @@ class ThinkWechat
     {
         /* 基础数据 */
         $this->data = array(
-            'ToUserName'   => $this->data['FromUserName'],
+            'ToUserName' => $this->data['FromUserName'],
             'FromUserName' => $this->data['ToUserName'],
-            'CreateTime'   => NOW_TIME,
-            'MsgType'      => $type,
+            'CreateTime' => NOW_TIME,
+            'MsgType' => $type,
         );
 
         /* 添加类型数据 */
@@ -84,7 +84,7 @@ class ThinkWechat
         $xml = new \SimpleXMLElement('<xml></xml>');
         $this->data2xml($xml, $this->data);
 
-        \Think\Log::record('echo:' . $xml->asXML());
+        // \Think\Log::record('echo:' . $xml->asXML());
 
         exit($xml->asXML());
     }
@@ -129,7 +129,7 @@ class ThinkWechat
 
     /**
      * 回复图文信息
-     * @param  string $news 要回复的图文内容
+     * @param  array $news 要回复的图文内容
      */
     private function news($news)
     {
@@ -151,7 +151,7 @@ class ThinkWechat
 
     /**
      * 数据XML编码
-     * @param  object $xml  XML对象
+     * @param  object $xml XML对象
      * @param  mixed $data 数据
      * @param  string $item 数字索引时的节点名称
      * @return string
@@ -212,12 +212,12 @@ class ThinkWechat
 
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
-        $tmpStr = implode( $tmpArr );
-        $tmpStr = sha1( $tmpStr );
+        $tmpStr = implode($tmpArr);
+        $tmpStr = sha1($tmpStr);
 
-        if( $tmpStr == $signature ){
+        if ($tmpStr == $signature) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

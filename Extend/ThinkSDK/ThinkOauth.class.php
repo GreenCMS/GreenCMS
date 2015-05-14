@@ -107,7 +107,7 @@ abstract class ThinkOauth
         $this->Type = strtoupper(substr($class, 0, strlen($class) - 3));
 
         //获取应用配置
-        $config = C("THINK_SDK_{$this->Type}");
+        $config = get_opinion("THINK_SDK_{$this->Type}");
         if (empty($config['APP_KEY']) || empty($config['APP_SECRET'])) {
             throw new \Think\Exception('请配置您申请的APP_KEY和APP_SECRET');
         } else {
@@ -145,13 +145,13 @@ abstract class ThinkOauth
      */
     private function config()
     {
-        $config = C("THINK_SDK_{$this->Type}");
+        $config = get_opinion("THINK_SDK_{$this->Type}");
         if (!empty($config['AUTHORIZE']))
             $this->Authorize = $config['AUTHORIZE'];
         if (!empty($config['CALLBACK']))
             $this->Callback = $config['CALLBACK'];
         else
-            throw new Exception('请配置回调页面地址');
+            throw new \Think\Exception('请配置回调页面地址');
     }
 
     /**
@@ -173,7 +173,7 @@ abstract class ThinkOauth
             if (is_array($_param)) {
                 $params = array_merge($params, $_param);
             } else {
-                throw new Exception('AUTHORIZE配置不正确！');
+                throw new \Exception('AUTHORIZE配置不正确！');
             }
         }
         return $this->GetRequestCodeURL . '?' . http_build_query($params);
@@ -183,7 +183,9 @@ abstract class ThinkOauth
      * 获取access_token
      * @param string $code 上一步请求到的code
      * @param null $extend
-     * @return
+     * @throws \Exception
+     * @throws \Think\Exception
+     * @return array|null
      */
     public function getAccessToken($code, $extend = null)
     {
@@ -260,7 +262,7 @@ abstract class ThinkOauth
                 $opts[CURLOPT_POSTFIELDS] = $params;
                 break;
             default:
-                throw new Exception('不支持的请求方式！');
+                throw new \Exception('不支持的请求方式！');
         }
 
         /* 初始化并执行curl请求 */
@@ -269,7 +271,7 @@ abstract class ThinkOauth
         $data = curl_exec($ch);
         $error = curl_error($ch);
         curl_close($ch);
-        if ($error) throw new Exception('请求发生错误：' . $error);
+        if ($error) throw new \Exception('请求发生错误：' . $error);
         return $data;
     }
 

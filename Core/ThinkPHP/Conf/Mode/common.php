@@ -39,7 +39,7 @@ return array(
         CORE_PATH . 'Hook'.EXT,
         CORE_PATH . 'App'.EXT,
         CORE_PATH . 'Dispatcher'.EXT,
-        //CORE_PATH . 'Log'.EXT,
+        CORE_PATH . 'Log'.EXT,
         CORE_PATH . 'Route'.EXT,
         CORE_PATH . 'Controller'.EXT,
         CORE_PATH . 'View'.EXT,
@@ -49,6 +49,11 @@ return array(
         BEHAVIOR_PATH . 'ParseTemplateBehavior'.EXT,
         BEHAVIOR_PATH . 'ContentReplaceBehavior'.EXT,
         BEHAVIOR_PATH . 'WriteHtmlCacheBehavior'.EXT,
+        APP_PATH.'Common/Model/CatsModel'.EXT,
+        APP_PATH.'Common/Model/LinksModel'.EXT,
+        APP_PATH.'Common/Model/PostsModel'.EXT,
+        APP_PATH.'Common/Model/UserModel'.EXT,
+
     ),
     // 行为扩展定义
     'tags'  =>  array(

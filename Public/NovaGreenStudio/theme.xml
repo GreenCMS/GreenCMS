@@ -1,11 +1,11 @@
 <theme>
     <name>NovaGreenStudio</name>
-    <version>2</version>
-    <build>20140527</build>
+    <version>3</version>
+    <build>20140823</build>
     <description>Nova Theme For GreenStudio</description>
     <author>ZTS</author>
     <preview>/NovaGreenStudio/preview.jpg</preview>
-    <preview_big>/NovaGreenStudio/preview_big.jpg</preview_big>
+    <preview_big>/NovaGreenStudio/preview.jpg</preview_big>
     <copyright>GreenStudio 2014</copyright>
     <tpl_view>Application/Home/View/NovaGreenStudio</tpl_view>
     <tpl_static>Public/NovaGreenStudio</tpl_static>
@@ -28,4 +28,45 @@
             <tpl>joinus</tpl>
         </joinus>
     </post>
+    <config>
+        <kv>
+            <text1>
+                <title>第一栏分类文字</title>
+                <type>text</type>
+                <value>作品发布</value>
+            </text1>
+
+            <id1>
+                <title>第一栏分类ID</title>
+                <type>text</type>
+                <value>17</value>
+            </id1>
+
+            <text2>
+                <title>第二栏分类文字</title>
+                <type>text</type>
+                <value>活动发布</value>
+            </text2>
+
+            <id2>
+                <title>第二栏分类ID</title>
+                <type>text</type>
+                <value>20</value>
+            </id2>
+
+            <text3>
+                <title>第三栏分类文字</title>
+                <type>text</type>
+                <value>科技新闻</value>
+            </text3>
+
+            <id3>
+                <title>第三栏分类ID</title>
+                <type>text</type>
+                <value>15</value>
+            </id3>
+        </kv>
+
+
+    </config>
 </theme>

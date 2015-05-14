@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,75 +36,108 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
 
-                                 <div class="row margin">
-                                    <div class="btn-group">
-                                        <a href="{:U('Admin/Custom/create')}">
-                                            <button type="submit" class="btn btn-success" name="postAdd" value='1'>
-                                                <i class="icon-plus"></i> 创建插件
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div class="btn-group">
-                                        <a href="{:U('Admin/Custom/hooks')}">
-                                            <button type="submit" class="btn btn-danger" name="hooks" value='1'>
-                                                <i class="icon-plus"></i> 钩子管理
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
-                            <table class="table table-bordered table-hover" class="tab">
-                                <tr>
-                                    <th class="hidden-480">名称</th>
-                                    <th class="hidden-480">标识</th>
-                                    <th class="hidden-480">描述</th>
-                                    <th class="hidden-480">状态</th>
-                                    <th class="hidden-480">作者</th>
-                                    <th class="hidden-480">版本</th>
-                                    <th class="hidden-480">操作</th>
-                                </tr>
-                                <volist name="list" id="vo">
-                                    <tr>
-                                        <td class="hidden-480">{$vo.title}</td>
-                                        <td class="hidden-480">{$vo.name}</td>
-                                        <td class="col-md-4">{$vo.description}</td>
-                                        <td class="hidden-480"> {$vo.status|int_to_status}</td>
-                                        <td class="hidden-480">{$vo.author}</td>
-                                        <td class="hidden-480">{$vo.version}</td>
-                                        <td class="hidden-480">
-                                            <a href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>|
-                                            <eq name="vo.status" value="1">
-                                                <a href='javascript:;' onclick="off({$vo.id})">禁用</a>|
-                                                <else/>
-                                                <a href='javascript:;' onclick="on({$vo.id})">启用</a>|
-                                            </eq>
-                                            <eq name="vo.status" value="99">
-                                                <a href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
-                                                <else/>
-                                                <a href="{:U('Admin/Custom/uninstall',array('id'=>$vo['id']) )}">卸载</a>
-                                            </eq>
-                                        </td>
-                                    </tr>
-                                </volist>
-                            </table>
-                            <div>
-                                <ul  class="pagination"> {$page}</ul>
+                        <div class="row margin">
+                            <div class="btn-group">
+                                <a href="{:U('Admin/Custom/create')}">
+                                    <button type="submit" class="btn btn-success" name="postAdd" value='1'>
+                                        <i class="icon-plus"></i> 创建插件
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="btn-group">
+                                <a href="{:U('Admin/Custom/hooks')}">
+                                    <button type="submit" class="btn btn-info" name="hooks" value='1'>
+                                        <i class="icon-plus"></i> 钩子管理
+                                    </button>
+                                </a>
+                            </div>
 
+                            <div class="btn-group">
+                                <a href="{:U('Admin/Custom/pluginAdd')}">
+                                    <button type="submit" class="btn bg-purple" name="hooks" value='1'>
+                                        <i class="icon-plus"></i> 在线安装新插件
+                                    </button>
+                                </a>
                             </div>
 
 
                         </div>
+
+                        <table class="table table-bordered table-hover" class="tab">
+                            <tr>
+                                <th class="hidden-480">名称</th>
+                                <th class="hidden-480">标识</th>
+                                <th class="hidden-480">描述</th>
+                                <th class="hidden-480">状态</th>
+                                <th class="hidden-480">作者</th>
+                                <th class="hidden-480">版本</th>
+                                <th class="hidden-480">操作</th>
+                            </tr>
+                            <volist name="list" id="vo">
+                                <tr>
+                                    <td class="hidden-480">{$vo.title}</td>
+                                    <td class="hidden-480">{$vo.name}</td>
+                                    <td class="col-md-4">{$vo.description}</td>
+                                    <td class="hidden-480"> {$vo.status|int_to_status}</td>
+                                    <td class="hidden-480">{$vo.author}</td>
+                                    <td class="hidden-480">{$vo.version}</td>
+                                    <td class="hidden-480">
+
+                                        <eq name="vo.status" value="1">
+                                            <a class="btn btn-sm btn-warning"
+                                               href="{:U('Admin/Custom/config', array('id'=>$vo['id']))}">配置</a>
+
+                                            <else/>
+
+                                        </eq>
+
+
+                                        <eq name="vo.status" value="99">
+                                            <a class="btn btn-sm btn-success"
+                                               href="{:U('Admin/Custom/install',array('addon_name'=>$vo['name']))}">安装</a>
+
+
+                                            <a class="btn btn-sm  btn-danger"
+                                               onclick="javascript:return a_confirm()"
+                                               href="{:U('Admin/Custom/pluginDelHandle',array('plugin_name'=>$vo['name']) )}">删除</a>
+
+                                            <else/>
+
+
+                                            <eq name="vo.status" value="1">
+
+                                                <a class="btn btn-sm bg-purple" href='javascript:;'
+                                                   onclick="off({$vo.id})">禁用</a>
+
+                                                <else/>
+                                                <a class="btn btn-sm btn-primary" href='javascript:;'
+                                                   onclick="on({$vo.id})">启用</a>
+                                            </eq>
+
+                                            <a class="btn btn-sm btn-danger"
+                                               href="{:U('Admin/Custom/uninstall',array('id'=>$vo['id']) )}">卸载</a>
+
+
+                                        </eq>
+                                        <a class="btn btn-sm bg-blue"
+                                           href="{:U('Admin/Custom/pluginExportHandle', array('plugin_name' => $vo['name']))}">导出</a>
+
+                                    </td>
+                                </tr>
+                            </volist>
+                        </table>
+                        <div>
+                            <ul class="pagination"> {$page}</ul>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
-
 
         </section>
         <!-- /.content -->
@@ -114,6 +147,34 @@
 <!-- ./wrapper -->
 
 <include file="Public:foot"/>
+<script>
+    function on(id) {
+        $.post("{:U('Admin/Custom/pluginEnable')}", {id: id},
+                function (data) {
+                    /*if (data.status == 1) {
+                     window.location.reload(true);
+                     }
+                     else {
+                     //$.dialog.alert(data);
+                     alert(data);
+                     }*/
+                    window.location.reload(true);
+                });
+    }
 
+    function off(id) {
+        $.post("{:U('Admin/Custom/pluginDisable')}", {id: id},
+                function (data) {
+                    /*if (data.status == 1) {
+                     window.location.reload(true);
+                     }
+                     else {
+                     //$.dialog.alert(data);
+                     alert(data);
+                     }*/
+                    window.location.reload(true);
+                });
+    }
+</script>
 </body>
 </html>

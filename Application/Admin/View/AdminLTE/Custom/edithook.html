@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,57 +36,61 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <form method="post" action="{:U('Admin/Custom/updateHook')}" >
-                                <div class="form-group">
-                                    <label class="control-label">钩子名称</label>
-                                    <div class="controls">
-                                        <input type="text" placeholder="Example" class="form-control large" name="name" value="{$info['name']}" />
-                                        <span class="help-inline">需要在程序中先添加钩子，否则无效</span>
-                                    </div>
+                        <form method="post" action="{:U('Admin/Custom/updateHook')}">
+                            <div class="form-group">
+                                <label class="control-label">钩子名称</label>
+
+                                <div class="controls">
+                                    <input type="text" placeholder="Example" class="form-control large" name="name"
+                                           value="{$info['name']}"/>
+                                    <span class="help-inline">需要在程序中先添加钩子，否则无效</span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">钩子描述</label>
-                                    <div class="controls">
-                                        <textarea name="description" class="large form-control" rows="3" placeholder="钩子的描述信息">{$info['description']}</textarea>
-                                        <span class="help-inline">钩子的描述信息</span>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">钩子描述</label>
+
+                                <div class="controls">
+                                    <textarea name="description" class="large form-control" rows="3"
+                                              placeholder="钩子的描述信息">{$info['description']}</textarea>
+                                    <span class="help-inline">钩子的描述信息</span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">钩子类型</label>
-                                    <div class="controls">
-                                        <select name="type" class="small form-control" tabindex="1">
-                                            <present name="info.type">
-                                                <eq name="info.type" value="1">
-                                                    <option value="1">视图</option>
-                                                    <option value="2">控制器</option>
-                                                    <else />
-                                                    <option value="2">控制器</option>
-                                                    <option value="1">视图</option>
-                                                </eq>
-                                                <else />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">钩子类型</label>
+
+                                <div class="controls">
+                                    <select name="type" class="small form-control" tabindex="1">
+                                        <present name="info.type">
+                                            <eq name="info.type" value="1">
                                                 <option value="1">视图</option>
                                                 <option value="2">控制器</option>
-                                            </present>
-                                        </select>
-                                    </div>
+                                                <else/>
+                                                <option value="2">控制器</option>
+                                                <option value="1">视图</option>
+                                            </eq>
+                                            <else/>
+                                            <option value="1">视图</option>
+                                            <option value="2">控制器</option>
+                                        </present>
+                                    </select>
                                 </div>
-                                <input type="hidden" name="id" value="{$info.id}">
-                                <div class="form-actions success_info">
-                                    <button type="submit" class="btn btn-success" target-form="form-horizontal">确定</button>
-                                    <button type="button" class="btn btn-primary" onclick="javascript:history.back(-1);return false;">返回</button>
-                                </div>
-                            </form>
+                            </div>
+                            <input type="hidden" name="id" value="{$info.id}">
+
+                            <div class="form-actions success_info">
+                                <button type="submit" class="btn btn-success" target-form="form-horizontal">确定</button>
+                                <button type="button" class="btn btn-primary"
+                                        onclick="javascript:history.back(-1);return false;">返回
+                                </button>
+                            </div>
+                        </form>
 
 
-                        </div>
                     </div>
                 </div>
             </div>

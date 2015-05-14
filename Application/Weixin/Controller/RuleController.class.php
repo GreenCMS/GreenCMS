@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: RuleController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-20
  * Time: 下午8:34
  */

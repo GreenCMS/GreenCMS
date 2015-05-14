@@ -1,26 +1,26 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: RbacBaseController.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-20
  * Time: 下午5:02
  */
 
 namespace Weixin\Controller;
 
- use Org\Util\Rbac;
+use Org\Util\Rbac;
 
- /**
-  * Class WeixinBaseController
-  * @package Weixin\Controller
-  */
- class WeixinBaseController extends WeixinCoreController
+/**
+ * Class WeixinBaseController
+ * @package Weixin\Controller
+ */
+class WeixinBaseController extends WeixinCoreController
 {
-     /**
-      *
-      */
-     public function __construct()
+    /**
+     *
+     */
+    public function __construct()
     {
         parent::__construct();
         $this->_initialize();
@@ -28,14 +28,14 @@ namespace Weixin\Controller;
         $this->_currentPostion();
         $this->_currentUser();
 
-        $this->customConfig();
+//        $this->customConfig();
 
     }
 
-     /**
-      *
-      */
-     protected function _initialize()
+    /**
+     *
+     */
+    protected function _initialize()
     {
         if (!RBAC::AccessDecision('Weixin')) // AccessDecision中间使用分组名
         {
@@ -49,16 +49,16 @@ namespace Weixin\Controller;
     }
 
 
-     /**
-      *
-      */
-     private function _currentPostion()
+    /**
+     *
+     */
+    private function _currentPostion()
     {
 
         //  echo CONTROLLER_NAME;
         //  echo ACTION_NAME;
 
-        $cache = C('admin_big_menu');
+        $cache = get_opinion('admin_big_menu');
         foreach ($cache as $big_url => $big_name) {
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 $module = $big_name;
@@ -67,7 +67,7 @@ namespace Weixin\Controller;
             }
         }
 
-        $cache = C('admin_sub_menu');
+        $cache = get_opinion('admin_sub_menu');
         foreach ($cache as $big_url => $big_name) {
             if (strtolower($big_url) == strtolower(CONTROLLER_NAME)) {
                 foreach ($big_name as $sub_url => $sub_name) {
@@ -87,38 +87,15 @@ namespace Weixin\Controller;
 
     }
 
-     /**
-      *
-      */
-     private function _currentUser()
+
+    /**
+     *
+     */
+    public function saveConfig()
     {
-        $user_id = ( int )$_SESSION [C('USER_AUTH_KEY')];
-        $user = D('User', 'Logic')->detail($user_id);
-        $this->assign('user', $user);
-    }
-
-
-     /**
-      *
-      */
-     public function saveConfig()
-    {
-        $options = D('Options');
-        $data = array();
-        foreach ($_POST as $name => $value) {
-            unset ($data ['option_id']); // 删除上次保存配置时产生的option_id，否则无法插入下一条数据
-            $data ['option_name'] = $name;
-            $data ['option_value'] = $value;
-
-            $find = $options->where(array(
-                                         'option_name' => $name
-                                    ))->select();
-            if (!$find) {
-                $options->data($data)->add();
-            } else {
-                $data ['option_id'] = $find [0] ['option_id'];
-                $options->save($data);
-            }
+        $post_data = I('post.');
+        foreach ($post_data as $name => $value) {
+            set_opinion($name, $value);
         }
     }
 

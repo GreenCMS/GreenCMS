@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: CommonWidget.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-1-25
  * Time: 上午10:41
  */
@@ -28,6 +28,7 @@ class CommonWidget extends Controller
         $this->display('Widget:header');
 
     }
+
     /**
      * @FBI Warning ！除非你有空闲时间，否则不要没事读这段丧心病狂的代码。。
      * @return string
@@ -45,14 +46,14 @@ class CommonWidget extends Controller
 
     private function show_side_menu()
     {
-        C('admin_sub_menu', array_change_key_case(C('admin_sub_menu')));
-        C('admin_big_menu', array_change_key_case(C('admin_big_menu')));
+        get_opinion('admin_sub_menu', array_change_key_case(get_opinion('admin_sub_menu')));
+        get_opinion('admin_big_menu', array_change_key_case(get_opinion('admin_big_menu')));
 
-        $accessList = RBAC::getAccessList($_SESSION [C('USER_AUTH_KEY')]);
+        $accessList = RBAC::getAccessList($_SESSION [get_opinion('USER_AUTH_KEY')]);
         $cache_access = array_change_key_case($accessList [strtoupper(MODULE_NAME)]);
 
-        $cache = C('admin_big_menu');
-        if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
+        $cache = get_opinion('admin_big_menu');
+        if ($_SESSION [get_opinion('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache as $cache_key => $cache_each) {
                 if (!array_key_exists($cache_key, $cache_access)) {
                     unset ($cache [$cache_key]);
@@ -61,7 +62,7 @@ class CommonWidget extends Controller
             }
         }
 
-        if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
+        if ($_SESSION [get_opinion('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache_access as $cache2_key => $cache2_each) {
                 foreach ($cache2_each as $key => $value) {
                     $cache2_each [$key] = strtolower($cache2_key) . '/' . strtolower($key);
@@ -69,7 +70,7 @@ class CommonWidget extends Controller
                 $cache_access [$cache2_key] = array_flip(array_change_key_case($cache2_each));
             }
 
-            $cache2 = array_change_key_case(C('admin_sub_menu'));
+            $cache2 = array_change_key_case(get_opinion('admin_sub_menu'));
             foreach ($cache2 as $cache2_key => $cache2_each) {
                 $cache2 [$cache2_key] = array_change_key_case($cache2_each);
             }
@@ -83,7 +84,7 @@ class CommonWidget extends Controller
                     }
                 }
             }
-            C('admin_sub_menu', $cache_access);
+            get_opinion('admin_sub_menu', $cache_access);
         }
 
         $count = count($cache);
@@ -103,7 +104,7 @@ class CommonWidget extends Controller
 
                     <ul class="treeview-menu">';
 
-                $cache = C('admin_sub_menu');
+                $cache = get_opinion('admin_sub_menu');
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {
@@ -124,7 +125,7 @@ class CommonWidget extends Controller
 
                     </a><ul class="treeview-menu">';
 
-                $cache = C('admin_sub_menu');
+                $cache = get_opinion('admin_sub_menu');
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {
@@ -142,7 +143,7 @@ class CommonWidget extends Controller
                   <i class="fa fa-angle-left pull-right"></i>
 
                     </a><ul class="treeview-menu">';
-                $cache = C('admin_sub_menu');
+                $cache = get_opinion('admin_sub_menu');
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {
@@ -158,7 +159,7 @@ class CommonWidget extends Controller
         return $menu;
     }
 
-    
+
     /**
      *
      */
@@ -178,14 +179,14 @@ class CommonWidget extends Controller
      */
     private function show_all_menu()
     {
-        C('admin_sub_menu', array_change_key_case(C('admin_sub_menu')));
-        C('admin_big_menu', array_change_key_case(C('admin_big_menu')));
+        get_opinion('admin_sub_menu', array_change_key_case(get_opinion('admin_sub_menu')));
+        get_opinion('admin_big_menu', array_change_key_case(get_opinion('admin_big_menu')));
 
-        $accessList = RBAC::getAccessList($_SESSION [C('USER_AUTH_KEY')]);
+        $accessList = RBAC::getAccessList($_SESSION [get_opinion('USER_AUTH_KEY')]);
         $cache_access = array_change_key_case($accessList [strtoupper(MODULE_NAME)]);
 
-        $cache = C('admin_big_menu');
-        if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
+        $cache = get_opinion('admin_big_menu');
+        if ($_SESSION [get_opinion('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache as $cache_key => $cache_each) {
                 if (!array_key_exists($cache_key, $cache_access)) {
                     unset ($cache [$cache_key]);
@@ -194,7 +195,7 @@ class CommonWidget extends Controller
             }
         }
 
-        if ($_SESSION [C('ADMIN_AUTH_KEY')] != true) {
+        if ($_SESSION [get_opinion('ADMIN_AUTH_KEY')] != true) {
             foreach ($cache_access as $cache2_key => $cache2_each) {
                 foreach ($cache2_each as $key => $value) {
                     $cache2_each [$key] = strtolower($cache2_key) . '/' . strtolower($key);
@@ -202,7 +203,7 @@ class CommonWidget extends Controller
                 $cache_access [$cache2_key] = array_flip(array_change_key_case($cache2_each));
             }
 
-            $cache2 = array_change_key_case(C('admin_sub_menu'));
+            $cache2 = array_change_key_case(get_opinion('admin_sub_menu'));
             foreach ($cache2 as $cache2_key => $cache2_each) {
                 $cache2 [$cache2_key] = array_change_key_case($cache2_each);
             }
@@ -216,7 +217,7 @@ class CommonWidget extends Controller
                     }
                 }
             }
-            C('admin_sub_menu', $cache_access);
+            get_opinion('admin_sub_menu', $cache_access);
         }
 
         $count = count($cache);
@@ -233,7 +234,7 @@ class CommonWidget extends Controller
 
                 </a><ul class="sub-menu">';
 
-                $cache = C('admin_sub_menu');
+                $cache = get_opinion('admin_sub_menu');
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {
@@ -253,7 +254,7 @@ class CommonWidget extends Controller
 
                     </a><ul class="sub-menu">';
 
-                $cache = C('admin_sub_menu');
+                $cache = get_opinion('admin_sub_menu');
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {
@@ -271,7 +272,7 @@ class CommonWidget extends Controller
                     <span class="arrow "></span>
 
                     </a><ul class="sub-menu">';
-                $cache = C('admin_sub_menu');
+                $cache = get_opinion('admin_sub_menu');
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {

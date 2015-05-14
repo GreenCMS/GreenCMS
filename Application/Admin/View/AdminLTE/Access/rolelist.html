@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,15 +36,19 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
+
                         <!-- /.box-header -->
                         <div class="box-body">
 
-
-                            <h4>{$action}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="col-md-3">
+                                <div class="btn-group">
+                                    <a href="{:U('Admin/Access/addrole')}">
+                                        <button id="sample_editable_1_new" class="btn btn-success">
+                                            <i class="icon-plus"></i>添加角色
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
 
                         <span class="control-group success"
                               style="font-size:16px;color: red;text-align: left; display:none;"></span>
@@ -73,9 +77,14 @@
                                             <if condition="$vo.pid eq 0">
                                                 <else/>
                                                 [ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>]
-                                                [ <a href="__URL__/editRole?id={$vo.id}" class="edit">编辑</a> ]
-                                                [ <a href="__URL__/changeRole?id={$vo.id}" class="edit">权限分配</a> ]
-                                                [ <a href="__URL__/setrolecat?id={$vo.id}" class="edit">投稿分类</a> ]
+                                                [ <a href="{:U('Admin/Access/editRole',array('id'=>$vo['id']))}"
+                                                     class="edit">编辑</a> ]
+                                                [ <a href="{:U('Admin/Access/changeRole',array('id'=>$vo['id']))}"
+                                                     class="edit">权限分配</a> ]
+                                                [ <a href="{:U('Admin/Access/setrolecat',array('id'=>$vo['id']))}"
+                                                     class="edit">投稿分类</a> ]
+
+
                                             </if>
                                         </td>
                                     </tr>
@@ -83,12 +92,9 @@
                             </table>
 
 
-
                         </div>
                     </div>
                 </div>
-            </div>
-
 
         </section>
         <!-- /.content -->
@@ -101,14 +107,14 @@
 <script>
     jQuery(document).ready(function () {
 
-         //快捷启用禁用操作
+        //快捷启用禁用操作
         $(".opStatus").click(function () {
             var obj = $(this);
             var id = $(this).parents("tr").attr("id");
             var status = $(this).attr("val");
             var div = $(".success");
             var url = "{:U('Admin/Access/opRoleStatus')}";
-            $.getJSON(url, { id: id, status: status }, function (json) {
+            $.getJSON(url, {id: id, status: status}, function (json) {
                 if (json.status == 1) {
                     div.fadeIn().html(json.info);
                     div.fadeOut(3000);

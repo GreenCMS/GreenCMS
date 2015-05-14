@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,52 +36,54 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-
-                                <div class="row margin">
-                                    <div class="btn-group">
-                                        <a href="{:U('Admin/Custom/addhook')}">
-                                            <button type="submit" class="btn btn-success" name="addhook" value='1'>
-                                                <i class="icon-plus"></i> 添加钩子
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                             <table class="table table-bordered table-hover" class="tab">
-                                <tr>
-                                    <th class="hidden-480">ID</th>
-                                    <th class="hidden-480">名称</th>
-                                    <th class="hidden-480">描述</th>
-                                    <th class="hidden-480">类型</th>
-                                    <th class="hidden-480">操作</th>
-                                </tr>
-                                <volist name="list" id="vo">
-                                    <tr>
-                                        <td class="hidden-480">{$vo.id}</td>
-                                        <td class="hidden-480"><a href="{:U('edithook?id='.$vo['id'])}">{$vo.name}</a></td>
-                                        <td class="hidden-480">{$vo.description}</td>
-                                        <td class="hidden-480"><eq name="vo.type" value="1">视图<else />控制器</eq></td>
-                                        <td class="hidden-480">
-                                            <a href="{:U('Admin/Custom/edithook', array('id'=>$vo['id']))}">编辑</a>|
-                                            <a href="{:U('Admin/Custom/delhook', array('id'=>$vo['id']))}">删除</a>
-                                        </td>
-                                    </tr>
-                                </volist>
-                            </table>
-                            <div>
-                                <ul  class="pagination"> {$page}</ul>
-
+                        <div class="row margin">
+                            <div class="btn-group">
+                                <a href="{:U('Admin/Custom/addhook')}">
+                                    <button type="submit" class="btn btn-success" name="addhook" value='1'>
+                                        <i class="icon-plus"></i> 添加钩子
+                                    </button>
+                                </a>
                             </div>
-
+                        </div>
+                        <table class="table table-bordered table-hover" class="tab">
+                            <tr>
+                                <th class="hidden-480">ID</th>
+                                <th class="hidden-480">名称</th>
+                                <th class="hidden-480">描述</th>
+                                <th class="hidden-480">类型</th>
+                                <th class="hidden-480">操作</th>
+                            </tr>
+                            <volist name="list" id="vo">
+                                <tr>
+                                    <td class="hidden-480">{$vo.id}</td>
+                                    <td class="hidden-480"><a href="{:U('edithook?id='.$vo['id'])}">{$vo.name}</a></td>
+                                    <td class="hidden-480">{$vo.description}</td>
+                                    <td class="hidden-480">
+                                        <eq name="vo.type" value="1">视图
+                                            <else/>
+                                            控制器
+                                        </eq>
+                                    </td>
+                                    <td class="hidden-480">
+                                        <a class="btn btn-sm btn-warning"
+                                           href="{:U('Admin/Custom/edithook', array('id'=>$vo['id']))}">编辑</a> &nbsp;
+                                        <a class="btn btn-sm btn-danger"
+                                           href="{:U('Admin/Custom/delhook', array('id'=>$vo['id']))}">删除</a>
+                                    </td>
+                                </tr>
+                            </volist>
+                        </table>
+                        <div>
+                            <ul class="pagination"> {$page}</ul>
 
                         </div>
+
+
                     </div>
                 </div>
             </div>

@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: version_config.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-3-21
  * Time: 上午10:13
  */
@@ -10,10 +10,10 @@
 /**
  * version code
  */
-define ('GreenCMS_Version', 'v2.1.0620');
-define ('GreenCMS_Build', '20140620');
+define ('GreenCMS_Version', 'v2.3.0503');
+define ('GreenCMS_Build', '20150503');
 
-define('Server_API', "http://greenapi.sinaapp.com/");
+define('Server_API', "http://api.greencms.net/");
 
 //backup api
-define('Server_API2', "http://api.greencms.net/");
+define('Server_API2', "http://greenapi.sinaapp.com/");

@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -36,20 +36,18 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
+
                         <!-- /.box-header -->
                         <div class="box-body">
 
 
-                            <form  id="newrole" method="post">
+                            <form id="newrole" method="post">
                                 <div class="form-group">
                                     <label class="control-label">角色组名称：</label>
 
                                     <div class="controls">
-                                        <input type="text" placeholder="" class="form-control large" name="name" id="name"
+                                        <input type="text" placeholder="" class="form-control large" name="name"
+                                               id="name"
                                                value="{$info.name}"/>
                                         <span class="help-inline"></span>
                                     </div>
@@ -91,7 +89,8 @@
                                     <label class="control-label">描 述：</label>
 
                                     <div class="controls">
-                                        <textarea name="remark" class="large form-control" rows="3">{$info.remark}</textarea>
+                                        <textarea name="remark" class="large form-control"
+                                                  rows="3">{$info.remark}</textarea>
                                     </div>
                                 </div>
                                 <input type="hidden" name="id" value="{$info.id}"/>
@@ -100,7 +99,8 @@
                                      style="font-size:16px;color: red;text-align: left; display:none;">
                                 </div>
                                 <div class="form-actions">
-                                    <button type="button" class="btn btn-info submit" id="submit"><i class="icon-ok"></i>
+                                    <button type="button" class="btn btn-info submit" id="submit"><i
+                                            class="icon-ok"></i>
                                         <switch name="action_name">
                                             <case value="editRole">修改</case>
                                             <case value="addRole">添加</case>
@@ -110,7 +110,8 @@
                                     </button>
                                 </div>
                                 <switch name="action_name">
-                                    <case value="editRole"><span id="action" style="display:none;">editRole</span></case>
+                                    <case value="editRole"><span id="action" style="display:none;">editRole</span>
+                                    </case>
                                     <case value="addRole"><span id="action" style="display:none;">addRole</span></case>
                                     <default/>
                                     <span id="action" style="display:none;">addRole</span>
@@ -121,8 +122,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
 
         </section>
         <!-- /.content -->
@@ -137,7 +136,6 @@
 <script>
     jQuery(document).ready(function () {
 
-      
 
         var url = '{:U("Admin/Access/$handle")}';
 
@@ -166,4 +164,5 @@
         });
     });
 </script>
-</body></html>
+</body>
+</html>

@@ -1,15 +1,17 @@
 .title {
-    width: 1140px;
+    /*width: 1140px;*/
+    /*width: 90%;*/
+    margin: 0 auto;
 }
 
 .title h1 {
     padding-top: 10px;
-    margin-left: 50px;
+    margin-left: 20px;
     font-size: 30px;
 }
 
 .breadcrumbs {
-    margin-left: 65px;
+    margin-left: 35px;
 }
 
 .breadcrumbs li {

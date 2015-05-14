@@ -1,5 +1,6 @@
 <?php
 namespace Oauth\Event;
+
 use \Extend\ThinkSDK\ThinkOauth;
 
 class TypeEvent
@@ -269,5 +270,27 @@ class TypeEvent
             throw_exception("获取搜狐用户信息失败：{$data['message']}");
         }
     }
+
+
+    //登录成功，获取Greencms用户信息
+    public function greencms($token)
+    {
+
+        $greencms = ThinkOauth::getInstance('greencms', $token);
+
+        //todo  time to go
+        $data = $greencms->call('users', "uid={$greencms->openid()}");
+
+        if ($data['error_code'] == 0) {
+            $userInfo['type'] = 'GREENCMS';
+            $userInfo['name'] = $data['name'];
+            $userInfo['nick'] = $data['nick'];
+            $userInfo['head'] = $data['head'];
+            return $userInfo;
+        } else {
+            throw_exception("获取Greencms用户信息失败：{$data['error']}");
+        }
+    }
+
 
 }

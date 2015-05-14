@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: UserEvent.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-2-17
  * Time: 上午11:49
  */
@@ -11,6 +11,7 @@ namespace Common\Event;
 
 use Common\Controller\BaseController;
 use Common\Logic\UserLogic;
+use Common\Util\GreenMail;
 use Org\Util\Rbac;
 
 /**
@@ -23,62 +24,33 @@ class UserEvent extends BaseController
 
     /**
      * 用户忘记密码找回
-     * @param $email
+     * @param $username
      * @return string
      */
-    public function forgetPassword($email)
+    public function forgetPassword($username)
     {
 
-
         $User = new UserLogic();
+        $GreenMail =new GreenMail();
 
-        $userDetail = $User->where(array('user_email' => $email))->find();
+        $userDetail = $User->where(array('user_login' => $username))->find();
 
         if (!$userDetail) {
             return $this->jsonResult(0, "不存在用户");
         }
 
         $new_pass = encrypt($userDetail['user_session']);
-        $User->where(array('user_email' => $email))->data(array('user_pass' => $new_pass))->save();
+        $User->where(array('user_email' => $userDetail['user_email']))->data(array('user_pass' => $new_pass))->save();
 
+        $res =  $GreenMail->sendMail( $userDetail['user_email'], "", "用户密码重置", "新密码: " . $userDetail['user_session']);
 
-        $res = send_mail($email, "", "用户密码重置", "新密码: " . $userDetail['user_session']); //
-
-        if ($res) {
+        if ($res['statue']) {
             return $this->jsonResult(1, "新密码的邮件已经发送到注册邮箱");
 
         } else {
-            return $this->jsonResult(0, "请检查邮件发送设置");
+            return $this->jsonResult(0, "请检查邮件发送设置".$res['info'] );
 
         }
-    }
-
-    /**
-     * 改变用户密码
-     * @param $uid
-     * @param $oldPassword
-     * @param $newPassword
-     * @return string
-     */
-    public function changePassword($uid, $oldPassword, $newPassword)
-    {
-
-        $User = new UserLogic();
-
-        $user = $User->detail($uid);
-        if ($user['user_pass'] != encrypt($oldPassword)) {
-            return $this->jsonResult(0, "原用户密码不正确");
-        }
-
-        $User->user_id = $uid;
-        $User->user_pass = encrypt($newPassword);
-
-        if ($User->save()) {
-            return $this->jsonResult(1, "密码修改成功", U("Admin/Login/logout"));
-        } else {
-            return $this->jsonResult(0, "密码修改失败");
-        }
-
     }
 
 
@@ -103,18 +75,18 @@ class UserEvent extends BaseController
         } else {
 
 
-            $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
+            $_SESSION[get_opinion('USER_AUTH_KEY')] = $authInfo['user_id'];
             if ($authInfo['user_login'] == get_opinion('Admin') || $authInfo['user_id'] == 1) {
-                $_SESSION[C('ADMIN_AUTH_KEY')] = true;
+                $_SESSION[get_opinion('ADMIN_AUTH_KEY')] = true;
             }
 
             //记住我
             if (I('post.remember') == 1) {
                 if ($authInfo['user_session'] != '') {
-                    cookie('user_session', $authInfo['user_session'], 3600000);
+                    cookie('user_session', $authInfo['user_session'], 3600 * 24 * 30);
                 } else if ($authInfo['user_session'] == '') {
                     $user_session = D('User', 'Logic')->genHash($authInfo);
-                    cookie('user_session', $user_session, 3600000);
+                    cookie('user_session', $user_session, 3600 * 24 * 30);
                 }
             }
             // 缓存访问权限
@@ -143,7 +115,7 @@ class UserEvent extends BaseController
     {
 
         $User = new UserLogic();
-        $authInfo = $User->detail(session(C('ADMIN_AUTH_KEY')));
+        $authInfo = $User->detail(session(get_opinion('ADMIN_AUTH_KEY')));
 
         $User->genHash($authInfo);
         cookie('user_session', null);

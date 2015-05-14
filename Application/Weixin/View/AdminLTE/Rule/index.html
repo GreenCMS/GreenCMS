@@ -44,70 +44,69 @@
                         <div class="box-body">
 
 
+                            <div class="portlet-body">
+                                <div class="row margin">
+                                    <div class="btn-group">
+                                        <a href="{:U('Weixin/Rule/add')}">
+                                            <button class="btn bg-green">
+                                                <i class="icon-plus"></i> 添加规则
+                                            </button>
+                                        </a>
 
+                                    </div>
 
-
-                        <div class="portlet-body">
-                            <div class="row margin">
-                                <div class="btn-group">
-                                    <a href="{:U('Weixin/Rule/add')}">
-                                        <button  class="btn bg-green"  >
-                                            <i class="icon-plus"></i> 添加规则
-                                        </button>
-                                    </a>
 
                                 </div>
+                                <table class="table table-striped table-bordered table-hover"
+                                       id="sample_1">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 8px;">ID</th>
+                                        <th>事件类型</th>
+                                        <th>键值或者关键字</th>
+                                        <th>返回类型</th>
+                                        <th>返回内容</th>
 
-
-                            </div>
-                            <table class="table table-striped table-bordered table-hover"
-                                   id="sample_1">
-                                <thead>
-                                <tr>
-                                    <th style="width: 8px;">ID</th>
-                                    <th>事件类型</th>
-                                    <th>键值或者关键字</th>
-                                    <th>返回类型</th>
-                                    <th>返回内容</th>
-
-                                    <th style="width:150px;">操作</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <foreach name="weixinaction" item="v">
-                                    <tr class="odd gradeX">
-                                        <td>{$v.wx_action_id}</td>
-                                        <td>{$v.action_type|getRealText}</td>
-                                        <td>{$v.action_name}</td>
-                                        <td>{$v.reply_type|getRealText}</td>
-                                        <td>{$v.reply_id}</td>
-                                        <td>
-                                            <a class="btn mini" href="{:U('Weixin/Rule/edit', array('id' => $v['wx_action_id']))}">编辑</a>
-                                            &nbsp;&nbsp;&nbsp;
-
-                                            <a class="btn mini red" href="{:U('Weixin/Rule/del', array('id' => $v['wx_action_id']))}">删除</a>
-                                        </td>
-
+                                        <th style="width:150px;">操作</th>
 
                                     </tr>
-                                </foreach>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    <foreach name="weixinaction" item="v">
+                                        <tr class="odd gradeX">
+                                            <td>{$v.wx_action_id}</td>
+                                            <td>{$v.action_type|getRealText}</td>
+                                            <td>{$v.action_name}</td>
+                                            <td>{$v.reply_type|getRealText}</td>
+                                            <td>{$v.reply_id}</td>
+                                            <td>
+                                                <a class="btn mini"
+                                                   href="{:U('Weixin/Rule/edit', array('id' => $v['wx_action_id']))}">编辑</a>
+                                                &nbsp;&nbsp;&nbsp;
 
+                                                <a class="btn mini red"
+                                                   href="{:U('Weixin/Rule/del', array('id' => $v['wx_action_id']))}">删除</a>
+                                            </td>
+
+
+                                        </tr>
+                                    </foreach>
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
                     </div>
-                </div>
 
 
-            </section>
-            <!-- /.content -->
-            </aside>
-            <!-- /.right-side -->
-        </div>
-        <!-- ./wrapper -->
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
 
-        <include file="Public:foot"/>
+<include file="Public:foot"/>
 
 </body>
 </html>

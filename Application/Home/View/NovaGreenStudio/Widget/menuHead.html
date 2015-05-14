@@ -10,12 +10,13 @@
             <a id="logo" class="pull-left" href="{:U('/')}">
                 <img src="__PUBLIC__/share/img/logo-png.png" alt="" title=""/>
 
+                <!--GreenCMS-->
             </a>
 
             <div class="nav-collapse collapse pull-right">
                 <ul class="nav">
                     <volist name="home_menu" id="menu_item">
-                         <if condition="$menu_item['menu_children'] == null">
+                        <if condition="$menu_item['menu_children'] == null">
                             <li><a href="{$menu_item['menu_abs_url']}">{$menu_item['menu_name']}</a></li>
 
                             <else/>

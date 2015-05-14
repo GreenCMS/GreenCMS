@@ -36,14 +36,9 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-warning">
-                        <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
-                        </div>
+
                         <!-- /.box-header -->
                         <div class="box-body">
-
-
 
                             <form method="POST" action="{:addons_url('Guestbook://Guestbook/delAll')}" id="messageForm">
                                 <div class="portlet-body">
@@ -84,11 +79,11 @@
                                                 <td>{:getTimestamp($v['date'],'Y-m-d H:i') }</td>
                                                 <td>
                                                     <notpresent name="v.reply">
-                                                        <a class="btn mini green" href="javascript:;"
+                                                        <a class="btn btn-sm btn-info" href="javascript:;"
                                                            onclick="ajax_reply({$v.id})">回复</a>
                                                         &nbsp;&nbsp;&nbsp;
                                                     </notpresent>
-                                                    <a class="btn mini red del_btn_{$v.id}" href="javascript:;"
+                                                    <a class="btn btn-sm btn-danger del_btn_{$v.id}" href="javascript:;"
                                                        onclick="ajax_del({$v.id})">删除</a>
                                                     &nbsp;&nbsp;&nbsp;
                                                     <eq name="v.status" value="0">
@@ -135,7 +130,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
 
         </section>

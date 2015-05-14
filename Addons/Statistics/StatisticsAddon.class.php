@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Green Studio.
+ * Created by GreenStudio GCS Dev Team.
  * File: StatisticsAddmin.class.php
- * User: TianShuo
+ * User: Timothy Zhang
  * Date: 14-3-9
  * Time: 下午12:28
  */

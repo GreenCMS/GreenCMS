@@ -1,0 +1,16 @@
+{
+  "name": "Timothy/GreenCMS",
+  "description": "GreenCMS",
+  "license": "Apache2",
+  "homepage": "http://www.greencms.net/",
+  "require": {
+    "php": ">=5.3.3",
+    "imagine/Imagine": "dev-master"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-0": {
+    }
+  }
+}

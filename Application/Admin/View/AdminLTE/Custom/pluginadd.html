@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{:get_opinion('title')}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-8">
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+
+                        <form role="form" action="{:U('Admin/Custom/pluginAddLocal')}" name="change_System"
+
+                              method="post"
+                              enctype="multipart/form-data">
+
+
+                            <div class="form-group">
+                                <label class="control-label">上传插件文件
+                                </label>
+
+                                <div class="controls">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+
+                                        <input type="file" class="default" name="file"/>
+
+                                    </div>
+
+                                    <span>注意! 可能会覆盖已有插件文件</span>
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-actions">
+                                <button onclick="javascript:return a_confirm()" type="submit" class="btn btn-info"><i
+                                        class="icon-ok"></i>提交
+                                </button>
+                            </div>
+
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

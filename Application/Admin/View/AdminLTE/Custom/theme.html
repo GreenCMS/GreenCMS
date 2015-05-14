@@ -23,7 +23,7 @@
         <section class="content-header">
             <h1>
                 {$action}
-                <small>{$Think.config.title}</small>
+                <small>{:get_opinion('title')}</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
@@ -34,11 +34,12 @@
         <!-- Main content -->
         <section class="content">
 
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title">{$action}</h3>
+                            <h3 class="box-title">已安装{$action}</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -59,7 +60,74 @@
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
 
                             <table class="table table-striped table-bordered table-hover"
-                                   id="sample_1">
+                                    >
+                                <thead>
+
+                                <tr>
+                                    <th style="width: 150px;">预览</th>
+
+                                    <th>名称</th>
+                                    <th>描述</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <volist name="theme_list_installed" id="vo" key="k">
+                                    <tr align="center">
+                                        <td>
+                                            <a href="__PUBLIC__{$vo.theme_preview}" target="_blank"><img
+                                                    src="__PUBLIC__{$vo.theme_preview}"/></a>
+                                        </td>
+                                        <!--<td>{$vo.menu_id}</td>-->
+                                        <td>{$vo.theme_name}</td>
+                                        <td align="left">{$vo.theme_description}</td>
+                                        <td>
+                                            <a class="btn {$vo.using_color}"
+                                               href="{$vo.status_url}">{$vo.status_name}</a>
+                                        </td>
+
+                                        <td>
+                                            <a class="btn bg-olive"
+                                               href="{:U('Admin/Custom/themeConfig', array('theme_name' => $vo['theme_name']))}">配置</a>
+
+                                            <a class="btn bg-blue"
+                                               href="{:U('Admin/Custom/themeDetail', array('theme_name' => $vo['theme_name']))}">详细</a>
+
+                                            <a class="btn btn-warning"
+                                                           href="{:U('Admin/Custom/themeExportHandle', array('theme_name' => $vo['theme_name']))}">导出</a>
+
+                                            <a class="btn btn-danger" onclick="javascript:return a_confirm()"
+                                               href="{:U('Admin/Custom/themeUninstallHandle', array('theme_name' => $vo['theme_name']))}">卸载</a>
+
+                                            <!--<a class="btn btn-info" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
+                                        </td>
+
+
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">未安装{$action}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <table class="table table-striped table-bordered table-hover"
+                                    >
                                 <thead>
 
                                 <tr>
@@ -73,25 +141,30 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <volist name="theme_list" id="vo" key="k">
-                                    <tr align="center" id="{$k}">
+                                <volist name="theme_list_not_installed" id="vo" key="k">
+                                    <tr align="center">
                                         <td>
-                                            <a href="__PUBLIC__{$vo.preview_big}" target="_blank"><img src="__PUBLIC__{$vo.preview}"/></a>
+                                            <a href="__PUBLIC__{$vo.preview_big}" target="_blank"><img
+                                                    src="__PUBLIC__{$vo.preview}"/></a>
                                         </td>
                                         <!--<td>{$vo.menu_id}</td>-->
                                         <td>{$vo.name}</td>
                                         <td align="left">{$vo.description}</td>
                                         <td>{$vo.introduction}</td>
                                         <td>
-                                            <a class="btn {$vo.using_color}" href="{$vo.status_url}">{$vo.status_name}</a>
+                                            <a class="btn  {$vo.using_color}" href="#">{$vo.status_name}</a>
                                         </td>
 
                                         <td>
 
-                                            <a class="btn btn-warning" href="{$vo.action_url2}">{$vo.action_name2}</a>
+                                            <a class="btn bg-olive"
+                                               href="{:U('Admin/Custom/themeInstallHandle', array('theme_name' => $vo['name']))}">安装</a>
+                                            &nbsp;&nbsp;<a class="btn bg-blue"
+                                                           href="{:U('Admin/Custom/themeExportHandle', array('theme_name' => $vo['name']))}">导出</a>
 
                                             <!--<a class="btn btn-info" href="{:U('Admin/Custom/themeChangeHandle',array('theme_name'=>$vo['name']))}">切换</a>-->
-                                            <a class="btn btn-danger" href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
+                                            <a class="btn btn-danger" onclick="javascript:return a_confirm()"
+                                               href="{:U('Admin/Custom/themeDelHandle',array('theme_name'=>$vo['name']))}">删除</a>
                                         </td>
 
 
@@ -99,9 +172,6 @@
                                 </volist>
                                 </tbody>
                             </table>
-
-
-
 
                         </div>
                     </div>

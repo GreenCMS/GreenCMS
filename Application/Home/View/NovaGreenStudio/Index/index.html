@@ -19,11 +19,25 @@
 
     <include file="Public:head"/>
 
+    {:hook('pageHeader', "")}
+
 </head>
 
 <body>
+{:hook('userHeader', "")}
+
 
 {:W('Widget/menuHead')}
+
+<php>
+    $CatsLogic=new Common\Logic\CatsLogic();
+
+    $cat71 = $CatsLogic->getPostsByCat(get_theme_opinion("id1"), 10 ,0 ,false );
+    $cat73 = $CatsLogic->getPostsByCat(get_theme_opinion("id2"), 10 ,0 ,false );
+    $cat13 = $CatsLogic->getPostsByCat(get_theme_opinion("id3"), 10 ,0 ,false );
+
+</php>
+
 
 <!--Slider-->
 <section id="slide-show">
@@ -97,21 +111,142 @@
 </section>
 <!--/Slider-->
 
-<section class="main-info">
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span9">
-                <h4 class="">绿荫工作室 2014年 夏季招新火热进行中 ........</h4>
 
-                <p class="no-margin pull-right">更多机遇，更多挑战，我们欢迎您的到来</p>
-            </div>
-            <div class="span3">
-                <a class="btn btn-success btn-large pull-right" href="{:U('Form/apply')}"><i class="icon-thumbs-up"></i>JOIN
-                    US NOW！</a></a>
-            </div>
+<!--<section class="main-info">-->
+<!--<div class="container">-->
+<!--<div class="row-fluid">-->
+<!--<div class="span9">-->
+<!--<h4 class="">绿荫工作室 2014年 夏季招新火热进行中 ........</h4>-->
+
+<!--<p class="no-margin pull-right">更多机遇，更多挑战，我们欢迎您的到来</p>-->
+<!--</div>-->
+<!--<div class="span3">-->
+<!--<a class="btn btn-success btn-large pull-right" href="{:U('Form/apply')}"><i class="icon-thumbs-up"></i>JOIN-->
+<!--US NOW！</a></a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+
+<section class="main">
+
+    <!--Container-->
+    <div class="container">
+        <div class="center gap">
+            <h3>最新消息</h3>
+
         </div>
+        <!--row-fluids-->
+        <div class="row-fluid">
+
+
+            <!--Archives-->
+            <div class="span4">
+                <h4>{:get_theme_opinion("text1")} </h4>
+
+                <div>
+
+                    <ul class="arrow">
+
+                        <volist name="cat71" id="v" key="k">
+
+
+                            <li>
+                                <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                    <i>·&nbsp;&nbsp;</i>
+                                    {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
+                                &nbsp;&nbsp;
+                        <span>
+                        {$v['post_date']|mb_substr=2,8,"UTF-8"}
+                        </span>
+
+                            </li>
+
+
+                        </volist>
+
+
+                    </ul>
+
+                </div>
+            </div>
+            <!--End Archives-->
+
+
+            <!--Archives-->
+            <div class="span4">
+                <h4>{:get_theme_opinion("text2")} </h4>
+
+                <div>
+
+                    <ul class="arrow">
+
+                        <volist name="cat73" id="v" key="k">
+
+
+                            <li>
+                                <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                    <i>·&nbsp;&nbsp;</i>
+                                    {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
+                                &nbsp;&nbsp;
+                        <span>
+                        {$v['post_date']|mb_substr=2,8,"UTF-8"}
+                        </span>
+
+                            </li>
+
+
+                        </volist>
+
+
+                    </ul>
+
+                </div>
+            </div>
+            <!--End Archives-->
+
+            <!--Archives-->
+            <div class="span4">
+                <h4>{:get_theme_opinion("text3")} </h4>
+
+                <div>
+
+                    <ul class="arrow">
+
+                        <volist name="cat13" id="v" key="k">
+
+
+                            <li>
+                                <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                    <i>·&nbsp;&nbsp;</i>
+                                    {$v['post_title']|strip_tags|mb_substr=0,20,"UTF-8"}</a>
+                                &nbsp;&nbsp;
+                        <span>
+                        {$v['post_date']|mb_substr=2,8,"UTF-8"}
+                        </span>
+
+                            </li>
+
+
+                        </volist>
+
+
+                    </ul>
+
+                </div>
+            </div>
+            <!--End Archives-->
+
+
+        </div>
+        <!--/row-fluid-->
     </div>
+    <!--/container-->
+
+
 </section>
+<!--/Slider-->
+
 
 <!--Services-->
 <section id="services">
@@ -119,7 +254,6 @@
         <div class="center gap">
             <h3>我们的关注</h3>
 
-            <p class="lead">绿荫工作室 致力于计算机相关领域研究</p>
         </div>
 
         <div class="row-fluid">
@@ -225,7 +359,6 @@
         <div class="center">
             <h3>最近成果</h3>
 
-            <p class="lead">仅展示最近上线的成果</p>
         </div>
         <div class="gap"></div>
         <ul class="gallery col-4">
@@ -355,6 +488,7 @@
 
 <include file="Public:foot"/>
 
+
 <!-- SL Slider -->
 <script type="text/javascript">
     $(function () {
@@ -380,7 +514,7 @@
                         });
                     };
 
-            return { init: init };
+            return {init: init};
 
         })();
 
@@ -388,5 +522,8 @@
     });
 </script>
 <!-- /SL Slider -->
+
+{:hook('pageFooter', "")}
+
 </body>
 </html>
