@@ -12,7 +12,7 @@
         }
 
         .sel_wrap {
-            height: 20px;
+            height: 30px;
             color: #a1a1a1;
             font-size: 16px;
             border: 1px solid #E4E4E4;
@@ -24,18 +24,18 @@
 
         .sel_wrap label {
             padding-left: 5px;
-            font-size: 16px;
+            font-size: 18px;
             z-index: 2;
             color: #606060;
-            line-height: 20px;
-            height: 20px;
+            line-height: 25px;
+            height: 25px;
             display: block;
         }
 
         .sel_wrap .select {
             width: 100%;
-            height: 20px;
-            line-height: 20px;
+            height: 25px;
+            line-height: 25px;
             z-index: 4;
             position: absolute;
             top: 0;
@@ -46,16 +46,15 @@
             /**margin-top: 12px;*/
             filter: alpha(opacity=0);
             cursor: pointer;
-            font-size: 16px;
+            font-size:18px;
         }
     </style>
 </head>
 <body>
 
 <php>
-    //get_theme_opinion("id_1_1")
     $CatsLogic=new Common\Logic\CatsLogic();
-    $id_1_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_1"), 1 ,0 ,false );
+
     $id_1_2 = $CatsLogic->getPostsByCat(get_theme_opinion("id_1_2"), 15 ,0 ,false );
     $id_2_1 = $CatsLogic->getPostsByCat(get_theme_opinion("id_2_1"), 8 ,0 ,false );
     $id_2_2 = $CatsLogic->getPostsByCatWithChildren(get_theme_opinion("id_2_2"), 8 ,0 ,false );
@@ -126,12 +125,13 @@
             </div>
         </div>
     </div>
-    <div class="head_box" style="width:  140px; margin-left: 20px;">
-        <div class="header">
-            快捷入口
+    <div class="head_box" style="width:  140px; margin-left: 20px;  ">
+        <div class="header" style="text-align: center">
+            <a style="float: left" href="{:U('Admin/Index/index')}">在线投稿</a>  | <a  style="float: right"  href="">发稿统计</a>
         </div>
         <div class="body" style="  padding: 8px 0px;text-align: center">
             <div class="box">
+
                 <a class="" href="#">
                     <img src="__PUBLIC__/Xsc/images/xsbd.png" alt="">
                 </a>
@@ -150,6 +150,11 @@
                     </a>
 
                 </div>
+
+                <!--<a class="" href="#">-->
+                    <!--<img src="__PUBLIC__/Xsc/images/tgtj.png" alt="">-->
+                <!--</a>-->
+
 
                 <a class="" href="{:U('Admin/Index/index')}">
                     <img src="__PUBLIC__/Xsc/images/gldl.png" alt="">
@@ -268,24 +273,24 @@
         <div class="body" style="padding:5px 10px 0 0;border-top: solid 5px #252525;">
 
 
-            <div style="text-align: center;font-size: 22px;  color: #1b58b8;  width: 50px; float: left;padding-left: 20px">
-                服务链接
+            <div style="text-align: center;font-size: 20px;  color: #1b58b8;">
+                友情链接
             </div>
 
-            <div style="text-align: left; float: right;width: 140px">
-                <div class="sel_wrap" style=" margin-top: 5px;">
-                    <label>----|校内链接|----</label>
-                    <select class="select" style="width:120px"
-                            onchange="window.open(this.options[this.selectedIndex].value)"
-                            size="1"
-                            name="mlink">
-                        <optionfriendlist link_group_id="1"></optionfriendlist>
-                    </select>
-                </div>
+            <div style="text-align: center; ">
+                <!--<div class="sel_wrap" style=" margin-top: 5px;">-->
+                    <!--<label>----|校内链接|----</label>-->
+                    <!--<select class="select" style="width:120px"-->
+                            <!--onchange="window.open(this.options[this.selectedIndex].value)"-->
+                            <!--size="1"-->
+                            <!--name="mlink">-->
+                        <!--<optionfriendlist link_group_id="1"></optionfriendlist>-->
+                    <!--</select>-->
+                <!--</div>-->
                 <div class="sel_wrap" style="  margin-top: 10px;">
                     <label>----|校外链接|----</label>
 
-                    <select class="select" style="width:120px"
+                    <select class="select" style=" "
                             onchange="window.open(this.options[this.selectedIndex].value)"
                             size="1"
                             name="mlink2">
