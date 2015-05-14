@@ -10,6 +10,8 @@
 namespace Admin\Controller;
 
 use Common\Event\WordpressEvent;
+use Common\Logic\PostsLogic;
+use Common\Logic\UserLogic;
 use Common\Util\File;
 use Think\Log;
 use Think\Upload;
@@ -140,6 +142,34 @@ class ToolsController extends AdminBaseController
         header("Content-Length: " . filesize($filePath));
         readfile($filePath);
     }
+
+
+    /*文章统计*/
+    public function count(){
+
+        $year=I('year',date('Y'));
+        $month=I('month',date('m'));
+
+        $condition['post_date'] = array('like', I('request.year', '%') . '-' . I('request.month', '%') . '-' . I('request.day', '%') . '%');
+
+        $UserLogic=new UserLogic();
+        $PostsLogic=new PostsLogic();
+
+        $user_list=$UserLogic->getList(false);
+
+        foreach($user_list as $key=>$user){
+            $condition['user_id']=$user['user_id'];
+            $user_list [$key]['post_count']= $PostsLogic->countAll('single',$condition);
+            $user_list [$key]['date']=  substr($condition['post_date'][1],0,7);
+        }
+
+        $this->assign("user_list",$user_list);
+
+        $this->assign("year",$year);
+        $this->assign("month",$month);
+        $this->display('count');
+    }
+
 
 
 }

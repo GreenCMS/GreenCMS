@@ -115,6 +115,8 @@ $menu_arr = array(
             'Tools/index' => '可用工具',
             'Tools/log' => '日志工具',
             'Tools/wordpress' => '从WordPress导入',
+            'Tools/count' => '统计工具',
+
             // 'Tools/rss'    => '从rss导入',
             // 'Tools/export'    => '导出',
 
