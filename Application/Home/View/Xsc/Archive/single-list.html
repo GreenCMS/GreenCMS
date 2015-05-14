@@ -26,10 +26,11 @@
 
     <div class="left-nav">
 
+        <include file="Public:hotlink"/>
 
 
-        <div class="left-nav-item">
-            <h3>
+        <div class="left-nav-item"  id="yxfc">
+            <h3 style="  background-color: #8E99A2;">
                 <a href="{$children['cat_id']|getCatURLByID}"
                    title=" {$children['cat_name']}"
                         > {$children['cat_name']}</a>
@@ -51,7 +52,6 @@
 
 
 
-        <include file="Public:hotlink"/>
         <include file="Public:search"/>
 
 
@@ -98,12 +98,12 @@
                         </h2>
                     </div>
                     <div class="Titletip">
-                        <div style="margin: 10px 20px 15px 10px;">
+                        <div style="margin: 0px 20px 0px 10px;">
 
-                            <p>{$post.post_content|strip_tags|mb_substr=0,300,"UTF-8"}</p>
+                            <p style="  height: 50px;  overflow: hidden;">{$post.post_content|strip_tags|mb_substr=0,300,"UTF-8"}</p>
                         </div>
 
-                        <div style="margin: 10px 20px 15px 10px;">
+                        <div style="margin: 5px 20px 0px 10px;">
                             <span>
                                    分类:
 

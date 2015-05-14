@@ -151,15 +151,17 @@ class CatsLogic extends RelationModel
      */
     public function getPostsByCatWithChildren($cat_id, $num = 5, $start = 0, $relation = true, $except_field = '')
     {
-        $getChild = $this->getChild($cat_id, 'publish', $start . ',' . $num);
+//        $getChild = $this->getChild($cat_id, 'publish', $start . ',' . $num);
+//
+//        $cat_id_list = $cat_id."','";
+//        foreach ($getChild as $value) {
+//            $cat_id_list .= $value['cat_id'];
+//            $cat_id_list .= "',";
+//        }
+//
+//        echo $cat_id_list;
 
-        $cat_id_list = $cat_id."','";
-        foreach ($getChild as $value) {
-            $cat_id_list .= $value['cat_id'];
-            $cat_id_list .= "',";
-        }
-
-        $cat = $this->getPostsId($cat_id_list, 'publish', $start . ',' . $num);
+        $cat = $this->getPostsIdWithChildren($cat_id, 'publish', $start . ',' . $num);
 
         if ($cat != null) {
             $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', $relation, array(), $cat, $except_field);
@@ -193,6 +195,7 @@ class CatsLogic extends RelationModel
             ->limit($limit)
             ->order('ps.post_top desc,ps.post_date desc')
             ->select();
+
 
         foreach ($res as $key => $value) {
             $ids[] = $res[$key]['post_id'];

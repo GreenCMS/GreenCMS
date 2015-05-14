@@ -52,8 +52,8 @@ img {
 
 .head-nav {
 
-    /*width: 1050px;*/
-    width: 100%;
+    width: 1050px;
+    /*width: 100%;*/
     margin: 0 auto;
 }
 
@@ -219,7 +219,7 @@ img {
     margin-right: 20px;
     float: right;
     color: #1b58b8;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .left_half .body {
@@ -396,7 +396,7 @@ img {
     /*width: 1140px;*/
     margin: 0 auto;
 
-    /*height: 140px;*/
+    height: 160px;
     overflow: hidden;
     /*background: RGB(25, 103, 175) url(../images/1/headerbg.png) no-repeat center top;*/
     /*background: RGB(25, 103, 175) url(../images/1/headerbg.png) no-repeat center top;*/
@@ -986,6 +986,7 @@ img {
     float: left;
     width: 200px;
     margin-top: 10px;
+    margin-right: 10px;
 
 }
 
@@ -1023,7 +1024,6 @@ img {
     /*background-color: #fff;*/
     /*color: #517693;*/
     color: #fff;
-    background-color: #517693;
 
     /*border-bottom: 5px solid #517693;*/
 
@@ -1035,22 +1035,23 @@ img {
 }
 
 .left-nav ul li {
-    height: 48px;
-    line-height: 48px;
+    height: 45px;
+    line-height: 45px;
     text-align: center;
     color: #517693;
-    font-size: 16px;
+    font-size: 20px;
     list-style: none;
     /*border-left: 5px solid #517693;*/
 
 }
 
 .left-nav ul li:hover {
-    border-left: 5px solid #e5e5e5;
+    /*border-left: 5px solid #e5e5e5;*/
 }
 
 
 .left-nav ul li a {
+    font-size: 18px;
     display: block;
     color: #507693;
     border-bottom: 1px solid #ddd;

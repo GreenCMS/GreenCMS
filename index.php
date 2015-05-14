@@ -29,7 +29,7 @@ define('APP_DEBUG', true);
 /**
  * 定义网站根目录
  */
-define("WEB_ROOT", './');  //dirname(__FILE__) .'/'
+define("WEB_ROOT", dirname(__FILE__) .'/' );  //dirname(__FILE__) .'/'
 
 define("WEB_ROOT_Real", __DIR__);  //dirname(__FILE__) .'/'
 

@@ -3,7 +3,7 @@
     /*width: 90%;*/
     margin-top: 11px;
     height: 50px;
-    width: 848px;
+    width: 830px;
     float: left;
     background-color: #DADADA;
 
@@ -17,7 +17,7 @@
 
     font-weight: bold;
 
-    width: 500px;
+    width: 400px;
     float: left;
     color: #000000;
 }
@@ -45,13 +45,20 @@
     margin: 20px auto;
 }
 
+
+.Titlelist{
+    margin-top : 10px;
+    margin-bottom : 10px;
+
+
+}
+
 .Titlenamelist {
-    width: 1000px;
+    width: 789px;
 }
 
 .Titlename {
-    width: 1000px;
-    margin-top: 20px;
+    width: 780px;
     /*float: left;*/
 }
 
@@ -74,7 +81,7 @@
 
 .Titletip {
 
-    margin: 15px 10px 20px 10px;
+    margin: 5px 10px 0px 10px;
 }
 
 .continue {
@@ -84,12 +91,12 @@
 }
 
 .foot {
-    width: 900px;
+    width: 750px;
 }
 
 .footlist {
     text-align: center;
-    width: 800px;
+    width: 750px;
     margin: 20px auto;
 }
 
@@ -111,11 +118,26 @@
 
 .article-list {
     color: #000000;
-    width: 800px;
+    width: 789px;
     margin: 0px auto;
     padding: 0px 20px 10px 20px;
     float: left;
-    border-left: 1px solid #EBEBEB;
+    border: 1px solid #EBEBEB;
+
 
 }
+
+
+#yxfc ul li {
+    height: 40px;
+    line-height: 40px;
+}
+
+
+#yxfc ul li a{
+    font-size: 16px;
+
+}
+
+
 /*display: block;*/

@@ -29,3 +29,10 @@ function get_post_icon($post)
 }
 
 
+function get_active($current_id ,$class_id)
+{
+    dump("自定义函数test");
+}
+
+
+
