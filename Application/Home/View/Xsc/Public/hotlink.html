@@ -3,10 +3,10 @@
     <h3>热点链接</h3>
     <ul>
 
-        <li><a href="{:get_cat_url(get_theme_opinion('id_1_2'))}">{:get_theme_opinion('text_1_2')}</a></li>
-        <li><a href="{:get_cat_url(get_theme_opinion('id_2_1'))}">{:get_theme_opinion('text_2_1')}</a></li>
-        <li><a href="{:get_cat_url(get_theme_opinion('id_2_2'))}">{:get_theme_opinion('text_2_2')}</a></li>
-        <li><a href="{:get_cat_url(get_theme_opinion('id_2_3'))}">{:get_theme_opinion('text_2_3')}</a></li>
+        <li><a class="{:is_active_cat(get_theme_opinion('id_1_2'))}" href="{:get_cat_url(get_theme_opinion('id_1_2'))}">{:get_theme_opinion('text_1_2')}</a></li>
+        <li><a class="{:is_active_cat(get_theme_opinion('id_2_1'))}" href="{:get_cat_url(get_theme_opinion('id_2_1'))}">{:get_theme_opinion('text_2_1')}</a></li>
+        <li><a class="{:is_active_cat(get_theme_opinion('id_2_2'))}" href="{:get_cat_url(get_theme_opinion('id_2_2'))}">{:get_theme_opinion('text_2_2')}</a></li>
+        <li><a class="{:is_active_cat(get_theme_opinion('id_2_3'))}" href="{:get_cat_url(get_theme_opinion('id_2_3'))}">{:get_theme_opinion('text_2_3')}</a></li>
         <li><a href="#">理论学习</a></li>
         <li><a href="#">先进典型</a></li>
         <li><a href="#">周恩来班</a></li>

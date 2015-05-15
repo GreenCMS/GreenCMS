@@ -1060,3 +1060,12 @@ img {
 .left-nav ul li a:hover {
     background-color: #D3D3D3;
 }
+
+
+.left-nav ul li .active{
+    background-color: #DCD9D9;
+    color: #9F2517;
+    font-size: 20px;
+    font-weight: 600;
+    border-left: 5px solid #517693;
+}
