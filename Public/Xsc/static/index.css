@@ -179,10 +179,6 @@ img {
 
 }
 
-.left_half:hover > .header .header_info {
-    color: #066400;
-
-}
 
 .left_half:hover > .body {
     background-color: #fefefe;
