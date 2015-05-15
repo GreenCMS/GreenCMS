@@ -14,50 +14,48 @@
 
     <style type="text/css">
 
-table{
+        table {
 
-    text-align: center;
-    border-collapse: collapse;
-    border-image-outset: 0px;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-source: none;
-    border-image-width: 1;
-    border-radius: 0px;
-    border: 1px solid rgb(221, 221, 221);
-    margin-bottom: 20px;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 0px;
+            text-align: center;
+            border-collapse: collapse;
+            border-image-outset: 0px;
+            border-image-repeat: stretch;
+            border-image-slice: 100%;
+            border-image-source: none;
+            border-image-width: 1;
+            border-radius: 0px;
+            border: 1px solid rgb(221, 221, 221);
+            margin-bottom: 20px;
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-top: 0px;
 
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 0px;
 
-    width: 750px;
+            width: 750px;
 
+        }
 
+        td, tr, th, thead, tbody {
+            text-align: center;
 
-}
+            border: 1px solid #ddd;
+            padding: 3px;
+            line-height: 1.428571429;
+            vertical-align: top;
 
-td , tr ,th ,thead,tbody{
-    text-align: center;
+            font-size: 16px;
 
-    border: 1px solid #ddd;
-    padding: 8px;
-    line-height: 1.428571429;
-    vertical-align: top;
+        }
 
-    font-size: 18px;
+        table a {
 
-}
-table a{
+            font-size: 18px;
 
-
-    font-size: 18px;
-
-}
+        }
 
 
     </style>
@@ -83,32 +81,26 @@ table a{
     <div class="article">
         <h1>投稿统计</h1>
         <!-- Post Start -->
-        <hr />
+        <hr/>
 
-        <div class="main-info"style="">
+        <div class="main-info" style="">
             <!-- Date -->
 
 
-
-
-
-
-
-
-                <form action="{:get_addon_url('Postcount/Postcount/count')}" method="post">
-                    <table class="table table-striped table-bordered table-hover">
-                        <tr>
-                            <td>
-                                文章统计检索
-                            </td>
-                            <td>
-                                <select name="year_start">
-                                    <option value="{$year_start}" selected>{$year_start}</option>
-                                    <for start="2000" end="2100">
-                                        <option value="{$i}">{$i}</option>
-                                    </for>
-                                </select>年
-                               <select name="month_start">
+            <form action="{:get_addon_url('Postcount/Postcount/count')}" method="post">
+                <table class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <td>
+                            文章统计
+                        </td>
+                        <td>
+                            <select name="year_start">
+                                <option value="{$year_start}" selected>{$year_start}</option>
+                                <for start="2000" end="2100">
+                                    <option value="{$i}">{$i}</option>
+                                </for>
+                            </select>年
+                            <select name="month_start">
                                 <option value="{$month_start}" selected>{$month_start}</option>
                                 <option value="01">01</option>
                                 <option value="02">02</option>
@@ -124,12 +116,12 @@ table a{
                                 <option value="12">12</option>
                                 <option value="%%">所有</option>
                             </select> 月至 <select name="year_end">
-                                <option value="{$year_end}" selected>{$year_end}</option>
-                                <for start="2000" end="2100">
-                                    <option value="{$i}">{$i}</option>
-                                </for>
-                            </select>年
-                                <select name="month_end">
+                            <option value="{$year_end}" selected>{$year_end}</option>
+                            <for start="2000" end="2100">
+                                <option value="{$i}">{$i}</option>
+                            </for>
+                        </select>年
+                            <select name="month_end">
                                 <option value="{$month_end}" selected>{$month_end}</option>
                                 <option value="01">01</option>
                                 <option value="02">02</option>
@@ -145,62 +137,46 @@ table a{
                                 <option value="12">12</option>
                                 <option value="%%">所有</option>
                             </select> 月
-                            </td>
+                        </td>
 
-
-
-
-
-                            <td>
-                                <input type="submit" name="submit" value="检索">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-
-
-
-                <table
-                        class="table table-striped table-bordered table-hover">
-                    <thead>
-
-                    <tr>
-                        <!-- <th style="width: 8px;">选择</th> -->
-                        <th style="width: 300px;">用户名</th>
-                        <th>用户组</th>
-                        <!--<th>统计时段</th>-->
-                        <th>此段文章数量</th>
+                        <td>
+                            <input type="submit" name="submit" value="统计" style="padding: 0 15px">
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody id="cache_table">
-                    <foreach name="user_list" item="v" key='k'>
-                        <tr align="center"><!--|del_sql=###-->
-                            <!-- <td><input type="checkbox" name="backupFiles" value="{$v.post_id}"/>
-                            </td> -->
-                            <td style="width: 300px">
-                                <a href="">{$v.user_nicename}</a>
-                            </td>
-                            <td>{$v['role_info'][0]['name']}</td>
-                            <!--<td>{$v.date}</td>-->
-                            <td>{$v.post_count}篇</td>
-
-                        </tr>
-                    </foreach>
-                    </tbody>
-
                 </table>
+            </form>
 
 
+            <table
+                    class="table table-striped table-bordered table-hover">
+                <thead>
 
+                <tr>
+                    <!-- <th style="width: 8px;">选择</th> -->
+                    <th style="width: 300px;">用户名</th>
+                    <!--<th>用户组</th>-->
+                    <!--<th>统计时段</th>-->
+                    <th>发稿数量</th>
+                </tr>
+                </thead>
+                <tbody id="cache_table">
+                <foreach name="user_list" item="v" key='k'>
+                    <tr align="center"><!--|del_sql=###-->
+                        <!-- <td><input type="checkbox" name="backupFiles" value="{$v.post_id}"/>
+                        </td> -->
+                        <td style="width: 300px">{$v.user_nicename}</td>
+                        <!--<td>{$v['role_info'][0]['name']}</td>-->
+                        <!--<td>{$v.date}</td>-->
+                        <td>{$v.post_count}篇</td>
 
+                    </tr>
+                </foreach>
+                </tbody>
 
-
-
+            </table>
 
 
         </div>
-
-
 
 
     </div>

@@ -197,3 +197,16 @@ function upgrade_20150202_to_20150215()
 
 
 }
+
+
+
+
+function upgrade_20150503_to_20150523()
+{
+    $db_prefix = C('db_prefix');
+
+    $Model = new \Think\Model();
+
+    $sql = "ALTER TABLE `{$db_prefix}user` ADD COLUMN `cataccess` varchar(255) DEFAULT NULL";
+    $Model->query($sql);
+}

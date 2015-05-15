@@ -436,6 +436,35 @@ class AccessController extends AdminBaseController
         }
 
     }
+    /**
+     * 投稿员指定分类
+     */
+    public function setusercat($id)
+    {
+        if (IS_POST) {
+
+            $data["cataccess"] = json_encode(I('post.cats'));
+
+            $res = D('User')->where(array('user_id' => $id))->data($data)->save();
+            if ($res) {
+                $this->success("保存成功");
+            } else {
+                $this->error("保存失败");
+            }
+
+        } else {
+            $role = D('User')->where(array('user_id' => $id))->find();
+
+            $this->user_cats = json_decode($role['cataccess']);
+
+            $this->action = '指定分类';
+            $this->action_name = "setusercat";
+            $this->assign("handle", U("Admin/Access/setusercat", array('id' => $id)));
+            $this->cats = D('Cats', 'Logic')->category();
+            $this->display();
+        }
+
+    }
 
     /**
      *

@@ -10,8 +10,8 @@
 /**
  * version code
  */
-define ('GreenCMS_Version', 'v2.3.0503');
-define ('GreenCMS_Build', '20150503');
+define ('GreenCMS_Version', 'v2.3.0523');
+define ('GreenCMS_Build', '20150523');
 
 define('Server_API', "http://api.greencms.net/");
 

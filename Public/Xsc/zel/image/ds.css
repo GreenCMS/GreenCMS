@@ -234,8 +234,7 @@ border: 1px solid #339999;
 background:#aCD4D4;
 }
 BODY {  
-	background:#FFFFFF;
-	background-image: url(bg.gif);
+	background-image: url(bg.png);
 	scrollbar-face-color:#B4E0F7;
 	scrollbar-arrow-color:#257B9D;
 	scrollbar-track-color:#E6EFF2;

@@ -171,8 +171,8 @@ class PostsController extends AdminBaseController
         }
 
 
-        $cats =$CatsLogic->category();
-        $tags =$TagsLogic->select();
+        $cats = $CatsLogic->category();
+        $tags = $TagsLogic->select();
 
 
         $this->assign("cats", $cats);
@@ -286,14 +286,14 @@ class PostsController extends AdminBaseController
 //      $this->redirect(U("Admin/Posts/posts",array("id"=>$post_id)));
 //      $post_restored = $PostEvent->restoreFromCookie();
 
-        $this->posts($post_id,true);
+        $this->posts($post_id, true);
         die();
     }
 
     /**
      * @param $id
      */
-    public function posts($id = -1,$new_post=false)
+    public function posts($id = -1, $new_post = false)
     {
         $PostEvent = new PostsEvent();
 
@@ -359,8 +359,8 @@ class PostsController extends AdminBaseController
             }
 
 
-            if($new_post){
-                $post['post_status']='publish';
+            if ($new_post) {
+                $post['post_status'] = 'publish';
             }
 
             $tpl_type_list = $PostEvent->getTplList();
@@ -369,7 +369,21 @@ class PostsController extends AdminBaseController
             if (!$this->noVerify()) {
                 $user = D('User', 'Logic')->detail(( int )$_SESSION [get_opinion('USER_AUTH_KEY')]);
                 $role = D('Role')->where(array('id' => $user["user_role"] ["role_id"]))->find();
-                $cats = D('Cats', 'Logic')->where(array('in', json_decode($role ["cataccess"])))->select();
+
+                $role_cataccess = json_decode($role ["cataccess"]);
+                if ($role_cataccess == "") {
+                    $role_cataccess = array();
+                }
+
+                $user_cataccess = json_decode($user ["cataccess"]);
+                if ($user_cataccess == "") {
+                    $user_cataccess = array();
+                }
+
+                $cataccess = array_merge($user_cataccess, $user_cataccess);
+
+                $cat_limit =array('cat_id'=> array('in', $cataccess));
+                $cats = D('Cats', 'Logic')->where($cat_limit)->select();
                 foreach ($cats as $key => $value) {
                     $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
                 }
@@ -389,7 +403,7 @@ class PostsController extends AdminBaseController
 
 
             $this->assign("info", $post);
-            $this->assign("handle", U('Admin/Posts/posts', array('id' => $id,'new_post'=>$new_post), true, false));
+            $this->assign("handle", U('Admin/Posts/posts', array('id' => $id, 'new_post' => $new_post), true, false));
 
             $this->assign("action", '编辑文章');
             $this->assign("action_name", 'posts');
@@ -529,7 +543,7 @@ class PostsController extends AdminBaseController
         $PostsLogic = new PostsLogic();
 
         if (!$PostsLogic->has($id)) {
-            $this->error("不存在该记录:".$id);
+            $this->error("不存在该记录:" . $id);
         }
 
         if ($PostsLogic->changePostStatue($id, $post_status)) {

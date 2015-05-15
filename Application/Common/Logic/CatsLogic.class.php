@@ -161,7 +161,7 @@ class CatsLogic extends RelationModel
 //
 //        echo $cat_id_list;
 
-        $cat = $this->getPostsIdWithChildren($cat_id, 'publish', $start . ',' . $num);
+        $cat = $this->getPostsIdWithChildren($cat_id, 'publish' );
 
         if ($cat != null) {
             $posts = D('Posts', 'Logic')->getList($num, 'single', 'post_date desc', $relation, array(), $cat, $except_field);

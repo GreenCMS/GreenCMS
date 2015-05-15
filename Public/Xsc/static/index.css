@@ -1031,7 +1031,7 @@ img {
 }
 
 .left-nav ul li {
-    height: 45px;
+    /*height: 45px;*/
     line-height: 45px;
     text-align: center;
     color: #517693;
@@ -1060,8 +1060,9 @@ img {
 
 .left-nav ul li .active{
     background-color: #DCD9D9;
-    color: #9F2517;
+    /*color: #9F2517;*/
+    color: #206EAB;
     font-size: 20px;
     font-weight: 600;
-    border-left: 5px solid #517693;
+    /*border-left: 5px solid #517693;*/
 }
