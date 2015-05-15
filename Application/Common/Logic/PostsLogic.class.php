@@ -111,16 +111,20 @@ class PostsLogic extends RelationModel
      *
      * @return bool 是否删除成功
      */
-    public function del($id, $relation = 'true')
+    public function del($id)
     {
         CacheManager::clearPostCacheById($id);
 
         $info['post_id'] = $id;
 
-        if ($this->where($info)->relation($relation)->delete())
+         if ($this->where($info)->relation(true)->delete()){
             return true;
-        else
+        }
+        else{
             return false;
+
+        }
+
     }
 
     /**

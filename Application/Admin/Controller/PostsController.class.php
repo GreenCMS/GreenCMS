@@ -304,6 +304,11 @@ class PostsController extends AdminBaseController
         if (IS_POST) {
             $post_data = $_POST;
 
+
+            if (($this->noverify() == false) || (I('post.post_status') == 'unverified')) {
+                $post_data['post_status'] = 'unverified';
+            }
+
             $post_data['post_modified'] = date("Y-m-d H:m:s", time());
             $post_data['post_type'] = $_POST['post_type'] ? $_POST['post_type'] : 'single';
             D("post_cat")->where(array("post_id" => $post_data['post_id']))->delete();

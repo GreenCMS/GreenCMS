@@ -46,7 +46,7 @@
                             <div class="portlet-body">
                                 <div class="row">
 
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <div class="btn-group">
                                             <a class="btn btn-info" href="{:U('Admin/Posts/emptyRecycleHandle')}"
                                                onclick="javascript:return a_confirm()">
@@ -55,18 +55,9 @@
                                         </div>
 
 
-                                        <div class="btn-group">
-                                            <button type="submit" class="btn btn-danger" name="delAll" value='1'><i
-                                                    class="icon-remove icon-white"
-                                                    onclick="javascript:return a_confirm()">
-                                            </i> 批量删除
-                                            </button>
-                                        </div>
-
                                     </div>
 
-
-                                    <div class="col-md-3">
+                                    <div class="col-md-5">
                                         <include file="Public:page"/>
                                     </div>
 
@@ -128,8 +119,14 @@
 
                                             </td>
                                             <td>{:getTimestamp($v['post_date'],'Y-m-d H:i') }</td>
-                                            <td><a class="btn btn-success"
+                                            <td>
+                                                <control access="Admin/Posts/recycleHandle">
+
+                                                <a class="btn btn-success"
                                                    href="{:U('Admin/Posts/recycleHandle', array('id' => $v[post_id]))}">恢复</a>&nbsp;&nbsp;
+
+                                                </control>
+
                                                 <a class="btn btn-danger"
                                                    href="{:U('Admin/Posts/del', array('id' => $v[post_id]))}">永久删除</a>
                                             </td>
