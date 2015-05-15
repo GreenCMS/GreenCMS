@@ -248,7 +248,7 @@
         //,autoSyncData:true //自动同步编辑器要提交的数据
         //,emotionLocalization:false //是否开启表情本地化，默认关闭。若要开启请确保emotion文件夹下包含官网提供的images表情文件夹
 
-        //,pasteplain:false  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+        ,pasteplain:true  //是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
         //纯文本粘贴模式下的过滤规则
 //        'filterTxtRules' : function(){
 //            function transP(node){
@@ -408,9 +408,9 @@
         //removeFormat
         //清除格式时可以删除的标签和属性
         //removeForamtTags标签
-        //,removeFormatTags:'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
+        ,removeFormatTags:'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
         //removeFormatAttributes属性
-        //,removeFormatAttributes:'class,style,lang,width,height,align,hspace,valign'
+        ,removeFormatAttributes:'class,style,lang,width,height,align,hspace,valign'
 
         //undo
         //可以最多回退的次数,默认20
@@ -420,7 +420,7 @@
 
         //autoHeightEnabled
         // 是否自动长高,默认true
-        //,autoHeightEnabled:true
+        ,autoHeightEnabled:true
 
         //scaleEnabled
         //是否可以拉伸长高,默认true(当开启时，自动长高失效)
@@ -438,7 +438,7 @@
 
         //indentValue
         //首行缩进距离,默认是2em
-        //,indentValue:'2em'
+        ,indentValue:'0em'
 
         //pageBreakTag
         //分页标识符,默认是_ueditor_page_break_tag_
@@ -458,21 +458,21 @@
 
         //autotypeset
         //  //自动排版参数
-        //  ,autotypeset:{
-        //      mergeEmptyline : true,         //合并空行
-        //      removeClass : true,           //去掉冗余的class
-        //      removeEmptyline : false,      //去掉空行
-        //      textAlign : "left" ,           //段落的排版方式，可以是 left,right,center,justify 去掉这个属性表示不执行排版
-        //      imageBlockLine : 'center',      //图片的浮动方式，独占一行剧中,左右浮动，默认: center,left,right,none 去掉这个属性表示不执行排版
-        //      pasteFilter : false,            //根据规则过滤没事粘贴进来的内容
-        //      clearFontSize : false,          //去掉所有的内嵌字号，使用编辑器默认的字号
-        //      clearFontFamily : false,        //去掉所有的内嵌字体，使用编辑器默认的字体
-        //      removeEmptyNode : false ,       // 去掉空节点
-        //      //可以去掉的标签
-        //      removeTagNames : {标签名字:1},
-        //      indent : false,                 // 行首缩进
-        //      indentValue : '2em'             //行首缩进的大小
-        //  },
+          ,autotypeset:{
+              mergeEmptyline : true,         //合并空行
+              removeClass : true,           //去掉冗余的class
+              removeEmptyline : false,      //去掉空行
+              textAlign : "left" ,           //段落的排版方式，可以是 left,right,center,justify 去掉这个属性表示不执行排版
+              imageBlockLine : 'center',      //图片的浮动方式，独占一行剧中,左右浮动，默认: center,left,right,none 去掉这个属性表示不执行排版
+              pasteFilter : false,            //根据规则过滤没事粘贴进来的内容
+              clearFontSize : false,          //去掉所有的内嵌字号，使用编辑器默认的字号
+              clearFontFamily : false,        //去掉所有的内嵌字体，使用编辑器默认的字体
+              removeEmptyNode : false ,       // 去掉空节点
+              //可以去掉的标签
+              removeTagNames : {"font":1},
+              indent : false,                 // 行首缩进
+              indentValue : '0em'             //行首缩进的大小
+          }
         //填写过滤规则
         //filterRules : {}
     };
