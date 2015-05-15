@@ -38,7 +38,7 @@ class AccessController extends AdminBaseController
      */
     public function index()
     {
-        $page = I('get.page', get_opinion('PAGER'));
+        $page = I('get.page', 20);
 
         $UserLogic = new UserLogic();
 

@@ -104,23 +104,26 @@
 
                     if (!empty($posts_id)) {
 
-                    $Page = new Common\Util\GreenPage($count, get_opinion('PAGER'));
-                    $pager_bar = $Page->show();
-                    $limit = $Page->firstRow . ',' . $Page->listRows;
+                        $Page = new Common\Util\GreenPage($count, get_opinion('PAGER'));
+                        $pager_bar = $Page->show();
+                        $limit = $Page->firstRow . ',' . $Page->listRows;
 
-                     $posts_list = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
+                         $posts_list = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
 
+                    }else{
+
+                         $posts_list=array();
                     }
 
                 </php>
 
 
-                <div class="Titlelist">
+                <div class="Titlelist" style="margin-top: 20px">
                     <div class="Titlename">
                         <!-- Title -->
                         <a href="{$cat_children['cat_children']['cat_id']|get_cat_url}" class="continue">查看全部</a>
 
-                        <h2>
+                        <h2 style="  ">
                             <a href="{$cat_children['cat_children']['cat_id']|get_cat_url}">
                                 {$cat_children['cat_children']['cat_name']}
                             </a>
@@ -134,13 +137,13 @@
 
                             <ul class="list1">
                                 <volist name="posts_list" id="v" key="k">
-                                    <li>
+                                    <li style="  height: 30px;   line-height: 30px;  border-bottom: 1px dashed #d8d8d8;">
                                         <a href="{$v|get_post_url}" title="{$v['post_title']}">
-                                            {$v|get_post_icon}
+
                                             {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}
                                         </a>
                                         &nbsp;&nbsp;
-                                        <span>
+                                        <span style="float: right">
                                         {$v['post_date']|mb_substr=2,8,"UTF-8"}
                                         </span>
                                     </li>
@@ -155,6 +158,11 @@
                 </div>
                 <hr/>
 
+                <php>
+                    $posts_id="";
+                    $count=0;
+
+                </php>
 
             </volist>
 

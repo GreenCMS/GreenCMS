@@ -50,6 +50,8 @@ function get_url_by_menu($menu_item = array(), $is_home = false)
         $real_url = $menu_item['menu_url'];
     } elseif ($menu_item['menu_function'] == 'none') {
         $real_url = '#';
+    } elseif ($menu_item['menu_function'] == 'in_site') {
+        $real_url = get_opinion('site_url') . $menu_item['menu_url'];
     } else {
 
         /**
@@ -233,6 +235,21 @@ function get_channel_url($cat, $group = '')
     return $URL;
 
 }
+
+
+function get_deep_url($cat, $group = '')
+{
+
+    if (is_array($cat)) {
+        $cat = $cat['cat_id'];
+    }
+
+    $URL = get_url($group . 'Cat/deep', array("info" => $cat));
+
+    return $URL;
+
+}
+
 
 /**
  * 获取插件链接

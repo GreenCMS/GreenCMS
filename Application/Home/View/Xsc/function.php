@@ -34,5 +34,8 @@ function get_active($current_id ,$class_id)
     dump("自定义函数test");
 }
 
+function get_deep_cat_url($cat_id){
 
+    return U('Home/cat/deep',array("info">$cat_id));
+}
 

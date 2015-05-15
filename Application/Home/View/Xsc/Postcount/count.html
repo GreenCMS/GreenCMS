@@ -102,11 +102,14 @@ table a{
                                 文章统计检索
                             </td>
                             <td>
-                                年份：<input type="text" name="year" value="{$year}"/>
-                            </td>
-                            <td>
-                                月份：<select name="month">
-                                <option value="{$month}" selected>{$month}</option>
+                                <select name="year_start">
+                                    <option value="{$year_start}" selected>{$year_start}</option>
+                                    <for start="2000" end="2100">
+                                        <option value="{$i}">{$i}</option>
+                                    </for>
+                                </select>年
+                               <select name="month_start">
+                                <option value="{$month_start}" selected>{$month_start}</option>
                                 <option value="01">01</option>
                                 <option value="02">02</option>
                                 <option value="03">03</option>
@@ -120,8 +123,34 @@ table a{
                                 <option value="11">11</option>
                                 <option value="12">12</option>
                                 <option value="%%">所有</option>
-                            </select>
+                            </select> 月至 <select name="year_end">
+                                <option value="{$year_end}" selected>{$year_end}</option>
+                                <for start="2000" end="2100">
+                                    <option value="{$i}">{$i}</option>
+                                </for>
+                            </select>年
+                                <select name="month_end">
+                                <option value="{$month_end}" selected>{$month_end}</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="%%">所有</option>
+                            </select> 月
                             </td>
+
+
+
+
+
                             <td>
                                 <input type="submit" name="submit" value="检索">
                             </td>
@@ -137,9 +166,9 @@ table a{
 
                     <tr>
                         <!-- <th style="width: 8px;">选择</th> -->
-                        <th>用户名</th>
+                        <th style="width: 300px;">用户名</th>
                         <th>用户组</th>
-                        <th>统计时段</th>
+                        <!--<th>统计时段</th>-->
                         <th>此段文章数量</th>
                     </tr>
                     </thead>
@@ -148,11 +177,11 @@ table a{
                         <tr align="center"><!--|del_sql=###-->
                             <!-- <td><input type="checkbox" name="backupFiles" value="{$v.post_id}"/>
                             </td> -->
-                            <td style="width: 25%">
+                            <td style="width: 300px">
                                 <a href="">{$v.user_nicename}</a>
                             </td>
                             <td>{$v['role_info'][0]['name']}</td>
-                            <td>{$v.date}</td>
+                            <!--<td>{$v.date}</td>-->
                             <td>{$v.post_count}篇</td>
 
                         </tr>
