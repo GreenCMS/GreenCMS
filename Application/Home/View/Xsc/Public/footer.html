@@ -11,8 +11,17 @@
 
      Copyright  ©  <a target="_blank" href="http://green.njtech.edu.cn">GreenStudio</a>  {:date('Y')}  All Right reserved
     <br/>
+    <opinioncontrol realtime="false" opinion_name="speed_info" default="false">
 
 
+    <php>
+        G('beginTime',$GLOBALS['_beginTime']);
+        G('viewEndTime');
+        echo "Load in ".G('beginTime','viewEndTime').'s with '. N('db_query').' db queries  and '.N('cache_read').' cache hits' ;
+
+
+    </php>
+    </opinioncontrol>
 
     <br/>
     <br/>

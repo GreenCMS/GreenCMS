@@ -191,4 +191,37 @@ abstract class BaseController extends Controller
     }
 
 
+
+    protected function antiCC(){
+
+
+
+         $timestamp = time();
+
+        session_start();
+        $ll_nowtime = $timestamp;
+        if (!empty($_SESSION['ll_lasttime'])) {
+            $ll_lasttime = $_SESSION['ll_lasttime'];
+            $ll_times = $_SESSION['ll_times'] + 1;
+            $_SESSION['ll_times'] = $ll_times;
+        } else {
+            $ll_lasttime = $ll_nowtime;
+            $ll_times = 1;
+            $_SESSION['ll_times'] = $ll_times;
+            $_SESSION['ll_lasttime'] = $ll_lasttime;
+        }
+        if (($ll_nowtime - $ll_lasttime) > 3) {
+            if ($ll_times > 15) { //5表示刷新次数
+               header(sprintf("Location: %s",'http://127.0.0.1'));
+                exit;
+
+            }
+        } else {
+            $ll_times = 0;
+            $_SESSION['ll_lasttime'] = $ll_nowtime;
+            $_SESSION['ll_times'] = $ll_times;
+        }
+
+    }
+
 }
