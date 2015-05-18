@@ -111,7 +111,7 @@ class CatsLogic extends RelationModel
     public function getChild($id = 0)
     {
         if ($id) {
-            $info = D('Cats')->cache(true, 2)->where(array("cat_father" => $id))->select();
+            $info = D('Cats')->cache(true, 2)->where(array("cat_father" => $id))->order("cat_order")->select();
             if ($info != null) return $info;
         }
         return false;
@@ -271,7 +271,7 @@ class CatsLogic extends RelationModel
             'cat_slug'
         )); // , array('cid', 'pid', 'name', 'fullname')
 
-        return $Cat->getList();
+        return $Cat->getList(null,0,'cat_order');
 
     }
 
@@ -291,7 +291,7 @@ class CatsLogic extends RelationModel
             'cat_slug'
         )); // , array('cid', 'pid', 'name', 'fullname')
 
-        return $Cat->getListWithCount();
+        return $Cat->getListWithCount(null,0,'cat_order');
 
     }
 
