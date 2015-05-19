@@ -325,6 +325,12 @@
                             <div class="form-actions">
                                 <span style="font-size: 18px; color: red; font-weight: bold;" id="success"></span>
 
+
+
+                                <button type="button" id="post_vertify_ctl" class="btn">
+                                    <i class="icon-ok"></i> 审核通过
+                                </button>
+
                                 <button type="button" id="post_width_ctl" class="btn btn-warning">
                                     <i class="icon-ok"></i> 沉浸模式
                                 </button>
@@ -333,7 +339,7 @@
                                     <i class="icon-ok"></i> 高级选项
                                 </button>
 
-                                <button type="button" class="btn btn-info submit">
+                                <button type="button" id="post_submit_ctl" class="btn btn-info submit">
                                     <i class="icon-ok"></i> 提交
                                 </button>
 
@@ -389,6 +395,19 @@
             var post_advance = $("#post_advance");
             post_advance.slideToggle(200);
         });
+
+        $("#post_vertify_ctl").click(function () {
+            $("#post_status").val("");
+            $("#post_status").val("publish");
+            $("#post_status").find("option[value='unverified']").attr("selected",false);
+            $("#post_status").find("option[value='reverify']").attr("selected",false);
+            $("#post_status").find("option[value='draft']").attr("selected",false);
+            $("#post_status").find("option[value='publish']").attr("selected",true);
+
+            $('#post_submit_ctl').click();
+
+        });
+
 
         $("#post_width_ctl").click(function () {
             $(".sidebar-toggle").trigger("click");
@@ -487,7 +506,7 @@
                             if (data.status == 1) {
                                 $(".submit").hide();
                                 div.fadeIn().html(data.info);
-                                div.fadeOut(3000);
+                                div.fadeOut(5000);
 
                             } else {
                                 div.fadeIn().html(data.info);
@@ -496,12 +515,12 @@
                             if (data.url && data.url != '') {
                                 setTimeout(function () {
                                     top.window.location.href = data.url;
-                                }, 1000);
+                                }, 2000);
                             }
                             if (data.url == '') {
                                 setTimeout(function () {
                                     top.window.location.reload();
-                                }, 1000);
+                                }, 2000);
                             }
 
                         }

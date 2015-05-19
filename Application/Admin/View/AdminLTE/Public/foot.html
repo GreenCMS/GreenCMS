@@ -81,8 +81,61 @@
                 clearWarningList();
             });
 
+            try
+            {
+                fetchPostCount();
+            }
+            catch (e)
+            {
 
+            }
         });
+
+
+        function fetchPostCount() {
+            var url = '{:U("Admin/Posts/countAll")}';
+            $.get(url, function (data) {
+                if (data != 'none') {
+
+                    /**
+                     * {
+                        status: 1,
+                        info: {
+                        publish: "4514",
+                        unverified: "0",
+                        reverify: "0",
+                        draft: "4",
+                        preDel: "1"
+                        },
+                        url: ""
+                        }
+                     */
+                    var dataObj = eval("(" + data + ")");//转换为json对象
+                    var obj = jQuery.parseJSON(data);
+
+
+//                    alert(obj.info.publish);
+
+
+                    $('#Admin-Posts-index a').append('<small class="badge pull-right bg-green">' + obj.info.publish + '</small>');
+
+                    if (obj.info.unverified != 0) {
+                        $('#Admin-Posts-unverified a').append('<small class="badge pull-right bg-yellow">' + obj.info.unverified + '</small>');
+                    }
+
+                    if (obj.info.reverify != 0) {
+                        $('#Admin-Posts-reverify a').append('<small class="badge pull-right bg-red">' + obj.info.reverify + '</small>');
+                    }
+
+//                    $('#Admin-Posts-draft a').append('<small class="badge pull-right bg-yellow">'+obj.info.draft+'</small>');
+//                    $('#Admin-Posts-recycle a').append('<small class="badge pull-right bg-yellow">'+obj.info.preDel+'</small>');
+
+                } else {
+
+
+                }
+            });
+        }
 
     </script>
 </control>

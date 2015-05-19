@@ -118,13 +118,20 @@
                                             </td>
                                             <td>{:getTimestamp($v['post_date'],'Y-m-d H:i') }</td>
                                             <td>
+                                                <a class="btn btn-sm btn-info"
+                                                   href="{:U('Home/Post/Preview', array('info' => $v['post_id']))}"
+                                                   target="_blank">预览</a>
+                                                &nbsp;
+
+
                                                 <a class="btn btn-sm btn-primary"
                                                    href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}">编辑</a>
                                                 &nbsp;
 
+
                                                 <control access="Admin/Posts/NOVERIFY">
 
-                                                    <a class="btn btn-sm btn-info"
+                                                    <a class="btn btn-sm btn-warning"
                                                        href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v[post_id],'post_status'=>'reverify'))}">不通过</a>
                                                     &nbsp;
                                                     <a class="btn btn-sm btn-success"

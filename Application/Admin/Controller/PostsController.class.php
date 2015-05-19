@@ -34,6 +34,7 @@ class PostsController extends AdminBaseController
         CacheManager::clearPost();
         CacheManager::clearTag();
 
+
     }
 
 
@@ -387,7 +388,7 @@ class PostsController extends AdminBaseController
 
                 $cataccess = array_merge($user_cataccess, $user_cataccess);
 
-                $cat_limit =array('cat_id'=> array('in', $cataccess));
+                $cat_limit = array('cat_id' => array('in', $cataccess));
                 $cats = D('Cats', 'Logic')->where($cat_limit)->select();
                 foreach ($cats as $key => $value) {
                     $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
@@ -412,6 +413,11 @@ class PostsController extends AdminBaseController
 
             $this->assign("action", '编辑文章');
             $this->assign("action_name", 'posts');
+
+
+            if (!$this->noVerify()) {
+                $this->assign('post_status', gen_opinion_list(get_opinion("post_status"), 'unverified'));
+            }
 
             $this->display('post_v3');
 
@@ -906,5 +912,30 @@ class PostsController extends AdminBaseController
     {
         $this->index($method, I('get.post_status', 'publish'), I('get.order', 'post_date desc'), I('get.keyword', ''));
     }
+
+    public function countAll(){
+
+        $where=array();
+        //投稿员只能看到自己的
+        if (!$this->noVerify()) {
+            $where['user_id'] = get_current_user_id();
+        }
+
+        $PostsLogic = new PostsLogic();
+
+        $res=array();
+
+        $post_status=C('post_status');
+        foreach ($post_status as $key => $value){
+            $where ['post_status']=$key;
+            $count = $PostsLogic->countAll('all', $where); // 查询满足要求的总记录数
+            $res[$key]=$count;
+        }
+
+        $this->jsonReturn(1,$res);
+
+    }
+
+
 
 }
