@@ -42,6 +42,7 @@ $menu_arr = array(
             'Index/profile' => '用户信息',
             'Index/sns' => '社交账号绑定',
             'Index/changePass' => '修改密码',
+
         ),
 
 
@@ -52,12 +53,13 @@ $menu_arr = array(
 
             'Posts/category' => '分类管理',
             'Posts/tag' => '标签管理',
+
             'Posts/add' => '添加文章',
 
-
-            'Posts/draft' => '草稿箱',
             'Posts/reverify' => '未通过',
             'Posts/unverified' => '待审核',
+
+            'Posts/draft' => '草稿箱',
             'Posts/recycle' => '回收站',
 
 //todo            'Posts/stats' => '信息统计',

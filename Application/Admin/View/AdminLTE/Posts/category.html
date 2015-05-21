@@ -6,6 +6,12 @@
 
     <include file="Public:head"/>
 
+    <style>
+        .table>tbody>tr>td{
+            vertical-align:middle;
+            padding: 3px 8px 3px 8px;
+        }
+    </style>
 </head>
 <body class="skin-blue">
 
@@ -85,13 +91,13 @@
                                     <td>{$v['post_count']} &nbsp;</td>
 
                                     <td>
-                                        <a class="btn btn-success"
+                                        <a class="btn btn-sm btn-success"
                                            href="{:U('Admin/Posts/index', array('cat' => $v['cat_id']))}">查看分类文章</a>
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary"
+                                        <a class="btn btn-sm btn-primary"
                                            href="{:U('Admin/Posts/editCategory', array('id' => $v['cat_id']))}">编辑</a>
-                                        <a onclick="javascript:return a_confirm()" class="btn btn-danger"
+                                        <a onclick="javascript:return a_confirm()" class="btn  btn-sm  btn-danger"
                                            href="{:U('Admin/Posts/delCategory', array('id' => $v['cat_id']))}">删除</a>
 
                                     </td>

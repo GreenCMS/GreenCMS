@@ -491,11 +491,30 @@
                     if ($("post_title").val() == ''
                             || $("#post_content").val() == '') {
                         div.fadeIn().html("标题或内容不能为空");
-                        div.fadeOut(3000);
+                        alert('标题或内容不能为空');
+                        div.fadeOut(5000);
                         return false;
                     }
 
-                    var url = '{$handle}';
+
+                    var arr = [];
+
+                    $("input[name='cats[]']:checked").each(function(i, o){
+//                        a[i] = $(o).val();
+                          arr.push($(o).val());
+
+
+                    });
+
+                    if (arr.length==0)
+                    {
+                        div.fadeIn().html("分类信息不能为空");
+                        alert('分类信息不能为空');
+                        div.fadeOut(5000);
+                        return false;
+                    }
+
+                        var url = '{$handle}';
                     var formObj = $("#add_post");
                     formObj.ajaxSubmit({
                         url: url,

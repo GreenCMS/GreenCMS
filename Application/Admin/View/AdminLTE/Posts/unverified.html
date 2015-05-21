@@ -41,7 +41,7 @@
                         <form method="POST" action="{:U('Admin/Posts/indexHandle')}" id="posts">
                             <div class="portlet-body">
 
-                                <div class="row">
+                                <div class="row"  style="padding-bottom: 10px;">
 
                                     <div class="col-md-4">
 
@@ -83,7 +83,7 @@
                                         <th style="width:100px;">作者</th>
                                         <th>分类 与 标签</th>
                                         <th style="width: 150px">发布日期</th>
-                                        <th style="width: 350px">操作</th>
+                                        <th style="width: 300px">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -121,22 +121,20 @@
                                                 <a class="btn btn-sm btn-info"
                                                    href="{:U('Home/Post/Preview', array('info' => $v['post_id']))}"
                                                    target="_blank">预览</a>
-                                                &nbsp;
 
 
                                                 <a class="btn btn-sm btn-primary"
                                                    href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}">编辑</a>
-                                                &nbsp;
 
 
                                                 <control access="Admin/Posts/NOVERIFY">
 
                                                     <a class="btn btn-sm btn-warning"
                                                        href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v[post_id],'post_status'=>'reverify'))}">不通过</a>
-                                                    &nbsp;
+
                                                     <a class="btn btn-sm btn-success"
                                                        href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v[post_id]))}">通过</a>
-                                                    &nbsp;
+
                                                     <a class="btn btn-sm btn-danger"
                                                        href="{:U('Admin/Posts/preDel', array('id' => $v[post_id]))}">删除</a>
 
