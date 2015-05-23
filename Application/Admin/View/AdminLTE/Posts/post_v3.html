@@ -143,6 +143,7 @@
                                 </div>
                             </div>
 
+                            <control access="Admin/Posts/NOVERIFY">
 
                             <div class="form-group">
 
@@ -184,64 +185,68 @@
                             </div>
 
 
-                            <div class="form-group">
-                                <label class="control-label">类型</label>
+                            </control>
 
-                                <div class="controls">
-
-
-                                    <select class="small form-control" tabindex="1" name="post_type" id="post_type">
-
-                                        {$post_type}
-
-                                    </select>
-                                    <span class="help-inline"></span>
-
-
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">状态</label>
-
-                                <div class="controls">
-
-
-                                    <select class="small form-control" tabindex="1" name="post_status" id="post_status">
-
-                                        {$post_status}
-
-                                    </select>
-                                    <span class="help-inline"></span>
-
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <label class="control-label">模板</label>
-
-                                <div class="controls">
-
-
-                                    <select class="small form-control" tabindex="1" name="post_template"
-                                            id="post_template">
-
-                                        {$tpl_type}
-
-                                    </select>
-                                    <span class="help-inline"></span>
-
-
-                                </div>
-
-                            </div>
 
 
                             <div id="post_advance" style="display: none">
+
+
+                                <div class="form-group">
+                                    <label class="control-label">类型</label>
+
+                                    <div class="controls">
+
+
+                                        <select class="small form-control" tabindex="1" name="post_type" id="post_type">
+
+                                            {$post_type}
+
+                                        </select>
+                                        <span class="help-inline"></span>
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label">状态</label>
+
+                                    <div class="controls">
+
+
+                                        <select class="small form-control" tabindex="1" name="post_status" id="post_status">
+
+                                            {$post_status}
+
+                                        </select>
+                                        <span class="help-inline"></span>
+
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">模板</label>
+
+                                    <div class="controls">
+
+
+                                        <select class="small form-control" tabindex="1" name="post_template"
+                                                id="post_template">
+
+                                            {$tpl_type}
+
+                                        </select>
+                                        <span class="help-inline"></span>
+
+
+                                    </div>
+
+                                </div>
 
                                 <div class="form-group">
                                     <label class="control-label">置顶</label>
@@ -487,34 +492,30 @@
                     }
 
                     var div = $("#success");
-
-                    if ($("post_title").val() == ''
-                            || $("#post_content").val() == '') {
+                     if ($("#post_title").val() == '' ||
+                            $("#post_title").val() == '未命名' ||
+                            $("#post_content").val() == '') {
                         div.fadeIn().html("标题或内容不能为空");
                         alert('标题或内容不能为空');
                         div.fadeOut(5000);
                         return false;
                     }
 
-
                     var arr = [];
 
-                    $("input[name='cats[]']:checked").each(function(i, o){
+                    $("input[name='cats[]']:checked").each(function (i, o) {
 //                        a[i] = $(o).val();
-                          arr.push($(o).val());
-
-
+                        arr.push($(o).val());
                     });
 
-                    if (arr.length==0)
-                    {
-                        div.fadeIn().html("分类信息不能为空");
-                        alert('分类信息不能为空');
+                    if (arr.length == 0) {
+                        div.fadeIn().html("分类信息不能为空<br />请选择分类");
+                        alert("分类信息不能为空,请选择分类");
                         div.fadeOut(5000);
                         return false;
                     }
 
-                        var url = '{$handle}';
+                    var url = '{$handle}';
                     var formObj = $("#add_post");
                     formObj.ajaxSubmit({
                         url: url,

@@ -51,13 +51,21 @@
 
 
         <div class="left-nav-item" id="yxfc">
-            <h3 style="  background-color: #8E99A2;">
-                <a href="{$children['cat_id']|getCatURLByID}"
-                   title=" {$children['cat_name']}"
-                        > {$children['cat_name']}</a>
+
+            <php>
+
+                if(I('get.info')!=2){
+
+           echo ' <h3 style="  background-color: #8E99A2;">
+                <a href="'.getCatURLByID($children['cat_id']).'"
+                   title=" '.$children['cat_name'].'"
+                        > '.$children['cat_name'].'</a>
+            </h3>';
 
 
-            </h3>
+                }
+
+            </php>
             <ul>
 
                 <volist name="children['cat_children']" id="cat_children" empty="没有子分类">
@@ -139,7 +147,6 @@
                                 <volist name="posts_list" id="v" key="k">
                                     <li style="  height: 30px;   line-height: 30px;  border-bottom: 1px dashed #d8d8d8;">
                                         <a href="{$v|get_post_url}" title="{$v['post_title']}">
-
                                             {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}
                                         </a>
                                         &nbsp;&nbsp;

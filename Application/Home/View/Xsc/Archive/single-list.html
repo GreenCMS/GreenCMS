@@ -30,13 +30,22 @@
 
 
         <div class="left-nav-item"  id="yxfc">
-            <h3 style="  background-color: #8E99A2;">
-                <a href="{$children['cat_id']|getCatURLByID}"
-                   title=" {$children['cat_name']}"
-                        > {$children['cat_name']}</a>
 
 
-            </h3>
+            <php>
+
+                if(I('get.info')!=2){
+
+                echo ' <h3 style="  background-color: #8E99A2;">
+                <a href="'.getCatURLByID($children['cat_id']).'"
+                   title=" '.$children['cat_name'].'"
+                        > '.$children['cat_name'].'</a>
+            </h3>';
+
+
+                }
+
+            </php>
             <ul>
 
                 <volist name="children['cat_children']" id="cat_children" empty="没有子分类">

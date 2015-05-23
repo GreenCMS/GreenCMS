@@ -81,6 +81,18 @@
                 clearWarningList();
             });
 
+
+        });
+
+
+
+    </script>
+</control>
+
+<control access="Admin/Posts/index">
+    <script>
+
+        $(document).ready(function () {
             try
             {
                 fetchPostCount();
@@ -114,17 +126,14 @@
                     var obj = jQuery.parseJSON(data);
 
 
-//                    alert(obj.info.publish);
-
-
-                    $('#Admin-Posts-index a').append('<small class="badge pull-right bg-green">' + obj.info.publish + '</small>');
+                    $('#admin-posts-index a').append('<small class="badge pull-right bg-green">' + obj.info.publish + '</small>');
 
                     if (obj.info.unverified != 0) {
-                        $('#Admin-Posts-unverified a').append('<small class="badge pull-right bg-yellow">' + obj.info.unverified + '</small>');
+                        $('#admin-posts-unverified a').append('<small class="badge pull-right bg-yellow">' + obj.info.unverified + '</small>');
                     }
 
                     if (obj.info.reverify != 0) {
-                        $('#Admin-Posts-reverify a').append('<small class="badge pull-right bg-red">' + obj.info.reverify + '</small>');
+                        $('#admin-posts-reverify a').append('<small class="badge pull-right bg-red">' + obj.info.reverify + '</small>');
                     }
 
 //                    $('#Admin-Posts-draft a').append('<small class="badge pull-right bg-yellow">'+obj.info.draft+'</small>');
@@ -137,5 +146,9 @@
             });
         }
 
+
+
     </script>
+
+
 </control>

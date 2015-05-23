@@ -303,8 +303,10 @@ class PostsController extends AdminBaseController
         $Posts = new PostsLogic();
 
         if (IS_POST) {
-            $post_data = $_POST;
-
+            $post_data = I('post.','','');
+            if($post_data['post_id']!=$id){
+                $this->jsonReturn(0, "更新失败，非法请求" );
+            }
 
             if (($this->noverify() == false) || (I('post.post_status') == 'unverified')) {
                 $post_data['post_status'] = 'unverified';
@@ -334,6 +336,10 @@ class PostsController extends AdminBaseController
             } else {
                 $url = U('Admin/Posts/index');
 
+            }
+
+            if (!$this->noVerify()) {
+                $url = U('Admin/Posts/unverified');
             }
 
             CacheManager::clearPostCacheById($id);
@@ -398,7 +404,6 @@ class PostsController extends AdminBaseController
                 $cats = D('Cats', 'Logic')->category();
                 $tags = D('Tags', 'Logic')->select();
             }
-
 
             $this->assign("cats", $cats);
             $this->assign("tags", $tags);
