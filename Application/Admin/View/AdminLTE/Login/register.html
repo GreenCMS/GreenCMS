@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="bg-black">
+<html class="lockscreen">
 <head>
     <meta charset="UTF-8">
     <title>{:get_opinion('title')} | 注册新用户</title>
@@ -127,14 +127,22 @@
     function fleshVerify() {
         //重载验证码
         document.getElementById('imgVerify').src = '{:U("Admin/Login/vertify")}';
+    };
+    jQuery.fn.center = function() {
+        this.css("position", "absolute");
+        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+        $(window).scrollTop()) - 30 + "px");
+        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+        $(window).scrollLeft()) + "px");
+        return this;
     }
-    ;
+
 </script>
 <script>
-    jQuery(document).ready(function () {
+    $(document).ready(function () {
 
-        fleshVerify();
-
+        setTimeout(fleshVerify, 1000);
+        $("#login-box").center();
     });
 </script>
 
