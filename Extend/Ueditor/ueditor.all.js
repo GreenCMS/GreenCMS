@@ -1904,7 +1904,11 @@
                         break;
                     case 'style':
                         node.style.cssText = '';
-                        !browser.ie && node.removeAttributeNode(node.getAttributeNode('style'))
+
+                        if (node.getAttributeNode('style') !== null) {
+                            !browser.ie && node.removeAttributeNode(node.getAttributeNode('style'))
+                        }
+
                 }
                 node.removeAttribute(ci);
             }

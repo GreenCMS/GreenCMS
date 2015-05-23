@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+
+
+    <php>
+
+        $info = I('get.info');
+
+        $CatsLogic = new Common\Logic\CatsLogic();
+        $cat = $CatsLogic->detail($info);
+        $children = $CatsLogic->getChildren($cat['cat_id']);
+
+        if (empty($children['cat_children'])) {
+        $children = ($CatsLogic->getChildren($children['cat_father']));
+        }
+
+
+        $CatsLogic = new Common\Logic\CatsLogic();
+        $Posts = new Common\Logic\PostsLogic();
+        $cat = $CatsLogic->detail($info);
+
+
+        $title=$cat['cat_name'];
+    </php>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>{$title}|{:get_opinion('title')}</title>
+    <meta name="description" content="{:get_opinion('description')}"/>
+    <meta name="keywords" content="{:get_opinion('keywords')}"/>
+    <link href="__PUBLIC__/Xsc/static/list.css" rel="stylesheet" type="text/css">
+
+    <include file="Public:head"/>
+
+    <style type="text/css">
+
+
+    </style>
+
+</head>
+<body>
+
+{:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
+
+<div id="content" class="clearfix">
+
+
+    <div class="left-nav">
+
+        <include file="Public:hotlink"/>
+
+
+        <div class="left-nav-item" id="yxfc">
+
+            <php>
+
+                if(I('get.info')!=2){
+
+           echo ' <h3 style="  background-color: #8E99A2;">
+                <a href="'.getCatURLByID($children['cat_id']).'"
+                   title=" '.$children['cat_name'].'"
+                        > '.$children['cat_name'].'</a>
+            </h3>';
+
+
+                }
+
+            </php>
+            <ul>
+
+                <volist name="children['cat_children']" id="cat_children" empty="没有子分类">
+                    <li>
+                        <a href="{$cat_children['cat_children']['cat_id']|getCatURLByID}"
+                           title="{$cat_children['cat_children']['cat_name']}"
+                                >{$cat_children['cat_children']['cat_name']}</a>
+                    </li>
+                </volist>
+
+            </ul>
+        </div>
+
+
+        <include file="Public:search"/>
+
+
+    </div>
+
+
+    <div class="title">
+        <h1>{$title}</h1>
+
+        <ul class="breadcrumbs">{$breadcrumbs}</ul>
+    </div>
+
+
+    <div class="article-list">
+
+        <!-- Blog / Srart
+        ================================================== -->
+        <div class="Titlelists">
+
+
+            <volist name="children.cat_children" id="cat_children" empty="没有相关文章.."> <!-- Post Start -->
+
+                <!--<dump>$cat_children</dump>-->
+
+                <php>
+
+                    $posts_id = $CatsLogic->getPostsId($cat_children['cat_children']['cat_id']);
+                    $count = sizeof($posts_id);
+                    ($count == 0) ? $res404 = 0 : $res404 = 1;
+
+                    if (!empty($posts_id)) {
+
+                        $Page = new Common\Util\GreenPage($count, get_opinion('PAGER'));
+                        $pager_bar = $Page->show();
+                        $limit = $Page->firstRow . ',' . $Page->listRows;
+
+                         $posts_list = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
+
+                    }else{
+
+                         $posts_list=array();
+                    }
+
+                </php>
+
+
+                <div class="Titlelist" style="margin-top: 20px">
+                    <div class="Titlename">
+                        <!-- Title -->
+                        <a href="{$cat_children['cat_children']['cat_id']|get_cat_url}" class="continue">查看全部</a>
+
+                        <h2 style="  ">
+                            <a href="{$cat_children['cat_children']['cat_id']|get_cat_url}">
+                                {$cat_children['cat_children']['cat_name']}
+                            </a>
+                        </h2>
+
+
+                    </div>
+                    <div class="Titletip">
+                        <div style="margin: 0px 20px 0px 10px;">
+
+
+                            <ul class="list1">
+                                <volist name="posts_list" id="v" key="k">
+                                    <li style="  height: 30px;   line-height: 30px;  border-bottom: 1px dashed #d8d8d8;">
+                                        <a href="{$v|get_post_url}" title="{$v['post_title']}">
+                                            {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}
+                                        </a>
+                                        &nbsp;&nbsp;
+                                        <span style="float: right">
+                                        {$v['post_date']|mb_substr=2,8,"UTF-8"}
+                                        </span>
+                                    </li>
+                                </volist>
+                            </ul>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <hr/>
+
+                <php>
+                    $posts_id="";
+                    $count=0;
+
+                </php>
+
+            </volist>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<div style="clear:both;"></div>
+
+<include file="Public:footer"/>
+
+</body>
+</html>

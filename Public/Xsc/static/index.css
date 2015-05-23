@@ -179,10 +179,6 @@ img {
 
 }
 
-.left_half:hover > .header .header_info {
-    color: #066400;
-
-}
 
 .left_half:hover > .body {
     background-color: #fefefe;
@@ -1035,7 +1031,7 @@ img {
 }
 
 .left-nav ul li {
-    height: 45px;
+    /*height: 45px;*/
     line-height: 45px;
     text-align: center;
     color: #517693;
@@ -1059,4 +1055,14 @@ img {
 
 .left-nav ul li a:hover {
     background-color: #D3D3D3;
+}
+
+
+.left-nav ul li .active{
+    background-color: #DCD9D9;
+    /*color: #9F2517;*/
+    color: #206EAB;
+    font-size: 20px;
+    font-weight: 600;
+    /*border-left: 5px solid #517693;*/
 }

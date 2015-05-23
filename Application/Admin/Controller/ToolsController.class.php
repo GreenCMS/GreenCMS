@@ -10,6 +10,8 @@
 namespace Admin\Controller;
 
 use Common\Event\WordpressEvent;
+use Common\Logic\PostsLogic;
+use Common\Logic\UserLogic;
 use Common\Util\File;
 use Think\Log;
 use Think\Upload;
@@ -139,6 +141,48 @@ class ToolsController extends AdminBaseController
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header("Content-Length: " . filesize($filePath));
         readfile($filePath);
+    }
+
+
+    /*文章统计*/
+    public function count()
+    {
+
+        $year = I('request.year', date('Y'));
+
+        $month_start = I('request.month_start', date('m'));
+        $month_end = I('request.month_end', date('m'));
+
+        if ($month_start == $month_end) {
+            $condition['post_date'] = array('like', I('request.year', '%') . '-' . I('request.month', '%') . '-' . I('request.day', '%') . '%');
+        } else {
+            if ($month_start == '%%') {
+                $condition['post_date'] = array('between', "{$year}-0-0,{$year}-{$month_end}-31");
+            }else            if ($month_end == '%%') {
+                $condition['post_date'] = array('between', "{$year}-{$month_start}-0,{$year}-12-31");
+            }else{
+                $condition['post_date'] = array('between', "{$year}-{$month_start}-0,{$year}-{$month_end}-31");
+            }
+        }
+
+
+        $UserLogic = new UserLogic();
+        $PostsLogic = new PostsLogic();
+
+        $user_list = $UserLogic->getList(false);
+
+        foreach ($user_list as $key => $user) {
+            $condition['user_id'] = $user['user_id'];
+            $user_list [$key]['post_count'] = $PostsLogic->countAll('single', $condition);
+            $user_list [$key]['date'] = substr($condition['post_date'][1], 0, 7);
+        }
+
+        $this->assign("user_list", $user_list);
+
+        $this->assign("year", $year);
+        $this->assign("month_start", $month_start);
+        $this->assign("month_end", $month_end);
+        $this->display('count');
     }
 
 

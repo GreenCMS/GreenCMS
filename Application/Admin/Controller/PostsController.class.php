@@ -34,6 +34,7 @@ class PostsController extends AdminBaseController
         CacheManager::clearPost();
         CacheManager::clearTag();
 
+
     }
 
 
@@ -170,6 +171,15 @@ class PostsController extends AdminBaseController
             $posts_list = $PostsLogic->getList($limit, $post_type, $order, true, $where, $post_ids);
         }
 
+
+        $cats = $CatsLogic->category();
+        $tags = $TagsLogic->select();
+
+
+        $this->assign("cats", $cats);
+        $this->assign("tags", $tags);
+
+
         $this->assign('post_type', $post_type);
         $this->assign('action', $name . $key . $cat . $tag . get_real_string($post_type) . '列表');
         $this->assign('posts', $posts_list);
@@ -277,14 +287,14 @@ class PostsController extends AdminBaseController
 //      $this->redirect(U("Admin/Posts/posts",array("id"=>$post_id)));
 //      $post_restored = $PostEvent->restoreFromCookie();
 
-        $this->posts($post_id,true);
+        $this->posts($post_id, true);
         die();
     }
 
     /**
      * @param $id
      */
-    public function posts($id = -1,$new_post=false)
+    public function posts($id = -1, $new_post = false)
     {
         $PostEvent = new PostsEvent();
 
@@ -293,7 +303,14 @@ class PostsController extends AdminBaseController
         $Posts = new PostsLogic();
 
         if (IS_POST) {
-            $post_data = $_POST;
+            $post_data = I('post.','','');
+            if($post_data['post_id']!=$id){
+                $this->jsonReturn(0, "更新失败，非法请求" );
+            }
+
+            if (($this->noverify() == false) || (I('post.post_status') == 'unverified')) {
+                $post_data['post_status'] = 'unverified';
+            }
 
             $post_data['post_modified'] = date("Y-m-d H:m:s", time());
             $post_data['post_type'] = $_POST['post_type'] ? $_POST['post_type'] : 'single';
@@ -319,6 +336,10 @@ class PostsController extends AdminBaseController
             } else {
                 $url = U('Admin/Posts/index');
 
+            }
+
+            if (!$this->noVerify()) {
+                $url = U('Admin/Posts/unverified');
             }
 
             CacheManager::clearPostCacheById($id);
@@ -350,8 +371,8 @@ class PostsController extends AdminBaseController
             }
 
 
-            if($new_post){
-                $post['post_status']='publish';
+            if ($new_post) {
+                $post['post_status'] = 'publish';
             }
 
             $tpl_type_list = $PostEvent->getTplList();
@@ -360,7 +381,21 @@ class PostsController extends AdminBaseController
             if (!$this->noVerify()) {
                 $user = D('User', 'Logic')->detail(( int )$_SESSION [get_opinion('USER_AUTH_KEY')]);
                 $role = D('Role')->where(array('id' => $user["user_role"] ["role_id"]))->find();
-                $cats = D('Cats', 'Logic')->where(array('in', json_decode($role ["cataccess"])))->select();
+
+                $role_cataccess = json_decode($role ["cataccess"]);
+                if ($role_cataccess == "") {
+                    $role_cataccess = array();
+                }
+
+                $user_cataccess = json_decode($user ["cataccess"]);
+                if ($user_cataccess == "") {
+                    $user_cataccess = array();
+                }
+
+                $cataccess = array_merge($user_cataccess, $user_cataccess);
+
+                $cat_limit = array('cat_id' => array('in', $cataccess));
+                $cats = D('Cats', 'Logic')->where($cat_limit)->select();
                 foreach ($cats as $key => $value) {
                     $cats[$key]['cat_slug'] = $cats[$key]['cat_name'];
                 }
@@ -369,7 +404,6 @@ class PostsController extends AdminBaseController
                 $cats = D('Cats', 'Logic')->category();
                 $tags = D('Tags', 'Logic')->select();
             }
-
 
             $this->assign("cats", $cats);
             $this->assign("tags", $tags);
@@ -380,10 +414,15 @@ class PostsController extends AdminBaseController
 
 
             $this->assign("info", $post);
-            $this->assign("handle", U('Admin/Posts/posts', array('id' => $id,'new_post'=>$new_post), true, false));
+            $this->assign("handle", U('Admin/Posts/posts', array('id' => $id, 'new_post' => $new_post), true, false));
 
             $this->assign("action", '编辑文章');
             $this->assign("action_name", 'posts');
+
+
+            if (!$this->noVerify()) {
+                $this->assign('post_status', gen_opinion_list(get_opinion("post_status"), 'unverified'));
+            }
 
             $this->display('post_v3');
 
@@ -520,7 +559,7 @@ class PostsController extends AdminBaseController
         $PostsLogic = new PostsLogic();
 
         if (!$PostsLogic->has($id)) {
-            $this->error("不存在该记录:".$id);
+            $this->error("不存在该记录:" . $id);
         }
 
         if ($PostsLogic->changePostStatue($id, $post_status)) {
@@ -878,5 +917,30 @@ class PostsController extends AdminBaseController
     {
         $this->index($method, I('get.post_status', 'publish'), I('get.order', 'post_date desc'), I('get.keyword', ''));
     }
+
+    public function countAll(){
+
+        $where=array();
+        //投稿员只能看到自己的
+        if (!$this->noVerify()) {
+            $where['user_id'] = get_current_user_id();
+        }
+
+        $PostsLogic = new PostsLogic();
+
+        $res=array();
+
+        $post_status=C('post_status');
+        foreach ($post_status as $key => $value){
+            $where ['post_status']=$key;
+            $count = $PostsLogic->countAll('all', $where); // 查询满足要求的总记录数
+            $res[$key]=$count;
+        }
+
+        $this->jsonReturn(1,$res);
+
+    }
+
+
 
 }

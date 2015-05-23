@@ -48,9 +48,9 @@ class CatController extends HomeBaseController
 //            $children = ($CatsLogic->getChildren($cat['cat_id']));
 
 //            if ($children['cat_children']) {
-                $this->channel($info);
-                Hook::listen('app_end');
-                die();
+            $this->channel($info);
+            Hook::listen('app_end');
+            die();
 //            }
         }
 
@@ -139,6 +139,17 @@ class CatController extends HomeBaseController
             $this->display('Archive/single-list');
         }
 
+    }
+
+
+    /**
+     * 未知类型单页显示 支持年月日限定
+     * @param $method 魔术方法名称 即文章类型
+     * @param $args
+     */
+    public function _empty($method, $args)
+    {
+        $this->display('Archive/' . $method . '-list');
     }
 
 

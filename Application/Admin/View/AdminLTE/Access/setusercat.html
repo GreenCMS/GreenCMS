@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> {$action} | {:get_opinion('title')}</title>
+
+    <include file="Public:head"/>
+
+</head>
+<body class="skin-blue">
+
+{:W('Common/header')}
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    {:W('Common/sideMenu')}
+
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+
+
+        <section class="content-header">
+            <h1>
+                {$action}
+                <small>{:get_opinion('title')}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$module_url}"><i class="fa fa-dashboard"></i> {$module}</a></li>
+                <li class="active">{$action}</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-10">
+
+                        <!-- /.box-header -->
+                        <div class="box-body">
+
+
+                            <form action="{$handle}" name="rolecat" method="post">
+
+
+                                <div class="form-group">
+
+                                    <label class="control-label">分类标签</label>
+
+                                    <div class="controls">
+
+                                        <foreach name="cats" item="vCats">
+                                            <div><label><input
+                                                    type="checkbox" value="{$vCats.cat_id}" name="cats[]"
+                                                <foreach name="user_cats" item="pcs">
+                                                    <if condition="$vCats['cat_id'] eq $pcs">
+                                                        checked="checked"
+                                                        <else/>
+                                                    </if>
+                                                </foreach>
+                                                /> {$vCats.cat_slug}
+                                            </label>
+                                            </div>
+                                        </foreach>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-actions">
+							<span style="font-size: 18px; color: red; font-weight: bold;"
+                                  id="success"></span>
+                                    <button type="submit" class="btn btn-info submit">
+                                        <i class="icon-ok"></i> 提交
+                                    </button>
+                                </div>
+
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+
+        </section>
+        <!-- /.content -->
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+
+<include file="Public:foot"/>
+
+</body>
+</html>

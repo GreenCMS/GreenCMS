@@ -116,9 +116,11 @@ class CommonWidget extends Controller
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {
+                            $id=strtolower(MODULE_NAME. "-".str_replace("/","-",$sub_url));
+
                             $sub_true_url = explode('/', $sub_url);
                             $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
-                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
+                            $menu .= '<li id="'.$id.'" class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
                         }
                 }
 
@@ -137,9 +139,11 @@ class CommonWidget extends Controller
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {
+                            $id=strtolower(MODULE_NAME. "-".str_replace("/","-",$sub_url));
+
                             $sub_true_url = explode('/', $sub_url);
                             $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
-                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
+                            $menu .= '<li  id="'.$id.'" class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
                         }
                 }
 
@@ -159,9 +163,11 @@ class CommonWidget extends Controller
                 foreach ($cache as $big_url => $big_name) {
                     if ($big_url == $url)
                         foreach ($big_name as $sub_url => $sub_name) {
+                            $id=strtolower(MODULE_NAME. "-".str_replace("/","-",$sub_url));
+
                             $sub_true_url = explode('/', $sub_url);
                             $css = !strcasecmp($sub_true_url [1], strtolower(ACTION_NAME)) ? "active" : "";
-                            $menu .= '<li class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
+                            $menu .= '<li  id="'.$id.'" class="' . $css . '"><a href="' . U("Admin/" . "$sub_url") . '"><i class="fa fa-angle-double-right"></i>' . $sub_name . '</a></li>';
                         }
                 }
                 $menu .= '</ul></li>';

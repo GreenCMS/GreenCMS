@@ -11,12 +11,14 @@ return array(
 
     "url_function" => array(
         'native' => '直链http://xxxx',
+        'in_site' => '站内相对链接',
         'get_post_url' => '文章Post',
         'get_cat_url' => '分类Cat',
         'get_tag_url' => '标签Tag',
         'get_channel_url' => '频道Cannel',
         'U' => 'TP原生U函数',
-        'get_addon_url' => '插件链接生成函数'
+        'get_addon_url' => '插件链接生成',
+        'get_deep_url' => '用户分类链接'
     ),
 
     "url_open" => array(

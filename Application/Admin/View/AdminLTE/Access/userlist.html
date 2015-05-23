@@ -62,7 +62,7 @@
                                 <td>文章数量</td>
 
                                 <td>开通时间</td>
-                                <td width="150">操作</td>
+                                <td width="200">操作</td>
                             </tr>
                             </thead>
                             <volist name="list" id="vo">
@@ -75,7 +75,10 @@
                                     <td>{$vo.post_count}</td>
                                     <td>{$vo.user_registered}</td>
 
-                                    <td>[ <a
+                                    <td>
+                                        [ <a href="{:U('Admin/Access/setusercat',array('id'=>$vo['user_id']))}"
+                                             class="edit">投稿分类</a> ]
+                                        [ <a
                                             href="{:U('Admin/Access/editUser',array('aid'=>$vo['user_id']))}">编辑</a>
                                         ][ <a
                                                 href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a>

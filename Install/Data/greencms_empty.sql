@@ -151,6 +151,7 @@ CREATE TABLE `{$db_prefix}user` (
   `user_intro` text CHARACTER SET utf8,
   `user_level` smallint(6) NOT NULL DEFAULT '10',
   `user_session` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
+  `cataccess` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   KEY `user_login_key` (`user_login`),
   KEY `user_nicename` (`user_nicename`)

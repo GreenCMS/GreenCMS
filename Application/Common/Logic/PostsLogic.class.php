@@ -43,6 +43,17 @@ class PostsLogic extends RelationModel
         return $post_res;
     }
 
+    public function preview($id, $relation = true, $info_with = array())
+    {
+        $info = $info_with;
+        $info['post_id|post_name'] = urlencode($id);
+
+        $post_res = D('Posts')->where($info)->relation($relation)->find();
+
+
+        return $post_res;
+    }
+
     /**
      * 判断文章是否存在
      * @param $id int 文章id或者其他识别符
@@ -111,16 +122,20 @@ class PostsLogic extends RelationModel
      *
      * @return bool 是否删除成功
      */
-    public function del($id, $relation = 'true')
+    public function del($id)
     {
         CacheManager::clearPostCacheById($id);
 
         $info['post_id'] = $id;
 
-        if ($this->where($info)->relation($relation)->delete())
+         if ($this->where($info)->relation(true)->delete()){
             return true;
-        else
+        }
+        else{
             return false;
+
+        }
+
     }
 
     /**

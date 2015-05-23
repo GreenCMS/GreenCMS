@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html class="bg-black">
+<html class="lockscreen">
 <head>
     <meta charset="UTF-8">
-    <title>GreenCMS 管理面板 | {:get_opinion('title')} </title>
+    <title>{:get_opinion('title')}  管理面板 | {:get_opinion('title')} </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
     <link href="__PUBLIC__/AdminLTE/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -48,10 +48,12 @@
 
     </style>
 </head>
-<body class="bg-black">
+
+
+<body class="bg-black" >
 
 <div class="form-box" id="login-box">
-    <div class="header">GreenCMS 管理登陆</div>
+    <div class="header">{:get_opinion('title')} <br /> 管理登陆</div>
     <form action="{:U('Admin/Login/login')}" method="POST">
         <div class="body bg-gray">
 
@@ -91,10 +93,14 @@
 
             <hr/>
 
-            <p style="text-align: center"><a href="{:U('Admin/Login/register')}" class="btn bg-orange">注册</a> 或者
+            <p style="text-align: center">
+
+                <opinioncontrol realtime="true" opinion_name="user_can_regist" default="true">
+                    <a href="{:U('Admin/Login/register')}" class="btn bg-orange">注册</a> 或者
+                </opinioncontrol>
+
 
                 <a href="{:U('Admin/Login/forgetpassword')}" class="btn bg-aqua">找回密码?</a></p>
-
 
         </div>
 
@@ -108,17 +114,18 @@
         <!--<button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>-->
         <div class="margin text-center">
 
-            <a href="{:U('Oauth/Sns/login',array('type'=>'sina'))}"><img
-                    src="__PUBLIC__/share/img/icon/weibo/weibo_login_24.png"/></a>
+                    <a href="{:U('Oauth/Sns/login',array('type'=>'sina'))}"><img
+                            src="__PUBLIC__/share/img/icon/weibo/weibo_login_24.png"/></a>
 
-
-            <!--<a href="{:U('Oauth/Sns/login',array('type'=>'greencms'))}">GreenOAuth账号登陆</a>-->
+                        <!--<a href="{:U('Oauth/Sns/login',array('type'=>'greencms'))}">GreenOAuth账号登陆</a>-->
         </div>
 
         <div class="copyright">
+
             2003-{:date('Y')} &copy; <a href="http://www.greencms.net">GreenCMS {:get_opinion('software_version')}</a>
-            <br/> Admin Dashboard.
+
             <br/>
+
             <a href="http://green.njtech.edu.cn">绿荫工作室</a>出品
         </div>
 
@@ -139,14 +146,22 @@
     function fleshVerify() {
         //重载验证码
         document.getElementById('imgVerify').src = '{:U("Admin/Login/vertify")}';
+    };
+    jQuery.fn.center = function() {
+        this.css("position", "absolute");
+        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+        $(window).scrollTop()) - 30 + "px");
+        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+        $(window).scrollLeft()) + "px");
+        return this;
     }
-    ;
+
 </script>
 <script>
     $(document).ready(function () {
 
         setTimeout(fleshVerify, 1000);
-
+        $("#login-box").center();
     });
 </script>
 

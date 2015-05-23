@@ -3,16 +3,25 @@
     <br/>
 
 
-    南京工业大学  党委学生工作部 学生事务部  025-58139092 <br/>
+    南京工业大学  党委学生工作部 学生事务部  025-58139081 <br/>
 
     通信地址：南京市浦口区浦珠南路30号南京工业大学江浦校区行政楼学生事务部   <br/>
 
 
 
-     Copyright  ©  <a target="_blank" href="http://green.njtech.edu.cn">GreenStduio</a>  {:date('Y')}  All Right reserved
+     Copyright  ©  <a target="_blank" href="http://green.njtech.edu.cn">GreenStudio</a>  {:date('Y')}  All Right reserved
     <br/>
+    <opinioncontrol realtime="false" opinion_name="speed_info" default="false">
 
 
+    <php>
+        G('beginTime',$GLOBALS['_beginTime']);
+        G('viewEndTime');
+        echo "Load in ".G('beginTime','viewEndTime').'s with '. N('db_query').' db queries  and '.N('cache_read').' cache hits' ;
+
+
+    </php>
+    </opinioncontrol>
 
     <br/>
     <br/>

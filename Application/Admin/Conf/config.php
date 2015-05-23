@@ -42,6 +42,8 @@ $menu_arr = array(
             'Index/profile' => '用户信息',
             'Index/sns' => '社交账号绑定',
             'Index/changePass' => '修改密码',
+
+
         ),
 
 
@@ -50,14 +52,16 @@ $menu_arr = array(
             'Posts/index' => '所有文章',
             'Posts/page' => '页面列表',
 
-            'Posts/category' => '分类管理',
-            'Posts/tag' => '标签管理',
             'Posts/add' => '添加文章',
 
+            'Posts/category' => '分类管理',
+            'Posts/tag' => '标签管理',
 
-            'Posts/draft' => '草稿箱',
+
             'Posts/reverify' => '未通过',
             'Posts/unverified' => '待审核',
+
+            'Posts/draft' => '草稿箱',
             'Posts/recycle' => '回收站',
 
 //todo            'Posts/stats' => '信息统计',
@@ -115,6 +119,8 @@ $menu_arr = array(
             'Tools/index' => '可用工具',
             'Tools/log' => '日志工具',
             'Tools/wordpress' => '从WordPress导入',
+            'Tools/count' => '统计工具',
+
             // 'Tools/rss'    => '从rss导入',
             // 'Tools/export'    => '导出',
 

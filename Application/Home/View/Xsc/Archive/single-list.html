@@ -30,18 +30,28 @@
 
 
         <div class="left-nav-item"  id="yxfc">
-            <h3 style="  background-color: #8E99A2;">
-                <a href="{$children['cat_id']|getCatURLByID}"
-                   title=" {$children['cat_name']}"
-                        > {$children['cat_name']}</a>
 
 
-            </h3>
+            <php>
+
+                if(I('get.info')!=2){
+
+                echo ' <h3 style="  background-color: #8E99A2;">
+                <a href="'.getCatURLByID($children['cat_id']).'"
+                   title=" '.$children['cat_name'].'"
+                        > '.$children['cat_name'].'</a>
+            </h3>';
+
+
+                }
+
+            </php>
             <ul>
 
                 <volist name="children['cat_children']" id="cat_children" empty="没有子分类">
                     <li>
-                        <a href="{$cat_children['cat_children']['cat_id']|getCatURLByID}"
+                        <a  class="{:is_active_cat($cat_children['cat_children']['cat_id'])}"
+                            href="{$cat_children['cat_children']['cat_id']|getCatURLByID}"
                            title="{$cat_children['cat_children']['cat_name']}"
                                 >{$cat_children['cat_children']['cat_name']}</a>
                     </li>
@@ -100,7 +110,7 @@
                     <div class="Titletip">
                         <div style="margin: 0px 20px 0px 10px;">
 
-                            <p style="  height: 50px;  overflow: hidden;">{$post.post_content|strip_tags|mb_substr=0,300,"UTF-8"}</p>
+                            <p style="  height: 55px;  overflow: hidden;">{$post.post_content|strip_tags|mb_substr=0,300,"UTF-8"}</p>
                         </div>
 
                         <div style="margin: 5px 20px 0px 10px;">

@@ -10,3 +10,17 @@
     <option value="__SELF__&page=20">20</option>
     <option value="__SELF__&page=100">100</option>
 </select>
+&nbsp;&nbsp;
+
+<label>分类:</label>
+<select style="width:100px"
+        onchange="self.location.href=options[selectedIndex].value"
+        size="1"
+        name="mlink2">
+    <option value="__SELF__">筛选分类</option>
+
+    <foreach name="cats" item="cat">
+       <option value="__SELF__&cat={$cat.cat_id}"> {$cat.cat_slug}</option>
+    </foreach>
+
+</select>

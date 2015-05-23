@@ -43,6 +43,7 @@ class AdminBaseController extends BaseController
         $this->_recordCurrentPage();
 
 //        $this->customConfig();
+        C('TMPL_CACHE_ON',false);
 
     }
 

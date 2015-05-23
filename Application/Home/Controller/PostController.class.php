@@ -11,6 +11,7 @@ namespace Home\Controller;
 
 use Common\Logic\PostsLogic;
 use Common\Util\File;
+use Common\Util\Rbac;
 
 /**
  * 文章控制器
@@ -72,6 +73,29 @@ class PostController extends HomeBaseController
         }
     }
 
+
+
+    public function preview($info = -1)
+    {
+        $Posts = new PostsLogic();
+
+        if ($_SESSION[get_opinion('USER_AUTH_KEY')]) {
+            $post_detail = $Posts->preview($info, true);
+        }
+
+        $this->if404($post_detail, "非常抱歉，你需要的文章暂时不存在，可能它已经躲起来了。.");
+
+        $this->assign('breadcrumbs', get_breadcrumbs('post', $post_detail));
+        $this->assign('post', $post_detail); // 赋值数据集
+
+        if (File::file_exists(T('Home@Post/' . $post_detail['post_template']))) {
+            $this->display($post_detail['post_template']);
+        } else {
+            $this->display('single');
+        }
+
+
+    }
     /**
      * 未知类型单页显示 支持年月日限定
      * @param $method 魔术方法名称 即文章类型

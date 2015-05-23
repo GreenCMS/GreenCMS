@@ -66,3 +66,12 @@ function get_real_string($string)
     return $map[$string];
 }
 
+
+function arr_merge($data){
+    $arr=array();
+    foreach ($data as $k => $v) {
+        $arr[$v['user_id']][$v['user_id']]++;
+    }
+    return $arr;
+}
+

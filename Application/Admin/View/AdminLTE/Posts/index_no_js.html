@@ -43,9 +43,9 @@
 
                         <form method="POST" action="{:U('Admin/Posts/indexHandle')}" id="posts">
                             <div class="portlet-body">
-                                <div class="row">
+                                <div class="row" style="padding-bottom: 10px;">
 
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <div class="btn-group">
                                             <a href="{:U('Admin/Posts/add')}">
                                                 <button type="submit" class="btn btn-success" name="postAdd"
@@ -58,7 +58,7 @@
 
                                         <div class="btn-group">
                                             <button type="submit" class="btn btn-info" name="verifyAll" value='1'><i
-                                                    class="icon-user icon-white"></i> 批量审核
+                                                    class="icon-user icon-white"></i> 批量送审
                                             </button>
                                         </div>
 
@@ -72,7 +72,7 @@
 
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-5">
                                         <include file="Public:page"/>
                                     </div>
 
@@ -89,10 +89,10 @@
                                                                        id="check-all"
                                                                        data-set="#post_table .checkboxes"/></th>
                                         <th class="col-md-3">标题</th>
-                                        <th class="col-md-1" style="width: 70px">作者</th>
-                                        <th>分类 与 标签 (最多显示5个)</th>
-                                        <th class="col-md-1" style="width: 150px">发布日期</th>
-                                        <th class="col-md-3">操作</th>
+                                        <th class="col-md-1" style="width: 100px">作者</th>
+                                        <th >分类 与 标签 (最多显示5个)</th>
+                                        <th class="col-md-1" style="width: 140px">发布日期</th>
+                                        <th style="width: 230px">操作</th>
 
                                     </tr>
                                     </thead>
@@ -131,7 +131,7 @@
                                                    target="_blank">查看</a>
 
                                                 <a class="btn btn-sm btn-warning"
-                                                   href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v['post_id'],'post_status' => 'unverified'))}">审核</a>
+                                                   href="{:U('Admin/Posts/unverifiedHandle', array('id' => $v['post_id'],'post_status' => 'unverified'))}">送审</a>
 
                                                 <a class="btn btn-sm btn-danger"
                                                    onclick="javascript:return a_confirm()"
