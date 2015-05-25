@@ -250,6 +250,8 @@ class PostsController extends AdminBaseController
      */
     public function draft($post_type = "all", $post_status = 'draft', $order = 'post_date desc', $keyword = '')
     {
+        $PostsLogic = new PostsLogic();
+        $PostsLogic ->emptyPostDraft($post_status);
         $this->index($post_type, $post_status, $order, $keyword, 'draft', "草稿箱");
         die();
 
@@ -375,6 +377,10 @@ class PostsController extends AdminBaseController
                 $post['post_status'] = 'publish';
             }
 
+            if (!$this->noVerify()) {
+                $post['post_status'] = 'unverified';
+            }
+
             $tpl_type_list = $PostEvent->getTplList();
 
             //投稿员只能看到权限内部的分类
@@ -412,17 +418,11 @@ class PostsController extends AdminBaseController
             $this->assign('post_status', gen_opinion_list(get_opinion("post_status"), $post['post_status']));
             $this->assign('post_type', gen_opinion_list(get_opinion("post_type"), $post['post_type']));
 
-
             $this->assign("info", $post);
             $this->assign("handle", U('Admin/Posts/posts', array('id' => $id, 'new_post' => $new_post), true, false));
 
             $this->assign("action", '编辑文章');
             $this->assign("action_name", 'posts');
-
-
-            if (!$this->noVerify()) {
-                $this->assign('post_status', gen_opinion_list(get_opinion("post_status"), 'unverified'));
-            }
 
             $this->display('post_v3');
 
@@ -705,6 +705,7 @@ class PostsController extends AdminBaseController
         $data['cat_name'] = I('post.cat_name');
         $data['cat_slug'] = urlencode(I('post.cat_slug'));
         $data['cat_father'] = I('post.cat_father');
+        $cat_data['cat_order'] = I('post.cat_order');
 
         if ($data['cat_slug'] == '') {
             $data['cat_slug'] = $data['cat_name'];
@@ -747,6 +748,7 @@ class PostsController extends AdminBaseController
         $cat_data['cat_name'] = I('post.cat_name');
         $cat_data['cat_slug'] = urlencode(I('post.cat_slug'));
         $cat_data['cat_father'] = I('post.cat_father');
+        $cat_data['cat_order'] = I('post.cat_order');
 
         if ($CatsLogic->where(array('cat_id' => $id))->save($cat_data)) {
             $this->success('分类编辑成功', U('Admin/Posts/category'));

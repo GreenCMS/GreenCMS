@@ -327,8 +327,8 @@
 
                             <input type="hidden" name="post_id" value="{$post_id}"/>
 
-                            <div class="form-actions">
-                                <span style="font-size: 18px; color: red; font-weight: bold;" id="success"></span>
+                            <hr />
+                            <div class="form-actions" style="  margin-left: 65px;">
 
                                 <control access="Admin/Posts/NOVERIFY">
                                     <button type="button" id="post_vertify_ctl" class="btn">
@@ -348,6 +348,8 @@
                                 <button type="button" id="post_submit_ctl" class="btn btn-info submit">
                                     <i class="icon-ok"></i> 提交
                                 </button>
+
+                                <span style="font-size: 18px; color: red; font-weight: bold;" id="success"></span>
 
 
                             </div>
@@ -384,47 +386,12 @@
         src="__PUBLIC__/AdminLTE/js/plugins/timepicker/jquery-ui-timepicker-zh-CN.js"></script>
 
 <script type="text/javascript">
+    var editor;
 
-    function leave_confirm() {
-        if (true) {
-            return "确认离开将不会保存当前数据。";
-        }
-    }
-
-    $(window).bind('beforeunload', leave_confirm);
-
-
-    $(document).ready(function () {
-
-
-        $("#post_advance_ctl").click(function () {
-            var post_advance = $("#post_advance");
-            post_advance.slideToggle(200);
-        });
-
-        $("#post_vertify_ctl").click(function () {
-            $("#post_status").val("");
-            $("#post_status").val("publish");
-            $("#post_status").find("option[value='unverified']").attr("selected", false);
-            $("#post_status").find("option[value='reverify']").attr("selected", false);
-            $("#post_status").find("option[value='draft']").attr("selected", false);
-            $("#post_status").find("option[value='publish']").attr("selected", true);
-
-            $('#post_submit_ctl').click();
-
-        });
-
-
-        $("#post_width_ctl").click(function () {
-            $(".sidebar-toggle").trigger("click");
-        });
-
-    });
 
     $(function () {
 
 
-        var editor;
         //具体参数配置在  editor_config.js  中
         var options = {
             zIndex: 999,
@@ -492,7 +459,7 @@
                     }
 
                     var div = $("#success");
-                     if ($("#post_title").val() == '' ||
+                    if ($("#post_title").val() == '' ||
                             $("#post_title").val() == '未命名' ||
                             $("#post_content").val() == '') {
                         div.fadeIn().html("标题或内容不能为空");
@@ -561,6 +528,92 @@
         });
     });
 
+
+
+    function leave_confirm() {
+        if (true) {
+            return "确认离开将不会保存当前数据。";
+        }
+    }
+
+    function update() {
+
+        if (editor.hasContents()) {
+            editor.sync();
+        }
+
+        var div = $("#success");
+        var url = '{$handle}';
+        var formObj = $("#add_post");
+        formObj.ajaxSubmit({
+            url: url,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+
+                if (data.status == 1) {
+                    div.fadeIn().html("草稿自动保存成功");
+                    div.fadeOut(5000);
+
+                } else {
+                    div.fadeIn().html("草稿保存失败");
+                    div.fadeOut(5000);
+                }
+                if (data.url && data.url != '') {
+
+                }
+                if (data.url == '') {
+
+                }
+
+            }
+        })
+    }
+
+    function auto_save(){
+        var post_status_dom= $("#post_status");
+        var post_status= post_status_dom.val();
+        post_status_dom.val("draft");
+        post_status_dom.find("option").attr("selected", false);
+        post_status_dom.find("option[value='draft']").attr("selected", true);
+        update();
+        post_status_dom.find("option").attr("selected", false);
+        post_status_dom.find("option[value='"+post_status+"']").attr("selected", true);
+        post_status_dom.val(post_status);
+
+    }
+
+    $(window).bind('beforeunload', leave_confirm);
+
+
+    $(document).ready(function () {
+
+        window.setInterval(auto_save, 60000);
+
+
+        $("#post_advance_ctl").click(function () {
+            var post_advance = $("#post_advance");
+            post_advance.slideToggle(200);
+        });
+
+        $("#post_vertify_ctl").click(function () {
+            $("#post_status").val("");
+            $("#post_status").val("publish");
+            $("#post_status").find("option[value='unverified']").attr("selected", false);
+            $("#post_status").find("option[value='reverify']").attr("selected", false);
+            $("#post_status").find("option[value='draft']").attr("selected", false);
+            $("#post_status").find("option[value='publish']").attr("selected", true);
+
+            $('#post_submit_ctl').click();
+
+        });
+
+
+        $("#post_width_ctl").click(function () {
+            $(".sidebar-toggle").trigger("click");
+        });
+
+    });
 
 </script>
 
