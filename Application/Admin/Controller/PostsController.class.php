@@ -142,7 +142,7 @@ class PostsController extends AdminBaseController
 
         //处理详细信息 搜索，指定TAG CAT文章
         if ($cat != '') {
-            $post_ids = $CatsLogic->getPostsId($cat);
+            $post_ids = $CatsLogic->getPostsIdWithChildren($cat);
             $post_ids = empty($post_ids) ? array('post_id' => 0) : $post_ids;
 
             $cat_detail = $CatsLogic->detail($cat);
