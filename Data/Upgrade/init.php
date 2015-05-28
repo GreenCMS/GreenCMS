@@ -183,8 +183,6 @@ function upgrade_20140819_to_20140822()
 
 
 
-
-
 function upgrade_20150202_to_20150215()
 {
     $db_prefix = C('db_prefix');
@@ -199,9 +197,7 @@ function upgrade_20150202_to_20150215()
 }
 
 
-
-
-function upgrade_20150503_to_20150523()
+function upgrade_20150503_to_20150603()
 {
     $db_prefix = C('db_prefix');
 
@@ -210,3 +206,4 @@ function upgrade_20150503_to_20150523()
     $sql = "ALTER TABLE `{$db_prefix}user` ADD COLUMN `cataccess` varchar(255) DEFAULT NULL";
     $Model->query($sql);
 }
+
