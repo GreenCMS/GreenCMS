@@ -194,7 +194,7 @@ class LoginController extends BaseController
     {
 
         $config = array(
-            'fontSize' => 20,
+            'fontSize' => 30,
             'length' => 4,
             'useCurve' => true,
             'useNoise' => true,

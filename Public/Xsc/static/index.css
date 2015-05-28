@@ -199,6 +199,8 @@ img {
     margin-top: 5px;
     font-size: 20px;
     color: #1b58b8;
+    word-spacing: 8px;
+    letter-spacing: 1px;
 }
 
 .left_half .header img {
@@ -796,6 +798,9 @@ img {
 
     /*padding-left: 28px;*/
     margin-left: 5px;
+
+    word-spacing: 8px;
+    letter-spacing:2px;
 
 }
 

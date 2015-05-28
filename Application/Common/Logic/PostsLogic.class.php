@@ -218,5 +218,15 @@ class PostsLogic extends RelationModel
         return $this->where(array('post_status' => $post_status))->relation(true)->delete();
     }
 
+    /**
+     * 清空指定状态文章
+     * @param $post_status
+     * @return mixed
+     */
+    public function emptyPostDraft($post_status)
+    {
+        return $this->where(array('post_status' => $post_status,'post_title'=>'未命名'))->relation(true)->delete();
+    }
+
 
 }
