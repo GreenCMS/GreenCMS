@@ -559,6 +559,31 @@ function get_post_img($post)
 
 }
 
+
+function get_post_attach($post)
+{
+
+    $content = $post['post_content'];
+
+    preg_match_all('/<a.*?(?: |\\t|\\r|\\n)?href=[\'"]?(.+?)[\'"]?(?:(?: |\\t|\\r|\\n)+.*?)?>/sim', $content, $strResult, PREG_PATTERN_ORDER);
+    $n = count($strResult[1]);
+    $random = mt_rand(1, 10);
+    if ($n > 0) {
+
+        if (!strstr($strResult[1][0], "http://")) {
+            return get_opinion('site_url') . $strResult[1][0];
+
+        } else {
+            return $strResult[1][0];
+
+        }
+
+    } else {
+        return "";
+    }
+
+}
+
 /**
  * 面包屑
  * @param $type
