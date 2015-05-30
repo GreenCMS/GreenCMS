@@ -670,7 +670,7 @@ class PostsController extends AdminBaseController
     {
         $CatsLogic = new CatsLogic();
 
-        $cat_list = $CatsLogic->relation(true)->selectWithPostsCount();
+        $cat_list = $CatsLogic->selectWithPostsCount();
         foreach ($cat_list as $key => $value) {
             $cat_list[$key]["cat_father"] = $CatsLogic->detail($value["cat_father"]);
         }
@@ -687,7 +687,7 @@ class PostsController extends AdminBaseController
     {
         $CatsLogic = new CatsLogic();
 
-        $action = '添加';
+        $action = '添加分类';
         $this->assign('action', $action);
         $cat_list = $CatsLogic->category();
 
@@ -757,6 +757,18 @@ class PostsController extends AdminBaseController
         }
     }
 
+
+    public function preDelCategory($id = -1)
+    {
+        $CatsLogic = new CatsLogic();
+        $cats_list=$CatsLogic->category();
+
+        $this->assign('form_url',U('Admin/Posts/delCategory',array('id'=>$id)));
+        $this->assign('cats_list', $cats_list);
+        $this->assign('action', '删除分类');
+        $this->display('delcat');
+    }
+
     /**
      * 删除分类
      * @param $id
@@ -764,25 +776,37 @@ class PostsController extends AdminBaseController
     public function delCategory($id = -1)
     {
         $CatsLogic = new CatsLogic();
+        $PostsLogic = new PostsLogic();
+
+        $process_method=I('post.process_method');
+
+        if($process_method=='tocat'&&I('post.newcat')==$id){
+            $this->error("移动后的分类不能和当前分类相同");
+        }
 
         if ($id == 1) {
             $this->error("默认分类不可删除");
         } else {
-            if ($CatsLogic->relation(true)->delete($id)) {
-
-                $data['cat_id'] = '1';
+            if ($CatsLogic->delete($id)) {
                 if (D('Post_cat')->where(array("cat_id" => $id))->find()) {
-                    $post = D('Post_cat')->where(array("cat_id" => $id))->select();
-                    foreach ($post as $v) {
-                        D('Post_cat')->where(array("pc_id" => $v['pc_id']))->data($data)->save();
+                    $pc_list = D('Post_cat')->where(array("cat_id" => $id))->select();
+                    foreach ($pc_list as $pc) {
+                        if($process_method=='del'){
+                            $PostsLogic->preDel( $pc['post_id']);
+                        }
+
+                        if($process_method=='tocat'){
+                            $data['cat_id'] =I('post.newcat');
+                            D('Post_cat')->where(array("pc_id" => $pc['pc_id']))->data($data)->save();
+                        }
                     }
                 }
-
-                $this->success('分类删除成功', U('Admin/Posts/category'));
             } else {
-                $this->success('分类删除失败:没有找到指定分类,可能它已经被删除', U('Admin/Posts/category'));
+                $this->error('分类删除失败:没有找到指定分类,可能它已经被删除', U('Admin/Posts/category'));
             }
         }
+
+        $this->success('分类删除成功', U('Admin/Posts/category'));
     }
 
     /**
@@ -816,7 +840,7 @@ class PostsController extends AdminBaseController
      */
     public function addTag()
     {
-
+        $this->assign('action', '新增标签');
         $this->display();
     }
 
@@ -885,6 +909,17 @@ class PostsController extends AdminBaseController
         }
     }
 
+    public function preDelTag($id = -1)
+    {
+        $TagsLogic = new TagsLogic();
+        $tags_list=$TagsLogic->select();
+
+        $this->assign('form_url',U('Admin/Posts/delTag',array('id'=>$id)));
+        $this->assign('tags_list', $tags_list);
+        $this->assign('action', '删除标签');
+        $this->display('deltag');
+    }
+
     /**
      * 删除标签
      * @param $id
@@ -892,12 +927,38 @@ class PostsController extends AdminBaseController
     public function delTag($id = -1)
     {
         $TagsLogic = new TagsLogic();
+        $PostsLogic = new PostsLogic();
 
-        if ($TagsLogic->relation(true)->delete($id)) {
-            $this->success('标签删除成功', U('Admin/Posts/tag'));
-        } else {
-            $this->success('标签删除失败:没有找到指定标签,可能它已经被删除', U('Admin/Posts/tag'));
+
+        $process_method=I('post.process_method');
+
+        if($process_method=='totag'&&I('post.newtag')==$id){
+            $this->error("移动后的标签不能和当前分类相同");
         }
+
+
+        if ($TagsLogic->delete($id)) {
+            if (D('Post_tag')->where(array("tag_id" => $id))->find()) {
+                $pt_list = D('Post_tag')->where(array("tag_id" => $id))->select();
+                foreach ($pt_list as $pt) {
+                    if($process_method=='del'){
+                        $PostsLogic->preDel( $pt['post_id']);
+                    }
+
+                    if($process_method=='totag'){
+                        $data['tag_id'] =I('post.newtag');
+                        D('Post_tag')->where(array("pt_id" => $pt['pt_id']))->data($data)->save();
+                    }
+                }
+            }
+
+        } else {
+            $this->error('标签删除失败:没有找到指定标签,可能它已经被删除', U('Admin/Posts/tag'));
+        }
+
+        $this->success('标签删除成功', U('Admin/Posts/tag'));
+
+
     }
 
 

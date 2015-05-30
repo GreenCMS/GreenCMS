@@ -37,6 +37,12 @@ class CatController extends HomeBaseController
      */
     public function detail($info)
     {
+        if (get_opinion("auto_channel", false, false)) {
+            $this->channel($info);
+            Hook::listen('app_end');
+            die();
+        }
+
         $CatsLogic = new CatsLogic();
         $PostsLogic = new PostsLogic();
         $cat = $CatsLogic->detail($info);
@@ -44,20 +50,8 @@ class CatController extends HomeBaseController
         $this->assign('cat_id', $cat['cat_id']); // 赋值数据集
 
 
-        if (get_opinion("auto_channel", false, false)) {
-//            $children = ($CatsLogic->getChildren($cat['cat_id']));
-
-//            if ($children['cat_children']) {
-            $this->channel($info);
-            Hook::listen('app_end');
-            die();
-//            }
-        }
-
         $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了"); //优雅的404
-
         $posts_id = $CatsLogic->getPostsId($cat['cat_id']);
-
 
         $count = sizeof($posts_id);
         ($count == 0) ? $res404 = 0 : $res404 = 1;
@@ -71,7 +65,6 @@ class CatController extends HomeBaseController
             $posts_list = $PostsLogic->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
 
         }
-
 
         $this->assign('title', '分类 ' . $cat['cat_name'] . ' 所有文章'); // 赋值数据集
         $this->assign('res404', $res404);
@@ -90,6 +83,7 @@ class CatController extends HomeBaseController
      */
     public function channel($info)
     {
+
         //TODO 兼容旧式CMS深目录结构的二级cat结构
         $CatsLogic = new CatsLogic();
         $cat = $CatsLogic->detail($info);
@@ -106,12 +100,14 @@ class CatController extends HomeBaseController
 
         $this->if404($cat, "非常抱歉，没有这个分类，可能它已经躲起来了"); //优雅的404
 
+
         $posts_id = $CatsLogic->getPostsIdWithChildren($cat['cat_id']);
+
+
         $count = sizeof($posts_id);
         ($count == 0) ? $res404 = 0 : $res404 = 1;
 
         if (!empty($posts_id)) {
-
             $Page = new GreenPage($count, get_opinion('PAGER'));
             $pager_bar = $Page->show();
             $limit = $Page->firstRow . ',' . $Page->listRows;
