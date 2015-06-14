@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+
+
+    <php>
+
+        $info = I('get.info');
+
+        $CatsLogic = new Common\Logic\CatsLogic();
+        $cat = $CatsLogic->detail($info);
+        $children = $CatsLogic->getChildren($cat['cat_id']);
+
+        $CatsLogic = new Common\Logic\CatsLogic();
+        $Posts = new Common\Logic\PostsLogic();
+        $cat = $CatsLogic->detail($info);
+
+
+        $title=$cat['cat_name'];
+
+        $posts_id = $CatsLogic->getPostsIdWithChildren($cat['cat_id']);
+
+        if (!empty($posts_id)) {
+
+        $Page = new  Common\Util\GreenPage($count, get_opinion('PAGER'));
+        $pager_bar = $Page->show();
+        $limit = $Page->firstRow . ',' . $Page->listRows;
+
+        $posts_list = $Posts->getList($limit, 'single', 'post_date desc', true, array(), $posts_id);
+
+        }
+
+    </php>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>{$title}|{:get_opinion('title')}</title>
+    <meta name="description" content="{:get_opinion('description')}"/>
+    <meta name="keywords" content="{:get_opinion('keywords')}"/>
+    <link href="__PUBLIC__/Xsc/static/list.css" rel="stylesheet" type="text/css">
+
+    <include file="Public:head"/>
+
+    <style type="text/css">
+
+
+    </style>
+
+</head>
+<body>
+
+
+{:W('Common/mainMenu',array('ul_attr'=>'class="menu"'))}
+
+<div id="content" class="clearfix">
+
+
+    <div class="left-nav">
+
+        <include file="Public:hotlink"/>
+
+        <include file="Public:search"/>
+
+
+    </div>
+
+    <div class="title">
+        <h1 >{$title}</h1>
+
+        <ul class="breadcrumbs">{$breadcrumbs}</ul>
+    </div>
+
+
+    <div class="article-list">
+
+        <!-- Blog / Srart
+        ================================================== -->
+        <div class="Titlelists">
+
+
+            <volist name="posts_list" id="post" empty="没有相关文章.."> <!-- Post Start -->
+
+                <div class="Titlelist">
+                    <div class="Titlename">
+                        <!-- Title -->
+                            <a style="font-size: 16px" href="{$post.post_id|getSingleURLByID=$post['post_type']}">
+                                {$post.post_top|is_top}{$post.post_title}
+                            </a>
+
+                        <a>{$post['post_date']|getTimeURL=$post['post_type']}</a>
+                        <a href="{$post|get_post_attach}" class="continue">点击下载</a>
+                    </div>
+
+
+                </div>
+
+
+            </volist>
+
+
+            <div class="foot">
+                <ul class="footlist">
+                    {$pager}
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<div style="clear:both;"></div>
+
+<include file="Public:footer"/>
+
+</body>
+</html>

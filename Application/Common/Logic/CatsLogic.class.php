@@ -212,15 +212,15 @@ class CatsLogic extends RelationModel
      * @param $limit
      * @return mixed 找到的话返回post_id数组集合
      */
-    public function getPostsIdWithChildren($info, $post_status = 'publish', $limit = 99999999)
+    public function getPostsIdWithChildren($info, $post_status = 'publish', $limit = 0)
     {
 
         $getChild = $this->getChild($info);
 
         $cat_id_list = "'".$info."'";
-        foreach ($getChild as $value) {
+        foreach ($getChild as $child) {
             $cat_id_list.=",'";
-            $cat_id_list .= $value['cat_id'];
+            $cat_id_list .= $child['cat_id'];
             $cat_id_list .= "'";
         }
 
@@ -234,11 +234,10 @@ class CatsLogic extends RelationModel
             ->order('ps.post_top desc,ps.post_date desc')
             ->select();
 
-        foreach ($res as $key => $value) {
+        foreach ($res as $key => $child) {
             $ids[] = $res[$key]['post_id'];
 
         }
-
 
         return $ids;
     }
