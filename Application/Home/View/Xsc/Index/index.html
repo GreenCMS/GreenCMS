@@ -54,6 +54,12 @@
             cursor: pointer;
             font-size:18px;
         }
+
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -102,7 +108,7 @@
         <div class="head_box" style="width:  480px; margin-left: 10px;margin-left: 0px\9;">
             <div class="header">
                 <a href="{:get_cat_url(get_theme_opinion('id_1_2'))}"
-                   class="more">更多</a>
+                   class="more" style="margin-right: 0px;  text-align: right;">更多</a>
                 <img src="__PUBLIC__/Xsc/images/icon/news.png" alt="" style="width: 30px;
     float: left;
     height: 30px;
@@ -118,12 +124,12 @@
                             <li>
                                 <a href="{$v|get_post_url}" title="{$v['post_title']}">
                                     {$v|get_post_icon}
-                                    {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}
+                                    {$v['post_title']|strip_tags|mb_substr=0,29,"UTF-8"}
                                 </a>
                                 &nbsp;&nbsp;
-                        <span>
-                        {$v['post_date']|mb_substr=2,8,"UTF-8"}
-                        </span>
+
+                                <span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+
                             </li>
                         </volist>
                     </ul>
@@ -134,34 +140,41 @@
     <div class="head_box" style="width:  140px; margin-left: 20px;  ">
         <div class="header" style="text-align: center">
             <a style="float: left" href="{:U('Admin/Index/index')}">在线投稿</a>
-            |
             <a  style="float: right"  href="{:get_addon_url('Postcount/Postcount/count')}">发稿统计</a>
         </div>
         <div class="body" style="  padding: 8px 0px;text-align: center">
-            <div class="box">
+            <div class="box" style="z-index:2">
 
                 <a class="" href="#">
                     <img src="__PUBLIC__/Xsc/images/xsbd.png" alt="">
                 </a>
-                <a class="" href="" id="al">
+                <a class="" href="#" id="ele9">
                     <img src="__PUBLIC__/Xsc/images/alst.png" alt="">
                 </a>
 
-                <div id="alst" style="display: none;  position: absolute; z-index: 80;  width: 1px;">
 
-                    <a class="" href="http://202.119.248.129/login.aspx">
-                        <img src="__PUBLIC__/Xsc/images/aljs.png" alt="">
-                    </a>
+                <div id="emample9" class="example">
+                    <div class="clr"></div>
+                                     <div id="blk9" class="blk" style="display:none;">
+                        <div class="head"><div class="head-right"></div></div>
+                        <div class="main">
+                            <h2>选择进入的入口</h2>
+                            <a href="javascript:void(0)" id="close9" class="closeBtn">关闭</a>
+                            <ul>
+                                <li><a class="" href="http://202.119.248.129/login.aspx">
+                                    <img src="__PUBLIC__/Xsc/images/aljs.png" alt="">
+                                </a>
+                                </li>
+                                <li><a class="" href="http://202.119.248.129:866/">
+                                    <img src="__PUBLIC__/Xsc/images/alxs.png" alt="">
+                                </a>
+                                </li>
 
-                    <a class="" href="http://202.119.248.129:866/">
-                        <img src="__PUBLIC__/Xsc/images/alxs.png" alt="">
-                    </a>
-
+                            </ul>
+                        </div>
+                        <div class="foot"><div class="foot-right"></div></div>
+                    </div>
                 </div>
-
-                <!--<a class="" href="#">-->
-                    <!--<img src="__PUBLIC__/Xsc/images/tgtj.png" alt="">-->
-                <!--</a>-->
 
 
                 <a class="" href="{:U('Admin/Index/index')}">
@@ -198,8 +211,8 @@
             <ul>
                 <volist name="id_2_1" id="v" key="k">
                     <li>
-            <span>
-              {$v['post_date']|mb_substr=2,5,"UTF-8"}</span>
+                        <span>{$v.post_date|getTimeStamp='month'}-{$v.post_date|getTimeStamp='day'}</span>
+
                         <a href="{$v|get_post_url}" title="{$v['post_title']}">
                             {$v|get_post_icon}
                             {$v['post_title']|strip_tags|mb_substr=0,25,"UTF-8"}</a>
@@ -268,7 +281,7 @@
 
                     </a></li>
 
-                    <li><a href="{:U('Zel/Index/index')}" title="周恩来班">
+                    <li><a href="{:U('Zel/Index/index')}" title="周恩来班" target="_blank">
                         <img src="__PUBLIC__/Xsc/images/zelb.png" alt="周恩来班"/>
                     </a></li>
                 </ul>
@@ -385,9 +398,11 @@
 
 //    $("#indexbanner").mouseover(function(){onbanner=true});
 //    $("#indexbanner").mouseout(function(){onbanner=false})
+
     })
 </script>
 <script type="text/javascript">
+
     //文字纵向滚动
     $(function () {
         var $this = $("#quotation");
@@ -397,7 +412,7 @@
         }, function () {
             scrollTimer = setInterval(function () {
                 scrollNews($this);
-            }, 3000);
+            }, 1500);
         }).trigger("mouseleave");
         function scrollNews(obj) {
             var $self = obj.find("ul");
@@ -411,86 +426,39 @@
             })
         }
     });
-
+	
+    var t9 = new PopupLayer({trigger:"#ele9",popupBlk:"#blk9",closeBtn:"#close9",
+            useOverlay:true,useFx:true,offsets:{x:0,y:-41}});
 
     $(document).ready(function () {
 
-
-//        $('#al').hover(
-//                function () {
-//                    $("#alst").show();
-//                },
-//                function () {
-////                    sleep(3000);
-//                    $("#alst").hide();
-//                }
-//        )
-//
-
-
-        (function ($) {
-            $.fn.hoverDelay = function (options) {
-                var defaults = {
-                    hoverDuring: 10,
-                    outDuring: 2000,
-                    hoverEvent: function () {
-                        $.noop();
-                    },
-                    outEvent: function () {
-                        $.noop();
-                    }
-                };
-                var sets = $.extend(defaults, options || {});
-                var hoverTimer, outTimer;
-                return $(this).each(function () {
-                    $(this).hover(function () {
-                        clearTimeout(outTimer);
-                        hoverTimer = setTimeout(sets.hoverEvent, sets.hoverDuring);
-                    }, function () {
-                        clearTimeout(hoverTimer);
-                        outTimer = setTimeout(sets.outEvent, sets.outDuring);
-                    });
-                });
+ 
+        t9.doEffects = function(way){
+            if(way == "open"){
+/*
+                alert(($(document).width() - this.popupLayer.width())/2);
+*/
+                this.popupLayer.css({opacity:0.3}).show(200,function(){
+                    this.popupLayer.animate({
+                        left:($(document).width() - this.popupLayer.width())/2,
+                        top:(document.documentElement.clientHeight -
+                        this.popupLayer.height())/2 + $(document).scrollTop(),
+                        opacity:0.8
+                    },800,function(){this.popupLayer.css("opacity",1)}.binding(this));
+                }.binding(this));
             }
-        })(jQuery);
+            else{
+                this.popupLayer.animate({
+                    left:this.trigger.offset().left,
+                    top:this.trigger.offset().top,
+                    opacity:0.1
+                },{duration:500,complete:function(){
+                    this.popupLayer.css("opacity",1);this.popupLayer.hide()}.binding(this)});
+            }
+        }
 
-
-
-
-
-        $('#al').each(function () {
-            var that = $(this);
-
-            that.hoverDelay({
-//                outDuring: 105000,
-                hoverEvent: function () {
-                    $("#alst").show();
-                }
-//                ,
-//                outEvent: function () {
-//                    $("#alst").hide();
-//                }
-            });
-
-
-        });
-
-
-        $('.head_box .body .box').each(function () {
-            var that = $(this);
-
-            that.hoverDelay({
-                outDuring: 100,
-                outEvent: function () {
-                    $("#alst").hide();
-                }
-            });
-
-
-        });
 
     });
-
 
 </script>
 </body>
