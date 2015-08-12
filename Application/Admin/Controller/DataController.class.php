@@ -499,6 +499,11 @@ class DataController extends AdminBaseController
         if (empty($_GET['file']) || empty($_GET['type']) || !in_array($_GET['type'], array("zip", "sql"))) {
             $this->error("下载地址不存在");
         }
+
+        if (strpos(I("get.file"), "..") !== false) {
+            $this->error("非法请求");
+        }
+
         $path = array("zip" => DB_Backup_PATH . "Zip/", "sql" => DB_Backup_PATH);
         $filePath = $path[$_GET['type']] . $_GET['file'];
         if (!file_exists($filePath)) {
@@ -509,22 +514,6 @@ class DataController extends AdminBaseController
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header("Content-Length: " . filesize($filePath));
         readfile($filePath);
-    }
-
-    /**
-     * 完整性测试，有待检验
-     */
-    //TODO bug
-    /**
-     * cat tag被删除之后完整性不能保证
-     */
-    function integrity_testing()
-    {
-
-        $System = new \Common\Event\SystemEvent();
-        $System->integrity_testing();
-
-
     }
 
 

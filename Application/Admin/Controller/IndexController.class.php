@@ -12,9 +12,7 @@ namespace Admin\Controller;
 use Common\Event\AccessEvent;
 use Common\Event\CountEvent;
 use Common\Event\UpdateEvent;
-use Common\Event\UserEvent;
-use Common\Logic\UserLogic;
-use Think\Storage;
+
 
 /**
  * Class IndexController
@@ -113,83 +111,6 @@ class IndexController extends AdminBaseController
     public function ajaxCron()
     {
         die('ok');
-
-    }
-
-
-    /**
-     * 修改密码
-     */
-    public function changePass()
-    {
-        $this->display('changepass');
-    }
-
-    /**
-     * 修改密码处理
-     */
-    public function changepassHandle()
-    {
-
-        if (I('post.password') != I('post.rpassword')) {
-            $this->error('两次密码不同');
-        }
-
-        $uid = $this->_currenUserId();
-
-        $UserLogic = new UserLogic();
-
-        $res = $UserLogic->changePassword($uid, I('post.opassword'), I('post.password'));
-
-        $this->array2Response($res);
-
-    }
-
-
-    /**
-     * 用户信息
-     */
-    public function profile()
-    {
-        $CountEvent = new CountEvent();
-
-
-        $uid = $this->_currenUserId();
-        $user = D('User', 'Logic')->detail($uid);
-
-        $this->assign("PostCount", $CountEvent->getPostCount(array("user_id" => $uid)));
-
-        $this->assign('user', $user);
-        $this->assign('action', '用户档案');
-
-        $this->display();
-
-
-    }
-
-    /**
-     * 用户信息信息保存
-     */
-    public function profileHandle($uid)
-    {
-        $this->_checkCurrentUser($uid);
-
-        $UserLogic = new UserLogic();
-
-        $post_data = I('post.');
-
-        $res = $UserLogic->update($uid, $post_data);
-
-        $this->array2Response($res);
-
-    }
-
-    /**
-     * 社交账号绑定
-     */
-    public function sns()
-    {
-        $this->display();
 
     }
 
