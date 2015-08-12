@@ -105,7 +105,7 @@
                                             <td><a href="{:U('Admin/Posts/posts', array('id' => $v['post_id']))}"
                                                    title="{$v.post_title}">{$v.post_title}</a></td>
                                             <td>
-                                                <a href="{:U('Admin/access/editUser', array('aid' => $v['post_user']['user_id']))}">{$v.post_user.user_nicename}</a>
+                                                <a href=" __SELF__&uid={$v['post_user']['user_id']}">{$v.post_user.user_nicename}</a>
                                             </td>
                                             <td>
                                                 分类:

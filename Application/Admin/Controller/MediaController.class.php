@@ -194,6 +194,9 @@ class MediaController extends AdminBaseController
 
         $filename = base64_decode($_GET['id']);
 
+        if (strpos(I("get.file"), "..") !== false) {
+            $this->error("非法请求");
+        }
 
         $filePath = $filename;
 

@@ -54,7 +54,7 @@ class SnsController extends OauthBaseController
         $where['user_id'] = get_current_user_id();
         $where['type'] = strtoupper($type);
         if ($User_sns->where($where)->delete()) {
-            $this->success("接触绑定成功");
+            $this->success("解除绑定成功");
         } else {
             $this->error("尚未绑定");
         }
@@ -135,7 +135,7 @@ class SnsController extends OauthBaseController
                         //未绑定
                         $res = $User_sns->data($data)->add();
                         if ($res) {
-                            $this->success($type . "绑定成功", U('Admin/Index/sns'));
+                            $this->success($type . "绑定成功", U('Admin/Member/sns'));
 
                         } else {
                             $this->error($type . "绑定失败");
@@ -183,12 +183,12 @@ class SnsController extends OauthBaseController
                     if (!empty($open_user_info)) {
                         //已绑定
                         //TODO 重新绑定
-                        $this->success('已绑定' . $type, U('Admin/Index/sns'));
+                        $this->success('已绑定' . $type, U('Admin/Member/sns'));
                     } else {
                         //未绑定
                         $res = $User_sns->data($data)->add();
                         if ($res) {
-                            $this->success($type . "绑定成功", U('Admin/Index/sns'));
+                            $this->success($type . "绑定成功", U('Admin/Member/sns'));
 
                         } else {
                             $this->error($type . "绑定失败");

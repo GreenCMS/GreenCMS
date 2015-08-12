@@ -13,6 +13,7 @@ use Admin\Event\PostsEvent;
 use Common\Logic\CatsLogic;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
+use Common\Logic\UserLogic;
 use Common\Util\GreenPage;
 use Common\Util\CacheManager;
 use Org\Util\Rbac;
@@ -122,10 +123,12 @@ class PostsController extends AdminBaseController
      * @param string $name
      */
     public function index($post_type = 'single', $post_status = 'publish', $order = 'post_date desc',
-                          $keyword = '', $tpl = 'index_no_js', $name = '')
+                          $keyword = '', $tpl = 'index_no_js', $name = '', $uid = 0)
     {
         $CatsLogic = new CatsLogic();
         $TagsLogic = new TagsLogic();
+
+        $key='';
 
         //获取get参数
         $cat = I('get.cat');
@@ -135,10 +138,21 @@ class PostsController extends AdminBaseController
         $where['post_content|post_title'] = array('like', "%$keyword%");
         $post_ids = array();
 
+        if ($uid != 0 && $this->noVerify()) {
+            $where['user_id'] = $uid;
+
+            $UserLogic = new UserLogic();
+            $user_info = $UserLogic->detail($uid);
+
+            $key .= $user_info["user_nicename"] . ' 的';
+
+        }
+
         //投稿员只能看到自己的
         if (!$this->noVerify()) {
             $where['user_id'] = get_current_user_id();
         }
+
 
         //处理详细信息 搜索，指定TAG CAT文章
         if ($cat != '') {
@@ -156,7 +170,7 @@ class PostsController extends AdminBaseController
 
             $tag = '关于标签' . $tag_detail['tag_name'] . ' 的';
         } else if ($keyword != '') {
-            $key = '关于' . $keyword . ' 的';
+            $key .= '关于' . $keyword . ' 的';
 
         }
 
@@ -251,7 +265,7 @@ class PostsController extends AdminBaseController
     public function draft($post_type = "all", $post_status = 'draft', $order = 'post_date desc', $keyword = '')
     {
         $PostsLogic = new PostsLogic();
-        $PostsLogic ->emptyPostDraft($post_status);
+        $PostsLogic->emptyPostDraft($post_status);
         $this->index($post_type, $post_status, $order, $keyword, 'draft', "草稿箱");
         die();
 
@@ -305,9 +319,9 @@ class PostsController extends AdminBaseController
         $Posts = new PostsLogic();
 
         if (IS_POST) {
-            $post_data = I('post.','','');
-            if($post_data['post_id']!=$id){
-                $this->jsonReturn(0, "更新失败，非法请求" );
+            $post_data = I('post.', '', '');
+            if ($post_data['post_id'] != $id) {
+                $this->jsonReturn(0, "更新失败，非法请求");
             }
 
             if (($this->noverify() == false) || (I('post.post_status') == 'unverified')) {
@@ -761,9 +775,9 @@ class PostsController extends AdminBaseController
     public function preDelCategory($id = -1)
     {
         $CatsLogic = new CatsLogic();
-        $cats_list=$CatsLogic->category();
+        $cats_list = $CatsLogic->category();
 
-        $this->assign('form_url',U('Admin/Posts/delCategory',array('id'=>$id)));
+        $this->assign('form_url', U('Admin/Posts/delCategory', array('id' => $id)));
         $this->assign('cats_list', $cats_list);
         $this->assign('action', '删除分类');
         $this->display('delcat');
@@ -778,9 +792,9 @@ class PostsController extends AdminBaseController
         $CatsLogic = new CatsLogic();
         $PostsLogic = new PostsLogic();
 
-        $process_method=I('post.process_method');
+        $process_method = I('post.process_method');
 
-        if($process_method=='tocat'&&I('post.newcat')==$id){
+        if ($process_method == 'tocat' && I('post.newcat') == $id) {
             $this->error("移动后的分类不能和当前分类相同");
         }
 
@@ -791,12 +805,12 @@ class PostsController extends AdminBaseController
                 if (D('Post_cat')->where(array("cat_id" => $id))->find()) {
                     $pc_list = D('Post_cat')->where(array("cat_id" => $id))->select();
                     foreach ($pc_list as $pc) {
-                        if($process_method=='del'){
-                            $PostsLogic->preDel( $pc['post_id']);
+                        if ($process_method == 'del') {
+                            $PostsLogic->preDel($pc['post_id']);
                         }
 
-                        if($process_method=='tocat'){
-                            $data['cat_id'] =I('post.newcat');
+                        if ($process_method == 'tocat') {
+                            $data['cat_id'] = I('post.newcat');
                             D('Post_cat')->where(array("pc_id" => $pc['pc_id']))->data($data)->save();
                         }
                     }
@@ -912,9 +926,9 @@ class PostsController extends AdminBaseController
     public function preDelTag($id = -1)
     {
         $TagsLogic = new TagsLogic();
-        $tags_list=$TagsLogic->select();
+        $tags_list = $TagsLogic->select();
 
-        $this->assign('form_url',U('Admin/Posts/delTag',array('id'=>$id)));
+        $this->assign('form_url', U('Admin/Posts/delTag', array('id' => $id)));
         $this->assign('tags_list', $tags_list);
         $this->assign('action', '删除标签');
         $this->display('deltag');
@@ -930,9 +944,9 @@ class PostsController extends AdminBaseController
         $PostsLogic = new PostsLogic();
 
 
-        $process_method=I('post.process_method');
+        $process_method = I('post.process_method');
 
-        if($process_method=='totag'&&I('post.newtag')==$id){
+        if ($process_method == 'totag' && I('post.newtag') == $id) {
             $this->error("移动后的标签不能和当前分类相同");
         }
 
@@ -941,12 +955,12 @@ class PostsController extends AdminBaseController
             if (D('Post_tag')->where(array("tag_id" => $id))->find()) {
                 $pt_list = D('Post_tag')->where(array("tag_id" => $id))->select();
                 foreach ($pt_list as $pt) {
-                    if($process_method=='del'){
-                        $PostsLogic->preDel( $pt['post_id']);
+                    if ($process_method == 'del') {
+                        $PostsLogic->preDel($pt['post_id']);
                     }
 
-                    if($process_method=='totag'){
-                        $data['tag_id'] =I('post.newtag');
+                    if ($process_method == 'totag') {
+                        $data['tag_id'] = I('post.newtag');
                         D('Post_tag')->where(array("pt_id" => $pt['pt_id']))->data($data)->save();
                     }
                 }
@@ -981,9 +995,10 @@ class PostsController extends AdminBaseController
         $this->index($method, I('get.post_status', 'publish'), I('get.order', 'post_date desc'), I('get.keyword', ''));
     }
 
-    public function countAll(){
+    public function countAll()
+    {
 
-        $where=array();
+        $where = array();
         //投稿员只能看到自己的
         if (!$this->noVerify()) {
             $where['user_id'] = get_current_user_id();
@@ -991,19 +1006,18 @@ class PostsController extends AdminBaseController
 
         $PostsLogic = new PostsLogic();
 
-        $res=array();
+        $res = array();
 
-        $post_status=C('post_status');
-        foreach ($post_status as $key => $value){
-            $where ['post_status']=$key;
+        $post_status = C('post_status');
+        foreach ($post_status as $key => $value) {
+            $where ['post_status'] = $key;
             $count = $PostsLogic->countAll('all', $where); // 查询满足要求的总记录数
-            $res[$key]=$count;
+            $res[$key] = $count;
         }
 
-        $this->jsonReturn(1,$res);
+        $this->jsonReturn(1, $res);
 
     }
-
 
 
 }

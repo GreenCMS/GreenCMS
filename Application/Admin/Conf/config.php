@@ -20,11 +20,13 @@ $menu_arr = array(
         'Tools' => 'fa-gavel',
         'System' => 'fa-gear',
         'Other' => 'fa-tag',
+        'Member' => 'fa-user',
     ),
 
 
     'admin_big_menu' => array(
         'Index' => '仪表盘',
+        'Member' => '会员中心',
         'Posts' => '文章页面',
         'Data' => '数据缓存',
         //  'Comments'=>'留言评论',
@@ -39,10 +41,13 @@ $menu_arr = array(
     'admin_sub_menu' => array(
         'Index' => array(
             'Index/index' => '基本信息',
-            'Index/profile' => '用户信息',
-            'Index/sns' => '社交账号绑定',
-            'Index/changePass' => '修改密码',
 
+        ),
+
+        'Member' => array(
+            'Member/profile' => '用户信息',
+            'Member/sns' => '社交账号绑定',
+            'Member/changePass' => '修改密码',
 
         ),
 
