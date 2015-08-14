@@ -37,66 +37,67 @@
             <div class="row">
                 <div class="col-md-12">
 
-                        <!-- /.box-header -->
-                        <div class="box-body">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row" style="padding-bottom: 10px;">
+                            <div class="col-md-6">
+                                <div class="btn-group">
+                                    <a href="{:U('Admin/Access/addnode')}">
+                                        <button id="sample_editable_1_new" class="btn btn-success">
+                                            <i class="icon-plus"></i>添加节点
+                                        </button>
+                                    </a>
+                                </div>
+                                &nbsp;
+                                <div class="btn-group">
 
-                                <div class="col-md-6">
-                                    <div class="btn-group">
-                                        <a href="{:U('Admin/Access/addnode')}">
-                                            <button id="sample_editable_1_new" class="btn btn-success">
-                                                <i class="icon-plus"></i>添加节点
-                                            </button>
-                                        </a>
-                                    </div>
-                                    &nbsp;
-                                    <div class="btn-group">
-
-                                        <a href="{:U('Admin/Access/rebuildAccess')}"
-                                           onclick="javascript:return a_confirm()">
-                                            <button type="submit" class="btn btn-danger" name="delAll" value='1'> 重建权限
-                                            </button>
-                                        </a>
-                                    </div>
+                                    <a href="{:U('Admin/Access/rebuildAccess')}"
+                                       onclick="javascript:return a_confirm()">
+                                        <button type="submit" class="btn btn-danger" name="delAll" value='1'> 重建权限
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
-
-                            <table class="table table-striped table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <td>序号</td>
-                                    <td>节点结构 <b title="单击分类隐藏/显示该分类下在子类">[i]</b></td>
-                                    <td>节点ID</td>
-                                    <td>名称</td>
-                                    <td>显示名</td>
-                                    <td>排序名称</td>
-                                    <td>类型</td>
-                                    <td>状态</td>
-                                    <td width="150">操作</td>
-                                </tr>
-                                </thead>
-                                <volist name="node" id="vo" key="k">
-                                    <tr align="center" id="{$vo.id}" pid="{$vo.pid}">
-                                        <td>{$k}</td>
-                                        <td align="left" class="tree" style="cursor: pointer;">{$vo.fullname}</td>
-                                        <td>{$vo.id}</td>
-                                        <td>{$vo.name}</td>
-                                        <td>{$vo.title}</td>
-                                        <td edit="0" fd="sort">{$vo.sort}</td>
-                                        <td>{$vo.level}</td>
-                                        <td>{$vo.statusTxt}</td>
-                                        <td>[ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>
-                                            ] [ <a href="{:U('Admin/Access/editNode',array('id'=>$vo['id']))}"
-                                                   class="edit">编辑</a> ]
-
-
-                                        </td>
-                                    </tr>
-                                </volist>
-                            </table>
-
-
                         </div>
+
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <td>序号</td>
+                                <td>节点结构 <b title="单击分类隐藏/显示该分类下在子类">[i]</b></td>
+                                <td>节点ID</td>
+                                <td>名称</td>
+                                <td>显示名</td>
+                                <td>排序名称</td>
+                                <td>类型</td>
+                                <td>状态</td>
+                                <td width="150">操作</td>
+                            </tr>
+                            </thead>
+                            <volist name="node" id="vo" key="k">
+                                <tr align="center" id="{$vo.id}" pid="{$vo.pid}">
+                                    <td>{$k}</td>
+                                    <td align="left" class="tree" style="cursor: pointer;">{$vo.fullname}</td>
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.name}</td>
+                                    <td>{$vo.title}</td>
+                                    <td edit="0" fd="sort">{$vo.sort}</td>
+                                    <td>{$vo.level}</td>
+                                    <td>{$vo.statusTxt}</td>
+                                    <td>[ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>
+                                        ] [ <a href="{:U('Admin/Access/editNode',array('id'=>$vo['id']))}"
+                                               class="edit">编辑</a> ]
+
+
+                                    </td>
+                                </tr>
+                            </volist>
+                        </table>
+
+
                     </div>
                 </div>
+            </div>
 
         </section>
         <!-- /.content -->

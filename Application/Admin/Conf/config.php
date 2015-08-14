@@ -143,7 +143,7 @@ $menu_arr = array(
             'System/db' => '数据库设置',
             'System/cache' => '缓存设置',
 
-            'System/email' => '邮箱配置',
+            'System/email' => '系统邮件配置',
 //            'System/kvset'  => '其他设置',
             'System/sns' => '社交登录设置',
             'System/green' => '开发者选项置',

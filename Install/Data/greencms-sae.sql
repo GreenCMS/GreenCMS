@@ -363,7 +363,6 @@ INSERT INTO `green_options` VALUES ('27', 'COOKIE_EXPIRE', '3600', 'yes');
 INSERT INTO `green_options` VALUES ('28', 'COOKIE_DOMAIN', '', 'yes');
 INSERT INTO `green_options` VALUES ('29', 'COOKIE_PATH', '/', 'yes');
 INSERT INTO `green_options` VALUES ('30', 'DB_FIELDS_CACHE', '1', 'yes');
-INSERT INTO `green_options` VALUES ('31', 'DB_SQL_BUILD_CACHE', '1', 'yes');
 INSERT INTO `green_options` VALUES ('32', 'sql_mail', '', 'yes');
 INSERT INTO `green_options` VALUES ('33', 'SHOW_CHROME_TRACE', '0', 'yes');
 INSERT INTO `green_options` VALUES ('34', 'users_can_register', 'on', 'yes');

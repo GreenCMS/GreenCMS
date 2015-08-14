@@ -39,13 +39,16 @@
 
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="col-md-3">
-                            <div class="btn-group">
-                                <a href="{:U('Admin/Access/adduser')}">
-                                    <button id="sample_editable_1_new" class="btn btn-success">
-                                        <i class="icon-plus"></i>添加新用户
-                                    </button>
-                                </a>
+
+                        <div class="row" style="padding-bottom: 10px;">
+                            <div class="col-md-3">
+                                <div class="btn-group">
+                                    <a href="{:U('Admin/Access/adduser')}">
+                                        <button id="sample_editable_1_new" class="btn btn-success">
+                                            <i class="icon-plus"></i>添加新用户
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -76,13 +79,13 @@
                                     <td>{$vo.user_registered}</td>
 
                                     <td>
-                                        [ <a href="{:U('Admin/Access/setusercat',array('id'=>$vo['user_id']))}"
-                                             class="edit">投稿分类</a> ]
+
                                         [ <a
                                             href="{:U('Admin/Access/editUser',array('aid'=>$vo['user_id']))}">编辑</a>
                                         ][ <a
-                                                href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a>
-                                        ]
+                                            href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a>
+                                        ][ <a href="{:U('Admin/Access/setusercat',array('id'=>$vo['user_id']))}"
+                                              class="edit">投稿分类</a> ]
                                     </td>
                                 </tr>
                             </volist>
