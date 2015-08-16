@@ -243,7 +243,6 @@ class SystemController extends AdminBaseController
             G("MD5");
             $message .= "文件MD5值: $file_md5 ,用时 " . G("DownFile", "MD5") . "秒<br />";
 
-            //todo 系统备份
             $System = new SystemEvent();
             //$System->backupFile();
             G("BackupFile");

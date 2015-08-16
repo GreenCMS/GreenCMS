@@ -7,7 +7,6 @@
  */
 
 namespace Admin\Controller;
-use Common\Event\UserEvent;
 use Common\Logic\UserLogic;
 use Oauth\Logic\User_snsLogic;
 use Common\Event\CountEvent;
@@ -17,7 +16,7 @@ class MemberController extends AdminBaseController
 
 
     /**
-     * 修改密码
+     * 修改密码页面
      */
     public function changePass()
     {
@@ -50,10 +49,10 @@ class MemberController extends AdminBaseController
      */
     public function profile()
     {
+        $uid = $this->_currenUserId();
+
         $CountEvent = new CountEvent();
 
-
-        $uid = $this->_currenUserId();
         $user = D('User', 'Logic')->detail($uid);
 
         $this->assign("PostCount", $CountEvent->getPostCount(array("user_id" => $uid)));
@@ -67,6 +66,7 @@ class MemberController extends AdminBaseController
 
     /**
      * 用户信息信息保存
+     * @param $uid int user_id
      */
     public function profileHandle($uid)
     {
@@ -98,7 +98,6 @@ class MemberController extends AdminBaseController
             $this->assign("SINA", '<a class="btn btn-primary" href="' . U('Oauth/Sns/login', array('type' => 'sina')) . '">微博登陆绑定</a>');
 
         }
-
 
         $this->display();
 

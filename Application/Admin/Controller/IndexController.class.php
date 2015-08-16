@@ -103,16 +103,5 @@ class IndexController extends AdminBaseController
     {
         S("checkTodo", null);
     }
-
-
-    /**
-     * ajax定时计划触发
-     */
-    public function ajaxCron()
-    {
-        die('ok');
-
-    }
-
-
+    
 }

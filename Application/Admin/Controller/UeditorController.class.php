@@ -124,7 +124,7 @@ class UeditorController extends AdminBaseController
 
         $config = array(
             "savePath" => 'File/',
-            "maxSize" => get_opinion('sqlFileSize', false, 20000000), // 单位B
+            "maxSize" => get_opinion('attachFileSize', false, 20*1000*1000), // 单位B，20M
             "exts" => explode(",", get_opinion("attachFileSuffix", false, 'zip,rar,doc,docx,zip,pdf,txt,ppt,pptx,xls,xlsx')),
             "subName" => $this->sub_name,
         );

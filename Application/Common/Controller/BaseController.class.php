@@ -161,6 +161,15 @@ abstract class BaseController extends Controller
         }
     }
 
+    /**
+     * 结果直接返回跳转信息
+     * @param $resArray array of result
+     * array(
+     * [status]=1 or 0
+     * [info]=message
+     * [url]=destination url (optional)
+     * )
+     */
     function array2Response($resArray)
     {
         if ($resArray['status'] == 1) {
@@ -191,12 +200,11 @@ abstract class BaseController extends Controller
     }
 
 
+    protected function antiCC()
+    {
 
-    protected function antiCC(){
 
-
-
-         $timestamp = time();
+        $timestamp = time();
 
         session_start();
         $ll_nowtime = $timestamp;
@@ -212,7 +220,7 @@ abstract class BaseController extends Controller
         }
         if (($ll_nowtime - $ll_lasttime) > 3) {
             if ($ll_times > 15) { //5表示刷新次数
-               header(sprintf("Location: %s",'http://127.0.0.1'));
+                header(sprintf("Location: %s", 'http://127.0.0.1'));
                 exit;
 
             }
