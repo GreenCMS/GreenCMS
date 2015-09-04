@@ -179,9 +179,11 @@ class MediaController extends AdminBaseController
         } else {
             $this->error('文件损坏');
         }
+
+        $SystemEvent = new SystemEvent;
+        $SystemEvent->clearCacheAll();
+
         $this->success('还原成功');
-
-
     }
 
 

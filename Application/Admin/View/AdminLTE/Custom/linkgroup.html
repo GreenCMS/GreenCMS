@@ -50,7 +50,7 @@
                                 </a>
 
                                 <a href="{:U('Admin/Custom/links')}">
-                                    <button class="btn btn-warning">
+                                    <button class="btn  ">
                                         未分类链接
                                     </button>
                                 </a>
@@ -65,9 +65,9 @@
                                 <th style="width: 8px;"><input type="checkbox"
                                                                class="group-checkable"
                                                                data-set="#sample_1 .checkboxes"/></th>
-                                <th>ID名称</th>
-                                <th>分组名称</th>
-                                <th>操作</th>
+                                <th class="col-md-1">ID</th>
+                                <th>链接分组名称</th>
+                                <th class="col-md-2">操作</th>
 
                             </tr>
                             </thead>
@@ -79,13 +79,16 @@
                                     <td><input type="checkbox" class="checkboxes" value="1"/></td>
                                     <td> {$v.link_group_id}</td>
                                     <td>
-                                        <a href="{:U('Admin/Custom/links', array('id' => $v['link_group_id']))}">{$v.link_group_name}</a>
+                                        <a
+                                           href="{:U('Admin/Custom/links', array('group_id' => $v['link_group_id']))}">{$v.link_group_name}</a>
                                     </td>
                                     <td>
-                                        <a href="{:U('Admin/Custom/editlinkgroup', array('id' => $v['link_group_id']))}">编辑</a>
-                                        &nbsp;&nbsp;&nbsp;
-                                        <a onclick="javascript:return a_confirm()"
-                                           href="{:U('Admin/Custom/dellinkgroupHandle', array('id' => $v['link_group_id']))}">删除</a>
+                                        <a class="btn btn-sm btn-primary"
+                                           href="{:U('Admin/Custom/editlinkgroup', array('group_id' => $v['link_group_id']))}">编辑</a>
+                                        &nbsp;&nbsp;
+                                        <a  class="btn btn-sm  btn-danger"
+                                            onclick="javascript:return a_confirm()"
+                                           href="{:U('Admin/Custom/dellinkgroupHandle', array('group_id' => $v['link_group_id']))}">删除</a>
                                     </td>
 
 

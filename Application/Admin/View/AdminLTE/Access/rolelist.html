@@ -59,12 +59,12 @@
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
-                                <td>序号</td>
-                                <td>组ID</td>
-                                <td>组名</td>
-                                <td>描述</td>
-                                <td>状态</td>
-                                <td>操作</td>
+                                <th>序号</th>
+                                <th>组ID</th>
+                                <th>组名</th>
+                                <th>描述</th>
+                                <th class="col-md-1">状态</th>
+                                <th class="col-md-3">操作</th>
                             </tr>
                             </thead>
                             <volist name="rolelist" id="vo" key="k">
@@ -77,13 +77,16 @@
                                     <td>
                                         <if condition="$vo.pid eq 0">
                                             <else/>
-                                            [ <a href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>]
-                                            [ <a href="{:U('Admin/Access/editRole',array('id'=>$vo['id']))}"
-                                                 class="edit">编辑</a> ]
-                                            [ <a href="{:U('Admin/Access/changeRole',array('id'=>$vo['id']))}"
-                                                 class="edit">权限分配</a> ]
-                                            [ <a href="{:U('Admin/Access/setrolecat',array('id'=>$vo['id']))}"
-                                                 class="edit">投稿分类</a> ]
+                                             <a   class="btn btn-sm  btn-danger" href="javascript:void(0);" class="opStatus" val="{$vo.status}">{$vo.chStatusTxt}</a>
+
+                                            <a   class="btn btn-sm btn-primary" href="{:U('Admin/Access/editRole',array('id'=>$vo['id']))}"
+                                                  >编辑</a>
+                                            <a   class="btn btn-sm  btn-warning " href="{:U('Admin/Access/changeRole',array('id'=>$vo['id']))}"
+                                                 class="edit">权限分配</a>
+                                            <a   class="btn btn-sm btn-info"
+                                                 href="{:U('Admin/Access/setrolecat',array('id'=>$vo['id']))}"
+                                                 >投稿分类</a>
+
 
 
                                         </if>

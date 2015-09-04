@@ -57,15 +57,16 @@
                                 class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
-                                <td>UID</td>
-                                <td>账号</td>
-                                <td>状态</td>
-                                <td>用户角色</td>
-                                <td>用户组</td>
-                                <td>文章数量</td>
+                                <th>UID</th>
+                                <th>账号</th>
+                                <th>状态</th>
+                                <th>用户角色</th>
+                                <th>用户组</th>
+                                <th>文章数量</th>
 
-                                <td>开通时间</td>
-                                <td width="200">操作</td>
+                                <th>开通时间</th>
+                                <th class="col-md-2">操作</th>
+
                             </tr>
                             </thead>
                             <volist name="list" id="vo">
@@ -80,12 +81,13 @@
 
                                     <td>
 
-                                        [ <a
+                                         <a  class="btn btn-sm btn-primary"
                                             href="{:U('Admin/Access/editUser',array('aid'=>$vo['user_id']))}">编辑</a>
-                                        ][ <a
+                                         <a   class="btn btn-sm  btn-danger"
                                             href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a>
-                                        ][ <a href="{:U('Admin/Access/setusercat',array('id'=>$vo['user_id']))}"
-                                              class="edit">投稿分类</a> ]
+                                          <a   class="btn btn-sm btn-info"
+                                               href="{:U('Admin/Access/setusercat',array('id'=>$vo['user_id']))}"
+                                              class="edit">投稿分类</a>
                                     </td>
                                 </tr>
                             </volist>
