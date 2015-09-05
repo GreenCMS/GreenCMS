@@ -60,34 +60,32 @@
                                 <th>UID</th>
                                 <th>账号</th>
                                 <th>状态</th>
-                                <th>用户角色</th>
                                 <th>用户组</th>
                                 <th>文章数量</th>
 
-                                <th>开通时间</th>
-                                <th class="col-md-2">操作</th>
+                                <th class="col-md-2">开通时间</th>
+                                <th class="col-md-3">操作</th>
 
                             </tr>
                             </thead>
                             <volist name="list" id="vo">
-                                <tr align="center" aid="{$vo.user_id}">
+                                <tr   aid="{$vo.user_id}">
                                     <td>{$vo.user_id}</td>
                                     <td>{$vo.user_login}</td>
                                     <td>{$vo.user_status}</td>
                                     <td>{$vo.role_info.0.name}</td>
-                                    <td>{$vo.role_info.0.remark}</td>
                                     <td>{$vo.post_count}</td>
                                     <td>{$vo.user_registered}</td>
 
                                     <td>
 
-                                         <a  class="btn btn-sm btn-primary"
-                                            href="{:U('Admin/Access/editUser',array('aid'=>$vo['user_id']))}">编辑</a>
-                                         <a   class="btn btn-sm  btn-danger"
-                                            href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a>
-                                          <a   class="btn btn-sm btn-info"
-                                               href="{:U('Admin/Access/setusercat',array('id'=>$vo['user_id']))}"
-                                              class="edit">投稿分类</a>
+                                        <a class="btn btn-sm btn-primary"
+                                           href="{:U('Admin/Access/editUser',array('aid'=>$vo['user_id']))}">编辑</a>
+                                        <a class="btn btn-sm  btn-danger"
+                                           href="{:U('Admin/Access/delUser',array('aid'=>$vo['user_id']))}">删除</a>
+                                        <a class="btn btn-sm btn-info"
+                                           href="{:U('Admin/Access/setusercat',array('id'=>$vo['user_id']))}"
+                                           class="edit">投稿分类</a>
                                     </td>
                                 </tr>
                             </volist>

@@ -169,10 +169,9 @@ class AccessController extends AdminBaseController
      */
     public function addUser()
     {
-        $this->action_name = 'addUser';
-        $role = M('role')->select();
+        $role = D('role')->select();
         $this->assign('info', $this->getRoleListOption());
-        // $this->assign("info",$this->getRoleListOption($info) );
+        $this->assign("action_name",'addUser' );
         $this->display("adduser");
     }
 

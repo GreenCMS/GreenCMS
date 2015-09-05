@@ -18,36 +18,15 @@
                 </a>
             </li>
 
-            <!--<control access="Weixin/Index/index">-->
-            <!--<li><a href="{:U('Weixin/Index/index')}" target="_blank">Weixin模块</a></li>-->
-            <!--</control>-->
 
             <control access="Admin/Data/clearAll">
                 <li><a href="{:U('Admin/Data/clearAll')}">缓存清理</a></li>
             </control>
 
 
-            <!--<li class="dropdown messages-menu">-->
-            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-            <!--模块切换-->
-            <!--</a>-->
-            <!--<ul class="dropdown-menu">-->
-            <!--<li>-->
-
-            <!--&lt;!&ndash; inner menu: contains the actual data &ndash;&gt;-->
-            <!--<ul class="menu">-->
-            <!--<control access="Weixin/Index/index">-->
-            <!--<li><a href="{:U('Weixin/Index/index')}" target="_blank"><h4>进入Weixin模块</h4></a></li>-->
-            <!--</control>-->
-
-
-            <!--<li><a href="{:U('Admin/Index/main')}" target="_blank"><h4>进入Home模块</h4></a></li>-->
-            <!--&lt;!&ndash; end message &ndash;&gt;-->
-
-            <!--</ul>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</li>-->
+            <control access="Admin/Posts/add">
+                <li><a href="{:U('Admin/Posts/add')}">文章发布</a></li>
+            </control>
 
 
             <li class="dropdown messages-menu">
@@ -60,10 +39,6 @@
                         <!-- inner menu: contains the actual data -->
                         <ul class="menu">
 
-
-                            <control access="Admin/Posts/add">
-                                <li><a href="{:U('Admin/Posts/add')}"><h4>文章发布</h4></a></li>
-                            </control>
 
                             {:hook('adminMenu', 'menu')}
 
@@ -184,19 +159,14 @@
                                 <small>注册时间: {$user.user_registered}</small>
                             </p>
                         </li>
-                        <!--&lt;!&ndash; Menu Body &ndash;&gt;-->
-                        <!--<li class="user-body">-->
-                        <!--<div class="col-xs-4 text-center">-->
-                        <!--<a href="#">One</a>-->
-                        <!--</div>-->
-                        <!--<div class="col-xs-4 text-center">-->
-                        <!--<a href="#">Two</a>-->
-                        <!--</div>-->
-                        <!--<div class="col-xs-4 text-center">-->
-                        <!--<a href="#">Three</a>-->
-                        <!--</div>-->
-                        <!--</li>-->
-                        <!-- Menu Footer-->
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="col-xs-12 text-center">
+                                <a href="http://www.greencms.net" target="_blank">Powered by GreenCMS</a>
+                            </div>
+
+                        </li>
+
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="{:U('Admin/Member/profile',array('uid'=>$user['user_id']))}"
