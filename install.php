@@ -33,7 +33,7 @@ define("WEB_ROOT", './');  //dirname(__FILE__) .'/'
 define ('APP_PATH', './Install/');
 
 if (file_exists(WEB_ROOT . "db_config.php")) require(WEB_ROOT . "db_config.php");
-require(WEB_ROOT . "const_config.php");
+if (file_exists(WEB_ROOT . "const_config.php")) require(WEB_ROOT . "const_config.php");
 require(WEB_ROOT . "version_config.php");
 
 
