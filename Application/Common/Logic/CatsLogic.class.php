@@ -111,7 +111,7 @@ class CatsLogic extends RelationModel
     public function getChild($id = 0)
     {
         if ($id) {
-            $info = D('Cats')->cache(true, 2)->where(array("cat_father" => $id))->order("cat_order")->select();
+            $info = D('Cats')->where(array("cat_father" => $id))->order("cat_order")->select();
             if ($info != null) return $info;
         }
         return false;
