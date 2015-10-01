@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Controller;
 
-use Think\Controller;
 
 /**
  * 扩展控制器
@@ -31,5 +30,25 @@ class AddonsController extends AdminBaseController
             $this->error('没有指定插件名称，控制器或操作！');
         }
     }
+
+
+    protected function display($templateFile = '', $charset = '', $contentType = '', $content = '', $prefix = '')
+    {
+
+        if (strpos($templateFile, "./Addons") === 0) {
+            $this->view->display($templateFile, $charset, $contentType, $content, $prefix);
+        } else {
+            $template_name = I('GET.action');
+            if ($templateFile != '') {
+                $template_name = $templateFile;
+            }
+            $templateFile = T('Addons://' . CONTROLLER_NAME . '@' . ACTION_NAME . '/' . $template_name);
+            $this->view->display($templateFile, $charset, $contentType, $content, $prefix);
+
+        }
+
+
+    }
+
 
 }

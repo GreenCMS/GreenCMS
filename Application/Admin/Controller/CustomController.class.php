@@ -770,9 +770,9 @@ str;
     /**
      * 安装插件
      */
-    public function install()
+    public function install($addon_name)
     {
-        $addon_name = trim(I('addon_name'));
+//        $addon_name = trim(I('addon_name'));
         $class = get_addon_class($addon_name);
         if (!class_exists($class))
             $this->error('插件不存在', U('Admin/Custom/plugin'));

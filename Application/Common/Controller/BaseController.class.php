@@ -83,7 +83,6 @@ abstract class BaseController extends Controller
         }
 
         if (!empty($_addons) && !empty($_controller) && !empty($_action)) {
-
             $Addons = A("Addons://{$_addons}/{$_controller}")->$_action();
             return true;
         } else {

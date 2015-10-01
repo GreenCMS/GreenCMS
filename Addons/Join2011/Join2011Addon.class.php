@@ -32,6 +32,9 @@ class Join2011Addon extends Addon
 
     public function install()
     {
+
+        $this->addNewHook('adminSideBar', 'adminSideBar');
+
         return true;
     }
 

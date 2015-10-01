@@ -44,10 +44,8 @@ class Join2011adminController extends AddonsController
         $this->assign('stu_count', $stu_count);
         $this->assign('stu_list', $stu_list);
         $this->assign('pager', $pager_bar);
-
         $this->assign('action', '2011报名管理');
-
-        $this->display(T('Addons://Join2011@Join2011admin/index'));
+        $this->display('');
     }
 
 
