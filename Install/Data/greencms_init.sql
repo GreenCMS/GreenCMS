@@ -116,6 +116,8 @@ INSERT INTO `{$db_prefix}options` VALUES ('44', 'home_tag_model', 'native', 'yes
 INSERT INTO `{$db_prefix}options` VALUES ('45', 'home_post_model', 'native', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('46', 'DATA_CACHE_TIME', '5', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('47', 'HTML_CACHE_TIME', '10', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('48', 'attachFileSuffix', 'zip,rar,doc,docx,zip,pdf,txt,ppt,pptx,xls,xlsx', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('49', 'attachImgSuffix', 'gif,png,jpg,jpeg,bmp', 'yes');
 
 
 -- ----------------------------
