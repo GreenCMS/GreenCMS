@@ -16,7 +16,7 @@ use Think\Storage;
  * Class File
  * @package Common\Util
  */
-class File
+class InstallFile
 {
 
     /**

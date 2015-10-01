@@ -1011,9 +1011,15 @@ class PostsController extends AdminBaseController
         $post_status = C('post_status');
         foreach ($post_status as $key => $value) {
             $where ['post_status'] = $key;
-            $count = $PostsLogic->countAll('all', $where); // 查询满足要求的总记录数
-            $res[$key] = $count;
+            $count = $PostsLogic->countAll('single', $where); // 查询满足要求的总记录数
+            $res['single'][$key] = $count;
         }
+
+        $where ['post_status'] = 'publish';
+        $count = $PostsLogic->countAll('single', $where); // 查询满足要求的总记录数
+        $res['page'][ 'publish'] = $count;
+
+
 
         $this->jsonReturn(1, $res);
 
