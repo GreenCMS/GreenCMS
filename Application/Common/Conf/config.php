@@ -11,6 +11,11 @@ return array(
     'DB_PORT' => GreenCMS_DB_PORT,
     'DB_PREFIX' => GreenCMS_DB_PREFIX, //测试是为空，生产环境需要自形添加 如 green_
     //   'DB_DSN' => 'pgsql:host=localhost;port=5432;dbname=green;',
+
+    'DB_SQL_BUILD_CACHE'    =>  true, // 数据库查询的SQL创建缓存
+
+
+
     'AUTOLOAD_NAMESPACE' => array('Addons' => './Addons/'), //扩展模块列表
 
     'SHOW_PAGE_TRACE' => false,

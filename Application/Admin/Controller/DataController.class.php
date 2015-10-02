@@ -189,6 +189,10 @@ class DataController extends AdminBaseController
         $time = time() - $_SESSION['cacheRestore']['time'];
         unset($_SESSION['cacheRestore']);
 //        echo json_encode(array("status" => 1, "info" => "导入成功，耗时：{$time} 秒钟"));
+
+        $SystemEvent = new SystemEvent;
+        $SystemEvent->clearCacheAll();
+
         $this->jsonReturn(1, "导入成功，耗时：{$time} 秒钟");
         // $this->success('导入成功', 'restore');
     }

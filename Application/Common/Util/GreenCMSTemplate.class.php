@@ -8,6 +8,7 @@
 
 namespace Common\Util;
 
+use Common\Logic\PostsLogic;
 use Think\Template\TagLib;
 
 
@@ -187,10 +188,11 @@ class GreenCMSTemplate extends TagLib
      */
     public function _recentlist($tag, $content)
     {
+        $PostsLogic = new PostsLogic();
 
         $num = isset ($tag ['num']) ? ( int )$tag ['num'] : 5;
         $post_type = isset ($tag ['type']) ? $tag ['type'] : 'single';
-        $order = isset ($tag ['order']) ? $tag ['order'] : 'post_id desc';
+        $order = isset ($tag ['order']) ? $tag ['order'] : 'post_date desc';
         $relation = isset ($tag ['relation']) ? $tag ['relation'] : false;
         $li_attr = isset ($tag ['li_attr']) ? $tag ['li_attr'] : '';
         $ul_attr = isset ($tag ['ul_attr']) ? $tag ['ul_attr'] : '';
@@ -198,8 +200,7 @@ class GreenCMSTemplate extends TagLib
 
         $info['post_type'] = $post_type;
 
-        $post_list = D('Posts', 'Logic')->cache(true)->where($info)->order($order)->limit($num)->relation($relation)->select();
-
+        $post_list = $PostsLogic->getList($num, $post_type, $order, $relation, $info);
 
         $parseStr = '<ul ' . $ul_attr . '>';
         foreach ($post_list as $value) {

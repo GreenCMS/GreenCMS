@@ -32,18 +32,11 @@ class UserheaderAddon extends Addon
 
     public function install()
     {
-        $Hooks = D('Hooks');
-        $userHeader= $Hooks->where(array('name' => 'userHeader'))->find();
-        if (!$userHeader) {
-            $data = array('name' => 'userHeader', 'description' => '用户登录顶部导航', 'type' => 1);
-            $Hooks->data($data)->add();
-        }
 
-        $userHeaderLink= $Hooks->where(array('name' => 'userHeaderLink'))->find();
-        if (!$userHeaderLink) {
-            $data = array('name' => 'userHeaderLink', 'description' => '用户登录顶部导航链接', 'type' => 1);
-            $Hooks->data($data)->add();
-        }
+        $this->addNewHook('pageHeader', 'pageHeader钩子方法');
+        $this->addNewHook('userHeader', '用户登录顶部导航');
+        $this->addNewHook('userHeaderLink', '用户登录顶部导航链接');
+        $this->addNewHook('pageFooter', 'pageFooter');
 
         return true;
     }

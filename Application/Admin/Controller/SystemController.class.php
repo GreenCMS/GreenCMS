@@ -243,7 +243,6 @@ class SystemController extends AdminBaseController
             G("MD5");
             $message .= "文件MD5值: $file_md5 ,用时 " . G("DownFile", "MD5") . "秒<br />";
 
-            //todo 系统备份
             $System = new SystemEvent();
             //$System->backupFile();
             G("BackupFile");
@@ -420,9 +419,7 @@ class SystemController extends AdminBaseController
     public function cache()
     {
         $this->assign('HTML_CACHE_ON', (int)get_opinion('HTML_CACHE_ON', true));
-        $this->assign('DB_FIELDS_CACHE', (int)get_opinion('DB_FIELDS_CACHE'));
-        $this->assign('DB_SQL_BUILD_CACHE', (int)get_opinion('DB_SQL_BUILD_CACHE'));
-        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(get_opinion("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
+  //        $this->assign('DATA_CACHE_TYPE', gen_opinion_list(get_opinion("cache_type"), get_opinion('DATA_CACHE_TYPE', true, "File")));
 
 
         $this->display();

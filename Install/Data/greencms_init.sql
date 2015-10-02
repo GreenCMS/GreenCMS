@@ -18,11 +18,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Records of {$db_prefix}role
 -- ----------------------------
-INSERT INTO `{$db_prefix}role` VALUES ('1', '超级管理员', '1', '1', '系统内置超级管理员组');
-INSERT INTO `{$db_prefix}role` VALUES ('2', '网站管理员', '2', '1', '拥有系统仅此于超级管理员的权限');
-INSERT INTO `{$db_prefix}role` VALUES ('3', '内容管理员', '3', '1', '拥有发布文章权利');
-INSERT INTO `{$db_prefix}role` VALUES ('4', '投稿员', '4', '1', '只能投稿默认为未审核');
-INSERT INTO `{$db_prefix}role` VALUES ('5', '游客', '5', '1', '基本信息修改');
+INSERT INTO `{$db_prefix}role` VALUES ('1', '超级管理员', '1', '1', '系统内置超级管理员组','');
+INSERT INTO `{$db_prefix}role` VALUES ('2', '网站管理员', '2', '1', '拥有系统仅此于超级管理员的权限','');
+INSERT INTO `{$db_prefix}role` VALUES ('3', '内容管理员', '3', '1', '拥有发布文章权利','');
+INSERT INTO `{$db_prefix}role` VALUES ('4', '投稿员', '4', '1', '只能投稿默认为未审核','');
+INSERT INTO `{$db_prefix}role` VALUES ('5', '游客', '5', '1', '基本信息修改','');
 
 -- ----------------------------
 -- Records of {$db_prefix}role_users
@@ -100,7 +100,6 @@ INSERT INTO `{$db_prefix}options` VALUES ('27', 'COOKIE_EXPIRE', '3600', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('28', 'COOKIE_DOMAIN', '', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('29', 'COOKIE_PATH', '/', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('30', 'DB_FIELDS_CACHE', '1', 'yes');
-INSERT INTO `{$db_prefix}options` VALUES ('31', 'DB_SQL_BUILD_CACHE', '1', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('32', 'sql_mail', '', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('33', 'SHOW_CHROME_TRACE', '0', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('34', 'users_can_register', 'on', 'yes');
@@ -117,6 +116,8 @@ INSERT INTO `{$db_prefix}options` VALUES ('44', 'home_tag_model', 'native', 'yes
 INSERT INTO `{$db_prefix}options` VALUES ('45', 'home_post_model', 'native', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('46', 'DATA_CACHE_TIME', '5', 'yes');
 INSERT INTO `{$db_prefix}options` VALUES ('47', 'HTML_CACHE_TIME', '10', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('48', 'attachFileSuffix', 'zip,rar,doc,docx,zip,pdf,txt,ppt,pptx,xls,xlsx', 'yes');
+INSERT INTO `{$db_prefix}options` VALUES ('49', 'attachImgSuffix', 'gif,png,jpg,jpeg,bmp', 'yes');
 
 
 -- ----------------------------

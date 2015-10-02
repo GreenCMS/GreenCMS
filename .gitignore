@@ -37,3 +37,4 @@ Temp
 .tmb
 .quarantine
 /db_config.php
+/const_config.php

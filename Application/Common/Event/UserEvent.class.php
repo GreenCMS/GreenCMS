@@ -73,11 +73,9 @@ class UserEvent extends BaseController
             return $this->jsonResult(0, "用户名或者密码错误");
 
         } else {
-
-
-            $_SESSION[get_opinion('USER_AUTH_KEY')] = $authInfo['user_id'];
+            $_SESSION[C('USER_AUTH_KEY')] = $authInfo['user_id'];
             if ($authInfo['user_login'] == get_opinion('Admin') || $authInfo['user_id'] == 1) {
-                $_SESSION[get_opinion('ADMIN_AUTH_KEY')] = true;
+                $_SESSION[C('ADMIN_AUTH_KEY')] = true;
             }
 
             //记住我
@@ -115,7 +113,7 @@ class UserEvent extends BaseController
     {
 
         $User = new UserLogic();
-        $authInfo = $User->detail(session(get_opinion('ADMIN_AUTH_KEY')));
+        $authInfo = $User->detail(session(C('ADMIN_AUTH_KEY')));
 
         $User->genHash($authInfo);
         cookie('user_session', null);

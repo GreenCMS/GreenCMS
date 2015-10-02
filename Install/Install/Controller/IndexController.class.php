@@ -9,7 +9,7 @@
 
 namespace Install\Controller;
 
-use Common\Util\File;
+use Common\Util\InstallFile;
 use Think\Controller;
 
 
@@ -30,7 +30,7 @@ class IndexController extends Controller
         }
         $lockFile = WEB_ROOT . 'Data/Install.lock';
 
-        if (File::file_exists($lockFile)) {
+        if (InstallFile::file_exists($lockFile)) {
             $this->error(" 你已经安装过GreenCMS，如果想重新安装，
             请先删除站点Data目录下的 install.lock 文件，然后再安装。");
         }
@@ -162,9 +162,9 @@ class IndexController extends Controller
 
         $file = WEB_ROOT . 'Install/Data/db_config_sample.php';
 
-        if (!File::file_exists($file))
+        if (!InstallFile::file_exists($file))
             $this->error('Install/Data/db_config_sample.php文件不存在,请检查');
-        $content = File::readFile($file);
+        $content = InstallFile::readFile($file);
 
         $content = str_replace("~dbhost~", $db_host, $content);
         $content = str_replace("~dbport~", $db_port, $content);
@@ -173,41 +173,41 @@ class IndexController extends Controller
         $content = str_replace("~dbpwd~", $db_password, $content);
         $content = str_replace("~dbprefix~", $db_prefix, $content);
 
-        if (!File::writeFile(WEB_ROOT . 'db_config.php', $content, 'w+')) {
+        if (!InstallFile::writeFile(WEB_ROOT . 'db_config.php', $content, 'w+')) {
             $this->error("数据库配置文件写入失败，请您手动根据Install/Data/db_config_sample.php文件在根目录创建文件");
         }
 
 
         $file = WEB_ROOT . 'Install/Data/const_config_sample.php.bak';
 
-        if (!File::file_exists($file))
+        if (!InstallFile::file_exists($file))
             $this->error('Install/Data/const_config_sample.php文件不存在,请检查');
-        $content = File::readFile($file);
+        $content = InstallFile::readFile($file);
 
         $content = str_replace("xxxxxxxxxx", substr(md5(time()), 0, 10), $content);
 
-        if (!File::writeFile(WEB_ROOT . 'const_config.php', $content, 'w+')) {
+        if (!InstallFile::writeFile(WEB_ROOT . 'const_config.php', $content, 'w+')) {
             $this->error("常量配置文件写入失败");
         }
 
 
-        File::makeDir(WEB_ROOT . 'Data/Cache');
+        InstallFile::makeDir(WEB_ROOT . 'Data/Cache');
 
-        $sql_empty = File::readFile(WEB_ROOT . 'Install/Data/greencms_empty.sql');
+        $sql_empty = InstallFile::readFile(WEB_ROOT . 'Install/Data/greencms_empty.sql');
         $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
         $file = WEB_ROOT . 'Data/Cache/greencms_sample.sql';
 
-        File::writeFile($file, $sql_query, 'w+');
+        InstallFile::writeFile($file, $sql_query, 'w+');
         insertDB($file, $conn);
-        File::delFile($file);
+        InstallFile::delFile($file);
 
-        $sql_empty = File::readFile(WEB_ROOT . 'Install/Data/greencms_init.sql');
+        $sql_empty = InstallFile::readFile(WEB_ROOT . 'Install/Data/greencms_init.sql');
         $sql_query = str_replace('{$db_prefix}', $db_prefix, $sql_empty);
         $file2 = WEB_ROOT . 'Data/Cache/greencms_init_sample.sql';
 
-        File::writeFile($file2, $sql_query, 'w+');
+        InstallFile::writeFile($file2, $sql_query, 'w+');
         insertDB($file2, $conn);
-        File::delFile($file2);
+        InstallFile::delFile($file2);
 
         /**
          * 插入管理员数据&更新配置
@@ -244,11 +244,11 @@ class IndexController extends Controller
      */
     public function step5()
     {
-        File::delAll(RUNTIME_PATH);
-        File::delAll(LOG_PATH);
-        File::delAll(WEB_CACHE_PATH);
-        File::delAll(WEB_ROOT . 'Data/Cache');
-        File::delAll(WEB_ROOT . 'Data/Temp');
+        InstallFile::delAll(RUNTIME_PATH);
+        InstallFile::delAll(LOG_PATH);
+        InstallFile::delAll(WEB_CACHE_PATH);
+        InstallFile::delAll(WEB_ROOT . 'Data/Cache');
+        InstallFile::delAll(WEB_ROOT . 'Data/Temp');
 
 
 //        $dirs = array();
@@ -275,9 +275,9 @@ class IndexController extends Controller
         //  $Access->initWeixin();
 
 
-        // File::delAll(WEB_ROOT . 'Install/Data');
+        // InstallFile::delAll(WEB_ROOT . 'Install/Data');
 
-        if (File::writeFile(WEB_ROOT . 'Data/Install.lock', 'installed', 'w+')) {
+        if (InstallFile::writeFile(WEB_ROOT . 'Data/Install.lock', 'installed', 'w+')) {
             C('URL_MODEL', 3);
             $this->success('GreenCMS安装成功,5秒钟返回首页', get_opinion("site_url"), 5);
         }

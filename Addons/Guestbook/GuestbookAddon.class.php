@@ -58,21 +58,9 @@ class GuestbookAddon extends Addon
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
                 ";
         M()->query($sql);
-        $Hooks = D('Hooks');
-        $Guestbook = $Hooks->where(array('name' => 'Guestbook'))->find();
-        if (!$Guestbook) {
-            $data = array('name' => 'Guestbook', 'description' => 'Guestbook', 'type' => 1);
-            $Hooks->data($data)->add();
 
-
-        }
-
-        $adminMenu = $Hooks->where(array('name' => 'adminSideBar'))->find();
-        if (!$adminMenu) {
-            $data = array('name' => 'adminSideBar', 'description' => 'adminSideBar', 'type' => 1);
-            $Hooks->data($data)->add();
-        }
-
+        $this->addNewHook('Guestbook', 'Guestbook');
+        $this->addNewHook('adminSideBar', 'adminSideBar');
 
         return true;
     }

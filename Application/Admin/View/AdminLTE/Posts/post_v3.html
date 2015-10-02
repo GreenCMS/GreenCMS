@@ -103,9 +103,7 @@
 
                                 <div class="controls">
 
-        <textarea class="span12 ckeditor" id="post_content" name="post_content" title="">
-            {$info.post_content}
-        </textarea>
+                                    <textarea class="span12 ckeditor" id="post_content" name="post_content" title="">{$info.post_content}</textarea>
 
                                 </div>
 
@@ -145,48 +143,47 @@
 
                             <control access="Admin/Posts/NOVERIFY">
 
-                            <div class="form-group">
+                                <div class="form-group">
 
-                                <label class="control-label">标签</label>
+                                    <label class="control-label">标签</label>
 
-                                <div class="controls">
+                                    <div class="controls">
 
-                                    <div class="btn-group">
-                                        <a class="btn btn-primary" href="#" data-toggle="dropdown"
-                                           style="width: 300px;">
-                                            选择标签 <i class="icon-angle-down"></i>
-                                        </a>
+                                        <div class="btn-group">
+                                            <a class="btn btn-primary" href="#" data-toggle="dropdown"
+                                               style="width: 300px;">
+                                                选择标签 <i class="icon-angle-down"></i>
+                                            </a>
 
-                                        <div class="dropdown-menu hold-on-click dropdown-checkboxes"
-                                             style="width: 500px;height: 300px;overflow: scroll">
+                                            <div class="dropdown-menu hold-on-click dropdown-checkboxes"
+                                                 style="width: 500px;height: 300px;overflow: scroll">
 
-                                            <foreach name="tags" item="vTags" key="k"><input
-                                                    type="checkbox" value="{$vTags.tag_id}" name="tags[]"
-                                                <foreach name="info['post_tag']" item="pts">
-                                                    <if condition="$vTags['tag_id'] eq $pts['tag_id']">
-                                                        checked="checked"
-                                                        <else/>
-                                                    </if>
+                                                <foreach name="tags" item="vTags" key="k"><input
+                                                        type="checkbox" value="{$vTags.tag_id}" name="tags[]"
+                                                    <foreach name="info['post_tag']" item="pts">
+                                                        <if condition="$vTags['tag_id'] eq $pts['tag_id']">
+                                                            checked="checked"
+                                                            <else/>
+                                                        </if>
+                                                    </foreach>
+                                                    /> {$vTags.tag_name}&nbsp;&nbsp;
+
+                                                    <php>
+                                                        if($k%5==0){
+                                                        echo '<br/>';
+                                                        }
+
+                                                    </php>
+
                                                 </foreach>
-                                                /> {$vTags.tag_name}&nbsp;&nbsp;
 
-                                                <php>
-                                                    if($k%5==0){
-                                                    echo '<br/>';
-                                                    }
-
-                                                </php>
-
-                                            </foreach>
-
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
 
                             </control>
-
 
 
                             <div id="post_advance" style="display: none">
@@ -216,7 +213,8 @@
                                     <div class="controls">
 
 
-                                        <select class="small form-control" tabindex="1" name="post_status" id="post_status">
+                                        <select class="small form-control" tabindex="1" name="post_status"
+                                                id="post_status">
 
                                             {$post_status}
 
@@ -327,7 +325,7 @@
 
                             <input type="hidden" name="post_id" value="{$post_id}"/>
 
-                            <hr />
+                            <hr/>
                             <div class="form-actions" style="  margin-left: 65px;">
 
                                 <control access="Admin/Posts/NOVERIFY">
@@ -337,9 +335,9 @@
                                 </control>
 
 
-                                <button type="button" id="post_width_ctl" class="btn btn-warning">
-                                    <i class="icon-ok"></i> 沉浸模式
-                                </button>
+                                <!--<button type="button" id="post_width_ctl" class="btn btn-warning">-->
+                                    <!--<i class="icon-ok"></i> 沉浸模式-->
+                                <!--</button>-->
 
                                 <button type="button" id="post_advance_ctl" class="btn btn-primary">
                                     <i class="icon-ok"></i> 高级选项
@@ -529,7 +527,6 @@
     });
 
 
-
     function leave_confirm() {
         if (true) {
             return "确认离开将不会保存当前数据。";
@@ -570,15 +567,15 @@
         })
     }
 
-    function auto_save(){
-        var post_status_dom= $("#post_status");
-        var post_status= post_status_dom.val();
+    function auto_save() {
+        var post_status_dom = $("#post_status");
+        var post_status = post_status_dom.val();
         post_status_dom.val("draft");
         post_status_dom.find("option").attr("selected", false);
         post_status_dom.find("option[value='draft']").attr("selected", true);
         update();
         post_status_dom.find("option").attr("selected", false);
-        post_status_dom.find("option[value='"+post_status+"']").attr("selected", true);
+        post_status_dom.find("option[value='" + post_status + "']").attr("selected", true);
         post_status_dom.val(post_status);
 
     }

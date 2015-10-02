@@ -111,9 +111,9 @@ $menu_arr = array(
             'Access/guest' => '游客管理',
             'Access/nodelist' => '节点管理',
             'Access/rolelist' => '角色管理',
-            'Access/addUser' => '添加用户',
-            'Access/addNode' => '添加节点',
-            'Access/addRole' => '添加角色',
+//            'Access/addUser' => '添加用户',
+//            'Access/addNode' => '添加节点',
+//            'Access/addRole' => '添加角色',
 
             'Access/loginlog' => '登陆记录',
             //  'Access/log' => '操作记录',
@@ -143,7 +143,7 @@ $menu_arr = array(
             'System/db' => '数据库设置',
             'System/cache' => '缓存设置',
 
-            'System/email' => '邮箱配置',
+            'System/email' => '系统邮件配置',
 //            'System/kvset'  => '其他设置',
             'System/sns' => '社交登录设置',
             'System/green' => '开发者选项置',

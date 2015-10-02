@@ -43,7 +43,7 @@
 
                         <div class="margin">
                             <div class="btn-group">
-                                <a href="{:U('Admin/Custom/addlink')}">
+                                <a href="{:U('Admin/Custom/addlink',array('id'=>I('get.id')))}">
                                     <button id="sample_editable_1_new" class="btn btn-success">
                                         添加链接<i class="icon-plus"></i>
                                     </button>
@@ -54,22 +54,22 @@
                                id="sample_1">
                             <thead>
                             <tr>
-                                <th style="width: 8px;"><input type="checkbox"
-                                                               class="group-checkable"
-                                                               data-set="#sample_1 .checkboxes"/></th>
+                                <!--<th style="width: 8px;"><input type="checkbox"-->
+                                                               <!--class="group-checkable"-->
+                                                               <!--data-set="#sample_1 .checkboxes"/></th>-->
                                 <th>标题</th>
-                                <th>排序</th>
-                                <th>分组</th>
+                                <th class="col-md-2">排序</th>
+                                <th class="col-md-2">分组</th>
 
                                 <th>描述</th>
-                                <th>操作</th>
+                                <th class="col-md-2">操作</th>
 
                             </tr>
                             </thead>
                             <tbody>
                             <foreach name="linklist" item="v">
                                 <tr class="odd gradeX">
-                                    <td><input type="checkbox" class="checkboxes" value="1"/></td>
+                                    <!--<td><input type="checkbox" class="checkboxes" value="1"/></td>-->
                                     <td><a
                                             href="{$v.link_url}"
                                             title="{$v.link_description}">{$v.link_name}</a></td>
@@ -81,11 +81,11 @@
                                     </td>
                                     <td>{$v.link_description}</td>
                                     <td>
-                                        <a
+                                        <a class="btn btn-sm btn-primary"
                                                 href="{:U('Admin/Custom/editlink', array('id' => $v['link_id']))}">编辑</a>
-                                        &nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;
 
-                                        <a
+                                        <a class="btn btn-sm  btn-danger"
                                                 onclick="javascript:return a_confirm()"
                                                 href="{:U('Admin/Custom/dellink', array('id' => $v['link_id']))}">删除</a>
                                     </td>

@@ -770,9 +770,9 @@ str;
     /**
      * 安装插件
      */
-    public function install()
+    public function install($addon_name)
     {
-        $addon_name = trim(I('addon_name'));
+//        $addon_name = trim(I('addon_name'));
         $class = get_addon_class($addon_name);
         if (!class_exists($class))
             $this->error('插件不存在', U('Admin/Custom/plugin'));
@@ -990,10 +990,10 @@ str;
      * 删除链接分组处理
      * @param $id
      */
-    public function dellinkgroupHandle($id)
+    public function dellinkgroupHandle($group_id)
     {
 
-        if (D('Link_group', 'Logic')->delete($id)) {
+        if (D('Link_group', 'Logic')->delete($group_id)) {
             $this->success('链接删除成功');
         } else {
             $this->error('链接删除失败');
@@ -1004,11 +1004,11 @@ str;
      * 编辑链接分组
      * @param $id
      */
-    public function editlinkgroup($id)
+    public function editlinkgroup($group_id)
     {
-        $this->assign('form_url', U('Admin/Custom/editlinkgroupHandle', array('id' => $id)));
+        $this->assign('form_url', U('Admin/Custom/editlinkgroupHandle', array('group_id' => $group_id)));
 
-        $link_group = D('Link_group', 'Logic')->where(array('link_group_id' => $id))->find();
+        $link_group = D('Link_group', 'Logic')->where(array('link_group_id' => $group_id))->find();
         $this->assign('link_group', $link_group);
 
 
@@ -1022,12 +1022,12 @@ str;
      * 编辑链接分组处理
      * @param $id
      */
-    public function editlinkgroupHandle($id)
+    public function editlinkgroupHandle($group_id)
     {
         $data['link_group_name'] = I('post.link_group_name');
 
 
-        if (D('Link_group', 'Logic')->where(array('link_group_id' => $id))->data($data)->save()) {
+        if (D('Link_group', 'Logic')->where(array('link_group_id' => $group_id))->data($data)->save()) {
             $this->success('链接分组编辑成功', U('Admin/Custom/linkgroup'));
         } else {
             $this->error('链接分组编辑失败', U('Admin/Custom/linkgroup'));
@@ -1038,13 +1038,13 @@ str;
     /**
      * 链接管理
      */
-    public function links($id = 0)
+    public function links($group_id = 0)
     {
 
-        $link_group = D('Link_group', 'Logic')->find($id);
+        $link_group = D('Link_group', 'Logic')->find($group_id);
         $this->assign('action', '链接管理:' . $link_group['link_group_name']);
 
-        $linklist = D('Links', 'Logic')->getList(1000, $id);
+        $linklist = D('Links', 'Logic')->getList(1000, $group_id);
         $this->assign('linklist', $linklist);
 
         $this->display();
