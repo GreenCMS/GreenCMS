@@ -12,26 +12,6 @@ class AddonsModel extends Model
 {
 
     /**
-     * 查找后置操作
-     */
-    protected function _after_find(&$result, $options)
-    {
-
-    }
-
-    /**
-     * @param $result
-     * @param $options
-     */
-    protected function _after_select(&$result, $options)
-    {
-
-        foreach ($result as &$record) {
-            $this->_after_find($record, $options);
-        }
-    }
-
-    /**
      * 文件模型自动完成
      * @var array
      */

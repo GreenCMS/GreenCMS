@@ -9,6 +9,9 @@
     <link href="__PUBLIC__/AdminLTE/css/timepicker/jquery-ui-1.8.17.custom.css" rel="stylesheet"/>
     <link href="__PUBLIC__/AdminLTE/css/timepicker/jquery-ui-timepicker-addon.css" rel="stylesheet"/>
 
+    <link href="__PUBLIC__/AdminLTE/css/select2/select2.css" rel="stylesheet"/>
+
+
     <script type="text/javascript">
         window.UEDITOR_HOME_URL = "__ROOT__/Extend/Ueditor/";
 
@@ -75,14 +78,14 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-12">
 
-                    <!-- /.box-header -->
-                    <div class="box-body">
+                <form action="{$handle}" id="add_post"
+                      name="add_post" class="form-horizontal">
 
+                    <div class="col-md-9">
 
-                        <form action="{$handle}" id="add_post"
-                              name="add_post" class="form-horizontal">
+                        <!-- /.box-header -->
+                        <div class="box-body">
 
 
                             <div class="form-group">
@@ -109,103 +112,44 @@
 
                             </div>
 
-                            <div class="form-group">
 
-                                <label class="control-label">分类</label>
+                            <input type="hidden" name="post_id" value="{$post_id}"/>
 
-                                <div class="controls">
-                                    <div class="btn-group">
-                                        <a class="btn btn-danger" href="#" data-toggle="dropdown" style="width: 300px;">
-                                            选择分类 <i class="icon-angle-down"></i>
-                                        </a>
+                            <hr/>
+                            <div class="form-actions" style="  margin-left: 65px;">
 
-                                        <div class="dropdown-menu hold-on-click dropdown-checkboxes"
-                                             style="width: 400px;height: 300px;overflow: scroll">
-                                            <foreach name="cats" item="vCats">
-                                                <div><label><input
-                                                        type="checkbox" value="{$vCats.cat_id}" name="cats[]"
-                                                    <foreach name="info['post_cat']" item="pcs">
-                                                        <if condition="$vCats['cat_id'] eq $pcs['cat_id']">
-                                                            checked="checked"
-                                                            <else/>
-                                                        </if>
-                                                    </foreach>
-                                                    /> {$vCats.cat_slug}
-                                                </label>
-                                                </div>
-                                            </foreach>
-                                        </div>
-                                    </div>
+                                <control access="Admin/Posts/NOVERIFY">
+                                    <button type="button" id="post_vertify_ctl" class="btn">
+                                        <i class="icon-ok"></i> 审核通过
+                                    </button>
+                                </control>
 
 
-                                </div>
+                                <!--<button type="button" id="post_width_ctl" class="btn btn-warning">-->
+                                <!--<i class="icon-ok"></i> 沉浸模式-->
+                                <!--</button>-->
+
+
+                                <button type="button" id="post_submit_ctl" class="btn btn-info submit">
+                                    <i class="icon-ok"></i> 提交
+                                </button>
+
+                                <span style="font-size: 18px; color: red; font-weight: bold;" id="success"></span>
+
+
                             </div>
 
-                            <control access="Admin/Posts/NOVERIFY">
 
-                                <div class="form-group">
-
-                                    <label class="control-label">标签</label>
-
-                                    <div class="controls">
-
-                                        <div class="btn-group">
-                                            <a class="btn btn-primary" href="#" data-toggle="dropdown"
-                                               style="width: 300px;">
-                                                选择标签 <i class="icon-angle-down"></i>
-                                            </a>
-
-                                            <div class="dropdown-menu hold-on-click dropdown-checkboxes"
-                                                 style="width: 500px;height: 300px;overflow: scroll">
-
-                                                <foreach name="tags" item="vTags" key="k"><input
-                                                        type="checkbox" value="{$vTags.tag_id}" name="tags[]"
-                                                    <foreach name="info['post_tag']" item="pts">
-                                                        <if condition="$vTags['tag_id'] eq $pts['tag_id']">
-                                                            checked="checked"
-                                                            <else/>
-                                                        </if>
-                                                    </foreach>
-                                                    /> {$vTags.tag_name}&nbsp;&nbsp;
-
-                                                    <php>
-                                                        if($k%5==0){
-                                                        echo '<br/>';
-                                                        }
-
-                                                    </php>
-
-                                                </foreach>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
 
 
-                            </control>
+                    </div>
 
+                    <div class="col-md-3">
+                        <div class="box-body well">
 
-                            <div id="post_advance" style="display: none">
+                            <div id="post_advance" style="padding-left: 5%">
 
-
-                                <div class="form-group">
-                                    <label class="control-label">类型</label>
-
-                                    <div class="controls">
-
-
-                                        <select class="small form-control" tabindex="1" name="post_type" id="post_type">
-
-                                            {$post_type}
-
-                                        </select>
-                                        <span class="help-inline"></span>
-
-
-                                    </div>
-
-                                </div>
 
                                 <div class="form-group">
                                     <label class="control-label">状态</label>
@@ -217,6 +161,28 @@
                                                 id="post_status">
 
                                             {$post_status}
+
+                                        </select>
+                                        <span class="help-inline"></span>
+
+
+                                    </div>
+
+                                </div>
+
+
+                                <hr/>
+
+
+                                <div class="form-group">
+                                    <label class="control-label">类型</label>
+
+                                    <div class="controls">
+
+
+                                        <select class="small form-control" tabindex="1" name="post_type" id="post_type">
+
+                                            {$post_type}
 
                                         </select>
                                         <span class="help-inline"></span>
@@ -289,10 +255,12 @@
                                     </div>
                                 </div>
 
+                                <hr/>
+
                                 <div class="form-group">
                                     <label class="control-label">发布时间:</label>
 
-                                    <div class="input-group controls " style="width: 40%">
+                                    <div class="input-group controls " style="width: 60%">
                                         <input name="post_date" type="text" class="form-control timepicker"
                                                style="z-index:2"
                                                value="{$info.post_date}"/>
@@ -307,7 +275,7 @@
                                 <div class="form-group">
                                     <label class="control-label">修改时间:</label>
 
-                                    <div class="input-group controls " style="width: 40%">
+                                    <div class="input-group controls " style="width: 60%">
 
                                         <input name="post_modified" type="text" class="form-control timepicker"
                                                style="z-index:2"
@@ -320,45 +288,86 @@
                                 </div>
 
 
-                            </div>
+                                <hr/>
+
+                                <div class="form-group">
+
+                                    <label class="control-label">分类</label>
+
+                                    <div class="controls">
+                                        <div class="btn-group">
+                                            <a class="btn btn-danger" href="#" data-toggle="dropdown"
+                                                    >
+
+                                                选择分类 <i class="icon-angle-down"></i>
+                                            </a>
+
+                                            <div class="dropdown-menu hold-on-click dropdown-checkboxes"
+                                                 style="width: 400px;height: 300px;overflow: scroll">
+                                                <foreach name="cats" item="vCats">
+                                                    <div><label><input
+                                                            type="checkbox" value="{$vCats.cat_id}" name="cats[]"
+                                                        <foreach name="info['post_cat']" item="pcs">
+                                                            <if condition="$vCats['cat_id'] eq $pcs['cat_id']">
+                                                                checked="checked"
+                                                                <else/>
+                                                            </if>
+                                                        </foreach>
+                                                        /> {$vCats.cat_slug}
+                                                    </label>
+                                                    </div>
+                                                </foreach>
+                                            </div>
+                                        </div>
 
 
-                            <input type="hidden" name="post_id" value="{$post_id}"/>
-
-                            <hr/>
-                            <div class="form-actions" style="  margin-left: 65px;">
+                                    </div>
+                                </div>
 
                                 <control access="Admin/Posts/NOVERIFY">
-                                    <button type="button" id="post_vertify_ctl" class="btn">
-                                        <i class="icon-ok"></i> 审核通过
-                                    </button>
+
+
+                                    <div class="form-group">
+
+                                        <label class="control-label">标签</label>
+
+                                        <div class="controls">
+                                            <select class="js-example-tags js-example-basic-multiple form-control select2-hidden-accessible"
+                                                 id="tags"   multiple="multiple"  name="tags[]"  tabindex="-1" aria-hidden="true">
+
+
+                                                <foreach name="tags" item="vTags" key="k">
+
+                                                    <option  value="{$vTags.tag_name}"
+
+                                                    <foreach name="info['post_tag']" item="pts">
+                                                        <if condition="$vTags['tag_id'] eq $pts['tag_id']">
+                                                            selected="selected"
+                                                            <else/>
+                                                        </if>
+                                                    </foreach>
+
+
+                                                    >{$vTags.tag_name}</option>
+
+                                                </foreach>
+
+
+                                            </select>
+
+                                         </div>
+                                    </div>
+
                                 </control>
 
 
-                                <!--<button type="button" id="post_width_ctl" class="btn btn-warning">-->
-                                    <!--<i class="icon-ok"></i> 沉浸模式-->
-                                <!--</button>-->
-
-                                <button type="button" id="post_advance_ctl" class="btn btn-primary">
-                                    <i class="icon-ok"></i> 高级选项
-                                </button>
-
-                                <button type="button" id="post_submit_ctl" class="btn btn-info submit">
-                                    <i class="icon-ok"></i> 提交
-                                </button>
-
-                                <span style="font-size: 18px; color: red; font-weight: bold;" id="success"></span>
-
-
                             </div>
 
-                        </form>
-
-
+                        </div>
                     </div>
 
 
-                </div>
+                </form>
             </div>
 
 
@@ -382,6 +391,8 @@
         src="__PUBLIC__/AdminLTE/js/plugins/timepicker/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript"
         src="__PUBLIC__/AdminLTE/js/plugins/timepicker/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript"
+        src="__PUBLIC__/AdminLTE/js/plugins/select2/select2.js"></script>
 
 <script type="text/javascript">
     var editor;
@@ -394,7 +405,7 @@
         var options = {
             zIndex: 999,
 
-            initialFrameWidth: "95%", //初化宽度
+            initialFrameWidth: "100%", //初化宽度
             initialFrameHeight: 400, //初化高度
             focus: false, //初始化时，是否让编辑器获得焦点true或false
             maximumWords: 99999, removeFormatAttributes: 'class,style,lang,width,height,align,hspace,valign'
@@ -473,6 +484,7 @@
                         arr.push($(o).val());
                     });
 
+
                     if (arr.length == 0) {
                         div.fadeIn().html("分类信息不能为空<br />请选择分类");
                         alert("分类信息不能为空,请选择分类");
@@ -482,6 +494,7 @@
 
                     var url = '{$handle}';
                     var formObj = $("#add_post");
+
                     formObj.ajaxSubmit({
                         url: url,
                         type: "POST",
@@ -568,15 +581,15 @@
     }
 
     function auto_save() {
-        var post_status_dom = $("#post_status");
-        var post_status = post_status_dom.val();
-        post_status_dom.val("draft");
-        post_status_dom.find("option").attr("selected", false);
-        post_status_dom.find("option[value='draft']").attr("selected", true);
+//        var post_status_dom = $("#post_status");
+//        var post_status = post_status_dom.val();
+//        post_status_dom.val("draft");
+//        post_status_dom.find("option").attr("selected", false);
+//        post_status_dom.find("option[value='draft']").attr("selected", true);
         update();
-        post_status_dom.find("option").attr("selected", false);
-        post_status_dom.find("option[value='" + post_status + "']").attr("selected", true);
-        post_status_dom.val(post_status);
+//        post_status_dom.find("option").attr("selected", false);
+//        post_status_dom.find("option[value='" + post_status + "']").attr("selected", true);
+//        post_status_dom.val(post_status);
 
     }
 
@@ -587,10 +600,9 @@
 
         window.setInterval(auto_save, 60000);
 
+        $(".js-example-tags").select2({
+            tags: true
 
-        $("#post_advance_ctl").click(function () {
-            var post_advance = $("#post_advance");
-            post_advance.slideToggle(200);
         });
 
         $("#post_vertify_ctl").click(function () {

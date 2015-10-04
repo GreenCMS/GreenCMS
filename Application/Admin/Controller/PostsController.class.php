@@ -11,6 +11,7 @@ namespace Admin\Controller;
 
 use Admin\Event\PostsEvent;
 use Common\Logic\CatsLogic;
+use Common\Logic\cc;
 use Common\Logic\PostsLogic;
 use Common\Logic\TagsLogic;
 use Common\Logic\UserLogic;
@@ -128,7 +129,7 @@ class PostsController extends AdminBaseController
         $CatsLogic = new CatsLogic();
         $TagsLogic = new TagsLogic();
 
-        $key='';
+        $key = '';
 
         //获取get参数
         $cat = I('get.cat');
@@ -307,13 +308,18 @@ class PostsController extends AdminBaseController
         die();
     }
 
+
     /**
      * @param $id
      */
     public function posts($id = -1, $new_post = false)
     {
         $PostEvent = new PostsEvent();
+        $CatsLogic = new CatsLogic();
+        $TagsLogic = new TagsLogic();
 
+//        dump($_POST);
+//        die();
 
         $this->post_id = $post_id = $id ? (int)$id : false;
         $Posts = new PostsLogic();
@@ -333,17 +339,33 @@ class PostsController extends AdminBaseController
             D("post_cat")->where(array("post_id" => $post_data['post_id']))->delete();
             D("post_tag")->where(array("post_id" => $post_data['post_id']))->delete();
 
+            if (!empty($_POST['tags'])) {
+                foreach ($_POST['tags'] as $tag_name) {
+                    $tags_temp = $TagsLogic->where(array("tag_name" => $tag_name))->find();
+                    if (empty($tags_temp)) {
+                        $TagsLogic->add(array("tag_name" => $tag_name, "tag_slug" => $tag_name));
+                    }
+                    $tags_temp = $TagsLogic->where(array("tag_name" => $tag_name))->find();
+
+
+                    D("Post_tag")->add(array("tag_id" => $tags_temp["tag_id"], "post_id" => $post_data['post_id']));
+
+//                D("Post_tag")->add(array("tag_id" => $tag_name, "post_id" => $post_data['post_id']));
+                }
+            }
+
+
             if (!empty($_POST['cats'])) {
                 foreach ($_POST['cats'] as $cat_id) {
                     D("Post_cat")->add(array("cat_id" => $cat_id, "post_id" => $post_data['post_id']));
                 };
             }
-
-            if (!empty($_POST['tags'])) {
-                foreach ($_POST['tags'] as $tag_id) {
-                    D("Post_tag")->add(array("tag_id" => $tag_id, "post_id" => $post_data['post_id']));
-                }
-            }
+//
+//            if (!empty($_POST['tags'])) {
+//                foreach ($_POST['tags'] as $tag_id) {
+//                    D("Post_tag")->add(array("tag_id" => $tag_id, "post_id" => $post_data['post_id']));
+//                }
+//            }
 
             if ($post_data['post_type'] == 'single') {
                 $url = U('Admin/Posts/index');
@@ -1017,8 +1039,7 @@ class PostsController extends AdminBaseController
 
         $where ['post_status'] = 'publish';
         $count = $PostsLogic->countAll('single', $where); // 查询满足要求的总记录数
-        $res['page'][ 'publish'] = $count;
-
+        $res['page']['publish'] = $count;
 
 
         $this->jsonReturn(1, $res);
