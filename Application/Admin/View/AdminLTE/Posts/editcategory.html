@@ -36,72 +36,68 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="box box-warning">
-
-                        <!-- /.box-header -->
-                        <div class="box-body">
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
 
-                            <form action="{:U('Admin/Posts/editCategoryHandle', array('id' => $cat['cat_id']))}"
-                                  method="post">
-                                <div class="form-group">
-                                    <label class="control-label">名称</label>
+                        <form action="{:U('Admin/Posts/editCategoryHandle', array('id' => $cat['cat_id']))}"
+                              method="post">
+                            <div class="form-group">
+                                <label class="control-label">名称</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="名称" class="form-control large" name="cat_name"
-                                               value="{$cat.cat_name}"/>
-                                        <span class="help-inline">这将是它在站点上显示的名字。</span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="名称" class="form-control large" name="cat_name"
+                                           value="{$cat.cat_name}"/>
+                                    <span class="help-inline">这将是它在站点上显示的名字。</span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">别名</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">别名</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="别名" class="form-control large" name="cat_slug"
-                                               value="{$cat.cat_slug}"/>
-                                        <span class="help-inline">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="别名" class="form-control large" name="cat_slug"
+                                           value="{$cat.cat_slug}"/>
+                                    <span class="help-inline">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="control-label">显示排序</label>
+                            <div class="form-group">
+                                <label class="control-label">显示排序</label>
 
-                                    <div class="controls">
-                                        <input type="text" placeholder="别名" class="form-control large" name="cat_order"
-                                               value="{$cat.cat_order}"/>
-                                        <span class="help-inline"></span>
-                                    </div>
+                                <div class="controls">
+                                    <input type="text" placeholder="别名" class="form-control large" name="cat_order"
+                                           value="{$cat.cat_order}"/>
+                                    <span class="help-inline"></span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">父级</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">父级</label>
 
-                                    <div class="controls">
+                                <div class="controls">
 
-                                        <select class="small form-control" tabindex="1" name="cat_father">
-                                            <option value="0">无</option>
-                                            <foreach name="cats" item="v">
-                                                <option value="{$v.cat_id}"
+                                    <select class="small form-control" tabindex="1" name="cat_father">
+                                        <option value="0">无</option>
+                                        <foreach name="cats" item="v">
+                                            <option value="{$v.cat_id}"
 
-                                                <php>
-                                                    if($v['cat_id']==$cat['cat_father'])
-                                                    echo 'selected="selected"';
+                                            <php>
+                                                if($v['cat_id']==$cat['cat_father'])
+                                                echo 'selected="selected"';
 
-                                                </php>
+                                            </php>
 
 
-                                                >{$v.cat_name}</option>
-                                            </foreach>
-                                        </select>
-                                    </div>
+                                            >{$v.cat_name}</option>
+                                        </foreach>
+                                    </select>
                                 </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-info"><i class="icon-ok"></i> {$action}
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-info"><i class="icon-ok"></i> {$action}
+                                </button>
+                            </div>
+                        </form>
 
-
-                        </div>
                     </div>
                 </div>
 

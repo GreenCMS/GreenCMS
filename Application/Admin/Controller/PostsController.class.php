@@ -762,7 +762,7 @@ class PostsController extends AdminBaseController
     {
         $CatsLogic = new CatsLogic();
 
-        $action = '编辑';
+        $action = '编辑分类';
         $cat = $CatsLogic->detail($id);
         $cats = $CatsLogic->category();
 
