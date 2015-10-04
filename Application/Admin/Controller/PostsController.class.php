@@ -1038,7 +1038,7 @@ class PostsController extends AdminBaseController
         }
 
         $where ['post_status'] = 'publish';
-        $count = $PostsLogic->countAll('single', $where); // 查询满足要求的总记录数
+        $count = $PostsLogic->countAll('page', $where); // 查询满足要求的总记录数
         $res['page']['publish'] = $count;
 
 
