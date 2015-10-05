@@ -95,9 +95,6 @@
                                     <input type="text" id="post_title"
                                            class="form-control large" name="post_title"
                                            value="{$info.post_title}"/>
-                                    <span class="help-inline" style="color: #d73726">
-                                      当前类型:{$info['post_status']}
-                                    </span>
 
                                 </div>
                             </div>
@@ -118,21 +115,17 @@
                             <hr/>
                             <div class="form-actions" style="  margin-left: 65px;">
 
+
+
+                                <button type="button" class="btn btn-info post_save_ctl">
+                                    <i class="icon-ok"></i> 保存
+                                </button>
+
                                 <control access="Admin/Posts/NOVERIFY">
-                                    <button type="button" id="post_vertify_ctl" class="btn">
-                                        <i class="icon-ok"></i> 审核通过
+                                    <button type="button" id="post_submit_ctl" class="btn btn-success submit">
+                                        <i class="icon-ok"></i> 立即发布
                                     </button>
                                 </control>
-
-
-                                <!--<button type="button" id="post_width_ctl" class="btn btn-warning">-->
-                                <!--<i class="icon-ok"></i> 沉浸模式-->
-                                <!--</button>-->
-
-
-                                <button type="button" id="post_submit_ctl" class="btn btn-info submit">
-                                    <i class="icon-ok"></i> 提交
-                                </button>
 
                                 <span style="font-size: 18px; color: red; font-weight: bold;" id="success"></span>
 
@@ -163,8 +156,13 @@
                                             {$post_status}
 
                                         </select>
-                                        <span class="help-inline"></span>
+                                        <span class="help-inline">
 
+                                             <button type="button" class="btn btn-info post_save_ctl">
+                                                 <i class="icon-ok"></i> 确定
+                                             </button>
+
+                                        </span>
 
                                     </div>
 
@@ -333,12 +331,13 @@
 
                                         <div class="controls">
                                             <select class="js-example-tags js-example-basic-multiple form-control select2-hidden-accessible"
-                                                 id="tags"   multiple="multiple"  name="tags[]"  tabindex="-1" aria-hidden="true">
+                                                    id="tags" multiple="multiple" name="tags[]" tabindex="-1"
+                                                    aria-hidden="true">
 
 
                                                 <foreach name="tags" item="vTags" key="k">
 
-                                                    <option  value="{$vTags.tag_name}"
+                                                    <option value="{$vTags.tag_name}"
 
                                                     <foreach name="info['post_tag']" item="pts">
                                                         <if condition="$vTags['tag_id'] eq $pts['tag_id']">
@@ -355,7 +354,7 @@
 
                                             </select>
 
-                                         </div>
+                                        </div>
                                     </div>
 
                                 </control>
@@ -541,9 +540,7 @@
 
 
     function leave_confirm() {
-        if (true) {
-            return "确认离开将不会保存当前数据。";
-        }
+        update();
     }
 
     function update() {
@@ -552,9 +549,20 @@
             editor.sync();
         }
 
+
         var div = $("#success");
         var url = '{$handle}';
         var formObj = $("#add_post");
+
+        if ($("#post_title").val() == '' ||
+                $("#post_title").val() == '未命名' ||
+                $("#post_content").val() == '') {
+
+            div.fadeIn().html("标题或内容不能为空，不能自动保存");
+            div.fadeOut(5000);
+            return false;
+        }
+
         formObj.ajaxSubmit({
             url: url,
             type: "POST",
@@ -617,10 +625,12 @@
 
         });
 
+        $(".post_save_ctl").click(function () {
+            auto_save();
 
-        $("#post_width_ctl").click(function () {
-            $(".sidebar-toggle").trigger("click");
         });
+
+
 
     });
 
