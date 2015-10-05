@@ -504,7 +504,7 @@ class PostsController extends AdminBaseController
         $data['post_name'] = urlencode(I('post.post_name', $data['post_title'], ''));
 
         $data['post_date'] = I('post.post_date') ? I('post.post_date') : date("Y-m-d H:m:s", time());
-        $data['post_modified'] = I('post.post_modified') ? I('post.post_modified') : date("Y-m-d H:m:s", time());
+        $data['post_modified'] = date("Y-m-d H:m:s", time());
 
         $data['user_id'] = I('post.post_user') ? I('post.post_user') : $_SESSION [get_opinion('USER_AUTH_KEY')];
 
