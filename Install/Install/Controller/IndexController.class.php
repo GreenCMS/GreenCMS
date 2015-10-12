@@ -74,15 +74,14 @@ class IndexController extends Controller
         $this->assign('sp_safe_mode', (ini_get('safe_mode') ? '<font color=red>[×]On</font>' : '<font color=green>[√]Off</font>'));
         $this->assign('sp_gd', ($sp_gd > 0 ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>'));
         $this->assign('sp_mysql', (function_exists('mysql_connect') ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>'));
+        $this->assign('sp_mysqli', (function_exists('mysqli_connect') ? '<font color=green>[√]On</font>' : '<font color=red>[×]Off</font>'));
 
         $test_dirs = array(
             '/',
-            '/Core/*',
             '/Public/*',
             '/Application/*',
             '/Data/*',
             '/Upload/*',
-            '/Extend/*',
         );
 
         $this->assign('sp_testdirs', $test_dirs);

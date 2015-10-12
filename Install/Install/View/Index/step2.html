@@ -147,13 +147,7 @@
                                             </tr>
                                             </thead>
                                             <tbody id="system_env">
-                                            <tr>
-                                                <td>safe_mode</td>
-                                                <td align="center">Off</td>
-                                                <td><?php echo $sp_safe_mode; ?>
-                                                    <small>(本系统不支持在<span class="STYLE2">非win主机的安全模式</span>下运行)</small>
-                                                </td>
-                                            </tr>
+
 
                                             <tr>
                                                 <td>GD 支持</td>
@@ -170,13 +164,15 @@
                                                     <small>(不支持无法使用本系统)</small>
                                                 </td>
                                             </tr>
-                                            </tbody>
-                                            <tfoot>
                                             <tr>
-                                                <th></th>
-                                                <th></th>
+                                                <td>MySqli 支持</td>
+                                                <td align="center">On</td>
+                                                <td>{$sp_mysqli}
+                                                    <small>(与mysql至少有一个支持)</small>
+                                                </td>
                                             </tr>
-                                            </tfoot>
+                                            </tbody>
+
                                         </table>
                                     </form>
 
