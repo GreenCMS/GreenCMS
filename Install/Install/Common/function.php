@@ -126,3 +126,20 @@ function get_opinion($key, $realtime = false, $default = '')
     }
 
 }
+
+// 生成目录安全文件
+function build_dir_secure($dirs=array()) {
+    // 目录安全写入（默认开启）
+    defined('BUILD_DIR_SECURE')  or define('BUILD_DIR_SECURE',    true);
+    if(BUILD_DIR_SECURE) {
+        defined('DIR_SECURE_FILENAME')  or define('DIR_SECURE_FILENAME',    'index.html');
+        defined('DIR_SECURE_CONTENT')   or define('DIR_SECURE_CONTENT',     ' ');
+        // 自动写入目录安全文件
+        $content = DIR_SECURE_CONTENT;
+        $files = explode(',', DIR_SECURE_FILENAME);
+        foreach ($files as $filename){
+            foreach ($dirs as $dir)
+                file_put_contents($dir.$filename,$content);
+        }
+    }
+}
