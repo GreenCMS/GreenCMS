@@ -55,15 +55,15 @@ QQ群: 123085170
     ";
 ```  
   
-##其他信息:  
-####安装之后需要的操作:  
+## 其他信息:  
+#### 安装之后需要的操作:  
     删除Install模块( /Application/Install)  --重要  
     删除Install数据( /Data/Install) --重要  
     关闭HTML_CACHE_ON(系统后台设置) --新版已经不需要了  
     不要忘记开启rewrite 或者 将/Home/config/config_router.php的url_mode改成0  
   
   
-####关于与ThinkPHP的不同：  
+#### 关于与ThinkPHP的不同：  
 > 虽然 GreenCMS是基于ThinkPHP 3.2.1 开发的CMS,我们尽可能使用ThinkPHP原生方法去编写，  
 > 但是由于ThinkPHP自身不合理，所以部分文件可能需要替换  
 > 目前已知的需要Patch的文件有  
@@ -80,27 +80,27 @@ QQ群: 123085170
 __如果你需要升级ThinkPHP框架请注意上面文件区别__
   
   
-####NginX IIS用户须知:  
+#### NginX IIS用户须知:  
 > 使用NginX IIS的用户可能需要配置rewrite或者pathinfo   
 > 更多信息参考ThinkPHP3.2.1手册  
   
-####index.php 选项:  
+#### index.php 选项:  
 > APP_DEBUG : 系统调试设置,项目正式部署后请设置为 false
   
   
   
-####安全风险 :  
+#### 安全风险 :  
 > 已知安全风险包括:
 > - Data/xxxBackup类文件夹外部可以访问,部署应放在www目录之外的位置 
 > - 模板可能会被下载,apache通过.htaccess控制 
   
   
-####安装建议 :  
+#### 安装建议 :  
 > 完成后删除Data/Install文件夹  
 > 在Application/Common/Conf/conig.php中删除不需要的模块信息  
   
   
-###目录结构  
+### 目录结构  
       
     /
     |--Addons 插件文件夹 (与OneThink高度兼容)
@@ -195,45 +195,45 @@ __如果你需要升级ThinkPHP框架请注意上面文件区别__
   
   
   
-###云平台须知  
+### 云平台须知  
   
-####SAE(Sina App Engine)平台不能使用的功能  
+#### SAE(Sina App Engine)平台不能使用的功能  
 > - 文章自动获取远程图片  
 > - 部分文件上传  
     
-####ACE(Aliyun Cloud Engine)平台不能使用的功能  
+#### ACE(Aliyun Cloud Engine)平台不能使用的功能  
 > - rewrite bug 导致系统不能运行  
 
-####搜狐云景 (Souhu Cloudscape)平台不能使用的功能  
+#### 搜狐云景 (Souhu Cloudscape)平台不能使用的功能  
 > - 没有原生Memcache和Storage服务
 
-####BAE(Baidu App Engine)平台不能使用的功能  
+#### BAE(Baidu App Engine)平台不能使用的功能  
 > - 未测试
   
 
   
-###数据库须知
+### 数据库须知
 
-####MySQL
+#### MySQL
 > - 默认引擎是用MyISAM可以选择Innodb
 
-####SqlServer
+#### SqlServer
 > - 不支持
 
 
-####PostgreSQL
+#### PostgreSQL
 > - PDO模式可以访问，不能插入数据，(ThinkPHP)主键获取有问题
 > - pg_sql模式几乎不能使用，(ThinkPHP Pgsql支持不力)。。。。。。。。
 > - 有GreenCMS init SQL for PostgreSQL需要的可以索取
 
 
 
-###HHVM与PHP7
-####HHVM
+### HHVM与PHP7
+#### HHVM
 > - 不知道为什么管理界面打不开
 > - 不稳定
 
-####PHP7
+#### PHP7
 > - 性能提升100%
 > - 首页RPS在50以上
 > - 演示地址:[http://php7.greencms.net/](http://php7.greencms.net/)
